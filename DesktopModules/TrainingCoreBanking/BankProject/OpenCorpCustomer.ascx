@@ -318,7 +318,7 @@
             <tr>
                 <td class="MyLable">Contact Person</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtContactPerson" Width="250" TabIndex="21" runat="server" ValidationGroup="Group1" />
+                    <telerik:RadTextBox ID="txtContactPerson" Width="300" TabIndex="21" runat="server" ValidationGroup="Group1" />
                 </td>
             </tr>
         </table>
@@ -343,7 +343,7 @@
                 <td class="MyLable">Email Address
                 </td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtEmailAddress" runat="server" TabIndex="24" ValidationGroup="Group1" />
+                    <telerik:RadTextBox ID="txtEmailAddress" runat="server" TabIndex="24" ValidationGroup="Group1" width="300"/>
                 </td>
             </tr>
 
@@ -351,7 +351,7 @@
                 <td class="MyLable">Remarks
                 </td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtRemarks" Width="250" runat="server" TabIndex="25" ValidationGroup="Group1" />
+                    <telerik:RadTextBox ID="txtRemarks" Width="300" runat="server" TabIndex="25" ValidationGroup="Group1" />
                 </td>
             </tr>
         </table>

@@ -32,7 +32,7 @@ namespace BankProject
         {
             LoadCountries();
             LoadCollateralStatus();
-            LoadCurrencies();
+            //LoadCurrencies();
             LoadCompanyStorage();
             LoadCollateralType();
             rdpValueDate.SelectedDate = DateTime.Now;
@@ -47,7 +47,7 @@ namespace BankProject
             if (commandname == "commit")
             {
                 var CollInfoID = tbCollInfoID.Text.Trim();
-                if (CollInfoID.Length == 13 && CollInfoID.Substring(10, 1) == ".")
+                if (CollInfoID.Length == 10 && CollInfoID.Substring(7, 1) == ".")
                 {
                     string RightID = CollInfoID.Substring(0,10); 
                     var ProvisionValue = decimal.Parse(lblProvisionValue.Text  == "" ? "0" : lblProvisionValue.Text);
@@ -62,9 +62,9 @@ namespace BankProject
                         Convert.ToDecimal( tbExeValue.Value.HasValue? tbExeValue.Value:0),
                         AllocatedAmt, rdpValueDate.SelectedDate, rdpExpiryDate.SelectedDate, rdpReviewDate.SelectedDate, UserInfo.Username.ToString());
                     TriTT.B_CONTINGENT_ENTRY_Insert_Update(CollInfoID, tbContingentEntryID.Text, tbCustomerIDName_Cont.Text.Substring(0, 7), tbAddress_cont.Text, tbIDTaxCode.Text
-                        , Convert.ToDateTime(tbDateOfIssue.Text), rcbTransactionCode.SelectedValue, rcbTransactionCode.Text.Replace(rcbTransactionCode.SelectedValue + " - ", "")
+                        , tbDateOfIssue.Text == "" ? "" : tbDateOfIssue.Text, rcbTransactionCode.SelectedValue, rcbTransactionCode.Text.Replace(rcbTransactionCode.SelectedValue + " - ", "")
                         , rcbDebitOrCredit.SelectedValue, rcbDebitOrCredit.Text.Replace(rcbDebitOrCredit.SelectedValue + " - ", ""), rcbCurrency.SelectedValue,
-                        rcbAccountNo.SelectedValue, rcbAccountNo.Text, Convert.ToDecimal( tbAmount.Value), Convert.ToDecimal( tbDealRate.Value), rdpValueDate.SelectedDate, tbNarrative.Text
+                        rcbAccountNo.SelectedValue, rcbAccountNo.Text, Convert.ToDecimal(tbAmount.Value), Convert.ToDecimal(tbDealRate.Value), rdpValueDate.SelectedDate, tbNarrative.Text
                         , UserInfo.Username.ToString());
                     Response.Redirect("Default.aspx?tabid=194");
                 }
@@ -83,7 +83,8 @@ namespace BankProject
                 rcbCollateralType.Enabled = false;
                 rcbCollateralCode.Enabled = false;
                 tbCustomerIDName.Enabled = false;
-                rcbFreignCcy.Enabled= rcbCurrency.Enabled = false;
+                rcbCurrency.Enabled = true;
+                rcbFreignCcy.Enabled = true;
                 rcbDebitOrCredit.Enabled= tbCollInfoID.Enabled = false;
                 LoadToolBar(true);
             }
@@ -96,14 +97,15 @@ namespace BankProject
         {
             BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);// f5 form de search tiep data
             FirstLoad();
-            if (CollIndoID.Length == 13 && CollIndoID.Substring(10,1)==".")// check lenght, hop le thi di tiep
+            LoadCurrencies(CollIndoID.Substring(0, 7));
+            if (CollIndoID.Length == 10 && CollIndoID.Substring(7,1)==".")// check lenght, hop le thi di tiep
             {
-                var RightID = CollIndoID.Substring(0,10);
                 if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(CollIndoID.Substring(0, 7)) == null)
                 {
                     tbCollInfoID.Text = CollIndoID;
                     lblCheckCustomer.Text = "Customer ID does not exists !"; return;
                 }
+
                 if (TriTT.B_COLLATERAL_INFO_LoadExistColl_InfoExists(CollIndoID).Tables[0].Rows.Count > 0)// neu Collateral Info exist thi` load len, neu khong thi chekc de tao moi
                 {
                     DataRow dr = TriTT.B_COLLATERAL_INFO_LoadExistColl_InfoExists(CollIndoID).Tables[0].Rows[0];
@@ -149,7 +151,10 @@ namespace BankProject
                     tbCustomerIDName_Cont.Text = tbCustomerIDName.Text;
                     tbAddress_cont.Text = dr["Address_cont"].ToString();
                     tbIDTaxCode.Text = dr["DocID"].ToString();
-                    tbDateOfIssue.Text = (Convert.ToDateTime( dr["DocIssueDate"].ToString())).ToShortDateString();
+                    if (dr["DocIssueDate"].ToString() != "")
+                    {
+                        tbDateOfIssue.Text = (Convert.ToDateTime(dr["DocIssueDate"].ToString())).ToShortDateString();
+                    }
                     tbReferenceNo.Text = CollIndoID;
                     rcbTransactionCode.SelectedValue = dr["TransactionCode"].ToString();
                     rcbDebitOrCredit.SelectedValue = dr["DCTypeCode"].ToString();
@@ -159,6 +164,7 @@ namespace BankProject
                     {
                         tbDealRate.Text = "";
                     }
+                    else tbDealRate.Text = dr["DealRate"].ToString();
                     if (dr["ValueDateCont"].ToString() != "")
                     {
                         rdpValuedate_cont.DbSelectedDate = Convert.ToDateTime(dr["ValueDateCont"].ToString());
@@ -169,32 +175,27 @@ namespace BankProject
                     LoadToolBar(false);
                     return;
                 }
-                DataSet ds = TriTT.B_COLLATERAL_INFO_LoadExistData(RightID);
+                var CustomerID = CollIndoID.Substring(0, 7);
+                DataSet ds = TriTT.B_COLLATERAL_INFO_LoadCustomer_Info(CustomerID);
                 int countRow = ds.Tables[0].Rows.Count;
-                if (countRow  > 0) // neu RIght exist thi load len
+                if (countRow  > 0) // neu CustomerID exist va Authorized trong BCustomer_INFO thi load len
                 {
                     DataRow dr = ds.Tables[0].Rows[0];
                     tbCollInfoID.Text = CollIndoID;
-                    rcbCollateralType.SelectedValue = dr["CollateralTypeCode"].ToString();
-                    rcbCollateralType.Enabled = false;
-                    LoadCollateralCode(rcbCollateralType.SelectedValue);
-                    rcbCollateralCode.SelectedValue = dr["CollateralCode"].ToString(); 
-                    rcbCollateralCode.Enabled = false;
-                    tbCustomerIDName.Text = dr["CustomerID"] + " - " + dr["CustomerName"];
+                    tbCustomerIDName.Text = dr["CustomerID_Name"].ToString();
                     lblCheckCustomer.Text = ""; // xoa trang thai not exist neu ton tai
-                    tbCustomerIDName.Enabled = false;
-                    rcbFreignCcy.SelectedValue= rcbCurrency.SelectedValue = dr["Currency"].ToString();
-                    rcbFreignCcy.Enabled= rcbCurrency.Enabled = false;
-                    //Load thong tin cho tab Contingent Entry Info//
-                    LoadContingetnAcct(rcbCollateralType.SelectedValue, rcbCurrency.SelectedValue);
-                    tbCustomerIDName_Cont.Text = dr["CustomerID"].ToString();
+                    tbCustomerIDName.Enabled = tbCustomerIDName_Cont.Enabled = false;
+                    tbCustomerIDName_Cont.Text = CustomerID;
                     tbAddress_cont.Text = dr["Address"].ToString();
                     tbIDTaxCode.Text = dr["DocID"].ToString();
-                    tbDateOfIssue.Text = (Convert.ToDateTime(dr["DocIssueDate"].ToString())).ToShortDateString();
+                    if (dr["DocIssueDate"].ToString() != "")
+                    {
+                        tbDateOfIssue.Text = (Convert.ToDateTime(dr["DocIssueDate"].ToString())).ToShortDateString();
+                    }
                     tbReferenceNo.Text = tbCollInfoID.Text;
                 }
                 else
-                { ShowMsgBox("Your Collateral Right ID has not been Created, You'd create it first !"); return; }
+                { ShowMsgBox("Your Customer ID has not been Created, You'd create it first !"); return; }
             }
             else { ShowMsgBox("Collateral Information ID is Incorrect Format. Please check again ! "); return; }
         }
@@ -278,32 +279,38 @@ namespace BankProject
         protected void rcbCollateralType_OnselectedIndexchanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadCollateralCode(rcbCollateralType.SelectedValue);
+            LoadContingetnAcct(rcbCollateralType.SelectedValue, rcbCurrency.SelectedValue);
         }
-        protected void LoadCurrencies()
+        protected void LoadCurrencies(string CustomerID)
         {
             rcbCurrency.Items.Clear();
-            DataSet ds = TriTT.B_LoadCurrency("USD", "VND");
+            DataSet ds = TriTT.B_COLLATERAL_INFO_LoadCurrency_forEach_Customer(CustomerID);
             if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
             {
                 DataRow dr = ds.Tables[0].NewRow();
-                dr["Code"] = "";
-                dr["Code"] = "";
+                dr["CurrencyCode"] = "";
+                //dr["CurrencyCode"] = "";
                 ds.Tables[0].Rows.InsertAt(dr, 0);
             }
             rcbCurrency.DataSource = ds;
-            rcbCurrency.DataValueField = "Code";
-            rcbCurrency.DataTextField = "Code";
+            rcbCurrency.DataValueField = "CurrencyCode";
+            rcbCurrency.DataTextField = "CurrencyCode";
             rcbCurrency.DataBind();
 
             rcbFreignCcy.Items.Clear();
             rcbFreignCcy.DataSource = ds;
-            rcbFreignCcy.DataValueField = "Code";
-            rcbFreignCcy.DataTextField = "Code";
+            rcbFreignCcy.DataValueField = "CurrencyCode";
+            rcbFreignCcy.DataTextField = "CurrencyCode";
             rcbFreignCcy.DataBind();
+        }
+        protected void rcbCurrency_OnClientSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            LoadContingetnAcct(rcbCollateralType.SelectedValue, rcbCurrency.SelectedValue);
         }
         protected void LoadContingetnAcct(string CollateralTypeCode, string Currency)
         {
             rcbContingentAcct.Items.Clear();
+            rcbContingentAcct.Text = rcbAccountNo.Text = "";
             DataSet ds = TriTT.LoaContAcctFromDB(CollateralTypeCode, Currency);
             if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {

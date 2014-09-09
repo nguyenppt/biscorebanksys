@@ -73,10 +73,10 @@
                     <td class="MyContent"></td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Collateral Code:</td>
+                    <td class="MyLable">Collateral Code:</td> 
                     <td class="MyContent">
-                        <telerik:RadComboBox ID="rcbCollateralCode" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="350">
+                        <telerik:RadComboBox ID="rcbCollateralCode" runat="server" MarkFirstMatch="true" AllowCustomText="false" 
+                            width="350" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -85,10 +85,24 @@
                         </telerik:RadComboBox>
                     </td>                    
                 </tr>
+                 <tr>
+                    <td class="MyLable" >Currency:</td>
+                    <td class="MyContent" width="200">
+                        <telerik:RadComboBox ID="rcbCurrency" runat="server" MarkFirstMatch="true" AllowCustomText="false"
+                           width="150" AutoPostback="true" OnselectedIndexchanged="rcbCurrency_OnClientSelectedIndexChanged">
+                            <CollapseAnimation Type="None" />
+                            <ExpandAnimation Type="None" />
+                            <Items>                     
+                                    <telerik:RadComboBoxItem Value="" Text="" />
+                            </Items>
+                        </telerik:RadComboBox>
+                    </td>
+                    
+                </tr>
                 <tr>
                     <td class="MyLable">Contingent Acct:<span class="Required">(*)</span>
                         <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator1"
-                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="CategoryID is required"
+                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Contingent Account is required"
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                     </td>
                     <td class="MyContent" width=350>
@@ -184,21 +198,7 @@
         <fieldset>
             <legend style="text-transform:uppercase ;font-weight:bold;">Value Detais</legend>
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td class="MyLable" >Currency:</td>
-                    <td class="MyContent" width="200">
-                        <telerik:RadComboBox ID="rcbCurrency" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                           width="150">
-                            <CollapseAnimation Type="None" />
-                            <ExpandAnimation Type="None" />
-                            <Items>                     
-                                    <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
-                    </td>
-                     <td class="MyLable" width=""></td>
-                    <td class="MyContent" width=""></td>
-                </tr>
+               
                 <tr>
                     <td class="MyLable">Country:</td>
                     <td class="MyContent">
@@ -211,6 +211,9 @@
                             </Items>
                         </telerik:RadComboBox>
                     </td>
+                     <td class="MyLable"></td>
+                    <td class="MyContent"></td>
+                </tr>
                     <tr>
                     <td class="MyLable">Nominal Value:</td>
                     <td class="MyContent">
@@ -260,7 +263,6 @@
                     <td class="MyContent">
                         <telerik:raddatepicker runat="server" ID="rdpReviewDate"  Width="150"></telerik:raddatepicker>
                     </td>                   
-                </tr>
                 </tr>
             </table>
         </fieldset>
@@ -427,7 +429,7 @@
                  <tr>
                      <td class="MyLable">Currency:</td>
                      <td class="MyContent">
-                         <telerik:RadComboBox ID="rcbFreignCcy" runat="server" MarkFirstMatch="true" AllowCustomText="false" Enabled="false"
+                         <telerik:RadComboBox ID="rcbFreignCcy" runat="server" MarkFirstMatch="true" AllowCustomText="false" 
                             width="150">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
@@ -567,6 +569,18 @@
         <telerik:AjaxSetting AjaxControlID="rcbTransactionCode">
             <UpdatedControls>  
                  <telerik:AjaxUpdatedControl ControlID="rcbDebitOrCredit" />
+            </UpdatedControls>
+        </telerik:AjaxSetting> 
+        <telerik:AjaxSetting AjaxControlID="rcbCollateralType">
+            <UpdatedControls>  
+                 <telerik:AjaxUpdatedControl ControlID="rcbContingentAcct" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbAccountNo" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbCurrency">
+            <UpdatedControls>  
+                 <telerik:AjaxUpdatedControl ControlID="rcbContingentAcct" /> 
+                <telerik:AjaxUpdatedControl ControlID="rcbAccountNo" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>
