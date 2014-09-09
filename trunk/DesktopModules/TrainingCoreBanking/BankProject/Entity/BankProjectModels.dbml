@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bisolutions_vvcb" Class="BankProjectModelsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=112.78.2.80,1433;Initial Catalog=bisolutions_vvcb;Persist Security Info=True;User ID=bisolutions_vvcb" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="VietVictoryCoreBanking" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BCOUNTRY" Member="BCOUNTRies">
+    <Type Name="BCOUNTRY">
+      <Column Name="MaQuocGia" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenTA" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TenTV" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

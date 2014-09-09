@@ -1,0 +1,5 @@
+D:\Data_CoreBanking\bin\BankProject.dll
+D:\Data_CoreBanking\bin\BankProject.pdb
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\obj\Debug\BankProject.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\obj\Debug\BankProject.pdb
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\obj\Debug\BankProject.csprojResolveAssemblyReference.cache

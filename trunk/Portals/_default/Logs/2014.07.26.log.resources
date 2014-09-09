@@ -1,0 +1,38 @@
+2014-07-26 16:43:46,552 [NguyenPham-PC][Thread:19][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Data.SqlClient.SqlException (0x80131904): Error converting data type nvarchar to float.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteNonQuery(String strsql, Object[] arrParams) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 50
+   at BankProject.DataProvider.SQLData.B_BOVERSEASTRANSFERMT103_Insert(String OverseasTransferCode, String PendingMT, String SenderReference, String TimeIndication, String BankOperationCode, String InstructionCode, String ValueDate, String Currency, String InterBankSettleAmount, String InstancedAmount, String OrderingCustAcc, String OrderingInstitution, String SenderCorrespondent, String ReceiverCorrespondent, String ReceiverCorrBankAct, String IntermediaryInstruction, String IntermediaryBankAcct, String AccountWithInstitution, String AccountWithBankAcct, String RemittanceInformation, String DetailOfCharges, String SenderCharges, String ReceiverCharges, String SenderToReceiveInfo, String curentUserId, String BeneficiaryCustomer1, String BeneficiaryCustomer2, String BeneficiaryCustomer3, String AccountType, String AccountWithBankAcct2, String BeneficiaryCustomer4, String BeneficiaryCustomer5, String IntermediaryType, String IntermediaryInstruction1, String IntermediaryInstruction2) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SQLData.cs:line 413
+   at BankProject.OverseasTransfer.SaveData() in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\OverseasTransfer.ascx.cs:line 340
+   at BankProject.OverseasTransfer.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\OverseasTransfer.ascx.cs:line 186
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:5a77170f-a155-40b3-ab48-6dd21c32de57
+2014-07-26 16:43:46,640 [NguyenPham-PC][Thread:19][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=251&error=Error+converting+data+type+nvarchar+to+float.&content=0
+System.Data.SqlClient.SqlException (0x80131904): Error converting data type nvarchar to float.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteNonQuery(String strsql, Object[] arrParams) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 50
+   at BankProject.DataProvider.SQLData.B_BOVERSEASTRANSFERMT103_Insert(String OverseasTransferCode, String PendingMT, String SenderReference, String TimeIndication, String BankOperationCode, String InstructionCode, String ValueDate, String Currency, String InterBankSettleAmount, String InstancedAmount, String OrderingCustAcc, String OrderingInstitution, String SenderCorrespondent, String ReceiverCorrespondent, String ReceiverCorrBankAct, String IntermediaryInstruction, String IntermediaryBankAcct, String AccountWithInstitution, String AccountWithBankAcct, String RemittanceInformation, String DetailOfCharges, String SenderCharges, String ReceiverCharges, String SenderToReceiveInfo, String curentUserId, String BeneficiaryCustomer1, String BeneficiaryCustomer2, String BeneficiaryCustomer3, String AccountType, String AccountWithBankAcct2, String BeneficiaryCustomer4, String BeneficiaryCustomer5, String IntermediaryType, String IntermediaryInstruction1, String IntermediaryInstruction2) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SQLData.cs:line 413
+   at BankProject.OverseasTransfer.SaveData() in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\OverseasTransfer.ascx.cs:line 340
+   at BankProject.OverseasTransfer.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\OverseasTransfer.ascx.cs:line 186
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:5a77170f-a155-40b3-ab48-6dd21c32de57

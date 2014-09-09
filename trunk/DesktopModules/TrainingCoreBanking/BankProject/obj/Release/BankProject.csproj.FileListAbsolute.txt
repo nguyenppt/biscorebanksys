@@ -1,0 +1,15 @@
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\BankProject.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\BankProject.pdb
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\System.Web.Mvc.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\DotNetNuke.Services.Syndication.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\SharpZipLib.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\DotNetNuke.WebControls.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\DotNetNuke.WebUtility.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\CountryListBox.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\DotNetNuke.Instrumentation.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\DotNetNuke.Web.Client.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\dotnetnuke.log4net.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\bin\ClientDependency.Core.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\obj\Release\BankProject.dll
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\obj\Release\BankProject.pdb
+D:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\obj\Release\BankProject.csprojResolveAssemblyReference.cache

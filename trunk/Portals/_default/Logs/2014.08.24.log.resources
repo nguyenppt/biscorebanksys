@@ -1,0 +1,390 @@
+2014-08-24 01:21:18,431 [NguyenPham-PC][Thread:50][ERROR] DotNetNuke.UI.Modules.ModuleHost - d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCredit\IssueLC.ascx(1630): error CS1061: 'ASP.desktopmodules_trainingcorebanking_bankproject_tradingfinance_import_documentarycredit_issuelc_ascx' does not contain a definition for 'comboAdviseThroughBankType700_OnSelectedIndexChanged' and no extension method 'comboAdviseThroughBankType700_OnSelectedIndexChanged' accepting a first argument of type 'ASP.desktopmodules_trainingcorebanking_bankproject_tradingfinance_import_documentarycredit_issuelc_ascx' could be found (are you missing a using directive or an assembly reference?)
+System.Web.HttpCompileException (0x80004005): d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCredit\IssueLC.ascx(1630): error CS1061: 'ASP.desktopmodules_trainingcorebanking_bankproject_tradingfinance_import_documentarycredit_issuelc_ascx' does not contain a definition for 'comboAdviseThroughBankType700_OnSelectedIndexChanged' and no extension method 'comboAdviseThroughBankType700_OnSelectedIndexChanged' accepting a first argument of type 'ASP.desktopmodules_trainingcorebanking_bankproject_tradingfinance_import_documentarycredit_issuelc_ascx' could be found (are you missing a using directive or an assembly reference?)
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-08-24 01:21:18,647 [NguyenPham-PC][Thread:50][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error: B_NormalLC is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpCompileException (0x80004005): d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCredit\IssueLC.ascx(1630): error CS1061: 'ASP.desktopmodules_trainingcorebanking_bankproject_tradingfinance_import_documentarycredit_issuelc_ascx' does not contain a definition for 'comboAdviseThroughBankType700_OnSelectedIndexChanged' and no extension method 'comboAdviseThroughBankType700_OnSelectedIndexChanged' accepting a first argument of type 'ASP.desktopmodules_trainingcorebanking_bankproject_tradingfinance_import_documentarycredit_issuelc_ascx' could be found (are you missing a using directive or an assembly reference?)
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
+2014-08-24 12:55:22,583 [NguyenPham-PC][Thread:6][ERROR] DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider - A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 0 - The semaphore timeout period has expired.)
+System.Data.SqlClient.SqlException (0x80131904): A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 0 - The semaphore timeout period has expired.) ---> System.ComponentModel.Win32Exception (0x80004005): The semaphore timeout period has expired
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByte(Byte& value)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.SqlDataProvider.AddLog(String logGUID, String logTypeKey, Int32 logUserID, String logUserName, Int32 logPortalID, String logPortalName, DateTime logCreateDate, String logServerName, String logProperties, Int32 logConfigID)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+ClientConnectionId:e59ecd66-87ab-4487-9fbb-1875bb30818e
+2014-08-24 12:55:22,666 [NguyenPham-PC][Thread:6][ERROR] DotNetNuke.Services.Log.EventLog.LogController - The remote host closed the connection. The error code is 0x800704CD.
+System.Web.HttpException (0x800704CD): The remote host closed the connection. The error code is 0x800704CD.
+   at System.Web.Hosting.IIS7WorkerRequest.RaiseCommunicationError(Int32 result, Boolean throwOnDisconnect)
+   at System.Web.Hosting.IIS7WorkerRequest.ExplicitFlush()
+   at System.Web.HttpResponse.Flush(Boolean finalFlush, Boolean async)
+   at System.Web.HttpWriter.Write(String s)
+   at DotNetNuke.Common.Utilities.HtmlUtils.WriteHeader(HttpResponse response, String mode)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.AddLog(LogInfo logInfo)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLog(LogInfo logInfo)
+2014-08-24 12:55:22,693 [NguyenPham-PC][Thread:6][ERROR] DotNetNuke.UI.ControlPanel.AddModule - FriendlyMessage="An error has occurred." ctrl="ASP.admin_controlpanel_addmodule_ascx" exc="System.Data.SqlClient.SqlException (0x80131904): A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 0 - The semaphore timeout period has expired.) ---> System.ComponentModel.Win32Exception (0x80004005): The semaphore timeout period has expired
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByte(Byte& value)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(SqlConnection connection, SqlTransaction transaction, CommandType commandType, String commandText, SqlParameter[] commandParameters, SqlConnectionOwnership connectionOwnership)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Data.SqlDataProvider.GetPackages(Int32 portalID)
+   at DotNetNuke.Web.UI.WebControls.DnnModuleComboBox.BindPortalDesktopModuleImages()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadModuleList()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadAllLists()
+   at DotNetNuke.UI.ControlPanel.AddModule.OnLoad(EventArgs e)
+ClientConnectionId:a22aa786-35fe-445c-a924-bb7b68328b46"
+2014-08-24 12:55:22,985 [NguyenPham-PC][Thread:6][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x800704CD): The remote host closed the connection. The error code is 0x800704CD.
+   at System.Web.Hosting.IIS7WorkerRequest.RaiseCommunicationError(Int32 result, Boolean throwOnDisconnect)
+   at System.Web.Hosting.IIS7WorkerRequest.ExplicitFlush()
+   at System.Web.HttpResponse.Flush(Boolean finalFlush, Boolean async)
+   at System.Web.HttpWriter.Write(String s)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   at System.Web.UI.Page.Render(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at Telerik.Web.UI.RadAjaxControl.RenderPageInAjaxMode(HtmlTextWriter writer, Control page)
+   at System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   at System.Web.UI.Page.Render(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 12:55:23,025 [NguyenPham-PC][Thread:6][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - The remote host closed the connection. The error code is 0x800704CD.
+DotNetNuke.Services.Exceptions.PageLoadException: The remote host closed the connection. The error code is 0x800704CD. ---> System.Web.HttpException: The remote host closed the connection. The error code is 0x800704CD.
+   at System.Web.Hosting.IIS7WorkerRequest.RaiseCommunicationError(Int32 result, Boolean throwOnDisconnect)
+   at System.Web.Hosting.IIS7WorkerRequest.ExplicitFlush()
+   at System.Web.HttpResponse.Flush(Boolean finalFlush, Boolean async)
+   at System.Web.HttpWriter.Write(String s)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   at System.Web.UI.Page.Render(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at Telerik.Web.UI.RadAjaxControl.RenderPageInAjaxMode(HtmlTextWriter writer, Control page)
+   at System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   at System.Web.UI.Page.Render(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-08-24 12:55:23,060 [NguyenPham-PC][Thread:6][FATAL] DotNetNuke.Web.Common.Internal.DotNetNukeHttpApplication - System.Web.HttpException (0x80004005): Error executing child request for /data_corebanking/ErrorPage.aspx. ---> System.Web.HttpUnhandledException (0x80004005): Exception of type 'System.Web.HttpUnhandledException' was thrown. ---> System.Web.HttpException (0x80004005): Server cannot set status after HTTP headers have been sent.
+   at System.Web.HttpResponse.set_StatusCode(Int32 value)
+   at DotNetNuke.Services.Exceptions.ErrorPage.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at System.Web.HttpServerUtility.ExecuteInternal(IHttpHandler handler, TextWriter writer, Boolean preserveForm, Boolean setPreviousPage, VirtualPath path, VirtualPath filePath, String physPath, Exception error, String queryStringOverride)
+   at System.Web.HttpServerUtility.ExecuteInternal(IHttpHandler handler, TextWriter writer, Boolean preserveForm, Boolean setPreviousPage, VirtualPath path, VirtualPath filePath, String physPath, Exception error, String queryStringOverride)
+   at System.Web.HttpServerUtility.Execute(String path, TextWriter writer, Boolean preserveForm)
+   at System.Web.HttpServerUtility.Transfer(String path)
+   at DotNetNuke.Framework.PageBase.OnError(EventArgs e)
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2014-08-24 15:52:40,390 [NguyenPham-PC][Thread:19][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 140
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-08-24 15:52:40,487 [NguyenPham-PC][Thread:19][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 140
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-08-24 15:52:41,424 [NguyenPham-PC][Thread:19][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-08-24 15:52:43,817 [NguyenPham-PC][Thread:19][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-08-24 15:52:43,827 [NguyenPham-PC][Thread:19][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 15:52:43,833 [NguyenPham-PC][Thread:19][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 15:58:07,546 [NguyenPham-PC][Thread:43][ERROR] DotNetNuke.Services.Scheduling.DNNScheduling.Scheduler+CoreScheduler - A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: TCP Provider, error: 0 - A socket operation was attempted to an unreachable host.)
+System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: TCP Provider, error: 0 - A socket operation was attempted to an unreachable host.) ---> System.ComponentModel.Win32Exception (0x80004005): A socket operation was attempted to an unreachable host
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity, Boolean withFailover)
+   at System.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at System.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at System.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Services.Scheduling.DNNScheduling.SqlDataProvider.GetSchedule(String Server)
+   at DotNetNuke.Services.Scheduling.DNNScheduling.Scheduler.CoreScheduler.LoadQueueFromTimer()
+   at DotNetNuke.Services.Scheduling.DNNScheduling.Scheduler.CoreScheduler.Start()
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+2014-08-24 15:58:07,551 [NguyenPham-PC][Thread:43][ERROR] DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider - A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: TCP Provider, error: 0 - A socket operation was attempted to an unreachable host.)
+System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: TCP Provider, error: 0 - A socket operation was attempted to an unreachable host.) ---> System.ComponentModel.Win32Exception (0x80004005): A socket operation was attempted to an unreachable host
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.SqlDataProvider.AddLog(String logGUID, String logTypeKey, Int32 logUserID, String logUserName, Int32 logPortalID, String logPortalName, DateTime logCreateDate, String logServerName, String logProperties, Int32 logConfigID)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+2014-08-24 15:58:10,737 [NguyenPham-PC][Thread:40][ERROR] DotNetNuke.Common.Initialize - A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 0 - The semaphore timeout period has expired.)
+System.Data.SqlClient.SqlException (0x80131904): A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 0 - The semaphore timeout period has expired.) ---> System.ComponentModel.Win32Exception (0x80004005): The semaphore timeout period has expired
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByte(Byte& value)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(SqlConnection connection, SqlTransaction transaction, CommandType commandType, String commandText, SqlParameter[] commandParameters, SqlConnectionOwnership connectionOwnership)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Services.Scheduling.DNNScheduling.SqlDataProvider.GetNextScheduledTask(String Server)
+   at DotNetNuke.Services.Scheduling.DNNScheduling.DNNScheduler.GetNextScheduledTask(String server)
+   at DotNetNuke.Services.Scheduling.SchedulingProvider.set_ScheduleLastPolled(DateTime value)
+   at DotNetNuke.Common.Initialize.RunSchedule(HttpRequest request)
+ClientConnectionId:a3d275c0-0846-4502-ba8b-b579f810de22
+2014-08-24 15:58:14,874 [NguyenPham-PC][Thread:40][ERROR] DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider - A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 0 - The semaphore timeout period has expired.)
+System.Data.SqlClient.SqlException (0x80131904): A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 0 - The semaphore timeout period has expired.) ---> System.ComponentModel.Win32Exception (0x80004005): The semaphore timeout period has expired
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByte(Byte& value)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteNonQuery(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.SqlDataProvider.AddLog(String logGUID, String logTypeKey, Int32 logUserID, String logUserName, Int32 logPortalID, String logPortalName, DateTime logCreateDate, String logServerName, String logProperties, Int32 logConfigID)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+ClientConnectionId:d939ebfa-1432-4e42-a075-5a9e327626a4
+2014-08-24 15:58:14,910 [NguyenPham-PC][Thread:40][ERROR] DotNetNuke.Services.Log.EventLog.LogController - Thread was being aborted.
+System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.AddLog(LogInfo logInfo)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLog(LogInfo logInfo)
+2014-08-24 16:25:32,266 [NguyenPham-PC][Thread:76][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 140
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-08-24 16:25:32,586 [NguyenPham-PC][Thread:76][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 140
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-08-24 16:25:32,809 [NguyenPham-PC][Thread:76][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-08-24 16:25:32,855 [NguyenPham-PC][Thread:76][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.LoadControls() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 149
+   at BankProject.Controls.VVTextBox.SetEnable(Boolean menable) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 88
+   at BankProject.Controls.Commont.SetTatusFormControls(ControlCollection ChildCtrls, Boolean enabel) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\Commont.cs:line 32
+   at BankProject.TradingFinance.Import.DocumentaryCredit.IssueLC.SetDisableByReview(Boolean flag) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCredit\IssueLC.ascx.cs:line 797
+   at BankProject.TradingFinance.Import.DocumentaryCredit.IssueLC.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCredit\IssueLC.ascx.cs:line 942
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 16:25:32,861 [NguyenPham-PC][Thread:76][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.LoadControls() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 149
+   at BankProject.Controls.VVTextBox.SetEnable(Boolean menable) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 88
+   at BankProject.Controls.Commont.SetTatusFormControls(ControlCollection ChildCtrls, Boolean enabel) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\Commont.cs:line 32
+   at BankProject.TradingFinance.Import.DocumentaryCredit.IssueLC.SetDisableByReview(Boolean flag) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCredit\IssueLC.ascx.cs:line 797
+   at BankProject.TradingFinance.Import.DocumentaryCredit.IssueLC.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCredit\IssueLC.ascx.cs:line 942
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:22,469 [NguyenPham-PC][Thread:11][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:22,547 [NguyenPham-PC][Thread:11][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:26,027 [NguyenPham-PC][Thread:8][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:26,031 [NguyenPham-PC][Thread:8][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:30,707 [NguyenPham-PC][Thread:6][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:30,710 [NguyenPham-PC][Thread:6][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:34,159 [NguyenPham-PC][Thread:12][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:34,162 [NguyenPham-PC][Thread:12][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:52,341 [NguyenPham-PC][Thread:12][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-24 19:37:52,345 [NguyenPham-PC][Thread:12][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 122
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 117
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

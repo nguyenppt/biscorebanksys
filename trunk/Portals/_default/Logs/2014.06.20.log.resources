@@ -1,0 +1,391 @@
+2014-06-20 00:05:17,229 [khanhnd-laptop][Thread:24][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Failed to load viewstate.  The control tree into which viewstate is being loaded must match the control tree that was used to save viewstate during the previous request.  For example, when adding controls dynamically, the controls added during a post-back must match the type and position of the controls added during the initial request.
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 00:05:17,344 [khanhnd-laptop][Thread:24][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Failed to load viewstate.  The control tree into which viewstate is being loaded must match the control tree that was used to save viewstate during the previous request.  For example, when adding controls dynamically, the controls added during a post-back must match the type and position of the controls added during the initial request.
+DotNetNuke.Services.Exceptions.PageLoadException: Failed to load viewstate.  The control tree into which viewstate is being loaded must match the control tree that was used to save viewstate during the previous request.  For example, when adding controls dynamically, the controls added during a post-back must match the type and position of the controls added during the initial request. ---> System.Web.HttpException: Failed to load viewstate.  The control tree into which viewstate is being loaded must match the control tree that was used to save viewstate during the previous request.  For example, when adding controls dynamically, the controls added during a post-back must match the type and position of the controls added during the initial request.
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Control.LoadChildViewStateByIndex(ArrayList childState)
+   at System.Web.UI.Control.LoadViewStateRecursive(Object savedState)
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-06-20 00:36:46,609 [khanhnd-laptop][Thread:61][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.NormalLC.LoadToolBar() in D:\works\Bank\TrainingCoreBanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 23
+   at BankProject.NormalLC.Page_Load(Object sender, EventArgs e) in D:\works\Bank\TrainingCoreBanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 17
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 00:36:46,756 [khanhnd-laptop][Thread:61][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.NormalLC.LoadToolBar() in D:\works\Bank\TrainingCoreBanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 23
+   at BankProject.NormalLC.Page_Load(Object sender, EventArgs e) in D:\works\Bank\TrainingCoreBanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 17
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:02:36,697 [khanhnd-laptop][Thread:49][ERROR] DotNetNuke.UI.Modules.ModuleHost - Type 'Telerik.Web.UI.RadNumericTextBox' does not have a public property named 'tr'.
+System.Web.HttpParseException (0x80004005): Type 'Telerik.Web.UI.RadNumericTextBox' does not have a public property named 'tr'. ---> System.Web.HttpParseException (0x80004005): Type 'Telerik.Web.UI.RadNumericTextBox' does not have a public property named 'tr'. ---> System.Web.HttpException (0x80004005): Type 'Telerik.Web.UI.RadNumericTextBox' does not have a public property named 'tr'.
+   at System.Web.UI.ControlBuilder.GetChildPropertyBuilder(String tagName, IDictionary attribs, Type& childType, TemplateParser templateParser, Boolean defaultProperty)
+   at System.Web.UI.ControlBuilder.CreateChildBuilder(String filter, String tagName, IDictionary attribs, TemplateParser parser, ControlBuilder parentBuilder, String id, Int32 line, VirtualPath virtualPath, Type& childType, Boolean defaultProperty)
+   at System.Web.UI.TemplateParser.ProcessBeginTag(Match match, String inputText)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-06-20 02:02:36,825 [khanhnd-laptop][Thread:49][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error: B_NormalLC is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpParseException (0x80004005): Type 'Telerik.Web.UI.RadNumericTextBox' does not have a public property named 'tr'. ---> System.Web.HttpParseException (0x80004005): Type 'Telerik.Web.UI.RadNumericTextBox' does not have a public property named 'tr'. ---> System.Web.HttpException (0x80004005): Type 'Telerik.Web.UI.RadNumericTextBox' does not have a public property named 'tr'.
+   at System.Web.UI.ControlBuilder.GetChildPropertyBuilder(String tagName, IDictionary attribs, Type& childType, TemplateParser templateParser, Boolean defaultProperty)
+   at System.Web.UI.ControlBuilder.CreateChildBuilder(String filter, String tagName, IDictionary attribs, TemplateParser parser, ControlBuilder parentBuilder, String id, Int32 line, VirtualPath virtualPath, Type& childType, Boolean defaultProperty)
+   at System.Web.UI.TemplateParser.ProcessBeginTag(Match match, String inputText)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
+2014-06-20 02:29:53,483 [khanhnd-laptop][Thread:66][ERROR] DotNetNuke.UI.Modules.ModuleHost - The ID 'StartDate' is already used by another control.
+System.Web.HttpParseException (0x80004005): The ID 'StartDate' is already used by another control. ---> System.Web.HttpParseException (0x80004005): The ID 'StartDate' is already used by another control. ---> System.Web.HttpException (0x80004005): The ID 'StartDate' is already used by another control.
+   at System.Web.UI.TemplateParser.ProcessError(String message)
+   at System.Web.UI.TemplateParser.ProcessBeginTag(Match match, String inputText)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-06-20 02:29:53,621 [khanhnd-laptop][Thread:66][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error: B_NormalLC is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpParseException (0x80004005): The ID 'StartDate' is already used by another control. ---> System.Web.HttpParseException (0x80004005): The ID 'StartDate' is already used by another control. ---> System.Web.HttpException (0x80004005): The ID 'StartDate' is already used by another control.
+   at System.Web.UI.TemplateParser.ProcessError(String message)
+   at System.Web.UI.TemplateParser.ProcessBeginTag(Match match, String inputText)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
+2014-06-20 02:35:17,647 [khanhnd-laptop][Thread:9][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:17,657 [khanhnd-laptop][Thread:9][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:20,089 [khanhnd-laptop][Thread:9][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:20,091 [khanhnd-laptop][Thread:9][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:21,912 [khanhnd-laptop][Thread:66][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:21,915 [khanhnd-laptop][Thread:66][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:25,946 [khanhnd-laptop][Thread:54][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:25,951 [khanhnd-laptop][Thread:54][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:34,781 [khanhnd-laptop][Thread:9][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:34,783 [khanhnd-laptop][Thread:9][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:54,912 [khanhnd-laptop][Thread:74][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:35:54,954 [khanhnd-laptop][Thread:74][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:36:13,336 [khanhnd-laptop][Thread:9][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:36:13,338 [khanhnd-laptop][Thread:9][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:36:15,345 [khanhnd-laptop][Thread:66][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:36:15,348 [khanhnd-laptop][Thread:66][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:36:22,054 [khanhnd-laptop][Thread:54][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:36:22,058 [khanhnd-laptop][Thread:54][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:36:55,948 [khanhnd-laptop][Thread:25][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:36:55,952 [khanhnd-laptop][Thread:25][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:38:01,689 [khanhnd-laptop][Thread:54][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:38:01,691 [khanhnd-laptop][Thread:54][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:38:04,096 [khanhnd-laptop][Thread:54][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:38:04,099 [khanhnd-laptop][Thread:54][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:38:05,294 [khanhnd-laptop][Thread:43][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:38:05,298 [khanhnd-laptop][Thread:43][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:38:15,784 [khanhnd-laptop][Thread:54][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 02:38:15,789 [khanhnd-laptop][Thread:54][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Only+one+instance+of+a+RadAjaxManager+can+be+added+to+the+page!&content=0
+System.InvalidOperationException: Only one instance of a RadAjaxManager can be added to the page!
+   at Telerik.Web.UI.RadAjaxControl.OnPageInit(Object sender, EventArgs e)
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-06-20 18:03:30,264 [KHANHND-LAPTOP][Thread:122][ERROR] DotNetNuke.Services.Log.EventLog.LogController - A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: SSL Provider, error: 0 - The handle specified is invalid)
+System.Data.SqlClient.SqlException (0x80131904): A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: SSL Provider, error: 0 - The handle specified is invalid) ---> System.ComponentModel.Win32Exception (0x80004005): The handle specified is invalid
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.ConsumePreLoginHandshake(Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity, Boolean& marsCapable)
+   at System.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity, Boolean withFailover)
+   at System.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at System.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at System.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.SqlDataProvider.GetLogTypeConfigInfo()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.GetLogTypeConfigInfo()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.GetLogTypeConfigInfoByKey(String logTypeKey, String logTypePortalID)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.AddLog(LogInfo logInfo)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLog(LogInfo logInfo)
+ClientConnectionId:95752171-9710-442e-a56e-54e900cafe82
+2014-06-20 18:03:39,010 [KHANHND-LAPTOP][Thread:122][ERROR] DotNetNuke.Services.Log.EventLog.LogController - A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: SSL Provider, error: 0 - The handle specified is invalid)
+System.Data.SqlClient.SqlException (0x80131904): A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: SSL Provider, error: 0 - The handle specified is invalid) ---> System.ComponentModel.Win32Exception (0x80004005): The handle specified is invalid
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.ConsumePreLoginHandshake(Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity, Boolean& marsCapable)
+   at System.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity, Boolean withFailover)
+   at System.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at System.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at System.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.SqlDataProvider.GetLogTypeConfigInfo()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.GetLogTypeConfigInfo()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.GetLogTypeConfigInfoByKey(String logTypeKey, String logTypePortalID)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.AddLog(LogInfo logInfo)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLog(LogInfo logInfo)
+ClientConnectionId:82c807f5-facf-4908-b89b-7df0339f6686
+2014-06-20 18:03:39,010 [KHANHND-LAPTOP][Thread:122][ERROR] DotNetNuke.Services.Log.EventLog.LogController - A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: SSL Provider, error: 0 - The handle specified is invalid)
+System.Data.SqlClient.SqlException (0x80131904): A connection was successfully established with the server, but then an error occurred during the pre-login handshake. (provider: SSL Provider, error: 0 - The handle specified is invalid) ---> System.ComponentModel.Win32Exception (0x80004005): The handle specified is invalid
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteReader(String connectionString, String spName, Object[] parameterValues)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.SqlDataProvider.GetLogTypeConfigInfo()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.GetLogTypeConfigInfo()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.GetLogTypeConfigInfoByKey(String logTypeKey, String logTypePortalID)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.AddLog(LogInfo logInfo)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLog(LogInfo logInfo)
+ClientConnectionId:82c807f5-facf-4908-b89b-7df0339f6686

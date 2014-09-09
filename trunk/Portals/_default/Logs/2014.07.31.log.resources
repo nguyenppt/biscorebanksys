@@ -1,0 +1,28 @@
+2014-07-31 19:55:43,068 [NguyenPham-PC][Thread:56][ERROR] DotNetNuke.UI.ControlPanel.AddPage - Page name is required.
+DotNetNuke.Web.UI.DotNetNukeException: Page name is required.
+   at DotNetNuke.Web.UI.RibbonBarManager.SaveTabInfoObject(TabInfo tab, TabInfo relativeToTab, TabRelativeLocation location, String templateMapPath)
+   at DotNetNuke.UI.ControlPanel.AddPage.CmdAddPageClick(Object sender, EventArgs e)
+2014-07-31 21:46:26,992 [NguyenPham-PC][Thread:45][ERROR] DotNetNuke.HttpModules.UrlRewriteModule - Resource Not Found: - /corebanking/Default.aspx?tabid=221MT400
+System.Web.HttpException (0x80004005): Resource Not Found
+2014-07-31 21:46:27,068 [NguyenPham-PC][Thread:45][FATAL] DotNetNuke.Web.Common.Internal.DotNetNukeHttpApplication - System.Web.HttpException (0x80004005): Resource Not Found
+   at DotNetNuke.Services.Exceptions.Exceptions.ProcessHttpException(HttpException exc, String URL)
+   at DotNetNuke.HttpModules.UrlRewriteModule.OnBeginRequest(Object s, EventArgs e)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2014-07-31 22:42:10,089 [NguyenPham-PC][Thread:28][ERROR] DotNetNuke.UI.Modules.ModuleHost - The file '/CoreBanking/DesktopModules/TrainingCoreBanking/BankProject/Views/TellerApplication/TransferByAccount.ascx' does not exist.
+System.Web.HttpException (0x80004005): The file '/CoreBanking/DesktopModules/TrainingCoreBanking/BankProject/Views/TellerApplication/TransferByAccount.ascx' does not exist.
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-07-31 22:42:10,340 [NguyenPham-PC][Thread:28][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error: B_TransferByAccount is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpException (0x80004005): The file '/CoreBanking/DesktopModules/TrainingCoreBanking/BankProject/Views/TellerApplication/TransferByAccount.ascx' does not exist.
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
