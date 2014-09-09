@@ -1,0 +1,222 @@
+2014-08-31 02:18:50,087 [NguyenPham-PC][Thread:14][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:18:50,156 [NguyenPham-PC][Thread:14][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:18:51,286 [NguyenPham-PC][Thread:15][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:18:51,287 [NguyenPham-PC][Thread:15][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:18:58,126 [NguyenPham-PC][Thread:30][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:18:58,128 [NguyenPham-PC][Thread:30][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:18:59,869 [NguyenPham-PC][Thread:15][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:18:59,873 [NguyenPham-PC][Thread:15][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:14,484 [NguyenPham-PC][Thread:17][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:14,488 [NguyenPham-PC][Thread:17][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:14,945 [NguyenPham-PC][Thread:30][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:14,947 [NguyenPham-PC][Thread:30][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:15,200 [NguyenPham-PC][Thread:6][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The client disconnected. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: ::1
+	Port: 5694
+	Referer: http://localhost/data_corebanking/Default.aspx?tabid=279
+	Path: /data_corebanking/Default.aspx
+	User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36
+	ViewState: JEU8vKW16J7FKPNWCFah3xgvX6amPkpvyTlsCCtdSlVTE10tSqe1Nys47pRaUjTp8QOuKNBpgNjezem1FYmkKpDghmKtocPNHu+SrVpOCNv6QcC4og5pjhizDOc3zIqSGOE8yfmrKlsFRbbB5IyQgL+yruqtfsgrEcUyNUyHvt0qpmIquEWLAtuH4L65Mh2zO9RupDa8JoOHXfvK8S7DZz2b8ufB5UGRlOYru/puQ5z0VCzj/BrPGwfx1e1a8/fvMZOSmwV/I0MEzOvfAqLRFSdfZRWi34LGjUBDD40Us+pfkQXeo+pH3xPkOfe9D4eC0Fd/6PvY2FN6qrdg6EoG2pKKQpHbCeatH7rWS72sIa+mtG7fqYe58zyt0hcokZDiiyh6ocKhNIlnec4eIKHerGwOZVKL1Q3KVAlFEVdPl5zU/QpH9BFDXPkHVEWtOTZVWObhcAUHv7rDUIE6uhSHTAtwAqdlxETfFY1rOiN+cEmfWdknJOtn5c/KNJWUvnllzXVgFyVEuQzG49aukwEeQpj0Bq8NxJfJueLQjJwJrFjRrwGU/x5MM4/sE+L5XKW7MwBbMOvN15rC95xZ5RJu/t7nTg9Rw6UFoLa8Y8LdysJCeDMMWD7Vyp8PDFeCCryuKuXyKaopmF7CaM/zXAcJUinqtMSZ4fForv7kzBsLR+/vqffy7FJDxfmajy9BUEpXBoWtBo2M+MWWyRLwwIgc+5wv/KkIf08DFDizDsA4Ie... ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:15,246 [NguyenPham-PC][Thread:6][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - The client disconnected.
+DotNetNuke.Services.Exceptions.PageLoadException: The client disconnected. ---> System.Web.HttpException: The client disconnected. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: ::1
+	Port: 5694
+	Referer: http://localhost/data_corebanking/Default.aspx?tabid=279
+	Path: /data_corebanking/Default.aspx
+	User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36
+	ViewState: JEU8vKW16J7FKPNWCFah3xgvX6amPkpvyTlsCCtdSlVTE10tSqe1Nys47pRaUjTp8QOuKNBpgNjezem1FYmkKpDghmKtocPNHu+SrVpOCNv6QcC4og5pjhizDOc3zIqSGOE8yfmrKlsFRbbB5IyQgL+yruqtfsgrEcUyNUyHvt0qpmIquEWLAtuH4L65Mh2zO9RupDa8JoOHXfvK8S7DZz2b8ufB5UGRlOYru/puQ5z0VCzj/BrPGwfx1e1a8/fvMZOSmwV/I0MEzOvfAqLRFSdfZRWi34LGjUBDD40Us+pfkQXeo+pH3xPkOfe9D4eC0Fd/6PvY2FN6qrdg6EoG2pKKQpHbCeatH7rWS72sIa+mtG7fqYe58zyt0hcokZDiiyh6ocKhNIlnec4eIKHerGwOZVKL1Q3KVAlFEVdPl5zU/QpH9BFDXPkHVEWtOTZVWObhcAUHv7rDUIE6uhSHTAtwAqdlxETfFY1rOiN+cEmfWdknJOtn5c/KNJWUvnllzXVgFyVEuQzG49aukwEeQpj0Bq8NxJfJueLQjJwJrFjRrwGU/x5MM4/sE+L5XKW7MwBbMOvN15rC95xZ5RJu/t7nTg9Rw6UFoLa8Y8LdysJCeDMMWD7Vyp8PDFeCCryuKuXyKaopmF7CaM/zXAcJUinqtMSZ4fForv7kzBsLR+/vqffy7FJDxfmajy9BUEpXBoWtBo2M+MWWyRLwwIgc+5wv/KkIf08DFDizDsA4Ie... ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-08-31 02:19:31,453 [NguyenPham-PC][Thread:20][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:31,454 [NguyenPham-PC][Thread:20][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:33,239 [NguyenPham-PC][Thread:17][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:33,241 [NguyenPham-PC][Thread:17][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:48,431 [NguyenPham-PC][Thread:11][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:48,433 [NguyenPham-PC][Thread:11][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:49,498 [NguyenPham-PC][Thread:9][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:49,500 [NguyenPham-PC][Thread:9][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:53,837 [NguyenPham-PC][Thread:23][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:53,877 [NguyenPham-PC][Thread:23][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:55,630 [NguyenPham-PC][Thread:12][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:19:55,633 [NguyenPham-PC][Thread:12][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:20:08,766 [NguyenPham-PC][Thread:40][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:20:08,769 [NguyenPham-PC][Thread:40][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:20:10,601 [NguyenPham-PC][Thread:14][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:20:10,605 [NguyenPham-PC][Thread:14][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:20:13,358 [NguyenPham-PC][Thread:12][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-31 02:20:13,362 [NguyenPham-PC][Thread:12][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.SetDebitAcc() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 121
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.tbLCNo_TextChanged(Object sender, EventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 116
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

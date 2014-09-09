@@ -1,0 +1,224 @@
+2014-08-05 20:04:32,143 [NguyenPham-PC][Thread:12][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'bisolutions_vvcb.dbo.BNORMAILLC'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.ProvisionTransfer_DC_GetByLCNo(String LCNo, String Type) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 115
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.LoadDataChangeLCNo() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 163
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.rcbType_SelectedIndexChanged(Object sender, RadComboBoxSelectedIndexChangedEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 124
+   at Telerik.Web.UI.RadComboBox.OnSelectedIndexChanged()
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:ec635ea4-d78f-44d3-a180-c1781087b30c
+2014-08-05 20:04:32,229 [NguyenPham-PC][Thread:12][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Invalid+object+name+%27bisolutions_vvcb.dbo.BNORMAILLC%27.&content=0
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'bisolutions_vvcb.dbo.BNORMAILLC'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.ProvisionTransfer_DC_GetByLCNo(String LCNo, String Type) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 115
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.LoadDataChangeLCNo() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 163
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.rcbType_SelectedIndexChanged(Object sender, RadComboBoxSelectedIndexChangedEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 124
+   at Telerik.Web.UI.RadComboBox.OnSelectedIndexChanged()
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:ec635ea4-d78f-44d3-a180-c1781087b30c
+2014-08-05 20:04:34,301 [NguyenPham-PC][Thread:20][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'bisolutions_vvcb.dbo.BNORMAILLC'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.ProvisionTransfer_DC_GetByLCNo(String LCNo, String Type) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 115
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.LoadDataChangeLCNo() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 163
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.rcbType_SelectedIndexChanged(Object sender, RadComboBoxSelectedIndexChangedEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 124
+   at Telerik.Web.UI.RadComboBox.OnSelectedIndexChanged()
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:ec635ea4-d78f-44d3-a180-c1781087b30c
+2014-08-05 20:04:34,303 [NguyenPham-PC][Thread:20][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Invalid+object+name+%27bisolutions_vvcb.dbo.BNORMAILLC%27.&content=0
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'bisolutions_vvcb.dbo.BNORMAILLC'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.ProvisionTransfer_DC_GetByLCNo(String LCNo, String Type) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 115
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.LoadDataChangeLCNo() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 163
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.rcbType_SelectedIndexChanged(Object sender, RadComboBoxSelectedIndexChangedEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 124
+   at Telerik.Web.UI.RadComboBox.OnSelectedIndexChanged()
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:ec635ea4-d78f-44d3-a180-c1781087b30c
+2014-08-05 20:04:37,553 [NguyenPham-PC][Thread:29][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'bisolutions_vvcb.dbo.BNORMAILLC'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.ProvisionTransfer_DC_GetByLCNo(String LCNo, String Type) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 115
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.LoadDataChangeLCNo() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 163
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.rcbType_SelectedIndexChanged(Object sender, RadComboBoxSelectedIndexChangedEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 124
+   at Telerik.Web.UI.RadComboBox.OnSelectedIndexChanged()
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:ec635ea4-d78f-44d3-a180-c1781087b30c
+2014-08-05 20:04:37,558 [NguyenPham-PC][Thread:29][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Invalid+object+name+%27bisolutions_vvcb.dbo.BNORMAILLC%27.&content=0
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'bisolutions_vvcb.dbo.BNORMAILLC'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.ProvisionTransfer_DC_GetByLCNo(String LCNo, String Type) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 115
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.LoadDataChangeLCNo() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 163
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.rcbType_SelectedIndexChanged(Object sender, RadComboBoxSelectedIndexChangedEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 124
+   at Telerik.Web.UI.RadComboBox.OnSelectedIndexChanged()
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:ec635ea4-d78f-44d3-a180-c1781087b30c
+2014-08-05 20:04:40,183 [NguyenPham-PC][Thread:26][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'bisolutions_vvcb.dbo.BNORMAILLC'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.ProvisionTransfer_DC_GetByLCNo(String LCNo, String Type) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 115
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.LoadDataChangeLCNo() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 163
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.rcbType_SelectedIndexChanged(Object sender, RadComboBoxSelectedIndexChangedEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 124
+   at Telerik.Web.UI.RadComboBox.OnSelectedIndexChanged()
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:ec635ea4-d78f-44d3-a180-c1781087b30c
+2014-08-05 20:04:40,188 [NguyenPham-PC][Thread:26][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=279&error=Invalid+object+name+%27bisolutions_vvcb.dbo.BNORMAILLC%27.&content=0
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'bisolutions_vvcb.dbo.BNORMAILLC'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.ProvisionTransfer_DC_GetByLCNo(String LCNo, String Type) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 115
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.LoadDataChangeLCNo() in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 163
+   at BankProject.TradingFinance.Import.DocumentaryCredit.ProvisionTransfer_DC.rcbType_SelectedIndexChanged(Object sender, RadComboBoxSelectedIndexChangedEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs:line 124
+   at Telerik.Web.UI.RadComboBox.OnSelectedIndexChanged()
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ClientConnectionId:ec635ea4-d78f-44d3-a180-c1781087b30c

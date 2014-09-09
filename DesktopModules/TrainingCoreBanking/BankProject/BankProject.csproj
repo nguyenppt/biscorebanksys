@@ -1,0 +1,1864 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AA49F1BA-D9C4-4931-A5CB-2295CA57D462}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BankProject</RootNamespace>
+    <AssemblyName>BankProject</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=4.3.0.2, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CoreBanking\bin\Aspose.Cells.dll</HintPath>
+    </Reference>
+    <Reference Include="Aspose.Words, Version=7.0.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Aspose.Words.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke">
+      <HintPath>..\..\..\bin\DotNetNuke.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fpt\source\Quang Ninh\ThongKe\Deploy\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Telerik.Web.UI">
+      <HintPath>..\..\..\bin\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Aspose.Cells.dll" />
+    <Content Include="bin\Aspose.Words.dll" />
+    <Content Include="bin\BankProject.dll" />
+    <Content Include="bin\BankProject.pdb" />
+    <Content Include="bin\ClientDependency.Core.dll" />
+    <Content Include="bin\CountryListBox.dll" />
+    <Content Include="bin\DotNetNuke.dll" />
+    <Content Include="bin\DotNetNuke.Instrumentation.dll" />
+    <Content Include="bin\dotnetnuke.log4net.dll" />
+    <Content Include="bin\DotNetNuke.Services.Syndication.dll" />
+    <Content Include="bin\DotNetNuke.Web.Client.dll" />
+    <Content Include="bin\DotNetNuke.WebControls.dll" />
+    <Content Include="bin\DotNetNuke.WebUtility.dll" />
+    <Content Include="bin\SharpZipLib.dll" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\Telerik.Web.UI.dll" />
+    <Content Include="Controls\DynamicControls.ascx" />
+    <Content Include="Controls\PaymentMethodControl.ascx" />
+    <Content Include="InputCollateralInformation_Enquiry.ascx" />
+    <Content Include="OpenCustomerAccountList.ascx" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentFrequency.ascx" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\SalaryPaymentEnquiry.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\ListReviewDiscounted.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Enquiry\ArrearandPeriodic.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Enquiry\Discounted.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\ListDiscounted.ascx" />
+    <Content Include="TellerApplication\SignatureManagement\Amend.ascx" />
+    <Content Include="TellerApplication\SignatureManagement\Capture.ascx" />
+    <Content Include="TellerApplication\SignatureManagement\Enquiry.ascx" />
+    <Content Include="TellerApplication\SignatureManagement\Preview.ascx" />
+    <Content Include="TradingFinance\BasicTools.xml" />
+    <Content Include="Controls\ThongTinChiNhanh.ascx" />
+    <Content Include="Controls\VVComboBox.ascx" />
+    <Content Include="Controls\VVDatePicker.ascx" />
+    <Content Include="Controls\VVMutiControls.ascx" />
+    <Content Include="Controls\VVNumberBox.ascx" />
+    <Content Include="Controls\VVTextBox.ascx" />
+    <Content Include="FTTeller\InwardProcessCreditAcc_PL.ascx" />
+    <Content Include="FTTeller\InwardProcessCreditAcc.ascx" />
+    <Content Include="FTTeller\InwardCashWithdraw_PL.ascx" />
+    <Content Include="FTTeller\InwardCashWithdraw.ascx" />
+    <Content Include="FTTeller\OutwardTransferByCash_PL.ascx" />
+    <Content Include="FTTeller\OutwardTransferByCash.ascx" />
+    <Content Include="InputCollateralInformation.ascx" />
+    <Content Include="InputCollateralInformation_PL.ascx" />
+    <Content Include="NormalCLControls\ProvisionTransfer.ascx" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentList.ascx" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentNonFrequency.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\DiscountedCloseList.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\ListReview.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreClosureFinal.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalAzAccount.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalInterestedAmount.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalPayment.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\PreClosure.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureDisplay.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureHoldings.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureInput.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureWithDraw.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactions.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactionsDisplay.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactionsEnd.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\Arrear.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\ArrearInput.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\ArrearNewDeposit.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\DiscountedClose.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\Discounted.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\ListReview.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\Periodic.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicInput.ascx" />
+    <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicNewDeposit.ascx" />
+    <Content Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx" />
+    <Content Include="TradingFinance\Export\AdvisingAndNegotiationLC.ascx" />
+    <Content Include="Amendment.ascx" />
+    <Content Include="bin\Microsoft.ApplicationBlocks.Data.dll" />
+    <Content Include="CancelLC.ascx" />
+    <Content Include="HomeRedirect.ascx" />
+    <Content Include="MainMenu.ascx" />
+    <Content Include="NormalCLControls\ReviewList.ascx" />
+    <Content Include="OpenCorpCustomer.ascx" />
+    <Content Include="OpenCustomerAccount.ascx" />
+    <Content Include="OpenDepositAcctForTF.ascx" />
+    <Content Include="OverseasTransfer.ascx" />
+    <Content Include="OverseasTransfers\ListReview.ascx" />
+    <Content Include="PhayHanhLC.ascx" />
+    <Content Include="TradingFinance\Export\AdvisingReviewList.ascx" />
+    <Content Include="TellerApplication\AccountManagement\BlockAccount.ascx" />
+    <Content Include="TellerApplication\AccountManagement\CloseAccount.ascx" />
+    <Content Include="test.ascx" />
+    <Content Include="TopMenu.ascx" />
+    <Content Include="TradingFinance\Export\AdvisingAmendmentList.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCollections\ExportEnquiryDocumentaryCollection.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx" />
+    <Content Include="TradingFinance\ForeignExchangeTrade.ascx" />
+    <Content Include="TradingFinance\ForeignExchangeTradePreviewList.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\DocumentaryCollectionCancel.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\DocumetaryCollection.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\EnquiryDocumentaryCollection.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\IncomingCollectionAmendment.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\IncomingCollectionPayment.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\ReviewList.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\ReviewListByAmendment.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\ReviewListByCancelAmendment.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\ReviewListByIncomingCollectionAcception.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\ReviewListByIncomingCollectionPayment.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC_PL.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCredit\DocumentWithNoDiscrepancy.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCredit\EnquiryIssueLC.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCredit\IssueLC.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCredit\LCEdit.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCredit\PreviewAmendLC.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCredit\PreviewCancelLC.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCredit\PreviewIssueLC.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCredit\Preview_DocumentProcessing.ascx" />
+    <Content Include="TradingFinance\IssueFreeFormatMessage.ascx" />
+    <Content Include="TradingFinance\PreviewIssueFreeFormatMessage.ascx" />
+    <Content Include="Views\CustomerManagement\EnquiryCustomer.ascx" />
+    <Content Include="Views\CustomerManagement\OpenInvidualCustomer\Index.ascx" />
+    <Content Include="Views\CustomerManagement\OpenInvidualCustomer\Index_ListReview.ascx" />
+    <Content Include="Views\TellerApplication\AmendLoanContract.ascx" />
+    <Content Include="Views\TellerApplication\AmendLoanContract_Item.ascx" />
+    <Content Include="Views\TellerApplication\AmendLoanContract_PL.ascx" />
+    <Content Include="Views\TellerApplication\CalculatedInterestedAmountManual.ascx" />
+    <Content Include="Views\TellerApplication\CashDepositePreviewList.ascx" />
+    <Content Include="Views\TellerApplication\CashRepayment.ascx" />
+    <Content Include="Views\TellerApplication\CashRepayment_PL.ascx" />
+    <Content Include="Views\TellerApplication\CashWithdrawalPreviewList.ascx" />
+    <Content Include="Views\TellerApplication\CashWithdrawalsBuyingPreviewList.ascx" />
+    <Content Include="Views\TellerApplication\BlockAccount.ascx" />
+    <Content Include="Views\TellerApplication\BlockAccountList.ascx" />
+    <Content Include="Views\TellerApplication\CancelStopCheque.ascx" />
+    <Content Include="Views\TellerApplication\CancelStopPayment.ascx" />
+    <Content Include="Views\TellerApplication\CashDeposits.ascx" />
+    <Content Include="Views\TellerApplication\CashWithdrawal.ascx" />
+    <Content Include="Views\TellerApplication\ChequeCancleStop.ascx" />
+    <Content Include="Views\TellerApplication\ChequeCancleStop_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\ChequeCancleStop_PL.ascx" />
+    <Content Include="Views\TellerApplication\ChequeIssue.ascx" />
+    <Content Include="Views\TellerApplication\ChequeIssueCollectCharges.ascx" />
+    <Content Include="Views\TellerApplication\ChequeIssue_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\ChequeIssue_PL.ascx" />
+    <Content Include="Views\TellerApplication\ChequePaymentStop.ascx" />
+    <Content Include="Views\TellerApplication\ChequePayStop_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\ChequePaytmentStop_PL.ascx" />
+    <Content Include="Views\TellerApplication\ChequeReturned.ascx" />
+    <Content Include="Views\TellerApplication\ChequeReturned2.ascx" />
+    <Content Include="Views\TellerApplication\ChequeReturned_PL.ascx" />
+    <Content Include="Views\TellerApplication\ChequeReturn_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\ChequeTransferDrawnOnUs.ascx" />
+    <Content Include="Views\TellerApplication\ChequeTransfer_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\ChequeWithDrawal_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\ChequeWithrawalDrawOnUs.ascx" />
+    <Content Include="Views\TellerApplication\ChequeWithrawalDrawOnUs_PL.ascx" />
+    <Content Include="Views\TellerApplication\CloseAccount.ascx" />
+    <Content Include="Views\TellerApplication\CloseAccountList.ascx" />
+    <Content Include="Views\TellerApplication\CollateralContingentEntry.ascx" />
+    <Content Include="Views\TellerApplication\CollateralContingentEntry_PL.ascx" />
+    <Content Include="Views\TellerApplication\CollectCharges.ascx" />
+    <Content Include="Views\TellerApplication\CollectChargesByCashPreviewList.ascx" />
+    <Content Include="Views\TellerApplication\CollectChargesPreviewList.ascx" />
+    <Content Include="Views\TellerApplication\CollectionForCreditCardPayment.ascx" />
+    <Content Include="Views\TellerApplication\CashWithdrawalsBuying.ascx" />
+    <Content Include="Views\TellerApplication\CollectChargesByCash.ascx" />
+    <Content Include="Views\TellerApplication\BuyTravellersCheque.ascx" />
+    <Content Include="Views\TellerApplication\CollectionForCreditCardPayment_PL.ascx" />
+    <Content Include="Views\TellerApplication\DefineCustomerLimitSub.ascx" />
+    <Content Include="Views\TellerApplication\DefineCustomerLimit_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\EnquiryAccount.ascx" />
+    <Content Include="Views\TellerApplication\EnquiryAccountTransaction.ascx" />
+    <Content Include="Views\TellerApplication\EnquiryCheque.ascx" />
+    <Content Include="Views\TellerApplication\ExchangeBanknotesManyDeno.ascx" />
+    <Content Include="Views\TellerApplication\ExchangeBanknotesManyDeno_PL.ascx" />
+    <Content Include="Views\TellerApplication\DCTransaction.ascx" />
+    <Content Include="Views\TellerApplication\DefineCustomerLimit_PL.ascx" />
+    <Content Include="Views\TellerApplication\ForeignExchange.ascx" />
+    <Content Include="Views\TellerApplication\ForeignExchangePreviewList.ascx" />
+    <Content Include="Views\TellerApplication\InputCollateralRight_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\LoanAccountList.ascx" />
+    <Content Include="Views\TellerApplication\NewNomarlLoan_FullView.ascx" />
+    <Content Include="Views\TellerApplication\NewNormalLoanEnquiry.ascx" />
+    <Content Include="Views\TellerApplication\OpenLoanWorkingAccount_PL.ascx" />
+    <Content Include="Views\TellerApplication\OpenLoanWorkingAcct_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\OpenNonRevolingCoomContr_PL.ascx" />
+    <Content Include="Views\TellerApplication\OpenRevoling_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\OpenRevolvingCommContract_PL.ascx" />
+    <Content Include="TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx" />
+    <Content Include="Views\TellerApplication\PastDueLoanRepayment.ascx" />
+    <Content Include="Views\TellerApplication\PastDueLoanRepayment_PL.ascx" />
+    <Content Include="Views\TellerApplication\PastDueLoanRepayment_Search.ascx" />
+    <Content Include="Views\TellerApplication\SellTravellersCheque.ascx" />
+    <Content Include="Views\TellerApplication\DefineCustomerLimit.ascx" />
+    <Content Include="Views\TellerApplication\FTAccountClose.ascx" />
+    <Content Include="Views\TellerApplication\FTAccountClose2.ascx" />
+    <Content Include="Views\TellerApplication\InputCollateralRight.ascx" />
+    <Content Include="Views\TellerApplication\NewNormalLoan.ascx" />
+    <Content Include="Views\TellerApplication\OpenIndividualCreditAcc.ascx" />
+    <Content Include="Views\TellerApplication\OpenLoanWorkingAccount.ascx" />
+    <Content Include="Views\TellerApplication\OpenNonRevolingCoomContr.ascx" />
+    <Content Include="Views\TellerApplication\OpenRevolvingCommContract.ascx" />
+    <Content Include="Views\TellerApplication\ReviewCloseAccountList.ascx" />
+    <Content Include="Views\TellerApplication\TransferByAccount.ascx" />
+    <Content Include="Views\TellerApplication\TransferByAccount_PL.ascx" />
+    <Content Include="Views\TellerApplication\TransferForCreditCardPayment.ascx" />
+    <Content Include="Views\TellerApplication\TransferForCreditCardPayment_PL.ascx" />
+    <Content Include="Views\TellerApplication\TransferWithdrawal.ascx" />
+    <Content Include="Views\TellerApplication\TransferWithdrawalPreviewList.ascx" />
+    <Content Include="Views\TellerApplication\UnBlockAccount.ascx" />
+    <Content Include="Views\TellerApplication\UnBlockAccountList.ascx" />
+    <Content Include="Views\TellerApplication\UnBlockAccountListEmpty.ascx" />
+    <Content Include="Views\TellerApplication\UnBlockAccountPreviewList.ascx" />
+    <Content Include="Views\TellerApplication\ChequeTransferDrawnOnUs_PL.ascx" />
+    <Content Include="Views\TellerApplication\WebUserControl2.ascx" />
+    <Content Include="Views\TellerApplication\WUXoomPayment.ascx" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Util.cs" />
+    <Compile Include="Controls\ComboBoxItem.cs" />
+    <Compile Include="Controls\Commands.cs" />
+    <Compile Include="Controls\CustomDateTimePicker.cs" />
+    <Compile Include="Controls\DynamicControls.ascx.cs">
+      <DependentUpon>DynamicControls.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DynamicControls.ascx.designer.cs">
+      <DependentUpon>DynamicControls.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PaymentMethodControl.ascx.cs">
+      <DependentUpon>PaymentMethodControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PaymentMethodControl.ascx.designer.cs">
+      <DependentUpon>PaymentMethodControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ThongTinChiNhanh.ascx.cs">
+      <DependentUpon>ThongTinChiNhanh.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ThongTinChiNhanh.ascx.designer.cs">
+      <DependentUpon>ThongTinChiNhanh.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VVComboBox.ascx.cs">
+      <DependentUpon>VVComboBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\VVComboBox.ascx.designer.cs">
+      <DependentUpon>VVComboBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VVDatePicker.ascx.cs">
+      <DependentUpon>VVDatePicker.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\VVDatePicker.ascx.designer.cs">
+      <DependentUpon>VVDatePicker.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VVMutiControls.ascx.cs">
+      <DependentUpon>VVMutiControls.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\VVMutiControls.ascx.designer.cs">
+      <DependentUpon>VVMutiControls.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VVNumberBox.ascx.cs">
+      <DependentUpon>VVNumberBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\VVNumberBox.ascx.designer.cs">
+      <DependentUpon>VVNumberBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VVTextBox.ascx.cs">
+      <DependentUpon>VVTextBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\VVTextBox.ascx.designer.cs">
+      <DependentUpon>VVTextBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DataProvider\Customer.cs" />
+    <Compile Include="DataProvider\ExportLCDao.cs" />
+    <Compile Include="DataProvider\KhanhND.cs" />
+    <Compile Include="DataProvider\SavingAccountDAO.cs" />
+    <Compile Include="DataProvider\SqlMapper.cs" />
+    <Compile Include="DataProvider\Teller.cs" />
+    <Compile Include="DataProvider\ThanhLP.cs" />
+    <Compile Include="DataProvider\TransactionStatus.cs" />
+    <Compile Include="DataProvider\TriTT.cs" />
+    <Compile Include="Entity\Category.cs" />
+    <Compile Include="Entity\AccountOpen.cs" />
+    <Compile Include="Entity\InternalBankAccount.cs" />
+    <Compile Include="Entity\SavingAcc\CommonObject.cs" />
+    <Compile Include="Entity\SavingAcc\DiscountedAccount.cs" />
+    <Compile Include="Entity\SavingAcc\SalaryPaymentFrequency.cs" />
+    <Compile Include="Entity\SavingAcc\SalaryPaymentFrequencyDetail.cs" />
+    <Compile Include="Entity\Term.cs" />
+    <Compile Include="Entity\Currency.cs" />
+    <Compile Include="Entity\Enums.cs" />
+    <Compile Include="Entity\SavingAcc\ArrearSavingAccount.cs" />
+    <Compile Include="Entity\BlockedAccount.cs" />
+    <Compile Include="Entity\LCExport\AdvAndNegoMain.cs" />
+    <Compile Include="Entity\ProductType.cs" />
+    <Compile Include="Entity\SavingAcc\PeriodicSavingAccount.cs" />
+    <Compile Include="Entity\SavingAcc\SavingAccount.cs" />
+    <Compile Include="Entity\TransferWithdrawal.cs" />
+    <Compile Include="Entity\TriTT_Saving\IndividualAccount.cs" />
+    <Compile Include="Entity\TriTT_Saving\SavingAccount.cs" />
+    <Compile Include="Entity\TriTT_Saving\SavingAccount_SQL.cs" />
+    <Compile Include="Entity\WorkingBankAccount.cs" />
+    <Compile Include="FTTeller\InwardProcessCreditAcc_PL.ascx.cs">
+      <DependentUpon>InwardProcessCreditAcc_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FTTeller\InwardProcessCreditAcc_PL.ascx.designer.cs">
+      <DependentUpon>InwardProcessCreditAcc_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FTTeller\InwardProcessCreditAcc.ascx.cs">
+      <DependentUpon>InwardProcessCreditAcc.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FTTeller\InwardProcessCreditAcc.ascx.designer.cs">
+      <DependentUpon>InwardProcessCreditAcc.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FTTeller\InwardCashWithdraw_PL.ascx.cs">
+      <DependentUpon>InwardCashWithdraw_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FTTeller\InwardCashWithdraw_PL.ascx.designer.cs">
+      <DependentUpon>InwardCashWithdraw_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FTTeller\InwardCashWithdraw.ascx.cs">
+      <DependentUpon>InwardCashWithdraw.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FTTeller\InwardCashWithdraw.ascx.designer.cs">
+      <DependentUpon>InwardCashWithdraw.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FTTeller\OutwardTransferByCash_PL.ascx.cs">
+      <DependentUpon>OutwardTransferByCash_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FTTeller\OutwardTransferByCash_PL.ascx.designer.cs">
+      <DependentUpon>OutwardTransferByCash_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FTTeller\OutwardTransferByCash.ascx.cs">
+      <DependentUpon>OutwardTransferByCash.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FTTeller\OutwardTransferByCash.ascx.designer.cs">
+      <DependentUpon>OutwardTransferByCash.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="InputCollateralInformation.ascx.cs">
+      <DependentUpon>InputCollateralInformation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InputCollateralInformation.ascx.designer.cs">
+      <DependentUpon>InputCollateralInformation.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="InputCollateralInformation_Enquiry.ascx.cs">
+      <DependentUpon>InputCollateralInformation_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InputCollateralInformation_Enquiry.ascx.designer.cs">
+      <DependentUpon>InputCollateralInformation_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="InputCollateralInformation_PL.ascx.cs">
+      <DependentUpon>InputCollateralInformation_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InputCollateralInformation_PL.ascx.designer.cs">
+      <DependentUpon>InputCollateralInformation_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="NormalCLControls\ProvisionTransfer.ascx.cs">
+      <DependentUpon>ProvisionTransfer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NormalCLControls\ProvisionTransfer.ascx.designer.cs">
+      <DependentUpon>ProvisionTransfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenCustomerAccountList.ascx.cs">
+      <DependentUpon>OpenCustomerAccountList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenCustomerAccountList.ascx.designer.cs">
+      <DependentUpon>OpenCustomerAccountList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\BlockedAccountRepository.cs" />
+    <Compile Include="Repository\TargetRepositoryCorp.cs" />
+    <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentFrequency.ascx.cs">
+      <DependentUpon>PaymentFrequency.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentFrequency.ascx.designer.cs">
+      <DependentUpon>PaymentFrequency.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentList.ascx.cs">
+      <DependentUpon>PaymentList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentList.ascx.designer.cs">
+      <DependentUpon>PaymentList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentNonFrequency.ascx.cs">
+      <DependentUpon>PaymentNonFrequency.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentNonFrequency.ascx.designer.cs">
+      <DependentUpon>PaymentNonFrequency.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\SalaryPaymentEnquiry.ascx.cs">
+      <DependentUpon>SalaryPaymentEnquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\SalaryPaymentEnquiry.ascx.designer.cs">
+      <DependentUpon>SalaryPaymentEnquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\DiscountedCloseList.ascx.cs">
+      <DependentUpon>DiscountedCloseList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\DiscountedCloseList.ascx.designer.cs">
+      <DependentUpon>DiscountedCloseList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\ListReview.ascx.cs">
+      <DependentUpon>ListReview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\ListReview.ascx.designer.cs">
+      <DependentUpon>ListReview.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\ListReviewDiscounted.ascx.cs">
+      <DependentUpon>ListReviewDiscounted.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\ListReviewDiscounted.ascx.designer.cs">
+      <DependentUpon>ListReviewDiscounted.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreClosureFinal.ascx.cs">
+      <DependentUpon>PreClosureFinal.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreClosureFinal.ascx.designer.cs">
+      <DependentUpon>PreClosureFinal.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalAzAccount.ascx.cs">
+      <DependentUpon>PreclosureFinalAzAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalAzAccount.ascx.designer.cs">
+      <DependentUpon>PreclosureFinalAzAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalInterestedAmount.ascx.cs">
+      <DependentUpon>PreclosureFinalInterestedAmount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalInterestedAmount.ascx.designer.cs">
+      <DependentUpon>PreclosureFinalInterestedAmount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalPayment.ascx.cs">
+      <DependentUpon>PreclosureFinalPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\Preclose\PreclosureFinalPayment.ascx.designer.cs">
+      <DependentUpon>PreclosureFinalPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreClosure.ascx.cs">
+      <DependentUpon>PreClosure.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreClosure.ascx.designer.cs">
+      <DependentUpon>PreClosure.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureDisplay.ascx.cs">
+      <DependentUpon>PreclosureDisplay.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureDisplay.ascx.designer.cs">
+      <DependentUpon>PreclosureDisplay.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureHoldings.ascx.cs">
+      <DependentUpon>PreclosureHoldings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureHoldings.ascx.designer.cs">
+      <DependentUpon>PreclosureHoldings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureInput.ascx.cs">
+      <DependentUpon>PreclosureInput.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureInput.ascx.designer.cs">
+      <DependentUpon>PreclosureInput.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureWithDraw.ascx.cs">
+      <DependentUpon>PreclosureWithDraw.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\PreclosureWithDraw.ascx.designer.cs">
+      <DependentUpon>PreclosureWithDraw.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactions.ascx.cs">
+      <DependentUpon>TellerTransactions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactions.ascx.designer.cs">
+      <DependentUpon>TellerTransactions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactionsDisplay.ascx.cs">
+      <DependentUpon>TellerTransactionsDisplay.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactionsDisplay.ascx.designer.cs">
+      <DependentUpon>TellerTransactionsDisplay.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactionsEnd.ascx.cs">
+      <DependentUpon>TellerTransactionsEnd.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\TellerTransactions\TellerTransactionsEnd.ascx.designer.cs">
+      <DependentUpon>TellerTransactionsEnd.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Enquiry\ArrearandPeriodic.ascx.cs">
+      <DependentUpon>ArrearandPeriodic.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Enquiry\ArrearandPeriodic.ascx.designer.cs">
+      <DependentUpon>ArrearandPeriodic.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Enquiry\Discounted.ascx.cs">
+      <DependentUpon>Discounted.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Enquiry\Discounted.ascx.designer.cs">
+      <DependentUpon>Discounted.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\Arrear.ascx.cs">
+      <DependentUpon>Arrear.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\Arrear.ascx.designer.cs">
+      <DependentUpon>Arrear.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\ArrearInput.ascx.cs">
+      <DependentUpon>ArrearInput.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\ArrearInput.ascx.designer.cs">
+      <DependentUpon>ArrearInput.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\ArrearNewDeposit.ascx.cs">
+      <DependentUpon>ArrearNewDeposit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\ArrearNewDeposit.ascx.designer.cs">
+      <DependentUpon>ArrearNewDeposit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\DiscountedClose.ascx.cs">
+      <DependentUpon>DiscountedClose.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Close\DiscountedClose.ascx.designer.cs">
+      <DependentUpon>DiscountedClose.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\Discounted.ascx.cs">
+      <DependentUpon>Discounted.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\Discounted.ascx.designer.cs">
+      <DependentUpon>Discounted.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\ListReview.ascx.cs">
+      <DependentUpon>ListReview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\ListReview.ascx.designer.cs">
+      <DependentUpon>ListReview.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\ListDiscounted.ascx.cs">
+      <DependentUpon>ListDiscounted.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\ListDiscounted.ascx.designer.cs">
+      <DependentUpon>ListDiscounted.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\Periodic.ascx.cs">
+      <DependentUpon>Periodic.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\Periodic.ascx.designer.cs">
+      <DependentUpon>Periodic.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicInput.ascx.cs">
+      <DependentUpon>PeriodicInput.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicInput.ascx.designer.cs">
+      <DependentUpon>PeriodicInput.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicNewDeposit.ascx.cs">
+      <DependentUpon>PeriodicNewDeposit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicNewDeposit.ascx.designer.cs">
+      <DependentUpon>PeriodicNewDeposit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\SignatureManagement\Amend.ascx.cs">
+      <DependentUpon>Amend.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\SignatureManagement\Amend.ascx.designer.cs">
+      <DependentUpon>Amend.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\SignatureManagement\Capture.ascx.cs">
+      <DependentUpon>Capture.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\SignatureManagement\Capture.ascx.designer.cs">
+      <DependentUpon>Capture.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\SignatureManagement\Enquiry.ascx.cs">
+      <DependentUpon>Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\SignatureManagement\Enquiry.ascx.designer.cs">
+      <DependentUpon>Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\SignatureManagement\Preview.ascx.cs">
+      <DependentUpon>Preview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\SignatureManagement\Preview.ascx.designer.cs">
+      <DependentUpon>Preview.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx.cs">
+      <DependentUpon>EnquiryOverseasFundsTransfer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx.designer.cs">
+      <DependentUpon>EnquiryOverseasFundsTransfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\AdvisingAndNegotiationLC.ascx.cs">
+      <DependentUpon>AdvisingAndNegotiationLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\AdvisingAndNegotiationLC.ascx.designer.cs">
+      <DependentUpon>AdvisingAndNegotiationLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Amendment.ascx.cs">
+      <DependentUpon>Amendment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Amendment.ascx.designer.cs">
+      <DependentUpon>Amendment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CancelLC.ascx.cs">
+      <DependentUpon>CancelLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CancelLC.ascx.designer.cs">
+      <DependentUpon>CancelLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Commont.cs" />
+    <Compile Include="Controls\CustomCombobox.cs" />
+    <Compile Include="DataProvider\Database.cs" />
+    <Compile Include="DataProvider\DataProvider.cs" />
+    <Compile Include="DataProvider\DataTam.cs" />
+    <Compile Include="DataProvider\SQLData.cs" />
+    <Compile Include="DataProvider\SqlDataProvider.cs" />
+    <Compile Include="Entity\Account.cs" />
+    <Compile Include="Entity\AccountOfficer.cs" />
+    <Compile Include="Entity\BankProjectModels.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankProjectModels.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\BCOUNTRY.cs" />
+    <Compile Include="Entity\City.cs" />
+    <Compile Include="Entity\Customer.cs" />
+    <Compile Include="Entity\CustomerStatus.cs" />
+    <Compile Include="Entity\DocumentType.cs" />
+    <Compile Include="Entity\Industry.cs" />
+    <Compile Include="Entity\ListItem.cs" />
+    <Compile Include="Entity\MainIndustry.cs" />
+    <Compile Include="Entity\MainSector.cs" />
+    <Compile Include="Entity\Nationality.cs" />
+    <Compile Include="Entity\Sector.cs" />
+    <Compile Include="Entity\Target.cs" />
+    <Compile Include="HomeRedirect.ascx.cs">
+      <DependentUpon>HomeRedirect.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomeRedirect.ascx.designer.cs">
+      <DependentUpon>HomeRedirect.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenu.ascx.cs">
+      <DependentUpon>MainMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainMenu.ascx.designer.cs">
+      <DependentUpon>MainMenu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="NormalCLControls\ReviewList.ascx.cs">
+      <DependentUpon>ReviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NormalCLControls\ReviewList.ascx.designer.cs">
+      <DependentUpon>ReviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenCorpCustomer.ascx.cs">
+      <DependentUpon>OpenCorpCustomer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenCorpCustomer.ascx.designer.cs">
+      <DependentUpon>OpenCorpCustomer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenCustomerAccount.ascx.cs">
+      <DependentUpon>OpenCustomerAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenCustomerAccount.ascx.designer.cs">
+      <DependentUpon>OpenCustomerAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenDepositAcctForTF.ascx.cs">
+      <DependentUpon>OpenDepositAcctForTF.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenDepositAcctForTF.ascx.designer.cs">
+      <DependentUpon>OpenDepositAcctForTF.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OverseasTransfer.ascx.cs">
+      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OverseasTransfer.ascx.designer.cs">
+      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OverseasTransfers\ListReview.ascx.cs">
+      <DependentUpon>ListReview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OverseasTransfers\ListReview.ascx.designer.cs">
+      <DependentUpon>ListReview.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PhayHanhLC.ascx.cs">
+      <DependentUpon>PhayHanhLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhayHanhLC.ascx.designer.cs">
+      <DependentUpon>PhayHanhLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AccountOfficerRepository.cs" />
+    <Compile Include="Repository\CityRepository.cs" />
+    <Compile Include="Repository\CountryRepository.cs" />
+    <Compile Include="Repository\CustomerStatusRepository.cs" />
+    <Compile Include="Repository\DocumentTypeRepository.cs" />
+    <Compile Include="Repository\IndustryRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\ListItemRepository.cs" />
+    <Compile Include="Repository\MainIndustryRepository.cs" />
+    <Compile Include="Repository\MainSectorRepository.cs" />
+    <Compile Include="Repository\NationalityRepository.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\SectorRepository.cs" />
+    <Compile Include="Repository\TargetRepository.cs" />
+    <Compile Include="Repository\TestRepository.cs" />
+    <Compile Include="TradingFinance\Export\AdvisingReviewList.ascx.cs">
+      <DependentUpon>AdvisingReviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\AdvisingReviewList.ascx.designer.cs">
+      <DependentUpon>AdvisingReviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\BlockAccount.ascx.cs">
+      <DependentUpon>BlockAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\BlockAccount.ascx.designer.cs">
+      <DependentUpon>BlockAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CloseAccount.ascx.cs">
+      <DependentUpon>CloseAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TellerApplication\AccountManagement\CloseAccount.ascx.designer.cs">
+      <DependentUpon>CloseAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="test.ascx.cs">
+      <DependentUpon>test.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test.ascx.designer.cs">
+      <DependentUpon>test.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TopMenu.ascx.cs">
+      <DependentUpon>TopMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TopMenu.ascx.designer.cs">
+      <DependentUpon>TopMenu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\AdvisingAmendmentList.ascx.cs">
+      <DependentUpon>AdvisingAmendmentList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\AdvisingAmendmentList.ascx.designer.cs">
+      <DependentUpon>AdvisingAmendmentList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx.cs">
+      <DependentUpon>ExportDocumentaryCollection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportDocumentaryCollection.ascx.designer.cs">
+      <DependentUpon>ExportDocumentaryCollection.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportEnquiryDocumentaryCollection.ascx.cs">
+      <DependentUpon>ExportEnquiryDocumentaryCollection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ExportEnquiryDocumentaryCollection.ascx.designer.cs">
+      <DependentUpon>ExportEnquiryDocumentaryCollection.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx.cs">
+      <DependentUpon>ReviewExport_DocumentCollection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx.designer.cs">
+      <DependentUpon>ReviewExport_DocumentCollection.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\ForeignExchangeTrade.ascx.cs">
+      <DependentUpon>ForeignExchangeTrade.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\ForeignExchangeTrade.ascx.designer.cs">
+      <DependentUpon>ForeignExchangeTrade.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\ForeignExchangeTradePreviewList.ascx.cs">
+      <DependentUpon>ForeignExchangeTradePreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\ForeignExchangeTradePreviewList.ascx.designer.cs">
+      <DependentUpon>ForeignExchangeTradePreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\DocumentaryCollectionCancel.ascx.cs">
+      <DependentUpon>DocumentaryCollectionCancel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\DocumentaryCollectionCancel.ascx.designer.cs">
+      <DependentUpon>DocumentaryCollectionCancel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\DocumetaryCollection.ascx.cs">
+      <DependentUpon>DocumetaryCollection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\DocumetaryCollection.ascx.designer.cs">
+      <DependentUpon>DocumetaryCollection.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\EnquiryDocumentaryCollection.ascx.cs">
+      <DependentUpon>EnquiryDocumentaryCollection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\EnquiryDocumentaryCollection.ascx.designer.cs">
+      <DependentUpon>EnquiryDocumentaryCollection.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\IncomingCollectionAmendment.ascx.cs">
+      <DependentUpon>IncomingCollectionAmendment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\IncomingCollectionAmendment.ascx.designer.cs">
+      <DependentUpon>IncomingCollectionAmendment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\IncomingCollectionPayment.ascx.cs">
+      <DependentUpon>IncomingCollectionPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\IncomingCollectionPayment.ascx.designer.cs">
+      <DependentUpon>IncomingCollectionPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewList.ascx.cs">
+      <DependentUpon>ReviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewList.ascx.designer.cs">
+      <DependentUpon>ReviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewListByAmendment.ascx.cs">
+      <DependentUpon>ReviewListByAmendment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewListByAmendment.ascx.designer.cs">
+      <DependentUpon>ReviewListByAmendment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewListByCancelAmendment.ascx.cs">
+      <DependentUpon>ReviewListByCancelAmendment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewListByCancelAmendment.ascx.designer.cs">
+      <DependentUpon>ReviewListByCancelAmendment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewListByIncomingCollectionAcception.ascx.cs">
+      <DependentUpon>ReviewListByIncomingCollectionAcception.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewListByIncomingCollectionAcception.ascx.designer.cs">
+      <DependentUpon>ReviewListByIncomingCollectionAcception.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewListByIncomingCollectionPayment.ascx.cs">
+      <DependentUpon>ReviewListByIncomingCollectionPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ReviewListByIncomingCollectionPayment.ascx.designer.cs">
+      <DependentUpon>ReviewListByIncomingCollectionPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC_PL.ascx.cs">
+      <DependentUpon>ProvisionTransfer_DC_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC_PL.ascx.designer.cs">
+      <DependentUpon>ProvisionTransfer_DC_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\DocumentWithNoDiscrepancy.ascx.cs">
+      <DependentUpon>DocumentWithNoDiscrepancy.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\DocumentWithNoDiscrepancy.ascx.designer.cs">
+      <DependentUpon>DocumentWithNoDiscrepancy.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\EnquiryIssueLC.ascx.cs">
+      <DependentUpon>EnquiryIssueLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\EnquiryIssueLC.ascx.designer.cs">
+      <DependentUpon>EnquiryIssueLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\IssueLC.ascx.cs">
+      <DependentUpon>IssueLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\IssueLC.ascx.designer.cs">
+      <DependentUpon>IssueLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\LCEdit.ascx.cs">
+      <DependentUpon>LCEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\LCEdit.ascx.designer.cs">
+      <DependentUpon>LCEdit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\PreviewAmendLC.ascx.cs">
+      <DependentUpon>PreviewAmendLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\PreviewAmendLC.ascx.designer.cs">
+      <DependentUpon>PreviewAmendLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\PreviewCancelLC.ascx.cs">
+      <DependentUpon>PreviewCancelLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\PreviewCancelLC.ascx.designer.cs">
+      <DependentUpon>PreviewCancelLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\PreviewIssueLC.ascx.cs">
+      <DependentUpon>PreviewIssueLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\PreviewIssueLC.ascx.designer.cs">
+      <DependentUpon>PreviewIssueLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\Preview_DocumentProcessing.ascx.cs">
+      <DependentUpon>Preview_DocumentProcessing.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCredit\Preview_DocumentProcessing.ascx.designer.cs">
+      <DependentUpon>Preview_DocumentProcessing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\IssueFreeFormatMessage.ascx.cs">
+      <DependentUpon>IssueFreeFormatMessage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\IssueFreeFormatMessage.ascx.designer.cs">
+      <DependentUpon>IssueFreeFormatMessage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\PreviewIssueFreeFormatMessage.ascx.cs">
+      <DependentUpon>PreviewIssueFreeFormatMessage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\PreviewIssueFreeFormatMessage.ascx.designer.cs">
+      <DependentUpon>PreviewIssueFreeFormatMessage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerManagement\EnquiryCustomer.ascx.cs">
+      <DependentUpon>EnquiryCustomer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CustomerManagement\EnquiryCustomer.ascx.designer.cs">
+      <DependentUpon>EnquiryCustomer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerManagement\OpenInvidualCustomer\Index.ascx.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CustomerManagement\OpenInvidualCustomer\Index.ascx.designer.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerManagement\OpenInvidualCustomer\Index_ListReview.ascx.cs">
+      <DependentUpon>Index_ListReview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CustomerManagement\OpenInvidualCustomer\Index_ListReview.ascx.designer.cs">
+      <DependentUpon>Index_ListReview.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\AmendLoanContract.ascx.cs">
+      <DependentUpon>AmendLoanContract.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\AmendLoanContract.ascx.designer.cs">
+      <DependentUpon>AmendLoanContract.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\AmendLoanContract_Item.ascx.cs">
+      <DependentUpon>AmendLoanContract_Item.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\AmendLoanContract_Item.ascx.designer.cs">
+      <DependentUpon>AmendLoanContract_Item.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\AmendLoanContract_PL.ascx.cs">
+      <DependentUpon>AmendLoanContract_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\AmendLoanContract_PL.ascx.designer.cs">
+      <DependentUpon>AmendLoanContract_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CalculatedInterestedAmountManual.ascx.cs">
+      <DependentUpon>CalculatedInterestedAmountManual.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CalculatedInterestedAmountManual.ascx.designer.cs">
+      <DependentUpon>CalculatedInterestedAmountManual.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashDepositePreviewList.ascx.cs">
+      <DependentUpon>CashDepositePreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashDepositePreviewList.ascx.designer.cs">
+      <DependentUpon>CashDepositePreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashRepayment.ascx.cs">
+      <DependentUpon>CashRepayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashRepayment.ascx.designer.cs">
+      <DependentUpon>CashRepayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashRepayment_PL.ascx.cs">
+      <DependentUpon>CashRepayment_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashRepayment_PL.ascx.designer.cs">
+      <DependentUpon>CashRepayment_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashWithdrawalPreviewList.ascx.cs">
+      <DependentUpon>CashWithdrawalPreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashWithdrawalPreviewList.ascx.designer.cs">
+      <DependentUpon>CashWithdrawalPreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashWithdrawalsBuyingPreviewList.ascx.cs">
+      <DependentUpon>CashWithdrawalsBuyingPreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashWithdrawalsBuyingPreviewList.ascx.designer.cs">
+      <DependentUpon>CashWithdrawalsBuyingPreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\BlockAccount.ascx.cs">
+      <DependentUpon>BlockAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\BlockAccount.ascx.designer.cs">
+      <DependentUpon>BlockAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\BlockAccountList.ascx.cs">
+      <DependentUpon>BlockAccountList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\BlockAccountList.ascx.designer.cs">
+      <DependentUpon>BlockAccountList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CancelStopCheque.ascx.cs">
+      <DependentUpon>CancelStopCheque.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CancelStopCheque.ascx.designer.cs">
+      <DependentUpon>CancelStopCheque.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CancelStopPayment.ascx.cs">
+      <DependentUpon>CancelStopPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CancelStopPayment.ascx.designer.cs">
+      <DependentUpon>CancelStopPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashDeposits.ascx.cs">
+      <DependentUpon>CashDeposits.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashDeposits.ascx.designer.cs">
+      <DependentUpon>CashDeposits.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashWithdrawal.ascx.cs">
+      <DependentUpon>CashWithdrawal.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashWithdrawal.ascx.designer.cs">
+      <DependentUpon>CashWithdrawal.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeCancleStop.ascx.cs">
+      <DependentUpon>ChequeCancleStop.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeCancleStop.ascx.designer.cs">
+      <DependentUpon>ChequeCancleStop.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeCancleStop_Enquiry.ascx.cs">
+      <DependentUpon>ChequeCancleStop_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeCancleStop_Enquiry.ascx.designer.cs">
+      <DependentUpon>ChequeCancleStop_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeCancleStop_PL.ascx.cs">
+      <DependentUpon>ChequeCancleStop_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeCancleStop_PL.ascx.designer.cs">
+      <DependentUpon>ChequeCancleStop_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeIssue.ascx.cs">
+      <DependentUpon>ChequeIssue.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeIssue.ascx.designer.cs">
+      <DependentUpon>ChequeIssue.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeIssueCollectCharges.ascx.cs">
+      <DependentUpon>ChequeIssueCollectCharges.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeIssueCollectCharges.ascx.designer.cs">
+      <DependentUpon>ChequeIssueCollectCharges.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeIssue_Enquiry.ascx.cs">
+      <DependentUpon>ChequeIssue_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeIssue_Enquiry.ascx.designer.cs">
+      <DependentUpon>ChequeIssue_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeIssue_PL.ascx.cs">
+      <DependentUpon>ChequeIssue_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeIssue_PL.ascx.designer.cs">
+      <DependentUpon>ChequeIssue_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequePaymentStop.ascx.cs">
+      <DependentUpon>ChequePaymentStop.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequePaymentStop.ascx.designer.cs">
+      <DependentUpon>ChequePaymentStop.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequePayStop_Enquiry.ascx.cs">
+      <DependentUpon>ChequePayStop_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequePayStop_Enquiry.ascx.designer.cs">
+      <DependentUpon>ChequePayStop_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequePaytmentStop_PL.ascx.cs">
+      <DependentUpon>ChequePaytmentStop_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequePaytmentStop_PL.ascx.designer.cs">
+      <DependentUpon>ChequePaytmentStop_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeReturned.ascx.cs">
+      <DependentUpon>ChequeReturned.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeReturned.ascx.designer.cs">
+      <DependentUpon>ChequeReturned.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeReturned2.ascx.cs">
+      <DependentUpon>ChequeReturned2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeReturned2.ascx.designer.cs">
+      <DependentUpon>ChequeReturned2.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeReturned_PL.ascx.cs">
+      <DependentUpon>ChequeReturned_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeReturned_PL.ascx.designer.cs">
+      <DependentUpon>ChequeReturned_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeReturn_Enquiry.ascx.cs">
+      <DependentUpon>ChequeReturn_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeReturn_Enquiry.ascx.designer.cs">
+      <DependentUpon>ChequeReturn_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeTransferDrawnOnUs.ascx.cs">
+      <DependentUpon>ChequeTransferDrawnOnUs.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeTransferDrawnOnUs.ascx.designer.cs">
+      <DependentUpon>ChequeTransferDrawnOnUs.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeTransfer_Enquiry.ascx.cs">
+      <DependentUpon>ChequeTransfer_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeTransfer_Enquiry.ascx.designer.cs">
+      <DependentUpon>ChequeTransfer_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeWithDrawal_Enquiry.ascx.cs">
+      <DependentUpon>ChequeWithDrawal_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeWithDrawal_Enquiry.ascx.designer.cs">
+      <DependentUpon>ChequeWithDrawal_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeWithrawalDrawOnUs.ascx.cs">
+      <DependentUpon>ChequeWithrawalDrawOnUs.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeWithrawalDrawOnUs.ascx.designer.cs">
+      <DependentUpon>ChequeWithrawalDrawOnUs.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeWithrawalDrawOnUs_PL.ascx.cs">
+      <DependentUpon>ChequeWithrawalDrawOnUs_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeWithrawalDrawOnUs_PL.ascx.designer.cs">
+      <DependentUpon>ChequeWithrawalDrawOnUs_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CloseAccount.ascx.cs">
+      <DependentUpon>CloseAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CloseAccount.ascx.designer.cs">
+      <DependentUpon>CloseAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CloseAccountList.ascx.cs">
+      <DependentUpon>CloseAccountList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CloseAccountList.ascx.designer.cs">
+      <DependentUpon>CloseAccountList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollateralContingentEntry.ascx.cs">
+      <DependentUpon>CollateralContingentEntry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollateralContingentEntry.ascx.designer.cs">
+      <DependentUpon>CollateralContingentEntry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollateralContingentEntry_PL.ascx.cs">
+      <DependentUpon>CollateralContingentEntry_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollateralContingentEntry_PL.ascx.designer.cs">
+      <DependentUpon>CollateralContingentEntry_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectCharges.ascx.cs">
+      <DependentUpon>CollectCharges.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectCharges.ascx.designer.cs">
+      <DependentUpon>CollectCharges.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectChargesByCashPreviewList.ascx.cs">
+      <DependentUpon>CollectChargesByCashPreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectChargesByCashPreviewList.ascx.designer.cs">
+      <DependentUpon>CollectChargesByCashPreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectChargesPreviewList.ascx.cs">
+      <DependentUpon>CollectChargesPreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectChargesPreviewList.ascx.designer.cs">
+      <DependentUpon>CollectChargesPreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectionForCreditCardPayment.ascx.cs">
+      <DependentUpon>CollectionForCreditCardPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectionForCreditCardPayment.ascx.designer.cs">
+      <DependentUpon>CollectionForCreditCardPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashWithdrawalsBuying.ascx.cs">
+      <DependentUpon>CashWithdrawalsBuying.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashWithdrawalsBuying.ascx.designer.cs">
+      <DependentUpon>CashWithdrawalsBuying.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectChargesByCash.ascx.cs">
+      <DependentUpon>CollectChargesByCash.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectChargesByCash.ascx.designer.cs">
+      <DependentUpon>CollectChargesByCash.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\BuyTravellersCheque.ascx.cs">
+      <DependentUpon>BuyTravellersCheque.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\BuyTravellersCheque.ascx.designer.cs">
+      <DependentUpon>BuyTravellersCheque.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectionForCreditCardPayment_PL.ascx.cs">
+      <DependentUpon>CollectionForCreditCardPayment_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectionForCreditCardPayment_PL.ascx.designer.cs">
+      <DependentUpon>CollectionForCreditCardPayment_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DefineCustomerLimitSub.ascx.cs">
+      <DependentUpon>DefineCustomerLimitSub.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DefineCustomerLimitSub.ascx.designer.cs">
+      <DependentUpon>DefineCustomerLimitSub.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DefineCustomerLimit_Enquiry.ascx.cs">
+      <DependentUpon>DefineCustomerLimit_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DefineCustomerLimit_Enquiry.ascx.designer.cs">
+      <DependentUpon>DefineCustomerLimit_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\EnquiryAccount.ascx.cs">
+      <DependentUpon>EnquiryAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\EnquiryAccount.ascx.designer.cs">
+      <DependentUpon>EnquiryAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\EnquiryAccountTransaction.ascx.cs">
+      <DependentUpon>EnquiryAccountTransaction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\EnquiryAccountTransaction.ascx.designer.cs">
+      <DependentUpon>EnquiryAccountTransaction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\EnquiryCheque.ascx.cs">
+      <DependentUpon>EnquiryCheque.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\EnquiryCheque.ascx.designer.cs">
+      <DependentUpon>EnquiryCheque.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ExchangeBanknotesManyDeno.ascx.cs">
+      <DependentUpon>ExchangeBanknotesManyDeno.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ExchangeBanknotesManyDeno.ascx.designer.cs">
+      <DependentUpon>ExchangeBanknotesManyDeno.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ExchangeBanknotesManyDeno_PL.ascx.cs">
+      <DependentUpon>ExchangeBanknotesManyDeno_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ExchangeBanknotesManyDeno_PL.ascx.designer.cs">
+      <DependentUpon>ExchangeBanknotesManyDeno_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DCTransaction.ascx.cs">
+      <DependentUpon>DCTransaction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DCTransaction.ascx.designer.cs">
+      <DependentUpon>DCTransaction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DefineCustomerLimit_PL.ascx.cs">
+      <DependentUpon>DefineCustomerLimit_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DefineCustomerLimit_PL.ascx.designer.cs">
+      <DependentUpon>DefineCustomerLimit_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ForeignExchange.ascx.cs">
+      <DependentUpon>ForeignExchange.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ForeignExchange.ascx.designer.cs">
+      <DependentUpon>ForeignExchange.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ForeignExchangePreviewList.ascx.cs">
+      <DependentUpon>ForeignExchangePreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ForeignExchangePreviewList.ascx.designer.cs">
+      <DependentUpon>ForeignExchangePreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\InputCollateralRight_Enquiry.ascx.cs">
+      <DependentUpon>InputCollateralRight_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\InputCollateralRight_Enquiry.ascx.designer.cs">
+      <DependentUpon>InputCollateralRight_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\LoanAccountList.ascx.cs">
+      <DependentUpon>LoanAccountList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\LoanAccountList.ascx.designer.cs">
+      <DependentUpon>LoanAccountList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\NewNomarlLoan_FullView.ascx.cs">
+      <DependentUpon>NewNomarlLoan_FullView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\NewNomarlLoan_FullView.ascx.designer.cs">
+      <DependentUpon>NewNomarlLoan_FullView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\NewNormalLoanEnquiry.ascx.cs">
+      <DependentUpon>NewNormalLoanEnquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\NewNormalLoanEnquiry.ascx.designer.cs">
+      <DependentUpon>NewNormalLoanEnquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenLoanWorkingAccount_PL.ascx.cs">
+      <DependentUpon>OpenLoanWorkingAccount_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenLoanWorkingAccount_PL.ascx.designer.cs">
+      <DependentUpon>OpenLoanWorkingAccount_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenLoanWorkingAcct_Enquiry.ascx.cs">
+      <DependentUpon>OpenLoanWorkingAcct_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenLoanWorkingAcct_Enquiry.ascx.designer.cs">
+      <DependentUpon>OpenLoanWorkingAcct_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenNonRevolingCoomContr_PL.ascx.cs">
+      <DependentUpon>OpenNonRevolingCoomContr_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenNonRevolingCoomContr_PL.ascx.designer.cs">
+      <DependentUpon>OpenNonRevolingCoomContr_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenRevoling_Enquiry.ascx.cs">
+      <DependentUpon>OpenRevoling_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenRevoling_Enquiry.ascx.designer.cs">
+      <DependentUpon>OpenRevoling_Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenRevolvingCommContract_PL.ascx.cs">
+      <DependentUpon>OpenRevolvingCommContract_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenRevolvingCommContract_PL.ascx.designer.cs">
+      <DependentUpon>OpenRevolvingCommContract_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.cs">
+      <DependentUpon>ProvisionTransfer_DC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Import\DocumentaryCollections\ProvisionTransfer_DC.ascx.designer.cs">
+      <DependentUpon>ProvisionTransfer_DC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\PastDueLoanRepayment.ascx.cs">
+      <DependentUpon>PastDueLoanRepayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\PastDueLoanRepayment.ascx.designer.cs">
+      <DependentUpon>PastDueLoanRepayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\PastDueLoanRepayment_PL.ascx.cs">
+      <DependentUpon>PastDueLoanRepayment_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\PastDueLoanRepayment_PL.ascx.designer.cs">
+      <DependentUpon>PastDueLoanRepayment_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\PastDueLoanRepayment_Search.ascx.cs">
+      <DependentUpon>PastDueLoanRepayment_Search.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\PastDueLoanRepayment_Search.ascx.designer.cs">
+      <DependentUpon>PastDueLoanRepayment_Search.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\SellTravellersCheque.ascx.cs">
+      <DependentUpon>SellTravellersCheque.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\SellTravellersCheque.ascx.designer.cs">
+      <DependentUpon>SellTravellersCheque.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DefineCustomerLimit.ascx.cs">
+      <DependentUpon>DefineCustomerLimit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\DefineCustomerLimit.ascx.designer.cs">
+      <DependentUpon>DefineCustomerLimit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\FTAccountClose.ascx.cs">
+      <DependentUpon>FTAccountClose.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\FTAccountClose.ascx.designer.cs">
+      <DependentUpon>FTAccountClose.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\FTAccountClose2.ascx.cs">
+      <DependentUpon>FTAccountClose2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\FTAccountClose2.ascx.designer.cs">
+      <DependentUpon>FTAccountClose2.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\InputCollateralRight.ascx.cs">
+      <DependentUpon>InputCollateralRight.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\InputCollateralRight.ascx.designer.cs">
+      <DependentUpon>InputCollateralRight.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\NewNormalLoan.ascx.cs">
+      <DependentUpon>NewNormalLoan.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\NewNormalLoan.ascx.designer.cs">
+      <DependentUpon>NewNormalLoan.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenIndividualCreditAcc.ascx.cs">
+      <DependentUpon>OpenIndividualCreditAcc.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenIndividualCreditAcc.ascx.designer.cs">
+      <DependentUpon>OpenIndividualCreditAcc.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenLoanWorkingAccount.ascx.cs">
+      <DependentUpon>OpenLoanWorkingAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenLoanWorkingAccount.ascx.designer.cs">
+      <DependentUpon>OpenLoanWorkingAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenNonRevolingCoomContr.ascx.cs">
+      <DependentUpon>OpenNonRevolingCoomContr.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenNonRevolingCoomContr.ascx.designer.cs">
+      <DependentUpon>OpenNonRevolingCoomContr.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenRevolvingCommContract.ascx.cs">
+      <DependentUpon>OpenRevolvingCommContract.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\OpenRevolvingCommContract.ascx.designer.cs">
+      <DependentUpon>OpenRevolvingCommContract.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ReviewCloseAccountList.ascx.cs">
+      <DependentUpon>ReviewCloseAccountList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ReviewCloseAccountList.ascx.designer.cs">
+      <DependentUpon>ReviewCloseAccountList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferByAccount.ascx.cs">
+      <DependentUpon>TransferByAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferByAccount.ascx.designer.cs">
+      <DependentUpon>TransferByAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferByAccount_PL.ascx.cs">
+      <DependentUpon>TransferByAccount_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferByAccount_PL.ascx.designer.cs">
+      <DependentUpon>TransferByAccount_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferForCreditCardPayment.ascx.cs">
+      <DependentUpon>TransferForCreditCardPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferForCreditCardPayment.ascx.designer.cs">
+      <DependentUpon>TransferForCreditCardPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferForCreditCardPayment_PL.ascx.cs">
+      <DependentUpon>TransferForCreditCardPayment_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferForCreditCardPayment_PL.ascx.designer.cs">
+      <DependentUpon>TransferForCreditCardPayment_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferWithdrawal.ascx.cs">
+      <DependentUpon>TransferWithdrawal.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferWithdrawal.ascx.designer.cs">
+      <DependentUpon>TransferWithdrawal.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferWithdrawalPreviewList.ascx.cs">
+      <DependentUpon>TransferWithdrawalPreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\TransferWithdrawalPreviewList.ascx.designer.cs">
+      <DependentUpon>TransferWithdrawalPreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAccount.ascx.cs">
+      <DependentUpon>UnBlockAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAccount.ascx.designer.cs">
+      <DependentUpon>UnBlockAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAccountList.ascx.cs">
+      <DependentUpon>UnBlockAccountList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAccountList.ascx.designer.cs">
+      <DependentUpon>UnBlockAccountList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAccountListEmpty.ascx.cs">
+      <DependentUpon>UnBlockAccountListEmpty.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAccountListEmpty.ascx.designer.cs">
+      <DependentUpon>UnBlockAccountListEmpty.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAccountPreviewList.ascx.cs">
+      <DependentUpon>UnBlockAccountPreviewList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAccountPreviewList.ascx.designer.cs">
+      <DependentUpon>UnBlockAccountPreviewList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeTransferDrawnOnUs_PL.ascx.cs">
+      <DependentUpon>ChequeTransferDrawnOnUs_PL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\ChequeTransferDrawnOnUs_PL.ascx.designer.cs">
+      <DependentUpon>ChequeTransferDrawnOnUs_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\WebUserControl2.ascx.cs">
+      <DependentUpon>WebUserControl2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\WebUserControl2.ascx.designer.cs">
+      <DependentUpon>WebUserControl2.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\WUXoomPayment.ascx.cs">
+      <DependentUpon>WUXoomPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\WUXoomPayment.ascx.designer.cs">
+      <DependentUpon>WUXoomPayment.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Entity\BankProjectModels.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>BankProjectModels.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entity\BankProjectModels.dbml.layout">
+      <DependentUpon>BankProjectModels.dbml</DependentUpon>
+    </None>
+    <None Include="Properties\PublishProfiles\Build.pubxml" />
+    <Content Include="Report\Template\DocumentaryCollection\RegisterDocumentaryCollection.doc" />
+    <Content Include="Report\Template\NormalLC\NormalLC.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\HOADONVAT - Copy.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\HOADONVAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentMT202.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentMT400.doc" />
+    <Content Include="Report\Template\OverseasTransfer\PHIEUCHUYENKHOAN.doc" />
+    <Content Include="Report\Template\OverseasTransfer\OverseasTransferMT103.doc" />
+    <Content Include="Report\Template\OverseasTransfer\OverseasTransferVAT.doc" />
+    <Content Include="Report\Template\SavingAcc\SavingAccount.docx" />
+    <Content Include="Report\Template\NormalLC\IssueLC_MT700.doc" />
+    <Content Include="Report\Template\NormalLC\IssueLC_MT740.doc" />
+    <Content Include="Report\Template\NormalLC\IssueLC_PHIEUNHAPNGOAIBANG.doc" />
+    <Content Include="Report\Template\NormalLC\IssueLC_VAT.doc" />
+    <Content Include="Report\Template\IssueFreeFormatMessage.doc" />
+    <Content Include="Report\Template\ProvisionTransfersPHIEUCHUYENKHOAN.doc" />
+    <Content Include="Report\Template\NormalLC\AmendLC_PHIEUNHAPNGOAIBANG.doc" />
+    <Content Include="Report\Template\NormalLC\AmendLC_PHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\NormalLC\AmendLC_VAT.doc" />
+    <Content Include="Report\Template\NormalLC\CancelLC_PHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\NormalLC\CancelLC_VAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionAcceptionMT412.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionAcceptionPHIEUNHAPNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionAcceptionVAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionAmendmentsMT410.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionAmendmentsPHIEUNHAPNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionAmendmentsPHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionAmendmentsVAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentPHIEUCHUYENKHOAN.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentPHIEUNHAPNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentPHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentVAT_B.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\RegisterDocumentaryCollectionMT410.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\RegisterDocumentaryCollectionVAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\DocumentaryCollectionCancelVAT.doc" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\datatest\CTY TNHH PHAT TRIEN PHAN MEM ABC.xlsx" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\datatest\CTY TNHH SONG HONG.xlsx" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\datatest\Travelocity Corp..xlsx" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\datatest\Viet Victory Corp..xlsx" />
+    <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\datatest\Wall Street Corp..xlsx" />
+    <Content Include="Report\Template\AccountTransaction\CashDeposit.docx" />
+    <Content Include="Report\Template\AccountTransaction\CashWithdrawal.docx" />
+    <Content Include="Report\Template\MainAccount\OpenAccount.docx" />
+    <Content Include="Report\Template\CollectCharge\CollectChargeVAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG.doc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Report\Export\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>11167</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

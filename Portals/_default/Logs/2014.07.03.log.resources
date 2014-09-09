@@ -1,0 +1,26 @@
+2014-07-03 22:12:05,482 [khanhnd-laptop][Thread:31][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Please, see whether wrapping the code block, generating the exception, within RadCodeBlock resolves the error. ---> System.Web.HttpException (0x80004005): The Controls collection cannot be modified because the control contains code blocks (i.e. <% ... %>).
+   at System.Web.UI.ControlCollection.AddAt(Int32 index, Control child)
+   at Telerik.Web.UI.RadAjaxControl.MoveUpdatePanel(Control initiator, Control updated)
+   at Telerik.Web.UI.RadAjaxControl.MoveUpdatePanel(Control initiator, Control updated)
+   at Telerik.Web.UI.RadAjaxControl.PerformRender()
+   at Telerik.Web.UI.RadAjaxControl.OnPageRender(HtmlTextWriter writer, Control page)
+   at Telerik.Web.UI.RadAjaxControl.RenderPageInAjaxMode(HtmlTextWriter writer, Control page)
+   at System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   at System.Web.UI.Page.Render(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-03 22:12:05,681 [khanhnd-laptop][Thread:31][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Please, see whether wrapping the code block, generating the exception, within RadCodeBlock resolves the error.
+DotNetNuke.Services.Exceptions.PageLoadException: Please, see whether wrapping the code block, generating the exception, within RadCodeBlock resolves the error. ---> System.Web.HttpException: Please, see whether wrapping the code block, generating the exception, within RadCodeBlock resolves the error. ---> System.Web.HttpException: The Controls collection cannot be modified because the control contains code blocks (i.e. <% ... %>).
+   at System.Web.UI.ControlCollection.AddAt(Int32 index, Control child)
+   at Telerik.Web.UI.RadAjaxControl.MoveUpdatePanel(Control initiator, Control updated)
+   --- End of inner exception stack trace ---
+   at Telerik.Web.UI.RadAjaxControl.MoveUpdatePanel(Control initiator, Control updated)
+   at Telerik.Web.UI.RadAjaxControl.PerformRender()
+   at Telerik.Web.UI.RadAjaxControl.OnPageRender(HtmlTextWriter writer, Control page)
+   at Telerik.Web.UI.RadAjaxControl.RenderPageInAjaxMode(HtmlTextWriter writer, Control page)
+   at System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   at System.Web.UI.Page.Render(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---

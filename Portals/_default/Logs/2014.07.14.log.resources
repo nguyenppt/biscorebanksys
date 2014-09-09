@@ -1,0 +1,142 @@
+2014-07-14 21:04:08,099 [AnPV3-Laptop][Thread:13][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+Telerik.Web.UI.GridBindingException: You should not call DataBind in NeedDataSource event handler. DataBind would take place automatically right after NeedDataSource handler finishes execution.
+   at Telerik.Web.UI.RadGrid.DataBind()
+   at BankProject.Views.TellerApplication.LoanAccountList.LoadData() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\LoanAccountList.ascx.cs:line 22
+   at BankProject.Views.TellerApplication.LoanAccountList.radGridReview_OnNeedDataSource(Object sender, GridNeedDataSourceEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\LoanAccountList.ascx.cs:line 27
+   at Telerik.Web.UI.RadGrid.OnNeedDataSource(GridNeedDataSourceEventArgs e)
+   at Telerik.Web.UI.RadGrid.AutoDataBind(GridRebindReason rebindReason)
+   at Telerik.Web.UI.RadGrid.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 21:04:08,231 [AnPV3-Laptop][Thread:13][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=202&error=You+should+not+call+DataBind+in+NeedDataSource+event+handler.+DataBind+would+take+place+automatically+right+after+NeedDataSource+handler+finishes+execution.&content=0
+Telerik.Web.UI.GridBindingException: You should not call DataBind in NeedDataSource event handler. DataBind would take place automatically right after NeedDataSource handler finishes execution.
+   at Telerik.Web.UI.RadGrid.DataBind()
+   at BankProject.Views.TellerApplication.LoanAccountList.LoadData() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\LoanAccountList.ascx.cs:line 22
+   at BankProject.Views.TellerApplication.LoanAccountList.radGridReview_OnNeedDataSource(Object sender, GridNeedDataSourceEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\LoanAccountList.ascx.cs:line 27
+   at Telerik.Web.UI.RadGrid.OnNeedDataSource(GridNeedDataSourceEventArgs e)
+   at Telerik.Web.UI.RadGrid.AutoDataBind(GridRebindReason rebindReason)
+   at Telerik.Web.UI.RadGrid.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:23:03,898 [AnPV3-Laptop][Thread:18][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 155
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:23:03,981 [AnPV3-Laptop][Thread:18][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=196&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 155
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:35:58,910 [AnPV3-Laptop][Thread:47][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 155
+   at Telerik.Web.UI.RadToolBar.RaiseEvent(Object eventKey, RadToolBarEventArgs e)
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at Telerik.Web.UI.RadToolBar.RaisePostBackEvent(String eventArgument)
+   at Telerik.Web.UI.RadToolBar.System.Web.UI.IPostBackEventHandler.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:35:58,953 [AnPV3-Laptop][Thread:47][ERROR] DotNetNuke.Framework.PageBase - ~/Default.aspx?tabid=196&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 155
+   at Telerik.Web.UI.RadToolBar.RaiseEvent(Object eventKey, RadToolBarEventArgs e)
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at Telerik.Web.UI.RadToolBar.RaisePostBackEvent(String eventArgument)
+   at Telerik.Web.UI.RadToolBar.System.Web.UI.IPostBackEventHandler.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:38:39,805 [AnPV3-Laptop][Thread:17][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 155
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:38:39,887 [AnPV3-Laptop][Thread:17][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=196&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 155
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:41:23,440 [AnPV3-Laptop][Thread:26][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.LoadToolBar() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 132
+   at BankProject.Views.TellerApplication.NewNormalLoan.Page_Load(Object sender, EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 22
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:41:23,503 [AnPV3-Laptop][Thread:26][ERROR] DotNetNuke.Framework.PageBase - ~/Default.aspx?tabid=196&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.LoadToolBar() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 132
+   at BankProject.Views.TellerApplication.NewNormalLoan.Page_Load(Object sender, EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 22
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:42:33,790 [AnPV3-Laptop][Thread:26][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.LoadToolBar() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 133
+   at BankProject.Views.TellerApplication.NewNormalLoan.Page_Load(Object sender, EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 22
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-14 23:42:33,875 [AnPV3-Laptop][Thread:26][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=196&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Views.TellerApplication.NewNormalLoan.LoadToolBar() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 133
+   at BankProject.Views.TellerApplication.NewNormalLoan.Page_Load(Object sender, EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\NewNormalLoan.ascx.cs:line 22
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

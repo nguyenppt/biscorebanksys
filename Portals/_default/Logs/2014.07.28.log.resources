@@ -1,0 +1,209 @@
+2014-07-28 19:59:53,706 [NguyenPham-PC][Thread:20][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at BankProject.TellerApplication.AccountManagement.CurrentNonTermSavingAC.SalaryPayment.PaymentFrequency.SubmitButton_Click(Object sender, EventArgs e) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentFrequency.ascx.cs:line 118
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-28 19:59:53,788 [NguyenPham-PC][Thread:20][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=138&error=Index+was+outside+the+bounds+of+the+array.&content=0
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at BankProject.TellerApplication.AccountManagement.CurrentNonTermSavingAC.SalaryPayment.PaymentFrequency.SubmitButton_Click(Object sender, EventArgs e) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentFrequency.ascx.cs:line 118
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-28 21:40:39,928 [NguyenPham-PC][Thread:39][ERROR] DotNetNuke.UI.Modules.ModuleHost - Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed.
+System.Web.HttpParseException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed. ---> System.Web.HttpParseException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed. ---> System.Web.HttpException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed.
+   at System.Web.UI.ControlBuilder.AppendLiteralString(String s)
+   at System.Web.UI.TemplateParser.ProcessLiteral()
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ProcessLiteral()
+   at System.Web.UI.TemplateParser.MaybeTerminateControl(String tagName, Match match)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-07-28 21:40:40,342 [NguyenPham-PC][Thread:39][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error:  is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpParseException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed. ---> System.Web.HttpParseException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed. ---> System.Web.HttpException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed.
+   at System.Web.UI.ControlBuilder.AppendLiteralString(String s)
+   at System.Web.UI.TemplateParser.ProcessLiteral()
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ProcessLiteral()
+   at System.Web.UI.TemplateParser.MaybeTerminateControl(String tagName, Match match)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
+2014-07-28 22:27:30,769 [NguyenPham-PC][Thread:20][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.ArgumentException: Parameter count does not match Parameter Value count.
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.AssignParameterValues(SqlParameter[] commandParameters, Object[] parameterValues)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.SQLData.B_BDOCUMETARYCOLLECTION_GetByDocCollectCode(String DocCollectCode) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SQLData.cs:line 601
+   at BankProject.TradingFinance.Import.DocumentaryCollections.DocumetaryCollection.LoadData() in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\DocumetaryCollection.ascx.cs:line 511
+   at BankProject.TradingFinance.Import.DocumentaryCollections.DocumetaryCollection.Page_Load(Object sender, EventArgs e) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\DocumetaryCollection.ascx.cs:line 78
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-28 22:27:30,841 [NguyenPham-PC][Thread:20][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=218&error=Parameter+count+does+not+match+Parameter+Value+count.&content=0
+System.ArgumentException: Parameter count does not match Parameter Value count.
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.AssignParameterValues(SqlParameter[] commandParameters, Object[] parameterValues)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.SQLData.B_BDOCUMETARYCOLLECTION_GetByDocCollectCode(String DocCollectCode) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SQLData.cs:line 601
+   at BankProject.TradingFinance.Import.DocumentaryCollections.DocumetaryCollection.LoadData() in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\DocumetaryCollection.ascx.cs:line 511
+   at BankProject.TradingFinance.Import.DocumentaryCollections.DocumetaryCollection.Page_Load(Object sender, EventArgs e) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\TradingFinance\Import\DocumentaryCollections\DocumetaryCollection.ascx.cs:line 78
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-28 22:40:54,248 [NguyenPham-PC][Thread:5][ERROR] DotNetNuke.UI.Modules.ModuleHost - Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed.
+System.Web.HttpParseException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed. ---> System.Web.HttpParseException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed. ---> System.Web.HttpException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed.
+   at System.Web.UI.ControlBuilder.AppendLiteralString(String s)
+   at System.Web.UI.TemplateParser.ProcessLiteral()
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ProcessLiteral()
+   at System.Web.UI.TemplateParser.MaybeTerminateControl(String tagName, Match match)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-07-28 22:40:54,332 [NguyenPham-PC][Thread:5][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error:  is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpParseException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed. ---> System.Web.HttpParseException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed. ---> System.Web.HttpException (0x80004005): Content ('</Items>') does not match any properties within a 'Telerik.Web.UI.RadComboBox', make sure it is well-formed.
+   at System.Web.UI.ControlBuilder.AppendLiteralString(String s)
+   at System.Web.UI.TemplateParser.ProcessLiteral()
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ProcessLiteral()
+   at System.Web.UI.TemplateParser.MaybeTerminateControl(String tagName, Match match)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
+2014-07-28 23:49:18,271 [NguyenPham-PC][Thread:43][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 140
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-28 23:49:18,406 [NguyenPham-PC][Thread:43][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 140
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-28 23:49:18,552 [NguyenPham-PC][Thread:43][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-28 23:49:18,673 [NguyenPham-PC][Thread:43][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-28 23:49:18,693 [NguyenPham-PC][Thread:43][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-28 23:49:18,700 [NguyenPham-PC][Thread:43][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=217&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

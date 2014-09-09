@@ -1,0 +1,933 @@
+2014-07-18 20:03:48,293 [AnPV3-Laptop][Thread:17][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 148
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:03:48,371 [AnPV3-Laptop][Thread:17][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 148
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:03:50,192 [AnPV3-Laptop][Thread:17][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:03:50,229 [AnPV3-Laptop][Thread:17][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.AddNewRow() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 252
+   at BankProject.Controls.DynamicControls.ibtAdd_Click(Object sender, ImageClickEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\DynamicControls.ascx.cs:line 34
+   at System.Web.UI.WebControls.ImageButton.OnClick(ImageClickEventArgs e)
+   at System.Web.UI.WebControls.ImageButton.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:03:50,246 [AnPV3-Laptop][Thread:17][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=138&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.AddNewRow() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 252
+   at BankProject.Controls.DynamicControls.ibtAdd_Click(Object sender, ImageClickEventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\DynamicControls.ascx.cs:line 34
+   at System.Web.UI.WebControls.ImageButton.OnClick(ImageClickEventArgs e)
+   at System.Web.UI.WebControls.ImageButton.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:25:18,877 [AnPV3-Laptop][Thread:16][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 115
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 55
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:25:18,961 [AnPV3-Laptop][Thread:16][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 115
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 55
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:25:23,840 [AnPV3-Laptop][Thread:16][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:25:26,176 [AnPV3-Laptop][Thread:16][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-18 20:25:26,184 [AnPV3-Laptop][Thread:16][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:25:26,190 [AnPV3-Laptop][Thread:16][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=138&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:27:20,985 [AnPV3-Laptop][Thread:16][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 115
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 55
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:27:21,055 [AnPV3-Laptop][Thread:16][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 115
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 55
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:27:22,331 [AnPV3-Laptop][Thread:16][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:27:22,450 [AnPV3-Laptop][Thread:16][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-18 20:27:22,454 [AnPV3-Laptop][Thread:16][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:27:22,457 [AnPV3-Laptop][Thread:16][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=138&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:30:17,176 [AnPV3-Laptop][Thread:31][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:30:17,272 [AnPV3-Laptop][Thread:31][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:30:21,694 [AnPV3-Laptop][Thread:31][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:30:26,020 [AnPV3-Laptop][Thread:31][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-18 20:30:26,037 [AnPV3-Laptop][Thread:31][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:30:26,051 [AnPV3-Laptop][Thread:31][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=138&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:33:50,768 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:33:50,803 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:33:51,447 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:33:51,519 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-18 20:33:51,521 [AnPV3-Laptop][Thread:39][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:33:51,524 [AnPV3-Laptop][Thread:39][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=138&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:38:23,618 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:38:23,796 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:38:24,452 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:38:24,905 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-18 20:38:24,984 [AnPV3-Laptop][Thread:39][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:38:24,986 [AnPV3-Laptop][Thread:39][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=139&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:38:40,981 [AnPV3-Laptop][Thread:43][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:38:41,094 [AnPV3-Laptop][Thread:43][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:38:42,252 [AnPV3-Laptop][Thread:43][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:38:42,438 [AnPV3-Laptop][Thread:43][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-18 20:38:42,514 [AnPV3-Laptop][Thread:43][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:38:42,515 [AnPV3-Laptop][Thread:43][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=138&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:39:03,640 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:39:03,986 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVComboBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 220
+   at BankProject.Controls.VVComboBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVComboBox.ascx.cs:line 109
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:39:04,891 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:39:05,052 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-18 20:39:05,056 [AnPV3-Laptop][Thread:39][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:39:05,059 [AnPV3-Laptop][Thread:39][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=138&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:41:15,994 [AnPV3-Laptop][Thread:53][ERROR] DotNetNuke.UI.Skins.Pane - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 248
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 152
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at DotNetNuke.UI.Modules.ModuleHost.CreateChildControls()
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Modules.ModuleHost.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Containers.Container.SetModuleConfiguration(ModuleInfo configuration)
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+2014-07-18 20:41:16,124 [AnPV3-Laptop][Thread:53][ERROR] DotNetNuke.UI.Skins.Skin - Unhandled Error Adding Module to ContentPane
+DotNetNuke.Services.Exceptions.ModuleLoadException: Unhandled Error Adding Module to ContentPane ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at BankProject.Controls.VVTextBox.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 248
+   at BankProject.Controls.VVTextBox.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\VVTextBox.ascx.cs:line 152
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at System.Web.UI.WebControls.TableRowCollection.Add(TableRow row)
+   at BankProject.Controls.PaymentMethodControl.LoadControls() in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 57
+   at BankProject.Controls.PaymentMethodControl.OnInit(EventArgs e) in d:\Job\aNguyen\VVCB\DesktopModules\TrainingCoreBanking\BankProject\Controls\PaymentMethodControl.ascx.cs:line 19
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Control.AddedControl(Control control, Int32 index)
+   at DotNetNuke.UI.Modules.ModuleHost.InjectModuleContent(Control content)
+   at DotNetNuke.UI.Modules.ModuleHost.CreateChildControls()
+   at System.Web.UI.Control.EnsureChildControls()
+   at DotNetNuke.UI.Modules.ModuleHost.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.get_ModuleControl()
+   at DotNetNuke.UI.Containers.Container.ProcessModule()
+   at DotNetNuke.UI.Containers.Container.SetModuleConfiguration(ModuleInfo configuration)
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   --- End of inner exception stack trace ---
+   at DotNetNuke.UI.Skins.Pane.InjectModule(ModuleInfo module)
+   at DotNetNuke.UI.Skins.Skin.InjectModule(Pane pane, ModuleInfo module)
+2014-07-18 20:41:22,772 [AnPV3-Laptop][Thread:53][ERROR] DotNetNuke.UI.Containers.ActionBase - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.UI.Containers.ActionBase.OnLoad(EventArgs e)"
+2014-07-18 20:41:25,689 [AnPV3-Laptop][Thread:53][ERROR] DotNetNuke.Web.DDRMenu.Actions - FriendlyMessage="An error has occurred." ctrl="ASP.desktopmodules_ddrmenu_actions_ascx" exc="System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.UI.Containers.ActionBase.get_ModuleContext()
+   at DotNetNuke.UI.Containers.ActionBase.get_ActionRoot()
+   at DotNetNuke.Web.DDRMenu.Actions.OnPreRender(EventArgs e)"
+2014-07-18 20:41:25,696 [AnPV3-Laptop][Thread:53][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:41:25,700 [AnPV3-Laptop][Thread:53][ERROR] DotNetNuke.Framework.PageBase - ~/Default.aspx?tabid=138&error=Object+reference+not+set+to+an+instance+of+an+object.&content=0
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Web.DDRMenu.DDRMenuControl.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:43:27,898 [AnPV3-Laptop][Thread:39][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Multiple controls with the same ID 'VVCB_610' were found. FindControl requires that controls have unique IDs.
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FindControl(String id, Int32 pathOffset)
+   at System.Web.UI.Page.ProcessPostData(NameValueCollection postData, Boolean fBeforeLoad)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:43:28,020 [AnPV3-Laptop][Thread:39][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Multiple controls with the same ID 'VVCB_610' were found. FindControl requires that controls have unique IDs.
+DotNetNuke.Services.Exceptions.PageLoadException: Multiple controls with the same ID 'VVCB_610' were found. FindControl requires that controls have unique IDs. ---> System.Web.HttpException: Multiple controls with the same ID 'VVCB_610' were found. FindControl requires that controls have unique IDs.
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FindControl(String id, Int32 pathOffset)
+   at System.Web.UI.Page.ProcessPostData(NameValueCollection postData, Boolean fBeforeLoad)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-07-18 20:59:51,195 [AnPV3-Laptop][Thread:67][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Multiple controls with the same ID 'VVCB_913' were found. FindControl requires that controls have unique IDs.
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FindControl(String id, Int32 pathOffset)
+   at System.Web.UI.Page.ProcessPostData(NameValueCollection postData, Boolean fBeforeLoad)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 20:59:51,235 [AnPV3-Laptop][Thread:67][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Multiple controls with the same ID 'VVCB_913' were found. FindControl requires that controls have unique IDs.
+DotNetNuke.Services.Exceptions.PageLoadException: Multiple controls with the same ID 'VVCB_913' were found. FindControl requires that controls have unique IDs. ---> System.Web.HttpException: Multiple controls with the same ID 'VVCB_913' were found. FindControl requires that controls have unique IDs.
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FindControl(String id, Int32 pathOffset)
+   at System.Web.UI.Page.ProcessPostData(NameValueCollection postData, Boolean fBeforeLoad)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-07-18 21:01:56,088 [AnPV3-Laptop][Thread:33][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Multiple controls with the same ID 'VVCB_914' were found. FindControl requires that controls have unique IDs.
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FindControl(String id, Int32 pathOffset)
+   at System.Web.UI.Page.ProcessPostData(NameValueCollection postData, Boolean fBeforeLoad)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 21:01:56,184 [AnPV3-Laptop][Thread:33][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Multiple controls with the same ID 'VVCB_914' were found. FindControl requires that controls have unique IDs.
+DotNetNuke.Services.Exceptions.PageLoadException: Multiple controls with the same ID 'VVCB_914' were found. FindControl requires that controls have unique IDs. ---> System.Web.HttpException: Multiple controls with the same ID 'VVCB_914' were found. FindControl requires that controls have unique IDs.
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FillNamedControlsTable(Control namingContainer, ControlCollection controls)
+   at System.Web.UI.Control.FindControl(String id, Int32 pathOffset)
+   at System.Web.UI.Page.ProcessPostData(NameValueCollection postData, Boolean fBeforeLoad)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-07-18 21:15:36,032 [AnPV3-Laptop][Thread:54][ERROR] DotNetNuke.UI.Modules.ModuleHost - The base class includes the field 'VVTextBox1', but its type (BankProject.Controls.PaymentMethodControl) is not compatible with the type of control (ASP.desktopmodules_trainingcorebanking_bankproject_controls_dynamiccontrols_ascx).
+System.Web.HttpParseException (0x80004005): The base class includes the field 'VVTextBox1', but its type (BankProject.Controls.PaymentMethodControl) is not compatible with the type of control (ASP.desktopmodules_trainingcorebanking_bankproject_controls_dynamiccontrols_ascx). ---> System.Web.HttpParseException (0x80004005): The base class includes the field 'VVTextBox1', but its type (BankProject.Controls.PaymentMethodControl) is not compatible with the type of control (ASP.desktopmodules_trainingcorebanking_bankproject_controls_dynamiccontrols_ascx).
+   at System.Web.Compilation.BaseTemplateCodeDomTreeGenerator.BuildFieldDeclaration(ControlBuilder builder)
+   at System.Web.Compilation.BaseTemplateCodeDomTreeGenerator.BuildSourceDataTreeFromBuilder(ControlBuilder builder, Boolean fInTemplate, Boolean topLevelControlInTemplate, PropertyEntry pse)
+   at System.Web.Compilation.BaseTemplateCodeDomTreeGenerator.BuildSourceDataTreeFromBuilder(ControlBuilder builder, Boolean fInTemplate, Boolean topLevelControlInTemplate, PropertyEntry pse)
+   at System.Web.Compilation.TemplateControlCodeDomTreeGenerator.BuildMiscClassMembers()
+   at System.Web.Compilation.BaseCodeDomTreeGenerator.BuildSourceDataTree()
+   at System.Web.Compilation.BaseCodeDomTreeGenerator.GetCodeDomTree(CodeDomProvider codeDomProvider, StringResourceBuilder stringResourceBuilder, VirtualPath virtualPath)
+   at System.Web.Compilation.BaseTemplateBuildProvider.GenerateCode(AssemblyBuilder assemblyBuilder)
+   at System.Web.Compilation.AssemblyBuilder.AddBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.AssemblyBuilder.AddBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-07-18 21:15:37,440 [AnPV3-Laptop][Thread:54][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error: Payment Frequency is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpParseException (0x80004005): The base class includes the field 'VVTextBox1', but its type (BankProject.Controls.PaymentMethodControl) is not compatible with the type of control (ASP.desktopmodules_trainingcorebanking_bankproject_controls_dynamiccontrols_ascx). ---> System.Web.HttpParseException (0x80004005): The base class includes the field 'VVTextBox1', but its type (BankProject.Controls.PaymentMethodControl) is not compatible with the type of control (ASP.desktopmodules_trainingcorebanking_bankproject_controls_dynamiccontrols_ascx).
+   at System.Web.Compilation.BaseTemplateCodeDomTreeGenerator.BuildFieldDeclaration(ControlBuilder builder)
+   at System.Web.Compilation.BaseTemplateCodeDomTreeGenerator.BuildSourceDataTreeFromBuilder(ControlBuilder builder, Boolean fInTemplate, Boolean topLevelControlInTemplate, PropertyEntry pse)
+   at System.Web.Compilation.BaseTemplateCodeDomTreeGenerator.BuildSourceDataTreeFromBuilder(ControlBuilder builder, Boolean fInTemplate, Boolean topLevelControlInTemplate, PropertyEntry pse)
+   at System.Web.Compilation.TemplateControlCodeDomTreeGenerator.BuildMiscClassMembers()
+   at System.Web.Compilation.BaseCodeDomTreeGenerator.BuildSourceDataTree()
+   at System.Web.Compilation.BaseCodeDomTreeGenerator.GetCodeDomTree(CodeDomProvider codeDomProvider, StringResourceBuilder stringResourceBuilder, VirtualPath virtualPath)
+   at System.Web.Compilation.BaseTemplateBuildProvider.GenerateCode(AssemblyBuilder assemblyBuilder)
+   at System.Web.Compilation.AssemblyBuilder.AddBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.AssemblyBuilder.AddBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
+2014-07-18 22:10:06,935 [AnPV3-Laptop][Thread:6][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Unable to find control id 'rcbType' referenced by the 'ControlToValidate' property of 'RequiredFieldValidator13'.
+   at System.Web.UI.WebControls.BaseValidator.CheckControlValidationProperty(String name, String propertyName)
+   at System.Web.UI.WebControls.BaseValidator.ControlPropertiesValid()
+   at System.Web.UI.WebControls.BaseValidator.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 22:10:07,079 [AnPV3-Laptop][Thread:6][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Unable to find control id 'rcbType' referenced by the 'ControlToValidate' property of 'RequiredFieldValidator13'.
+DotNetNuke.Services.Exceptions.PageLoadException: Unable to find control id 'rcbType' referenced by the 'ControlToValidate' property of 'RequiredFieldValidator13'. ---> System.Web.HttpException: Unable to find control id 'rcbType' referenced by the 'ControlToValidate' property of 'RequiredFieldValidator13'.
+   at System.Web.UI.WebControls.BaseValidator.CheckControlValidationProperty(String name, String propertyName)
+   at System.Web.UI.WebControls.BaseValidator.ControlPropertiesValid()
+   at System.Web.UI.WebControls.BaseValidator.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-07-18 22:10:52,610 [AnPV3-Laptop][Thread:13][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Unable to find control id 'rcbType' referenced by the 'ControlToValidate' property of 'RequiredFieldValidator13'.
+   at System.Web.UI.WebControls.BaseValidator.CheckControlValidationProperty(String name, String propertyName)
+   at System.Web.UI.WebControls.BaseValidator.ControlPropertiesValid()
+   at System.Web.UI.WebControls.BaseValidator.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 22:10:52,644 [AnPV3-Laptop][Thread:13][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Unable to find control id 'rcbType' referenced by the 'ControlToValidate' property of 'RequiredFieldValidator13'.
+DotNetNuke.Services.Exceptions.PageLoadException: Unable to find control id 'rcbType' referenced by the 'ControlToValidate' property of 'RequiredFieldValidator13'. ---> System.Web.HttpException: Unable to find control id 'rcbType' referenced by the 'ControlToValidate' property of 'RequiredFieldValidator13'.
+   at System.Web.UI.WebControls.BaseValidator.CheckControlValidationProperty(String name, String propertyName)
+   at System.Web.UI.WebControls.BaseValidator.ControlPropertiesValid()
+   at System.Web.UI.WebControls.BaseValidator.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-07-18 22:26:09,920 [AnPV3-Laptop][Thread:9][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.ArgumentException: Invalid JSON primitive: .
+   at System.Web.Script.Serialization.JavaScriptObjectDeserializer.DeserializePrimitiveObject()
+   at System.Web.Script.Serialization.JavaScriptObjectDeserializer.DeserializeInternal(Int32 depth)
+   at System.Web.Script.Serialization.JavaScriptObjectDeserializer.BasicDeserialize(String input, Int32 depthLimit, JavaScriptSerializer serializer)
+   at System.Web.Script.Serialization.JavaScriptSerializer.Deserialize(JavaScriptSerializer serializer, String input, Type type, Int32 depthLimit)
+   at Telerik.Web.UI.RadDatePicker.System.Web.UI.IPostBackDataHandler.LoadPostData(String postDataKey, NameValueCollection postCollection)
+   at System.Web.UI.Page.ProcessPostData(NameValueCollection postData, Boolean fBeforeLoad)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 22:26:10,066 [AnPV3-Laptop][Thread:9][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=196&error=Invalid+JSON+primitive%3a+.&content=0
+System.ArgumentException: Invalid JSON primitive: .
+   at System.Web.Script.Serialization.JavaScriptObjectDeserializer.DeserializePrimitiveObject()
+   at System.Web.Script.Serialization.JavaScriptObjectDeserializer.DeserializeInternal(Int32 depth)
+   at System.Web.Script.Serialization.JavaScriptObjectDeserializer.BasicDeserialize(String input, Int32 depthLimit, JavaScriptSerializer serializer)
+   at System.Web.Script.Serialization.JavaScriptSerializer.Deserialize(JavaScriptSerializer serializer, String input, Type type, Int32 depthLimit)
+   at Telerik.Web.UI.RadDatePicker.System.Web.UI.IPostBackDataHandler.LoadPostData(String postDataKey, NameValueCollection postCollection)
+   at System.Web.UI.Page.ProcessPostData(NameValueCollection postData, Boolean fBeforeLoad)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-18 22:46:27,909 [AnPV3-Laptop][Thread:9][ERROR] DotNetNuke.UI.Modules.ModuleHost - Unknown server tag 'dnn:DnnJsInclude'.
+System.Web.HttpParseException (0x80004005): Unknown server tag 'dnn:DnnJsInclude'. ---> System.Web.HttpParseException (0x80004005): Unknown server tag 'dnn:DnnJsInclude'. ---> System.Web.HttpException (0x80004005): Unknown server tag 'dnn:DnnJsInclude'.
+   at System.Web.UI.TagPrefixTagNameToTypeMapper.System.Web.UI.ITagNameToTypeMapper.GetControlType(String tagName, IDictionary attribs)
+   at System.Web.UI.RootBuilder.GetChildControlType(String tagName, IDictionary attribs)
+   at System.Web.UI.ControlBuilder.CreateChildBuilder(String filter, String tagName, IDictionary attribs, TemplateParser parser, ControlBuilder parentBuilder, String id, Int32 line, VirtualPath virtualPath, Type& childType, Boolean defaultProperty)
+   at System.Web.UI.TemplateParser.ProcessBeginTag(Match match, String inputText)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-07-18 22:46:28,027 [AnPV3-Laptop][Thread:9][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error: NewNormalLoan is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpParseException (0x80004005): Unknown server tag 'dnn:DnnJsInclude'. ---> System.Web.HttpParseException (0x80004005): Unknown server tag 'dnn:DnnJsInclude'. ---> System.Web.HttpException (0x80004005): Unknown server tag 'dnn:DnnJsInclude'.
+   at System.Web.UI.TagPrefixTagNameToTypeMapper.System.Web.UI.ITagNameToTypeMapper.GetControlType(String tagName, IDictionary attribs)
+   at System.Web.UI.RootBuilder.GetChildControlType(String tagName, IDictionary attribs)
+   at System.Web.UI.ControlBuilder.CreateChildBuilder(String filter, String tagName, IDictionary attribs, TemplateParser parser, ControlBuilder parentBuilder, String id, Int32 line, VirtualPath virtualPath, Type& childType, Boolean defaultProperty)
+   at System.Web.UI.TemplateParser.ProcessBeginTag(Match match, String inputText)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ProcessException(Exception ex)
+   at System.Web.UI.TemplateParser.ParseStringInternal(String text, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseString(String text, VirtualPath virtualPath, Encoding fileEncoding)
+   at System.Web.UI.TemplateParser.ParseFile(String physicalPath, VirtualPath virtualPath)
+   at System.Web.UI.TemplateParser.Parse()
+   at System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
