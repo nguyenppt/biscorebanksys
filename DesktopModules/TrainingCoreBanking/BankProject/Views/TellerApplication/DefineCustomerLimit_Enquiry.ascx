@@ -92,10 +92,10 @@
                 <telerik:GridBoundColumn HeaderText="MainLimit ID" DataField="MainLimitID" />
                 <telerik:GridBoundColumn HeaderText="SubLimit ID" DataField="SubLimitID" />
                 <telerik:GridBoundColumn HeaderText="Customer Name" DataField="CustomerName" />
-                <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" ItemStyle-horizontalAlign="center" />
-                <telerik:GridBoundColumn HeaderText="InternalLimitAmt" DataField="InternalLimitAmt"  headerStyle-HorizontalAlign="center"
+                <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" ItemStyle-horizontalAlign="center"  HeaderStyle-horizontalAlign="center" />
+                <telerik:GridBoundColumn HeaderText="InternalLimitAmt" DataField="InternalLimitAmt"  headerStyle-HorizontalAlign="right"
                     ItemStyle-HorizontalAlign="right" />
-                 <telerik:GridBoundColumn HeaderText="Max Total" DataField="MaxTotal"  headerStyle-HorizontalAlign="center"
+                 <telerik:GridBoundColumn HeaderText="Max Total" DataField="MaxTotal"  headerStyle-HorizontalAlign="right"
                     ItemStyle-HorizontalAlign="right" />
                 <telerik:GridTemplateColumn ItemStyle-HorizontalAlign="Right" >
                     <ItemStyle Width="25" />

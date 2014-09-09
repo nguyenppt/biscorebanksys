@@ -30,9 +30,17 @@ namespace BankProject.Views.TellerApplication
             string commandName = ToolBarButton.CommandName;
             if (commandName == "search")
             {
-                RadGrid.DataSource= TriTT.B_OPEN_COMMITMENT_CONT_Enquiry_Account(tbAcctRef.Text, tbCustomerID.Text, tbFullName.Text, rcbCurrency.SelectedValue, rcbCategory.SelectedValue,
-                    tbDocId.Text, tbIntRepayAcct.Text);
-                RadGrid.DataBind();
+                if (IsPostBack)
+                {
+                    RadGrid.DataSource = TriTT.B_OPEN_COMMITMENT_CONT_Enquiry_Account(tbAcctRef.Text, tbCustomerID.Text, tbFullName.Text, rcbCurrency.SelectedValue, rcbCategory.SelectedValue,
+                        tbDocId.Text, tbIntRepayAcct.Text);
+                    RadGrid.DataBind();
+                }
+                else
+                {
+                    RadGrid.DataSource = TriTT.B_OPEN_COMMITMENT_CONT_Enquiry_Account("!", tbCustomerID.Text, tbFullName.Text, rcbCurrency.SelectedValue, rcbCategory.SelectedValue,
+                       tbDocId.Text, "<");
+                }
             }
         }
         protected void RadGrid1_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
