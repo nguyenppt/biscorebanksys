@@ -33,6 +33,11 @@ namespace BankProject.Views.CustomerManagement
         }
         protected void RadGrid1_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
+            if (IsPostBack)
+            {
+                RadGrid1.DataSource = TriTT.ENQUIRY_CUSTOMER_Search_Account_Customer(rcbCustomerType.SelectedValue, tbCustomerID.Text.Trim(), tbCellPhone.Text.Trim(), tbGBFullName.Text.Trim(),
+                tbDocID.Text.Trim(), rcbMainSector.SelectedValue, rcbSubSector.SelectedValue, rcbMainIndustry.SelectedValue, rcbSubIndustry.SelectedValue);
+            } else
             RadGrid1.DataSource = TriTT.ENQUIRY_CUSTOMER_Search_Account_Customer("!","!","","","","","","","");
         }
         public string geturlReview(string CustomerID, string Status) /// co 3 truong hop cho Status: REV, UNA , AUT
@@ -52,9 +57,18 @@ namespace BankProject.Views.CustomerManagement
         #region Help Methods
         protected void Search_Customer()
         {
-            RadGrid1.DataSource = TriTT.ENQUIRY_CUSTOMER_Search_Account_Customer(rcbCustomerType.SelectedValue, tbCustomerID.Text.Trim(), tbCellPhone.Text.Trim(), tbGBFullName.Text.Trim(),
-                tbDocID.Text.Trim(), rcbMainSector.SelectedValue, rcbSubSector.SelectedValue, rcbMainIndustry.SelectedValue, rcbSubIndustry.SelectedValue);
-            RadGrid1.DataBind();
+            if (IsPostBack)
+            {
+                RadGrid1.DataSource = TriTT.ENQUIRY_CUSTOMER_Search_Account_Customer(rcbCustomerType.SelectedValue, tbCustomerID.Text.Trim(), tbCellPhone.Text.Trim(), tbGBFullName.Text.Trim(),
+                    tbDocID.Text.Trim(), rcbMainSector.SelectedValue, rcbSubSector.SelectedValue, rcbMainIndustry.SelectedValue, rcbSubIndustry.SelectedValue);
+                RadGrid1.DataBind();
+            }
+            else
+            {
+                RadGrid1.DataSource = TriTT.ENQUIRY_CUSTOMER_Search_Account_Customer("!1", tbCustomerID.Text.Trim(), tbCellPhone.Text.Trim(), tbGBFullName.Text.Trim(),
+                     tbDocID.Text.Trim(), rcbMainSector.SelectedValue, "!", rcbMainIndustry.SelectedValue, rcbSubIndustry.SelectedValue);
+                RadGrid1.DataBind();
+            }
         }
         protected void Load_MainSector()
         {
