@@ -354,11 +354,19 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("LoaContAcctFromDB", CollateralTypeCode, Currency);
         }
         public static void B_CONTINGENT_ENTRY_Insert_Update(string CollateralInfoID, string ContingentEntryID, string CustomerID, string CustomerAddress, string DocIDTaxCode
-            , DateTime DateOfIssue, string TransactionCode, string TransactionName, string DCMode, string DCName, string Currency, string AccountNo, string AccountName,
+            , string DateOfIssue, string TransactionCode, string TransactionName, string DCMode, string DCName, string Currency, string AccountNo, string AccountName,
             decimal? Amount, decimal? DealRate, DateTime? ValueDate, string Narrative, string ApprovedUser)
         {
             sqldata.ndkExecuteNonQuery("B_CONTINGENT_ENTRY_Insert_Update", CollateralInfoID, ContingentEntryID, CustomerID, CustomerAddress, DocIDTaxCode, DateOfIssue, TransactionCode,
                 TransactionName, DCMode, DCName, Currency, AccountNo, AccountName, Amount, DealRate, ValueDate, Narrative, ApprovedUser);
+        }
+        public static DataSet B_COLLATERAL_INFO_LoadCustomer_Info(string CustomerID)
+        {
+            return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadCustomer_Info", CustomerID);
+        }
+        public static DataSet B_COLLATERAL_INFO_LoadCurrency_forEach_Customer(string CustomerID)
+        {
+            return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadCurrency_forEach_Customer", CustomerID);
         }
         #endregion
         #region B_CHEQUE ISSUE
