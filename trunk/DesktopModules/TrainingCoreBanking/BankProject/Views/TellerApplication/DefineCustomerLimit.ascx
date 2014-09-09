@@ -162,7 +162,7 @@
             <tr>
                 <td class="MyLable">Internal Limit Amt:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1">
+                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1"  >
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:RadTextBox>
                    
@@ -269,7 +269,7 @@
             <tr>
                 <td class="MyLable">Maximum Total:</td>
                 <td class="MyContent">
-                    <telerik:radtextbox ID="tbMaxTotal" runat="server"  Width="150">
+                    <telerik:radtextbox ID="tbMaxTotal" runat="server"  Width="150" >
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:radtextbox>
                 </td>

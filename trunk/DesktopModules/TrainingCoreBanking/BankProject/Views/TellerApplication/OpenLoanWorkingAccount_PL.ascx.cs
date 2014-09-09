@@ -18,7 +18,9 @@ namespace BankProject.Views.TellerApplication
         }
         public void RadGridPreview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
+            if(IsPostBack)
             RadGridPreview.DataSource = TriTT.B_OPEN_LOANWORK_ACCT_List_Preview("AUT");
+            else RadGridPreview.DataSource = TriTT.B_OPEN_LOANWORK_ACCT_List_Preview("AUT");
         }
         public string GeturlReview(string ID)
         {

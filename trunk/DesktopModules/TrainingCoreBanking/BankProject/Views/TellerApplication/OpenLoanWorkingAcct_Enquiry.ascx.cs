@@ -31,9 +31,17 @@ namespace BankProject.Views.TellerApplication
             string CommandName = ToolBarButton.CommandName;
             if (CommandName == "search")
             {
-                RadGrid.DataSource = TriTT.B_OPEN_LOANWORK_ACCT_Enquiry_Customer(tbAcctRef.Text, tbCustomerID.Text, tbFullName.Text, rcbCurrency.SelectedValue, 
-                    rcbProductLine.SelectedValue, rcbCategory.SelectedValue, tbDocId.Text);
-                RadGrid.DataBind();
+                if (IsPostBack)
+                {
+                    RadGrid.DataSource = TriTT.B_OPEN_LOANWORK_ACCT_Enquiry_Customer(tbAcctRef.Text, tbCustomerID.Text, tbFullName.Text, rcbCurrency.SelectedValue,
+                        rcbProductLine.SelectedValue, rcbCategory.SelectedValue, tbDocId.Text);
+                    RadGrid.DataBind();
+                }
+                else
+                {
+                    RadGrid.DataSource = TriTT.B_OPEN_LOANWORK_ACCT_Enquiry_Customer("!!", "!", tbFullName.Text, rcbCurrency.SelectedValue,
+                         rcbProductLine.SelectedValue, rcbCategory.SelectedValue, "!");
+                }
             }
         }
         protected string geturlReview(string AccountID, string status)

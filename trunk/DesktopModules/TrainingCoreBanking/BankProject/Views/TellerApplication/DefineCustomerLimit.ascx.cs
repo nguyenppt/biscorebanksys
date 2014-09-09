@@ -141,12 +141,15 @@ namespace BankProject.Views.TellerApplication
                     if(HanMucCha =="7000" || HanMucCha =="8000") // check han muc cha
                     {
                         if (rcbFandA.SelectedValue == "Variable") { ShowMsgBox("Fixed/Variable value must be “Fixed”"); return; }
+                        // check Internal amount and Maximum Total
+                        if ((tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0 )<( tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
+                        { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
                         if ( TriTT.B_CUSTOMER_LIMIT_Check_CustomerID(CustomerID) != "")
                         { 
                             TriTT.B_CUSTOMER_LIMIT_Insert_Update(LimitID, CustomerID, HanMucCha, rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.Text.Replace(rcbCountry.SelectedValue + " - ", "")
                                 , RdpApprovedDate.SelectedDate, RdpOfferedUnit.SelectedDate, rdpExpiryDate.SelectedDate, RdpProposalDate.SelectedDate, RdpAvailableDate.SelectedDate
-                                , Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")), Convert.ToDecimal(tbAdvisedAmt.Text.Replace(",", "")),0 ,
-                             tbNote.Text, rcbFandA.SelectedValue, Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")), UserInfo.Username.ToString());
+                                ,tbIntLimitAmt.Text!=""? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")):0, tbAdvisedAmt.Text!=""? Convert.ToDecimal(tbAdvisedAmt.Text.Replace(",", "")):0,0 ,
+                                tbNote.Text, rcbFandA.SelectedValue,tbMaxTotal.Text !=""?  Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, UserInfo.Username.ToString());
                             Response.Redirect("Default.aspx?tabid=192");
                         }
                         else { ShowMsgBox("Customer ID is not exists, Please check again !"); return; }
@@ -168,8 +171,8 @@ namespace BankProject.Views.TellerApplication
                             TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
                                 , "", "",
                                 "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
-                                , lblPeriodAmt.Text, lblPeriodPct.Text, Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")), Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")),
-                               Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")), lblOtherSecured.Text, lblCollateralRight.Text
+                                , lblPeriodAmt.Text, lblPeriodPct.Text,tbMaxSecured.Text !=""? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")):0, tbMaxUnsecured.Text!=""? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")):0,
+                                tbMaxTotal.Text!=""? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
                                 , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
                             Response.Redirect("Default.aspx?tabid=192");
                         }

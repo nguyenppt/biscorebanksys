@@ -146,9 +146,9 @@ namespace BankProject.Views.TellerApplication
                             {
                                 TriTT.B_CUSTOMER_LIMIT_Insert_Update(LimitID, CustomerID, HanMucCha, rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.Text.Replace(rcbCountry.SelectedValue + " - ", "")
                                 , RdpApprovedDate.SelectedDate, RdpOfferedUnit.SelectedDate, rdpExpiryDate.SelectedDate, RdpProposalDate.SelectedDate, RdpAvailableDate.SelectedDate
-                                , Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")), Convert.ToDecimal(tbAdvisedAmt.Text.Replace(",", "")), 0,
-                             tbNote.Text, rcbFandA.SelectedValue, Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")), UserInfo.Username.ToString());
-                                Response.Redirect("Default.aspx?tabid=192");
+                                , tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0, tbAdvisedAmt.Text != "" ? Convert.ToDecimal(tbAdvisedAmt.Text.Replace(",", "")) : 0, 0,
+                                tbNote.Text, rcbFandA.SelectedValue, tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, UserInfo.Username.ToString());
+                                Response.Redirect("Default.aspx?tabid=359");
                             }
                             else { ShowMsgBox("Customer ID is not exists, Please check again !"); return; }
                         }
@@ -164,20 +164,23 @@ namespace BankProject.Views.TellerApplication
                         string STTSub = LimitID.Substring(13, 2);
                         if (HanMucCon == "7700" || HanMucCon == "8700")
                         {
+                            // check Internal amount and Maximum Total
+                            if ((tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0) < (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
+                            { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
                             //if (TriTT.B_CUSTOMER_LIMIT_SUB_check_SubLimitID(LimitID).Tables[0].Rows.Count == 0)
                             {
-                                TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue,""
-                                , "", "",
-                                "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
-                                , lblPeriodAmt.Text, lblPeriodPct.Text, Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")), Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")),
-                               Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")), lblOtherSecured.Text, lblCollateralRight.Text
-                                , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
-                                Response.Redirect("Default.aspx?tabid=192");
+                                TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
+                               , "", "",
+                               "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
+                               , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
+                               tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
+                               , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
+                                Response.Redirect("Default.aspx?tabid=359");
                             }
                             //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
                         }
                         else
-                        { ShowMsgBox("SubRevoling Limit ID or SubNon-Revoling Limit ID is Incorrect, '7700' for SubRevoling and '8700' for SubNon-Revolving, Please check again !"); return; }
+                        { ShowMsgBox("SubRevoling Limit ID or SubNon-Revoling Limit ID is Incorrect, '7700' for SubRevoling and '8700' for SubNon-Revolving, Please check again !"); break; }
                     }
                     else
                     {
@@ -249,6 +252,7 @@ namespace BankProject.Views.TellerApplication
                     RdpAvailableDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["Availabledate"].ToString());
                 }
                 tbIntLimitAmt.Text = ds.Tables[0].Rows[0]["InternalLimitAmt"].ToString();
+                //tbIntLimitAmt.Text = String.Format("{0:C}",Convert.ToDecimal( ds.Tables[0].Rows[0]["InternalLimitAmt"].ToString())).Replace("$", "");
                 tbAdvisedAmt.Text = ds.Tables[0].Rows[0]["AdvisedAmt"].ToString();
                 tbOriginalLimit.Text = ds.Tables[0].Rows[0]["OriginalLimit"].ToString();
                 tbNote.Text = ds.Tables[0].Rows[0]["Note"].ToString();
@@ -265,7 +269,7 @@ namespace BankProject.Views.TellerApplication
             string KieuHanMuc = "";
             if (HanMucCon == "7700") { KieuHanMuc = "7000"; }
             else if (HanMucCon == "8700") { KieuHanMuc = "8000"; }
-            Load_MainLimit_DataToReview(CustomerID + "." + KieuHanMuc);
+            Load_MainLimit_DataToReview(CustomerID + "." + KieuHanMuc); //Load data cho phan Han muc cha
             tbLimitID.Text = SubLimitID;
 
             if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(SubLimitID.Substring(0, 7)) != null)  // lay customreID
