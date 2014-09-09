@@ -21,10 +21,10 @@
 
      var gbShortNameLastElement = $find("<%= txtGBShortName.ClientID %>");
             var gbFullNameLastElement = $find("<%= txtGBFullName.ClientID %>");
-        var fullName = firstName + " " + middleName + " " + lastName;
+        var fullName = firstName + " " + lastName + " " + middleName;
         gbShortNameLastElement.set_value(fullName);
         gbFullNameLastElement.set_value(fullName);
-        gbShortNameLastElement.focus();
+        //gbShortNameLastElement.focus();
     }
 </script>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
@@ -100,21 +100,21 @@
         <div id="Div2" class="dnnClear">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">First Name:</td>
+                    <td class="MyLable">First Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtFirstName" runat="server" ValidationGroup="Group1" TabIndex="2" />
+                        <telerik:RadTextBox ID="txtFirstName" runat="server" ValidationGroup="Group1" TabIndex="2" ClientEvents-OnValueChanged="OnMiddleNameChanged" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Last Name:</td>
+                    <td class="MyLable">Last Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtLastName" runat="server" ValidationGroup="Group1" TabIndex="3" />
+                        <telerik:RadTextBox ID="txtLastName" runat="server" ValidationGroup="Group1" TabIndex="3" ClientEvents-OnValueChanged="OnMiddleNameChanged" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Middle Name:</td>
+                    <td class="MyLable">Middle Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtMiddleName" runat="server" ClientEvents-OnValueChanged="OnMiddleNameChanged" ValidationGroup="Group1" TabIndex="3" />
                     </td>
@@ -316,7 +316,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Doc Type:</td>
+                    <td class="MyLable">Doc Type</td>
                     <td class="MyContent" width="300">
                         <telerik:RadComboBox ID="cmbDocType"
                             MarkFirstMatch="True" 
@@ -356,6 +356,12 @@
                     <td class="MyLable" style="width: 80px;">Doc Expiry Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="rdpDocExpiry" runat="server" MinDate="1/1/1900" TabIndex="19" ValidationGroup="Group1"></telerik:RadDatePicker>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">Email Address</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox runat="server" id="tbEmailAddress" width="300" />
                     </td>
                 </tr>
             </table>
