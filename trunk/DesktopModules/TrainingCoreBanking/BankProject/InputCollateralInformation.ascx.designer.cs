@@ -76,6 +76,15 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadComboBox rcbCollateralCode;
         
         /// <summary>
+        /// rcbCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbCurrency;
+        
+        /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
         /// <remarks>
@@ -173,15 +182,6 @@ namespace BankProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbCompanyStorage;
-        
-        /// <summary>
-        /// rcbCurrency control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbCurrency;
         
         /// <summary>
         /// rcbCountry control.

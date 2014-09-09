@@ -40,8 +40,8 @@ namespace BankProject
                             txtOfficeNumber.Enabled = false;
                             break;
                         case "audit": //cho phep hien va chinh sua thong tin cua ACC tu` form CUSTOMER ENQUIRY link qua ,co status != AUT,  
-                            LoadToolBar(true); // hien button commit, preview 
-                            BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                            LoadToolBar(false); // hien button authorize, reverse 
+                            BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                             break;
                     }
                 }
@@ -380,7 +380,7 @@ namespace BankProject
                 case "REV":
                 case "UNA":
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                    LoadToolBar(true);
+                    LoadToolBar(false);
                     break;
                 case "AUT":
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
