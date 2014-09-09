@@ -33,10 +33,13 @@ namespace BankProject.Views.CustomerManagement.OpenInvidualCustomer
             switch (From)
             { 
                 case "OpenIndividualCustomer":
+                    if (IsPostBack)  RadGridAccountReviewList.DataSource = SavingAccount_SQL.GetIndividualCustomerBySatus(Entity.AuthoriseStatus.UNA);
+                else
                     RadGridAccountReviewList.DataSource = SavingAccount_SQL.GetIndividualCustomerBySatus(Entity.AuthoriseStatus.UNA);
                     break;
                 case "OpenCorporateCustomer":
-                    RadGridAccountReviewList.DataSource = TriTT.OPEN_CORPORATE_CUSTOMER_review_Account("","UNA","C","1");
+                    if (IsPostBack) RadGridAccountReviewList.DataSource = TriTT.OPEN_CORPORATE_CUSTOMER_review_Account("", "UNA", "C", "1");
+                    else RadGridAccountReviewList.DataSource = TriTT.OPEN_CORPORATE_CUSTOMER_review_Account("","UNA","C","1");
                      break;
             }
         }
@@ -51,7 +54,7 @@ namespace BankProject.Views.CustomerManagement.OpenInvidualCustomer
                     return string.Format("Default.aspx?tabid={0}&mid={1}&CustomerID={2}&disable=true&mode=preview", TabId, ModuleId, CustomerID);
                     break;/// redirect ve trang web OPEN INDIVIDUAL CUSTOMER
                 default:
-                    return string.Format("Default.aspx?tabid={0}&mid={1}&CustomerID={2}&disable=true&mode=preview", 256, ModuleId, CustomerID);
+                    return string.Format("Default.aspx?tabid={0}&mid={1}&CustomerID={2}&disable=true&mode=audit", 256, ModuleId, CustomerID); // mode= audit cho phu hop voi code  OPEN CORPORATE CUSTOMER
                     break; /// redirect ve trang web OPEN CORPORATE CUSTOMER
             }
         }

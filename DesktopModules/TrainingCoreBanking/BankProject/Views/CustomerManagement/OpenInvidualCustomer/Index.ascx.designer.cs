@@ -265,6 +265,15 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer 
         protected global::Telerik.Web.UI.RadDatePicker rdpDocExpiry;
         
         /// <summary>
+        /// tbEmailAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox tbEmailAddress;
+        
+        /// <summary>
         /// cmbMainSector control.
         /// </summary>
         /// <remarks>

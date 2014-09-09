@@ -184,8 +184,8 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                 this.LoadCountries();
                 this.cmbMainSector.SelectedIndex = 1;
                 this.cmbSubSector.SelectedIndex = 1;
+                this.LoadToolBar(true);
                 LoadOrGenerateDefaultData();
-                this.LoadToolBar();
             }
         }
 
@@ -213,6 +213,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                     SavingAccount_SQL.ReverseIndividualCustomerAccount(CustomerIDToReview);
                     //LoadDataforCommboBox(); //Load data cho cac commboxs, phuc vu viec hieu chinh thong tin de commit lai
                     RadToolBar1.FindItemByValue("btCommitData").Enabled = true;// mo button de commit lai
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
                     RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
                     RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
@@ -220,47 +221,65 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                 break;
             }
         }
-        private void LoadToolBar()
+        protected void LoadToolBar(bool isauthorize)
         {
-            switch (Mode)
-            {
-                case "audit":
-                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-                    switch (Status) // danh cho truong hop link tu CUSTOMER ENQUIRY qua
-                    {
-                        case "REV":
-                        case "UNA":
-                            RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                            BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true); /// danh cho truong hop audit thong tin, link tu form CUSTOMER ENQUIRY
-                            break;
-                    }
-                    break;
-                case "preview":
-                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                    RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                    RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                     // danh cho truong hop link tu CUSTOMER ENQUIRY qua
-                    if (Request.Params.Keys.Get(3) == "status")
-                    {
-                        switch (Status) // danh cho truong hop link tu CUSTOMER ENQUIRY qua
-                        {
-                            case "AUT":
-                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                                RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-                                break;
-                        }
-                    }
-                            break;
-                default :
-                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-                    break;
-            }
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = isauthorize;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = isauthorize;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = !isauthorize;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = !isauthorize;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
         }
+        protected void LoadToolBar_AllFalse()
+        {
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+        }
+        //private void LoadToolBar()
+        //{
+        //    switch (Mode)
+        //    {
+        //        case "audit":
+        //            RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+        //            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+        //            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+        //            switch (Status) // danh cho truong hop link tu CUSTOMER ENQUIRY qua
+        //            {
+        //                case "REV":
+        //                case "UNA":
+        //                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+        //                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+        //                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true); /// danh cho truong hop audit thong tin, link tu form CUSTOMER ENQUIRY
+        //                    break;
+        //            }
+        //            break;
+        //        case "preview":
+        //            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+        //            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+        //            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+        //             // danh cho truong hop link tu CUSTOMER ENQUIRY qua
+        //            if (Request.Params.Keys.Get(3) == "status")
+        //            {
+        //                switch (Status) // danh cho truong hop link tu CUSTOMER ENQUIRY qua
+        //                {
+        //                    case "AUT":
+        //                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+        //                        RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+        //                        break;
+        //                }
+        //            }
+        //                    break;
+        //        default :
+        //            RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+        //            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+        //            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+        //            break;
+        //    }
+        //}
         private void LoadDataforCommboBox()
         {
             this.LoadCities();
@@ -327,19 +346,24 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
        
         private void LoadOrGenerateDefaultData()
         {
-                switch (Mode)
-                {
-                    case "preview":
-                        txtId.Text = CustomerIDToReview;
-                        BindDataToControl(CustomerIDToReview);
-                        break;
-                    case "audit": // lam them cho du cac truong` hop cho mode tren URL, k lam` case nay cung dc
-                        txtId.Text = CustomerIDToReview;
-                        BindDataToControl(CustomerIDToReview);
-                        break;
-                    default:
-                        break;
-                }
+            if (Request.QueryString["CustomerID"] != null)
+            {
+                txtId.Text = Request.QueryString["CustomerID"].ToString();
+                BindDataToControl(Request.QueryString["CustomerID"].ToString());
+            }
+                //switch (Mode)
+                //{
+                //    case "preview":
+                //        txtId.Text = CustomerIDToReview;
+                //        BindDataToControl(CustomerIDToReview);
+                //        break;
+                //    case "audit": // lam them cho du cac truong` hop cho mode tren URL, k lam` case nay cung dc
+                //        txtId.Text = CustomerIDToReview;
+                //        BindDataToControl(CustomerIDToReview);
+                //        break;
+                //    default:
+                //        break;
+                //}
         }
         private bool CommitSaveAcctoDB()
         {
@@ -393,7 +417,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             IndividualAcc.IndustryCode = cmbMainIndustry.SelectedValue;
             IndividualAcc.IndustryName = cmbMainIndustry.Text.Replace(IndividualAcc.IndustryCode+" - ","");
             IndividualAcc.SubIndustryCode = cmbIndustry.SelectedValue;
-            IndividualAcc.SubIndustryName = cmbIndustry.Text.Replace(IndividualAcc.SubIndustryName + " - ", "");
+            IndividualAcc.SubIndustryName = cmbIndustry.Text;
             IndividualAcc.TargetCode = cmbTarget.SelectedValue;
             IndividualAcc.MaritalStatus = cmbMaritalStatus.SelectedValue;
             IndividualAcc.AccountOfficer = cmbAccountOfficer.SelectedValue;
@@ -416,6 +440,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             IndividualAcc.OfficeAddress = txtOfficeAddress.Text;
             IndividualAcc.CustomerLiability = txtCustomerLiability.Text;
             IndividualAcc.ApprovedUser = UserInfo.Username.ToString();
+            IndividualAcc.IndCust_EmailAddress = tbEmailAddress.Text;
         }
         private void BindDataToControl(string CustomerIDToReview)
         {
@@ -466,7 +491,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             cmbMainIndustry_SelectedIndexChanged(cmbMainIndustry, null);
             cmbMainIndustry.SelectedItem.Text =IndividualCustomer.IndustryCode+" - "+ IndividualCustomer.IndustryName;
             cmbIndustry.SelectedValue = IndividualCustomer.SubIndustryCode;
-            cmbIndustry.SelectedItem.Text = IndividualCustomer.SubIndustryCode+" - "+IndividualCustomer.SubIndustryName;
+            cmbIndustry.SelectedItem.Text = IndividualCustomer.SubIndustryName;
             cmbTarget.SelectedValue = IndividualCustomer.TargetCode;
             cmbMaritalStatus.SelectedValue = IndividualCustomer.MaritalStatus;
             cmbAccountOfficer.SelectedItem.Text= IndividualCustomer.AccountOfficer;
@@ -489,7 +514,15 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             txtMonthlyIncome.Text = IndividualCustomer.MonthlyIncome;
             txtOfficeAddress.Text = IndividualCustomer.OfficeAddress;
             txtCustomerLiability.Text = IndividualCustomer.CustomerLiability;
+            tbEmailAddress.Text = IndividualCustomer.IndCust_EmailAddress;
             StatusAccount_from_Search_action = IndividualCustomer.Status;
+            if (IndividualCustomer.Status == "AUT")
+            {
+                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
+                LoadToolBar_AllFalse();
+                return;
+            }
+            LoadToolBar(false);
         }
     
 #endregion
@@ -502,10 +535,10 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                 case "REV":
                 case "UNA":
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                    RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+                    RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                    RadToolBar1.FindItemByValue("btReverse").Enabled = true;
                     RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                     RadToolBar1.FindItemByValue("btPrint").Enabled = false;
                     break;
