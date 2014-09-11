@@ -45,7 +45,7 @@
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="150" />
-                    <ItemTemplate><%# BankProject.Controls.Commont.GenerateEnquiryButtons(Eval("CustomerId").ToString(), Eval("Status").ToString(), 287, 288, null, 285, true) %>
+                    <ItemTemplate><%# BankProject.Controls.Commont.GenerateEnquiryButtons(Eval("CustomerId").ToString(), Eval("Status").ToString(), 287, 288, 285, 285, true) %>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
             </Columns>

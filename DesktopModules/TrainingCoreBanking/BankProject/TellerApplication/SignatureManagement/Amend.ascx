@@ -8,9 +8,6 @@
         height: 25px;
         margin-right:10px;
     }
-    .SignatureCaptureNoDisplay {
-        display:none;
-    }
     #<%=imgSignaturePreview.ClientID%> {
         margin-top:5px;
     }
@@ -44,19 +41,17 @@
 <table cellpadding="0" cellspacing="0">
     <tr>
         <td class="MyLable">Customer Id <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Customer Id require !" Display="None" ControlToValidate="txtCustomerId" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
-        <td class="MyContent"><asp:HiddenField ID="txtCustomerIdOld" runat="server" /><asp:TextBox ID="txtCustomerId" runat="server" Width="200" /></td>
-        <td class="MyLable" style="color: darkgrey;"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></td>
+        <td class="MyContent"><asp:HiddenField ID="txtCustomerIdOld" runat="server" /><asp:TextBox ID="txtCustomerId" runat="server" Width="200" />
+        <span style="color: darkgrey;"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></span></td>
     </tr>
     <tr>
         <td class="MyLable" style="vertical-align:top;">New signature <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Signature require !" Display="None" ControlToValidate="txtSignature" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
-        <td class="MyContent"><asp:FileUpload ID="txtSignature" runat="server" CssClass="SignatureCaptureNoDisplay" /><asp:Button ID="cmdSelectSignatureImage" runat="server" Text="Select signature image" OnClientClick="return false;" /><asp:Label ID="lblSignatureImage" runat="server" Text=""></asp:Label>
-            <br /><asp:Image ID="imgSignaturePreview" runat="server" Width="200" CssClass="SignatureCaptureNoDisplay" /></td>
-        <td class="MyLable"></td>
+        <td class="MyContent"><asp:FileUpload ID="txtSignature" runat="server" CssClass="NoDisplay" /><asp:Button ID="cmdSelectSignatureImage" runat="server" Text="Select signature image" OnClientClick="return false;" /><asp:Label ID="lblSignatureImage" runat="server" Text=""></asp:Label>
+            <br /><asp:Image ID="imgSignaturePreview" runat="server" CssClass="imgSignaturePreview NoDisplay" /></td>
     </tr>
     <tr>
         <td class="MyLable" style="vertical-align:top;">Old signature</td>
-        <td class="MyContent"><asp:HyperLink ID="lnkSignatureOld" runat="server" Target="_blank"><asp:Image ID="imgSignatureOld" runat="server" Width="200" /></asp:HyperLink></td>
-        <td class="MyLable"></td>
+        <td class="MyContent"><asp:HyperLink ID="lnkSignatureOld" runat="server" Target="_blank"><asp:Image ID="imgSignatureOld" runat="server" CssClass="imgSignaturePreview" /></asp:HyperLink></td>
     </tr>
 </table>
 <script type="text/javascript">
@@ -102,8 +97,8 @@
                 var files = !!this.files ? this.files : [];
                 //
                 lblSignatureImage.text('');
-                imgSignaturePreview.removeClass('SignatureCaptureNoDisplay');
-                imgSignaturePreview.addClass('SignatureCaptureNoDisplay');
+                imgSignaturePreview.removeClass('NoDisplay');
+                imgSignaturePreview.addClass('NoDisplay');
                 //alert(files.length);
                 if (!files.length) {
                     //user not choose file
@@ -125,7 +120,7 @@
                     var reader = new FileReader(); // instance of the FileReader
                     reader.readAsDataURL(files[0]); // read the local file
                     reader.onloadend = function () { // set image data as background of div
-                        imgSignaturePreview.removeClass('SignatureCaptureNoDisplay');
+                        imgSignaturePreview.removeClass('NoDisplay');
                         imgSignaturePreview.attr("src", this.result);
                         lblSignatureImage.text(fileName);
                     }

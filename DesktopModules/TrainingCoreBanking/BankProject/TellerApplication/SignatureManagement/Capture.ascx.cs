@@ -16,6 +16,27 @@ namespace BankProject.TellerApplication.SignatureManagement
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
+            txtCustomerId.Text = Request.QueryString["tid"];
+            if (String.IsNullOrEmpty(txtCustomerId.Text)) return;
+            //
+            lblCustomerName.Text = "";
+            imgSignaturePreview.ImageUrl = "";
+            //
+            DataTable tDetail = bd.Customer.SignatureDetail(txtCustomerId.Text);
+            if (tDetail == null || tDetail.Rows.Count <= 0)
+            {
+                lblCustomerName.Text = "This Customer does not exist.";
+                return;
+            }
+            txtCustomerId.Enabled = false;
+            //
+            DataRow dr = tDetail.Rows[0];
+            lblCustomerName.Text = dr["CustomerName"].ToString();
+            imgSignaturePreview.ImageUrl = "~/" + bd.Customer.SignaturePath + "/" + dr["Signatures"];
+            string Status = dr["Status"].ToString();
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.UNA);
+            RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.UNA);
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -39,7 +60,7 @@ namespace BankProject.TellerApplication.SignatureManagement
                             bd.Customer.InsertSignature(txtCustomerId.Text, fileName, this.UserInfo.Username);
                             bc.Commont.SetEmptyFormControls(this.Controls);
                             //
-                            txtCustomerIdOld.Value = "";
+                            Response.Redirect("Default.aspx?tabid=" + this.TabId);
                             bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
                         }
                         catch (Exception err)
@@ -59,8 +80,7 @@ namespace BankProject.TellerApplication.SignatureManagement
                             bd.Customer.UpdateSignatureStatus(txtCustomerId.Text, bd.TransactionStatus.AUT, this.UserInfo.Username);
                         else
                             bd.Customer.UpdateSignatureStatus(txtCustomerId.Text, bd.TransactionStatus.REV, this.UserInfo.Username);
-                        bc.Commont.SetEmptyFormControls(this.Controls);
-                        bc.Commont.SetTatusFormControls(this.Controls, true);
+                        Response.Redirect("Default.aspx?tabid=" + this.TabId);
                     }
                     catch (Exception err)
                     {

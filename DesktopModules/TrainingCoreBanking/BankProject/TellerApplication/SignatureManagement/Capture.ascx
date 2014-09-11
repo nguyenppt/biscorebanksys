@@ -8,9 +8,6 @@
         height: 25px;
         margin-right:10px;
     }
-    .SignatureCaptureNoDisplay {
-        display:none;
-    }
     #<%=imgSignaturePreview.ClientID%> {
         margin-top:5px;
     }
@@ -46,14 +43,14 @@
         <td class="MyLable">Customer Id <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Customer require !" Display="None" ControlToValidate="txtCustomerId" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
         <td class="MyContent">
             <asp:HiddenField ID="txtCustomerIdOld" runat="server" />
-            <asp:TextBox ID="txtCustomerId" runat="server" Width="200" /> </td>
-        <td class="MyLable" style="color: darkgrey;"><telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" LoadingPanelID="RadAjaxLoadingPanel1" OnAjaxRequest="RadAjaxPanel1_AjaxRequest"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></telerik:RadAjaxPanel></td>
+            <asp:TextBox ID="txtCustomerId" runat="server" Width="200" /> 
+        <span style="color: darkgrey;"><telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" LoadingPanelID="RadAjaxLoadingPanel1" OnAjaxRequest="RadAjaxPanel1_AjaxRequest"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></telerik:RadAjaxPanel></span>
+            </td>
     </tr>
     <tr>
         <td class="MyLable" style="vertical-align:top;">Signature <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Signature require !" Display="None" ControlToValidate="txtSignature" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
-        <td class="MyContent"><asp:FileUpload ID="txtSignature" runat="server" CssClass="SignatureCaptureNoDisplay" /><asp:Button ID="cmdSelectSignatureImage" runat="server" Text="Select signature image" OnClientClick="return false;" /><asp:Label ID="lblSignatureImage" runat="server" Text=""></asp:Label>
-            <br /><asp:Image ID="imgSignaturePreview" runat="server" Width="200" CssClass="SignatureCaptureNoDisplay" /></td>
-        <td class="MyLable"></td>
+        <td class="MyContent"><asp:FileUpload ID="txtSignature" runat="server" CssClass="NoDisplay" /><asp:Button ID="cmdSelectSignatureImage" runat="server" Text="Select signature image" OnClientClick="return false;" /><asp:Label ID="lblSignatureImage" runat="server" Text=""></asp:Label>
+            <br /><asp:Image ID="imgSignaturePreview" runat="server" CssClass="imgSignaturePreview NoDisplay" /></td>
     </tr>
 </table>
 <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" />
@@ -102,8 +99,8 @@
                 var files = !!this.files ? this.files : [];
                 //
                 lblSignatureImage.text('');
-                imgSignaturePreview.removeClass('SignatureCaptureNoDisplay');
-                imgSignaturePreview.addClass('SignatureCaptureNoDisplay');
+                imgSignaturePreview.removeClass('NoDisplay');
+                imgSignaturePreview.addClass('NoDisplay');
                 //alert(files.length);
                 if (!files.length) {
                     //user not choose file
@@ -125,7 +122,7 @@
                     var reader = new FileReader(); // instance of the FileReader
                     reader.readAsDataURL(files[0]); // read the local file
                     reader.onloadend = function () { // set image data as background of div
-                        imgSignaturePreview.removeClass('SignatureCaptureNoDisplay');
+                        imgSignaturePreview.removeClass('NoDisplay');
                         imgSignaturePreview.attr("src", this.result);
                         lblSignatureImage.text(fileName);
                     }

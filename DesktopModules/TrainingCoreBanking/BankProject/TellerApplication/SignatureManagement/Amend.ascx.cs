@@ -64,6 +64,7 @@ namespace BankProject.TellerApplication.SignatureManagement
                     lnkSignatureOld.NavigateUrl = "#";
                     RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                     RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                    Response.Redirect("Default.aspx?tabid=" + this.TabId);
                     bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
                 }
                 catch (Exception err)
