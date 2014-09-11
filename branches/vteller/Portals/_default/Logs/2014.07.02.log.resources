@@ -1,0 +1,128 @@
+2014-07-02 21:03:23,177 [khanhnd-laptop][Thread:47][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\works\Bank\TrainingCoreBanking\Report\Template\NormalLC\HtmlPage1.html'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.OpenText(String path)
+   at BankProject.NormalLC.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 163
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-02 21:03:23,312 [khanhnd-laptop][Thread:47][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Could+not+find+a+part+of+the+path+%27D%3a%5cworks%5cBank%5cTrainingCoreBanking%5cReport%5cTemplate%5cNormalLC%5cHtmlPage1.html%27.&content=0
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\works\Bank\TrainingCoreBanking\Report\Template\NormalLC\HtmlPage1.html'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Boolean detectEncodingFromByteOrderMarks)
+   at System.IO.File.OpenText(String path)
+   at BankProject.NormalLC.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 163
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-02 21:12:27,935 [khanhnd-laptop][Thread:8][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: The license is not valid for this product.
+   at ..(Stream )
+   at ..(String , Assembly )
+   at BankProject.NormalLC.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 159
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-02 21:12:27,981 [khanhnd-laptop][Thread:8][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=The+license+is+not+valid+for+this+product.&content=0
+System.InvalidOperationException: The license is not valid for this product.
+   at ..(Stream )
+   at ..(String , Assembly )
+   at BankProject.NormalLC.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 159
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-02 21:12:28,118 [khanhnd-laptop][Thread:8][ERROR] DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider - '', hexadecimal value 0x02, is an invalid character.
+System.ArgumentException: '', hexadecimal value 0x02, is an invalid character.
+   at System.Xml.XmlEncodedRawTextWriter.InvalidXmlChar(Int32 ch, Char* pDst, Boolean entitize)
+   at System.Xml.XmlEncodedRawTextWriter.WriteElementTextBlock(Char* pSrc, Char* pSrcEnd)
+   at System.Xml.XmlEncodedRawTextWriter.WriteString(String text)
+   at System.Xml.XmlWellFormedWriter.WriteString(String text)
+   at System.Xml.XmlWriter.WriteElementString(String localName, String ns, String value)
+   at DotNetNuke.Services.Log.EventLog.LogDetailInfo.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogProperties.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogProperties.Serialize()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+2014-07-02 21:12:28,498 [khanhnd-laptop][Thread:8][ERROR] DotNetNuke.Services.Log.EventLog.LogController - Thread was being aborted.
+System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.AddLog(LogInfo logInfo)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLog(LogInfo logInfo)
+2014-07-02 21:12:28,690 [khanhnd-laptop][Thread:8][ERROR] DotNetNuke.Services.Log.EventLog.LogController - '', hexadecimal value 0x02, is an invalid character.
+System.ArgumentException: '', hexadecimal value 0x02, is an invalid character.
+   at System.Xml.XmlEncodedRawTextWriter.InvalidXmlChar(Int32 ch, Char* pDst, Boolean entitize)
+   at System.Xml.XmlEncodedRawTextWriter.WriteElementTextBlock(Char* pSrc, Char* pSrcEnd)
+   at System.Xml.XmlEncodedRawTextWriter.WriteString(String text)
+   at System.Xml.XmlWellFormedWriter.WriteString(String text)
+   at System.Xml.XmlWriter.WriteElementString(String localName, String ns, String value)
+   at DotNetNuke.Services.Log.EventLog.LogDetailInfo.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogProperties.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogInfo.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLogToFile(LogInfo logInfo)
+2014-07-02 21:13:40,590 [khanhnd-laptop][Thread:58][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.InvalidOperationException: The license is not valid for this product.
+   at ..(Stream )
+   at ..(String , Assembly )
+   at BankProject.NormalLC.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 159
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-02 21:13:40,636 [khanhnd-laptop][Thread:58][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=The+license+is+not+valid+for+this+product.&content=0
+System.InvalidOperationException: The license is not valid for this product.
+   at ..(Stream )
+   at ..(String , Assembly )
+   at BankProject.NormalLC.RadToolBar1_ButtonClick(Object sender, RadToolBarEventArgs e) in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 159
+   at Telerik.Web.UI.RadToolBar.OnButtonClick(RadToolBarEventArgs e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-02 21:13:40,663 [khanhnd-laptop][Thread:58][ERROR] DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider - '', hexadecimal value 0x02, is an invalid character.
+System.ArgumentException: '', hexadecimal value 0x02, is an invalid character.
+   at System.Xml.XmlEncodedRawTextWriter.InvalidXmlChar(Int32 ch, Char* pDst, Boolean entitize)
+   at System.Xml.XmlEncodedRawTextWriter.WriteElementTextBlock(Char* pSrc, Char* pSrcEnd)
+   at System.Xml.XmlEncodedRawTextWriter.WriteString(String text)
+   at System.Xml.XmlWellFormedWriter.WriteString(String text)
+   at System.Xml.XmlWriter.WriteElementString(String localName, String ns, String value)
+   at DotNetNuke.Services.Log.EventLog.LogDetailInfo.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogProperties.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogProperties.Serialize()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+2014-07-02 21:13:40,680 [khanhnd-laptop][Thread:58][ERROR] DotNetNuke.Services.Log.EventLog.LogController - Thread was being aborted.
+System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.WriteLog(LogQueueItem logQueueItem)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.DBLoggingProvider.AddLog(LogInfo logInfo)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLog(LogInfo logInfo)
+2014-07-02 21:13:40,697 [khanhnd-laptop][Thread:58][ERROR] DotNetNuke.Services.Log.EventLog.LogController - '', hexadecimal value 0x02, is an invalid character.
+System.ArgumentException: '', hexadecimal value 0x02, is an invalid character.
+   at System.Xml.XmlEncodedRawTextWriter.InvalidXmlChar(Int32 ch, Char* pDst, Boolean entitize)
+   at System.Xml.XmlEncodedRawTextWriter.WriteElementTextBlock(Char* pSrc, Char* pSrcEnd)
+   at System.Xml.XmlEncodedRawTextWriter.WriteString(String text)
+   at System.Xml.XmlWellFormedWriter.WriteString(String text)
+   at System.Xml.XmlWriter.WriteElementString(String localName, String ns, String value)
+   at DotNetNuke.Services.Log.EventLog.LogDetailInfo.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogProperties.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogInfo.WriteXml(XmlWriter writer)
+   at DotNetNuke.Services.Log.EventLog.LogController.AddLogToFile(LogInfo logInfo)
+2014-07-02 23:54:17,933 [khanhnd-laptop][Thread:29][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.ArgumentOutOfRangeException: Value of '1/1/1900 12:00:00 AM' is not valid for 'SelectedDate'. 'SelectedDate' should be between 'MinDate' and 'MaxDate'.
+Parameter name: SelectedDate
+   at Telerik.Web.UI.RadDatePicker.set_SelectedDate(Nullable`1 value)
+   at BankProject.NormalLC.LoadNomalLC() in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 653
+   at BankProject.NormalLC.btSearch_Click(Object sender, EventArgs e) in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 634
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-07-02 23:54:18,143 [khanhnd-laptop][Thread:29][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=92&error=Value+of+%271%2f1%2f1900+12%3a00%3a00+AM%27+is+not+valid+for+%27SelectedDate%27.+%27SelectedDate%27+should+be+between+%27MinDate%27+and+%27MaxDate%27.%0d%0aParameter+name%3a+SelectedDate&content=0
+System.ArgumentOutOfRangeException: Value of '1/1/1900 12:00:00 AM' is not valid for 'SelectedDate'. 'SelectedDate' should be between 'MinDate' and 'MaxDate'.
+Parameter name: SelectedDate
+   at Telerik.Web.UI.RadDatePicker.set_SelectedDate(Nullable`1 value)
+   at BankProject.NormalLC.LoadNomalLC() in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 653
+   at BankProject.NormalLC.btSearch_Click(Object sender, EventArgs e) in d:\works\Bank\trainingcorebanking\DesktopModules\TrainingCoreBanking\BankProject\NormalLC.ascx.cs:line 634
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

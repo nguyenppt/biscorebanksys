@@ -1,0 +1,827 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="Amendment.ascx">
+      <publishTime>07/10/2014 23:16:08</publishTime>
+    </File>
+    <File Include="bin/Aspose.Cells.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/Aspose.Words.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/BankProject.dll">
+      <publishTime>09/09/2014 23:18:19</publishTime>
+    </File>
+    <File Include="bin/ClientDependency.Core.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/CountryListBox.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.Instrumentation.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/dotnetnuke.log4net.dll">
+      <publishTime>07/10/2014 23:14:46</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.Services.Syndication.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.Web.Client.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.WebControls.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/DotNetNuke.WebUtility.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ApplicationBlocks.Data.dll">
+      <publishTime>07/10/2014 23:15:44</publishTime>
+    </File>
+    <File Include="bin/SharpZipLib.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>07/10/2014 23:14:45</publishTime>
+    </File>
+    <File Include="bin/Telerik.Web.UI.dll">
+      <publishTime>07/10/2014 23:14:46</publishTime>
+    </File>
+    <File Include="CancelLC.ascx">
+      <publishTime>07/10/2014 23:16:07</publishTime>
+    </File>
+    <File Include="Controls/DynamicControls.ascx">
+      <publishTime>07/25/2014 22:01:20</publishTime>
+    </File>
+    <File Include="Controls/PaymentMethodControl.ascx">
+      <publishTime>07/18/2014 20:13:04</publishTime>
+    </File>
+    <File Include="Controls/ThongTinChiNhanh.ascx">
+      <publishTime>07/10/2014 23:16:15</publishTime>
+    </File>
+    <File Include="Controls/VVComboBox.ascx">
+      <publishTime>07/25/2014 21:59:03</publishTime>
+    </File>
+    <File Include="Controls/VVDatePicker.ascx">
+      <publishTime>07/21/2014 20:21:21</publishTime>
+    </File>
+    <File Include="Controls/VVMutiControls.ascx">
+      <publishTime>07/17/2014 23:38:28</publishTime>
+    </File>
+    <File Include="Controls/VVNumberBox.ascx">
+      <publishTime>07/19/2014 22:16:56</publishTime>
+    </File>
+    <File Include="Controls/VVTextBox.ascx">
+      <publishTime>07/10/2014 23:16:15</publishTime>
+    </File>
+    <File Include="Entity/BankProjectModels.dbml">
+      <publishTime>09/06/2014 22:40:16</publishTime>
+    </File>
+    <File Include="FTTeller/InwardCashWithdraw.ascx">
+      <publishTime>08/08/2014 01:32:18</publishTime>
+    </File>
+    <File Include="FTTeller/InwardCashWithdraw_PL.ascx">
+      <publishTime>07/31/2014 21:41:32</publishTime>
+    </File>
+    <File Include="FTTeller/InwardProcessCreditAcc.ascx">
+      <publishTime>08/08/2014 01:32:18</publishTime>
+    </File>
+    <File Include="FTTeller/InwardProcessCreditAcc_PL.ascx">
+      <publishTime>08/03/2014 21:13:09</publishTime>
+    </File>
+    <File Include="FTTeller/OutwardTransferByCash.ascx">
+      <publishTime>08/08/2014 01:32:18</publishTime>
+    </File>
+    <File Include="FTTeller/OutwardTransferByCash_PL.ascx">
+      <publishTime>07/28/2014 22:43:54</publishTime>
+    </File>
+    <File Include="HomeRedirect.ascx">
+      <publishTime>07/10/2014 23:16:17</publishTime>
+    </File>
+    <File Include="InputCollateralInformation.ascx">
+      <publishTime>08/29/2014 23:49:39</publishTime>
+    </File>
+    <File Include="InputCollateralInformation_Enquiry.ascx">
+      <publishTime>08/22/2014 20:32:09</publishTime>
+    </File>
+    <File Include="InputCollateralInformation_PL.ascx">
+      <publishTime>07/13/2014 18:01:30</publishTime>
+    </File>
+    <File Include="MainMenu.ascx">
+      <publishTime>07/10/2014 23:16:08</publishTime>
+    </File>
+    <File Include="NormalCLControls/ProvisionTransfer.ascx">
+      <publishTime>07/13/2014 18:01:30</publishTime>
+    </File>
+    <File Include="NormalCLControls/ReviewList.ascx">
+      <publishTime>07/10/2014 23:16:14</publishTime>
+    </File>
+    <File Include="NormalLC.ascx">
+      <publishTime>06/30/2014 23:50:13</publishTime>
+    </File>
+    <File Include="OpenCorpCustomer.ascx">
+      <publishTime>08/10/2014 20:26:32</publishTime>
+    </File>
+    <File Include="OpenCustomerAccount.ascx">
+      <publishTime>09/03/2014 23:26:35</publishTime>
+    </File>
+    <File Include="OpenCustomerAccountList.ascx">
+      <publishTime>08/06/2014 14:12:01</publishTime>
+    </File>
+    <File Include="OpenDepositAcctForTF.ascx">
+      <publishTime>07/16/2014 20:11:43</publishTime>
+    </File>
+    <File Include="OverseasTransfer.ascx">
+      <publishTime>08/30/2014 22:42:14</publishTime>
+    </File>
+    <File Include="OverseasTransfers/ListReview.ascx">
+      <publishTime>07/16/2014 20:11:41</publishTime>
+    </File>
+    <File Include="PhayHanhLC.ascx">
+      <publishTime>07/16/2014 20:11:43</publishTime>
+    </File>
+    <File Include="Report/Template/AccountTransaction/CashDeposit.docx">
+      <publishTime>09/04/2014 00:44:20</publishTime>
+    </File>
+    <File Include="Report/Template/AccountTransaction/CashWithdrawal.docx">
+      <publishTime>08/24/2014 00:20:42</publishTime>
+    </File>
+    <File Include="Report/Template/CollectCharge/CollectChargeVAT.doc">
+      <publishTime>08/24/2014 12:25:06</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc">
+      <publishTime>08/30/2014 20:08:20</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/DocumentaryCollectionCancelVAT.doc">
+      <publishTime>08/28/2014 22:43:13</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc">
+      <publishTime>09/03/2014 10:41:20</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1.doc">
+      <publishTime>09/02/2014 16:27:53</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2.doc">
+      <publishTime>09/02/2014 16:41:24</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1.doc">
+      <publishTime>09/03/2014 19:37:31</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG.doc">
+      <publishTime>09/02/2014 15:40:46</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG.doc">
+      <publishTime>09/04/2014 20:48:01</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/HOADONVAT - Copy.doc">
+      <publishTime>07/22/2014 01:20:00</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/HOADONVAT.doc">
+      <publishTime>07/22/2014 01:20:00</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAcceptionMT412.doc">
+      <publishTime>08/18/2014 00:54:58</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAcceptionPHIEUNHAPNGOAIBANG.doc">
+      <publishTime>08/14/2014 23:18:13</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAcceptionVAT.doc">
+      <publishTime>08/28/2014 22:42:10</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAmendmentsMT410.doc">
+      <publishTime>08/14/2014 22:43:10</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAmendmentsPHIEUNHAPNGOAIBANG.doc">
+      <publishTime>08/14/2014 23:17:37</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAmendmentsPHIEUXUATNGOAIBANG.doc">
+      <publishTime>08/24/2014 18:08:40</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAmendmentsVAT.doc">
+      <publishTime>08/30/2014 20:00:13</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT202.doc">
+      <publishTime>08/14/2014 22:43:10</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT400.doc">
+      <publishTime>08/14/2014 22:43:10</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentPHIEUCHUYENKHOAN.doc">
+      <publishTime>08/14/2014 23:17:13</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentPHIEUNHAPNGOAIBANG.doc">
+      <publishTime>08/30/2014 20:09:30</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentPHIEUXUATNGOAIBANG.doc">
+      <publishTime>08/31/2014 00:01:05</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentVAT_B.doc">
+      <publishTime>09/01/2014 21:25:04</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentVAT_B.docx">
+      <publishTime>07/26/2014 16:12:51</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/RegisterDocumentaryCollection.doc">
+      <publishTime>08/14/2014 22:43:10</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/RegisterDocumentaryCollectionMT410.doc">
+      <publishTime>08/14/2014 22:43:10</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG.doc">
+      <publishTime>08/14/2014 23:33:41</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/RegisterDocumentaryCollectionVAT.doc">
+      <publishTime>08/28/2014 22:42:48</publishTime>
+    </File>
+    <File Include="Report/Template/IssueFreeFormatMessage.doc">
+      <publishTime>08/27/2014 13:05:38</publishTime>
+    </File>
+    <File Include="Report/Template/MainAccount/OpenAccount.docx">
+      <publishTime>08/24/2014 13:05:20</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/AmendLC_PHIEUNHAPNGOAIBANG.doc">
+      <publishTime>08/28/2014 01:01:53</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/AmendLC_PHIEUXUATNGOAIBANG.doc">
+      <publishTime>09/02/2014 15:40:47</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/AmendLC_VAT.doc">
+      <publishTime>09/01/2014 21:25:04</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/CancelLC_PHIEUXUATNGOAIBANG.doc">
+      <publishTime>09/02/2014 15:40:47</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/CancelLC_VAT.doc">
+      <publishTime>09/02/2014 15:40:47</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/IssueLC_MT700.doc">
+      <publishTime>09/03/2014 22:59:18</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/IssueLC_MT740.doc">
+      <publishTime>08/30/2014 20:17:51</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/IssueLC_PHIEUNHAPNGOAIBANG.doc">
+      <publishTime>08/28/2014 00:52:48</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/IssueLC_VAT.doc">
+      <publishTime>09/02/2014 15:40:47</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/MT700.doc">
+      <publishTime>07/13/2014 18:01:31</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/NormalLC.doc">
+      <publishTime>07/10/2014 23:16:17</publishTime>
+    </File>
+    <File Include="Report/Template/OverseasTransfer/OverseasTransfer.doc">
+      <publishTime>07/10/2014 23:16:17</publishTime>
+    </File>
+    <File Include="Report/Template/OverseasTransfer/OverseasTransferMT103.doc">
+      <publishTime>08/30/2014 01:43:45</publishTime>
+    </File>
+    <File Include="Report/Template/OverseasTransfer/OverseasTransferVAT.doc">
+      <publishTime>08/30/2014 23:08:25</publishTime>
+    </File>
+    <File Include="Report/Template/OverseasTransfer/PHIEUCHUYENKHOAN.doc">
+      <publishTime>08/30/2014 23:05:05</publishTime>
+    </File>
+    <File Include="Report/Template/ProvisionTransfersPHIEUCHUYENKHOAN.doc">
+      <publishTime>08/30/2014 23:57:00</publishTime>
+    </File>
+    <File Include="Report/Template/SavingAcc/SavingAccount.docx">
+      <publishTime>08/19/2014 11:15:05</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/BlockAccount.ascx">
+      <publishTime>07/10/2014 23:16:20</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CloseAccount.ascx">
+      <publishTime>07/10/2014 23:16:20</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/datatest/CTY TNHH PHAT TRIEN PHAN MEM ABC.xlsx">
+      <publishTime>07/24/2014 21:47:16</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/datatest/CTY TNHH SONG HONG.xlsx">
+      <publishTime>07/24/2014 21:47:16</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/datatest/Travelocity Corp..xlsx">
+      <publishTime>07/24/2014 21:47:16</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/datatest/Viet Victory Corp..xlsx">
+      <publishTime>07/24/2014 21:47:16</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/datatest/Wall Street Corp..xlsx">
+      <publishTime>07/24/2014 21:47:16</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/PaymentFrequency.ascx">
+      <publishTime>08/23/2014 10:43:45</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/PaymentList.ascx">
+      <publishTime>08/22/2014 20:40:15</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/PaymentNonFrequency.ascx">
+      <publishTime>08/23/2014 10:43:45</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/SalaryPaymentEnquiry.ascx">
+      <publishTime>08/23/2014 10:43:45</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/DiscountedClose.ascx">
+      <publishTime>08/17/2014 15:03:49</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/DiscountedCloseList.ascx">
+      <publishTime>08/20/2014 09:42:40</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/ListReview.ascx">
+      <publishTime>08/08/2014 23:29:29</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/ListReviewDiscounted.ascx">
+      <publishTime>08/17/2014 15:03:49</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/Preclose/PreClosureFinal.ascx">
+      <publishTime>07/13/2014 22:06:26</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/Preclose/PreclosureFinalAzAccount.ascx">
+      <publishTime>07/13/2014 22:06:26</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/Preclose/PreclosureFinalInterestedAmount.ascx">
+      <publishTime>07/13/2014 22:06:26</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/Preclose/PreclosureFinalPayment.ascx">
+      <publishTime>07/13/2014 22:06:26</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/PreClosure.ascx">
+      <publishTime>08/20/2014 09:42:40</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/PreclosureDisplay.ascx">
+      <publishTime>08/06/2014 14:12:01</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/PreclosureHoldings.ascx">
+      <publishTime>07/13/2014 22:06:25</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/PreclosureInput.ascx">
+      <publishTime>08/17/2014 15:03:49</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/PreclosureWithDraw.ascx">
+      <publishTime>08/06/2014 14:12:01</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/TellerTransactions/TellerTransactions.ascx">
+      <publishTime>08/08/2014 23:29:29</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/TellerTransactions/TellerTransactionsDisplay.ascx">
+      <publishTime>07/13/2014 22:06:24</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Close/TellerTransactions/TellerTransactionsEnd.ascx">
+      <publishTime>07/19/2014 00:20:49</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Enquiry/ArrearandPeriodic.ascx">
+      <publishTime>09/09/2014 10:22:21</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Enquiry/Discounted.ascx">
+      <publishTime>09/09/2014 10:22:21</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/Arrear.ascx">
+      <publishTime>08/19/2014 13:12:37</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/ArrearInput.ascx">
+      <publishTime>07/10/2014 23:16:20</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/ArrearNewDeposit.ascx">
+      <publishTime>07/31/2014 21:41:32</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/Discounted.ascx">
+      <publishTime>09/09/2014 10:22:21</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/ListDiscounted.ascx">
+      <publishTime>08/19/2014 13:12:37</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/ListReview.ascx">
+      <publishTime>08/04/2014 12:01:53</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/Periodic.ascx">
+      <publishTime>08/17/2014 15:03:49</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/PeriodicInput.ascx">
+      <publishTime>07/31/2014 21:41:32</publishTime>
+    </File>
+    <File Include="TellerApplication/AccountManagement/SavingsAC/Open/PeriodicNewDeposit.ascx">
+      <publishTime>07/28/2014 23:17:43</publishTime>
+    </File>
+    <File Include="TellerApplication/SignatureManagement/Amend.ascx">
+      <publishTime>09/09/2014 10:22:21</publishTime>
+    </File>
+    <File Include="TellerApplication/SignatureManagement/Capture.ascx">
+      <publishTime>09/09/2014 10:22:21</publishTime>
+    </File>
+    <File Include="TellerApplication/SignatureManagement/Enquiry.ascx">
+      <publishTime>09/09/2014 10:22:21</publishTime>
+    </File>
+    <File Include="TellerApplication/SignatureManagement/Preview.ascx">
+      <publishTime>09/09/2014 10:22:21</publishTime>
+    </File>
+    <File Include="test.ascx">
+      <publishTime>07/10/2014 23:16:24</publishTime>
+    </File>
+    <File Include="TopMenu.ascx">
+      <publishTime>07/10/2014 23:16:14</publishTime>
+    </File>
+    <File Include="TradingFinance/BasicTools.xml">
+      <publishTime>08/27/2014 13:05:38</publishTime>
+    </File>
+    <File Include="TradingFinance/EnquiryOverseasFundsTransfer.ascx">
+      <publishTime>08/27/2014 13:05:38</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/AdvisingAmendmentList.ascx">
+      <publishTime>07/10/2014 23:16:20</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/AdvisingAndNegotiationLC.ascx">
+      <publishTime>07/13/2014 18:01:32</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/AdvisingReviewList.ascx">
+      <publishTime>07/10/2014 23:16:20</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCollections/ExportDocumentaryCollection.ascx">
+      <publishTime>09/06/2014 00:33:14</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCollections/ExportEnquiryDocumentaryCollection.ascx">
+      <publishTime>09/03/2014 19:37:31</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCollections/ReviewExport_DocumentCollection.ascx">
+      <publishTime>07/19/2014 00:20:50</publishTime>
+    </File>
+    <File Include="TradingFinance/ForeignExchangeTrade.ascx">
+      <publishTime>08/22/2014 23:49:17</publishTime>
+    </File>
+    <File Include="TradingFinance/ForeignExchangeTradePreviewList.ascx">
+      <publishTime>08/02/2014 00:06:44</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/DocumentaryCollectionCancel.ascx">
+      <publishTime>07/19/2014 00:20:52</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/DocumetaryCollection.ascx">
+      <publishTime>08/18/2014 22:07:13</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/EnquiryDocumentaryCollection.ascx">
+      <publishTime>08/05/2014 00:15:17</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/IncomingCollectionAmendment.ascx">
+      <publishTime>07/19/2014 00:20:52</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/IncomingCollectionPayment.ascx">
+      <publishTime>08/22/2014 23:49:17</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/ProvisionTransfer_DC.ascx">
+      <publishTime>08/30/2014 23:51:45</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/ProvisionTransfer_DC_PL.ascx">
+      <publishTime>08/08/2014 23:29:29</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/ReviewList.ascx">
+      <publishTime>08/05/2014 00:15:17</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/ReviewListByAmendment.ascx">
+      <publishTime>08/05/2014 00:15:17</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/ReviewListByCancelAmendment.ascx">
+      <publishTime>08/18/2014 00:54:58</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/ReviewListByIncomingCollectionAcception.ascx">
+      <publishTime>08/05/2014 00:15:17</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCollections/ReviewListByIncomingCollectionPayment.ascx">
+      <publishTime>07/10/2014 23:16:22</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/DocumentWithNoDiscrepancy.ascx">
+      <publishTime>08/28/2014 01:16:20</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/EnquiryIssueLC.ascx">
+      <publishTime>08/20/2014 09:42:40</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/IssueLC.ascx">
+      <publishTime>09/03/2014 22:59:18</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/LCEdit.ascx">
+      <publishTime>07/25/2014 21:19:12</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/PreviewAmendLC.ascx">
+      <publishTime>08/18/2014 00:54:58</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/PreviewCancelLC.ascx">
+      <publishTime>08/22/2014 23:49:17</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/PreviewIssueLC.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/Preview_DocumentProcessing.ascx">
+      <publishTime>08/28/2014 01:16:20</publishTime>
+    </File>
+    <File Include="TradingFinance/IssueFreeFormatMessage.ascx">
+      <publishTime>08/27/2014 13:05:38</publishTime>
+    </File>
+    <File Include="TradingFinance/PreviewIssueFreeFormatMessage.ascx">
+      <publishTime>08/07/2014 01:43:42</publishTime>
+    </File>
+    <File Include="Views/CustomerManagement/EnquiryCustomer.ascx">
+      <publishTime>08/10/2014 20:26:32</publishTime>
+    </File>
+    <File Include="Views/CustomerManagement/OpenInvidualCustomer/Index.ascx">
+      <publishTime>08/09/2014 17:32:50</publishTime>
+    </File>
+    <File Include="Views/CustomerManagement/OpenInvidualCustomer/Index_ListReview.ascx">
+      <publishTime>08/08/2014 23:29:29</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/AmendLoanContract.ascx">
+      <publishTime>08/04/2014 22:53:50</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/AmendLoanContract_Item.ascx">
+      <publishTime>08/04/2014 22:53:50</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/AmendLoanContract_PL.ascx">
+      <publishTime>08/04/2014 22:53:50</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/BlockAccount.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/BlockAccountList.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/BuyTravellersCheque.ascx">
+      <publishTime>07/25/2014 21:15:05</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CalculatedInterestedAmountManual.ascx">
+      <publishTime>08/19/2014 13:12:37</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CancelStopCheque.ascx">
+      <publishTime>07/10/2014 23:15:55</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CancelStopPayment.ascx">
+      <publishTime>07/10/2014 23:15:56</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashDepositePreviewList.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashDeposits.ascx">
+      <publishTime>08/29/2014 20:51:03</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashRepayment.ascx">
+      <publishTime>07/25/2014 21:15:05</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashRepayment_PL.ascx">
+      <publishTime>07/25/2014 21:15:05</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashWithdrawal.ascx">
+      <publishTime>08/30/2014 10:57:46</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashWithdrawalPreviewList.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashWithdrawalsBuying.ascx">
+      <publishTime>09/06/2014 22:54:42</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashWithdrawalsBuyingPreviewList.ascx">
+      <publishTime>07/13/2014 17:58:57</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeCancleStop.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeCancleStop_Enquiry.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeCancleStop_PL.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeIssue.ascx">
+      <publishTime>08/29/2014 23:49:39</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeIssueCollectCharges.ascx">
+      <publishTime>07/10/2014 23:15:50</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeIssue_Enquiry.ascx">
+      <publishTime>08/29/2014 23:49:39</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeIssue_PL.ascx">
+      <publishTime>08/29/2014 23:49:39</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequePaymentStop.ascx">
+      <publishTime>09/04/2014 20:27:31</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequePayStop_Enquiry.ascx">
+      <publishTime>09/04/2014 20:27:31</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequePaytmentStop_PL.ascx">
+      <publishTime>09/04/2014 20:27:31</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeReturned.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeReturned2.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeReturned_PL.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeReturn_Enquiry.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeTransferDrawnOnUs.ascx">
+      <publishTime>09/03/2014 19:58:11</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeTransferDrawnOnUs_PL.ascx">
+      <publishTime>09/03/2014 19:58:11</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeTransfer_Enquiry.ascx">
+      <publishTime>09/03/2014 19:58:11</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeWithDrawal_Enquiry.ascx">
+      <publishTime>08/29/2014 23:49:39</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeWithrawalDrawOnUs.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ChequeWithrawalDrawOnUs_PL.ascx">
+      <publishTime>08/29/2014 23:49:39</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CloseAccount.ascx">
+      <publishTime>08/20/2014 09:42:39</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CloseAccountList.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollateralContingentEntry.ascx">
+      <publishTime>07/16/2014 00:14:24</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollateralContingentEntry_PL.ascx">
+      <publishTime>07/13/2014 17:58:57</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollectCharges.ascx">
+      <publishTime>08/30/2014 10:57:46</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollectChargesByCash.ascx">
+      <publishTime>08/23/2014 10:43:44</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollectChargesByCashPreviewList.ascx">
+      <publishTime>08/24/2014 12:25:06</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollectChargesPreviewList.ascx">
+      <publishTime>08/24/2014 12:25:06</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollectionForCreditCardPayment.ascx">
+      <publishTime>08/02/2014 21:41:21</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollectionForCreditCardPayment_PL.ascx">
+      <publishTime>07/13/2014 17:58:57</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/DCTransaction.ascx">
+      <publishTime>07/16/2014 00:14:24</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/DefineCustomerLimit.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/DefineCustomerLimitSub.ascx">
+      <publishTime>09/08/2014 14:20:33</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/DefineCustomerLimit_Enquiry.ascx">
+      <publishTime>08/29/2014 23:49:39</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/DefineCustomerLimit_PL.ascx">
+      <publishTime>07/13/2014 17:58:57</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/EnquiryAccount.ascx">
+      <publishTime>09/07/2014 23:15:09</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/EnquiryAccountTransaction.ascx">
+      <publishTime>08/19/2014 13:12:37</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/EnquiryCheque.ascx">
+      <publishTime>07/28/2014 00:26:26</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ExchangeBanknotesManyDeno.ascx">
+      <publishTime>07/22/2014 01:19:59</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ExchangeBanknotesManyDeno_PL.ascx">
+      <publishTime>07/22/2014 01:19:59</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ForeignExchange.ascx">
+      <publishTime>07/25/2014 21:15:05</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ForeignExchangePreviewList.ascx">
+      <publishTime>07/13/2014 17:58:57</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/FTAccountClose.ascx">
+      <publishTime>07/27/2014 22:48:24</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/FTAccountClose2.ascx">
+      <publishTime>07/10/2014 23:15:56</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/InputCollateralRight.ascx">
+      <publishTime>08/29/2014 23:49:39</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/InputCollateralRight_Enquiry.ascx">
+      <publishTime>08/22/2014 10:25:03</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/LoanAccountList.ascx">
+      <publishTime>08/29/2014 20:51:03</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/NewNomarlLoan_FullView.ascx">
+      <publishTime>07/13/2014 16:37:44</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/NewNormalLoan.ascx">
+      <publishTime>08/29/2014 20:51:03</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/NewNormalLoanEnquiry.ascx">
+      <publishTime>08/29/2014 20:51:03</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenIndividualCreditAcc.ascx">
+      <publishTime>07/27/2014 16:04:49</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenLoanWorkingAccount.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenLoanWorkingAccount_PL.ascx">
+      <publishTime>08/12/2014 21:47:27</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenLoanWorkingAcct_Enquiry.ascx">
+      <publishTime>08/13/2014 14:58:37</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenNonRevolingCoomContr.ascx">
+      <publishTime>07/19/2014 00:20:26</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenNonRevolingCoomContr_PL.ascx">
+      <publishTime>07/13/2014 17:58:57</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenRevoling_Enquiry.ascx">
+      <publishTime>08/14/2014 22:43:10</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenRevolvingCommContract.ascx">
+      <publishTime>08/19/2014 17:06:10</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/OpenRevolvingCommContract_PL.ascx">
+      <publishTime>07/13/2014 17:58:57</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/PastDueLoanRepayment.ascx">
+      <publishTime>07/27/2014 17:47:24</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/PastDueLoanRepayment_PL.ascx">
+      <publishTime>07/27/2014 14:49:26</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/PastDueLoanRepayment_Search.ascx">
+      <publishTime>07/31/2014 00:56:38</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/ReviewCloseAccountList.ascx">
+      <publishTime>08/15/2014 11:10:53</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/SellTravellersCheque.ascx">
+      <publishTime>09/09/2014 23:07:41</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/TransferByAccount.ascx">
+      <publishTime>08/08/2014 01:32:17</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/TransferByAccount_PL.ascx">
+      <publishTime>08/02/2014 01:19:37</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/TransferForCreditCardPayment.ascx">
+      <publishTime>08/02/2014 19:26:22</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/TransferForCreditCardPayment_PL.ascx">
+      <publishTime>07/13/2014 17:58:57</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/TransferWithdrawal.ascx">
+      <publishTime>08/30/2014 10:57:46</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/TransferWithdrawalPreviewList.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/UnBlockAccount.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/UnBlockAccountList.ascx">
+      <publishTime>07/10/2014 23:15:55</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/UnBlockAccountListEmpty.ascx">
+      <publishTime>07/10/2014 23:15:52</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/UnBlockAccountPreviewList.ascx">
+      <publishTime>08/17/2014 15:03:51</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/WebUserControl2.ascx">
+      <publishTime>07/21/2014 22:05:52</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/WUXoomPayment.ascx">
+      <publishTime>07/27/2014 16:04:49</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>09/09/2014 23:18:20</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

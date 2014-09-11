@@ -1,0 +1,324 @@
+2014-08-18 12:53:52,401 [NguyenPham-PC][Thread:46][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: ::1
+	Port: 7126
+	Referer: http://localhost/data_corebanking/Default.aspx?tabid=146&ctl=Login&returnurl=%2fdata_corebanking%2fDefault.aspx%3ftabid%3d146
+	Path: /data_corebanking/Default.aspx
+	User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36
+	ViewState: iTSNk7O7njPD69iT8FZh+y9SQZXGw2Ylv8iJ1wtSgrm0DtxYx+/v2gZCd2UUj8YLRlOkgcz4rZKh5nU2100xNfOWOg5Jw9iJzkou4OZUpl6jwtuYIRQG1BvgrFEqQ/y4nK/EJEVzSMZsU06KxMosm1+G9Toe7U6p3b5gOsTF9J/R1/h1Lu2KJKFDNQ72rZZwcR7NRrUrv5WsZfkiSEG6rivIUbA9B6mbjSbOhxeAGnHS+FhIVdoVwe8rRiRtTy2wOKtYB5q23J1gSosIHOUIx/aOWdWq+H9vyKl/68Ex7cPRXjN3oOTomwefLT4q/3cjheDIOLqL1g2l4ZAbqmPjxqWnP+h+zcNUQXBEQLZYhseomTdk/o1FbV3UPAEcvZlFRcRDn5cbBYf30pA/61F3b1FZcSYPhkKkeWppQQxvh4C/O3qd7IOx2HZgsvioMh8JnF0YLWFNZEtOH6oySXhT5cRwfvr2aiKS8BbYEi3xoNbiwfqj0RJLgFJV2cxTor+fI8EsSJg2mty/rw7oAZgq/czGUcj2y9HsXWMRStc9uHCnnfHHp/NmF0O5dd3EXDmnASKIwfTj7Fmr3EA6h7XJdapilrtwZiynjLTElT4vcXtp94WYr6z838gCA2KXVdNqKMPcKL7biw6y819eqfeRY9bDZw+bRXeAPjyzC...
+   at System.Web.UI.ViewStateException.ThrowMacValidationError(Exception inner, String persistedState)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-18 12:53:52,629 [NguyenPham-PC][Thread:46][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+DotNetNuke.Services.Exceptions.PageLoadException: Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster. ---> System.Web.HttpException: Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: ::1
+	Port: 7126
+	Referer: http://localhost/data_corebanking/Default.aspx?tabid=146&ctl=Login&returnurl=%2fdata_corebanking%2fDefault.aspx%3ftabid%3d146
+	Path: /data_corebanking/Default.aspx
+	User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36
+	ViewState: iTSNk7O7njPD69iT8FZh+y9SQZXGw2Ylv8iJ1wtSgrm0DtxYx+/v2gZCd2UUj8YLRlOkgcz4rZKh5nU2100xNfOWOg5Jw9iJzkou4OZUpl6jwtuYIRQG1BvgrFEqQ/y4nK/EJEVzSMZsU06KxMosm1+G9Toe7U6p3b5gOsTF9J/R1/h1Lu2KJKFDNQ72rZZwcR7NRrUrv5WsZfkiSEG6rivIUbA9B6mbjSbOhxeAGnHS+FhIVdoVwe8rRiRtTy2wOKtYB5q23J1gSosIHOUIx/aOWdWq+H9vyKl/68Ex7cPRXjN3oOTomwefLT4q/3cjheDIOLqL1g2l4ZAbqmPjxqWnP+h+zcNUQXBEQLZYhseomTdk/o1FbV3UPAEcvZlFRcRDn5cbBYf30pA/61F3b1FZcSYPhkKkeWppQQxvh4C/O3qd7IOx2HZgsvioMh8JnF0YLWFNZEtOH6oySXhT5cRwfvr2aiKS8BbYEi3xoNbiwfqj0RJLgFJV2cxTor+fI8EsSJg2mty/rw7oAZgq/czGUcj2y9HsXWMRStc9uHCnnfHHp/NmF0O5dd3EXDmnASKIwfTj7Fmr3EA6h7XJdapilrtwZiynjLTElT4vcXtp94WYr6z838gCA2KXVdNqKMPcKL7biw6y819eqfeRY9bDZw+bRXeAPjyzC...
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowMacValidationError(Exception inner, String persistedState)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-08-18 12:53:59,852 [NguyenPham-PC][Thread:20][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: ::1
+	Port: 7126
+	Referer: http://localhost/data_corebanking/Default.aspx?tabid=146&ctl=Login&returnurl=%2fdata_corebanking%2fDefault.aspx%3ftabid%3d146
+	Path: /data_corebanking/Default.aspx
+	User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36
+	ViewState: iTSNk7O7njPD69iT8FZh+y9SQZXGw2Ylv8iJ1wtSgrm0DtxYx+/v2gZCd2UUj8YLRlOkgcz4rZKh5nU2100xNfOWOg5Jw9iJzkou4OZUpl6jwtuYIRQG1BvgrFEqQ/y4nK/EJEVzSMZsU06KxMosm1+G9Toe7U6p3b5gOsTF9J/R1/h1Lu2KJKFDNQ72rZZwcR7NRrUrv5WsZfkiSEG6rivIUbA9B6mbjSbOhxeAGnHS+FhIVdoVwe8rRiRtTy2wOKtYB5q23J1gSosIHOUIx/aOWdWq+H9vyKl/68Ex7cPRXjN3oOTomwefLT4q/3cjheDIOLqL1g2l4ZAbqmPjxqWnP+h+zcNUQXBEQLZYhseomTdk/o1FbV3UPAEcvZlFRcRDn5cbBYf30pA/61F3b1FZcSYPhkKkeWppQQxvh4C/O3qd7IOx2HZgsvioMh8JnF0YLWFNZEtOH6oySXhT5cRwfvr2aiKS8BbYEi3xoNbiwfqj0RJLgFJV2cxTor+fI8EsSJg2mty/rw7oAZgq/czGUcj2y9HsXWMRStc9uHCnnfHHp/NmF0O5dd3EXDmnASKIwfTj7Fmr3EA6h7XJdapilrtwZiynjLTElT4vcXtp94WYr6z838gCA2KXVdNqKMPcKL7biw6y819eqfeRY9bDZw+bRXeAPjyzC...
+   at System.Web.UI.ViewStateException.ThrowMacValidationError(Exception inner, String persistedState)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-18 12:53:59,870 [NguyenPham-PC][Thread:20][ERROR] DotNetNuke.Services.Exceptions.ErrorPage - Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+DotNetNuke.Services.Exceptions.PageLoadException: Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster. ---> System.Web.HttpException: Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: ::1
+	Port: 7126
+	Referer: http://localhost/data_corebanking/Default.aspx?tabid=146&ctl=Login&returnurl=%2fdata_corebanking%2fDefault.aspx%3ftabid%3d146
+	Path: /data_corebanking/Default.aspx
+	User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36
+	ViewState: iTSNk7O7njPD69iT8FZh+y9SQZXGw2Ylv8iJ1wtSgrm0DtxYx+/v2gZCd2UUj8YLRlOkgcz4rZKh5nU2100xNfOWOg5Jw9iJzkou4OZUpl6jwtuYIRQG1BvgrFEqQ/y4nK/EJEVzSMZsU06KxMosm1+G9Toe7U6p3b5gOsTF9J/R1/h1Lu2KJKFDNQ72rZZwcR7NRrUrv5WsZfkiSEG6rivIUbA9B6mbjSbOhxeAGnHS+FhIVdoVwe8rRiRtTy2wOKtYB5q23J1gSosIHOUIx/aOWdWq+H9vyKl/68Ex7cPRXjN3oOTomwefLT4q/3cjheDIOLqL1g2l4ZAbqmPjxqWnP+h+zcNUQXBEQLZYhseomTdk/o1FbV3UPAEcvZlFRcRDn5cbBYf30pA/61F3b1FZcSYPhkKkeWppQQxvh4C/O3qd7IOx2HZgsvioMh8JnF0YLWFNZEtOH6oySXhT5cRwfvr2aiKS8BbYEi3xoNbiwfqj0RJLgFJV2cxTor+fI8EsSJg2mty/rw7oAZgq/czGUcj2y9HsXWMRStc9uHCnnfHHp/NmF0O5dd3EXDmnASKIwfTj7Fmr3EA6h7XJdapilrtwZiynjLTElT4vcXtp94WYr6z838gCA2KXVdNqKMPcKL7biw6y819eqfeRY9bDZw+bRXeAPjyzC...
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowMacValidationError(Exception inner, String persistedState)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   --- End of inner exception stack trace ---
+2014-08-18 21:55:35,405 [NguyenPham-PC][Thread:26][ERROR] DotNetNuke.UI.ControlPanel.AddModule - FriendlyMessage="An error has occurred." ctrl="ASP.admin_controlpanel_addmodule_ascx" exc="System.Data.SqlClient.SqlException (0x80131904): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByteArray(Byte[] buff, Int32 offset, Int32 len, Int32& totalRead)
+   at System.Data.SqlClient.TdsParserStateObject.TryReadString(Int32 length, String& value)
+   at System.Data.SqlClient.TdsParser.TryReadSqlStringValue(SqlBuffer value, Byte type, Int32 length, Encoding encoding, Boolean isPlp, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValue(SqlBuffer value, SqlMetaDataPriv md, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumnInternal(Int32 i, Boolean readHeaderOnly)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumn(Int32 i, Boolean setTimeout, Boolean allowPartiallyReadColumn)
+   at System.Data.SqlClient.SqlDataReader.GetValueInternal(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at DotNetNuke.Entities.BaseEntityInfo.FillInternal(IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.HydrateObject(Object hydratedObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.FillObjectFromReader(Object objObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.CreateObjectFromReader(Type objType, IDataReader dr, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillListFromReader[TItem](IDataReader dr, IList`1 objList, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillCollection[TItem](IDataReader dr)
+   at DotNetNuke.Web.UI.WebControls.DnnModuleComboBox.BindPortalDesktopModuleImages()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadModuleList()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadAllLists()
+   at DotNetNuke.UI.ControlPanel.AddModule.OnLoad(EventArgs e)
+ClientConnectionId:42e709ed-5893-4145-b804-c85274d5b53c"
+2014-08-18 21:57:28,068 [NguyenPham-PC][Thread:53][ERROR] DotNetNuke.UI.ControlPanel.AddModule - FriendlyMessage="An error has occurred." ctrl="ASP.admin_controlpanel_addmodule_ascx" exc="System.Data.SqlClient.SqlException (0x80131904): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByteArray(Byte[] buff, Int32 offset, Int32 len, Int32& totalRead)
+   at System.Data.SqlClient.TdsParserStateObject.TryReadString(Int32 length, String& value)
+   at System.Data.SqlClient.TdsParser.TryReadSqlStringValue(SqlBuffer value, Byte type, Int32 length, Encoding encoding, Boolean isPlp, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValue(SqlBuffer value, SqlMetaDataPriv md, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumnInternal(Int32 i, Boolean readHeaderOnly)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumn(Int32 i, Boolean setTimeout, Boolean allowPartiallyReadColumn)
+   at System.Data.SqlClient.SqlDataReader.GetValueInternal(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at DotNetNuke.Entities.BaseEntityInfo.FillInternal(IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.HydrateObject(Object hydratedObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.FillObjectFromReader(Object objObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.CreateObjectFromReader(Type objType, IDataReader dr, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillListFromReader[TItem](IDataReader dr, IList`1 objList, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillCollection[TItem](IDataReader dr)
+   at DotNetNuke.Web.UI.WebControls.DnnModuleComboBox.BindPortalDesktopModuleImages()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadModuleList()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadAllLists()
+   at DotNetNuke.UI.ControlPanel.AddModule.OnLoad(EventArgs e)
+ClientConnectionId:2332c23b-5548-49b5-83be-4ca9fd52d519"
+2014-08-18 21:58:36,317 [NguyenPham-PC][Thread:11][ERROR] DotNetNuke.UI.ControlPanel.AddModule - FriendlyMessage="An error has occurred." ctrl="ASP.admin_controlpanel_addmodule_ascx" exc="System.Data.SqlClient.SqlException (0x80131904): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryProcessHeader()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByteArray(Byte[] buff, Int32 offset, Int32 len, Int32& totalRead)
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByteArray(Byte[] buff, Int32 offset, Int32 len)
+   at System.Data.SqlClient.TdsParser.TrySkipValue(SqlMetaDataPriv md, Int32 columnOrdinal, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.TrySkipRow(_SqlMetaDataSet columns, Int32 startCol, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at System.Data.SqlClient.SqlDataReader.Read()
+   at DotNetNuke.Common.Utilities.CBO.FillListFromReader[TItem](IDataReader dr, IList`1 objList, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillCollection[TItem](IDataReader dr)
+   at DotNetNuke.Web.UI.WebControls.DnnModuleComboBox.BindPortalDesktopModuleImages()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadModuleList()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadAllLists()
+   at DotNetNuke.UI.ControlPanel.AddModule.OnLoad(EventArgs e)
+ClientConnectionId:ce113d1d-e6ae-4ff8-99bc-1fdc66fa48b4"
+2014-08-18 21:59:39,595 [NguyenPham-PC][Thread:55][ERROR] DotNetNuke.Services.Scheduling.SchedulerClient - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+System.Data.SqlClient.SqlException (0x80131904): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByteArray(Byte[] buff, Int32 offset, Int32 len, Int32& totalRead)
+   at System.Data.SqlClient.TdsParserStateObject.TryReadInt32(Int32& value)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValueInternal(SqlBuffer value, Byte tdsType, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValue(SqlBuffer value, SqlMetaDataPriv md, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumnInternal(Int32 i, Boolean readHeaderOnly)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumn(Int32 i, Boolean setTimeout, Boolean allowPartiallyReadColumn)
+   at System.Data.SqlClient.SqlDataReader.GetValueInternal(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at DotNetNuke.Entities.BaseEntityInfo.FillInternal(IDataReader dr)
+   at DotNetNuke.Entities.Content.ContentItem.FillInternal(IDataReader dr)
+   at DotNetNuke.Entities.Modules.ModuleInfo.Fill(IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.FillObjectFromReader(Object objObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.CreateObjectFromReader(Type objType, IDataReader dr, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillListFromReader(Type objType, IDataReader dr, IList objList, Boolean closeReader)
+   at DotNetNuke.Entities.Modules.ModuleController.GetSearchModules(Int32 portalID)
+   at DotNetNuke.Services.Search.ModuleIndexer.GetModuleList(Int32 PortalID)
+   at DotNetNuke.Services.Search.ModuleIndexer.GetSearchIndexItems(Int32 PortalID)
+   at DotNetNuke.Services.Search.SearchEngine.GetContent(IndexingProvider Indexer)
+   at DotNetNuke.Services.Search.SearchEngineScheduler.DoWork()
+ClientConnectionId:63b0bb08-8a27-4118-bf84-201658be9f0c
+2014-08-18 21:59:39,607 [NguyenPham-PC][Thread:55][ERROR] DotNetNuke.Services.Scheduling.DNNScheduling.Scheduler+CoreScheduler - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+System.Data.SqlClient.SqlException (0x80131904): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByteArray(Byte[] buff, Int32 offset, Int32 len, Int32& totalRead)
+   at System.Data.SqlClient.TdsParserStateObject.TryReadInt32(Int32& value)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValueInternal(SqlBuffer value, Byte tdsType, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValue(SqlBuffer value, SqlMetaDataPriv md, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumnInternal(Int32 i, Boolean readHeaderOnly)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumn(Int32 i, Boolean setTimeout, Boolean allowPartiallyReadColumn)
+   at System.Data.SqlClient.SqlDataReader.GetValueInternal(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at DotNetNuke.Entities.BaseEntityInfo.FillInternal(IDataReader dr)
+   at DotNetNuke.Entities.Content.ContentItem.FillInternal(IDataReader dr)
+   at DotNetNuke.Entities.Modules.ModuleInfo.Fill(IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.FillObjectFromReader(Object objObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.CreateObjectFromReader(Type objType, IDataReader dr, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillListFromReader(Type objType, IDataReader dr, IList objList, Boolean closeReader)
+   at DotNetNuke.Entities.Modules.ModuleController.GetSearchModules(Int32 portalID)
+   at DotNetNuke.Services.Search.ModuleIndexer.GetModuleList(Int32 PortalID)
+   at DotNetNuke.Services.Search.ModuleIndexer.GetSearchIndexItems(Int32 PortalID)
+   at DotNetNuke.Services.Search.SearchEngine.GetContent(IndexingProvider Indexer)
+   at DotNetNuke.Services.Search.SearchEngineScheduler.DoWork()
+ClientConnectionId:63b0bb08-8a27-4118-bf84-201658be9f0c
+2014-08-18 21:59:39,700 [NguyenPham-PC][Thread:55][ERROR] DotNetNuke.Services.Search.SearchEngineScheduler - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+System.Data.SqlClient.SqlException (0x80131904): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByteArray(Byte[] buff, Int32 offset, Int32 len, Int32& totalRead)
+   at System.Data.SqlClient.TdsParserStateObject.TryReadInt32(Int32& value)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValueInternal(SqlBuffer value, Byte tdsType, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValue(SqlBuffer value, SqlMetaDataPriv md, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumnInternal(Int32 i, Boolean readHeaderOnly)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumn(Int32 i, Boolean setTimeout, Boolean allowPartiallyReadColumn)
+   at System.Data.SqlClient.SqlDataReader.GetValueInternal(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at DotNetNuke.Entities.BaseEntityInfo.FillInternal(IDataReader dr)
+   at DotNetNuke.Entities.Content.ContentItem.FillInternal(IDataReader dr)
+   at DotNetNuke.Entities.Modules.ModuleInfo.Fill(IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.FillObjectFromReader(Object objObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.CreateObjectFromReader(Type objType, IDataReader dr, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillListFromReader(Type objType, IDataReader dr, IList objList, Boolean closeReader)
+   at DotNetNuke.Entities.Modules.ModuleController.GetSearchModules(Int32 portalID)
+   at DotNetNuke.Services.Search.ModuleIndexer.GetModuleList(Int32 PortalID)
+   at DotNetNuke.Services.Search.ModuleIndexer.GetSearchIndexItems(Int32 PortalID)
+   at DotNetNuke.Services.Search.SearchEngine.GetContent(IndexingProvider Indexer)
+   at DotNetNuke.Services.Search.SearchEngineScheduler.DoWork()
+ClientConnectionId:63b0bb08-8a27-4118-bf84-201658be9f0c
+2014-08-18 22:02:55,017 [NguyenPham-PC][Thread:27][ERROR] DotNetNuke.UI.ControlPanel.AddModule - FriendlyMessage="An error has occurred." ctrl="ASP.admin_controlpanel_addmodule_ascx" exc="System.Data.SqlClient.SqlException (0x80131904): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at System.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at System.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at System.Data.SqlClient.TdsParserStateObject.TryReadByteArray(Byte[] buff, Int32 offset, Int32 len, Int32& totalRead)
+   at System.Data.SqlClient.TdsParserStateObject.TryReadString(Int32 length, String& value)
+   at System.Data.SqlClient.TdsParser.TryReadSqlStringValue(SqlBuffer value, Byte type, Int32 length, Encoding encoding, Boolean isPlp, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.TryReadSqlValue(SqlBuffer value, SqlMetaDataPriv md, Int32 length, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumnInternal(Int32 i, Boolean readHeaderOnly)
+   at System.Data.SqlClient.SqlDataReader.TryReadColumn(Int32 i, Boolean setTimeout, Boolean allowPartiallyReadColumn)
+   at System.Data.SqlClient.SqlDataReader.GetValueInternal(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at DotNetNuke.Entities.BaseEntityInfo.FillInternal(IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.HydrateObject(Object hydratedObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.FillObjectFromReader(Object objObject, IDataReader dr)
+   at DotNetNuke.Common.Utilities.CBO.CreateObjectFromReader(Type objType, IDataReader dr, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillListFromReader[TItem](IDataReader dr, IList`1 objList, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillCollection[TItem](IDataReader dr)
+   at DotNetNuke.Web.UI.WebControls.DnnModuleComboBox.BindPortalDesktopModuleImages()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadModuleList()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadAllLists()
+   at DotNetNuke.UI.ControlPanel.AddModule.OnLoad(EventArgs e)
+ClientConnectionId:9fb567d9-995d-4129-bc67-7cf00687317e"
+2014-08-18 22:03:41,751 [NguyenPham-PC][Thread:76][ERROR] DotNetNuke.UI.ControlPanel.AddModule - FriendlyMessage="An error has occurred." ctrl="ASP.admin_controlpanel_addmodule_ascx" exc="System.Data.SqlClient.SqlException (0x80131904): Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding. ---> System.ComponentModel.Win32Exception (0x80004005): The wait operation timed out
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at System.Data.SqlClient.SqlDataReader.Read()
+   at DotNetNuke.Common.Utilities.CBO.FillListFromReader[TItem](IDataReader dr, IList`1 objList, Boolean closeReader)
+   at DotNetNuke.Common.Utilities.CBO.FillCollection[TItem](IDataReader dr)
+   at DotNetNuke.Web.UI.WebControls.DnnModuleComboBox.BindPortalDesktopModuleImages()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadModuleList()
+   at DotNetNuke.UI.ControlPanel.AddModule.LoadAllLists()
+   at DotNetNuke.UI.ControlPanel.AddModule.OnLoad(EventArgs e)
+ClientConnectionId:23c8e137-0726-4a7e-ac8c-f30e37699c9c"
+2014-08-18 22:26:38,294 [NguyenPham-PC][Thread:11][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.ArgumentException: Parameter count does not match Parameter Value count.
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.AssignParameterValues(SqlParameter[] commandParameters, Object[] parameterValues)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.BOPENACCOUNT_EnquiryTransaction(String transactiontype, String Refid, String currency, String CustomerType, String CustomerID, String CustomerName, String AccountCode, Nullable`1 amountFrom, Nullable`1 amountTo, Nullable`1 date) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 143
+   at BankProject.Views.TellerApplication.EnquiryAccountTransaction.radGridReview_OnNeedDataSource(Object sender, GridNeedDataSourceEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\EnquiryAccountTransaction.ascx.cs:line 48
+   at Telerik.Web.UI.RadGrid.OnNeedDataSource(GridNeedDataSourceEventArgs e)
+   at Telerik.Web.UI.RadGrid.AutoDataBind(GridRebindReason rebindReason)
+   at Telerik.Web.UI.RadGrid.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-18 22:26:38,311 [NguyenPham-PC][Thread:11][ERROR] System.Web.UI.Page - ~/Default.aspx?tabid=296&error=Parameter+count+does+not+match+Parameter+Value+count.&content=0
+System.ArgumentException: Parameter count does not match Parameter Value count.
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.AssignParameterValues(SqlParameter[] commandParameters, Object[] parameterValues)
+   at Microsoft.ApplicationBlocks.Data.SqlHelper.ExecuteDataset(String connectionString, String spName, Object[] parameterValues)
+   at BankProject.DataProvider.SqlDataProvider.ndkExecuteDataset(String strsql, Object[] arrParams) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\SqlDataProvider.cs:line 45
+   at BankProject.DataProvider.Database.BOPENACCOUNT_EnquiryTransaction(String transactiontype, String Refid, String currency, String CustomerType, String CustomerID, String CustomerName, String AccountCode, Nullable`1 amountFrom, Nullable`1 amountTo, Nullable`1 date) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\DataProvider\Database.cs:line 143
+   at BankProject.Views.TellerApplication.EnquiryAccountTransaction.radGridReview_OnNeedDataSource(Object sender, GridNeedDataSourceEventArgs e) in d:\Data_CoreBanking\DesktopModules\TrainingCoreBanking\BankProject\Views\TellerApplication\EnquiryAccountTransaction.ascx.cs:line 48
+   at Telerik.Web.UI.RadGrid.OnNeedDataSource(GridNeedDataSourceEventArgs e)
+   at Telerik.Web.UI.RadGrid.AutoDataBind(GridRebindReason rebindReason)
+   at Telerik.Web.UI.RadGrid.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2014-08-18 23:10:18,072 [NguyenPham-PC][Thread:102][ERROR] DotNetNuke.UI.Modules.ModuleHost - The file '/data_corebanking/DesktopModules/TrainingCoreBanking/BankProject/Views/TellerApplication/DefineCustomerLimit_Enquiry.ascx' does not exist.
+System.Web.HttpException (0x80004005): The file '/data_corebanking/DesktopModules/TrainingCoreBanking/BankProject/Views/TellerApplication/DefineCustomerLimit_Enquiry.ascx' does not exist.
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()
+2014-08-18 23:10:18,333 [NguyenPham-PC][Thread:102][ERROR] DotNetNuke.UI.Modules.ModuleHost - FriendlyMessage="Error: DefineCustomerLimit_Enquiry is currently unavailable." ctrl="DotNetNuke.UI.Modules.ModuleControlBase" exc="System.Web.HttpException (0x80004005): The file '/data_corebanking/DesktopModules/TrainingCoreBanking/BankProject/Views/TellerApplication/DefineCustomerLimit_Enquiry.ascx' does not exist.
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.TemplateControl.LoadControl(VirtualPath virtualPath)
+   at DotNetNuke.UI.Modules.WebFormsModuleControlFactory.CreateModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleControlFactory.LoadModuleControl(TemplateControl containerControl, ModuleInfo moduleConfiguration)
+   at DotNetNuke.UI.Modules.ModuleHost.LoadModuleControl()"
