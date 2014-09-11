@@ -28,14 +28,12 @@
 <table cellpadding="0" cellspacing="0">
     <tr>
         <td class="MyLable">Customer Id <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Customer require !" Display="None" ControlToValidate="txtCustomerId" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
-        <td class="MyContent"><asp:HiddenField ID="txtCustomerIdOld" runat="server" /><asp:TextBox ID="txtCustomerId" runat="server" Width="200" /> </td>
-        <td class="MyLable" style="color: darkgrey;"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></td>
+        <td class="MyContent"><asp:HiddenField ID="txtCustomerIdOld" runat="server" /><asp:TextBox ID="txtCustomerId" runat="server" Width="200" /> <span style="color: darkgrey;"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></span></td>
     </tr>
     <tr>
         <td class="MyLable" style="vertical-align:top;">Signature </td>
         <td class="MyContent">
-            <asp:HyperLink ID="lnkSignature" runat="server" Target="_blank"><asp:Image ID="imgSignature" runat="server" Width="200" /></asp:HyperLink></td>
-        <td class="MyLable"></td>
+            <asp:HyperLink ID="lnkSignature" runat="server" Target="_blank"><asp:Image ID="imgSignature" runat="server" CssClass="imgSignaturePreview" /></asp:HyperLink></td>
     </tr>
 </table>
 <script type="text/javascript">
