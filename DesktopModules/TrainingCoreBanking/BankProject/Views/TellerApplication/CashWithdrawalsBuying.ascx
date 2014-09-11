@@ -2,33 +2,27 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"/>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"  />
-<script type="text/javascript">
-    jQuery(function ($) {
-        $('#tabs-demo').dnnTabs();
-    });
-
-</script>
 <div>
     <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
          OnClientButtonClicking="OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
-            ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
+            ToolTip="Commit Data" Value="btCommitData" CommandName="commit" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="preview">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
-            ToolTip="Authorize" Value="btAuthorize" CommandName="authorize">
+            ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/reverse.png"
-            ToolTip="Reverse" Value="btReverse" CommandName="reverse">
+            ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search">
+            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false">
         </telerik:RadToolBarButton>
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
+            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" Enabled="false">
         </telerik:RadToolBarButton>
     </Items>
 </telerik:RadToolBar>
@@ -36,7 +30,15 @@
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width: 200px; padding: 5px 0 5px 20px;">
-            <asp:TextBox ID="txtId" runat="server" Width="200" />
+            <asp:TextBox ID="txtId" runat="server" Width="200" ValidationGroup="Commit" /><asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+            <asp:RequiredFieldValidator
+                        runat="server" Display="None"
+                        ID="RequiredFieldValidator2"
+                        ControlToValidate="txtId"
+                        ValidationGroup="Commit"
+                        InitialValue=""
+                        ErrorMessage="TTNo is Required" ForeColor="Red">
+                    </asp:RequiredFieldValidator>
         </td>
     </tr>
 </table>
@@ -46,7 +48,7 @@
         <!--<li><a href="#blank">Audit</a></li>
         <li><a href="#blank">Full View</a></li>-->
     </ul>
-    <div id="ChristopherColumbus" class="dnnClear">
+    <div id="ChristopherColumbus" class="dnnClear"><telerik:RadAjaxPanel ID="RadAjaxPanelTopInfo" runat="server" OnAjaxRequest="RadAjaxPanelAccount_AjaxRequest">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Customer</td>
@@ -54,9 +56,7 @@
                 <td class="MyContent" ><asp:Label ID="lbCustomerName" runat="server"></asp:Label></td>
             </tr>
         </table>
-
-        <hr />
-         
+        <hr />         
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Currency</td>
@@ -80,8 +80,7 @@
                             <telerik:RadComboBoxItem Value="1" Text="03.000068528.1 - CITI BANK NEWYORK" />
                             <telerik:RadComboBoxItem Value="2" Text="03.000078945.1 - HSBC" />
                         </Items>
-                    </telerik:RadComboBox>
-                    
+                    </telerik:RadComboBox> <asp:Label ID="lblCustomerAccount" runat="server" Text=""></asp:Label>                    
                 </td>
                 <td><asp:RequiredFieldValidator
                         runat="server" Display="None"
@@ -97,8 +96,8 @@
             <tr>
                 <td class="MyLable">Amt LCY</td>
                 <td class="MyContent"><asp:HiddenField ID="txtAmtLCYOldValue" Value="0" runat="server" />
-                    <telerik:RadNumericTextBox ID="txtAmtLCY" runat="server"  NumberFormat-GroupSeparator=","  NumberFormat-DecimalDigits="0" />
-                     <span>Exchange Rate: </span><telerik:RadNumericTextBox ID="txtExchangeRate" ReadOnly="true" TabIndex="0" runat="server" NumberFormat-DecimalDigits="2" />
+                    <telerik:RadNumericTextBox ID="txtAmtLCY" runat="server" Type="Number"/>
+                     <span>Exchange Rate: </span><telerik:RadNumericTextBox ID="txtExchangeRate" ReadOnly="true" TabIndex="0" runat="server" Type="Number" ClientEvents-OnValueChanged ="OnExchangeRateChanged" />
                 </td>
             </tr>
             <tr>
@@ -148,23 +147,23 @@
             <tr>
                 <td class="MyLable">Deal Rate</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtDealRate" runat="server" NumberFormat-DecimalDigits="5" ClientEvents-OnValueChanged ="OnDealRateChanged" />
+                    <telerik:RadNumericTextBox ID="txtDealRate" runat="server" Type="Number" ClientEvents-OnValueChanged ="OnDealRateChanged" />
                 </td>
             </tr>
             <tr>
                 <td class="MyLable">Amt Paid to Cust</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="lblAmtPaidToCust" ReadOnly="true" TabIndex="0" runat="server"  NumberFormat-DecimalDigits="2" />
+                    <telerik:RadNumericTextBox ID="lblAmtPaidToCust" ReadOnly="true" TabIndex="0" runat="server" Type="Number" ClientEvents-OnValueChanged ="OnAmtPaidToCustChanged" />
                 </td>
             </tr>
 
             <tr>
                 <td class="MyLable">New Cust Bal</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="lblNewCustBal" ReadOnly="true" TabIndex="0" runat="server" NumberFormat-DecimalDigits="2" />
+                    <telerik:RadNumericTextBox ID="lblNewCustBal" ReadOnly="true" TabIndex="0" runat="server" Type="Number" />
                 </td>
             </tr>
-        </table>
+        </table></telerik:RadAjaxPanel>
         <hr />
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -184,9 +183,6 @@
                 </td>
             </tr>
         </table>
-
-        
-
         <hr />
        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -206,18 +202,14 @@
                 </td>
             </tr>
         </table>
-
+        <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Narrative</td>
-                <td class="MyContent" width="300">
-                    <telerik:RadTextBox ID="txtNarrative" Width="300"
-                        runat="server"  />
-                </td>
-                <td><a class="add">
-                    <img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
+                <td class="MyContent"><telerik:RadTextBox ID="txtNarrative" Width="300" runat="server"  /><%if (RadToolBar1.FindItemByValue("btCommitData").Enabled){ %><span><a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png"></a></span><%} %></td>
             </tr>
         </table>
+        </telerik:RadCodeBlock>
     </div>
     <div id="dvAudit" runat="server">
         <hr />
@@ -273,68 +265,46 @@
 </div>
 <script type="text/javascript">
     $(document).ready(
-function () {
-        $('a.add').live('click',
-            function () {
-                $(this)
-                    .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                    .removeClass('add')
-                    .addClass('remove')
+        function () {
+            $('a.add').live('click',
+                function () {
+                    $(this)
+                        .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
+                        .removeClass('add')
+                        .addClass('remove')
                     ;
-                $(this)
-                    .closest('tr')
-                    .clone()
-                    .appendTo($(this).closest('table'));
-                $(this)
-                    .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                    .removeClass('remove')
-                    .addClass('add');
-            });
-        $('a.remove').live('click',
-            function () {
-                $(this)
-                    .closest('tr')
-                    .remove();
-            });
-        $('input:text').each(
-            function () {
-                var thisName = $(this).attr('name'),
-                    thisRrow = $(this)
-                                .closest('tr')
-                                .index();
-                $(this).attr('name', 'row' + thisRow + thisName);
-                $(this).attr('id', 'row' + thisRow + thisName);
-            });
+                    $(this)
+                        .closest('tr')
+                        .clone()
+                        .appendTo($(this).closest('table'));
+                    $(this)
+                        .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
+                        .removeClass('remove')
+                        .addClass('add');
+                });
+            $('a.remove').live('click',
+                function () {
+                    $(this)
+                        .closest('tr')
+                        .remove();
+                });
+            $('input:text').each(
+                function () {
+                    var thisName = $(this).attr('name'),
+                        thisRrow = $(this)
+                                    .closest('tr')
+                                    .index();
+                    $(this).attr('name', 'row' + thisRow + thisName);
+                    $(this).attr('id', 'row' + thisRow + thisName);
+                });
         
-});
-
+        });
+    </script>
+<telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+<script type="text/javascript">
     function cmbCustomerAccount_OnClientSelectedIndexChanged(sender, eventArgs) {
-        //sender.set_text("You selected " + item.get_text());        
-        $('#<%=lbCustomer.ClientID%>').html('');
-        $('#<%=lbCustomerName.ClientID%>').html('');
-        $('#<%=lbCurrency.ClientID%>').html('');
-        $find('<%=txtExchangeRate.ClientID%>').set_value(0);
-        //
-        var accountElement = $find("<%= cmbCustomerAccount.ClientID%>");
-        var accountValue = accountElement.get_value();
-        var accountText = accountElement.get_text();
-        if (accountValue != '') {
-            var arr = accountValue.split('#');
-            $('#<%=lbCustomer.ClientID%>').html(arr[0]);
-            $('#<%=lbCustomerName.ClientID%>').html(accountText.split(" - ")[1]);
-            $('#<%=lbCurrency.ClientID%>').html(arr[2]);
-            //
-            var opts = $find('<%=cmbCurrencyPaid.ClientID%>').get_items();
-            for (i=0; i < opts._array.length; i++) {
-                var itemValue = opts._array[i].get_value();
-                if (itemValue != '') {
-                    var arr1 = itemValue.split('#');
-                    if (arr[2] == arr1[0]) {
-                        $find('<%=txtExchangeRate.ClientID%>').set_value(arr1[1]);
-                    }
-                }
-            };
-        }
+        var objMsg = $('#<%=lblCustomerAccount.ClientID%>');
+        $find("<%= RadAjaxPanelTopInfo.ClientID%>").ajaxRequestWithTarget("<%= RadAjaxPanelTopInfo.UniqueID %>", "loadTopInfo");
     }
 
     function cmbCurrencyPaid_OnClientSelectedIndexChanged(sender, eventArgs) {
@@ -361,13 +331,22 @@ function () {
             if (Page_IsValid) {
                 args.set_cancel(true);
                 lastClickedItem = args.get_item();
-                Page_IsValid = radconfirm("Credit Till Closing Balance", confirmCallbackFunction1);
+                radconfirm("Credit Till Closing Balance", confirmCallbackFunction1);
             }
             return;
         }
 
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            window.location = "Default.aspx?tabid=150&ctl=chitiet&mid=779";
+            var TTNo = $('#<%=txtId.ClientID%>').val();
+            if (TTNo == null || TTNo == '') {
+                alert('TT number require !');
+                return;
+            }
+            window.location = "Default.aspx?tabid=<%=this.TabId.ToString()%>&ttno=" + TTNo;
+        }
+
+        if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
+            window.location = '<%=EditUrl("chitiet")%>';
         }
     }
 
@@ -379,7 +358,7 @@ function () {
         clickCalledAfterRadconfirm = false;
         var amtFCYDepositedElement = $find("<%= txtAmtFCY.ClientID%>");
         var amtFCYDeposited = amtFCYDepositedElement.get_value();
-        radconfirm("Unauthorised overdraft of USD " + amtFCYDeposited + " on account 050001688331", confirmCallbackFunction2); //" + amtFCYDeposited + "
+        radconfirm("Unauthorised overdraft of " + $('#<%=lbCurrency.ClientID%>').val() + " " + amtFCYDeposited + " on account " + $('#<%= cmbCustomerAccount.ClientID%>').val(), confirmCallbackFunction2); //" + amtFCYDeposited + "
     }
    
     function confirmCallbackFunction2(args) {
@@ -390,25 +369,54 @@ function () {
         }
     }
 
-    function OnAmtFCYChanged() {
-        var amtFCY = $find("<%= txtAmtFCY.ClientID%>").get_value();
-        var amtFCYOldValue = $('#<%=txtAmtFCYOldValue.ClientID%>').val();
-        //alert('OnAmtFCYChanged : ' + amtFCY + '^' + amtFCYOldValue);
-        if (amtFCY != amtFCYOldValue) {
-            var exchangeRate = $find("<%= txtExchangeRate.ClientID%>").get_value();            
-            $('#<%=txtAmtFCYOldValue.ClientID%>').val(amtFCY);
-            $find("<%= txtAmtLCY.ClientID %>").set_value(amtFCY * exchangeRate);
-            //
-            var dealRate = $find("<%= txtDealRate.ClientID%>").get_value();
-            $find("<%= lblAmtPaidToCust.ClientID %>").set_value(amtFCY * exchangeRate / dealRate);
+    $("#<%=txtId.ClientID%>")
+        .keypress(function (event) {
+            if (event.which == 13) {
+                $find('<%=RadToolBar1.ClientID%>').findItemByValue("btPreview").click();
+            }
+        });
+
+    function OnExchangeRateChanged() {
+        var objAmtLCY = $find("<%= txtAmtLCY.ClientID %>");
+        var ExchangeRate = Number($find("<%= txtExchangeRate.ClientID%>").get_value());        
+        var amtFCY = Number($find("<%= txtAmtFCY.ClientID%>").get_value());
+        if (ExchangeRate <= 0 || amtFCY <= 0) {
+            objAmtLCY.set_value(0);
+            return;
         }
+        //Tinh lai LCY
+        objAmtLCY.set_value(amtFCY * ExchangeRate);
+        //Tinh lai Amt Paid To Cust
+        OnDealRateChanged();
+    }
+
+    function OnAmtFCYChanged() {
+        var amtFCY = Number($find("<%= txtAmtFCY.ClientID%>").get_value());
+        var amtFCYOldValue = Number($('#<%=txtAmtFCYOldValue.ClientID%>').val());
+        if (amtFCY == amtFCYOldValue) return;//check loop :)
+        $('#<%=txtAmtFCYOldValue.ClientID%>').val(amtFCY);
+        //
+        OnExchangeRateChanged();
     }
 
     function OnDealRateChanged() {
-        var amtFCY = $find("<%= txtAmtFCY.ClientID%>").get_value();
-        var exchangeRate = $find("<%= txtExchangeRate.ClientID%>").get_value();
-        var dealRate = $find("<%= txtDealRate.ClientID%>").get_value();
+        //Tinh lai Amt Paid To Cust
+        var ExchangeRate = Number($find("<%= txtExchangeRate.ClientID%>").get_value());
+        var amtFCY = Number($find("<%= txtAmtFCY.ClientID%>").get_value());
+        var Currency = $find("<%= cmbCurrencyPaid.ClientID%>").get_value();
+        var dealRate = Number($find("<%= txtDealRate.ClientID%>").get_value());
+        var objAmtPaidToCust = $find("<%= lblAmtPaidToCust.ClientID%>");
+        if (Currency == '' || dealRate <= 0) {
+            objAmtPaidToCust.set_value(0);
+            return;
+        }
+        //
+        objAmtPaidToCust.set_value(amtFCY * ExchangeRate / dealRate);
+    }
 
-        $find("<%= lblAmtPaidToCust.ClientID %>").set_value(amtFCY * exchangeRate / dealRate);
+    function OnAmtPaidToCustChanged() {
+        var amount = Number($find("<%= lblAmtPaidToCust.ClientID%>").get_value());
+        $find("<%= lblNewCustBal.ClientID%>").set_value(amount * -1);
     }
   </script>
+    </telerik:RadCodeBlock>
