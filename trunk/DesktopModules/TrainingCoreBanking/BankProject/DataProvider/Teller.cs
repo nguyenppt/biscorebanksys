@@ -17,7 +17,11 @@ namespace BankProject.DataProvider
 
         public static DataTable AccountForBuyingTC()
         {
-            return sqldata.ndkExecuteDataset("P_AccountForBuyingTC").Tables[0];
+            return AccountForBuyingTC(null);
+        }
+        public static DataTable AccountForBuyingTC(string AccountNo)
+        {
+            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCAccounts", AccountNo).Tables[0];
         }
 
         public static DataTable ExchangeRate()
@@ -27,22 +31,22 @@ namespace BankProject.DataProvider
 
         public static void InsertCashWithrawalForBuyingTC(string TransID, string Account, string Currency, double? ExchangeRate, double? AmtLCY, double? AmtFCY, string CurrencyPaid, double? DealRate, double? AmtPaidToCust, string TellerID, string WaiveCharges, string Narrative, string UserCreate)
         {
-            sqldata.ndkExecuteNonQuery("P_CashWithrawalForBuyingTC", TransID, Account, Currency, ExchangeRate, AmtLCY, AmtFCY, CurrencyPaid, DealRate, AmtPaidToCust, TellerID, WaiveCharges, Narrative, UserCreate);
+            sqldata.ndkExecuteNonQuery("P_CashWithrawalForBuyingTCUpdate", TransID, Account, Currency, ExchangeRate, AmtLCY, AmtFCY, CurrencyPaid, DealRate, AmtPaidToCust, TellerID, WaiveCharges, Narrative, UserCreate);
         }
 
-        public static DataTable CashWithrawalForBuyingTCList()
+        public static DataTable CashWithrawalForBuyingTCList(string CustomerID, string CustomerName)
         {
-            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCList").Tables[0];
+            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCDetailOrList", null, CustomerID, CustomerName).Tables[0];
         }
 
         public static DataTable CashWithrawalForBuyingTCDetail(string TransID)
         {
-            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCDetail", TransID).Tables[0];
+            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCDetailOrList", TransID, null, null).Tables[0];
         }
 
         public static void UpdateCashWithrawalForBuyingTC(string TransID, string Status)
         {
-            sqldata.ndkExecuteNonQuery("P_UpdateCashWithrawalForBuyingTC", TransID, Status);
+            sqldata.ndkExecuteNonQuery("P_CashWithrawalForBuyingTCUpdateStatus", TransID, Status);
         }
         //add new & edit
         public static void SellTravellersChequeUpdate(string Command, string TTNo, string CustomerName, string CustomerAddress,	string CustomerPassportNo,	string CustomerPassportDateOfIssue, string CustomerPassportPlaceOfIssue, string CustomerPhoneNo,
