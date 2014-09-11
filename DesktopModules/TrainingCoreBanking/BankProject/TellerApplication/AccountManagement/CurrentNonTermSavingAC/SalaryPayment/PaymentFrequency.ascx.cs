@@ -486,7 +486,7 @@ namespace BankProject.TellerApplication.AccountManagement.CurrentNonTermSavingAC
                     labelNoResults.Text = "Wrong Selected Company Payment file"; 
                     return;
                 }
-                if (file.GetName().ToLower().Replace(file.GetExtension().ToLower(),"") != rcbAccountPayment.SelectedItem.Text.ToLower())
+                if (file.GetName().ToLower().Replace(file.GetExtension().ToLower(), "") != rcbAccountPayment.SelectedItem.Attributes["CustomerName"].ToLower())
                 {
                     labelNoResults.Text = "Wrong Selected Company Payment file";
                     return;
