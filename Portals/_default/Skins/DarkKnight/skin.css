@@ -103,3 +103,10 @@ box-sizing: border-box;
 
 .ChiNhanh {font-weight:bold; color:#f6f6f6; padding-right:5px;
 }
+
+.NoDisplay {
+        display:none;
+    }
+.imgSignaturePreview{
+	width:150%;
+}
