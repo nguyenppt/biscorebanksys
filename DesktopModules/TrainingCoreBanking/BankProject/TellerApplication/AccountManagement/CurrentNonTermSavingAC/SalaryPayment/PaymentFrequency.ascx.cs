@@ -97,7 +97,7 @@ namespace BankProject.TellerApplication.AccountManagement.CurrentNonTermSavingAC
             var listAcc = new SavingAccountDAO().GetAccountOpenByType("C");
             foreach (AccountOpen acc in listAcc)
             {
-                RadComboBoxItem item = new RadComboBoxItem( acc.CustomerName,acc.ID);                
+                RadComboBoxItem item = new RadComboBoxItem(acc.AccountCode + " - "+ acc.CustomerName,acc.ID);                
                 item.Attributes.Add("CustomerName", acc.CustomerName);
                 item.Attributes.Add("Currency", acc.Currency);
                 item.Attributes.Add("CustomerID", acc.CustomerID);
