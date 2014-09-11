@@ -1,12 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Enquiry.ascx.cs" Inherits="BankProject.TellerApplication.SignatureManagement.Enquiry" %>
 <%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
-<style>
-    .enquiryButton {
-        border : 0px;
-        width:20px;
-        margin-right:5px;
-    }
-</style>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False"  />
 <div>
     <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" OnButtonClick="RadToolBar1_ButtonClick">
@@ -52,7 +45,7 @@
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="150" />
-                    <ItemTemplate><%# generateURLs(Eval("CustomerId").ToString(), Eval("Status").ToString()) %>
+                    <ItemTemplate><%# BankProject.Controls.Commont.GenerateEnquiryButtons(Eval("CustomerId").ToString(), Eval("Status").ToString(), 287, 288, null, 285, true) %>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
             </Columns>

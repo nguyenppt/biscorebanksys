@@ -31,6 +31,15 @@ namespace BankProject.TellerApplication.SignatureManagement {
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
+        /// RadCodeBlock2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCodeBlock RadCodeBlock2;
+        
+        /// <summary>
         /// RadToolBar1 control.
         /// </summary>
         /// <remarks>
@@ -103,31 +112,31 @@ namespace BankProject.TellerApplication.SignatureManagement {
         protected global::System.Web.UI.WebControls.FileUpload txtSignature;
         
         /// <summary>
-        /// lblSignaturePreview control.
+        /// cmdSelectSignatureImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSignaturePreview;
+        protected global::System.Web.UI.WebControls.Button cmdSelectSignatureImage;
         
         /// <summary>
-        /// lnkSignature control.
+        /// lblSignatureImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkSignature;
+        protected global::System.Web.UI.WebControls.Label lblSignatureImage;
         
         /// <summary>
-        /// imgSignature control.
+        /// imgSignaturePreview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgSignature;
+        protected global::System.Web.UI.WebControls.Image imgSignaturePreview;
         
         /// <summary>
         /// RadAjaxLoadingPanel1 control.

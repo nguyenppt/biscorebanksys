@@ -32,10 +32,9 @@
         <td class="MyLable" style="color: darkgrey;"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></td>
     </tr>
     <tr>
-        <td class="MyLable" style="vertical-align:top;">
-            <asp:Label ID="lblSignaturePreview" runat="server" Text="Signature"></asp:Label> </td>
+        <td class="MyLable" style="vertical-align:top;">Signature </td>
         <td class="MyContent">
-            <asp:HyperLink ID="lnkSignature" runat="server" Target="_blank"><asp:Image ID="imgSignature" runat="server" Width="100" Height="100" /></asp:HyperLink></td>
+            <asp:HyperLink ID="lnkSignature" runat="server" Target="_blank"><asp:Image ID="imgSignature" runat="server" Width="200" /></asp:HyperLink></td>
         <td class="MyLable"></td>
     </tr>
 </table>
@@ -60,9 +59,6 @@
             }
     }
     $("#<%=txtCustomerId.ClientID%>")
-            .focusout(function () {
-                loadInfo();
-            })
             .keypress(function (event) {
                 if (event.which == 13) {
                     loadInfo();
