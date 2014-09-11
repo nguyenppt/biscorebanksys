@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using bd = BankProject.DataProvider;
+using bc = BankProject.Controls;
 
 namespace BankProject.TellerApplication.SignatureManagement
 {
@@ -22,7 +24,7 @@ namespace BankProject.TellerApplication.SignatureManagement
             string commandName = toolBarButton.CommandName;
             switch (commandName)
             {
-                case BankProject.Controls.Commands.Commit:
+                case bc.Commands.Commit:
                     if (txtSignature.FileName != "")
                     {
                         try
@@ -32,48 +34,40 @@ namespace BankProject.TellerApplication.SignatureManagement
                             int i = txtSignature.FileName.LastIndexOf(".");
                             string fileExt = txtSignature.FileName.Substring(i, txtSignature.FileName.Length - i);
                             fileName += fileExt;
-                            txtSignature.SaveAs(Server.MapPath(BankProject.DataProvider.Customer.SignaturePath) + @"\" + fileName);
+                            txtSignature.SaveAs(Server.MapPath(bd.Customer.SignaturePath) + @"\" + fileName);
                             //save to database
-                            BankProject.DataProvider.Customer.InsertSignature(txtCustomerId.Text, fileName, this.UserInfo.Username);
-                            BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                            bd.Customer.InsertSignature(txtCustomerId.Text, fileName, this.UserInfo.Username);
+                            bc.Commont.SetEmptyFormControls(this.Controls);
                             //
                             txtCustomerIdOld.Value = "";
-                            ShowMsgBox("Save data success !");
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
                         }
                         catch (Exception err)
                         {
-                            ShowMsgBox("Save data error : " + err.Message);
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data error : " + err.Message);
                         }
                     }
                     break;
-                case BankProject.Controls.Commands.Preview:
+                case bc.Commands.Preview:
                     //Xem Preview.ascx
                     break;
-                case BankProject.Controls.Commands.Authozize:
-                case BankProject.Controls.Commands.Reverse:
+                case bc.Commands.Authozize:
+                case bc.Commands.Reverse:
                     try
                     {
-                        if (commandName.Equals(BankProject.Controls.Commands.Authozize))
-                            BankProject.DataProvider.Customer.UpdateSignatureStatus(txtCustomerId.Text, BankProject.DataProvider.TransactionStatus.AUT, this.UserInfo.Username);
+                        if (commandName.Equals(bc.Commands.Authozize))
+                            bd.Customer.UpdateSignatureStatus(txtCustomerId.Text, bd.TransactionStatus.AUT, this.UserInfo.Username);
                         else
-                            BankProject.DataProvider.Customer.UpdateSignatureStatus(txtCustomerId.Text, BankProject.DataProvider.TransactionStatus.REV, this.UserInfo.Username);
-                        BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
-                        BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                            bd.Customer.UpdateSignatureStatus(txtCustomerId.Text, bd.TransactionStatus.REV, this.UserInfo.Username);
+                        bc.Commont.SetEmptyFormControls(this.Controls);
+                        bc.Commont.SetTatusFormControls(this.Controls, true);
                     }
                     catch (Exception err)
                     {
-                        ShowMsgBox("Error : " + err.Message);
+                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Error : " + err.Message);
                     }
                     break;
             }            
-        }
-
-        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
-        {
-            string radalertscript =
-                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
-                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
 
         protected void RadAjaxPanel1_AjaxRequest(object sender, AjaxRequestEventArgs e)
@@ -81,9 +75,9 @@ namespace BankProject.TellerApplication.SignatureManagement
             switch (e.Argument)
             {
                 case "loadCustomerName":
-                    DataTable tDetail = BankProject.DataProvider.Customer.CustomerDetail(txtCustomerId.Text);
+                    DataTable tDetail = bd.Customer.CustomerDetail(txtCustomerId.Text);
                     if (tDetail == null || tDetail.Rows.Count <= 0)
-                        lblCustomerName.Text = "Customer not found !";
+                        lblCustomerName.Text = "This Customer does not exist.";
                     else
                         lblCustomerName.Text = tDetail.Rows[0]["GBFullName"].ToString();
                     break;

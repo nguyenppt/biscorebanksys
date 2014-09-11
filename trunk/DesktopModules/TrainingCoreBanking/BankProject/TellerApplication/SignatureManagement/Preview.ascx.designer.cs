@@ -67,15 +67,6 @@ namespace BankProject.TellerApplication.SignatureManagement {
         protected global::System.Web.UI.WebControls.Label lblCustomerName;
         
         /// <summary>
-        /// lblSignaturePreview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSignaturePreview;
-        
-        /// <summary>
         /// lnkSignature control.
         /// </summary>
         /// <remarks>
