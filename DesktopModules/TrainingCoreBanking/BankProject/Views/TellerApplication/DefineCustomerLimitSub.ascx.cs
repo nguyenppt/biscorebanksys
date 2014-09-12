@@ -14,6 +14,7 @@ namespace BankProject.Views.TellerApplication
     {
         public Boolean Enable_toAudit = false;
         public static Boolean is_New_edit_hanMucCha = false;
+        protected static Boolean Global_Limit_Was_Created = true;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
@@ -168,15 +169,19 @@ namespace BankProject.Views.TellerApplication
                             if ((tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0) < (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
                             { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
                             //if (TriTT.B_CUSTOMER_LIMIT_SUB_check_SubLimitID(LimitID).Tables[0].Rows.Count == 0)
+                            if (Global_Limit_Was_Created == false) //In case User co tinh tao HM con khi HM cha chua dc tao
                             {
-                                TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
-                               , "", "",
-                               "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
-                               , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
-                               tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
-                               , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
-                                Response.Redirect("Default.aspx?tabid=359");
+                                ShowMsgBox("The Product Limit that You have entered does not have Global Limit " + LimitID.Substring(8, 4) + ". Please Create Global Limit before do this action !");
+                                break;
                             }
+                            TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
+                            , "", "",
+                            "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
+                            , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
+                            tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
+                            , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
+                            Response.Redirect("Default.aspx?tabid=359");
+                            
                             //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
                         }
                         else
@@ -217,11 +222,23 @@ namespace BankProject.Views.TellerApplication
                     break;
             }
         }
+        protected void btSearch_Click1(object sender, EventArgs e)
+        {
+            string LimitID = tbLimitID.Text;
+            if (LimitID.Length == 12)
+            {
+                Load_MainLimit_ForLimitDetail(LimitID);
+            }
+            else if (LimitID.Length == 15)
+            {
+                Load_SubLimit_DataToReview(LimitID);
+            }
+        }
         protected void Load_MainLimit_DataToReview(String LimitID)
         {
             BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
             tbLimitID.Text = LimitID;
-            DataSet ds = TriTT.B_CUSTOMER_LIMIT_Load_Customer_Limit(LimitID);
+            DataSet ds = TriTT.B_CUSTOMER_LIMIT_Load_Customer_Limit(LimitID);// kiem tra da tao HM cha chua, co thi load len de tao HM con, chua co thi show mesg
             if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 if (LimitID.Length == 15)
@@ -258,6 +275,13 @@ namespace BankProject.Views.TellerApplication
                 tbNote.Text = ds.Tables[0].Rows[0]["Note"].ToString();
                 rcbFandA.SelectedValue = ds.Tables[0].Rows[0]["Mode"].ToString();
                 tbMaxTotal.Text = ds.Tables[0].Rows[0]["MaxTotal"].ToString();
+                Global_Limit_Was_Created = true;// tra Flag ve trang thai true nhu luc dau
+            }
+            else
+            {
+                ShowMsgBox("The Product Limit that You have entered does not have Global Limit " + LimitID.Substring(8,4) +". Please Create Global Limit before do this action !");
+                Global_Limit_Was_Created = false;
+                return;
             }
         }
         protected void Load_SubLimit_DataToReview(string SubLimitID)
@@ -313,18 +337,7 @@ namespace BankProject.Views.TellerApplication
 
             }
         }
-        protected void btSearch_Click1(object sender, EventArgs e)
-        {
-            string LimitID = tbLimitID.Text;
-            if (LimitID.Length == 12)
-            {
-                Load_MainLimit_ForLimitDetail(LimitID);
-            }
-            else if (LimitID.Length == 15)
-            {
-                Load_SubLimit_DataToReview(LimitID);
-            }
-        }
+        
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
         {
             string radalertscript =
