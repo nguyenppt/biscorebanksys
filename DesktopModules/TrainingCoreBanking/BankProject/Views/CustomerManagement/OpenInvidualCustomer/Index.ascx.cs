@@ -440,7 +440,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             IndividualAcc.OfficeAddress = txtOfficeAddress.Text;
             IndividualAcc.CustomerLiability = txtCustomerLiability.Text;
             IndividualAcc.ApprovedUser = UserInfo.Username.ToString();
-            IndividualAcc.IndCust_EmailAddress = tbEmailAddress.Text;
+            IndividualAcc.EmailAddress = tbEmailAddress.Text;
         }
         private void BindDataToControl(string CustomerIDToReview)
         {
@@ -514,7 +514,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             txtMonthlyIncome.Text = IndividualCustomer.MonthlyIncome;
             txtOfficeAddress.Text = IndividualCustomer.OfficeAddress;
             txtCustomerLiability.Text = IndividualCustomer.CustomerLiability;
-            tbEmailAddress.Text = IndividualCustomer.IndCust_EmailAddress;
+            tbEmailAddress.Text = IndividualCustomer.EmailAddress;
             StatusAccount_from_Search_action = IndividualCustomer.Status;
             if (IndividualCustomer.Status == "AUT")
             {
