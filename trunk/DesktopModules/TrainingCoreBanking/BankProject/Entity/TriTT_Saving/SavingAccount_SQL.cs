@@ -21,21 +21,21 @@ namespace BankProject.Entity.TriTT_Saving
                                                         [SubSectorCode]=@SubSectorCode, [SubSectorName]=@SubSectorName, [IndustryCode]=@IndustryCode, [IndustryName]=@IndustryName, [SubIndustryCode]=@SubIndustryCode, [SubIndustryName]=@SubIndustryName, [TargetCode]=@TargetCode, [MaritalStatus]=@MaritalStatus, [AccountOfficer]=@AccountOfficer,
                                                         [Gender]=@Gender, [Title]=@Title, [ContactDate]=@ContactDate, [RelationCode]=@RelationCode, [OfficeNumber]=@OfficeNumber, [FaxNumber]=@FaxNumber, [NoOfDependant]=@NoOfDependant, [NoOfChildUnder15]=@NoOfChildUnder15, [NoOfChildUnder25]=@NoOfChildUnder25, [NoOfchildOver25]=@NoOfchildOver25, 
                                                         [HomeOwnerShip]=@HomeOwnerShip, [ResidenceType]=@ResidenceType, [EmploymentStatus]=@EmploymentStatus, [CompanyName]=@CompanyName, [Currency]=@Currency, [MonthlyIncome]=@MonthlyIncome, [OfficeAddress]=@OfficeAddress, 
-                                                        [CustomerLiability]=@CustomerLiability, [ApprovedUser] = @ApprovedUser, [IndCust_EmailAddress]= @IndCust_EmailAddress
+                                                        [CustomerLiability]=@CustomerLiability, [ApprovedUser] = @ApprovedUser, [EmailAddress]= @EmailAddress
                                                         where [CustomerID]=@CustomerID";
         private readonly string CREATE_SAVING_ACCOUNT = @"INSERT INTO  [dbo].[BCUSTOMER_INFO] ( [CustomerID], [Status], [FirstName], [LastName], [MiddleName], [GBShortName], [GBFullName], [BirthDay], [GBStreet]
                                                         , [GBDist], [MobilePhone], [MaTinhThanh], [TenTinhThanh], [CountryCode], [CountryName], [NationalityCode], [NationalityName], 
                                                         [ResidenceCode], [ResidenceName], [DocType], [DocID], [DocIssuePlace], [DocIssueDate], [DocExpiryDate], [SectorCode], [SectorName], 
                                                         [SubSectorCode], [SubSectorName], [IndustryCode], [IndustryName], [SubIndustryCode], [SubIndustryName], [TargetCode], [MaritalStatus], [AccountOfficer],
                                                         [Gender], [Title], [ContactDate], [RelationCode], [OfficeNumber], [FaxNumber], [NoOfDependant], [NoOfChildUnder15], [NoOfChildUnder25], [NoOfchildOver25], 
-                                                        [HomeOwnerShip], [ResidenceType], [EmploymentStatus], [CompanyName], [Currency], [MonthlyIncome], [OfficeAddress], [CustomerLiability],[ApprovedUser],IndCust_EmailAddress  )
+                                                        [HomeOwnerShip], [ResidenceType], [EmploymentStatus], [CompanyName], [Currency], [MonthlyIncome], [OfficeAddress], [CustomerLiability],[ApprovedUser],EmailAddress  )
                                                         VALUES
                                                         (@CustomerID, @Status, @FirstName, @LastName, @MiddleName, @GBShortName, @GBFullName, @BirthDay, @GBStreet,
                                                         @GBDist, @MobilePhone, @MaTinhThanh, @TenTinhThanh, @CountryCode, @CountryName, @NationalityCode, @NationalityName, 
                                                         @ResidenceCode, @ResidenceName, @DocType, @DocID, @DocIssuePlace, @DocIssueDate, @DocExpiryDate, @SectorCode, @SectorName, 
                                                         @SubSectorCode, @SubSectorName, @IndustryCode, @IndustryName, @SubIndustryCode, @SubIndustryName, @TargetCode, @MaritalStatus, @AccountOfficer,
                                                         @Gender, @Title, @ContactDate, @RelationCode, @OfficeNumber, @FaxNumber, @NoOfDependant, @NoOfChildUnder15, @NoOfChildUnder25, @NoOfchildOver25, 
-                                                        @HomeOwnerShip, @ResidenceType, @EmploymentStatus, @CompanyName, @Currency, @MonthlyIncome, @OfficeAddress, @CustomerLiability,@ApprovedUser, @IndCust_EmailAddress)";
+                                                        @HomeOwnerShip, @ResidenceType, @EmploymentStatus, @CompanyName, @Currency, @MonthlyIncome, @OfficeAddress, @CustomerLiability,@ApprovedUser, @EmailAddress)";
         private readonly string QUERY_GET_INDIVIDUAL_CUSTOMER_ACCOUNT_BY_STATUS = @"SELECT [CustomerID], [Status], [GBShortName] ,[TenTinhThanh], [NationalityName], [IndustryName], [TargetCode],[DocID] 
 		                                               FROM  [dbo].[BCUSTOMER_INFO] WHERE [Status]=@Status and CustomerType='P' ORDER BY ContactDate Desc";
 
@@ -45,7 +45,7 @@ namespace BankProject.Entity.TriTT_Saving
                                                       ,[SectorName],[SubSectorCode],[SubSectorName] ,[IndustryCode] ,[IndustryName] ,[SubIndustryCode],[SubIndustryName]
                                                       ,[TargetCode],[MaritalStatus] ,[AccountOfficer],[Gender],[Title] ,[ContactDate],[RelationCode],[OfficeNumber]
                                                       ,[FaxNumber],[NoOfDependant] ,[NoOfChildUnder15],[NoOfChildUnder25],[NoOfchildOver25] ,[HomeOwnerShip],[ResidenceType]
-                                                      ,[EmploymentStatus],[CompanyName],[Currency],[MonthlyIncome] ,[OfficeAddress],[CustomerLiability],[ApprovedUser],[IndCust_EmailAddress]
+                                                      ,[EmploymentStatus],[CompanyName],[Currency],[MonthlyIncome] ,[OfficeAddress],[CustomerLiability],[ApprovedUser],[EmailAddress]
                                                          FROM [dbo].[BCUSTOMER_INFO] where [CustomerID]=@CustomerID";
         private readonly string UPDATE_SET_STATUS_FOR_INDIVIDUAL_CUSTOMER_ACCOUNT = @"UPDATE [dbo].[BCUSTOMER_INFO] SET [Status]=@Status where CustomerID = @CustomerID";
         #endregion
