@@ -27,9 +27,12 @@ namespace BankProject.Views.TellerApplication
             string CommandName = ToolBarButton.CommandName;
             if (CommandName == "search")
             {
-                RadGrid.DataSource = TriTT.B_CHEQUE_RETURN_Enquiry(tbRefCheque.Text, tbWorkingAcct.Text, tbDocID.Text, tbCustomerID.Text, tbCustomerName.Text,
-                    rdpActiveDate.SelectedDate.HasValue ? rdpActiveDate.SelectedDate : null, rcbChequeType.SelectedValue, tbReturnedCheque.Value.HasValue? tbReturnedCheque.Value.Value : 0 );
-                RadGrid.DataBind();
+                if (IsPostBack)
+                {
+                    RadGrid.DataSource = TriTT.B_CHEQUE_RETURN_Enquiry(tbRefCheque.Text, tbWorkingAcct.Text, tbDocID.Text, tbCustomerID.Text, tbCustomerName.Text,
+                        rdpActiveDate.SelectedDate.HasValue ? rdpActiveDate.SelectedDate : null, rcbChequeType.SelectedValue, tbReturnedCheque.Value.HasValue ? tbReturnedCheque.Value.Value : 0);
+                    RadGrid.DataBind();
+                }
             }
         }
         protected string getUrlPreview(string RefCheque, string ReturnedCheque)
@@ -38,7 +41,11 @@ namespace BankProject.Views.TellerApplication
         }
         protected void RadGrid_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-
+            if (IsPostBack)
+            {
+                RadGrid.DataSource = TriTT.B_CHEQUE_RETURN_Enquiry(tbRefCheque.Text, tbWorkingAcct.Text, tbDocID.Text, tbCustomerID.Text, tbCustomerName.Text,
+                    rdpActiveDate.SelectedDate.HasValue ? rdpActiveDate.SelectedDate : null, rcbChequeType.SelectedValue, tbReturnedCheque.Value.HasValue ? tbReturnedCheque.Value.Value : 0);
+            }
         }
         protected void LoadChequeType()
         {

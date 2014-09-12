@@ -18,7 +18,7 @@ namespace BankProject.Views.TellerApplication
         }
         protected void RadGridPreview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            RadGridPreview.DataSource = TriTT.B_CHEQUEISSUE_Preview_2_Authorize();
+                RadGridPreview.DataSource = TriTT.B_CHEQUEISSUE_Preview_2_Authorize();
         }
         protected string getUrlPreview(string id)
         {

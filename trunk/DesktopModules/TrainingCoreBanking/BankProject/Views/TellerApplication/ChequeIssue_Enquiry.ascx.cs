@@ -29,9 +29,13 @@ namespace BankProject.Views.TellerApplication
             string CommandName = ToolBarButton.CommandName;
             if (CommandName == "search")
             {
-                RadGridView.DataSource = TriTT.B_CHEQUEISSUE_Enquiry_Cheque(tbChequeRef.Text, tbWorkingAcct.Text,rcbChequeType.SelectedValue,
-                    rdpIssuedDate.SelectedDate, tbChequeNo.Text.Length == 0? 0 : tbChequeNo.Value.Value);
-                RadGridView.DataBind();
+                if (IsPostBack)
+                {
+                    RadGridView.DataSource = TriTT.B_CHEQUEISSUE_Enquiry_Cheque(tbChequeRef.Text, tbWorkingAcct.Text, rcbChequeType.SelectedValue,
+                        rdpIssuedDate.SelectedDate, tbChequeNo.Text.Length == 0 ? 0 : tbChequeNo.Value.Value);
+                    RadGridView.DataBind();
+                }
+                
             }
         }
         public string geturlReview(string ChequeID)
@@ -40,7 +44,11 @@ namespace BankProject.Views.TellerApplication
         }
         protected void RadGrid1_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            TriTT.B_CHEQUEISSUE_Enquiry_Cheque("!", "!", "",rdpIssuedDate.SelectedDate , 0);
+            if (IsPostBack)
+            {
+                RadGridView.DataSource = TriTT.B_CHEQUEISSUE_Enquiry_Cheque(tbChequeRef.Text, tbWorkingAcct.Text, rcbChequeType.SelectedValue,
+                         rdpIssuedDate.SelectedDate, tbChequeNo.Text.Length == 0 ? 0 : tbChequeNo.Value.Value);
+            }
         }
         protected void LoadChequeType()
         {

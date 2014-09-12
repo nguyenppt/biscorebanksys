@@ -55,7 +55,12 @@
     <div id="ChristopherColumbus" class="dnnClear">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Cheque Status:</td>
+                <td class="MyLable">Cheque Status:<span class="Required">(*)</span> 
+                    <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator3"
+                     ControlToValidate="rcbChequeStatus" ValidationGroup="Commit" InitialValue="" 
+                     ErrorMessage="Cheque Status  is required"
+                    ForeColor="Red"></asp:RequiredFieldValidator>
+                </td>
                 <td class="MyContent">
                     <telerik:RadComboBox ID="rcbChequeStatus" appendDataBoundItems="true"
                         MarkFirstMatch="True"

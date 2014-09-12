@@ -2,133 +2,186 @@
 using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using System.Data;
+using bd = BankProject.DataProvider;
+using bc = BankProject.Controls;
+using System.Globalization;
 
 namespace BankProject.Views.TellerApplication
 {
     public partial class BuyTravellersCheque : PortalModuleBase
     {
-        private static int Id = 7890;
-        private void LoadToolBar(bool isauthorise)
-        {
-            RadToolBar1.FindItemByValue("btCommitData").Enabled = !isauthorise;
-            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-            RadToolBar1.FindItemByValue("btAuthorize").Enabled = isauthorise;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-            this.txtId.Text = "TT/09161/0" + Id.ToString();
-            txtTellerId.Text = this.UserInfo.Username;
-            tbTellerIDCR.Text = this.UserInfo.Username;
-            dvAudit.Visible = false;
-
-            if (Request.QueryString["IsAuthorize"] != null)
+            //
+            try
             {
-                LoadToolBar(true);
-                loaddataPreview();
-                //dvAudit.Visible = true;
-                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
+                cmbTCCurrency.DataSource = bd.Teller.ExchangeRate();
+                cmbTCCurrency.DataValueField = "Value";
+                cmbTCCurrency.DataTextField = "Title";
+                cmbTCCurrency.DataBind();
+                //
+                rcbCurrencyPaid.DataSource = bd.Teller.ExchangeRate();
+                rcbCurrencyPaid.DataValueField = "Value";
+                rcbCurrencyPaid.DataTextField = "Title";
+                rcbCurrencyPaid.DataBind();
+                //
+                rcbCrAccount.DataSource = bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll();
+                rcbCrAccount.DataValueField = "Account";
+                rcbCrAccount.DataTextField = "Display";
+                rcbCrAccount.DataBind();
+                //
             }
-            else 
+            catch (Exception err)
             {
-                LoadToolBar(false);
-                //dvAudit.Visible = false;
+                lblMessage.Text = err.StackTrace;
             }
+            //
+            if (Request.QueryString["tid"] != null)
+            {
+                txtId.Text = Request.QueryString["tid"];
+                string TTNo = txtId.Text;
+                DataTable dt = bd.Teller.SellTravellersChequeDetailOrList(TTNo, null);
+                if (dt == null || dt.Rows.Count <= 0)
+                {
+                    bc.Commont.SetEmptyFormControls(this.Controls);
+                    return;
+                }
+                DataRow dr = dt.Rows[0];
+                //
+                tbCustomerName.Text = dr["CustomerName"].ToString();
+                tbAddress.Text = dr["CustomerAddress"].ToString();
+                tbPassportNo.Text = dr["CustomerPassportNo"].ToString();
+                if (dr["CustomerPassportDateOfIssue"] != DBNull.Value && !String.IsNullOrEmpty(dr["CustomerPassportDateOfIssue"].ToString()))
+                    tbDateOfIsssue.SelectedDate = DateTime.ParseExact(dr["CustomerPassportDateOfIssue"].ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+                tbPlaceOfIss.Text = dr["CustomerPassportPlaceOfIssue"].ToString();
+                txtPhoneNo.Text = dr["CustomerPhoneNo"].ToString();
+                //
+                txtTellerId.Text = dr["TellerID"].ToString();
+                for (int i = 0; i < cmbTCCurrency.Items.Count; i++)
+                {
+                    if (cmbTCCurrency.Items[i].Text.Equals(dr["TCCurrency"].ToString()))
+                    {
+                        cmbTCCurrency.SelectedIndex = i;
+                        break;
+                    }
+                }
+                /*rcbDebitAccount.SelectedValue = dr["DebitAccount"].ToString();
+                tbTCAmount.Value = Convert.ToDouble(dr["TCAmount"]);
+                for (int i = 0; i < rcbDrCurrency.Items.Count; i++)
+                {
+                    if (rcbDrCurrency.Items[i].Text.Equals(dr["DrCurrency"].ToString()))
+                    {
+                        rcbDrCurrency.SelectedIndex = i;
+                        break;
+                    }
+                }
+                rcbCrAccount.SelectedValue = dr["CrAccount"].ToString();
+                tbAmountDebited.Text = dr["AmountDebited"].ToString();
+                tbExchangeRate.Value = null;
+                if (dr["ExchangeRate"] != DBNull.Value)
+                    tbExchangeRate.Value = Convert.ToDouble(dr["ExchangeRate"]);*/
+                txtNarrative.Text = dr["Narrative"].ToString();
+                //
+                bc.Commont.SetTatusFormControls(this.Controls, false);
+                //
+                loadToolBar(dr["Status"].ToString());
+            }
+            else
+            {
+                this.txtId.Text = bd.Teller.GenerateTTId();
+                txtTellerId.Text = this.UserInfo.UserID + "";
+                //
+                bc.Commont.SetTatusFormControls(this.Controls, true);
+                //
+                loadToolBar(null);
+            }
+        }
 
+        private void loadToolBar(string Status)
+        {
+            if (Status == null) Status = "";
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = String.IsNullOrEmpty(Status);
+            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.UNA);
+            RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.AUT);
+            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            dvAudit.Visible = Status.Equals(bd.TransactionStatus.AUT);
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
-            
             var toolBarButton = e.Item as RadToolBarButton;
             string commandName = toolBarButton.CommandName;
-            if (commandName == "commit")
+            switch (commandName)
             {
-                Id++;
-                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
-                txtTellerId.Text = this.UserInfo.Username;
-                tbTellerIDCR.Text = this.UserInfo.Username;
-                this.txtId.Text = "TT/09161/0" + Id.ToString();
-                //this.cmbCustomerAccount.SelectedIndex = 0;
-                //this.txtAmtFCY.Text = string.Empty;
-                //this.txtAmtLCY.Text = string.Empty;
-                //this.txtNarrative.Text = string.Empty;
+                case bc.Commands.Commit:
+                    try
+                    {
+                        string DateOfIsssue = "";
+                        if (tbDateOfIsssue.SelectedDate != null)
+                            DateOfIsssue = tbDateOfIsssue.SelectedDate.Value.ToString("yyyyMMdd");
+                        //                        
+                        /*bd.Teller.SellTravellersChequeUpdate("new", txtId.Text, tbCustomerName.Text, tbAddress.Text, tbPassportNo.Text, DateOfIsssue, tbPlaceOfIss.Text, txtPhoneNo.Text,
+                            txtTellerId.Text, cmbTCCurrency.SelectedValue, rcbDebitAccount.SelectedValue, tbTCAmount.Value, rcbDrCurrency.SelectedValue, rcbCrAccount.SelectedValue, tbAmountDebited.Value, tbExchangeRate.Value, txtNarrative.Text, this.UserInfo.Username);*/
+                        bc.Commont.SetEmptyFormControls(this.Controls);
+                        this.txtId.Text = bd.Teller.GenerateTTId();
+                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
+                    }
+                    catch (Exception err)
+                    {
+                        lblMessage.Text = err.StackTrace;
+                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Error : " + err.Message);
+                    }
+                    break;
+                case bc.Commands.Preview:
 
-                //this.cmbCurrencyPaid.SelectedIndex = 0;
-                //this.txtDealRate.Text = string.Empty;
-                //this.cmbWaiveCharges.SelectedIndex = 0;
-            }
-
-            if(commandName=="preview")
-            {
-                Response.Redirect(EditUrl("chitiet"));
-            }
-
-        }
-
-        void loaddataPreview()
-        {
-            if (Request.QueryString["LCCode"] != null)
-            {
-                string LCCode = Request.QueryString["LCCode"].ToString();
-                switch (LCCode)
-                { 
-                    case "1":
-                        txtId.Text = "TT/09161/078911";
-                        //cmbCustomerAccount.SelectedValue = "0";
-                        //txtAmtFCY.Value = 100;
-                        cmbTCCurrency.SelectedValue = "USD";
-                        loadDrAccount();
-                        //txtDealRate.Value = 7;
-                        txtTellerId.Text = "140001";
-                        //cmbWaiveCharges.SelectedValue = "YES";
-                        txtNarrative.Text = "NOP TM DE MUA SEC TRANG";
-                        break;
-
-                    case "2":
-                        txtId.Text = "TT/09161/078912";
-                        //cmbCustomerAccount.SelectedValue = "1";
-                        //txtAmtFCY.Value = 200;
-                        cmbTCCurrency.SelectedValue = "USD";
-                        loadDrAccount();
-                        //txtDealRate.Value = 5.8;
-                        txtTellerId.Text = "140002";
-                        //cmbWaiveCharges.SelectedValue = "YES";
-                        txtNarrative.Text = "NOP TM DE MUA SEC TRANG";
-                        break;
-                }
-            }
-        }
-        void loadDrAccount()
-        {
-            rcbDrAccount.Items.Clear();
-            if (cmbTCCurrency.SelectedValue != "")
-            {
-                DataSet ds = BankProject.DataProvider.Database.B_BDRFROMACCOUNT_OtherCustomer("", cmbTCCurrency.SelectedValue);
-                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                {
-                    DataRow dr = ds.Tables[0].NewRow();
-                    dr["Display"] = "";
-                    dr["Id"] = "";
-                    dr["CustomerID"] = "";
-                    dr["Name"] = "";
-                    ds.Tables[0].Rows.InsertAt(dr, 0);
-
-                    rcbDrAccount.DataTextField = "Display";
-                    rcbDrAccount.DataValueField = "Id";
-                    rcbDrAccount.DataSource = ds;
-                    rcbDrAccount.DataBind();
-                }
+                    break;
+                case bc.Commands.Authozize:
+                case bc.Commands.Reverse:
+                    try
+                    {
+                        if (commandName.Equals(bc.Commands.Authozize))
+                        {
+                            bd.Teller.SellTravellersChequeUpdateStatus(txtId.Text, bd.TransactionStatus.AUT, this.UserInfo.Username);
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Authozize complete !");
+                        }
+                        else
+                        {
+                            bd.Teller.SellTravellersChequeUpdateStatus(txtId.Text, bd.TransactionStatus.REV, this.UserInfo.Username);
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Reverse complete !");
+                        }
+                        bc.Commont.SetEmptyFormControls(this.Controls);
+                        bc.Commont.SetTatusFormControls(this.Controls, true);
+                        this.txtId.Text = bd.Teller.GenerateTTId();
+                        loadToolBar(null);
+                    }
+                    catch (Exception err)
+                    {
+                        lblMessage.Text = err.StackTrace;
+                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Error : " + err.Message);
+                    }
+                    break;
             }
         }
 
-        protected void cmbTCCurrency_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void RadAjaxPanelDebitAcc_AjaxRequest(object sender, AjaxRequestEventArgs e)
         {
-            loadDrAccount();
+            switch (e.Argument)
+            {
+                case "loadDebitAcc":
+                    string Currency = "";
+                    if (cmbTCCurrency.SelectedIndex >= 0)
+                        Currency = cmbTCCurrency.Items[cmbTCCurrency.SelectedIndex].Text;
+                    /*rcbDebitAccount.DataSource = bd.Database.B_BDRFROMACCOUNT_GetByCustomer(tbCustomerName.Text, Currency);
+                    rcbDebitAccount.DataValueField = "Id";
+                    rcbDebitAccount.DataTextField = "DisplayHasCurrency";
+                    rcbDebitAccount.DataBind();*/
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

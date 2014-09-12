@@ -58,7 +58,7 @@ namespace BankProject.Views.TellerApplication
                 {
                     if (TriTT.B_CHEQUE_RETURN_check_cheque_in_Returned(rcbChequeType.SelectedValue, Convert.ToDouble(tbChequeNo.Value.Value)).Tables[0].Rows.Count == 0)// check xem chequeNo co bi Returned chua ?
                     {
-                        double dealrate = Convert.ToDouble(tbDealRate.Value);
+                        decimal dealrate = Convert.ToDecimal(tbDealRate.Value.Value);
                         if (rcbDebitCurrency.SelectedValue == rcbCreditCurrency.SelectedValue) { dealrate = 1; }
                         TriTT.BCHEQUE_TRANSFER_Insert_Update(tbID.Text, "UNA", tbCustomerID.Text, tbCustomerName.Text, rcbDebitCurrency.SelectedValue, rcbDebitAccount.SelectedValue
                             , rcbDebitAccount.Text, Convert.ToDouble(tbDebitAmountLCY.Text), Convert.ToDouble(tbOldCustBal.Text), Convert.ToDouble(tbNewCustBal.Text),
