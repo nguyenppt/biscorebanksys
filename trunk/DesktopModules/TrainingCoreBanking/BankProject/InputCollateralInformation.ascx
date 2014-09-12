@@ -193,6 +193,18 @@
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
+                <tr>
+                    <td class="MyLable">Limit ID/Contract:</td>
+                    <td class="MyContent">
+                        <telerik:RadComboBox id="rcbProductLimit" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true">
+                            <CollapseAnimation Type="None" />
+                            <ExpandAnimation Type="None" />
+                            <Items>
+                                <telerik:RadComboBoxItem Value="" Text="" />
+                            </Items>
+                        </telerik:RadComboBox>
+                    </td>
+                </tr>
             </table>
         </fieldset>
         <fieldset>
