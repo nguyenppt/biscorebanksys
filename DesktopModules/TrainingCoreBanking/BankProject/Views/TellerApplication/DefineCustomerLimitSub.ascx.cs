@@ -180,7 +180,7 @@ namespace BankProject.Views.TellerApplication
                             , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
                             tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
                             , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
-                            Response.Redirect("Default.aspx?tabid=359");
+                            Response.Redirect("Default.aspx?tabid=361");
                             
                             //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
                         }
