@@ -1,11 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SellTravellersChequeList.ascx.cs" Inherits="BankProject.Views.TellerApplication.SellTravellersChequeList" %>
-<style>
-    .enquiryButton {
-        border : 0px;
-        width:20px;
-        margin-right:5px;
-    }
-</style>
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False"  />
 <div>
     <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" OnButtonClick="RadToolBar1_ButtonClick">
@@ -63,7 +57,7 @@
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="150" />
-                    <ItemTemplate><%# generateURLs(Eval("TTNo").ToString(), Eval("Status").ToString()) %>
+                    <ItemTemplate><%# BankProject.Controls.Commont.GenerateEnquiryButtons(Eval("TTNo").ToString(), Eval("Status").ToString(), this.TabId, this.TabId, this.TabId, this.TabId) %>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
             </Columns>

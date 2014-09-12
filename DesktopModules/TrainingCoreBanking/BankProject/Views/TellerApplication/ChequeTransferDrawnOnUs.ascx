@@ -233,7 +233,7 @@
                 <td class="MyContent">
                     <telerik:RadNumericTextBox ID="tbDealRate" runat="server" ValidationGroup="Group1"   
                               ClientEvents-OnValueChanged="tbDebitAmountLCY_ClientEventsOnValueChanged"
-                        NumberFormat-DecimalDigits="6"></telerik:RadNumericTextBox>
+                        NumberFormat-DecimalDigits="5"></telerik:RadNumericTextBox>
                 </td>
             </tr>
             <tr>

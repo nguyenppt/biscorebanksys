@@ -10,8 +10,8 @@
                 <telerik:GridBoundColumn HeaderText="Customer Name" DataField="CustomerName" HeaderStyle-Width="100"  />
                  <telerik:GridBoundColumn HeaderText="Amount Paid" DataField="AmountPaid" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" 
                      HeaderStyle-Width="150"  />
-                 <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" ItemStyle-HorizontalAlign="center" HeaderStyle-HorizontalAlign="center" />
-                 <telerik:GridBoundColumn HeaderText="Cheque No" DataField="ChequeNo" />
+                 <telerik:GridBoundColumn HeaderText="Currency" DataField="CurrencyPaid" ItemStyle-HorizontalAlign="center" HeaderStyle-HorizontalAlign="center" />
+                 <telerik:GridBoundColumn HeaderText="Cheque No" DataField="ChequeNo" HeaderStyle-HorizontalAlign="center"  />
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
                 <telerik:GridBoundColumn HeaderText="WithDrawal Date" DataField="CreatedDate" />
                 <telerik:GridTemplateColumn>

@@ -29,10 +29,13 @@ namespace BankProject.Views.TellerApplication
             string CommandName = ToolBarButton.CommandName;
             if (CommandName == "search")
             {
-                RadGridView.DataSource = TriTT.CHEQUE_TRANSFER_Enquiry(tbTransferID.Text, tbWorkingAcct.Text, tbChequeNo.Value.HasValue ? tbChequeNo.Value.Value : 0, tbCustomerID.Text
-                    , tbCustomerName.Text, rdpTransferDate.SelectedDate, rcbChequeType.SelectedValue, tbLegalID.Text, tbFromAmountLCY.Value.HasValue ? tbFromAmountLCY.Value.Value : 0,
-                    tbToAmountLCY.Value.HasValue ? tbToAmountLCY.Value.Value : 0);
-                RadGridView.DataBind();
+                if (IsPostBack)
+                {
+                    RadGridView.DataSource = TriTT.CHEQUE_TRANSFER_Enquiry(tbTransferID.Text, tbWorkingAcct.Text, tbChequeNo.Value.HasValue ? tbChequeNo.Value.Value : 0, tbCustomerID.Text
+                        , tbCustomerName.Text, rdpTransferDate.SelectedDate, rcbChequeType.SelectedValue, tbLegalID.Text, tbFromAmountLCY.Value.HasValue ? tbFromAmountLCY.Value.Value : 0,
+                        tbToAmountLCY.Value.HasValue ? tbToAmountLCY.Value.Value : 0);
+                    RadGridView.DataBind();
+                }
             }
         }
         public string geturlReview(string ID)
@@ -41,7 +44,12 @@ namespace BankProject.Views.TellerApplication
         }
         protected void RadGrid1_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            TriTT.CHEQUE_TRANSFER_Enquiry("!", "!", 0, "0", "0", new DateTime(1900, 12, 12), "0", "0", 0, 0);
+            if (IsPostBack)
+            {
+                RadGridView.DataSource = TriTT.CHEQUE_TRANSFER_Enquiry(tbTransferID.Text, tbWorkingAcct.Text, tbChequeNo.Value.HasValue ? tbChequeNo.Value.Value : 0, tbCustomerID.Text
+                           , tbCustomerName.Text, rdpTransferDate.SelectedDate, rcbChequeType.SelectedValue, tbLegalID.Text, tbFromAmountLCY.Value.HasValue ? tbFromAmountLCY.Value.Value : 0,
+                           tbToAmountLCY.Value.HasValue ? tbToAmountLCY.Value.Value : 0);
+            }
         }
         protected void LoadChequeType()
         {

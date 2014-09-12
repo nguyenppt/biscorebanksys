@@ -27,15 +27,23 @@ namespace BankProject.Views.TellerApplication
             string CommandName = ToolBarButton.CommandName;
             if (CommandName == "search")
             {
-                RadGridDataPreview.DataSource = TriTT.CHEQUE_STOP_Enquiry(tbDocID.Text, tbWorkingAcct.Text, tbChequeNo.Value.HasValue? tbChequeNo.Value.Value:0,
-                    tbCustomerID.Text, tbCustomerName.Text, rdpActiveDate.SelectedDate.HasValue? rdpActiveDate.SelectedDate:null ,rcbChequeType.SelectedValue,
-                    rcbStopReason.SelectedValue);
-                RadGridDataPreview.DataBind();
+                if (IsPostBack)
+                {
+                    RadGridDataPreview.DataSource = TriTT.CHEQUE_STOP_Enquiry(tbDocID.Text, tbWorkingAcct.Text, tbChequeNo.Value.HasValue ? tbChequeNo.Value.Value : 0,
+                        tbCustomerID.Text, tbCustomerName.Text, rdpActiveDate.SelectedDate.HasValue ? rdpActiveDate.SelectedDate : null, rcbChequeType.SelectedValue,
+                        rcbStopReason.SelectedValue);
+                    RadGridDataPreview.DataBind();
+                }
             }
         }
         protected void DataPreview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            //TriTT.CHEQUE_TRANSFER_Enquiry("!", "!", 0, "0", "0", new DateTime(1900, 12, 12), "0", "0", 0, 0);
+            if (IsPostBack)
+            {
+                RadGridDataPreview.DataSource = TriTT.CHEQUE_STOP_Enquiry(tbDocID.Text, tbWorkingAcct.Text, tbChequeNo.Value.HasValue ? tbChequeNo.Value.Value : 0,
+                    tbCustomerID.Text, tbCustomerName.Text, rdpActiveDate.SelectedDate.HasValue ? rdpActiveDate.SelectedDate : null, rcbChequeType.SelectedValue,
+                    rcbStopReason.SelectedValue);
+            }
         }
         protected string getUrlPreview(string ID)
         {

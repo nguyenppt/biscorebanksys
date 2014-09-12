@@ -101,13 +101,14 @@
                 <telerik:GridBoundColumn HeaderText="Customer Name" DataField="CustomerName" HeaderStyle-Width="100"  />
                  <telerik:GridBoundColumn HeaderText="Amount Debit" DataField="DebitAmount" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" 
                      HeaderStyle-Width="150"  />
-                 <telerik:GridBoundColumn HeaderText="Currency" DataField="DebitCurrency" ItemStyle-HorizontalAlign="center" HeaderStyle-HorizontalAlign="center" />
-                 <telerik:GridBoundColumn HeaderText="Cheque No" DataField="ChequeNo" />
-                <telerik:GridBoundColumn HeaderText="Beneficiary Name" DataField="BeneficialName" HeaderStyle-Width="150"  />
+                 <telerik:GridBoundColumn HeaderText="Debit Currency" DataField="DebitCurrency" ItemStyle-HorizontalAlign="center" HeaderStyle-HorizontalAlign="center" />
+                 <telerik:GridBoundColumn HeaderText="Cheque No" DataField="ChequeNo" HeaderStyle-HorizontalAlign="center" />
+                <telerik:GridBoundColumn HeaderText="Beneficiary Name" DataField="BeneficialName" HeaderStyle-Width="120"  />
                 <telerik:GridBoundColumn HeaderText="Amount Transfer" DataField="AmtCreditForCust" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" 
                      HeaderStyle-Width="150"  />
+                 <telerik:GridBoundColumn HeaderText="Credit Currency" DataField="CreditCurrency" ItemStyle-HorizontalAlign="center" HeaderStyle-HorizontalAlign="center" />
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
-                <telerik:GridBoundColumn HeaderText="Transfer Date" DataField="CreatedDate" />
+                <telerik:GridBoundColumn HeaderText="Transfer Date" DataField="CreatedDate" HeaderStyle-HorizontalAlign="center"  />
                 <telerik:GridTemplateColumn ItemStyle-HorizontalAlign="Right" >
                     <ItemStyle Width="25" />
                     <Itemtemplate>

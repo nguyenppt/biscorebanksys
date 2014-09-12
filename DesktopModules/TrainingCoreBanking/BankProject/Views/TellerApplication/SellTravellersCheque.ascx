@@ -2,6 +2,12 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"  />
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#tabs-demo').dnnTabs();
+    });
+
+</script>
 <style>
     .disableTextBox {
         background-color:#D0D0D0 !important;
@@ -201,6 +207,7 @@
                 </td>
             </tr>
         </table>
+        <hr />
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                <td class="MyLable">Dr Currency
@@ -404,6 +411,13 @@
         var labelElement = $('#<%= lbCrAccount.ClientID%>');
         labelElement.html("Accounts Pble");
     }
+
+    $("#<%=txtId.ClientID%>")
+        .keypress(function (event) {
+            if (event.which == 13) {
+                $find('<%=RadToolBar1.ClientID%>').findItemByValue("btPreview").click();
+            }
+        });
 
     function TCAmount_ValueChanged() {
         calculateAmountDebited();        

@@ -81,7 +81,7 @@ namespace BankProject.Views.TellerApplication
             if (Status == null) Status = "";
             RadToolBar1.FindItemByValue("btCommitData").Enabled = String.IsNullOrEmpty(Status);
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-            RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.NAU);
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.UNA);
             RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.AUT);
             RadToolBar1.FindItemByValue("btSearch").Enabled = true;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;

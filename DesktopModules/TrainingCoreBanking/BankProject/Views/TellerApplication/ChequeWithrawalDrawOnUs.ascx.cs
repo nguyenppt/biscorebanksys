@@ -36,14 +36,14 @@ namespace BankProject.Views.TellerApplication
                 {
                     if (TriTT.B_CHEQUE_RETURN_check_cheque_in_Returned(rcbChequeType.SelectedValue ,Convert.ToDouble(tbChequeNo.Value.Value)).Tables[0].Rows.Count == 0)// check xem chequeNo co bi Returned chua ?
                     {
-                        decimal dealrate = Convert.ToDecimal(tbDealRate.Value);
+                        decimal dealrate = Convert.ToDecimal(tbDealRate.Value.Value);
                         if (rcbCurrency.SelectedValue == rcbCurrencyPaid.SelectedValue) { dealrate = 1; }
                         TriTT.CHEQUE_WITHDRAWAL_Insert_Update(tbID.Text, tbCustomerID.Text, tbCustomerName.Text, rcbCurrency.SelectedValue, rcbAccCustomer.SelectedValue,
                             rcbAccCustomer.Text, Convert.ToDecimal(tbAmountLocal.Value.HasValue ? tbAmountLocal.Value : 0), Convert.ToDecimal(tbOldCustBal.Text != "" ? tbOldCustBal.Text : "0"),
                             Convert.ToDecimal(tbNewCustBal.Text != "" ? tbNewCustBal.Text : "0"), rcbChequeType.SelectedValue, rcbChequeType.Text.Replace(rcbChequeType.SelectedValue + " - ", "")
                             , Convert.ToDecimal(tbChequeNo.Value), tbTellerID.Text, rcbCurrencyPaid.SelectedValue, rcbAccountPaid.SelectedValue, rcbAccountPaid.Text, dealrate
                             , Convert.ToDecimal(tbAmtPaidToCust.Text != "" ? tbAmtPaidToCust.Text : "0"), rcbWaiveCharges.SelectedValue, tbNarrative.Text, tbBeneName.Text
-                            , tbAddress.Text, tbLegalID.Text, rdpIssDate.SelectedDate.Value.Date, tbPlaceOfIssue.Text, "UNA");
+                            , tbAddress.Text, tbLegalID.Text, rdpIssDate.SelectedDate, tbPlaceOfIssue.Text, "UNA");
                         Response.Redirect("Default.aspx?tabid=132");
                     }
                     else { ShowMsgBox("ChequeNo was Returned back to the Bank, please choose another ChequeNo !"); return; }

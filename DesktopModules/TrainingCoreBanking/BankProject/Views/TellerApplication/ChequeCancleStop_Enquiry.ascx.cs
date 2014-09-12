@@ -27,9 +27,12 @@ namespace BankProject.Views.TellerApplication
             string CommandName = ToolBarButton.CommandName;
             if (CommandName == "search")
             {
-                RadGridDataPreview.DataSource = TriTT.CHEQUE_CANCLE_STOP_Enquiry(tbWorkingAcct.Text, tbChequeNo.Value.HasValue ? tbChequeNo.Value.Value : 0,
-                    tbDocID.Text, tbCustomerID.Text, tbCustomerName.Text, rdpActiveDate.SelectedDate, rcbChequeType.SelectedValue);
-                RadGridDataPreview.DataBind();
+                if (IsPostBack)
+                {
+                    RadGridDataPreview.DataSource = TriTT.CHEQUE_CANCLE_STOP_Enquiry(tbWorkingAcct.Text, tbChequeNo.Value.HasValue ? tbChequeNo.Value.Value : 0,
+                        tbDocID.Text, tbCustomerID.Text, tbCustomerName.Text, rdpActiveDate.SelectedDate, rcbChequeType.SelectedValue);
+                    RadGridDataPreview.DataBind();
+                }
             }
         }
         protected string getUrlPreview(string AccountID, string SerialNo)
@@ -37,8 +40,12 @@ namespace BankProject.Views.TellerApplication
             return "Default.aspx?tabid=135"+ "&AccountID=" + AccountID + "&SerialNo=" + SerialNo;
         }
         protected void DataPreview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        { 
-            
+        {
+            if (IsPostBack)
+            {
+                RadGridDataPreview.DataSource = TriTT.CHEQUE_CANCLE_STOP_Enquiry(tbWorkingAcct.Text, tbChequeNo.Value.HasValue ? tbChequeNo.Value.Value : 0,
+                    tbDocID.Text, tbCustomerID.Text, tbCustomerName.Text, rdpActiveDate.SelectedDate, rcbChequeType.SelectedValue);
+            }
         }
         protected void LoadChequeType()
         {
