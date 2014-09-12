@@ -330,13 +330,13 @@ namespace BankProject.DataProvider
         }
         public static void B_COLLATERAL_INFO_Insert_Update(string RightID, string CollateralInfoID, string CollateralTypeCode, string CollateralTypeName,
             string CollateralCode, string CollateralName, string ContingentAcctID, string ContingentAcctName, string Description, string Address, string CollateralStatusID,
-            string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string Currency
+            string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID,string Currency
         , string CountryCode, string CountryName, decimal? NominalValue, decimal? MaxValue, decimal? ProvisionValue, decimal? ExecutionValue, decimal? AllocatedAmt, DateTime? ValueDate,
             DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser)
         {
             sqldata.ndkExecuteNonQuery("B_COLLATERAL_INFO_Insert_Update", RightID, CollateralInfoID, CollateralTypeCode, CollateralTypeName, CollateralCode, CollateralName,
                 ContingentAcctID, ContingentAcctName, Description, Address, CollateralStatusID, CollateralStatusDesc, CustomerID, CustomreIDName, Note,
-                CompanyStorageID, CompanyStorageDesc, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
+                CompanyStorageID, CompanyStorageDesc, ProductLimitID, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
                 AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser);
         }
         public static DataSet B_COLLATERAL_INFO_LoadExistColl_InfoExists(string CollateralInfoID)
@@ -367,6 +367,10 @@ namespace BankProject.DataProvider
         public static DataSet B_COLLATERAL_INFO_LoadCurrency_forEach_Customer(string CustomerID)
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadCurrency_forEach_Customer", CustomerID);
+        }
+        public static DataSet B_COLLATERAL_INFO_Load_ProductLimit(string CustomerID)
+        {
+            return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_Load_ProductLimit", CustomerID);
         }
         #endregion
         #region B_CHEQUE ISSUE
@@ -453,7 +457,7 @@ namespace BankProject.DataProvider
         }
         public static void BCHEQUE_TRANSFER_Insert_Update(string ID, string Status, string CustomerID, string CustomerName, string DebitCurrency, string DebitAcctCode
             , string DebitAcctName, double? DebitAmount, double? OldCustBalance, double? NewCustBalance, string ChequeType, string ChequeDesc
-            , double? ChequeNo, DateTime? DebitValueDate, string CreditCurrency, string CreditAcctCode, string CreditAcctName, double? DealRate, DateTime? ExposureDate, 
+            , double? ChequeNo, DateTime? DebitValueDate, string CreditCurrency, string CreditAcctCode, string CreditAcctName, decimal? DealRate, DateTime? ExposureDate, 
             double? AmtCreditForCust, DateTime? CreditValueDate, string WaiveCharge
             , string Narrative, string BeneficialName, string Address, string LegalID, DateTime? IssuedDate, string PlaceOfIssue, string ApprovedUser)
         {
