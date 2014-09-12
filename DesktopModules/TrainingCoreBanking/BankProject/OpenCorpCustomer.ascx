@@ -361,7 +361,17 @@
              <ContentTemplate>
         <table>
             <tr>
-                <td class="MyLable">Main Sector</td>
+                <td class="MyLable">Main Sector<span class="Required">(*)</span>
+                           <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator102"
+                            ControlToValidate="cmbMainSector"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="Main Sector is Required" ForeColor="Red">
+                        </asp:RequiredFieldValidator>
+
+                </td>
                 <td class="MyContent">
                     <telerik:RadComboBox ID="cmbMainSector"
                         MarkFirstMatch="True" TabIndex="26"

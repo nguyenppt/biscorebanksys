@@ -228,8 +228,8 @@ namespace BankProject
                     txtId.Enabled = false;  // khong cho hieu chinh Ma khach hang
                     break;
                 case "search":
-                    LoadDataToReview(txtId.Text);
-                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
+                    LoadDataToReview_Search_tai_Form(txtId.Text);
+                    //BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                     break;
             }
         }
@@ -379,8 +379,8 @@ namespace BankProject
             { 
                 case "REV":
                 case "UNA":
-                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                    LoadToolBar(false);
+                    //BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                    LoadToolBar(true);
                     break;
                 case "AUT":
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
