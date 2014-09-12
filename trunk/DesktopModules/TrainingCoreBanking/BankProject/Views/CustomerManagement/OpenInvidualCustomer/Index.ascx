@@ -21,7 +21,7 @@
 
      var gbShortNameLastElement = $find("<%= txtGBShortName.ClientID %>");
             var gbFullNameLastElement = $find("<%= txtGBFullName.ClientID %>");
-        var fullName = firstName + " " + lastName + " " + middleName;
+        var fullName =  lastName + " " + middleName +" "+ firstName ;
         gbShortNameLastElement.set_value(fullName);
         gbFullNameLastElement.set_value(fullName);
         //gbShortNameLastElement.focus();
@@ -368,7 +368,15 @@
             <hr />
             <table>
                 <tr>
-                    <td class="MyLable">Main Sector</td>
+                    <td class="MyLable">Main Sector <span class="Required">(*)</span>
+                           <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator102"
+                            ControlToValidate="cmbMainSector"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="Main Sector is Required" ForeColor="Red">
+                        </asp:RequiredFieldValidator> </td>
                     <td class="MyContent">
                         <telerik:RadComboBox ID="cmbMainSector"
                             MarkFirstMatch="True"
