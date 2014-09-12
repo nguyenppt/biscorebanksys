@@ -46,7 +46,7 @@ namespace BankProject.Views.TellerApplication
         }
         protected string geturlReview(string MainLimitID, string SubLimitID)
         {
-            return string.Format("Default.aspx?tabid=359&MainLimitID={0}&SubLimitID={1}",MainLimitID, SubLimitID);
+            return string.Format("Default.aspx?tabid=361&MainLimitID={0}&SubLimitID={1}",MainLimitID, SubLimitID);
         }
         protected void rcbCollateralType_ONSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
