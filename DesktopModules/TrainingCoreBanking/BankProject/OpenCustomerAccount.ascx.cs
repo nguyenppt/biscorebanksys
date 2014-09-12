@@ -93,13 +93,13 @@ namespace BankProject
                 string RestrictTxn = cmbRestrictTxn.Text != "" ? cmbRestrictTxn.Text : "";
                 string RelationCode = cmbRelationCode.Text != "" ? cmbRelationCode.Text.Split('-')[1].Trim() : "";
 
-                DataSet ds = BankProject.DataProvider.Database.BOPENACCOUNT_KiemTraTK_ThanhToan(cmbCustomerId.SelectedValue, cmbCurrency.SelectedValue);
-                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                {
-                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "test", string.Format("<script>alert('This customer already has the {0} current account'); </script>", cmbCurrency.SelectedValue));
-                }
-                else
-                {
+                //DataSet ds = BankProject.DataProvider.Database.BOPENACCOUNT_KiemTraTK_ThanhToan(cmbCustomerId.SelectedValue, cmbCurrency.SelectedValue);
+                //if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                //{
+                //    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "test", string.Format("<script>alert('This customer already has the {0} current account'); </script>", cmbCurrency.SelectedValue));
+                //}
+                //else
+                //{
                     DataProvider.Database.BOPENACCOUNT_Insert(txtId.Text, cmbCustomerId.SelectedValue, lbCustomerType.Text, lbCustomerName.Text, cmbCategory.SelectedValue,
                     Category, cmbCurrency.SelectedValue, txtAccountTitle.Text, txtShortTitle.Text, tbIntCaptoAC.Text,
                     cmbAccountOfficer.SelectedValue, cmbAccountOfficer.Text, cmbProductLine.SelectedValue, ProductLine, cmbChargeCode.SelectedValue,
@@ -111,7 +111,7 @@ namespace BankProject
                     BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                     string SoTT = BankProject.DataProvider.Database.B_BMACODE_GetNewSoTT("BOPENACCOUNT").Tables[0].Rows[0]["SoTT"].ToString();
                     this.txtId.Text = "07." + SoTT.PadLeft(9, '0') + ".5";
-                }
+                //}
             }
 
                 
