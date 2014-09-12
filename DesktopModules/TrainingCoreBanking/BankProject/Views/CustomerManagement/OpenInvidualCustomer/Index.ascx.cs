@@ -534,11 +534,11 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             {
                 case "REV":
                 case "UNA":
-                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                    RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
-                    RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                    RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                    //BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+                    RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                     RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                     RadToolBar1.FindItemByValue("btPrint").Enabled = false;
                     break;

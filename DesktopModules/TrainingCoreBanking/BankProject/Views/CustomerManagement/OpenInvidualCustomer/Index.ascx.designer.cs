@@ -274,6 +274,15 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer 
         protected global::Telerik.Web.UI.RadTextBox tbEmailAddress;
         
         /// <summary>
+        /// RequiredFieldValidator102 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator102;
+        
+        /// <summary>
         /// cmbMainSector control.
         /// </summary>
         /// <remarks>
