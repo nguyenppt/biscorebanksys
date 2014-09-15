@@ -17,9 +17,9 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("P_CustomerSignatureUpdate", CustomerId, Signatures, UserCreate);
         }
 
-        public static DataTable SignatureList(string CustomerId, string CustomerName)
+        public static DataTable SignatureList(string Status, string CustomerId, string CustomerName)
         {
-            return sqldata.ndkExecuteDataset("P_CustomerSignatureList", CustomerId, CustomerName).Tables[0];
+            return sqldata.ndkExecuteDataset("P_CustomerSignatureList", Status, CustomerId, CustomerName).Tables[0];
         }
 
         public static DataTable SignatureDetail(string CustomerId)
