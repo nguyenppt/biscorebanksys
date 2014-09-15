@@ -590,5 +590,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("[dbo].[BPLACCOUNT_GetAll]");
         }
+
+        public static DataTable ExchangeRate()
+        {
+            return sqldata.ndkExecuteDataset("P_ExchangeRate").Tables[0];
+        }
     }
 }
