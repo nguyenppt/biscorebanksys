@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
@@ -7,7 +10,7 @@ namespace BankProject.Controls
 {
     public class Commont
     {
-        public static void SetTatusFormControls(ControlCollection ChildCtrls, bool enabel)
+        public static void SetTatusFormControls(ControlCollection ChildCtrls,bool enabel)
         {
             foreach (Control Ctrl in ChildCtrls)
             {
@@ -74,7 +77,7 @@ namespace BankProject.Controls
         }
         //Xem Signature Management -> Enquiry.ascx
         public static string GenerateEnquiryButtons(string TransId, string Status, int? viewTabId, int? amendTabId, int? reverseTabId, int? approveTabId)
-        { 
+        {
             return GenerateEnquiryButtons(TransId, Status, viewTabId, amendTabId, reverseTabId, approveTabId, false);
         }
         public static string GenerateEnquiryButtons(string TransId, string Status, int? viewTabId, int? amendTabId, int? reverseTabId, int? approveTabId, bool allowAmendAuthorizeTrans)
@@ -105,10 +108,10 @@ namespace BankProject.Controls
             if (!String.IsNullOrEmpty(amendURL))
             {
                 url = "#";
-                icon = "<img src=\"Icons/bank/edit.png\" class=\"enquiryButton enquiryButtonDisable\" />";                
+                icon = "<img src=\"Icons/bank/edit.png\" class=\"enquiryButton enquiryButtonDisable\" />";
                 if (Status.Equals(BankProject.DataProvider.TransactionStatus.UNA) ||
                     (Status.Equals(BankProject.DataProvider.TransactionStatus.AUT) && allowAmendAuthorizeTrans))
-                {                    
+                {
                     url = amendURL;
                     icon = "<img src=\"Icons/bank/edit.png\" class=\"enquiryButton\" />";
                 }
@@ -117,29 +120,41 @@ namespace BankProject.Controls
             //Reverse
             if (!String.IsNullOrEmpty(reverseURL))
             {
-                url = "#";
-                icon = "<img src=\"Icons/bank/delete.png\" class=\"enquiryButton enquiryButtonDisable\" />";                
-                if (Status.Equals(BankProject.DataProvider.TransactionStatus.UNA))
+                icon = "<img src=\"Icons/bank/delete.png\" class=\"enquiryButton\" />";
+                url = reverseURL;
+                if (!Status.Equals(BankProject.DataProvider.TransactionStatus.UNA))
                 {
-                    icon = "<img src=\"Icons/bank/delete.png\" class=\"enquiryButton\" />";
-                    url = reverseURL;
+                    url = "#";
+                    icon = "<img src=\"Icons/bank/delete.png\" class=\"enquiryButton enquiryButtonDisable\" />";
                 }
                 urls += "<a href=\"" + url + "\" title=\"Reverse\">" + icon + "</a>";
             }
             //Approve
             if (!String.IsNullOrEmpty(approveURL))
             {
-                url = "#";
-                icon = "<img src=\"Icons/bank/approve.png\" class=\"enquiryButton enquiryButtonDisable\" />";                
-                if (Status.Equals(BankProject.DataProvider.TransactionStatus.UNA))
+                icon = "<img src=\"Icons/bank/approve.png\" class=\"enquiryButton\" />";
+                url = approveURL;
+                if (!Status.Equals(BankProject.DataProvider.TransactionStatus.UNA))
                 {
-                    icon = "<img src=\"Icons/bank/approve.png\" class=\"enquiryButton\" />";
-                    url = approveURL;
+                    url = "#";
+                    icon = "<img src=\"Icons/bank/approve.png\" class=\"enquiryButton enquiryButtonDisable\" />";
                 }
                 urls += "<a href=\"" + url + "\" title=\"Approve\">" + icon + "</a>";
             }
             //
             return urls;
+        }
+        //
+        public static void initRadComboBox(ref RadComboBox cboList, string DataTextField, string DataValueField, object DataSource)
+        {            
+            cboList.DataTextField = DataTextField;
+            cboList.DataValueField = DataValueField;
+            cboList.DataSource = DataSource;
+            cboList.DataBind();
+            if (cboList.Items.Count > 0)
+            {
+                cboList.Items.Insert(0, new RadComboBoxItem(""));
+            }
         }
     }
 }
