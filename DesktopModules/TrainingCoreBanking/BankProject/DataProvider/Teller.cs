@@ -26,7 +26,7 @@ namespace BankProject.DataProvider
 
         public static DataTable ExchangeRate()
         {
-            return sqldata.ndkExecuteDataset("P_ExchangeRate").Tables[0];
+            return Database.ExchangeRate();
         }
 
         public static void InsertCashWithrawalForBuyingTC(string TransID, string Account, string Currency, double? ExchangeRate, double? AmtLCY, double? AmtFCY, string CurrencyPaid, double? DealRate, double? AmtPaidToCust, string TellerID, string WaiveCharges, string Narrative, string UserCreate)
