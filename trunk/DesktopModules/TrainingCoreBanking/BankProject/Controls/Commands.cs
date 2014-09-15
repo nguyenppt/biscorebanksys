@@ -8,5 +8,6 @@
         public const string Reverse = "reverse";
         public const string Search = "search";
         public const string Edit = "edit";
+        public const string Print = "print";
     }
 }
