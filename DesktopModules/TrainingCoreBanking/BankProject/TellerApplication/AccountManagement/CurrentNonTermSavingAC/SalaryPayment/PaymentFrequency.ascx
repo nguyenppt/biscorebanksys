@@ -197,7 +197,7 @@ div.Upload .ruFakeInput
                         </td>
                         <td style="width:90px" >
                             <asp:ImageButton  ImageUrl="~/Icons/Sigma/Save_16X16_Standard.png"  OnClick="UpdateRow_Click" ID="UpdateRowData" runat="server" Text="Insert" />&nbsp;&nbsp;&nbsp
-                            <asp:ImageButton ImageUrl="~/Icons/Sigma/Refresh_16x16_Standard.png" ID="CancelButton" runat="server" CommandName="Cancel" Text="Clear" />
+                            <%--<asp:ImageButton ImageUrl="~/Icons/Sigma/Refresh_16x16_Standard.png" ID="CancelButton" runat="server" CommandName="Cancel" Text="Clear" />--%>
                         </td>
                     </tr>
                 <tr>
@@ -223,7 +223,7 @@ div.Upload .ruFakeInput
                                         <ItemStyle Width="100" />
                                         <ItemTemplate>
                                               <asp:ImageButton ID="ImageButton1" ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" runat="server" CommandName="DeleteRow" CommandArgument='<%# Eval("CreditAccount") %>' Text="Delete" />&nbsp;&nbsp;&nbsp
-                                              <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="EditButton" runat="server" CommandName="EditRow" CommandArgument='<%# Eval("CreditAccount") %>'  Text="Edit" />
+                                              <%--<asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="EditButton" runat="server" CommandName="EditRow" CommandArgument='<%# Eval("CreditAccount") %>'  Text="Edit" />--%>
                                         </itemtemplate>
                                     </telerik:GridTemplateColumn>
                                 </Columns>
@@ -249,7 +249,7 @@ div.Upload .ruFakeInput
             ControlToValidate="CheckExist"
             ValidationGroup="Commit"
             InitialValue=""
-            ErrorMessage="have account not exist" ForeColor="Red">
+            ErrorMessage="Some credit accounts are invalid. Please check again" ForeColor="Red">
         </asp:RequiredFieldValidator>
      <telerik:radtextbox ID="CheckExist" runat="server"  ></telerik:radtextbox>
    
@@ -259,7 +259,7 @@ div.Upload .ruFakeInput
             ControlToValidate="NotTotalDebitAmt"
             ValidationGroup="Commit"
             InitialValue=""
-            ErrorMessage="Total debit amt invalid value" ForeColor="Red">
+            ErrorMessage="The selected {so} account is not enough money for processing this salary payment transaction. Please ask the company doing the deposit." ForeColor="Red">
         </asp:RequiredFieldValidator>
      <telerik:radtextbox ID="NotTotalDebitAmt" runat="server" Text="ok"  ></telerik:radtextbox>
       <asp:TextBox ID="tbDepositCode" runat="server" Width="200px" />
@@ -300,6 +300,7 @@ div.Upload .ruFakeInput
     });
     function alert(m) {
         m = m.replace(/-/g, '<br>-') + "<br> &nbsp;<br> &nbsp;";
+        m = m.replace("{so}", $("#<%=rcbAccountPayment.ClientID %>").val())
         radalert(m, "Alert");
     }
 </script>
