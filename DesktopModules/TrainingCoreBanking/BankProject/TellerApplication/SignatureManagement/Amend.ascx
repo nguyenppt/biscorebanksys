@@ -73,7 +73,7 @@
             //do nothing
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            loadInfo();            
+            loadInfo();
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
             window.location = "Default.aspx?tabid=286";
