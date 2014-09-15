@@ -21,7 +21,7 @@
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit" ValidationGroup="Commit">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false" Enabled="false">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
             ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
@@ -30,7 +30,7 @@
             ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false" Enabled="false">
+            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false">
         </telerik:RadToolBarButton>
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
             ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" Enabled="false">
@@ -38,19 +38,20 @@
     </Items>
 </telerik:RadToolBar>
 </div>
-<table cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0" style="width:100%;">
     <tr>
-        <td class="MyLable">Customer Id <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Customer require !" Display="None" ControlToValidate="txtCustomerId" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
-        <td class="MyContent">
+        <td class="MyLable" style="width:160px;">Customer Id <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Customer require !" Display="None" ControlToValidate="txtCustomerId" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
+        <td class="MyContent" style="width:220px;">
             <asp:HiddenField ID="txtCustomerIdOld" runat="server" />
-            <asp:TextBox ID="txtCustomerId" runat="server" Width="200" /> 
-        <span style="color: darkgrey;"><telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" LoadingPanelID="RadAjaxLoadingPanel1" OnAjaxRequest="RadAjaxPanel1_AjaxRequest"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></telerik:RadAjaxPanel></span>
+            <asp:TextBox ID="txtCustomerId" runat="server" Width="200" /></td>
+        <td style="text-align:left;">
+        <span style="color: darkgrey;">&nbsp;<telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" LoadingPanelID="RadAjaxLoadingPanel1" OnAjaxRequest="RadAjaxPanel1_AjaxRequest"><asp:Label ID="lblCustomerName" runat="server" Text=""></asp:Label></telerik:RadAjaxPanel></span>
             </td>
     </tr>
     <tr>
         <td class="MyLable" style="vertical-align:top;">Signature <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Signature require !" Display="None" ControlToValidate="txtSignature" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
-        <td class="MyContent"><asp:FileUpload ID="txtSignature" runat="server" CssClass="NoDisplay" /><asp:Button ID="cmdSelectSignatureImage" runat="server" Text="Select signature image" OnClientClick="return false;" /><asp:Label ID="lblSignatureImage" runat="server" Text=""></asp:Label>
-            <br /><asp:Image ID="imgSignaturePreview" runat="server" CssClass="imgSignaturePreview NoDisplay" /></td>
+        <td class="MyContent" colspan="2"><asp:FileUpload ID="txtSignature" runat="server" CssClass="NoDisplay" /><asp:Button ID="cmdSelectSignatureImage" runat="server" Text="Select signature image" OnClientClick="return false;" /><asp:Label ID="lblSignatureImage" runat="server" Text=""></asp:Label>
+            <br /><asp:Image ID="imgSignaturePreview" runat="server" /></td>
     </tr>
 </table>
 <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" />
@@ -70,9 +71,9 @@
             var button = args.get_item();
             if (button.get_commandName() == "<%=BankProject.Controls.Commands.Commit%>") {
             //do nothing
-        }
-        if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-                window.location = "Default.aspx?tabid=287";
+            }
+            if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
+                window.location = "Default.aspx?tabid=286&lst=UNA";
             }
             if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
                 window.location = "Default.aspx?tabid=286";

@@ -16,7 +16,6 @@ namespace BankProject.TellerApplication.SignatureManagement
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-            lblCustomerName.Text = this.GetType().ToString();
             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
             //
             txtCustomerId.Text = Request.QueryString["tid"];

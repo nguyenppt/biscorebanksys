@@ -8,7 +8,7 @@
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
             ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
@@ -39,27 +39,14 @@
 <script type="text/javascript">
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
-        if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            var custID = $("#<%=txtCustomerId.ClientID%>").val();
-            if (custID == null || custID == '') {
-                alert('Customer require !');
-                return;
-            }
-            window.location = "Default.aspx?tabid=287&cid=" + custID;
+        if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {           
+            window.location = "Default.aspx?tabid=286";
         }
-    }
-    function loadInfo() {
-        var objCust = $("#<%=txtCustomerId.ClientID%>");
-        var objCustOld = $("#<%=txtCustomerIdOld.ClientID%>");
-        if (objCust.val() != objCustOld.val()) {
-            objCustOld.val(objCust.val());
-                $find('<%=RadToolBar1.ClientID%>').findItemByValue("btPreview").click();
-            }
     }
     $("#<%=txtCustomerId.ClientID%>")
             .keypress(function (event) {
                 if (event.which == 13) {
-                    loadInfo();
+                    window.location = "Default.aspx?tabid=287&tid=" + $("#<%=txtCustomerId.ClientID%>").val();
                 }
             });
 </script>
