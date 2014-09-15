@@ -15,7 +15,8 @@ namespace BankProject.TellerApplication.SignatureManagement
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            RadToolBar1.FindItemByValue("btSearch").Enabled = (Request.QueryString["lst"] == null);
+            divSearchBox.Visible = (Request.QueryString["lst"] == null);
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -32,10 +33,18 @@ namespace BankProject.TellerApplication.SignatureManagement
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (IsPostBack)
+            if (IsPostBack || Request.QueryString["lst"] != null)
             {
                 radGridReview.DataSource = bd.Customer.SignatureList(txtCustomerId.Text, txtCustomerName.Text);
             }
-        }   
+        }
+
+        public string GenerateEnquiryButtons(string CustomerId)
+        {
+            if (Request.QueryString["lst"] != null)
+                return "<a href=\"Default.aspx?tabid=285&amp;tid=" + CustomerId + "\"><img src=\"Icons/bank/text_preview.png\" alt=\"\" title=\"\" style=\"\" width=\"20\"> </a>";
+
+            return "<a href=\"Default.aspx?tabid=287&amp;tid=" + CustomerId + "\"><img src=\"Icons/bank/text_preview.png\" alt=\"\" title=\"\" style=\"\" width=\"20\"> </a>";
+        }
     }
 }

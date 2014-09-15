@@ -21,7 +21,7 @@
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit" ValidationGroup="Commit">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
             ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
@@ -64,7 +64,7 @@
         }
         if (objCust.val() != objCustOld.val()) {
             objCustOld.val(objCust.val());
-            window.location = "Default.aspx?tabid=288&cid=" + objCust.val();
+            window.location = "Default.aspx?tabid=288&tid=" + objCust.val();
         }
     }
     function OnClientButtonClicking(sender, args) {

@@ -26,7 +26,7 @@
 </telerik:RadToolBar>
 </div>
 <div style="padding:10px;">
-    <div>
+    <div id="divSearchBox" runat="server">
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Customer Id </td>
@@ -45,7 +45,7 @@
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="150" />
-                    <ItemTemplate><%# BankProject.Controls.Commont.GenerateEnquiryButtons(Eval("CustomerId").ToString(), Eval("Status").ToString(), 287, 288, 285, 285, true) %>
+                    <ItemTemplate><%# GenerateEnquiryButtons(Eval("CustomerId").ToString()) %>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
             </Columns>

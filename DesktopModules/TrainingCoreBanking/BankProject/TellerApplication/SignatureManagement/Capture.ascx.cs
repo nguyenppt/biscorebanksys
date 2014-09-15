@@ -16,6 +16,7 @@ namespace BankProject.TellerApplication.SignatureManagement
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
+            imgSignaturePreview.Attributes.Add("css", "imgSignaturePreview NoDisplay");
             txtCustomerId.Text = Request.QueryString["tid"];
             if (String.IsNullOrEmpty(txtCustomerId.Text)) return;
             //
@@ -33,6 +34,8 @@ namespace BankProject.TellerApplication.SignatureManagement
             DataRow dr = tDetail.Rows[0];
             lblCustomerName.Text = dr["CustomerName"].ToString();
             imgSignaturePreview.ImageUrl = "~/" + bd.Customer.SignaturePath + "/" + dr["Signatures"];
+            imgSignaturePreview.Attributes.Remove("css");
+            imgSignaturePreview.Attributes.Add("css", "imgSignaturePreview");
             string Status = dr["Status"].ToString();
             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.UNA);
@@ -60,7 +63,6 @@ namespace BankProject.TellerApplication.SignatureManagement
                             bd.Customer.InsertSignature(txtCustomerId.Text, fileName, this.UserInfo.Username);
                             bc.Commont.SetEmptyFormControls(this.Controls);
                             //
-                            Response.Redirect("Default.aspx?tabid=" + this.TabId);
                             bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
                         }
                         catch (Exception err)
