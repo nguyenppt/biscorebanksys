@@ -53,10 +53,7 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_BNORMAILLC_GetbyNormalLCCode", NormalLCCode);
         }
-        public static DataSet BOPENACCOUNT_LOANACCOUNT_GetByCode(string CustomerName, string currency)
-        {
-            return sqldata.ndkExecuteDataset("BOPENACCOUNT_LOANACCOUNT_GetByCode", CustomerName, currency);
-        }
+
         //ve sau se doi customerName thanh customerID
         public static DataSet B_BDRFROMACCOUNT_GetByCustomer(string CustomerName, string currency)
         {
@@ -200,11 +197,6 @@ namespace BankProject.DataProvider
                          JoinNotes, AlternateAct, CloseOnline, CloseMode, CreditCurrency, AccountPaid, Narrative, Userid, AccountStatus,docid, categorytype);
         }
 
-        public static DataSet BOPENACCOUNT_KiemTraTK_ThanhToan(string customerid, string currency)
-        {
-            return sqldata.ndkExecuteDataset("BOPENACCOUNT_KiemTraTK_ThanhToan", customerid, currency);
-        }
-		
         public static DataSet BOPENACCOUNT_Print_GetByCode(string code)
         {
             return sqldata.ndkExecuteDataset("BOPENACCOUNT_Print_GetByCode", code);
@@ -542,12 +534,12 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("BNEWNORMALLOAN_GetbyStatus", Status, UserID);
         }
-        
-		public static void BNEWNORMALLOAN_UpdateStatus(string Status, string NormalLCCode, string userid)
+
+        public static void BNEWNORMALLOAN_UpdateStatus(string Status, string NormalLCCode, string userid)
         {
             sqldata.ndkExecuteNonQuery("BNEWNORMALLOAN_UpdateStatus", Status, NormalLCCode, userid);
         }
-        
+
         public static DataSet BNEWNORMALLOAN_Print_GetByCode(string code)
         {
             return sqldata.ndkExecuteDataset("BNEWNORMALLOAN_Print_GetByCode", code);
@@ -574,9 +566,9 @@ namespace BankProject.DataProvider
                     AutoSch, DefineSch, RepaySchType, LoanStatus, TotalInterestAmt, PDStatus, PrinRepAccount, IntRepAccount,
                     ChrgRepAccount, ExpectedLoss, LossGivenDef, CustomerRemarks, AccountOfficer, AccountOfficerName, Secured,
                     CollateralID, AmountAlloc, CountryRisk, LegacyRef, UserId);
-        }  
+        }
 
-		public static DataSet BNEWNORMALLOAN_Enquiry(string Code, string CustomerType, string CustomerID, string CustomerName, string docid, string MainCategory, string currency, string SubCategory)
+        public static DataSet BNEWNORMALLOAN_Enquiry(string Code, string CustomerType, string CustomerID, string CustomerName, string docid, string MainCategory, string currency, string SubCategory)
         {
             return sqldata.ndkExecuteDataset("BNEWNORMALLOAN_Enquiry", Code, CustomerType, CustomerID, CustomerName, docid, MainCategory, currency, SubCategory);
         }
@@ -590,7 +582,6 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("[dbo].[BPLACCOUNT_GetAll]");
         }
-
         public static DataTable ExchangeRate()
         {
             return sqldata.ndkExecuteDataset("P_ExchangeRate").Tables[0];
