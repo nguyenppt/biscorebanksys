@@ -26,7 +26,7 @@
 <div style="padding:10px;">
     <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px">
         <tr>
-            <td style="width: 60px">TF No.</td>
+            <td style="width: 60px">FT No.</td>
             <td ><asp:TextBox ID="txtCode" runat="server" Width="355"/></td>
             <td style="width: 100px">&nbsp;Country Code&nbsp;</td>
             <td>
@@ -77,7 +77,8 @@
             </td>
             <td style="width: 100px">&nbsp;Commodity/Services&nbsp;</td>
             <td>
-                <telerik:RadComboBox Width="355" AppendDataBoundItems="True"
+                <telerik:RadComboBox Width="355" 
+                    AppendDataBoundItems="True"
                     ID="comboCommoditySer" Runat="server"
                     MarkFirstMatch="True"
                     AllowCustomText="false" >

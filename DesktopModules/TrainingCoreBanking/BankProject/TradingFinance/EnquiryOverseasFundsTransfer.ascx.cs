@@ -30,6 +30,13 @@ namespace BankProject.TradingFinance
             comboCountryCode.DataTextField = "TenTA";
             comboCountryCode.DataSource = SQLData.B_BCOUNTRY_GetAll();
             comboCountryCode.DataBind();
+
+            //comboCommoditySer.Items.Clear();
+            //comboCommoditySer.Items.Add(new RadComboBoxItem(""));
+            //comboCommoditySer.DataValueField = "TenTA";
+            //comboCommoditySer.DataTextField = "TenTA";
+            //comboCommoditySer.DataSource = SQLData.B_BCOMMODITY_GetByTransactionType();
+            //comboCommoditySer.DataBind();
         }
 
         protected void InitToolBar(bool flag)
