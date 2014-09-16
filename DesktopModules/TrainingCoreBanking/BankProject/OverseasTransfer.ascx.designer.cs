@@ -301,13 +301,13 @@ namespace BankProject {
         protected global::System.Web.UI.WebControls.Label lblCreditAccount;
         
         /// <summary>
-        /// comboCreditCurrency control.
+        /// txtCreditCurrency control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboCreditCurrency;
+        protected global::Telerik.Web.UI.RadTextBox txtCreditCurrency;
         
         /// <summary>
         /// numTreasuryRate control.
@@ -940,13 +940,13 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadTextBox txtAddRemarks2;
         
         /// <summary>
-        /// txtProfitCenteCust control.
+        /// comboAccountOfficer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtProfitCenteCust;
+        protected global::Telerik.Web.UI.RadComboBox comboAccountOfficer;
         
         /// <summary>
         /// lblTotalChargeAmount control.

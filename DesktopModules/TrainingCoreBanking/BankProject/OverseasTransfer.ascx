@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OverseasTransfer.ascx.cs" Inherits="BankProject.OverseasTransfer" %>
-<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
-<%@ Register Src="Controls/VVTextBox.ascx" TagPrefix="uc1" TagName="VVTextBox" %>
+
+<%--<%@ Register Src="Controls/VVTextBox.ascx" TagPrefix="uc1" TagName="VVTextBox" %>--%>
 
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true" />
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"/>
@@ -8,7 +8,8 @@
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <script type="text/javascript">
         var clickCalledAfterRadconfirm = false;
-        
+        var waiveCharges = '<%= WaiveCharges %>';
+
         jQuery(function ($) {
             $('#tabs-demo').dnnTabs();
         });
@@ -34,7 +35,10 @@
             if (result) {
                 $("#<%=btnPhieuCKReport.ClientID %>").click();
             }
-            radconfirm("Do you want to download VAT file?", confirmCallbackFunctionVAT, 340, 150, null, 'Download');
+
+            if (waiveCharges === 'NO') {
+                radconfirm("Do you want to download VAT file?", confirmCallbackFunctionVAT, 340, 150, null, 'Download');
+            }            
         }
         
         function confirmCallbackFunctionVAT(result) {
@@ -452,11 +456,12 @@
                 <tr>    
                     <td style="width: 230px;" class="MyLable">Credit Currency</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox AppendDataBoundItems="True"
+                        <telerik:RadTextBox ID="txtCreditCurrency" runat="server" ReadOnly="true" />
+                        <%--<telerik:RadComboBox AppendDataBoundItems="True"
                             ID="comboCreditCurrency" Runat="server"
                             MarkFirstMatch="True"
                             AllowCustomText="false" >
-                        </telerik:RadComboBox>
+                        </telerik:RadComboBox>--%>
                     </td>
                 </tr>
                 
@@ -1172,9 +1177,14 @@
             
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
-                    <td class="MyLable">Account  Officer</td>
+                    <td class="MyLable">Account Officer</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtProfitCenteCust" runat="server" Width="355" />
+                        <telerik:RadComboBox Width="355" AppendDataBoundItems="true"
+                            ID="comboAccountOfficer" Runat="server"
+                            MarkFirstMatch="True"
+                            AllowCustomText="false" >
+                        </telerik:RadComboBox>
+                        <%--<telerik:RadTextBox ID="txtProfitCenteCust" runat="server" Width="355" />--%>
                     </td>
                 </tr>
                 
@@ -1206,7 +1216,7 @@
                  <telerik:AjaxUpdatedControl ControlID="lblCreditAccount" />
                 <telerik:AjaxUpdatedControl ControlID="comboReceiverCorrespondent" />
                 <telerik:AjaxUpdatedControl ControlID="lblReceiverCorrespondentName" />
-                <telerik:AjaxUpdatedControl ControlID="comboCreditCurrency" />
+                <telerik:AjaxUpdatedControl ControlID="txtCreditCurrency" />
                 <telerik:AjaxUpdatedControl ControlID="comboCurrency" />
             </UpdatedControls>
         </telerik:AjaxSetting>
@@ -1241,7 +1251,7 @@
                 
                 <telerik:AjaxUpdatedControl ControlID="comboDebitAcctNo" />
                 <telerik:AjaxUpdatedControl ControlID="txtDeitCurrency" />
-                <telerik:AjaxUpdatedControl ControlID="comboCreditCurrency" />
+                <telerik:AjaxUpdatedControl ControlID="txtCreditCurrency" />
                 <telerik:AjaxUpdatedControl ControlID="comboCreditAccount" />
                 
                 <telerik:AjaxUpdatedControl ControlID="comboOrderingCustAcc" />
@@ -1286,7 +1296,7 @@
                  <telerik:AjaxUpdatedControl ControlID="txtOrderingCustomer1" />
                 <telerik:AjaxUpdatedControl ControlID="comboDebitAcctNo" />
                 <telerik:AjaxUpdatedControl ControlID="txtDeitCurrency" />
-                <telerik:AjaxUpdatedControl ControlID="comboCreditCurrency" />
+                <telerik:AjaxUpdatedControl ControlID="txtCreditCurrency" />
                 
                 <telerik:AjaxUpdatedControl ControlID="comboOrderingCustAcc" />
                 <telerik:AjaxUpdatedControl ControlID="comboChargeAcct" />
@@ -1417,7 +1427,7 @@
                 <telerik:AjaxUpdatedControl ControlID="txtChargeAcctName" />
                 
                 <telerik:AjaxUpdatedControl ControlID="comboCreditAccount" />
-                <telerik:AjaxUpdatedControl ControlID="comboCreditCurrency" />
+                <telerik:AjaxUpdatedControl ControlID="txtCreditCurrency" />
                 
                 <telerik:AjaxUpdatedControl ControlID="comboOrderingCustAcc" />
             </UpdatedControls>
@@ -1436,7 +1446,7 @@
                 <telerik:AjaxUpdatedControl ControlID="txtVATNo" />
                 <telerik:AjaxUpdatedControl ControlID="txtAddRemarks1" />
                 <telerik:AjaxUpdatedControl ControlID="txtAddRemarks2" />
-                <telerik:AjaxUpdatedControl ControlID="txtProfitCenteCust" />
+                <telerik:AjaxUpdatedControl ControlID="comboAccountOfficer" />
                 <telerik:AjaxUpdatedControl ControlID="comboChargeAcct" />
                 
             </UpdatedControls>
@@ -1495,3 +1505,4 @@
       });
   </script>
 </telerik:RadCodeBlock>
+<%--<textarea id="TextArea1" cols="20" rows="2" style="width: 400px;height:200px"></textarea>--%>
