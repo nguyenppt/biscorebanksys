@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -21,6 +22,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         return ExportDocumentaryScreenType.Amend;
                     case 230:
                         return ExportDocumentaryScreenType.Cancel;
+                    case 227:
+                        return ExportDocumentaryScreenType.RegisterCc;
+                    case 362:
+                        return ExportDocumentaryScreenType.Acception;
                     default:
                         return ExportDocumentaryScreenType.Register;
                 }
@@ -33,6 +38,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             radGridReview.DataSource = SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_GetbyStatus(ScreenType.ToString("G"), UserId.ToString());
+
         }
         public string geturlReview(string id)
         {

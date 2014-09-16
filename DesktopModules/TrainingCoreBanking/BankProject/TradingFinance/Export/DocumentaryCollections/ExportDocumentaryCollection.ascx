@@ -76,11 +76,11 @@
     </ul>
 
     <div id="Main" class="dnnClear">
+        <div runat="server" id="divDocumentaryCollectionCancel" Visible="false">
         <fieldset>
             <legend>
-                <div style="font-weight: bold; text-transform: uppercase;">Drawer Information</div>
+                <div style="font-weight: bold; text-transform: uppercase;">Cancel Information</div>
             </legend>
-            <div runat="server" id="divDocumentaryCollectionCancel" Visible="false">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">Cancel Date</td>
@@ -103,7 +103,38 @@
                     </td>
                 </tr>
             </table>
-        </div>
+            </fieldset>
+            </div>
+        <div runat="server" id="divOutgoingCollectionAcception" Visible="false">
+        <fieldset>
+            <legend>
+                <div style="font-weight: bold; text-transform: uppercase;">Acception Information</div>
+            </legend>
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="MyLable">Acception Date</td>
+                    <td class="MyContent">
+                        <telerik:RadDatePicker ID="dtAcceptDate" runat="server" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="MyLable">Accept Remark</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtAcceptREmark" runat="server" Width="355" />
+                    </td>
+                </tr>
+            </table>
+            </fieldset>
+            </div>
+        <fieldset>
+            <legend>
+                <div style="font-weight: bold; text-transform: uppercase;">Drawer Information</div>
+            </legend>
+            
+            
+        
+            <div id="divCollectionType" runat="server">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">1 Collection Type<span class="Required"> (*)</span></td>
@@ -148,7 +179,7 @@
                         <asp:Label ID="lblCollectionTypeName" runat="server" Text="" />
                 </tr>
             </table>
-
+                </div>
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
@@ -555,7 +586,7 @@
                         <asp:Label ID="txtCommodityName" runat="server" /></td>
                 </tr>
             </table>
-
+            <div runat="server" id="divDocsCode">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">14.1 Docs Code</td>
@@ -590,7 +621,7 @@
                     </td>
                 </tr>
             </table>
-
+                </div>
             <div runat="server" id="divDocsCode2">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
@@ -1378,7 +1409,7 @@
 
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
-            if (tabId == 226) { // Register Documetary Collection
+            if (tabId == 226 || tabId == 227) { // Register Documetary Collection
                 if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                     args.set_cancel(true);
                     radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Customer?", confirmCallbackRegisterNNB1, 340, 150, null, 'Download');
@@ -1392,7 +1423,7 @@
 
                 }
             }
-            if (tabId == 230) { // Incoming Collection Amendments
+            if (tabId == 230) { // Incoming Collection Cancel
                 if (button.get_commandName() == "print") {
                     args.set_cancel(true);
                     radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunctionCancel, 420, 150, null, 'Download');
