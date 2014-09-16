@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using BankProject.DataProvider;
 using DotNetNuke.Common;
 using Telerik.Web.UI;
@@ -16,7 +12,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
     {
         Register,
         Amend,
-        Cancel
+        Cancel,
+        RegisterCc,
+        Acception
     }
 
     public partial class ExportDocumentaryCollection : DotNetNuke.Entities.Modules.PortalModuleBase
@@ -36,15 +34,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         return ExportDocumentaryScreenType.Amend;
                     case 230:
                         return ExportDocumentaryScreenType.Cancel;
+                    case 227:
+                        return ExportDocumentaryScreenType.RegisterCc;
+                    case 362:
+                        return ExportDocumentaryScreenType.Acception;
                     default:
                         return ExportDocumentaryScreenType.Register;
                 }
             }
         }
+
         private string CodeId
         {
             get { return Request.QueryString["CodeID"]; }
         }
+
         private bool Disable
         {
             get { return Request.QueryString["disable"] == "1"; }
@@ -81,6 +85,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             switch (ScreenType)
             {
+                case ExportDocumentaryScreenType.RegisterCc:
                 case ExportDocumentaryScreenType.Register:
 
                     InitToolBarForRegister();
@@ -98,6 +103,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     lblAmount_New.Visible = false;
                     divDocumentaryCollectionCancel.Visible = true;
+                    break;
+                case ExportDocumentaryScreenType.Acception:
+                    InitToolBarForAccept();
+
+                    lblAmount_New.Visible = false;
+                    divOutgoingCollectionAcception.Visible = true;
                     break;
             }
             #region Old Code
@@ -272,13 +283,29 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             divDocsCode3.Visible = false;
 
             // bind value collection type
-            comboCollectionType.Items.Clear();
-            comboCollectionType.DataValueField = "ID";
-            comboCollectionType.DataTextField = "ID";
-            comboCollectionType.DataSource =
+            if (ScreenType == ExportDocumentaryScreenType.RegisterCc)
+            {
+                comboCollectionType.Items.Clear();
+                comboCollectionType.DataValueField = "ID";
+                comboCollectionType.DataTextField = "ID";
+                comboCollectionType.DataSource =
+                    SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
+                comboCollectionType.DataBind();
+                divCollectionType.Visible = false;
+                divDocsCode.Visible = false;
+                divDocsCode2.Visible = false;
+                divDocsCode3.Visible = false;
+            }
+            else
+            {
+                comboCollectionType.Items.Clear();
+                comboCollectionType.DataValueField = "ID";
+                comboCollectionType.DataTextField = "ID";
+                comboCollectionType.DataSource =
                     SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_CollectionType");
-            comboCollectionType.DataBind();
-
+                comboCollectionType.DataBind();
+                
+            }
             lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
 
             // bind drawer
@@ -499,6 +526,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Amend Documentary was authorized";
                     }
+                    else if (_exportDoc["Cancel_Status"].ToString() == "AUT")
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        lblError.Text = "This Documentary was canceled";
+                    }
                     else // Not yet authorize
                     {
                         RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
@@ -513,6 +545,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     {
                         lblError.Text = "This Documentary was not authorized";
                         SetDisableByReview(false);
+                    }
+                    else if (_exportDoc["Cancel_Status"].ToString() == "AUT")
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        lblError.Text = "This Documentary was canceled";
                     }
                     else if (_exportDoc["Amend_Status"].ToString() == "AUT") // Authorized
                     {
@@ -573,7 +610,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtCode.Text = SQLData.B_BMACODE_GetNewID("EXPORT_DOCUMETARYCOLLECTION", Refix_BMACODE());
             }
         }
-        protected void InitToolBarForCancel()
+        protected void InitToolBarForAccept()
         {
             RadToolBar1.FindItemByValue("btReview").Enabled = true;
             if (_exportDoc != null)
@@ -585,6 +622,83 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         lblError.Text = "This Documentary was not authorized";
                     }
                     else if (!string.IsNullOrEmpty(_exportDoc["Amend_Status"].ToString()) &&  _exportDoc["Amend_Status"].ToString() != "AUT")
+                    {
+                        lblError.Text = "This Amend Documentary was not authorized";
+                    }
+                    else if (_exportDoc["AcceptStatus"].ToString() == "AUT")
+                    {
+                        lblError.Text = "This Acception Documentary was authorized";
+                    }
+                    //else if (!string.IsNullOrEmpty(_exportDoc["AcceptStatus"].ToString()) && _exportDoc["AcceptStatus"].ToString() != "AUT")
+                    //{
+                    //    lblError.Text = "This Acception Documentary was not authorized";
+                    //}
+                    else if (_exportDoc["Cancel_Status"].ToString() == "AUT")
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        lblError.Text = "This Cancel Documentary was authorized";
+                    }
+                    else // Not yet authorize
+                    {
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btRevert").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                    }
+                    SetDisableByReview(false);
+                }
+                else // Editing
+                {
+                    if (_exportDoc["Status"].ToString() != "AUT") // Authorized
+                    {
+                        lblError.Text = "This Documentary was not authorized";
+                    }
+                    else if (!string.IsNullOrEmpty(_exportDoc["Amend_Status"].ToString()) && _exportDoc["Amend_Status"].ToString() != "AUT")
+                    {
+                        lblError.Text = "This Amend Documentary was not authorized";
+                    }
+                    else if (_exportDoc["AcceptStatus"].ToString() == "AUT")
+                    {
+                        lblError.Text = "This Acception Documentary was authorized";
+                    }
+                    //else if (!string.IsNullOrEmpty(_exportDoc["AcceptStatus"].ToString()) && _exportDoc["AcceptStatus"].ToString() != "AUT")
+                    //{
+                    //    lblError.Text = "This Acception Documentary was not authorized";
+                    //}
+                    else if (_exportDoc["Cancel_Status"].ToString() == "AUT")
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        lblError.Text = "This Cancel Documentary was authorized";
+                    }
+                    else // Not yet authorize
+                    {
+                        RadToolBar1.FindItemByValue("btSave").Enabled = true;
+                    }
+                    SetDisableByReview(false);
+                    if (_exportDoc["AcceptStatus"].ToString() != "AUT")
+                    {
+                        dtAcceptDate.Enabled = true;
+                        txtAcceptREmark.Enabled = true;
+                    }
+                }
+
+            }
+            else
+            {
+
+            }
+        }
+        protected void InitToolBarForCancel()
+        {
+            RadToolBar1.FindItemByValue("btReview").Enabled = true;
+            if (_exportDoc != null)
+            {
+                if (Disable) // Authorizing
+                {
+                    if (_exportDoc["Status"].ToString() != "AUT") // Authorized
+                    {
+                        lblError.Text = "This Documentary was not authorized";
+                    }
+                    else if (!string.IsNullOrEmpty(_exportDoc["Amend_Status"].ToString()) && _exportDoc["Amend_Status"].ToString() != "AUT")
                     {
                         lblError.Text = "This Amend Documentary was not authorized";
                     }
@@ -681,6 +795,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                                           , dteCancelDate.SelectedDate.ToString()
                                                           , dteContingentExpiryDate.SelectedDate.ToString()
                                                           , txtCancelRemark.Text
+                                                          , dtAcceptDate.SelectedDate.ToString()
+                                                          , txtAcceptREmark.Text
                                                           , ScreenType.ToString("G")
                 );
 
@@ -759,8 +875,37 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                 txtCancelRemark.Text = drow["CancelRemark"].ToString();
 
-                ///////////////////////////////////////
+                // Outgoing Document Acception
+                if (!string.IsNullOrEmpty(drow["AcceptedDate"].ToString()) && drow["AcceptedDate"].ToString().IndexOf("1/1/1900") == -1)
+                {
+                    dtAcceptDate.SelectedDate = DateTime.Parse(drow["AcceptedDate"].ToString());
+                }
 
+
+                if (string.IsNullOrEmpty(drow["AcceptStatus"].ToString()))
+                {
+                    dtAcceptDate.SelectedDate = DateTime.Now;
+                }
+
+                txtAcceptREmark.Text = drow["AcceptedRemarks"].ToString();
+
+                ///////////////////////////////////////
+                // CC
+                if (drow["CollectionType"].ToString() == "CC")
+                {
+                    comboCollectionType.Items.Clear();
+                    comboCollectionType.DataValueField = "ID";
+                    comboCollectionType.DataTextField = "ID";
+                    comboCollectionType.DataSource =
+                        SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
+                    comboCollectionType.DataBind();
+                    divCollectionType.Visible = false;
+                    divDocsCode.Visible = false;
+                    divDocsCode2.Visible = false;
+                    divDocsCode3.Visible = false;
+
+                }
+                // end cc
                 comboCollectionType.SelectedValue = drow["CollectionType"].ToString();
                 lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
 
@@ -804,7 +949,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 numNoOfOriginals3.Text = drow["NoOfOriginals3"].ToString();
                 numNoOfCopies3.Text = drow["NoOfCopies3"].ToString();
 
-
+               
 
                 if ((!string.IsNullOrWhiteSpace(drow["NoOfOriginals2"].ToString()) &&
                      int.Parse(drow["NoOfOriginals2"].ToString()) > 0) ||
@@ -1481,6 +1626,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             //Open template
             string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1.doc");
+            if (comboCollectionType.SelectedValue == "CC")
+            {
+                path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1.doc");
+            }
             //Open the template document
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
@@ -1490,7 +1639,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            var filename = (comboCollectionType.SelectedValue == "CC"
+                ? "RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1_"
+                : "RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1_") + DateTime.Now.ToString("yyyyMMddHHmmss") +
+                           ".doc";
+            doc.Save(filename, Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
         }
         protected void btnRegisterNhapNgoaiBang2_Click(object sender, EventArgs e)
         {
@@ -1499,6 +1652,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             //Open template
             string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2.doc");
+            if (comboCollectionType.SelectedValue == "CC")
+            {
+                path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2.doc");
+            }
             //Open the template document
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
@@ -1508,7 +1665,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            var filename = (comboCollectionType.SelectedValue == "CC"
+                ? "RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2_"
+                : "RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2_") + DateTime.Now.ToString("yyyyMMddHHmmss") +
+                           ".doc";
+            doc.Save(filename, Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
         }
         protected void btnRegisterXuatNgoaiBang1_Click(object sender, EventArgs e)
         {
@@ -1517,6 +1678,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             //Open template
             string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1.doc");
+            if (comboCollectionType.SelectedValue == "CC")
+            {
+                path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1.doc");
+            }
             //Open the template document
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
@@ -1526,7 +1691,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            var filename = (comboCollectionType.SelectedValue == "CC"
+                ? "RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1_"
+                : "RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1_") + DateTime.Now.ToString("yyyyMMddHHmmss") +
+                           ".doc";
+            doc.Save(filename, Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
         }
 
         protected void btnAmendXuatNgoaiBang_Click(object sender, EventArgs e)

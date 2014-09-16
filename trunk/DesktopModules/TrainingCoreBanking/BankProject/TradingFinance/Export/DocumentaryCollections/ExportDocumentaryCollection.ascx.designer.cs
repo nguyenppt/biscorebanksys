@@ -103,6 +103,42 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtCancelRemark;
         
         /// <summary>
+        /// divOutgoingCollectionAcception control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOutgoingCollectionAcception;
+        
+        /// <summary>
+        /// dtAcceptDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dtAcceptDate;
+        
+        /// <summary>
+        /// txtAcceptREmark control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtAcceptREmark;
+        
+        /// <summary>
+        /// divCollectionType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCollectionType;
+        
+        /// <summary>
         /// comboCollectionType control.
         /// </summary>
         /// <remarks>
@@ -461,6 +497,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label txtCommodityName;
+        
+        /// <summary>
+        /// divDocsCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode;
         
         /// <summary>
         /// comboDocsCode1 control.
