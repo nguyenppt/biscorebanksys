@@ -1075,13 +1075,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.WebControls.Button btnReportPhieuXuatNgoaiBang;
         
         /// <summary>
-        /// btnReportVAT control.
+        /// btnReportPhieuChuyenKhoan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReportVAT;
+        protected global::System.Web.UI.WebControls.Button btnReportPhieuChuyenKhoan;
         
         /// <summary>
         /// btnReportVATb control.

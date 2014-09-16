@@ -3,14 +3,18 @@
 <telerik:RadGrid runat="server" AutoGenerateColumns="False" ID="radGridReview" AllowPaging="True" OnNeedDataSource="radGridReview_OnNeedDataSource">
     <MasterTableView>
         <Columns>
-            <telerik:GridBoundColumn HeaderText="LC Code" DataField="LCCode" />
-            <telerik:GridBoundColumn HeaderText="Customer Account" DataField="CustomerAccount" />
-            <telerik:GridBoundColumn HeaderText="Amt LCY" DataField="AmtLCY" ItemStyle-HorizontalAlign="Right" />
-            <telerik:GridBoundColumn HeaderText="Amt FCY" DataField="AmtFCY" ItemStyle-HorizontalAlign="Right" />
+            <telerik:GridBoundColumn HeaderText="LC Code" DataField="LCCode" />            
+            <telerik:GridTemplateColumn HeaderText="Amount">
+                <ItemStyle HorizontalAlign="Right" />
+                <ItemTemplate><%# Eval("DrawingAmount")  + " " + Eval("Currency") %>
+                </ItemTemplate>
+            </telerik:GridTemplateColumn>
+            <telerik:GridBoundColumn HeaderText="Customer Id" DataField="ApplicantId" />
+            <telerik:GridBoundColumn HeaderText="Customer Name" DataField="ApplicantName" />
             <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
             <telerik:GridTemplateColumn>
                 <ItemStyle Width="150" />
-                <ItemTemplate><%# GenerateEnquiryButtons(Eval("ReperenceNo").ToString()) %> 
+                <ItemTemplate><%# GenerateEnquiryButtons(Eval("Id").ToString()) %> 
                 </itemtemplate>
             </telerik:GridTemplateColumn>
         </Columns>

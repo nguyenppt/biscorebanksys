@@ -32,7 +32,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (IsPostBack || String.IsNullOrEmpty(lstType))
+            if (IsPostBack || !String.IsNullOrEmpty(lstType))
             {
                 if (lstType != null && lstType.ToLower().Equals("4appr"))
                     radGridReview.DataSource = bd.IssueLC.ImportLCPaymentList(bd.TransactionStatus.UNA);
@@ -41,9 +41,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
         }
 
-        public string GenerateEnquiryButtons(string TTNo)
+        public string GenerateEnquiryButtons(string TId)
         {
-            return "<a href=\"Default.aspx?tabid=" + this.TabId + "&amp;tid=" + TTNo + "&amp;lst=" + lstType + "\"><img src=\"Icons/bank/text_preview.png\" alt=\"\" title=\"\" style=\"\" width=\"20\"> </a>";
+            return "<a href=\"Default.aspx?tabid=" + this.TabId + "&amp;tid=" + TId + "&amp;lst=" + lstType + "\"><img src=\"Icons/bank/text_preview.png\" alt=\"\" title=\"\" style=\"\" width=\"20\"> </a>";
         }
     }
 }
