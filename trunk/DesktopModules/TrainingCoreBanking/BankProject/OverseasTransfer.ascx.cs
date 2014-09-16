@@ -15,6 +15,8 @@ namespace BankProject
             return "FT";
         }
 
+        public string WaiveCharges = string.Empty;
+
         protected double PercentOverseasTransfer()
         {
             return 0.15;
@@ -93,14 +95,14 @@ namespace BankProject
             {
                 comboReceiverCorrespondent.SelectedValue = drow[0]["Code"].ToString();
                 lblReceiverCorrespondentName.Text = lblCreditAccount.Text;
-                comboCreditCurrency.SelectedValue = drow[0]["Currency"].ToString();
+                txtCreditCurrency.Text = drow[0]["Currency"].ToString();
                 comboCurrency.SelectedValue = drow[0]["Currency"].ToString();
             }
             else
             {
                 comboReceiverCorrespondent.SelectedValue = string.Empty;
                 lblReceiverCorrespondentName.Text = string.Empty;
-                comboCreditCurrency.SelectedValue = string.Empty;
+                txtCreditCurrency.Text = string.Empty;
                 comboCurrency.SelectedValue = string.Empty;
             }
         }
@@ -297,12 +299,12 @@ namespace BankProject
 
             var dsCurrency = SQLData.B_BCURRENCY_GetAll();
 
-            comboCreditCurrency.Items.Clear();
-            comboCreditCurrency.Items.Add(new RadComboBoxItem(""));
-            comboCreditCurrency.DataValueField = "Code";
-            comboCreditCurrency.DataTextField = "Code";
-            comboCreditCurrency.DataSource = dsCurrency;
-            comboCreditCurrency.DataBind();
+            //comboCreditCurrency.Items.Clear();
+            //comboCreditCurrency.Items.Add(new RadComboBoxItem(""));
+            //comboCreditCurrency.DataValueField = "Code";
+            //comboCreditCurrency.DataTextField = "Code";
+            //comboCreditCurrency.DataSource = dsCurrency;
+            //comboCreditCurrency.DataBind();
 
             comboCurrency.Items.Clear();
             comboCurrency.Items.Add(new RadComboBoxItem(""));
@@ -311,6 +313,12 @@ namespace BankProject
             comboCurrency.DataSource = dsCurrency;
             comboCurrency.DataBind();
 
+            comboAccountOfficer.Items.Clear();
+            comboAccountOfficer.Items.Add(new RadComboBoxItem(""));
+            comboAccountOfficer.DataTextField = "Description";
+            comboAccountOfficer.DataValueField = "Code";
+            comboAccountOfficer.DataSource = SQLData.B_BACCOUNTOFFICER_GetAll();
+            comboAccountOfficer.DataBind();
 
             lblCommoditySerName.Text = comboCommoditySer.SelectedValue;
 
@@ -374,7 +382,7 @@ namespace BankProject
                     , AmountDebited
                     , comboTPKT.SelectedValue
                     , comboCreditAccount.SelectedValue
-                    , comboCreditCurrency.SelectedValue
+                    , txtCreditCurrency.Text
                     , TreasuryRate
                     , CreditAmount
                     , dteCreditDate.SelectedDate.ToString()
@@ -484,7 +492,7 @@ namespace BankProject
                 , txtVATNo.Text.Trim()
                 , txtAddRemarks1.Text.Trim()
                 , txtAddRemarks2.Text.Trim()
-                , txtProfitCenteCust.Text.Trim()
+                , comboAccountOfficer.SelectedValue
                 , TotalChargeAmount
                 , TotalTaxAmount,
                 UserId.ToString(),
@@ -571,7 +579,7 @@ namespace BankProject
                     comboTPKT.SelectedValue = drow["TPKT"].ToString();
                     lblTPKTName.Text = comboTPKT.SelectedValue;
 
-                    comboCreditCurrency.SelectedValue = drow["CreditCurrency"].ToString();
+                    txtCreditCurrency.Text = drow["CreditCurrency"].ToString();
                     numTreasuryRate.Text = drow["TreasuryRate"].ToString();
 
                     numCreditAmount.Text = drow["CreditAmount"].ToString();
@@ -626,7 +634,7 @@ namespace BankProject
                     comboCreditAccount.SelectedValue = string.Empty;
                     lblCreditAccount.Text = comboCreditAccount.SelectedItem != null ? comboCreditAccount.SelectedItem.Attributes["Description"] : "";
 
-                    comboCreditCurrency.SelectedValue = string.Empty;
+                    txtCreditCurrency.Text = string.Empty;
 
                     numTreasuryRate.Value = 0;
 
@@ -772,6 +780,8 @@ namespace BankProject
                 {
                     var drowCharge = dsOT.Tables[2].Rows[0];
 
+                    WaiveCharges = drowCharge["CommissionCode"].ToString();
+
                     LoadChargeAcc();
                     comboChargeAcct.SelectedValue = drowCharge["ChargeAcct"].ToString();
                     if (comboChargeAcct.SelectedItem != null)
@@ -802,7 +812,7 @@ namespace BankProject
                     txtAddRemarks1.Text = drowCharge["AddRemarks1"].ToString();
                     txtAddRemarks2.Text = drowCharge["AddRemarks2"].ToString();
 
-                    txtProfitCenteCust.Text = drowCharge["ProfitCenteCust"].ToString();
+                    comboAccountOfficer.SelectedValue = drowCharge["ProfitCenteCust"].ToString();
 
                     lblTotalChargeAmount.Text = String.Format("{0:C}", drowCharge["TotalChargeAmount"]).Replace("$", "");
                     lblTotalTaxAmount.Text = String.Format("{0:C}", drowCharge["TotalTaxAmount"]).Replace("$", "");
@@ -834,7 +844,7 @@ namespace BankProject
                     txtAddRemarks1.Text = string.Empty;
                     txtAddRemarks2.Text = string.Empty;
 
-                    txtProfitCenteCust.Text = string.Empty;
+                    comboAccountOfficer.SelectedValue = string.Empty;
 
                     lblTotalChargeAmount.Text = "0";
                     lblTotalTaxAmount.Text = "0";
@@ -1331,7 +1341,7 @@ namespace BankProject
             else
             {
                 txtDeitCurrency.Text = string.Empty;
-                comboCreditCurrency.SelectedValue = string.Empty;
+                txtCreditCurrency.Text = string.Empty;
             }
         }
 
@@ -1421,7 +1431,7 @@ namespace BankProject
                     txtVATNo.Enabled = false;
                     txtAddRemarks1.Enabled = true;
                     txtAddRemarks2.Enabled = true;
-                    txtProfitCenteCust.Enabled = true;
+                    comboAccountOfficer.Enabled = true;
                     comboChargeAcct.Enabled = true;
                     break;
 
@@ -1437,7 +1447,7 @@ namespace BankProject
                     txtVATNo.Enabled = false;
                     txtAddRemarks1.Enabled = false;
                     txtAddRemarks2.Enabled = false;
-                    txtProfitCenteCust.Enabled = false;
+                    comboAccountOfficer.Enabled = false;
                     comboChargeAcct.Enabled = false;
                     break;
             }
@@ -1462,7 +1472,7 @@ namespace BankProject
             if (item != null)
             {
                 txtDeitCurrency.Text = item.Attributes["Currency"];
-                comboCreditCurrency.SelectedValue = item.Attributes["Currency"];
+                txtCreditCurrency.Text = item.Attributes["Currency"];
                 SetChargeAccByDebitAcctNo();
             }
             comboOrderingCustAcc.SelectedValue = comboDebitAcctNo.SelectedValue;
