@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Payment.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCredit.Payment" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:radwindowmanager id="RadWindowManager1" runat="server" enableshadow="true" />
-<asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
+<asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"/>
 <style>
     .labelDisabled {
         color: darkgray !important;
@@ -11,13 +11,13 @@
     }
 </style>
 <telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%"
-    onbuttonclick="RadToolBar1_ButtonClick">
+    OnButtonClick="RadToolBar1_ButtonClick" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommit" CommandName="commit" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="preview" postback="false" Enabled="true">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" postback="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
             ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
@@ -143,7 +143,7 @@
                         </asp:RequiredFieldValidator>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none;"><!-- Ẩn theo y/c của Nguyên -->
                     <td class="MyLable">Prov Cover Acct</td>
                     <td class="MyContent">
                         <telerik:radcombobox
@@ -153,11 +153,11 @@
                         </telerik:radcombobox>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none;"><!-- Ẩn theo y/c của Nguyên -->
                     <td class="MyLable">Prov Exchange Rate</td>
                     <td class="MyContent"><telerik:radnumerictextbox id="txtProvExchangeRate" runat="server" CssClass="paymentControlWidth" /></td>
                 </tr>
-                <tr>
+                <tr style="display:none;"><!-- Ẩn theo y/c của Nguyên -->
                     <td class="MyLable labelDisabled">Cover Amount</td>
                     <td class="MyContent labelDisabled"><telerik:radnumerictextbox id="txtCoverAmount" runat="server" CssClass="paymentControlWidth labelDisabled" ReadOnly="true" /></td>
                 </tr>
@@ -195,7 +195,7 @@
                 </tr>
                 <tr>
                     <td class="MyLable">Payment Remarks</td>
-                    <td class="MyContent"><telerik:radtextbox id="txtPaymentRemarks" runat="server" CssClass="paymentControlWidth" /></td>
+                    <td class="MyContent"><telerik:radtextbox id="txtPaymentRemarks" runat="server" width="300" /></td>
                 </tr>
             </table>
         </fieldset>
@@ -935,6 +935,12 @@
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
             //
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Preview%>') {
+                window.location = '<%=EditUrl("list")%>&lst=4appr';
+            }
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Search%>') {
+                window.location = '<%=EditUrl("list")%>';
+            }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
                 args.set_cancel(true);
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file ?", confirmCallbackFunction_PhieuNgoaiBang, 420, 150, null, 'Download');
@@ -945,13 +951,25 @@
             if (result) {
                 $("#<%=btnReportPhieuXuatNgoaiBang.ClientID %>").click();
             }
-            //Xu ly in hoa don VAT
-            //radconfirm("Do you want to download PHIEU CHUYEN KHHOAN file?", confirmCallbackFunction_PhieuCK, 420, 150, null, 'Download');
+            radconfirm("Do you want to download PHIEU CHUYEN KHOAN file?", confirmCallbackFunction_PhieuChuyenKhoan, 420, 150, null, 'Download');
+        }
+        function confirmCallbackFunction_PhieuChuyenKhoan(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnReportPhieuChuyenKhoan.ClientID %>").click();
+            }
+            radconfirm("Do you want to download HOA DON VAT file?", confirmCallbackFunction_VATB, 365, 150, null, 'Download');
+        }
+        function confirmCallbackFunction_VATB(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnReportVATb.ClientID %>").click();
+            }
         }
         //
         $("#<%=txtCode.ClientID %>").keyup(function (event) {
             if (event.keyCode == 13) {
-                window.location = 'Default.aspx?tabid=<%=this.TabId%>&tid=' + $('#<%=txtCode.ClientID%>').val();
+                window.location = 'Default.aspx?tabid=<%=this.TabId%>&lc=' + $('#<%=txtCode.ClientID%>').val();
             }
         });
     </script>
@@ -1036,6 +1054,6 @@
 <div style="visibility: hidden;">
     <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="Search" /></div>
 <div style="visibility: hidden;">
-    <asp:Button ID="btnReportVAT" runat="server" OnClick="btnReportVAT_Click" Text="Search" /></div>
+    <asp:Button ID="btnReportPhieuChuyenKhoan" runat="server" OnClick="btnReportPhieuChuyenKhoan_Click" Text="Search" /></div>
 <div style="visibility: hidden;">
     <asp:Button ID="btnReportVATb" runat="server" OnClick="btnReportVATb_Click" Text="Search" /></div>
