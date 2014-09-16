@@ -50,14 +50,22 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("P_ImportLCPaymentUpdateStatus", PaymentId, NewStatus, UserExecute);
         }
 
-        public static DataSet ImportLCPaymentPhieuXuatNgoaiBang(long PaymentId, string UserId)
+        public static DataSet ImportLCPaymentReport(int ReportType, long PaymentId, string UserId)
         {
-            return sqldata.ndkExecuteDataset("P_ReportPhieuXuatNgoaiBang", PaymentId, UserId);
+            return sqldata.ndkExecuteDataset("P_ImportLCPaymentReport", ReportType, PaymentId, UserId);
         }
 
         public static DataTable ImportLCPaymentList(string Status)
         {
             return sqldata.ndkExecuteDataset("P_ImportLCPaymentList", Status).Tables[0];
+        }
+
+        public static string GetVatNo()
+        {
+            DataTable tDetail = Database.B_BMACODE_GetNewSoTT("VATNO").Tables[0];
+            if (tDetail == null || tDetail.Rows.Count <= 0) return null;
+
+            return tDetail.Rows[0]["SoTT"].ToString();
         }
     }
 }
