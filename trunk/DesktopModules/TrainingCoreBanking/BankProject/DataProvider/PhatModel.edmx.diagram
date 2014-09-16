@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bd4ca47134084aa3934aafd48b94f081" Name="Diagram1" ZoomLevel="53">
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BPAYMENTMETHOD" Width="1.5" PointX="5.6944581632010909" PointY="11.991877725344095" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BCUSTOMER" Width="1.5" PointX="6.9903399958230281" PointY="8.2726195195096643" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BSWIFTCODE" Width="1.5" PointX="8.5757736510484364" PointY="17.724467211274646" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BOUTGOINGCOLLECTIONPAYMENT" Width="1.5" PointX="1.6264849089209386" PointY="26.7532540386325" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BCHARGECODE" Width="1.5" PointX="9.8269138344688862" PointY="28.61555309436077" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BOUTGOINGCOLLECTIONPAYMENTCHARGE" Width="1.5" PointX="11.18185895457019" PointY="1.1176731889684095" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BOUTGOINGCOLLECTIONPAYMENTMT910" Width="1.5" PointX="4.4225313348800555" PointY="11.542382469187668" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BDRFROMACCOUNT" Width="1.5" PointX="1.7235218778827794" PointY="30.66600862083305" />
+        <EntityTypeShape EntityType="bisolutions_vvcbModel.BEXPORT_DOCUMETARYCOLLECTION" Width="1.5" PointX="6.441034971941745" PointY="20.40230044182497" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

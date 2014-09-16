@@ -122,7 +122,18 @@ namespace BankProject.DataProvider
                     dtTemp.Rows.Add(drow);
 
                     break;
+                case "OutgoingPayment_TabMain_DrawType":
+                    drow = dtTemp.NewRow();
+                    drow["Description"] = "Sight Payment";
+                    drow["Id"] = "SP";
+                    dtTemp.Rows.Add(drow);
 
+                    drow = dtTemp.NewRow();
+                    drow["Description"] = "Mature Acceptance";
+                    drow["Id"] = "MA";
+                    dtTemp.Rows.Add(drow);
+
+                    break;
                 case "DocumetaryCollection_TabMain_Commodity":
                     drow = dtTemp.NewRow();
                     drow["Description"] = "Sắt thép";
@@ -799,7 +810,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_BSWIFTCODE_GetAll");
         }
-
+        public static DataSet P_BPAYMENTMETHOD_GetAll()
+        {
+            return sqldata.ndkExecuteDataset("P_BPAYMENTMETHOD_GetAll");
+        }
         public static DataSet B_BSWIFTCODE_GetByCurrency(string Currency)
         {
             return sqldata.ndkExecuteDataset("B_BSWIFTCODE_GetByCurrency", Currency);
@@ -1017,7 +1031,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode", code);
         }
-
+        public static DataSet P_BEXPORT_DOCUMETARYCLEANCOLLECTION_GetByDocCollectCode(string code)
+        {
+            return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCLEANCOLLECTION_GetByDocCollectCode", code);
+        }
         public static void B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(string NormalLCCode, string WaiveCharges,
                                                                         string Chargecode, string ChargeAcct,
                                                                         string ChargePeriod, string ChargeCcy
@@ -1081,6 +1098,8 @@ namespace BankProject.DataProvider
                                                                  , string CancelDate
                                                                  , string ContingentExpiryDate
                                                                  , string CancelRemark
+                                                                 , string AcceptedDate
+                                                                 , string AcceptedRemark
                                                                  , string screenType
                                                                  )
         {
@@ -1128,6 +1147,8 @@ namespace BankProject.DataProvider
                                        , CancelDate
                                        , ContingentExpiryDate
                                        , CancelRemark
+                                       , AcceptedDate
+                                       , AcceptedRemark
                                        , screenType);
         }
 
@@ -1228,7 +1249,7 @@ namespace BankProject.DataProvider
         public static DataSet P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report(string code,
                                                                                       string currentuserlogin)
         {
-            return sqldata.ndkExecuteDataset("B_DOCUMENTARYCOLLECTIONCANCEL_PHIEUXUATNGOAIBANG_REPORT", code,
+            return sqldata.ndkExecuteDataset("P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report", code,
                                              currentuserlogin);
         }
         public static DataTable B_BBANKSWIFTCODE_GetByCode(string Code)
