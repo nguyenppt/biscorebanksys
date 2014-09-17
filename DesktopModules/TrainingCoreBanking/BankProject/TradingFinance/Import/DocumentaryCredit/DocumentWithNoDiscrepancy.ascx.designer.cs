@@ -184,13 +184,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDocCode;
         
         /// <summary>
-        /// divDocsCode_INVL control.
+        /// divDocsCode1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode_INVL;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode1;
         
         /// <summary>
         /// comboDocsCode1 control.
@@ -229,13 +229,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadNumericTextBox numNoOfCopies1;
         
         /// <summary>
-        /// divDocsCode_BL control.
+        /// divDocsCode2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode_BL;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode2;
         
         /// <summary>
         /// comboDocsCode2 control.
@@ -274,13 +274,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadNumericTextBox numNoOfCopies2;
         
         /// <summary>
-        /// divDocsCode_PL control.
+        /// divDocsCode3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode_PL;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode3;
         
         /// <summary>
         /// comboDocsCode3 control.
@@ -796,13 +796,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlTable table2;
         
         /// <summary>
-        /// tbChargecode2 control.
+        /// tbChargeCode2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox tbChargecode2;
+        protected global::Telerik.Web.UI.RadComboBox tbChargeCode2;
         
         /// <summary>
         /// rcbChargeCcy2 control.
@@ -958,13 +958,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlTable table4;
         
         /// <summary>
-        /// tbChargecode3 control.
+        /// tbChargeCode3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox tbChargecode3;
+        protected global::Telerik.Web.UI.RadComboBox tbChargeCode3;
         
         /// <summary>
         /// rcbChargeCcy3 control.

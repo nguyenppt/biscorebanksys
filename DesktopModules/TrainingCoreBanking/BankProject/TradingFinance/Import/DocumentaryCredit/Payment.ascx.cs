@@ -21,80 +21,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             if (IsPostBack) return;
             //
-            txtPaymentId.Value = "0";
-            cboDrawType.Items.Clear();
-            switch (this.TabId)
-            {
-                case tabSightPayment:
-                    cboDrawType.Items.Add(new RadComboBoxItem("Sight Payment", "SP"));
-                    break;
-                case tabMatureAcceptance:
-                    cboDrawType.Items.Add(new RadComboBoxItem("Maturity Acceptance", "MA"));
-                    break;
-            }
-            //
-            LoadTransInfo();          
-        }
-
-        private void setToolbar(int commandType)
-        {
-            RadToolBar1.FindItemByValue("btCommit").Enabled = (commandType == 1);
-            //RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-            RadToolBar1.FindItemByValue("btAuthorize").Enabled = (commandType == 2);
-            RadToolBar1.FindItemByValue("btReverse").Enabled = (commandType == 2);
-            //RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = (commandType > 1);
-        }
-
-        protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
-        {
-            var toolBarButton = e.Item as RadToolBarButton;
-            var commandName = toolBarButton.CommandName;
-            switch (commandName)
-            {
-                case bc.Commands.Commit:
-                    CommitData();
-                    break;
-                case bc.Commands.Preview:
-                    break;
-                case bc.Commands.Authozize:
-                    bd.IssueLC.ImportLCPaymentUpdateStatus(Convert.ToInt64(txtPaymentId.Value), bd.TransactionStatus.AUT, this.UserId.ToString());
-                    Response.Redirect("Default.aspx?tabid=" + this.TabId);
-                    break;
-                case bc.Commands.Reverse:
-                    bd.IssueLC.ImportLCPaymentUpdateStatus(Convert.ToInt64(txtPaymentId.Value), bd.TransactionStatus.REV, this.UserId.ToString());
-                    Response.Redirect("Default.aspx?tabid=" + this.TabId);
-                    break;
-            }
-        }
-
-        private DataTable createTableList()
-        {
-            DataTable tblList = new DataTable();
-            tblList.Columns.Add(new DataColumn("Value", typeof(string)));
-            tblList.Columns.Add(new DataColumn("Text", typeof(string)));
-
-            return tblList;
-        }
-
-        private void addData2TableList(ref DataTable tblList, string text)
-        {
-            addData2TableList(ref tblList, text, text);
-        }
-        private void addData2TableList(ref DataTable tblList, string text, string value)
-        {
-            DataRow dr = tblList.NewRow();
-            dr["Value"] = text;
-            dr["Text"] = value;
-            tblList.Rows.Add(dr);
-        }
-
-        private void LoadTransInfo()
-        {
             setToolbar(0);
             lblError.Text = "";
             //ChargeCode
-            DataRow dr;
             DataTable tblList;/* = bd.SQLData.B_BCHARGECODE_GetByViewType(this.TabId);
             bc.Commont.initRadComboBox(ref tabCableCharge_cboChargeCode, "Name_EN", "Code", tblList);
             bc.Commont.initRadComboBox(ref tabPaymentCharge_cboChargeCode, "Name_EN", "Code", tblList);
@@ -138,109 +67,50 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             bc.Commont.initRadComboBox(ref tabDiscrepenciesCharge_cboChargeStatus, "Text", "Value", tblList);
             bc.Commont.initRadComboBox(ref tabOtherCharge_cboChargeStatus, "Text", "Value", tblList);
             //
-            DataSet ds;
-            if (Request.QueryString["tid"] != null)
+            bc.Commont.initRadComboBox(ref cboPaymentMethod, "Description", "Code", bd.IssueLC.PaymentMethod());
+            //
+            cboDrawType.Items.Clear();
+            switch (this.TabId)
             {
-                ds = bd.IssueLC.ImportLCPaymentDetail(null, Convert.ToInt64(Request.QueryString["tid"]));
+                case tabSightPayment:
+                    cboDrawType.Items.Add(new RadComboBoxItem("Sight Payment", "SP"));
+                    break;
+                case tabMatureAcceptance:
+                    cboDrawType.Items.Add(new RadComboBoxItem("Maturity Acceptance", "MA"));
+                    break;
+            }
+            //
+            if (!String.IsNullOrEmpty(Request.QueryString["tid"]))
+            {
+                DataSet ds = bd.IssueLC.ImportLCPaymentDetail(null, Convert.ToInt64(Request.QueryString["tid"]));
                 if (ds == null || ds.Tables.Count <= 0)
                 {
                     lblError.Text = "Can not found this transaction !";
                     return;
                 }
-                if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
-                    setToolbar(2);
-            }
-            else
-            {
-                txtCode.Text = Request.QueryString["lc"];
-                if (string.IsNullOrEmpty(txtCode.Text)) return;
-                ds = bd.IssueLC.ImportLCPaymentDetail(txtCode.Text, null);
-                if (ds != null) lblError.Text = "This LC has a payment waiting for approve !";
-            }            
-            //Có payment chưa duyệt ?
-            string DepositAccount = "", PaymentMethod = "", NostroAcct = "";
-            DataTable tDetail;            
-            if (ds == null || ds.Tables.Count <= 0)
-            {
-                tDetail = bd.IssueLC.GetDocForPayment(txtCode.Text);
-                if (tDetail == null || tDetail.Rows.Count <= 0)
-                {
-                    lblError.Text = "Document for payment of this LC doesn't found !";
-                    return;
-                }
                 //
-                dr = tDetail.Rows[0];
-                string Status = dr["Status"].ToString();
-                if (!Status.Equals(bd.TransactionStatus.AUT))
-                {
-                    switch (Status)
-                    {
-                        case bd.TransactionStatus.UNA:
-                            lblError.Text = "This Doc not authorize !";
-                            break;
-                        case bd.TransactionStatus.REV:
-                            lblError.Text = "This Doc is reversed !";
-                            break;
-                        default:
-                            lblError.Text = "This Doc is invalid status(" + Status + ") !";
-                            break;
-                    }
-                    return;
-                }
-                //
-                if (dr["RejectStatus"] != DBNull.Value)
-                {
-                    string RejectStatus = dr["RejectStatus"].ToString();
-                    switch (RejectStatus)
-                    {
-                        case bd.TransactionStatus.UNA:
-                            lblError.Text = "This Doc is waiting reject authorize !";
-                            break;
-                        case bd.TransactionStatus.AUT:
-                            lblError.Text = "This Doc is rejected !";
-                            break;
-                        case bd.TransactionStatus.REV://Xử lý sao ? hỏi lại Nguyên
-                            lblError.Text = "This Doc is reversed !";
-                            break;
-                        default:
-                            lblError.Text = "This Doc is invalid status(" + Status + ") !";
-                            break;
-                    }
-
-                    return;
-                }
-                //
-                int PaymentFullFlag = Convert.ToInt32(dr["PaymentFullFlag"]);
-                if (PaymentFullFlag != 0)
-                {
-                    lblError.Text = "This Doc is already payment completed !";
-                    return;
-                }
-                setToolbar(1);
-                //
-                txtDrawingAmount.Value = Convert.ToDouble(dr["Amount"]);
-                txtAmountCredited.Value = 0;
-                txtFullyUtilised.Text = "NO";
-                txtVatNo.Text = bd.IssueLC.GetVatNo();
-            }
-            else
-            {
                 bc.Commont.SetTatusFormControls(this.Controls, false);
                 //setToolbar(2);
-                tDetail = ds.Tables[0];
-                dr = tDetail.Rows[0];
+                DataTable tDetail = ds.Tables[0];
+                DataRow dr = tDetail.Rows[0];
                 txtCode.Text = dr["LCCode"].ToString();
                 txtPaymentId.Value = dr["PaymentId"].ToString();
                 txtDrawingAmount.Value = Convert.ToDouble(dr["DrawingAmount"]);
                 if (dr["AmountCredited"] != DBNull.Value)
                     txtAmountCredited.Value = Convert.ToDouble(dr["AmountCredited"]);
-                DepositAccount = dr["DepositAccount"].ToString();
-                PaymentMethod = dr["PaymentMethod"].ToString();
-                NostroAcct = dr["NostroAcct"].ToString();
+                bc.Commont.initRadComboBox(ref cboDepositAccount, "AccountName", "DepositCode", bd.IssueLC.GetDepositAccount(dr["CustomerID"].ToString(), dr["Currency"].ToString()));
+                cboDepositAccount.SelectedValue = dr["DepositAccount"].ToString();
+                cboPaymentMethod.SelectedValue = dr["PaymentMethod"].ToString();
+                bc.Commont.initRadComboBox(ref cboNostroAcct, "Description", "AccountNo", bd.SQLData.B_BSWIFTCODE_GetByCurrency(dr["Currency"].ToString()));
+                cboNostroAcct.SelectedValue = dr["NostroAcct"].ToString();
                 txtFullyUtilised.Text = dr["FullyUtilised"].ToString();
                 cboWaiveCharges.SelectedValue = dr["WaiveCharges"].ToString();
                 txtChargeRemarks.Text = dr["ChargeRemarks"].ToString();
                 txtVatNo.Text = dr["VATNo"].ToString();
+                cboDrawType.SelectedValue = dr["DrawType"].ToString();
+                lblCurrency.Text = dr["Currency"].ToString();
+                txtAmtDrFromAcct.Value = txtDrawingAmount.Value;
+                txtValueDate.SelectedDate = Convert.ToDateTime(dr["BookingDate"]);
                 //
                 DataTable tCharge = ds.Tables[1];
                 if (tCharge != null)
@@ -317,29 +187,68 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             tabOtherCharge_txtTaxAmt.Value = Convert.ToDouble(drCharge["TaxAmt"]);
                     }
                 }
-            }            
-            //
-            txtDocId.Value = dr["DocId"].ToString();
-            //
-            cboDrawType.SelectedValue = dr["DrawType"].ToString();
-            lblCurrency.Text = dr["Currency"].ToString();
-            txtAmtDrFromAcct.Value = txtDrawingAmount.Value;
-            txtValueDate.SelectedDate = Convert.ToDateTime(dr["BookingDate"]);
-            //
-            bc.Commont.initRadComboBox(ref cboDepositAccount, "AccountName", "DepositCode", bd.IssueLC.GetDepositAccount(dr["CustomerID"].ToString(), dr["Currency"].ToString()));
-            cboDepositAccount.SelectedValue = DepositAccount;
-            //
-            bc.Commont.initRadComboBox(ref cboPaymentMethod, "Description", "Code", bd.IssueLC.PaymentMethod());
-            cboPaymentMethod.SelectedValue = PaymentMethod;
-            //
-            bc.Commont.initRadComboBox(ref cboNostroAcct, "Description", "AccountNo", bd.SQLData.B_BSWIFTCODE_GetByCurrency(dr["Currency"].ToString()));
-            cboNostroAcct.SelectedValue = NostroAcct;
-        }        
+                if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
+                    setToolbar(2);
+            }
+        }
 
+        private void setToolbar(int commandType)
+        {
+            RadToolBar1.FindItemByValue("btCommit").Enabled = (commandType == 1);
+            //RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = (commandType == 2);
+            RadToolBar1.FindItemByValue("btReverse").Enabled = (commandType == 2);
+            //RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = (commandType > 1);
+        }
+
+        protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
+        {
+            var toolBarButton = e.Item as RadToolBarButton;
+            var commandName = toolBarButton.CommandName;
+            switch (commandName)
+            {
+                case bc.Commands.Commit:
+                    CommitData();
+                    break;
+                case bc.Commands.Preview:
+                    break;
+                case bc.Commands.Authozize:
+                    bd.IssueLC.ImportLCPaymentUpdateStatus(Convert.ToInt64(txtPaymentId.Value), bd.TransactionStatus.AUT, this.UserId.ToString());
+                    Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    break;
+                case bc.Commands.Reverse:
+                    bd.IssueLC.ImportLCPaymentUpdateStatus(Convert.ToInt64(txtPaymentId.Value), bd.TransactionStatus.REV, this.UserId.ToString());
+                    Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    break;
+            }
+        }
+
+        private DataTable createTableList()
+        {
+            DataTable tblList = new DataTable();
+            tblList.Columns.Add(new DataColumn("Value", typeof(string)));
+            tblList.Columns.Add(new DataColumn("Text", typeof(string)));
+
+            return tblList;
+        }
+
+        private void addData2TableList(ref DataTable tblList, string text)
+        {
+            addData2TableList(ref tblList, text, text);
+        }
+        private void addData2TableList(ref DataTable tblList, string text, string value)
+        {
+            DataRow dr = tblList.NewRow();
+            dr["Value"] = text;
+            dr["Text"] = value;
+            tblList.Rows.Add(dr);
+        }
+        
         private void CommitData()
         {
             long paymentId = Convert.ToInt64(txtPaymentId.Value);
-            DataTable tResult = bd.IssueLC.ImportLCPaymentUpdate(paymentId, Convert.ToInt64(txtDocId.Value), txtCode.Text, cboDrawType.SelectedValue, txtDrawingAmount.Value, lblCurrency.Text, cboDepositAccount.SelectedValue, txtExchangeRate.Value,
+            DataTable tResult = bd.IssueLC.ImportLCPaymentUpdate(paymentId, txtCode.Text, cboDrawType.SelectedValue, txtDrawingAmount.Value, lblCurrency.Text, cboDepositAccount.SelectedValue, txtExchangeRate.Value,
                     txtAmtDrFromAcct.Value, txtProvExchangeRate.Value, "", txtProvExchangeRate.Value, txtCoverAmount.Value, cboPaymentMethod.SelectedValue, cboNostroAcct.SelectedValue, txtAmountCredited.Value, txtPaymentRemarks.Text, txtFullyUtilised.Text,
                     cboWaiveCharges.SelectedValue, txtChargeRemarks.Text, txtVatNo.Text, this.UserId.ToString());
             if (paymentId <= 0)
@@ -531,6 +440,54 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void btnReportVATb_Click(object sender, EventArgs e)
         {
             showReport(3);
+        }
+
+        protected void btnLoadDocsInfo_Click(object sender, EventArgs e)
+        {
+            lblError.Text = "";
+            DataSet dsDetail = bd.IssueLC.ImportLCPaymentDetail(txtCode.Text, null);
+            if (dsDetail != null && dsDetail.Tables.Count > 0 && dsDetail.Tables[0].Rows.Count > 0)
+            {
+                lblError.Text = "This Docs is waiting payment approve !";
+                return;
+            }
+            //
+            DataTable tbDetail = bd.IssueLC.GetDocForPayment(txtCode.Text);
+            if (tbDetail == null || tbDetail.Rows.Count <= 0)
+            {
+                lblError.Text = "This Docs not found !";
+                return;
+            }
+            //
+            DataRow dr = tbDetail.Rows[0];
+            if (dr["Status"].ToString().Equals(bd.TransactionStatus.AUT))
+            {
+                if (dr["RejectStatus"] != DBNull.Value)
+                {
+                    if (!dr["RejectStatus"].ToString().Equals(bd.TransactionStatus.REV))
+                    {
+                        lblError.Text = "This Docs is waiting for reject !";
+                        return;
+                    }
+                }
+                if (Convert.ToInt32(dr["PaymentFullFlag"]) != 0)
+                {
+                    lblError.Text = "This Doc is already payment completed !";
+                    return;
+                }
+                txtDrawingAmount.Value = Convert.ToDouble(dr["Amount"]);
+                txtAmtDrFromAcct.Value = txtDrawingAmount.Value;
+                lblCurrency.Text = dr["Currency"].ToString();
+                txtValueDate.SelectedDate = Convert.ToDateTime(dr["BookingDate"]);
+                txtAmountCredited.Value = 0;
+                txtFullyUtilised.Text = "NO";
+                txtVatNo.Text = bd.IssueLC.GetVatNo();
+                bc.Commont.initRadComboBox(ref cboDepositAccount, "AccountName", "DepositCode", bd.IssueLC.GetDepositAccount(dr["CustomerID"].ToString(), dr["Currency"].ToString()));
+                bc.Commont.initRadComboBox(ref cboNostroAcct, "Description", "AccountNo", bd.SQLData.B_BSWIFTCODE_GetByCurrency(dr["Currency"].ToString()));
+                setToolbar(1);
+                return;
+            }
+            lblError.Text = "This Docs has wrong Status (" + dr["Status"] + ") !";            
         }
     }
 }

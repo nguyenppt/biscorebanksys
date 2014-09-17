@@ -36,7 +36,7 @@
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width: 200px; padding: 5px 0 5px 20px;">            
-            <asp:HiddenField ID="txtPaymentId" runat="server" Value="0" /><asp:HiddenField ID="txtDocId" runat="server" />
+            <asp:HiddenField ID="txtPaymentId" runat="server" Value="0" />
             <asp:TextBox ID="txtCode" runat="server" Width="200" /><span class="Required"> (*)</span> &nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" />
         </td>
         <asp:RequiredFieldValidator
@@ -969,7 +969,7 @@
         //
         $("#<%=txtCode.ClientID %>").keyup(function (event) {
             if (event.keyCode == 13) {
-                window.location = 'Default.aspx?tabid=<%=this.TabId%>&lc=' + $('#<%=txtCode.ClientID%>').val();
+                $('#<%=btnLoadDocsInfo.ClientID%>').click();
             }
         });
     </script>
@@ -1057,3 +1057,5 @@
     <asp:Button ID="btnReportPhieuChuyenKhoan" runat="server" OnClick="btnReportPhieuChuyenKhoan_Click" Text="Search" /></div>
 <div style="visibility: hidden;">
     <asp:Button ID="btnReportVATb" runat="server" OnClick="btnReportVATb_Click" Text="Search" /></div>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnLoadDocsInfo" runat="server" OnClick="btnLoadDocsInfo_Click" Text="Search" /></div>

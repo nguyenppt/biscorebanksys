@@ -4,7 +4,13 @@
     OnNeedDataSource="radGridReview_OnNeedDataSource">
     <MasterTableView>
         <Columns>
-            <telerik:GridBoundColumn HeaderText="LC No." DataField="PaymentId" />
+            <telerik:GridBoundColumn HeaderText="Docs No." DataField="PaymentId" />
+            <telerik:GridTemplateColumn HeaderText="Amount">
+                <ItemStyle HorizontalAlign="Right" />
+                <ItemTemplate><%# Eval("Amount")  + " " + Eval("Currency") %>
+                </ItemTemplate>
+            </telerik:GridTemplateColumn>
+            <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
             <telerik:GridTemplateColumn>
                 <ItemStyle Width="25" />
                 <ItemTemplate>

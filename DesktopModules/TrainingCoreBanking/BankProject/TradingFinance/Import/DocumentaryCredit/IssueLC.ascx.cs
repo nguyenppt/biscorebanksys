@@ -338,22 +338,17 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             e.Item.Attributes["SwiftCode"] = row["SwiftCode"].ToString();
         }
 
-        protected void rcbAdviseBankNo_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            tbAdviseBankName.Text = rcbAdviseBankNo.SelectedItem.Attributes["BankName"];
+        //protected void rcbAdviseBankNo_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        //{
+        //    tbAdviseBankName.Text = rcbAdviseBankNo.SelectedItem.Attributes["BankName"];
             
-        }
+        //}
         
         protected void rcbApplicantBankType700_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_ApplicantBankType700();
         }
-
-        protected void rcbApplicant700_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            SetRelation_Applicant700();
-        }
-
+          
         protected void rcbAvailableWithType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_AvailableWithType();
@@ -401,21 +396,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void comboReimbBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            SetRelation_ReimbBankType();
-
-            comboReimbBankType700.SelectedValue = comboReimbBankType.SelectedValue;
-            tbReimbBankName700.Text = "";
-            tbReimbBankName700.Text = "";
-            tbReimbBankAddr700_1.Text = "";
-            tbReimbBankAddr700_2.Text = "";
-            tbReimbBankAddr700_3.Text = "";
-
-            comboReimbBankType_747.SelectedValue = comboReimbBankType.SelectedValue;
-            comboReimbBankNo_747.SelectedValue = "";
-            txtReimbBankName_747.Text = "";
-            txtReimbBankAddr_747_1.Text = "";
-            txtReimbBankAddr_747_2.Text = "";
-            txtReimbBankAddr_747_3.Text = "";
+            SetRelation_ReimbBankType();        
         }
         
         protected void comboAvailableWithNo_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -467,12 +448,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             rcbApplicantID.DataSource = dsc;
             rcbApplicantID.DataBind();
             
-            rcbApplicant700.Items.Clear();
-            rcbApplicant700.Items.Add(new RadComboBoxItem(""));
-            rcbApplicant700.DataTextField = "CustomerName";
-            rcbApplicant700.DataValueField = "CustomerID";
-            rcbApplicant700.DataSource = dsc;
-            rcbApplicant700.DataBind();
+            //rcbApplicant700.Items.Clear();
+            //rcbApplicant700.Items.Add(new RadComboBoxItem(""));
+            //rcbApplicant700.DataTextField = "CustomerName";
+            //rcbApplicant700.DataValueField = "CustomerID";
+            //rcbApplicant700.DataSource = dsc;
+            //rcbApplicant700.DataBind();
 
            
             rcbAccountOfficer.Items.Clear();
@@ -572,7 +553,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             SetRelation_AdviseThruType();
 
             SetRelation_ApplicantBankType700();
-            SetRelation_Applicant700();
             SetRelation_DraweeCusType700();
             
             //SetRelation_AvailableWithType740();
@@ -679,6 +659,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbReimbBankAddr700_1.Enabled = false;
             tbReimbBankAddr700_2.Enabled = false;
             tbReimbBankAddr700_3.Enabled = false;
+
+            tbApplicantNo700.Enabled = false;
+            tbApplicantName700.Enabled = false;
+            tbApplicantAddr700_1.Enabled = false;
+            tbApplicantAddr700_2.Enabled = false;
+            tbApplicantAddr700_3.Enabled = false;
 
             tbDraweeCusNo740.Enabled = false;
             tbDraweeCusName740.Enabled = false;
@@ -893,6 +879,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbReimbBankAddr700_1.Enabled = false;
             tbReimbBankAddr700_2.Enabled = false;
             tbReimbBankAddr700_3.Enabled = false;
+
+            tbApplicantNo700.Enabled = false;
+            tbApplicantName700.Enabled = false;
+            tbApplicantAddr700_1.Enabled = false;
+            tbApplicantAddr700_2.Enabled = false;
+            tbApplicantAddr700_3.Enabled = false;
             
             tbDraweeCusNo740.Enabled = false;
             tbDraweeCusName740.Enabled = false;
@@ -1365,7 +1357,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , tbPlaceOfExpiry.Text.Trim()
                 , comboAvailableRule.SelectedValue
                 , rcbApplicantBankType700.SelectedValue
-                , rcbApplicant700.SelectedValue
+                , tbApplicantNo700.Text
                 , tbApplicantName700.Text.Trim()
                 , tbApplicantAddr700_1.Text.Trim()
                 , tbApplicantAddr700_2.Text.Trim()
@@ -1751,7 +1743,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 comboAvailableRule.SelectedValue = drow["ApplicationRule"].ToString();
 
                 rcbApplicantBankType700.SelectedValue = drow["ApplicantType"].ToString();
-                rcbApplicant700.SelectedValue = drow["ApplicantNo"].ToString();
+                tbApplicantNo700.Text = drow["ApplicantNo"].ToString();
                 tbApplicantName700.Text = drow["ApplicantName"].ToString();
                 tbApplicantAddr700_1.Text = drow["ApplicantAddr1"].ToString();
                 tbApplicantAddr700_2.Text = drow["ApplicantAddr2"].ToString();
@@ -1861,7 +1853,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 comboAvailableRule.SelectedValue = "EUCP LASTED VERSION";
 
                 rcbApplicantBankType700.SelectedValue = string.Empty;
-                rcbApplicant700.SelectedValue = string.Empty;
+                tbApplicantNo700.Text = string.Empty;
                 tbApplicantName700.Text = string.Empty;
                 tbApplicantAddr700_1.Text = string.Empty;
                 tbApplicantAddr700_2.Text = string.Empty;
@@ -2383,7 +2375,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             SetRelation_AdviseThruType();
 
             SetRelation_ApplicantBankType700();
-            SetRelation_Applicant700();
             SetRelation_DraweeCusType700();
 
             SetRelation_Beneficiary740();
@@ -2545,15 +2536,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 
             }
         }
-
-        protected void SetRelation_Applicant700()
-        {
-            var row = rcbApplicant700.SelectedItem;
-            tbApplicantName700.Text = row.Attributes["CustomerName"];
-            tbApplicantAddr700_1.Text = row.Attributes["Address"];
-            tbApplicantAddr700_2.Text = row.Attributes["City"];
-            tbApplicantAddr700_3.Text = row.Attributes["Country"];
-        }
+              
         
         #region Module Report
         protected void btnIssueLC_MT700Report_Click(object sender, EventArgs e)
