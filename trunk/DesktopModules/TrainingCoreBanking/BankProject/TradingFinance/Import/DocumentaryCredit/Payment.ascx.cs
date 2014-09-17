@@ -213,7 +213,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
                 case bc.Commands.Preview:
                     break;
-                case bc.Commands.Authozize:
+                case bc.Commands.Authorize:
                     bd.IssueLC.ImportLCPaymentUpdateStatus(Convert.ToInt64(txtPaymentId.Value), bd.TransactionStatus.AUT, this.UserId.ToString());
                     Response.Redirect("Default.aspx?tabid=" + this.TabId);
                     break;

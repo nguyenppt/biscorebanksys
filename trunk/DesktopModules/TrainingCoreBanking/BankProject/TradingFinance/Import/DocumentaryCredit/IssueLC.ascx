@@ -1,10 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="IssueLC.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCredit.IssueLC" %>
-
-<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true">
-          </telerik:RadWindowManager>
-<asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
-        ShowSummary="False" ValidationGroup="Commit" />
-
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
+<asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <script type="text/javascript">
         var amount =  parseFloat(<%= Amount %>);
@@ -29,7 +26,7 @@
                 args.set_cancel(true);
 
                 switch (tabId) {
-                    case 92:
+                    case <%=TabIssueLCAddNew%>:
                         
                         if (receivingBank_700) {
                             radconfirm("Do you want to download MT700 file?", confirmCallbackFunction_IssueLC_MT700, 370, 150, null, 'Download');
@@ -40,11 +37,11 @@
                         }
                         break;
                         
-                    case 204: // Amend LC
+                    case <%=TabIssueLCAmend%>: // Amend LC
                         showPhieuNhap_Xuat();
                         break;
                         
-                    case 205: // Cancel LC
+                    case <%=TabIssueLCCancel%>: // Cancel LC
                         radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_CancelLC_XuatNgoaiBang, 420, 150, null, 'Download');
                         break;
                 }
@@ -187,12 +184,12 @@
     <telerik:RadCodeBlock ID="RadCodeBlock3" runat="server">
         <ul class="dnnAdminTabNav">
             <li><a href="#Main">Main</a></li>
-            <% if (TabId == 92) %>
+            <% if (TabId == TabIssueLCAddNew) %>
                 <%{ %>
                 <li><a href="#MT700">MT700</a></li>
                 <li><a href="#MT740">MT740</a></li>
             <% }
-                else if (TabId == 204) %>
+                else if (TabId == TabIssueLCAmend) %>
                     <%{%>
                         <li><a href="#MT707">MT707</a></li>
                         <li><a href="#MT747">MT747</a></li>
@@ -882,8 +879,8 @@
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
                     <td style="width: 250px" class="MyLable">Receiving Bank</td>
-                    <td style="width: 450px" class="MyContent">
-                        <telerik:RadComboBox 
+                    <td class="MyContent">
+                        <%--<telerik:RadComboBox 
                             width="355"
                             Height="150"
                             AppendDataBoundItems="true"
@@ -893,11 +890,12 @@
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
                             </Items>
-                        </telerik:RadComboBox>
+                        </telerik:RadComboBox>--%>
+                        <telerik:RadTextBox ID="txtRevivingBank700" runat="server" Width="355"/>
                     </td>
-                    <td>
+                   <%-- <td>
                         <asp:Label ID="tbRevivingBankName" runat="server" />
-                    </td>
+                    </td>--%>
                 </tr>
                 
                 <tr>    
@@ -2422,36 +2420,50 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
 	                </td>
                 </tr>
                 <tr>
-	                <td class="MyLable" style="vertical-align: top ">77A. Narrative, if amended</td>
+	                <td class="MyLable" style="vertical-align: top ">79. Narrative, if amended</td>
 	                <td class="MyContent">
-		                <telerik:RadTextBox ID="txtNarrative_707" runat="server" Width="355" TextMode="MultiLine" Height="200"/>
+		                <telerik:RadTextBox ID="txtNarrative_707" runat="server" Width="355" TextMode="MultiLine" Height="200" MaxLength="1750"/>
 	                </td>
                 </tr>
                 <tr>
 	                <td class="MyLable">72. Sender to receiver information</td>
 	                <td class="MyContent">
-		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_1" runat="server" Width="355" />
+		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_1" runat="server" Width="355" MaxLength="35"/>
 	                </td>
                 </tr>
 
                 <tr>
 	                <td class="MyLable"></td>
 	                <td class="MyContent">
-		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_2" runat="server" Width="355" />
+		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_2" runat="server" Width="355" MaxLength="35"/>
 	                </td>
                 </tr>
 
                 <tr>
 	                <td class="MyLable"></td>
 	                <td class="MyContent">
-		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_3" runat="server" Width="355" />
+		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_3" runat="server" Width="355" MaxLength="35"/>
 	                </td>
                 </tr>
 
                 <tr>
 	                <td class="MyLable"></td>
 	                <td class="MyContent">
-		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_4" runat="server" Width="355" />
+		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_4" runat="server" Width="355" MaxLength="35"/>
+	                </td>
+                </tr>
+
+                <tr>
+	                <td class="MyLable"></td>
+	                <td class="MyContent">
+		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_5" runat="server" Width="355" MaxLength="35"/>
+	                </td>
+                </tr>
+
+                <tr>
+	                <td class="MyLable"></td>
+	                <td class="MyContent">
+		                <telerik:RadTextBox ID="txtSenderToReceiverInformation_707_6" runat="server" Width="355" MaxLength="35"/>
 	                </td>
                 </tr>
             </table>
@@ -2925,7 +2937,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
                             <td class="MyLable">Charge code</td>
                             <td class="MyContent">
                                 <telerik:RadComboBox
-                                    ID="tbChargecode2" runat="server" 
+                                    ID="tbChargeCode2" runat="server" 
                                     MarkFirstMatch="True"
                                     AllowCustomText="false">
                                     <ExpandAnimation Type="None" />
@@ -3108,7 +3120,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
 			                <td class="MyLable">Charge code</td>
 			                <td class="MyContent">
 				                <telerik:RadComboBox
-					                ID="tbChargecode3" runat="server" 
+					                ID="tbChargeCode3" runat="server" 
 					                MarkFirstMatch="True"
 					                AllowCustomText="false">
 					                <ExpandAnimation Type="None" />
@@ -3443,28 +3455,23 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
 
 
         function AdviseBank_OnClientSelectedIndexChanged() {
-            var comboRevivingBank = $find("<%= comboRevivingBank.ClientID %>"),
-                txtRemittingBankNo = $find("<%= txtRemittingBankNo.ClientID %>"),
+            var txtRevivingBank700 = $find("<%= txtRevivingBank700.ClientID %>"),
                 rcbAdviseBankNo = $find("<%=rcbAdviseBankNo.ClientID %>");
 
-            if (comboRevivingBank) {
-                comboRevivingBank.set_text(rcbAdviseBankNo.get_selectedItem().get_text());
-                comboRevivingBank.set_value(rcbAdviseBankNo.get_value());
+            if (txtRevivingBank700) {
+                txtRevivingBank700.set_value(rcbAdviseBankNo.get_value());
+                txtRevivingBank700.set_textBoxValue(rcbAdviseBankNo.get_value());
+                txtRevivingBank700.set_displayValue(rcbAdviseBankNo.get_value());
             }
 
-            //if (txtRemittingBankNo) {
-            //    txtRemittingBankNo.set_value(rcbAdviseBankNo.get_value());
-            //}
-
-            $find("<%= tbAdviseBankName.ClientID %>").set_value(rcbAdviseBankNo.get_selectedItem().get_attributes().getAttribute("BankName"))
+            $find("<%= tbAdviseBankName.ClientID %>").set_value(rcbAdviseBankNo.get_selectedItem().get_attributes().getAttribute("BankName"));
         }
         
         function rcbReimbBankNo_OnClientSelectedIndexChanged() {
             var rcbReimbBankNo = $find("<%= rcbReimbBankNo.ClientID %>"),
                 tbReimbBankName = $find("<%= tbReimbBankName.ClientID %>"),
                 rcbReimbBankNo700 = $find("<%= rcbReimbBankNo700.ClientID %>"),
-                tbReimbBankName700 = $find("<%= tbReimbBankName700.ClientID %>"),
-                comboRevivingBank = $find("<%= comboRevivingBank.ClientID %>"),
+                tbReimbBankName700 = $find("<%= tbReimbBankName700.ClientID %>"),                
                 txtRemittingBankNo = $find("<%= txtRemittingBankNo.ClientID %>"),
                 lblReceivingBank_747 = $find("<%= txtReceivingBank_747.ClientID %>"),
                 comboReimbBankNo_747 = $find("<%= comboReimbBankNo_747.ClientID %>"),
@@ -3477,6 +3484,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
                 tbReimbBankName700.set_value(rcbReimbBankNo.get_selectedItem().get_attributes().getAttribute("BankName"));
             }
             
+            //comboRevivingBank = $find(""),
             //if (comboRevivingBank) {
             //    comboRevivingBank.set_text(rcbReimbBankNo.get_selectedItem().get_text());
             //    comboRevivingBank.set_value(rcbReimbBankNo.get_value());

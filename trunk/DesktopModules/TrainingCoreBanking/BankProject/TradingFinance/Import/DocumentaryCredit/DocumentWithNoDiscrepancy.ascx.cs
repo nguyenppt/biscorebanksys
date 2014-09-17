@@ -266,7 +266,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     }                    
                     break;
 
-                case bc.Commands.Authozize:
+                case bc.Commands.Authorize:
                     bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.AUT, TabId, UserId);
                     Response.Redirect("Default.aspx?tabid=" + TabId);
                     break;
