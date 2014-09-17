@@ -34,14 +34,14 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("P_CashWithrawalForBuyingTCUpdate", TransID, Account, Currency, ExchangeRate, AmtLCY, AmtFCY, CurrencyPaid, DealRate, AmtPaidToCust, TellerID, WaiveCharges, Narrative, UserCreate);
         }
 
-        public static DataTable CashWithrawalForBuyingTCList(string CustomerID, string CustomerName)
+        public static DataTable CashWithrawalForBuyingTCList(string Status, string CustomerID, string CustomerName)
         {
-            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCDetailOrList", null, CustomerID, CustomerName).Tables[0];
+            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCDetailOrList", Status, null, CustomerID, CustomerName).Tables[0];
         }
 
         public static DataTable CashWithrawalForBuyingTCDetail(string TransID)
         {
-            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCDetailOrList", TransID, null, null).Tables[0];
+            return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCDetailOrList", null, TransID, null, null).Tables[0];
         }
 
         public static void UpdateCashWithrawalForBuyingTC(string TransID, string Status)
@@ -57,6 +57,10 @@ namespace BankProject.DataProvider
 			AmountDebited, ExchangeRate, Narrative, UserCreate);
         }
         //get detail or list
+        public static DataTable SellTravellersChequeDetailOrList(string Status)
+        {
+            return SellTravellersChequeDetailOrList(null, Status, null, null, null);
+        }
         public static DataTable SellTravellersChequeDetailOrList(string TTNo, string Status)
         {
             return SellTravellersChequeDetailOrList(TTNo, Status, null, null, null);
