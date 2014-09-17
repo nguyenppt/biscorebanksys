@@ -10,9 +10,9 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("P_ImportDocumentProcessingReject", LCCcode, UserExecute, RejectStatus, RejectDrawType);
         }
 
-        public static DataTable GetDocForPayment(string LCCcode)
+        public static DataTable GetDocForPayment(string DocCode)
         {
-            return sqldata.ndkExecuteDataset("P_ImportLCGetDocForPayment", LCCcode).Tables[0];
+            return sqldata.ndkExecuteDataset("P_ImportLCGetDocForPayment", DocCode).Tables[0];
         }
 
         public static DataTable GetDepositAccount(string CustomerID, string Currency)
@@ -30,11 +30,11 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("P_ImportLCPaymentDetail", LCCode, PaymentId);
         }
 
-        public static DataTable ImportLCPaymentUpdate(long PaymentId, long DocId, string LCCode, string DrawType, double? DrawingAmount, string Currency, string DepositAccount, double? ExchangeRate, double? AmtDRFrAcctCcy, double? ProvAmtRelease,
+        public static DataTable ImportLCPaymentUpdate(long PaymentId, string LCCode, string DrawType, double? DrawingAmount, string Currency, string DepositAccount, double? ExchangeRate, double? AmtDRFrAcctCcy, double? ProvAmtRelease,
                 string ProvCoverAcct, double? ProvExchangeRate, double? CoverAmount, string PaymentMethod, string NostroAcct, double? AmountCredited, string PaymentRemarks, string FullyUtilised, string WaiveCharges,
                 string ChargeRemarks, string VATNo, string UserExecute)
         {
-            return sqldata.ndkExecuteDataset("P_ImportLCPaymentUpdate", PaymentId, DocId, LCCode, DrawType, DrawingAmount, Currency, DepositAccount, ExchangeRate, AmtDRFrAcctCcy, ProvAmtRelease,
+            return sqldata.ndkExecuteDataset("P_ImportLCPaymentUpdate", PaymentId, LCCode, DrawType, DrawingAmount, Currency, DepositAccount, ExchangeRate, AmtDRFrAcctCcy, ProvAmtRelease,
                 ProvCoverAcct, ProvExchangeRate, CoverAmount, PaymentMethod, NostroAcct, AmountCredited, PaymentRemarks, FullyUtilised, 
                 WaiveCharges, ChargeRemarks, VATNo, UserExecute).Tables[0];
         }
@@ -66,6 +66,21 @@ namespace BankProject.DataProvider
             if (tDetail == null || tDetail.Rows.Count <= 0) return null;
 
             return tDetail.Rows[0]["SoTT"].ToString();
+        }
+
+        public static DataSet ImportLCDocsProcessDetail(string LCCode, string DocCode)
+        {
+            return sqldata.ndkExecuteDataset("P_ImportLCDocsProcessDetail", LCCode, DocCode);
+        }
+
+        public static DataTable ImportLCDetailForDocProcess(string LCCode)
+        {
+            return sqldata.ndkExecuteDataset("P_ImportLCDetailForDocProcess", LCCode).Tables[0];
+        }
+
+        public static DataTable ImportLCDocsList(string Status, int TabId)
+        {
+            return sqldata.ndkExecuteDataset("P_ImportLCDocsList", Status, TabId).Tables[0];
         }
     }
 }
