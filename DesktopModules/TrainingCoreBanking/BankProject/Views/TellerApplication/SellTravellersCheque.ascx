@@ -149,8 +149,6 @@
             </tr>
         </table>
         <hr />
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-            <ContentTemplate>
         <table width="100%" cellpadding="0" cellspacing="0">
              <tr>
                 <td class="MyLable">TC Currency
@@ -187,17 +185,15 @@
         <tr>
                 <td class="MyLable">Debit Account</td>
                 <td class="MyContent" style="width:350px;" >
-                    <telerik:RadAjaxPanel ID="RadAjaxPanelDebitAcc" runat="server" OnAjaxRequest="RadAjaxPanelDebitAcc_AjaxRequest"><telerik:RadComboBox ID="rcbDebitAccount"
+                    <telerik:RadComboBox ID="rcbDebitAccount"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
                         runat="server" Width="350" ValidationGroup="Commit" >
-                    </telerik:RadComboBox></telerik:RadAjaxPanel>
+                    </telerik:RadComboBox>
                 </td>
              <td>&nbsp;</td>
             </tr>
         </table>
-            </ContentTemplate>
-            </asp:UpdatePanel>
          <table width="100%" cellpadding="0" cellspacing="0">
             
             <tr>
@@ -237,7 +233,6 @@
                     <telerik:RadComboBox ID="rcbCrAccount"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
-                        OnClientSelectedIndexChanged="rcbCrAccount_SelectedIndexChanged"
                         Width="160"
                         runat="server" >
                         <Items>
@@ -274,7 +269,7 @@
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Narrative</td>
-                <td class="MyContent"><telerik:RadTextBox ID="txtNarrative" runat="server" MaxLength="35" /><%if (RadToolBar1.FindItemByValue("btCommitData").Enabled){ %><a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png"></a><%}else {Response.Write("&nbsp;");} %></td>
+                <td class="MyContent"><telerik:RadTextBox ID="txtNarrative" runat="server" MaxLength="35" /><a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
             </tr>
         </table>
     </div>
@@ -328,8 +323,6 @@
         </table>
     </div>
 </div>
-<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" />
-</telerik:RadAjaxLoadingPanel>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
 <script type="text/javascript">
     $(document).ready(
@@ -379,18 +372,12 @@
 
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
-        var ttNo = $('#<%= txtId.ClientID%>').val();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            if (ttNo == null || ttNo == '') {                
-                alert('TTNo require !');
-                return;
-            }
-            window.location = 'Default.aspx?tabid=<%=this.TabId.ToString()%>&ttno=' + ttNo;
+            window.location = '<%=EditUrl("SellTravellersSchequeList")%>&lst=4appr';
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
             window.location = '<%=EditUrl("SellTravellersSchequeList")%>';
         }
-
     }
 
     var lastClickedItem = null;
@@ -415,7 +402,7 @@
     $("#<%=txtId.ClientID%>")
         .keypress(function (event) {
             if (event.which == 13) {
-                $find('<%=RadToolBar1.ClientID%>').findItemByValue("btPreview").click();
+                window.location = 'Default.aspx?tabid=<%=this.TabId%>&tid=' + $('#<%=txtId.ClientID%>').val();
             }
         });
 
@@ -425,7 +412,7 @@
 
     function loadDebitAccount() {
         //alert('loadDebitAccount');
-        $find("<%= RadAjaxPanelDebitAcc.ClientID%>").ajaxRequestWithTarget("<%= RadAjaxPanelDebitAcc.UniqueID %>", "loadDebitAcc");
+        $("#<%= btLoadDebitAccount.ClientID%>").click();
     }
 
     function cmbTCCurrency_SelectedIndexChanged() {
@@ -484,3 +471,22 @@
     }
   </script>
 </telerik:RadCodeBlock>
+<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" />
+</telerik:RadAjaxLoadingPanel>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
+    <AjaxSettings>        
+        <telerik:AjaxSetting AjaxControlID="btLoadDebitAccount">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbDebitAccount" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+    </AjaxSettings>
+    <AjaxSettings>        
+        <telerik:AjaxSetting AjaxControlID="cmbTCCurrency">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbDebitAccount" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+    </AjaxSettings>
+</telerik:RadAjaxManager>
+<div style="visibility: hidden;"><asp:Button ID="btLoadDebitAccount" runat="server" OnClick="btLoadDebitAccount_Click" Text="Search" /></div>

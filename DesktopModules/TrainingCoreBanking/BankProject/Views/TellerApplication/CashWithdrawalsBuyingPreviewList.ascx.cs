@@ -13,9 +13,10 @@ namespace BankProject.Views.TellerApplication
 {
     public partial class CashWithdrawalsBuyingPreviewList : DotNetNuke.Entities.Modules.PortalModuleBase
     {
+        protected string lstType = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lstType = Request.QueryString["lst"];
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -32,10 +33,15 @@ namespace BankProject.Views.TellerApplication
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (IsPostBack)
-            {
-                radGridReview.DataSource = BankProject.DataProvider.Teller.CashWithrawalForBuyingTCList(txtCustomerId.Text, txtCustomerName.Text);
-            }
+            if (string.IsNullOrEmpty(lstType))
+                radGridReview.DataSource = BankProject.DataProvider.Teller.CashWithrawalForBuyingTCList(null, txtCustomerId.Text, txtCustomerName.Text);
+            else
+                radGridReview.DataSource = BankProject.DataProvider.Teller.CashWithrawalForBuyingTCList(bd.TransactionStatus.UNA, txtCustomerId.Text, txtCustomerName.Text);
+        }
+
+        public string GenerateEnquiryButtons(string TTNo)
+        {
+            return "<a href=\"Default.aspx?tabid=" + this.TabId + "&amp;tid=" + TTNo + "&amp;lst=" + lstType + "\"><img src=\"Icons/bank/text_preview.png\" alt=\"\" title=\"\" style=\"\" width=\"20\"> </a>";
         }
     }
 }
