@@ -33,6 +33,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 //Hiển thị thông tin docs
                 DataRow drDetail = dsDetail.Tables[0].Rows[0];
                 loadDocsDetail(drDetail);
+                //mặc định là preview
+                bc.Commont.SetTatusFormControls(this.Controls, false);
                 switch (this.TabId)
                 {
                     case TabDocsWithDiscrepancies:
@@ -53,20 +55,29 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                     RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                                     RadToolBar1.FindItemByValue("btReverse").Enabled = true;
                                     RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                                    bc.Commont.SetTatusFormControls(this.Controls, false);
                                     break;  
                                 default:
                                     lblError.Text = "Wrong status (" + drDetail["Status"] + ")";
                                     break;
                             }
                             return;
-                        }
-                        //mặc định là preview
-                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        }                        
                         break;
                     case TabDocsReject:
                     case TabDocsAmend:
                     case TabDocsAccept:
+                        if (this.TabId == TabDocsReject)
+                            comboDrawType.SelectedValue = "CR";
+                        else if (this.TabId == TabDocsAccept)
+                            comboDrawType.SelectedValue = "AC";
+                        if (!string.IsNullOrEmpty(Request.QueryString["lst"]))
+                        {
+                            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                        }
                         break;
                 }
             }
