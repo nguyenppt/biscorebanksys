@@ -24,7 +24,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         return ExportDocumentaryScreenType.Cancel;
                     case 227:
                         return ExportDocumentaryScreenType.RegisterCc;
-                    case 362:
+                    case 377:
                         return ExportDocumentaryScreenType.Acception;
                     default:
                         return ExportDocumentaryScreenType.Register;
