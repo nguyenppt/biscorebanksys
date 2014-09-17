@@ -17,27 +17,21 @@ namespace BankProject.TellerApplication.SignatureManagement
         {
             if (IsPostBack) return;
             //
+            bc.Commont.SetTatusFormControls(this.Controls, false);
+            txtCustomerId.Enabled = true;
             txtCustomerId.Text = Request.QueryString["tid"];
             if (String.IsNullOrEmpty(txtCustomerId.Text)) return;
             //
             txtCustomerIdOld.Value = txtCustomerId.Text;
-            DataTable tDetail = bd.Customer.SignatureDetail(txtCustomerId.Text);
-            if (tDetail == null || tDetail.Rows.Count <= 0)
+            if (loadSignature())
             {
-                lblCustomerName.Text = "This Customer does not exist.";
-                return;
-            }
-            //
-            DataRow dr = tDetail.Rows[0];
-            txtCustomerId.Enabled = false;
-            lblCustomerName.Text = dr["CustomerName"].ToString();
-            imgSignatureOld.ImageUrl = "~/" + bd.Customer.SignaturePath + "/" + dr["Signatures"];
-            lnkSignatureOld.NavigateUrl = imgSignatureOld.ImageUrl;
-            //
-            if (dr["Status"].ToString().Equals(bd.TransactionStatus.UNA))
-            {
-                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                txtCustomerId.Enabled = false;
+                RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
+                {
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                    RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                }
             }
         }
 
@@ -93,6 +87,32 @@ namespace BankProject.TellerApplication.SignatureManagement
                     }
                     break;
             }            
+        }
+
+        protected void btSearch_Click(object sender, EventArgs e)
+        {
+            if (loadSignature())
+            {
+                txtCustomerId.Enabled = false;
+                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+            }
+        }
+
+        private bool loadSignature()
+        {
+            DataTable tDetail = bd.Customer.SignatureDetail(txtCustomerId.Text);
+            if (tDetail == null || tDetail.Rows.Count <= 0)
+            {
+                lblCustomerName.Text = "This Customer does not exist.";
+                return false;
+            }
+            //
+            DataRow dr = tDetail.Rows[0];            
+            lblCustomerName.Text = dr["CustomerName"].ToString();
+            imgSignatureOld.ImageUrl = "~/" + bd.Customer.SignaturePath + "/" + dr["Signatures"];
+            lnkSignatureOld.NavigateUrl = imgSignatureOld.ImageUrl;
+
+            return true;
         }
     }
 }

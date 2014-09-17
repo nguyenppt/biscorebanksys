@@ -18,10 +18,10 @@
          OnClientButtonClicking="OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png"
-            ToolTip="Commit Data" Value="btCommitData" CommandName="commit" ValidationGroup="Commit">
+            ToolTip="Commit Data" Value="btCommitData" CommandName="commit" ValidationGroup="Commit" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false" Enabled="false">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
             ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
@@ -30,7 +30,7 @@
             ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search" Enabled="false">
+            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false">
         </telerik:RadToolBarButton>
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
             ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" Enabled="false">
@@ -64,7 +64,7 @@
         }
         if (objCust.val() != objCustOld.val()) {
             objCustOld.val(objCust.val());
-            window.location = "Default.aspx?tabid=288&tid=" + objCust.val();
+            $("#<%=btSearch.ClientID%>").click();
         }
     }
     function OnClientButtonClicking(sender, args) {
@@ -73,7 +73,7 @@
             //do nothing
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            loadInfo();
+            window.location = "Default.aspx?tabid=286&lst=4appr";
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
             window.location = "Default.aspx?tabid=286";
@@ -143,3 +143,4 @@
             return (fileTypes.indexOf(fileExt) >= 0);
         }
 </script>
+<div style="visibility: hidden;"><asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" /></div>
