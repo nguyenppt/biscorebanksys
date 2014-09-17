@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BankProject.DataProvider;
+using bd = BankProject.DataProvider;
 using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 
@@ -12,19 +12,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 {
     public partial class Preview_DocumentProcessing : PortalModuleBase
     {
+        protected string lstType = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lstType = Request.QueryString["lst"];
         }
 
         public string geturlReview(string id)
         {
-            return "Default.aspx?tabid=" + TabId.ToString() + "&paycode=" + id + "&disable=1";
+            return "Default.aspx?tabid=" + TabId.ToString() + "&tid=" + id + "&lst=" + lstType;
         }
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            radGridReview.DataSource = SQLData.B_BIMPORT_DOCUMENTPROCESSING_GetByReview(TabId ,UserId);
+            string Status = null;
+            if (!string.IsNullOrEmpty(lstType)) Status = bd.TransactionStatus.UNA;
+            radGridReview.DataSource = bd.IssueLC.ImportLCDocsList(Status, this.TabId);
         }
     }
 }

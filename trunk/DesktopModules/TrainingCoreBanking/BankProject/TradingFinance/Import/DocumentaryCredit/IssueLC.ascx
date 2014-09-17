@@ -505,7 +505,8 @@
                 <tr>
                     <td class="MyLable">11.1 Beneficiary No.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryNo" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryNo_OnValueChanged"/>
+                        <telerik:RadTextBox ID="txtBeneficiaryNo" runat="server" Width="355" MaxLength="34"
+                            ClientEvents-OnValueChanged="txtBeneficiaryNo_OnValueChanged"/>
                     </td>
                 </tr>
             </table>
@@ -514,28 +515,32 @@
                 <tr>
                     <td class="MyLable">11.2 Beneficiary Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryBankName" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryBankName_OnValueChanged"/>
+                        <telerik:RadTextBox ID="txtBeneficiaryBankName" runat="server" Width="355" MaxLength="35"
+                            ClientEvents-OnValueChanged="txtBeneficiaryBankName_OnValueChanged"/>
                     </td>
                 </tr>
                 
                 <tr>
                     <td class="MyLable">11.3 Beneficiary Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr1" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryBankAddr1_OnValueChanged"/>
+                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr1" runat="server" Width="355" MaxLength="35"
+                            ClientEvents-OnValueChanged="txtBeneficiaryBankAddr1_OnValueChanged"/>
                     </td>
                 </tr>
                 
                 <tr>
                     <td class="MyLable">11.4 Beneficiary Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr2" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryBankAddr2_OnValueChanged" />
+                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr2" runat="server" Width="355" MaxLength="35"
+                            ClientEvents-OnValueChanged="txtBeneficiaryBankAddr2_OnValueChanged" />
                     </td>
                 </tr>
                 
                 <tr>
                     <td class="MyLable">11.5 Beneficiary Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr3" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryBankAddr3_OnValueChanged" />
+                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr3" runat="server" Width="355" MaxLength="35"
+                            ClientEvents-OnValueChanged="txtBeneficiaryBankAddr3_OnValueChanged" />
                     </td>
                 </tr>
             </table>
@@ -554,9 +559,8 @@
                             ID="rcbAdviseBankNo"
                             Runat="server" 
                             AppendDataBoundItems="true"
-                            AutoPostBack="True"
-                            OnSelectedIndexChanged="rcbAdviseBankNo_OnSelectedIndexChanged"
                             OnItemDataBound="SwiftCode_ItemDataBound"  
+                            OnClientSelectedIndexChanged="AdviseBank_OnClientSelectedIndexChanged"
                             MarkFirstMatch="True"
                             Width="355"
                             Height="150"
@@ -606,6 +610,7 @@
                         <telerik:RadComboBox 
                             AutoPostBack="True"
                             OnSelectedIndexChanged="comboReimbBankType_OnSelectedIndexChanged"
+                            OnClientSelectedIndexChanged="comboReimbBankType_OnClientSelectedIndexChanged"
                             ID="comboReimbBankType" runat="server"
                             MarkFirstMatch="True"
                             AllowCustomText="false">
@@ -614,6 +619,7 @@
                                 <telerik:RadComboBoxItem Value="B" Text="B" />
                                 <telerik:RadComboBoxItem Value="D" Text="D" />
                             </Items>
+                            
                         </telerik:RadComboBox>
                     </td>
                 </tr>
@@ -631,7 +637,8 @@
                         MarkFirstMatch="True"
                         Width="355"
                         Height="150"
-                        AllowCustomText="false" OnClientSelectedIndexChanged="rcbReimbBankNo_OnClientSelectedIndexChanged">
+                        AllowCustomText="false" 
+                        OnClientSelectedIndexChanged="rcbReimbBankNo_OnClientSelectedIndexChanged">
                         <ExpandAnimation Type="None" />
                         <CollapseAnimation Type="None"  />
                         <Items>
@@ -782,11 +789,8 @@
                             <ExpandAnimation Type="None" />
                             <CollapseAnimation Type="None" />
                             <HeaderTemplate>
-                                <table style="width:250px" cellpadding="0" cellspacing="0"> 
-                                  <tr> 
-                                     <td style="width:60px;"> 
-                                        ID 
-                                     </td> 
+                                <table style="width:250px; display:none;" cellpadding="0" cellspacing="0"> 
+                                  <tr>
                                      <td style="width:200px;"> 
                                         Name
                                      </td> 
@@ -795,10 +799,7 @@
                            </HeaderTemplate>
                             <ItemTemplate>
                                 <table style="width:250px"  cellpadding="0" cellspacing="0"> 
-                                    <tr> 
-                                        <td style="width:60px;"> 
-                                        <%# DataBinder.Eval(Container.DataItem, "ID")%> 
-                                        </td> 
+                                    <tr>
                                         <td style="width:200px;"> 
                                         <%# DataBinder.Eval(Container.DataItem, "Name")%> 
                                         </td> 
@@ -1003,17 +1004,7 @@
                 <tr>
                     <td style="width: 250px" class="MyLable">50.1 Applicant</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox 
-                            AppendDataBoundItems="True"   
-                            AutoPostBack="true" 
-                            OnSelectedIndexChanged="rcbApplicant700_SelectIndexChange"
-                            OnItemDataBound="rcbApplicantID_ItemDataBound"
-                            ID="rcbApplicant700" Runat="server"
-                            MarkFirstMatch="True" Width="355"
-                            AllowCustomText="false" >
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                        </telerik:RadComboBox>
+                        <telerik:RadTextBox ID="tbApplicantNo700" runat="server" Width="355" />
                     </td>
                 </tr>
             </table>
@@ -2105,7 +2096,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
-                    <td style="width: 250px" class="MyLable">71A. Reimbursing Bank's Changes</td>
+                    <td style="width: 250px" class="MyLable">71A. Reimbursing Bank's Charges</td>
                     <td class="MyContent">
                         <telerik:RadComboBox width="200"
                             ID="comboReimbursingBankChange" Runat="server"
@@ -3434,35 +3425,38 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             var numPercentCreditAmount2 = $find("<%= numPercentCreditAmount2.ClientID %>"),
                 numPercentageCreditAmountTolerance740_2 = $find("<%= numPercentageCreditAmountTolerance740_2.ClientID %>"),
                 numPercentageCreditAmountTolerance_707_2 = $find("<%= numPercentageCreditAmountTolerance_707_2.ClientID %>"),
-                crToleranceVal = $find('<%=tbcrTolerance.ClientID %>').get_value();
+                tbdrTolerance = $find('<%=tbdrTolerance.ClientID %>').get_value();
             
             if (numPercentCreditAmount2)
             {
-                numPercentCreditAmount2.set_value(crToleranceVal);
+                numPercentCreditAmount2.set_value(tbdrTolerance);
             }
             
             if (numPercentageCreditAmountTolerance740_2) {
-                numPercentageCreditAmountTolerance740_2.set_value(crToleranceVal);
+                numPercentageCreditAmountTolerance740_2.set_value(tbdrTolerance);
             }
             
             if (numPercentageCreditAmountTolerance_707_2) {
-                numPercentageCreditAmountTolerance_707_2.set_value(crToleranceVal);
+                numPercentageCreditAmountTolerance_707_2.set_value(tbdrTolerance);
             }
         }
 
 
         function AdviseBank_OnClientSelectedIndexChanged() {
             var comboRevivingBank = $find("<%= comboRevivingBank.ClientID %>"),
-                txtRemittingBankNo = $find("<%= txtRemittingBankNo.ClientID %>");
+                txtRemittingBankNo = $find("<%= txtRemittingBankNo.ClientID %>"),
+                rcbAdviseBankNo = $find("<%=rcbAdviseBankNo.ClientID %>");
 
             if (comboRevivingBank) {
-                comboRevivingBank.set_text($find("<%=rcbAdviseBankNo.ClientID %>").get_selectedItem().get_text());
-                comboRevivingBank.set_value($find("<%=rcbAdviseBankNo.ClientID %>").get_value());
+                comboRevivingBank.set_text(rcbAdviseBankNo.get_selectedItem().get_text());
+                comboRevivingBank.set_value(rcbAdviseBankNo.get_value());
             }
 
-            if (txtRemittingBankNo) {
-                txtRemittingBankNo.set_value($find("<%=rcbAdviseBankNo.ClientID %>").get_value());
-            }
+            //if (txtRemittingBankNo) {
+            //    txtRemittingBankNo.set_value(rcbAdviseBankNo.get_value());
+            //}
+
+            $find("<%= tbAdviseBankName.ClientID %>").set_value(rcbAdviseBankNo.get_selectedItem().get_attributes().getAttribute("BankName"))
         }
         
         function rcbReimbBankNo_OnClientSelectedIndexChanged() {
@@ -3483,10 +3477,10 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
                 tbReimbBankName700.set_value(rcbReimbBankNo.get_selectedItem().get_attributes().getAttribute("BankName"));
             }
             
-            if (comboRevivingBank) {
-                comboRevivingBank.set_text(rcbReimbBankNo.get_selectedItem().get_text());
-                comboRevivingBank.set_value(rcbReimbBankNo.get_value());
-            }
+            //if (comboRevivingBank) {
+            //    comboRevivingBank.set_text(rcbReimbBankNo.get_selectedItem().get_text());
+            //    comboRevivingBank.set_value(rcbReimbBankNo.get_value());
+            //}
 
             if (txtRemittingBankNo) {
                 txtRemittingBankNo.set_value(rcbReimbBankNo.get_value());
@@ -3517,7 +3511,8 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
         function txtBeneficiaryBankAddr1_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_1 = $find('<%=txtBeneficiaryAddr700_1.ClientID %>');
             var txtBeneficiaryBankAddr1 = $find('<%=txtBeneficiaryBankAddr1.ClientID %>'),
-                txtBeneficiaryAddr_707_1 = $find('<%=txtBeneficiaryAddr_707_1.ClientID %>');
+                txtBeneficiaryAddr_707_1 = $find('<%=txtBeneficiaryAddr_707_1.ClientID %>'),
+                tbApplicantAddr700_1 = $find('<%=tbApplicantAddr700_1.ClientID %>');
 
             if (txtBeneficiaryAddr700_1) {
                 txtBeneficiaryAddr700_1.set_value(txtBeneficiaryBankAddr1.get_value());
@@ -3526,12 +3521,17 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             if (txtBeneficiaryAddr_707_1) {
                 txtBeneficiaryAddr_707_1.set_value(txtBeneficiaryBankAddr1.get_value());
             }
+
+            if (tbApplicantAddr700_1) {
+                tbApplicantAddr700_1.set_value(txtBeneficiaryBankAddr1.get_value());
+            }
         }
         
         function txtBeneficiaryBankAddr2_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_2 = $find('<%=txtBeneficiaryAddr700_2.ClientID %>');
             var txtBeneficiaryBankAddr2 = $find('<%=txtBeneficiaryBankAddr2.ClientID %>'),
-                txtBeneficiaryAddr_707_2 = $find('<%=txtBeneficiaryAddr_707_2.ClientID %>');
+                txtBeneficiaryAddr_707_2 = $find('<%=txtBeneficiaryAddr_707_2.ClientID %>'),
+                tbApplicantAddr700_2 = $find('<%=tbApplicantAddr700_2.ClientID %>');
 
             if (txtBeneficiaryAddr700_2) {
                 txtBeneficiaryAddr700_2.set_value(txtBeneficiaryBankAddr2.get_value());
@@ -3540,12 +3540,17 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             if (txtBeneficiaryAddr_707_2) {
                 txtBeneficiaryAddr_707_2.set_value(txtBeneficiaryBankAddr2.get_value());
             }
+
+            if (tbApplicantAddr700_2) {
+                tbApplicantAddr700_2.set_value(txtBeneficiaryBankAddr2.get_value());
+            }
         }
         
         function txtBeneficiaryBankAddr3_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_3 = $find('<%=txtBeneficiaryAddr700_3.ClientID %>');
             var txtBeneficiaryBankAddr3 = $find('<%=txtBeneficiaryBankAddr3.ClientID %>'),
-                txtBeneficiaryAddr_707_3 = $find('<%=txtBeneficiaryAddr_707_3.ClientID %>');
+                txtBeneficiaryAddr_707_3 = $find('<%=txtBeneficiaryAddr_707_3.ClientID %>'),
+                tbApplicantAddr700_3 = $find('<%=tbApplicantAddr700_3.ClientID %>');
 
             if (txtBeneficiaryAddr700_3) {
                 txtBeneficiaryAddr700_3.set_value(txtBeneficiaryBankAddr3.get_value());
@@ -3554,12 +3559,17 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             if (txtBeneficiaryAddr_707_3) {
                 txtBeneficiaryAddr_707_3.set_value(txtBeneficiaryBankAddr3.get_value());
             }
+
+            if (tbApplicantAddr700_3) {
+                tbApplicantAddr700_3.set_value(txtBeneficiaryBankAddr3.get_value());
+            }
         }
         
         function txtBeneficiaryBankName_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryName700 = $find('<%=txtBeneficiaryName700.ClientID %>');
             var txtBeneficiaryBankName = $find('<%=txtBeneficiaryBankName.ClientID %>'),
-                txtBeneficiaryName_707 = $find('<%=txtBeneficiaryName_707.ClientID %>');
+                txtBeneficiaryName_707 = $find('<%=txtBeneficiaryName_707.ClientID %>'),
+                tbApplicantName700 = $find('<%=tbApplicantName700.ClientID %>');
 
             if (txtBeneficiaryName700) {
                 txtBeneficiaryName700.set_value(txtBeneficiaryBankName.get_value());
@@ -3567,6 +3577,10 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             
             if (txtBeneficiaryName_707) {
                 txtBeneficiaryName_707.set_value(txtBeneficiaryBankName.get_value());
+            }
+
+            if (tbApplicantName700) {
+                tbApplicantName700.set_value(txtBeneficiaryBankName.get_value());
             }
         }
 
@@ -3624,28 +3638,12 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
         }
         
         function rcbApplicantID_OnClientSelectedIndexChanged() {
-            var rcbApplicantID = $find('<%=rcbApplicantID.ClientID %>'),
-                rcbApplicant700 = $find('<%=rcbApplicant700.ClientID %>'),
-                tbApplicantName700 = $find('<%=tbApplicantName700.ClientID %>'),
-                tbApplicantAddr700_1 = $find('<%=tbApplicantAddr700_1.ClientID %>'),
-                tbApplicantAddr700_2 = $find('<%=tbApplicantAddr700_2.ClientID %>'),
-                tbApplicantAddr700_3 = $find('<%=tbApplicantAddr700_3.ClientID %>'),
+            var rcbApplicantID = $find('<%=rcbApplicantID.ClientID %>'),                
                 
                 tbApplicantName = $find('<%=tbApplicantName.ClientID %>'),
                 tbApplicantAddr1 = $find('<%=tbApplicantAddr1.ClientID %>'),
                 tbApplicantAddr2 = $find('<%=tbApplicantAddr2.ClientID %>'),
-                tbApplicantAddr3 = $find('<%=tbApplicantAddr3.ClientID %>');
-            
-
-            if (rcbApplicant700) {
-                rcbApplicant700.set_text(rcbApplicantID.get_selectedItem().get_text());
-                rcbApplicant700.set_value(rcbApplicantID.get_value());
-                
-                tbApplicantName700.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("CustomerName"));
-                tbApplicantAddr700_1.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Address"));
-                tbApplicantAddr700_2.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("City"));
-                tbApplicantAddr700_3.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Country"));
-            }
+                tbApplicantAddr3 = $find('<%=tbApplicantAddr3.ClientID %>');                       
             
             if (tbApplicantName) {
                 tbApplicantName.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("CustomerName"));
@@ -3658,11 +3656,10 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
         function txtBeneficiaryNo_OnValueChanged() {
             var txtBeneficiaryNo = $find('<%=txtBeneficiaryNo.ClientID %>'),
                 bankCode = txtBeneficiaryNo.get_value(),
-                txtBeneficiaryNo700 = $find('<%=txtBeneficiaryNo700.ClientID %>'),
-                
-                tbBeneficiaryNo740 = $find('<%=tbBeneficiaryNo740.ClientID %>'),
-                
-                txtBeneficiaryNo_707 = $find('<%=txtBeneficiaryNo_707.ClientID %>');
+                txtBeneficiaryNo700 = $find('<%=txtBeneficiaryNo700.ClientID %>'),                
+                tbBeneficiaryNo740 = $find('<%=tbBeneficiaryNo740.ClientID %>'),                
+                txtBeneficiaryNo_707 = $find('<%=txtBeneficiaryNo_707.ClientID %>'),
+                tbApplicantNo700 = $find('<%=tbApplicantNo700.ClientID %>');
             
             if (txtBeneficiaryNo700) {
                 txtBeneficiaryNo700.set_value(bankCode);
@@ -3677,6 +3674,10 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             if (txtBeneficiaryNo_707) {
                 txtBeneficiaryNo_707.set_value(bankCode);
                 //txtBeneficiaryName_707.set_value(bankName);
+            }
+
+            if (tbApplicantNo700) {
+                tbApplicantNo700.set_value(bankCode);
             }
         }
         
@@ -3700,6 +3701,40 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             }
         }
 
+        function comboReimbBankType_OnClientSelectedIndexChanged () {
+            var comboReimbBankType = $find('<%=comboReimbBankType.ClientID %>'),
+                comboReimbBankType700 = $find('<%=comboReimbBankType700.ClientID %>'),
+                comboReimbBankType_747 = $find('<%=comboReimbBankType_747.ClientID %>');
+                
+
+            if (comboReimbBankType700) {
+                comboReimbBankType700.set_value(comboReimbBankType.get_value());
+                comboReimbBankType700.set_text(comboReimbBankType.get_selectedItem().get_text());
+
+                $find('<%=rcbReimbBankNo700.ClientID %>').set_value('');
+                $find('<%=rcbReimbBankNo700.ClientID %>').set_text('');
+
+                $find('<%=tbReimbBankName700.ClientID %>').set_value('');
+                $find('<%=tbReimbBankAddr700_1.ClientID %>').set_value('');
+                $find('<%=tbReimbBankAddr700_2.ClientID %>').set_value('');
+                $find('<%=tbReimbBankAddr700_3.ClientID %>').set_value('');
+            }
+
+            if (comboReimbBankType_747) {
+                comboReimbBankType_747.set_value(comboReimbBankType.get_value());
+                comboReimbBankType_747.set_text(comboReimbBankType.get_selectedItem().get_text());
+
+                $find('<%=comboReimbBankNo_747.ClientID %>').set_value('');
+                $find('<%=comboReimbBankNo_747.ClientID %>').set_text('');
+
+                $find('<%=txtReimbBankName_747.ClientID %>').set_value('');
+                $find('<%=txtReimbBankAddr_747_1.ClientID %>').set_value('');
+                $find('<%=txtReimbBankAddr_747_2.ClientID %>').set_value('');
+                $find('<%=txtReimbBankAddr_747_3.ClientID %>').set_value('');
+            }
+
+        }
+
     </script>
 </telerik:RadCodeBlock>
 
@@ -3717,12 +3752,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
                 <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr3" />
-                
-                <telerik:AjaxUpdatedControl ControlID="rcbApplicant700" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantName700" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr700_1" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr700_2" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr700_3" />
+  
             </UpdatedControls>
         </telerik:AjaxSetting>
         
@@ -3781,12 +3811,12 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
             </UpdatedControls>
         </telerik:AjaxSetting>
         
-        <telerik:AjaxSetting AjaxControlID="rcbAdviseBankNo">
+       <%-- <telerik:AjaxSetting AjaxControlID="rcbAdviseBankNo">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="tbAdviseBankName" />
                 
             </UpdatedControls>
-        </telerik:AjaxSetting>
+        </telerik:AjaxSetting>--%>
         
         <telerik:AjaxSetting AjaxControlID="tbReimbBankName">
             <UpdatedControls>
@@ -3820,16 +3850,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
         
         <telerik:AjaxSetting AjaxControlID="rcbApplicantBankType700">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="rcbApplicant700" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantName700" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr700_1" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr700_2" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr700_3" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
-        
-        <telerik:AjaxSetting AjaxControlID="rcbApplicant700">
-            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbApplicantNo700" />
                 <telerik:AjaxUpdatedControl ControlID="tbApplicantName700" />
                 <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr700_1" />
                 <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr700_2" />
@@ -3977,20 +3998,6 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr3" />
-                
-                <telerik:AjaxUpdatedControl ControlID="comboReimbBankType700" />
-                <telerik:AjaxUpdatedControl ControlID="rcbReimbBankNo700" />
-                <telerik:AjaxUpdatedControl ControlID="tbReimbBankName700" />
-                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_1" />
-                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_2" />
-                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_3" />
-                
-                <telerik:AjaxUpdatedControl ControlID="comboReimbBankType_747" />
-                <telerik:AjaxUpdatedControl ControlID="comboReimbBankNo_747" />
-                <telerik:AjaxUpdatedControl ControlID="txtReimbBankName_747" />
-                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_1" />
-                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_2" />
-                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         
@@ -4005,11 +4012,11 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
         </telerik:AjaxSetting>
         
         
-        <telerik:AjaxSetting AjaxControlID="comboAvailableRule">
+        <%--<telerik:AjaxSetting AjaxControlID="comboAvailableRule">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblApplicableRule740" />
             </UpdatedControls>
-        </telerik:AjaxSetting>
+        </telerik:AjaxSetting>--%>
         
         <telerik:AjaxSetting AjaxControlID="comboDraweeCusType">
             <UpdatedControls>

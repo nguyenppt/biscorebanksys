@@ -724,13 +724,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadComboBox rcbApplicantBankType700;
         
         /// <summary>
-        /// rcbApplicant700 control.
+        /// tbApplicantNo700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbApplicant700;
+        protected global::Telerik.Web.UI.RadTextBox tbApplicantNo700;
         
         /// <summary>
         /// tbApplicantName700 control.

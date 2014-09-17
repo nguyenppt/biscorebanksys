@@ -1,86 +1,73 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocumentWithNoDiscrepancy.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCredit.DocumentWithNoDiscrepancy" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
-
-<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true">
-          </telerik:RadWindowManager>
-<asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
-        ShowSummary="False" ValidationGroup="Commit" />
-
+<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
+<asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
-    <script type="text/javascript">
-        var tabId = <%= TabId %>;
-        
+    <script type="text/javascript">        
         jQuery(function ($) {
             $('#tabs-demo').dnnTabs();
         });
 
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
-            
-            if (button.get_commandName() == "print") {
-                args.set_cancel(true);
-
-                switch (tabId) {
-                    case 92:
-                        //radconfirm("Do you want to download MT700 file?", confirmCallbackFunction_IssueLC_MT700, 370, 150, null, 'Download');
-                        break;
-                }
+            //
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Preview%>') {
+                window.location = '<%=EditUrl("preview_nodiscrepancy")%>&lst=4appr';
+            }
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Search%>') {
+                window.location = '<%=EditUrl("preview_nodiscrepancy")%>';
+            }
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
+                alert('Function not define !');
             }
         }
         
     </script>
 </telerik:RadCodeBlock>
-
-
 <telerik:RadToolBar runat="server" ID="RadToolBar1" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking"
     EnableRoundedCorners="true" EnableShadows="true" width="100%" OnButtonClick="RadToolBar1_ButtonClick" >
         <Items>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
-            ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
+            ToolTip="Commit Data" Value="btCommitData" CommandName="commit" enabled="false">
             </telerik:RadToolBarButton>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-                ToolTip="Preview" Value="btPreview" CommandName="Preview">
+                ToolTip="Preview" Value="btPreview" CommandName="preview" postback="false" enabled="true">
             </telerik:RadToolBarButton>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
-                ToolTip="Authorize" Value="btAuthorize" CommandName="authorize">
+                ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" enabled="false">
             </telerik:RadToolBarButton>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/reverse.png"
-                ToolTip="Reverse" Value="btReverse" CommandName="reverse">
+                ToolTip="Reverse" Value="btReverse" CommandName="reverse" enabled="false">
             </telerik:RadToolBarButton>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-                ToolTip="Search" Value="btSearch" CommandName="search">
+                ToolTip="Search" Value="btSearch" CommandName="search" postback="false" enabled="true">
             </telerik:RadToolBarButton>
              <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-                ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
+                ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" postback="false" enabled="false">
             </telerik:RadToolBarButton>
         </Items>
-</telerik:RadToolBar>  
-
+</telerik:RadToolBar>
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width:200px; padding:5px 0 5px 20px;"><asp:TextBox ID="txtCode" runat="server" Width="200" />&nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" /></td>
     </tr>
 </table>
-
 <div class="dnnForm" id="tabs-demo">
     <telerik:RadCodeBlock ID="RadCodeBlock3" runat="server">
         <ul class="dnnAdminTabNav">
             <li><a href="#Main">Main</a></li>
-            <% if (TabId == 207) %>
+            <% if (TabId == TabDocsWithDiscrepancies) %>
                 <%{ %>
                 <li><a href="#tabMT734">MT734</a></li>
                 <li><a href="#tabCharge">Charge</a></li>
             <% }
-                else if (TabId == 208) %>
+               else if (TabId == TabDocsReject) %>
                     <%{%>
                         <li><a href="#tabCharge">Charge</a></li>
             <% } %>
         </ul>
-    </telerik:RadCodeBlock>
-    
-    <div id="Main" class="dnnClear">
-        
+    </telerik:RadCodeBlock>    
+    <div id="Main" class="dnnClear">        
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable" style="width: 180px">1. Draw Type</td>
@@ -93,8 +80,7 @@
                     </telerik:RadComboBox>
                 </td>
             </tr>
-        </table>
-        
+        </table>        
         <div runat="server" ID="divPresentorNo">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -180,7 +166,7 @@
         </table>
         
         <div runat="server" ID="divDocCode">
-        <div runat="server" ID="divDocsCode_INVL">
+        <div runat="server" ID="divDocsCode1">
         <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 180px">38.1 Docs Code</td>
@@ -216,9 +202,8 @@
                     </td>
                 </tr>
             </table>
-        </div>
-        
-        <div runat="server" ID="divDocsCode_BL">
+        </div>        
+        <div runat="server" ID="divDocsCode2">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 180px">41.1 Docs Code</td>
@@ -253,9 +238,8 @@
                     </td>
                 </tr>
             </table>
-        </div>
-        
-        <div runat="server" ID="divDocsCode_PL">
+        </div>        
+        <div runat="server" ID="divDocsCode3">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 180px">44.1 Docs Code</td>
@@ -300,14 +284,14 @@
                 </td>
             </tr>
             
-            <tr>
+            <tr style="display:none;">
                 <td class="MyLable">69.3.2 Other Docs</td>
                 <td class="MyContent">
                     <telerik:Radtextbox runat="server" ID="txtOtherDocs2" Width="355" />
                 </td>
             </tr>
             
-            <tr>
+            <tr style="display:none;">
                 <td class="MyLable">69.3.3 Other Docs</td>
                 <td class="MyContent">
                     <telerik:Radtextbox runat="server" ID="txtOtherDocs3" Width="355" />
@@ -316,7 +300,7 @@
         </table>
         </div>
 
-        <fieldset runat="server" ID="fieldsetDiscrepancies">
+        <fieldset runat="server" ID="fieldsetDiscrepancies" visible="false">
             <legend>
                 <div style="font-weight: bold; text-transform: uppercase;">Discrepancies and Disposal of Docs</div>
             </legend>
@@ -386,7 +370,7 @@
     </div>
     
    
-    <div id="tabMT734" class="dnnClear">
+    <div id="tabMT734" class="dnnClear" style="display:none;">
         <div runat="server" ID="divMT734">
             <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -502,7 +486,7 @@
         </div>
     </div>
        
-    <div id="tabCharge" class="dnnClear">
+    <div id="tabCharge" class="dnnClear" style="display:none;">
         <div runat="server" ID="divCharge">
             <asp:HiddenField ID="hiddenCustomerName" runat="server" />
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -734,7 +718,7 @@
                                 <td class="MyLable">Charge code</td>
                                 <td class="MyContent">
                                     <telerik:RadComboBox
-                                        ID="tbChargecode2" runat="server" 
+                                        ID="tbChargeCode2" runat="server" 
                                         MarkFirstMatch="True"
                                         AllowCustomText="false">
                                         <ExpandAnimation Type="None" />
@@ -917,7 +901,7 @@
 			                    <td class="MyLable">Charge code</td>
 			                    <td class="MyContent">
 				                    <telerik:RadComboBox
-					                    ID="tbChargecode3" runat="server" 
+					                    ID="tbChargeCode3" runat="server" 
 					                    MarkFirstMatch="True"
 					                    AllowCustomText="false">
 					                    <ExpandAnimation Type="None" />
@@ -1091,30 +1075,23 @@
 		                    </tr>
 	                    </table>
                     </div>
-                </telerik:RadPageView>
-           
+                </telerik:RadPageView>           
             </telerik:RadMultiPage>
         </div>
-    </div>
-       
+    </div>       
 </div>
-
-
 <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="AjaxLoadingPanel1">
-    <AjaxSettings>
-        
+    <AjaxSettings>        
         <telerik:AjaxSetting AjaxControlID="comboPresentorNo">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorName" />
             </UpdatedControls>
-        </telerik:AjaxSetting>
-        
+        </telerik:AjaxSetting>        
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
             </UpdatedControls>
-        </telerik:AjaxSetting>
-        
+        </telerik:AjaxSetting>        
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
@@ -1138,7 +1115,6 @@
 
     </AjaxSettings>
 </telerik:RadAjaxManager>
-
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
     <script type="text/javascript">
         $("#<%=txtCode.ClientID %>").keyup(function (event) {
@@ -1148,5 +1124,4 @@
         });
     </script>
 </telerik:RadCodeBlock>
-
 <div style="visibility: hidden;"><asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" /></div>

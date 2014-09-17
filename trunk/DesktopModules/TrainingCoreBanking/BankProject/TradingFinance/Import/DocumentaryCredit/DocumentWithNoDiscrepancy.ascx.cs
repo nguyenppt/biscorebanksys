@@ -10,126 +10,115 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 {
     public partial class DocumentWithNoDiscrepancy : PortalModuleBase
     {
-        private const int TabDocsWithNoDiscrepancies = 206;
-        private const int TabDocsWithDiscrepancies = 207;
-        private const int TabDocsReject = 208;
+        protected const int TabDocsWithNoDiscrepancies = 206;
+        protected const int TabDocsWithDiscrepancies = 207;
+        protected const int TabDocsReject = 208;
+        protected const int TabDocsAmend = 361;
+        protected const int TabDocsAccept = 210;
         //
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-
-            DataRow drowProcessing = null;
-
+            //
             InitDataSource();
-            SetDefaultValue();
-            GenerateVAT();
-            LoadToolBar(false);
-
-            if (!string.IsNullOrEmpty(Request.QueryString["paycode"]))
+            if (!string.IsNullOrEmpty(Request.QueryString["tid"]))
             {
-                txtCode.Text = Request.QueryString["paycode"];
-                LoadToolBar(true);
+                //Lấy chi tiết
+                DataSet dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, Request.QueryString["tid"]);
+                if (dsDetail == null || dsDetail.Tables.Count <= 0)
+                {
+                    lblError.Text = "This Docs not found !";
+                    return;
+                }
+                //Hiển thị thông tin docs
+                DataRow drDetail = dsDetail.Tables[0].Rows[0];
+                loadDocsDetail(drDetail);
+                switch (this.TabId)
+                {
+                    case TabDocsWithDiscrepancies:
+                    case TabDocsWithNoDiscrepancies:
+                        if (Convert.ToInt32(drDetail["DocumentType"]) != this.TabId)
+                        {
+                            lblError.Text = "Wrong function !";
+                            return;
+                        }
+                        if (!string.IsNullOrEmpty(Request.QueryString["lst"]))
+                        {
+                            //Hiển thị nút duyệt
+                            switch (drDetail["Status"].ToString())
+                            {
+                                case bd.TransactionStatus.UNA:
+                                    RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                                    RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                                    RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                                    bc.Commont.SetTatusFormControls(this.Controls, false);
+                                    break;  
+                                default:
+                                    lblError.Text = "Wrong status (" + drDetail["Status"] + ")";
+                                    break;
+                            }
+                            return;
+                        }
+                        //mặc định là preview
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        break;
+                    case TabDocsReject:
+                    case TabDocsAmend:
+                    case TabDocsAccept:
+                        break;
+                }
+            }
+        }
 
-                LoadData(ref drowProcessing);
-
-                SetDisableByReview(false);
-                RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
-                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+        private void loadDocsDetail(DataRow drDetail)
+        {
+            txtCode.Text = drDetail["PaymentId"].ToString();
+            comboDrawType.SelectedValue = drDetail["DrawType"].ToString();
+            comboPresentorNo.SelectedValue = drDetail["PresentorNo"].ToString();
+            txtPresentorName.Text = drDetail["PresentorName"].ToString();
+            txtPresentorRefNo.Text = drDetail["PresentorRefNo"].ToString();
+            lblCurrency.Text = drDetail["Currency"].ToString();
+            numAmount.Value = Convert.ToDouble(drDetail["Amount"]);
+            dteBookingDate.SelectedDate = Convert.ToDateTime(drDetail["BookingDate"]);
+            dteDocsReceivedDate.SelectedDate = Convert.ToDateTime(drDetail["DocsReceivedDate"]);
+            //
+            setDocsCodeData(drDetail, 1, ref comboDocsCode1, ref numNoOfOriginals1, ref numNoOfCopies1, ref txtOtherDocs1);
+            setDocsCodeData(drDetail, 2, ref comboDocsCode2, ref numNoOfOriginals2, ref numNoOfCopies2, ref txtOtherDocs2);
+            setDocsCodeData(drDetail, 3, ref comboDocsCode3, ref numNoOfOriginals3, ref numNoOfCopies3, ref txtOtherDocs3);
+            //
+            if (drDetail["TraceDate"] != DBNull.Value)
+                dteTraceDate.SelectedDate = Convert.ToDateTime(drDetail["TraceDate"]);
+            if (drDetail["DocsReceivedDate_Supplemental"] != DBNull.Value)
+                dteDocsReceivedDate_Supplemental.SelectedDate = Convert.ToDateTime(drDetail["DocsReceivedDate_Supplemental"]);
+            txtPresentorRefNo_Supplemental.Text = drDetail["PresentorRefNo_Supplemental"].ToString();
+            txtDocs_Supplemental1.Text = drDetail["Docs_Supplemental1"].ToString();
+            if (Convert.ToInt32(drDetail["DocumentType"]) == TabDocsWithDiscrepancies)
+            {
+                fieldsetDiscrepancies.Visible = true;
+                txtDiscrepancies.Text = drDetail["Discrepancies"].ToString();
+                txtDisposalOfDocs.Text = drDetail["DisposalOfDocs"].ToString();
             }
         }
 
         protected void InitDataSource()
         {
-            comboDrawType.Items.Clear();
-            comboDrawType.Items.Add(new RadComboBoxItem(""));
-            comboDrawType.DataTextField = "Display";
-            comboDrawType.DataValueField = "Code";
-            comboDrawType.DataSource = bd.SQLData.B_BDRAWTYPE_GetAll();
-            comboDrawType.DataBind();
-
-            var dsall = bd.SQLData.B_BBANKSWIFTCODE_GetByType("all");
-            comboPresentorNo.Items.Clear();
-            comboPresentorNo.Items.Add(new RadComboBoxItem(""));
-            comboPresentorNo.DataTextField = "SwiftCode";
-            comboPresentorNo.DataValueField = "SwiftCode";
-            comboPresentorNo.DataSource = dsall;
-            comboPresentorNo.DataBind();
-
-            var dsDocsCode = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
-            comboDocsCode1.Items.Clear();
-            comboDocsCode1.Items.Add(new RadComboBoxItem(""));
-            comboDocsCode1.DataValueField = "Id";
-            comboDocsCode1.DataTextField = "Description";
-            comboDocsCode1.DataSource = dsDocsCode;
-            comboDocsCode1.DataBind();
-
-            comboDocsCode2.Items.Clear();
-            comboDocsCode2.Items.Add(new RadComboBoxItem(""));
-            comboDocsCode2.DataValueField = "Id";
-            comboDocsCode2.DataTextField = "Description";
-            comboDocsCode2.DataSource = dsDocsCode;
-            comboDocsCode2.DataBind();
-
-            comboDocsCode3.Items.Clear();
-            comboDocsCode3.Items.Add(new RadComboBoxItem(""));
-            comboDocsCode3.DataValueField = "Id";
-            comboDocsCode3.DataTextField = "Description";
-            comboDocsCode3.DataSource = dsDocsCode;
-            comboDocsCode3.DataBind();
-
-            var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
-            rcbChargeCcy.Items.Clear();
-            rcbChargeCcy.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy.DataValueField = "Code";
-            rcbChargeCcy.DataTextField = "Code";
-            rcbChargeCcy.DataSource = dsCurrency;
-            rcbChargeCcy.DataBind();
-
-            rcbChargeCcy2.Items.Clear();
-            rcbChargeCcy2.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy2.DataValueField = "Code";
-            rcbChargeCcy2.DataTextField = "Code";
-            rcbChargeCcy2.DataSource = dsCurrency;
-            rcbChargeCcy2.DataBind();
-
-            rcbChargeCcy3.Items.Clear();
-            rcbChargeCcy3.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy3.DataValueField = "Code";
-            rcbChargeCcy3.DataTextField = "Code";
-            rcbChargeCcy3.DataSource = dsCurrency;
-            rcbChargeCcy3.DataBind();
-
-            var datasource = bd.SQLData.B_BCHARGECODE_GetByViewType(92);
-            tbChargeCode.Items.Clear();
-            tbChargeCode.Items.Add(new RadComboBoxItem(""));
-            tbChargeCode.DataValueField = "Code";
-            tbChargeCode.DataTextField = "Code";
-            tbChargeCode.DataSource = datasource;
-            tbChargeCode.DataBind();
-
-            tbChargecode2.Items.Clear();
-            tbChargecode2.Items.Add(new RadComboBoxItem(""));
-            tbChargecode2.DataValueField = "Code";
-            tbChargecode2.DataTextField = "Code";
-            tbChargecode2.DataSource = datasource;
-            tbChargecode2.DataBind();
-
-            tbChargecode3.Items.Clear();
-            tbChargecode3.Items.Add(new RadComboBoxItem(""));
-            tbChargecode3.DataValueField = "Code";
-            tbChargecode3.DataTextField = "Code";
-            tbChargecode3.DataSource = datasource;
-            tbChargecode3.DataBind();
-
-            var dsc = bd.SQLData.B_BCUSTOMERS_OnlyBusiness();
-            comboPresentorNo_734.Items.Clear();
-            comboPresentorNo_734.Items.Add(new RadComboBoxItem(""));
-            comboPresentorNo_734.DataTextField = "CustomerName";
-            comboPresentorNo_734.DataValueField = "CustomerID";
-            comboPresentorNo_734.DataSource = dsc;
-            comboPresentorNo_734.DataBind();
+            bc.Commont.initRadComboBox(ref comboDrawType, "Display", "Code", bd.SQLData.B_BDRAWTYPE_GetAll());
+            bc.Commont.initRadComboBox(ref comboPresentorNo, "SwiftCode", "SwiftCode", bd.SQLData.B_BBANKSWIFTCODE_GetByType("all"));
+            var tblList = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            bc.Commont.initRadComboBox(ref comboDocsCode1, "Description", "Id", tblList);
+            bc.Commont.initRadComboBox(ref comboDocsCode2, "Description", "Id", tblList);
+            bc.Commont.initRadComboBox(ref comboDocsCode3, "Description", "Id", tblList);
+            tblList = bd.SQLData.B_BCURRENCY_GetAll().Tables[0];
+            bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", tblList);
+            tblList = bd.SQLData.B_BCHARGECODE_GetByViewType(92);
+            bc.Commont.initRadComboBox(ref tbChargeCode, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref tbChargeCode2, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref tbChargeCode3, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref comboPresentorNo_734, "CustomerName", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
         }
 
         protected void SetDefaultValue()
@@ -166,8 +155,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
             }
 
-            divDocsCode_BL.Visible = false;
-            divDocsCode_PL.Visible = false;
+            divDocsCode2.Visible = false;
+            divDocsCode3.Visible = false;
 
             comboDocsCode1.Enabled = false;
             comboDocsCode2.Enabled = false;
@@ -192,13 +181,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             numAmount.Value = 0;
 
             tbChargeCode.SelectedValue = "ILC.CABLE";
-            tbChargecode2.SelectedValue = "ILC.OPEN";
-            tbChargecode3.SelectedValue = "ILC.OPENAMORT";
+            tbChargeCode2.SelectedValue = "ILC.OPEN";
+            tbChargeCode3.SelectedValue = "ILC.OPENAMORT";
 
             tbVatNo.Enabled = false;
             tbChargeCode.Enabled = false;
-            tbChargecode2.Enabled = false;
-            tbChargecode3.Enabled = false;
+            tbChargeCode2.Enabled = false;
+            tbChargeCode3.Enabled = false;
 
             rcbPartyCharged.SelectedValue = "A";
             rcbPartyCharged2.SelectedValue = "A";
@@ -249,76 +238,36 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     {
                         case TabDocsWithNoDiscrepancies:
                         case TabDocsWithDiscrepancies:
+                        case TabDocsAmend:
                             if (CheckAmountAvailable())
                             {
-                                InsertData();
+                                CommitData();
+                                if (this.TabId == TabDocsAmend)
+                                    bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId);
                                 Response.Redirect("Default.aspx?tabid=" + TabId);
                             }
                             break;
                         case TabDocsReject:
-                            //do something
-                            bd.IssueLC.ImportDocumentProcessingReject(txtCode.Text, this.UserId.ToString(), bd.TransactionStatus.UNA, comboDrawType.SelectedValue);
+                        case TabDocsAccept:
+                            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId);
                             Response.Redirect("Default.aspx?tabid=" + TabId);
                             break;
                     }                    
-                    break;
-
-                case bc.Commands.Preview:
-                    switch (TabId)
-                    {
-                        case TabDocsWithNoDiscrepancies:
-                            Response.Redirect(EditUrl("preview_nodiscrepancy"));
-                            break;
-                        case TabDocsWithDiscrepancies:
-                            Response.Redirect(EditUrl("preview_discrepancy"));
-                            break;
-                        case TabDocsReject:
-                            Response.Redirect(EditUrl("preview_rejectdoc"));
-                            break;
-                    }
                     break;
 
                 case bc.Commands.Authozize:
-                    switch (TabId)
-                    {
-                        case TabDocsWithNoDiscrepancies:
-                        case TabDocsWithDiscrepancies:
-                            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), "AUT", TabId, UserId);
-                            Response.Redirect("Default.aspx?tabid=" + TabId);
-                            break;
-                        case TabDocsReject:
-                            //do something
-                            bd.IssueLC.ImportDocumentProcessingReject(txtCode.Text, this.UserId.ToString(), bd.TransactionStatus.AUT, comboDrawType.SelectedValue);
-                            Response.Redirect("Default.aspx?tabid=" + TabId);
-                            break;
-                    }  
-                    
+                    bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.AUT, TabId, UserId);
+                    Response.Redirect("Default.aspx?tabid=" + TabId);
                     break;
 
                 case bc.Commands.Reverse:
-                    switch (TabId)
-                    {
-                        case TabDocsWithNoDiscrepancies:
-                        case TabDocsWithDiscrepancies:
-                            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), "REV", TabId, UserId);
-                            // Active control
-                            SetDisableByReview(true);
-                            // ko cho Authorize/Preview
-                            LoadToolBar(false);
-                            RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                            break;
-                        case TabDocsReject:
-                            //do something
-                            bd.IssueLC.ImportDocumentProcessingReject(txtCode.Text, this.UserId.ToString(), bd.TransactionStatus.REV, comboDrawType.SelectedValue);
-                            Response.Redirect("Default.aspx?tabid=" + TabId);
-                            break;
-                    }                    
+                    bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.REV, TabId, UserId);
+                    Response.Redirect("Default.aspx?tabid=" + TabId);
                     break;
             }
         }
 
-        private void InsertData()
+        private void CommitData()
         {
             bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_Insert(TabId.ToString()
                                                         , txtCode.Text
@@ -352,92 +301,96 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                                         , TabId
                                                         , txtDiscrepancies.Text
                                                         , txtDisposalOfDocs.Text);
-
-            double chargeAmt = 0, chargeAmt2 = 0, chargeAmt3 = 0;
-            if (tbChargeAmt.Value > 0)
+            if (divCharge.Visible)
             {
-                chargeAmt = (double) tbChargeAmt.Value;
-            }
+                double chargeAmt = 0, chargeAmt2 = 0, chargeAmt3 = 0;
+                if (tbChargeAmt.Value > 0)
+                {
+                    chargeAmt = (double)tbChargeAmt.Value;
+                }
 
-            if (tbChargeAmt2.Value > 0)
+                if (tbChargeAmt2.Value > 0)
+                {
+                    chargeAmt2 = (double)tbChargeAmt2.Value;
+                }
+
+                if (tbChargeAmt3.Value > 0)
+                {
+                    chargeAmt3 = (double)tbChargeAmt3.Value;
+                }
+
+                bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_CHARGE_Insert(txtCode.Text.Trim(),
+                                                          comboWaiveCharges.SelectedValue,
+                                                          tbChargeCode.SelectedValue,
+                                                          rcbChargeAcct.SelectedValue,
+                                                          tbChargePeriod.Text,
+                                                          rcbChargeCcy.SelectedValue,
+                                                          chargeAmt,
+                                                          rcbPartyCharged.SelectedValue,
+                                                          rcbOmortCharge.SelectedValue,
+                                                          rcbChargeStatus.SelectedValue,
+                                                          tbChargeRemarks.Text,
+                                                          tbVatNo.Text,
+                                                          lblTaxCode.Text,
+                                                          string.IsNullOrEmpty(lblTaxAmt.Text) ? 0 : double.Parse(lblTaxAmt.Text),
+                                                          1,
+                                                          TabId);
+
+                bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_CHARGE_Insert(txtCode.Text.Trim(),
+                                                          comboWaiveCharges.SelectedValue,
+                                                          tbChargeCode2.SelectedValue,
+                                                          rcbChargeAcct2.SelectedValue,
+                                                          tbChargePeriod2.Text,
+                                                          rcbChargeCcy2.SelectedValue,
+                                                          chargeAmt2,
+                                                          rcbPartyCharged2.SelectedValue,
+                                                          rcbOmortCharges2.SelectedValue,
+                                                          rcbChargeStatus2.SelectedValue,
+                                                          tbChargeRemarks.Text,
+                                                          tbVatNo.Text,
+                                                          lblTaxCode2.Text,
+                                                          string.IsNullOrEmpty(lblTaxAmt2.Text) ? 0 : double.Parse(lblTaxAmt2.Text),
+                                                          2,
+                                                          TabId);
+                bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_CHARGE_Insert(txtCode.Text.Trim(),
+                                                          comboWaiveCharges.SelectedValue,
+                                                          tbChargeCode3.SelectedValue,
+                                                          rcbChargeAcct3.SelectedValue,
+                                                          tbChargePeriod3.Text,
+                                                          rcbChargeCcy3.SelectedValue,
+                                                          chargeAmt3,
+                                                          rcbPartyCharged3.SelectedValue,
+                                                          rcbOmortCharges3.SelectedValue,
+                                                          rcbChargeStatus3.SelectedValue,
+                                                          tbChargeRemarks.Text,
+                                                          tbVatNo.Text,
+                                                          lblTaxCode3.Text,
+                                                          string.IsNullOrEmpty(lblTaxAmt3.Text) ? 0 : double.Parse(lblTaxAmt3.Text),
+                                                          3,
+                                                          TabId);
+
+            }
+            if (divMT734.Visible)
             {
-                chargeAmt2 = (double) tbChargeAmt2.Value;
+                bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_MT734_Insert(txtCode.Text
+                    , comboPresentorNo_734.SelectedValue
+                    , txtPresentorName_734.Text
+                    , txtPresentorAddr_734_1.Text
+                    , txtPresentorAddr_734_2.Text
+                    , txtPresentorAddr_734_3.Text
+                    , lblSenderTRN.Text
+                    , txtPresentingBankRef.Text
+                    , dteDateUtilization.SelectedDate
+                    , numAmountUtilization.Value
+                    , ""
+                    , lblChargesClaimed.Text
+                    , lblTotalAmountClaimed.Text
+                    , txtAccountWithBank.Text
+                    , ""
+                    , tbSendertoReceiverInfomation.Text
+                    , txtDiscrepancies_734.Text
+                    , txtDisposalOfDocs_734.Text);
             }
-
-            if (tbChargeAmt3.Value > 0)
-            {
-                chargeAmt3 = (double) tbChargeAmt3.Value;
-            }
-
-            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_CHARGE_Insert(txtCode.Text.Trim(),
-                                                      comboWaiveCharges.SelectedValue,
-                                                      tbChargeCode.SelectedValue,
-                                                      rcbChargeAcct.SelectedValue,
-                                                      tbChargePeriod.Text,
-                                                      rcbChargeCcy.SelectedValue,
-                                                      chargeAmt,
-                                                      rcbPartyCharged.SelectedValue,
-                                                      rcbOmortCharge.SelectedValue,
-                                                      rcbChargeStatus.SelectedValue,
-                                                      tbChargeRemarks.Text,
-                                                      tbVatNo.Text,
-                                                      lblTaxCode.Text,
-                                                      string.IsNullOrEmpty(lblTaxAmt.Text) ? 0 : double.Parse(lblTaxAmt.Text),
-                                                      1,
-                                                      TabId);
-
-            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_CHARGE_Insert(txtCode.Text.Trim(),
-                                                      comboWaiveCharges.SelectedValue,
-                                                      tbChargecode2.SelectedValue,
-                                                      rcbChargeAcct2.SelectedValue,
-                                                      tbChargePeriod2.Text,
-                                                      rcbChargeCcy2.SelectedValue,
-                                                      chargeAmt2,
-                                                      rcbPartyCharged2.SelectedValue,
-                                                      rcbOmortCharges2.SelectedValue,
-                                                      rcbChargeStatus2.SelectedValue,
-                                                      tbChargeRemarks.Text,
-                                                      tbVatNo.Text,
-                                                      lblTaxCode2.Text,
-                                                      string.IsNullOrEmpty(lblTaxAmt2.Text) ? 0 : double.Parse(lblTaxAmt2.Text),
-                                                      2,
-                                                      TabId);
-            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_CHARGE_Insert(txtCode.Text.Trim(),
-                                                      comboWaiveCharges.SelectedValue,
-                                                      tbChargecode3.SelectedValue,
-                                                      rcbChargeAcct3.SelectedValue,
-                                                      tbChargePeriod3.Text,
-                                                      rcbChargeCcy3.SelectedValue,
-                                                      chargeAmt3,
-                                                      rcbPartyCharged3.SelectedValue,
-                                                      rcbOmortCharges3.SelectedValue,
-                                                      rcbChargeStatus3.SelectedValue,
-                                                      tbChargeRemarks.Text,
-                                                      tbVatNo.Text,
-                                                      lblTaxCode3.Text,
-                                                      string.IsNullOrEmpty(lblTaxAmt3.Text) ? 0 : double.Parse(lblTaxAmt3.Text),
-                                                      3,
-                                                      TabId);
-
-
-            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_MT734_Insert(txtCode.Text
-                , comboPresentorNo_734.SelectedValue
-                , txtPresentorName_734.Text
-                , txtPresentorAddr_734_1.Text
-                , txtPresentorAddr_734_2.Text
-                , txtPresentorAddr_734_3.Text
-                , lblSenderTRN.Text
-                , txtPresentingBankRef.Text
-                , dteDateUtilization.SelectedDate
-                , numAmountUtilization.Value
-                , ""
-                , lblChargesClaimed.Text
-                , lblTotalAmountClaimed.Text
-                , txtAccountWithBank.Text
-                , ""
-                , tbSendertoReceiverInfomation.Text
-                , txtDiscrepancies_734.Text
-                , txtDisposalOfDocs_734.Text);
         }
 
         protected void SwiftCode_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -453,19 +406,19 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void btAddDocsCode_Click(object sender, ImageClickEventArgs e)
         {
             //divDocsCode_BL
-            if (divDocsCode_BL.Visible == false)
+            if (divDocsCode2.Visible == false)
             {
-                divDocsCode_BL.Visible = true;
+                divDocsCode2.Visible = true;
             }
-            else if (divDocsCode_PL.Visible == false)
+            else if (divDocsCode3.Visible == false)
             {
-                divDocsCode_PL.Visible = true;
+                divDocsCode3.Visible = true;
             }
         }
 
         protected void btDeleteDocsCode2_Click(object sender, ImageClickEventArgs e)
         {
-            divDocsCode_BL.Visible = false;
+            divDocsCode2.Visible = false;
             comboDocsCode2.SelectedValue = string.Empty;
             numNoOfOriginals2.Value = 0;
             numNoOfCopies2.Value = 0;
@@ -473,7 +426,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void btDeleteDocsCode3_Click(object sender, ImageClickEventArgs e)
         {
-            divDocsCode_PL.Visible = false;
+            divDocsCode3.Visible = false;
             comboDocsCode3.SelectedValue = string.Empty;
             numNoOfOriginals3.Value = 0;
             numNoOfCopies3.Value = 0;
@@ -482,13 +435,161 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void btSearch_Click(object sender, EventArgs e)
         {
             lblError.Text = "";
-            DataRow drowProcessing = null;
+            DataSet dsDetail;
+            DataTable tbDetail;
+            DataRow drDetail;
+            switch (this.TabId)
+            {
+                case TabDocsWithDiscrepancies:
+                case TabDocsWithNoDiscrepancies:
+                    //Có docs nào đang chờ duyệt ?
+                    dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(txtCode.Text, null);
+                    if (dsDetail != null && dsDetail.Tables.Count > 0 && dsDetail.Tables[0].Rows.Count > 0)
+                    {
+                        lblError.Text = "Previous docs is waiting for approve !";
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        //Hiển thị thông tin docs đang chờ duyệt
+                        drDetail = dsDetail.Tables[0].Rows[0];
+                        loadDocsDetail(drDetail);
 
-            LoadData(ref drowProcessing);
+                        return;
+                    }
+                    //Không có docs nào đang chờ duyệt, lấy thông tin LC
+                    tbDetail = bd.IssueLC.ImportLCDetailForDocProcess(txtCode.Text);
+                    if (tbDetail == null || tbDetail.Rows.Count <= 0)
+                    {
+                        lblError.Text = "This LC not found !";
+                        return;
+                    }
+                    drDetail = tbDetail.Rows[0];
+                    if (!drDetail["Status"].ToString().Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblError.Text = "This LC not authorize !";
+                        return;
+                    }
+                    if (drDetail["Amend_Status"] != DBNull.Value && !drDetail["Amend_Status"].ToString().Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblError.Text = "This LC waiting for amend approve !";
+                        return;
+                    }
+                    if (drDetail["Accept_Status"] != DBNull.Value && !drDetail["Accept_Status"].ToString().Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblError.Text = "This LC waiting for accept approve !";
+                        return;
+                    }
+                    if (drDetail["Cancel_Status"] != DBNull.Value && !drDetail["Cancel_Status"].ToString().Equals(bd.TransactionStatus.REV))
+                    {
+                        lblError.Text = "This LC is canceled !";
+                        return;
+                    }
+                    txtCode.Text = drDetail["PaymentId"].ToString();
+                    hiddenCustomerName.Value = drDetail["ApplicantName"].ToString();
+                    lblCurrency.Text = drDetail["Currency"].ToString();
+                    numAmount.Value = Convert.ToDouble(drDetail["Amount"]) - Convert.ToDouble(drDetail["TotalDocsAmount"]);
+                    dteBookingDate.SelectedDate = DateTime.Now;
+                    comboDrawType.SelectedValue = "CO";
+                    comboDrawType.Enabled = false;
+                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
 
-            lblSenderTRN.Text = txtCode.Text;
+                    break;
+                case TabDocsReject:                    
+                case TabDocsAmend:
+                case TabDocsAccept:
+                    dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, txtCode.Text);
+                    if (dsDetail == null || dsDetail.Tables.Count <= 0 || dsDetail.Tables[0].Rows.Count <= 0)
+                    {
+                        lblError.Text = "This Docs not found !";
+                        return;
+                    }
+                    //
+                    drDetail = dsDetail.Tables[0].Rows[0];
+                    string Status = "", RejectStatus = "";
+                    if (drDetail["Status"] != DBNull.Value) Status = drDetail["Status"].ToString();
+                    if (drDetail["RejectStatus"] != DBNull.Value) RejectStatus = drDetail["RejectStatus"].ToString();
+                    switch (this.TabId)
+                    {
+                        case TabDocsReject:
+                        case TabDocsAccept:
+                            if (!Status.Equals(bd.TransactionStatus.AUT))
+                            {
+                                lblError.Text = "This Docs is not authorize !";
+                                return;
+                            }
+                            if (!(String.IsNullOrEmpty(RejectStatus) || RejectStatus.Equals(bd.TransactionStatus.REV)))
+                            {
+                                lblError.Text = "This Docs is reject !";
+                                return;
+                            }
+                            if (Convert.ToInt32(drDetail["PaymentFullFlag"]) != 0)
+                            {
+                                lblError.Text = "This Doc is already payment completed !";
+                                return;
+                            }
+                            if (this.TabId == TabDocsAccept)
+                            {
+                                string AcceptStatus = "";
+                                if (drDetail["AcceptStatus"] != DBNull.Value) AcceptStatus = drDetail["AcceptStatus"].ToString();
+                                if (AcceptStatus.Equals(bd.TransactionStatus.AUT))
+                                {
+                                    lblError.Text = "This Docs is accepted !";
+                                    return;
+                                }
+                                if (AcceptStatus.Equals(bd.TransactionStatus.UNA))
+                                {
+                                    lblError.Text = "This Docs is waiting for accept approve !";
+                                    return;
+                                }
+                            }
+                            break;
+                        case TabDocsAmend:
+                            if (!Status.Equals(bd.TransactionStatus.UNA))
+                            {
+                                lblError.Text = "This Docs is not allow amend !";
+                                return;
+                            }
+                            break;
+                    }
+                    loadDocsDetail(drDetail);
+                    switch (this.TabId)
+                    {
+                        case TabDocsReject:
+                            comboDrawType.SelectedValue = "CR";
+                            break;
+                        case TabDocsAccept:
+                            comboDrawType.SelectedValue = "AC";
+                            break;
+                    }
+                    bc.Commont.SetTatusFormControls(this.Controls, this.TabId == TabDocsAmend);
+                    comboDrawType.Enabled = false;
+                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+
+                    break;
+            }
         }
 
+        private void setDocsCodeData(DataRow drDetail, int stt, ref RadComboBox cboDocsCode, ref RadNumericTextBox txtNumOfOriginals, ref RadNumericTextBox txtNumOfCopies, ref RadTextBox txtOtherDocs)
+        {
+            cboDocsCode.SelectedValue = drDetail["DocsCode" + stt].ToString();
+            if (drDetail["NoOfOriginals" + stt] != DBNull.Value)
+                txtNumOfOriginals.Value = Convert.ToDouble(drDetail["NoOfOriginals" + stt]);
+            if (drDetail["NoOfCopies" + stt] != DBNull.Value)
+                txtNumOfCopies.Value = Convert.ToDouble(drDetail["NoOfCopies" + stt]);
+            if (drDetail["OtherDocs" + stt] != DBNull.Value)
+                txtOtherDocs.Text = drDetail["OtherDocs" + stt].ToString();
+
+            switch (stt)
+            {
+                case 1:
+                    divDocsCode1.Visible = (txtNumOfOriginals.Value > 0 || txtNumOfCopies.Value > 0 || !String.IsNullOrEmpty(txtOtherDocs.Text));
+                    break;
+                case 2:
+                    divDocsCode1.Visible = (txtNumOfOriginals.Value > 0 || txtNumOfCopies.Value > 0 || !String.IsNullOrEmpty(txtOtherDocs.Text));
+                    break;
+                case 3:
+                    divDocsCode1.Visible = (txtNumOfOriginals.Value > 0 || txtNumOfCopies.Value > 0 || !String.IsNullOrEmpty(txtOtherDocs.Text));
+                    break;
+            }
+        }
         protected void LoadData(ref DataRow drowProcessing)
         {
             var dsDoc = bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_GetByCode(txtCode.Text.Trim(), TabId, UserId);
@@ -540,18 +641,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 comboDocsCode2.SelectedValue = drow["DocsCode2"].ToString();
                 numNoOfOriginals2.Text = drow["NoOfOriginals2"].ToString();
                 numNoOfCopies2.Text = drow["NoOfCopies2"].ToString();
-                if (numNoOfOriginals2.Value > 0)
-                {
-                    divDocsCode_BL.Visible = true;
-                }
+                divDocsCode2.Visible = (numNoOfOriginals2.Value > 0);
 
                 comboDocsCode3.SelectedValue = drow["DocsCode3"].ToString();
                 numNoOfOriginals3.Text = drow["NoOfOriginals3"].ToString();
                 numNoOfCopies3.Text = drow["NoOfCopies3"].ToString();
-                if (numNoOfOriginals3.Value > 0)
-                {
-                    divDocsCode_PL.Visible = true;
-                }
+                divDocsCode3.Visible = (numNoOfOriginals3.Value > 0);
 
                 txtOtherDocs1.Text = drow["OtherDocs1"].ToString();
                 txtOtherDocs2.Text = drow["OtherDocs2"].ToString();
@@ -600,8 +695,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 numNoOfOriginals3.Value = 0;
                 numNoOfCopies3.Value = 0;
 
-                divDocsCode_BL.Visible = false;
-                divDocsCode_PL.Visible = false;
+                divDocsCode2.Visible = false;
+                divDocsCode3.Visible = false;
 
                 txtOtherDocs1.Text = string.Empty;
                 txtOtherDocs2.Text = string.Empty;
@@ -627,12 +722,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 tbChargeRemarks.Text = drow1["ChargeRemarks"].ToString();
                 tbVatNo.Text = drow1["VATNo"].ToString();
 
-
-
                 rcbChargeCcy.SelectedValue = drow1["ChargeCcy"].ToString();
                 if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
                 {
-                    LoadChargeAcct();
+                    LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy.SelectedValue, ref rcbChargeAcct);
                     rcbChargeAcct.SelectedValue = drow1["ChargeAcct"].ToString();
                 }
 
@@ -661,7 +754,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 rcbChargeCcy2.SelectedValue = drow1["ChargeCcy"].ToString();
                 if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
                 {
-                    LoadChargeAcct2();
+                    LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy2.SelectedValue, ref rcbChargeAcct2);
                     rcbChargeAcct2.SelectedValue = drow1["ChargeAcct"].ToString();
                 }
 
@@ -691,7 +784,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 rcbChargeCcy3.SelectedValue = drow1["ChargeCcy"].ToString();
                 if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
                 {
-                    LoadChargeAcct3();
+                    LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy3.SelectedValue, ref rcbChargeAcct3);
                     rcbChargeAcct3.SelectedValue = drow1["ChargeAcct"].ToString();
                 }
 
@@ -806,9 +899,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblError.Text = "This LC has not authorized at Amend step.";
                 SetDisableByReview(false);
                 txtCode.Enabled = true;
-                divDocsCode_BL.Disabled = true;
-                divDocsCode_PL.Disabled = true;
-                divDocsCode_INVL.Disabled = true;
+                divDocsCode2.Disabled = true;
+                divDocsCode3.Disabled = true;
+                divDocsCode1.Disabled = true;
             }
             else if (!string.IsNullOrEmpty(drow["Cancel_Status"].ToString()) &&
                         drow["Cancel_Status"].ToString().Equals(bd.TransactionStatus.AUT))
@@ -816,9 +909,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblError.Text = "This LC is cancel";
                 SetDisableByReview(false);
                 txtCode.Enabled = true;
-                divDocsCode_BL.Disabled = true;
-                divDocsCode_PL.Disabled = true;
-                divDocsCode_INVL.Disabled = true;
+                divDocsCode2.Disabled = true;
+                divDocsCode3.Disabled = true;
+                divDocsCode1.Disabled = true;
             }
             else if (!string.IsNullOrEmpty(drow["Amend_Status"].ToString()) &&
                      !drow["Amend_Status"].ToString().Equals(bd.TransactionStatus.AUT))
@@ -826,9 +919,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblError.Text = "This LC has not authorized at Amend step.";
                 SetDisableByReview(false);
                 txtCode.Enabled = true;
-                divDocsCode_BL.Disabled = true;
-                divDocsCode_PL.Disabled = true;
-                divDocsCode_INVL.Disabled = true;
+                divDocsCode2.Disabled = true;
+                divDocsCode3.Disabled = true;
+                divDocsCode1.Disabled = true;
             }
         }
 
@@ -892,47 +985,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void rcbChargeCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct();
+            LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy.SelectedValue, ref rcbChargeAcct);
         }
 
         protected void rcbChargeCcy2_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct2();
+            LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy2.SelectedValue, ref rcbChargeAcct2);
         }
 
         protected void rcbChargeCcy3_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct3();
+            LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy3.SelectedValue, ref rcbChargeAcct3);
         }
 
-        protected void LoadChargeAcct()
+        private void LoadChargeAcct(string CustomerName, string Currency, ref RadComboBox cboChargeAcct)
         {
-            rcbChargeAcct.Items.Clear();
-            rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct.DataValueField = "Id";
-            rcbChargeAcct.DataTextField = "Id";
-            rcbChargeAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(hiddenCustomerName.Value, rcbChargeCcy.SelectedValue);
-            rcbChargeAcct.DataBind();
-        }
-
-        protected void LoadChargeAcct2()
-        {
-            rcbChargeAcct2.Items.Clear();
-            rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct2.DataValueField = "Id";
-            rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(hiddenCustomerName.Value, rcbChargeCcy2.SelectedValue);
-            rcbChargeAcct2.DataBind();
-        }
-
-        protected void LoadChargeAcct3()
-        {
-            rcbChargeAcct3.Items.Clear();
-            rcbChargeAcct3.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct3.DataValueField = "Id";
-            rcbChargeAcct3.DataTextField = "Id";
-            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(hiddenCustomerName.Value, rcbChargeCcy3.SelectedValue);
-            rcbChargeAcct3.DataBind();
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(CustomerName, Currency));
         }
 
         protected void rcbChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -952,52 +1020,28 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }
         protected void tbChargeAmt_TextChanged(object sender, EventArgs e)
         {
-            chargeAmt_Changed();
+            chargeAmt_Changed(tbChargeAmt.Value, ref lblTaxAmt, ref lblTaxCode);
         }
         protected void tbChargeAmt2_TextChanged(object sender, EventArgs e)
         {
-            chargeAmt2_Changed();
+            chargeAmt_Changed(tbChargeAmt2.Value, ref lblTaxAmt2, ref lblTaxCode2);
         }
         protected void tbChargeAmt3_TextChanged(object sender, EventArgs e)
         {
-            chargeAmt3_Changed();
+            chargeAmt_Changed(tbChargeAmt3.Value, ref lblTaxAmt3, ref lblTaxCode3);
         }
 
-        protected void chargeAmt_Changed()
+        private void chargeAmt_Changed(double? ChargeAmt, ref System.Web.UI.WebControls.Label labelTaxAmt, ref System.Web.UI.WebControls.Label labelTaxCode)
         {
             double sotien = 0;
 
-            if (tbChargeAmt.Value > 0)
+            if (ChargeAmt.HasValue)
             {
-                sotien = double.Parse(tbChargeAmt.Value.ToString());
-                sotien = sotien * 0.1;
+                sotien = ChargeAmt.Value * 0.1;
             }
 
-            lblTaxAmt.Text = String.Format("{0:C}", sotien).Replace("$", "");
-            lblTaxCode.Text = "81      10% VAT on Charge";
-        }
-        protected void chargeAmt2_Changed()
-        {
-            double sotien = 0;
-
-            if (tbChargeAmt2.Value > 0)
-            {
-                sotien = Double.Parse(tbChargeAmt2.Value.ToString());
-                sotien = sotien * 0.1;
-            }
-            lblTaxAmt2.Text = String.Format("{0:C}", sotien).Replace("$", "");
-            lblTaxCode2.Text = "81      10% VAT on Charge";
-        }
-        protected void chargeAmt3_Changed()
-        {
-            double sotien = 0;
-            if (tbChargeAmt3.Value > 0)
-            {
-                sotien = Double.Parse(tbChargeAmt3.Value.ToString());
-                sotien = sotien * 0.1;
-            }
-            lblTaxAmt3.Text = String.Format("{0:C}", sotien).Replace("$", "");
-            lblTaxCode3.Text = "81      10% VAT on Charge";
+            labelTaxAmt.Text = String.Format("{0:C}", sotien).Replace("$", "");
+            labelTaxCode.Text = "81      10% VAT on Charge";
         }
 
         protected void rcbPartyCharged_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
