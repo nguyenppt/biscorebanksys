@@ -5,7 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BankProject.DataProvider;
+using bd = BankProject.DataProvider;
+using bc = BankProject.Controls;
 using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using Telerik.Web.UI.Calendar;
@@ -15,15 +16,20 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 {
     public partial class IssueLC : PortalModuleBase
     {
-        public double Amount = 0;
-        public double Amount_Old = 0;
-        public double B4_AUT_Amount = 0;
-        public double TotalChargeAmt = 0;
-        public string Generate740 = string.Empty;
-        public string ReceivingBank_700 = string.Empty;
-        public string ReceivingBank_740 = string.Empty;
+        protected const int TabIssueLCAddNew = 92;
+        protected const int TabIssueLCAmend = 204;
+        protected const int TabIssueLCCancel = 205;
+        protected const int TabIssueLCClose = 264;
+        //
+        protected double Amount = 0;
+        protected double Amount_Old = 0;
+        protected double B4_AUT_Amount = 0;
+        protected double TotalChargeAmt = 0;
+        protected string Generate740 = string.Empty;
+        protected string ReceivingBank_700 = string.Empty;
+        protected string ReceivingBank_740 = string.Empty;
 
-        public string WaiveCharges = string.Empty;
+        protected string WaiveCharges = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -51,13 +57,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             else
             {
                 GenerateVAT();
-                if (TabId == 92)
+                if (TabId == TabIssueLCAddNew)
                 {
                     GenerateLCCode();
                 }
             }
 
-            if (TabId == 205) // Cancel LC
+            if (TabId == TabIssueLCCancel) // Cancel LC
             {
                 divCancelLC.Visible = true;
             }
@@ -68,6 +74,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 LoadToolBar(true);
                 RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                 RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+            }
+            if (TabId == TabIssueLCClose)
+            {
+                
             }
 
             Session["DataKey"] = txtCode.Text;
@@ -86,7 +96,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbAvailableWithName740.Text = "";
             if (!string.IsNullOrEmpty(tbAvailableWithNo740.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(tbAvailableWithNo740.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(tbAvailableWithNo740.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     tbAvailableWithName740.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -109,7 +119,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             lblBeneficiaryError740.Text = "";
             if (!string.IsNullOrEmpty(tbBeneficiaryNo740.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(tbBeneficiaryNo740.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(tbBeneficiaryNo740.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     tbBeneficiaryName740.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -127,7 +137,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             txtBeneficiaryName700.Text = "";
             if (!string.IsNullOrEmpty(txtBeneficiaryNo700.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtBeneficiaryNo700.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtBeneficiaryNo700.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     txtBeneficiaryName700.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -381,17 +391,17 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void rcbChargeCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct();
+            LoadChargeAcct(ref rcbChargeAcct);
         }
 
         protected void rcbChargeCcy2_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct2();
+            LoadChargeAcct(ref rcbChargeAcct2);
         }
 
         protected void rcbChargeCcy3_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct3();
+            LoadChargeAcct(ref rcbChargeAcct3);
         }
 
         protected void comboReimbBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -440,109 +450,36 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             LoadPartyCharged();
             LoadChargeCode();
 
-            var dsc = SQLData.B_BCUSTOMERS_OnlyBusiness();
-            rcbApplicantID.Items.Clear();
-            rcbApplicantID.Items.Add(new RadComboBoxItem(""));
-            rcbApplicantID.DataTextField = "CustomerName";
-            rcbApplicantID.DataValueField = "CustomerID";
-            rcbApplicantID.DataSource = dsc;
-            rcbApplicantID.DataBind();
-            
-            //rcbApplicant700.Items.Clear();
-            //rcbApplicant700.Items.Add(new RadComboBoxItem(""));
-            //rcbApplicant700.DataTextField = "CustomerName";
-            //rcbApplicant700.DataValueField = "CustomerID";
-            //rcbApplicant700.DataSource = dsc;
-            //rcbApplicant700.DataBind();
+            var dsc = bd.SQLData.B_BCUSTOMERS_OnlyBusiness();
+            bc.Commont.initRadComboBox(ref rcbApplicantID, "CustomerName", "CustomerID", dsc);
+            //bc.Commont.initRadComboBox(ref rcbApplicant700, "CustomerName", "CustomerID", dsc);
+            bc.Commont.initRadComboBox(ref rcbAccountOfficer, "Description", "Code", bd.SQLData.B_BACCOUNTOFFICER_GetAll());
 
-           
-            rcbAccountOfficer.Items.Clear();
-            rcbAccountOfficer.Items.Add(new RadComboBoxItem(""));
-            rcbAccountOfficer.DataTextField = "Description";
-            rcbAccountOfficer.DataValueField = "Code";
-            rcbAccountOfficer.DataSource = SQLData.B_BACCOUNTOFFICER_GetAll();
-            rcbAccountOfficer.DataBind();
-            
-            var dsAdviseBankNo = SQLData.B_BBANKSWIFTCODE_GetByType("RMA");
-            BindComboSwift(dsAdviseBankNo, rcbAdviseBankNo);
+            var dsAdviseBankNo = bd.SQLData.B_BBANKSWIFTCODE_GetByType("RMA");
+            bc.Commont.initRadComboBox(ref rcbAdviseBankNo, "SwiftCode", "SwiftCode", dsAdviseBankNo);
+                        
+            var dsNostro = bd.SQLData.B_BBANKSWIFTCODE_GetByType("Nostro");
+            bc.Commont.initRadComboBox(ref rcbReimbBankNo, "SwiftCode", "SwiftCode", dsNostro);
+            bc.Commont.initRadComboBox(ref rcbReimbBankNo700, "SwiftCode", "SwiftCode", dsNostro);
+            //bc.Commont.initRadComboBox(ref comboRevivingBank, "SwiftCode", "SwiftCode", dsNostro);
+            bc.Commont.initRadComboBox(ref comboReimbBankNo_747, "SwiftCode", "SwiftCode", dsNostro);
+            var dsall = bd.SQLData.B_BBANKSWIFTCODE_GetByType("all");
 
-            var dsNostro = SQLData.B_BBANKSWIFTCODE_GetByType("Nostro");
-            BindComboSwift(dsNostro, rcbReimbBankNo);
-            BindComboSwift(dsNostro, rcbReimbBankNo700);
-            BindComboSwift(dsNostro, comboRevivingBank);
-            BindComboSwift(dsNostro, comboReimbBankNo_747);
-            
+            bc.Commont.initRadComboBox(ref rcbAdviseThruNo, "SwiftCode", "SwiftCode", dsall);
+            bc.Commont.initRadComboBox(ref comboAdviseThroughBankNo700, "SwiftCode", "SwiftCode", dsall);
+            bc.Commont.initRadComboBox(ref comboAvailableWithNo, "SwiftCode", "SwiftCode", dsall);
+            bc.Commont.initRadComboBox(ref comboDraweeCusNo700, "SwiftCode", "SwiftCode", dsall);
 
-            var dsall = SQLData.B_BBANKSWIFTCODE_GetByType("all");
-            BindComboSwift(dsall, rcbAdviseThruNo);
-            BindComboSwift(dsall, comboAdviseThroughBankNo700);
-            BindComboSwift(dsall, comboAvailableWithNo);
-            BindComboSwift(dsall, comboDraweeCusNo700);
-            
-            
-            rcbLCType.Items.Clear();
-            rcbLCType.Items.Add(new RadComboBoxItem(""));
-            rcbLCType.DataTextField = "LCTYPE";
-            rcbLCType.DataValueField = "LCTYPE";
-            rcbLCType.DataSource = DataTam.B_BLCTYPES_GetAll();
-            rcbLCType.DataBind();
-
-            rcCommodity.Items.Clear();
-            rcCommodity.Items.Add(new RadComboBoxItem(""));
-            rcCommodity.DataTextField = "ID";
-            rcCommodity.DataValueField = "ID";
-            rcCommodity.DataSource = SQLData.B_BCOMMODITY_GetByTransactionType("OTC");
-            rcCommodity.DataBind();
-
-            var dsCurrency = SQLData.B_BCURRENCY_GetAll();
-            rcbChargeCcy.Items.Clear();
-            rcbChargeCcy.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy.DataValueField = "Code";
-            rcbChargeCcy.DataTextField = "Code";
-            rcbChargeCcy.DataSource = dsCurrency;
-            rcbChargeCcy.DataBind();
-
-            rcbChargeCcy2.Items.Clear();
-            rcbChargeCcy2.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy2.DataValueField = "Code";
-            rcbChargeCcy2.DataTextField = "Code";
-            rcbChargeCcy2.DataSource = dsCurrency;
-            rcbChargeCcy2.DataBind();
-
-            rcbChargeCcy3.Items.Clear();
-            rcbChargeCcy3.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy3.DataValueField = "Code";
-            rcbChargeCcy3.DataTextField = "Code";
-            rcbChargeCcy3.DataSource = dsCurrency;
-            rcbChargeCcy3.DataBind();
-
-            rcbCcyAmount.Items.Clear();
-            rcbCcyAmount.Items.Add(new RadComboBoxItem(""));
-            rcbCcyAmount.DataValueField = "Code";
-            rcbCcyAmount.DataTextField = "Code";
-            rcbCcyAmount.DataSource = dsCurrency;
-            rcbCcyAmount.DataBind();
-
-            comboCurrency700.Items.Clear();
-            comboCurrency700.Items.Add(new RadComboBoxItem(""));
-            comboCurrency700.DataValueField = "Code";
-            comboCurrency700.DataTextField = "Code";
-            comboCurrency700.DataSource = dsCurrency;
-            comboCurrency700.DataBind();
-
-            comboCreditCurrency.Items.Clear();
-            comboCreditCurrency.Items.Add(new RadComboBoxItem(""));
-            comboCreditCurrency.DataValueField = "Code";
-            comboCreditCurrency.DataTextField = "Code";
-            comboCreditCurrency.DataSource = dsCurrency;
-            comboCreditCurrency.DataBind();
-
-            comboCurrency_747.Items.Clear();
-            comboCurrency_747.Items.Add(new RadComboBoxItem(""));
-            comboCurrency_747.DataValueField = "Code";
-            comboCurrency_747.DataTextField = "Code";
-            comboCurrency_747.DataSource = dsCurrency;
-            comboCurrency_747.DataBind();
+            bc.Commont.initRadComboBox(ref rcbLCType, "LCTYPE", "LCTYPE", bd.DataTam.B_BLCTYPES_GetAll());
+            bc.Commont.initRadComboBox(ref rcCommodity, "ID", "ID", bd.SQLData.B_BCOMMODITY_GetByTransactionType("OTC"));
+            var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
+            bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref rcbCcyAmount, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref comboCurrency700, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref comboCreditCurrency, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref comboCurrency_747, "Code", "Code", dsCurrency);
         }
 
         protected void SetDefaultValue()
@@ -566,12 +503,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbcrTolerance.Value = 0;
             tbdrTolerance.Value = 0;
 
-            comboRevivingBank.Enabled = false;
+            txtRevivingBank700.Enabled = false;
 
             tbVatNo.Enabled = false;
             tbChargeCode.Enabled = false;
-            tbChargecode2.Enabled = false;
-            tbChargecode3.Enabled = false;
+            tbChargeCode2.Enabled = false;
+            tbChargeCode3.Enabled = false;
 
             rcbPartyCharged.SelectedValue = "A";
             rcbPartyCharged2.SelectedValue = "A";
@@ -706,15 +643,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             divMT700.Visible = false;
             switch (TabId)
             {
-                case 92: //Issue LC
+                case TabIssueLCAddNew: //Issue LC
                     divMT740.Visible = true;
                     divMT700.Visible = true;
 
                     tbChargeCode.SelectedValue = "ILC.CABLE";
-                    tbChargecode2.SelectedValue = "ILC.OPEN";
-                    tbChargecode3.SelectedValue = "ILC.OPENAMORT";
+                    tbChargeCode2.SelectedValue = "ILC.OPEN";
+                    tbChargeCode3.SelectedValue = "ILC.OPENAMORT";
                     break;
-                case 204: //Amend LC
+                case TabIssueLCAmend: //Amend LC
                     divMT747.Visible = true;
                     divMT707.Visible = true;
                     tbIssuingDate.Enabled = false;
@@ -723,13 +660,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     RadTabStrip3.Tabs[2].Visible = false;
 
                     tbChargeCode.SelectedValue = "ILC.CABLE";
-                    tbChargecode2.SelectedValue = "IC.AMEND";
+                    tbChargeCode2.SelectedValue = "IC.AMEND";
                     break;
-                case 205: //Cancel LC
+                case TabIssueLCCancel: //Cancel LC
 
                     tbChargeCode.SelectedValue = "ILC.CABLE";
-                    tbChargecode2.SelectedValue = "ILC.CANCEL";
-                    tbChargecode3.SelectedValue = "ILC.OTHER";
+                    tbChargeCode2.SelectedValue = "ILC.CANCEL";
+                    tbChargeCode3.SelectedValue = "ILC.OTHER";
 
                     RadTabStrip3.Tabs[1].Text = "Cancel Charge";
                     RadTabStrip3.Tabs[2].Text = "Other Charge";
@@ -761,69 +698,20 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         
         protected void LoadPartyCharged()
         {
-            var dtSource = SQLData.CreateGenerateDatas("PartyCharged_IssueLC");
-
-            rcbPartyCharged.Items.Clear();
-            rcbPartyCharged.DataValueField = "Id";
-            rcbPartyCharged.DataTextField = "Id";
-            rcbPartyCharged.DataSource = dtSource;
-            rcbPartyCharged.DataBind();
-
-            rcbPartyCharged2.Items.Clear();
-            rcbPartyCharged2.DataValueField = "Id";
-            rcbPartyCharged2.DataTextField = "Id";
-            rcbPartyCharged2.DataSource = dtSource;
-            rcbPartyCharged2.DataBind();
-
-            rcbPartyCharged3.Items.Clear();
-            rcbPartyCharged3.DataValueField = "Id";
-            rcbPartyCharged3.DataTextField = "Id";
-            rcbPartyCharged3.DataSource = dtSource;
-            rcbPartyCharged3.DataBind();
+            var dtSource = bd.SQLData.CreateGenerateDatas("PartyCharged_IssueLC");
+            bc.Commont.initRadComboBox(ref rcbPartyCharged, "Id", "Id", dtSource);
+            bc.Commont.initRadComboBox(ref rcbPartyCharged2, "Id", "Id", dtSource);
+            bc.Commont.initRadComboBox(ref rcbPartyCharged3, "Id", "Id", dtSource);
         }
 
         protected void LoadChargeCode()
         {
-            var datasource = SQLData.B_BCHARGECODE_GetByViewType(TabId);
-
-            tbChargeCode.Items.Clear();
-            tbChargeCode.Items.Add(new RadComboBoxItem(""));
-            tbChargeCode.DataValueField = "Code";
-            tbChargeCode.DataTextField = "Code";
-            tbChargeCode.DataSource = datasource;
-            tbChargeCode.DataBind();
-
-            tbChargecode2.Items.Clear();
-            tbChargecode2.Items.Add(new RadComboBoxItem(""));
-            tbChargecode2.DataValueField = "Code";
-            tbChargecode2.DataTextField = "Code";
-            tbChargecode2.DataSource = datasource;
-            tbChargecode2.DataBind();
-
-            tbChargecode3.Items.Clear();
-            tbChargecode3.Items.Add(new RadComboBoxItem(""));
-            tbChargecode3.DataValueField = "Code";
-            tbChargecode3.DataTextField = "Code";
-            tbChargecode3.DataSource = datasource;
-            tbChargecode3.DataBind();
+            var datasource = bd.SQLData.B_BCHARGECODE_GetByViewType(TabId);
+            bc.Commont.initRadComboBox(ref tbChargeCode, "Code", "Code", datasource);
+            bc.Commont.initRadComboBox(ref tbChargeCode2, "Code", "Code", datasource);
+            bc.Commont.initRadComboBox(ref tbChargeCode3, "Code", "Code", datasource);
         }
-
-        static void BindCombo(object dataSource, RadComboBox combo, string textField, string valueField)
-        {
-            combo.DataSource = dataSource;
-            combo.DataTextField = textField;
-            combo.DataValueField = valueField;
-            combo.DataBind();
-        }
-        protected void BindComboCustomer(object dataSource, RadComboBox combo)
-        {
-            BindCombo(dataSource, combo, "CustomerName", "CustomerID");
-        }
-        protected void BindComboSwift(object dataSource, RadComboBox combo)
-        {
-            BindCombo(dataSource, combo, "SwiftCode", "SwiftCode");
-        }
-
+        
         private void LoadToolBar(bool flag)
         {
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = flag;
@@ -838,12 +726,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             BankProject.Controls.Commont.SetTatusFormControls(this.Controls, flag);
 
-            comboRevivingBank.Enabled = false;
+            txtRevivingBank700.Enabled = false;
 
             tbVatNo.Enabled = false;
             tbChargeCode.Enabled = false;
-            tbChargecode2.Enabled = false;
-            tbChargecode3.Enabled = false;
+            tbChargeCode2.Enabled = false;
+            tbChargeCode3.Enabled = false;
 
             dteDateOfIssue.Enabled = false;
             dteMT700DateAndPlaceOfExpiry.Enabled = false;
@@ -929,25 +817,25 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
             switch (TabId)
             {
-                case 92: //Issue LC
+                case TabIssueLCAddNew: //Issue LC
                     break;
-                case 204: //Amend LC
+                case TabIssueLCAmend: //Amend LC
                     tbIssuingDate.Enabled = false;
                     break;
-                case 205: //Cancel LC
+                case TabIssueLCCancel: //Cancel LC
                     break;
             }
         }
         
         protected void GenerateVAT()
         {
-            var vatno = Database.B_BMACODE_GetNewSoTT("VATNO");
+            var vatno = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
             tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
         }
 
         protected void GenerateLCCode()
         {
-            var ds = DataTam.B_ISSURLC_GetNewID();
+            var ds = bd.DataTam.B_ISSURLC_GetNewID();
             txtCode.Text = ds.Tables[0].Rows[0]["Code"].ToString();
 
             GetDocumentaryCreditNumber();
@@ -979,7 +867,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             var toolBarButton = e.Item as RadToolBarButton;
             var commandName = toolBarButton.CommandName;
-            DataRow dataRow = null;
 
             switch (commandName)
             {
@@ -992,28 +879,28 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 case "Preview":
                     switch (TabId)
                     {
-                        case 92: // Issue LC
+                        case TabIssueLCAddNew: // Issue LC
                             Response.Redirect(EditUrl("preview_issuelc"));
                             break;
 
-                        case 204: //Amend LC
+                        case TabIssueLCAmend: //Amend LC
                             Response.Redirect(EditUrl("preview_amendlc"));
                             break;
 
-                        case 205: //Cancel LC
+                        case TabIssueLCCancel: //Cancel LC
                             Response.Redirect(EditUrl("preview_cancellc"));
                             break;
                     }
                     break;
 
                 case "authorize":
-                    SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString(), TabId);
+                    bd.SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.AUT, UserId.ToString(), TabId);
 
                     Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
                     break;
 
                 case "reverse":
-                    SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString(), TabId);
+                    bd.SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.REV, UserId.ToString(), TabId);
 
                     // Active control
                     SetDisableByReview(true);
@@ -1085,7 +972,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             lblReceivingBankName.Text = "";
             if (!string.IsNullOrEmpty(txtRemittingBankNo.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtRemittingBankNo.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtRemittingBankNo.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     lblReceivingBankName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -1188,7 +1075,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 loanPrincipal = double.Parse(numLoanPrincipal.Value.ToString());
             }
 
-            SQLData.B_BIMPORT_NORMAILLC_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_BIMPORT_NORMAILLC_Insert(txtCode.Text.Trim()
                 , rcbLCType.SelectedValue
                 , rcbApplicantID.SelectedValue
                 , tbApplicantName.Text.Trim()
@@ -1251,10 +1138,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             // Insert tab Dien ======================
             switch (TabId)
             {
-                case 92: //Issue LC
+                case TabIssueLCAddNew: //Issue LC
                     SaveData_IssueLC_TabDien();
                     break;
-                case 204://Amend LC
+                case TabIssueLCAmend://Amend LC
                     SaveData_AmendLC_TabDien();
                     break;
             }
@@ -1276,7 +1163,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 chargeAmt3 = (double)tbChargeAmt3.Value;
             }
 
-            SQLData.B_BIMPORT_NORMAILLC_CHARGE_Insert(txtCode.Text.Trim(),
+            bd.SQLData.B_BIMPORT_NORMAILLC_CHARGE_Insert(txtCode.Text.Trim(),
                                                     comboWaiveCharges.SelectedValue,
                                                     tbChargeCode.SelectedValue,
                                                     rcbChargeAcct.SelectedValue,
@@ -1293,9 +1180,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                                     1,
                                                     TabId);
 
-            SQLData.B_BIMPORT_NORMAILLC_CHARGE_Insert(txtCode.Text.Trim(),
+            bd.SQLData.B_BIMPORT_NORMAILLC_CHARGE_Insert(txtCode.Text.Trim(),
                                                     comboWaiveCharges.SelectedValue,
-                                                    tbChargecode2.SelectedValue,
+                                                    tbChargeCode2.SelectedValue,
                                                     rcbChargeAcct2.SelectedValue,
                                                     tbChargePeriod2.Text,
                                                     rcbChargeCcy2.SelectedValue,
@@ -1309,9 +1196,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                                     string.IsNullOrEmpty(lblTaxAmt2.Text) ? 0 : double.Parse(lblTaxAmt2.Text),
                                                     2,
                                                     TabId);
-            SQLData.B_BIMPORT_NORMAILLC_CHARGE_Insert(txtCode.Text.Trim(),
+            bd.SQLData.B_BIMPORT_NORMAILLC_CHARGE_Insert(txtCode.Text.Trim(),
                                                     comboWaiveCharges.SelectedValue,
-                                                    tbChargecode3.SelectedValue,
+                                                    tbChargeCode3.SelectedValue,
                                                     rcbChargeAcct3.SelectedValue,
                                                     tbChargePeriod3.Text,
                                                     rcbChargeCcy3.SelectedValue,
@@ -1346,9 +1233,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 percentCreditAmount2 = double.Parse(numPercentCreditAmount2.Value.ToString());
             }
 
-            SQLData.B_BIMPORT_NORMAILLC_MT700_Insert(
+            bd.SQLData.B_BIMPORT_NORMAILLC_MT700_Insert(
                 txtCode.Text.Trim()
-                , comboRevivingBank.SelectedValue
+                , rcbAdviseBankNo.SelectedValue
                 , tbBaquenceOfTotal.Text
                 , comboFormOfDocumentaryCredit.SelectedValue
                 , lblDocumentaryCreditNumber.Text
@@ -1445,7 +1332,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 creditAmount = (double)numCreditAmount.Value;
             }
 
-            SQLData.B_BIMPORT_NORMAILLC_MT740_Insert(
+            bd.SQLData.B_BIMPORT_NORMAILLC_MT740_Insert(
                 txtCode.Text.Trim(),
                 comGenerate.SelectedValue,
                 txtRemittingBankNo.Text.Trim(),
@@ -1486,7 +1373,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void SaveData_AmendLC_TabDien()
         {
-            SQLData.B_BIMPORT_NORMAILLC_MT707_Insert(txtCode.Text
+            bd.SQLData.B_BIMPORT_NORMAILLC_MT707_Insert(txtCode.Text
                 , txtReceivingBankId_707.Text
                 , lblSenderReference_707.Text
                 , txtReceiverReference_707.Text
@@ -1526,10 +1413,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , txtSenderToReceiverInformation_707_2.Text
                 , txtSenderToReceiverInformation_707_3.Text
                 , txtSenderToReceiverInformation_707_4.Text
+                , txtShipmentPeriod_707_5.Text
+                , txtShipmentPeriod_707_6.Text
+                , txtSenderToReceiverInformation_707_5.Text
+                , txtSenderToReceiverInformation_707_6.Text
                 );
 
 
-            SQLData.B_BIMPORT_NORMAILLC_MT747_Insert(txtCode.Text
+            bd.SQLData.B_BIMPORT_NORMAILLC_MT747_Insert(txtCode.Text
                 , comboGenerateMT747.SelectedValue
                 , txtReceivingBank_747.Text
                 , lblDocumentaryCreditNumber_747.Text
@@ -1559,7 +1450,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void LoadData(ref DataRow drowLC)
         {
-            var dsDoc = SQLData.B_BIMPORT_NORMAILLC_GetByNormalLCCode(txtCode.Text.Trim(), TabId);
+            var dsDoc = bd.SQLData.B_BIMPORT_NORMAILLC_GetByNormalLCCode(txtCode.Text.Trim(), TabId);
             if (dsDoc == null || dsDoc.Tables.Count <= 0)
             {
                 return;
@@ -1651,7 +1542,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
                 // ===Amount_Old
                 // Amend LC
-                if (TabId == 204)
+                if (TabId == TabIssueLCAmend)
                 {
                     lblAmount_Old.Text = Double.Parse(drow["Amount_Old"].ToString()).ToString("C", CultureInfo.CurrentCulture).Replace("$", "");
                     divAmount.Visible = true;
@@ -1735,7 +1626,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 var drow = dsDoc.Tables[1].Rows[0];
                 ReceivingBank_700 = drow["ReceivingBank"].ToString();
 
-                comboRevivingBank.SelectedValue = drow["ReceivingBank"].ToString();
+                txtRevivingBank700.Text = drow["ReceivingBank"].ToString();
                 tbBaquenceOfTotal.Text = drow["SequenceOfTotal"].ToString();
                 comboFormOfDocumentaryCredit.SelectedValue = drow["FormDocumentaryCredit"].ToString();
                 lblDocumentaryCreditNumber.Text = drow["DocumentaryCreditNumber"].ToString();
@@ -1845,7 +1736,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
             else
             {
-                comboRevivingBank.SelectedValue = string.Empty;
+                txtRevivingBank700.Text = string.Empty;
                 tbBaquenceOfTotal.Text = string.Empty;
                 comboFormOfDocumentaryCredit.SelectedValue = string.Empty;
                 lblDocumentaryCreditNumber.Text = string.Empty;
@@ -2031,7 +1922,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 rcbChargeCcy.SelectedValue = drow1["ChargeCcy"].ToString();
                 if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
                 {
-                    LoadChargeAcct();
+                    LoadChargeAcct(ref rcbChargeAcct);
                     rcbChargeAcct.SelectedValue = drow1["ChargeAcct"].ToString();    
                 }
                 
@@ -2060,7 +1951,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 rcbChargeCcy2.SelectedValue = drow1["ChargeCcy"].ToString();
                 if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
                 {
-                    LoadChargeAcct2();
+                    LoadChargeAcct(ref rcbChargeAcct2);
                     rcbChargeAcct2.SelectedValue = drow1["ChargeAcct"].ToString();    
                 }
                 
@@ -2090,7 +1981,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 rcbChargeCcy3.SelectedValue = drow1["ChargeCcy"].ToString();
                 if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
                 {
-                    LoadChargeAcct3();
+                    LoadChargeAcct(ref rcbChargeAcct3);
                     rcbChargeAcct3.SelectedValue = drow1["ChargeAcct"].ToString();    
                 }
                 
@@ -2162,39 +2053,18 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
             else
             {
-                // set default values
-                if (dsDoc.Tables[0].Rows.Count > 0)
-                {
-                    var drow = dsDoc.Tables[0].Rows[0];
+                lblDocumentaryCreditNumber_747.Text = string.Empty;
+                txtReceivingBank_747.Text = string.Empty;
 
-                    lblDocumentaryCreditNumber_747.Text = drow["NormalLCCode"].ToString();
-                    txtReceivingBank_747.Text = drow["ReimbBankNo"].ToString();
+                comboReimbBankType_747.SelectedValue = string.Empty;
+                comboReimbBankNo_747.SelectedValue = string.Empty;
+                txtReimbBankName_747.Text = string.Empty;
+                txtReimbBankAddr_747_1.Text = string.Empty;
+                txtReimbBankAddr_747_2.Text = string.Empty;
+                txtReimbBankAddr_747_3.Text = string.Empty;
 
-                    comboReimbBankType_747.SelectedValue = drow["ReimbBankType"].ToString();
-                    comboReimbBankNo_747.SelectedValue = drow["ReimbBankNo"].ToString();
-                    txtReimbBankName_747.Text = drow["ReimbBankName"].ToString();
-                    txtReimbBankAddr_747_1.Text = drow["ReimbBankAddr1"].ToString();
-                    txtReimbBankAddr_747_2.Text = drow["ReimbBankAddr2"].ToString();
-                    txtReimbBankAddr_747_3.Text = drow["ReimbBankAddr3"].ToString();
-
-                    numPercentageCreditTolerance_747_1.Text = drow["CrTolerance"].ToString();
-                    numPercentageCreditTolerance_747_1.Text = drow["DrTolerance"].ToString();
-                }
-                else
-                {
-                    lblDocumentaryCreditNumber_747.Text = string.Empty;
-                    txtReceivingBank_747.Text = string.Empty;
-
-                    comboReimbBankType_747.SelectedValue = string.Empty;
-                    comboReimbBankNo_747.SelectedValue = string.Empty;
-                    txtReimbBankName_747.Text = string.Empty;
-                    txtReimbBankAddr_747_1.Text = string.Empty;
-                    txtReimbBankAddr_747_2.Text = string.Empty;
-                    txtReimbBankAddr_747_3.Text = string.Empty;
-
-                    numPercentageCreditTolerance_747_1.Value = 0;
-                    numPercentageCreditTolerance_747_1.Value = 0;
-                }
+                numPercentageCreditTolerance_747_1.Value = 0;
+                numPercentageCreditTolerance_747_1.Value = 0;
 
                 comboGenerateMT747.SelectedValue = string.Empty;
 
@@ -2214,6 +2084,38 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_2.Text = string.Empty;
                 txtSenderToReceiverInfomation_747_3.Text = string.Empty;
                 txtSenderToReceiverInfomation_747_4.Text = string.Empty;
+
+                // set default values
+                if (dsDoc.Tables[0].Rows.Count > 0)
+                {
+                    var drow = dsDoc.Tables[0].Rows[0];
+
+                    lblDocumentaryCreditNumber_747.Text = drow["NormalLCCode"].ToString();
+                    txtReceivingBank_747.Text = drow["ReimbBankNo"].ToString();
+
+                    comboReimbBankType_747.SelectedValue = drow["ReimbBankType"].ToString();
+                    comboReimbBankNo_747.SelectedValue = drow["ReimbBankNo"].ToString();
+                    txtReimbBankName_747.Text = drow["ReimbBankName"].ToString();
+                    txtReimbBankAddr_747_1.Text = drow["ReimbBankAddr1"].ToString();
+                    txtReimbBankAddr_747_2.Text = drow["ReimbBankAddr2"].ToString();
+                    txtReimbBankAddr_747_3.Text = drow["ReimbBankAddr3"].ToString();
+
+                    numPercentageCreditTolerance_747_1.Text = drow["CrTolerance"].ToString();
+                    numPercentageCreditTolerance_747_1.Text = drow["DrTolerance"].ToString();
+
+                    comboCurrency_747.SelectedValue = drow["Currency"].ToString();
+                    numAmount_747.Text = drow["Amount"].ToString();
+                }
+
+                if (dsDoc.Tables[2].Rows.Count > 0)
+                {
+                    var drow740 = dsDoc.Tables[2].Rows[0];
+
+                    txtSenderToReceiverInfomation_747_1.Text = drow740["SenderToReceiverInformation1"].ToString();
+                    txtSenderToReceiverInfomation_747_2.Text = drow740["SenderToReceiverInformation2"].ToString();
+                    txtSenderToReceiverInfomation_747_3.Text = drow740["SenderToReceiverInformation3"].ToString();
+                    txtSenderToReceiverInfomation_747_4.Text = drow740["SenderToReceiverInformation4"].ToString();
+                }
 
                 GenerateMT747();
             }
@@ -2286,6 +2188,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtShipmentPeriod_707_2.Text = drow["ShipmentPeriod2"].ToString();
                 txtShipmentPeriod_707_3.Text = drow["ShipmentPeriod3"].ToString();
                 txtShipmentPeriod_707_4.Text = drow["ShipmentPeriod4"].ToString();
+                txtShipmentPeriod_707_5.Text = drow["ShipmentPeriod5"].ToString();
+                txtShipmentPeriod_707_6.Text = drow["ShipmentPeriod6"].ToString();
 
                 txtPortofloading_707.Text = drow["PortOfLoading"].ToString();
                 txtPortofDischarge_707.Text = drow["PortOfDischarge"].ToString();
@@ -2295,9 +2199,62 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInformation_707_2.Text = drow["SenderReceiverInfomation2"].ToString();
                 txtSenderToReceiverInformation_707_3.Text = drow["SenderReceiverInfomation3"].ToString();
                 txtSenderToReceiverInformation_707_4.Text = drow["SenderReceiverInfomation4"].ToString();
+                txtSenderToReceiverInformation_707_5.Text = drow["SenderReceiverInfomation5"].ToString();
+                txtSenderToReceiverInformation_707_6.Text = drow["SenderReceiverInfomation6"].ToString();
             }
             else
             {
+                txtReceivingBankId_707.Text = string.Empty;
+                lblSenderReference_707.Text = string.Empty;
+                numPercentageCreditAmountTolerance_707_1.Value = 0;
+                numPercentageCreditAmountTolerance_707_2.Value = 0;
+
+                comboBeneficiaryType_707.SelectedValue = string.Empty;
+                txtBeneficiaryNo_707.Text = string.Empty;
+                txtBeneficiaryName_707.Text = string.Empty;
+                txtBeneficiaryAddr_707_1.Text = string.Empty;
+                txtBeneficiaryAddr_707_2.Text = string.Empty;
+                txtBeneficiaryAddr_707_3.Text = string.Empty;
+
+                txtReferenceToPreAdvice_707.Text = string.Empty;
+                txtIssuingBankReferenceNo_707.Text = string.Empty;
+                txtIssuingBankReferenceName_707.Text = string.Empty;
+                txtIssuingBankReferenceAddr_707_1.Text = string.Empty;
+                txtIssuingBankReferenceAddr_707_2.Text = string.Empty;
+                txtIssuingBankReferenceAddr_707_3.Text = string.Empty;
+
+                txtReceiverReference_707.Text = string.Empty;
+
+                dteDateOfIssue_707.SelectedDate = DateTime.Now;
+                comboAvailableRule_707.SelectedValue = string.Empty;
+                dteDateOfAmendment_707.SelectedDate = DateTime.Now;
+
+                dteNewDateOfExpiry_707.SelectedDate = null;
+                comboMaximumCreditAmount_707.SelectedValue = string.Empty;
+                txtAdditionalAmountsCovered_707_1.Text = string.Empty;
+                txtAdditionalAmountsCovered_707_2.Text = string.Empty;
+                txtPlaceoftakingincharge_707.Text = string.Empty;
+                txtPlaceoffinalindistination_707.Text = string.Empty;
+                dteLatesDateofShipment_707.SelectedDate = null;
+
+                txtShipmentPeriod_707_1.Text = string.Empty;
+                txtShipmentPeriod_707_2.Text = string.Empty;
+                txtShipmentPeriod_707_3.Text = string.Empty;
+                txtShipmentPeriod_707_4.Text = string.Empty;
+                txtShipmentPeriod_707_5.Text = string.Empty;
+                txtShipmentPeriod_707_6.Text = string.Empty;
+
+                txtPortofloading_707.Text = string.Empty;
+                txtPortofDischarge_707.Text = string.Empty;
+                txtNarrative_707.Text = string.Empty;
+
+                txtSenderToReceiverInformation_707_1.Text = "PLEASE ADVISE THIS AMENDMENT TO THE BENEFICIARY THROUGH";
+                txtSenderToReceiverInformation_707_2.Text = string.Empty;
+                txtSenderToReceiverInformation_707_3.Text = string.Empty;
+                txtSenderToReceiverInformation_707_4.Text = string.Empty;
+                txtSenderToReceiverInformation_707_5.Text = string.Empty;
+                txtSenderToReceiverInformation_707_6.Text = string.Empty;
+
                 // set default values
                 if (dsDoc.Tables[0].Rows.Count > 0)
                 {
@@ -2314,52 +2271,48 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     txtBeneficiaryAddr_707_1.Text = drow["BeneficiaryAddr1"].ToString();
                     txtBeneficiaryAddr_707_2.Text = drow["BeneficiaryAddr2"].ToString();
                     txtBeneficiaryAddr_707_3.Text = drow["BeneficiaryAddr3"].ToString();
-                }
-                else
+                }                
+
+                if (dsDoc.Tables[1].Rows.Count > 0)
                 {
-                    txtReceivingBankId_707.Text = string.Empty;
-                    lblSenderReference_707.Text = string.Empty;
-                    numPercentageCreditAmountTolerance_707_1.Value = 0;
-                    numPercentageCreditAmountTolerance_707_2.Value = 0;
+                    var drow700 = dsDoc.Tables[1].Rows[0];
 
-                    comboBeneficiaryType_707.SelectedValue = string.Empty;
-                    txtBeneficiaryNo_707.Text = string.Empty;
-                    txtBeneficiaryName_707.Text = string.Empty;
-                    txtBeneficiaryAddr_707_1.Text = string.Empty;
-                    txtBeneficiaryAddr_707_2.Text = string.Empty;
-                    txtBeneficiaryAddr_707_3.Text = string.Empty;
-                }
+                    txtIssuingBankReferenceNo_707.Text = drow700["DraweeNo"].ToString();
+                    txtIssuingBankReferenceName_707.Text = drow700["DraweeName"].ToString();
+                    txtIssuingBankReferenceAddr_707_1.Text = drow700["DraweeAddr1"].ToString();
+                    txtIssuingBankReferenceAddr_707_2.Text = drow700["DraweeAddr2"].ToString();
+                    txtIssuingBankReferenceAddr_707_3.Text = drow700["DraweeAddr3"].ToString();
 
-                txtReceiverReference_707.Text = string.Empty;
-                txtReferenceToPreAdvice_707.Text = string.Empty;
-                txtIssuingBankReferenceNo_707.Text = string.Empty;
-                txtIssuingBankReferenceName_707.Text = string.Empty;
-                txtIssuingBankReferenceAddr_707_1.Text = string.Empty;
-                txtIssuingBankReferenceAddr_707_2.Text = string.Empty;
-                txtIssuingBankReferenceAddr_707_3.Text = string.Empty;
-                dteDateOfIssue_707.SelectedDate = DateTime.Now;
-                comboAvailableRule_707.SelectedValue = string.Empty;
-                dteDateOfAmendment_707.SelectedDate = DateTime.Now;
+                    comboMaximumCreditAmount_707.SelectedValue = drow700["MaximumCreditAmount"].ToString();
 
-                dteNewDateOfExpiry_707.SelectedDate = null;
-                comboMaximumCreditAmount_707.SelectedValue = string.Empty;
-                txtAdditionalAmountsCovered_707_1.Text = string.Empty;
-                txtAdditionalAmountsCovered_707_2.Text = string.Empty;
-                txtPlaceoftakingincharge_707.Text = string.Empty;
-                txtPlaceoffinalindistination_707.Text = string.Empty;
-                dteLatesDateofShipment_707.SelectedDate = null;
-                txtShipmentPeriod_707_1.Text = string.Empty;
-                txtShipmentPeriod_707_2.Text = string.Empty;
-                txtShipmentPeriod_707_3.Text = string.Empty;
-                txtShipmentPeriod_707_4.Text = string.Empty;
-                txtPortofloading_707.Text = string.Empty;
-                txtPortofDischarge_707.Text = string.Empty;
-                txtNarrative_707.Text = string.Empty;
+                    txtAdditionalAmountsCovered_707_1.Text = drow700["AdditionalAmountsCovered1"].ToString();
+                    txtAdditionalAmountsCovered_707_2.Text = drow700["AdditionalAmountsCovered2"].ToString();
 
-                txtSenderToReceiverInformation_707_1.Text = "PLEASE ADVISE THIS AMENDMENT TO THE BENEFICIARY THROUGH";
-                txtSenderToReceiverInformation_707_2.Text = string.Empty;
-                txtSenderToReceiverInformation_707_3.Text = string.Empty;
-                txtSenderToReceiverInformation_707_4.Text = string.Empty;
+                    txtPlaceoftakingincharge_707.Text = drow700["PlaceOfTakingInCharge"].ToString();
+                    txtPlaceoffinalindistination_707.Text = drow700["PlaceOfFinalInDistination"].ToString();
+
+                    if (!string.IsNullOrEmpty(drow700["LatesDateOfShipment"].ToString()) &&
+                    drow700["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteLatesDateofShipment_707.SelectedDate = DateTime.Parse(drow700["LatesDateOfShipment"].ToString());
+                    }
+
+                    if (!string.IsNullOrEmpty(drow700["DateExpiry"].ToString()) &&
+                    drow700["DateExpiry"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteNewDateOfExpiry_707.SelectedDate = DateTime.Parse(drow700["DateExpiry"].ToString());
+                    }                    
+
+                    txtShipmentPeriod_707_1.Text = drow700["ShipmentPeriod1"].ToString();
+                    txtShipmentPeriod_707_2.Text = drow700["ShipmentPeriod2"].ToString();
+                    txtShipmentPeriod_707_3.Text = drow700["ShipmentPeriod3"].ToString();
+                    txtShipmentPeriod_707_4.Text = drow700["ShipmentPeriod4"].ToString();
+                    txtShipmentPeriod_707_5.Text = drow700["ShipmentPeriod5"].ToString();
+                    txtShipmentPeriod_707_6.Text = drow700["ShipmentPeriod6"].ToString();
+
+                    txtPortofloading_707.Text = drow700["PortOfLoading"].ToString();
+                    txtPortofDischarge_707.Text = drow700["PortOfDischarge"].ToString();
+                }                
             }
 
             #endregion
@@ -2381,7 +2334,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
             GenerateMT740();
 
-            if (TabId == 205 && Request.QueryString["disable"] == null) //Cancel LC
+            if (TabId == TabIssueLCCancel && Request.QueryString["disable"] == null) //Cancel LC
             {
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
 
@@ -2392,7 +2345,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
 
                 //===========================
-                //if (drowLC != null && drowLC["Cancel_Status"].ToString() != "AUT")
+                //if (drowLC != null && drowLC["Cancel_Status"].ToString() != bd.TransactionStatus.AUT)
                // {
                     comboWaiveCharges.Enabled = true;
                     tbChargeRemarks.Enabled = true;
@@ -2431,24 +2384,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             const string errorUn_AUT = "This Issue LC has Not Authorized yet. Do not allow to process Payment Acceptance!";
             switch (TabId)
             {
-                case 92: // Issue LC
-                    if (TabId == 92 && Request.QueryString["key"] == null)
+                case TabIssueLCAddNew: // Issue LC
+                    if (Request.QueryString["key"] == null)
                     {
-                        if (drow["Status"].ToString() == "AUT" && drow["PaymentFullFlag"].ToString() == "1")
+                        if (drow["Status"].ToString() == bd.TransactionStatus.AUT && drow["PaymentFullFlag"].ToString() == "1")
                         {
                             lblError.Text = "This LC has payment full";
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
-                        else if (drow["Cancel_Status"].ToString() == "AUT")
+                        else if (drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This LC was canceled";
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
-                        else if (drow["Status"].ToString() == "AUT")
+                        else if (drow["Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This LC was authorized";
                             LoadToolBar(false);
@@ -2457,14 +2410,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         }
                     }
                     break;
-                case 204: //Amend LC
-                    if (TabId == 204 && Request.QueryString["key"] == null)
+                case TabIssueLCAmend: //Amend LC
+                    if (Request.QueryString["key"] == null)
                     {
                         //Chỉ cho phép tu chỉnh đối với BCT:
                         //1. Đã authorised màn hình nhập nhờ thu (Reg)
                         //2, Chưa thực hiện cancel
                         //3, Chưa thực hiện thanh toán full 
-                        if (drow["Status"].ToString() != "AUT")
+                        if (drow["Status"].ToString() != bd.TransactionStatus.AUT)
                         {
                             lblError.Text = errorUn_AUT;
                             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
@@ -2472,7 +2425,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
-                        else if (drow["Amend_Status"].ToString() == "AUT")
+                        else if (drow["Amend_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This LC was authorized";
 
@@ -2482,7 +2435,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             RadToolBar1.FindItemByValue("btPrint").Enabled = true;
 
                         }
-                        else if (drow["Cancel_Status"].ToString() == "AUT")
+                        else if (drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This LC is cancel";
 
@@ -2501,13 +2454,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         }
                     }
                     break;
-                case 205: //  Cancel LC
-                    if (TabId == 205 && Request.QueryString["key"] == null)
+                case TabIssueLCCancel: //  Cancel LC
+                    if (Request.QueryString["key"] == null)
                     {
                         //Chỉ cho cancel khi BCT:
                         //1, Nhập BCT đã được authorised
                         //2, Chưa thực hiện thanh toán full
-                        if (drow["Status"].ToString() != "AUT")
+                        if (drow["Status"].ToString() != bd.TransactionStatus.AUT)
                         {
                             lblError.Text = errorUn_AUT;
                             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
@@ -2515,7 +2468,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
-                        else if (drow["Cancel_Status"].ToString() == "AUT")
+                        else if (drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This LC is cancel";
 
@@ -2535,8 +2488,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
                 
             }
-        }
-              
+        }              
         
         #region Module Report
         protected void btnIssueLC_MT700Report_Click(object sender, EventArgs e)
@@ -2550,7 +2502,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_MT700_Report(txtCode.Text);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_MT700_Report(txtCode.Text);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2568,7 +2520,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_MT740_Report(txtCode.Text);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_MT740_Report(txtCode.Text);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2586,7 +2538,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_VAT_Report(txtCode.Text,UserInfo.Username, TabId);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_VAT_Report(txtCode.Text, UserInfo.Username, TabId);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2604,7 +2556,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username, TabId);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username, TabId);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2623,7 +2575,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2641,7 +2593,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUNHAPNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUNHAPNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2659,7 +2611,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2678,7 +2630,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_CANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2696,7 +2648,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
+            ds = bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2785,23 +2737,18 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
         }
 
-        protected void LoadChargeAcct()
+        protected void LoadChargeAcct(ref RadComboBox cboChargeAcct)
         {
-            rcbChargeAcct.Items.Clear();
-            rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct.DataValueField = "Id";
-            rcbChargeAcct.DataTextField = "Id";
-            rcbChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy.SelectedValue);
-            rcbChargeAcct.DataBind();
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy.SelectedValue));
         }
 
-        protected void LoadChargeAcct2()
+        /*protected void LoadChargeAcct2()
         {
             rcbChargeAcct2.Items.Clear();
             rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct2.DataValueField = "Id";
             rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy2.SelectedValue);
+            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy2.SelectedValue);
             rcbChargeAcct2.DataBind();
         }
 
@@ -2811,9 +2758,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             rcbChargeAcct3.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct3.DataValueField = "Id";
             rcbChargeAcct3.DataTextField = "Id";
-            rcbChargeAcct3.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy3.SelectedValue);
+            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy3.SelectedValue);
             rcbChargeAcct3.DataBind();
-        }
+        }*/
         
         protected void SetRelation_ReimbBankType()
         {
@@ -2921,8 +2868,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_4.Enabled = false;
                 txtNarrative_747.Enabled = false;
             } 
-        }
-
-        
+        }        
     }
 }

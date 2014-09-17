@@ -625,22 +625,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMT700;
         
         /// <summary>
-        /// comboRevivingBank control.
+        /// txtRevivingBank700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboRevivingBank;
-        
-        /// <summary>
-        /// tbRevivingBankName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label tbRevivingBankName;
+        protected global::Telerik.Web.UI.RadTextBox txtRevivingBank700;
         
         /// <summary>
         /// tbBaquenceOfTotal control.
@@ -2164,6 +2155,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation_707_4;
         
         /// <summary>
+        /// txtSenderToReceiverInformation_707_5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation_707_5;
+        
+        /// <summary>
+        /// txtSenderToReceiverInformation_707_6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation_707_6;
+        
+        /// <summary>
         /// divMT747 control.
         /// </summary>
         /// <remarks>
@@ -2614,13 +2623,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlTable table2;
         
         /// <summary>
-        /// tbChargecode2 control.
+        /// tbChargeCode2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox tbChargecode2;
+        protected global::Telerik.Web.UI.RadComboBox tbChargeCode2;
         
         /// <summary>
         /// rcbChargeCcy2 control.
@@ -2776,13 +2785,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlTable table4;
         
         /// <summary>
-        /// tbChargecode3 control.
+        /// tbChargeCode3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox tbChargecode3;
+        protected global::Telerik.Web.UI.RadComboBox tbChargeCode3;
         
         /// <summary>
         /// rcbChargeCcy3 control.
