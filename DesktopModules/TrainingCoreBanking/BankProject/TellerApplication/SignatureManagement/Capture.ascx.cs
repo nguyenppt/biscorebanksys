@@ -19,6 +19,7 @@ namespace BankProject.TellerApplication.SignatureManagement
             imgSignaturePreview.Attributes.Add("css", "imgSignaturePreview NoDisplay");
             txtCustomerId.Text = Request.QueryString["tid"];
             if (String.IsNullOrEmpty(txtCustomerId.Text)) return;
+            bc.Commont.SetTatusFormControls(this.Controls, false);
             //
             lblCustomerName.Text = "";
             imgSignaturePreview.ImageUrl = "";
@@ -26,16 +27,31 @@ namespace BankProject.TellerApplication.SignatureManagement
             DataTable tDetail = bd.Customer.SignatureDetail(txtCustomerId.Text);
             if (tDetail == null || tDetail.Rows.Count <= 0)
             {
-                lblCustomerName.Text = "This Customer does not exist.";
+                lblCustomerName.Text = "This Customer signature does not exist.";
                 return;
             }
-            txtCustomerId.Enabled = false;
             //
             DataRow dr = tDetail.Rows[0];
             lblCustomerName.Text = dr["CustomerName"].ToString();
-            imgSignaturePreview.ImageUrl = "~/" + bd.Customer.SignaturePath + "/" + dr["Signatures"];
+            cmdSelectSignatureImage.Visible = false;            
             imgSignaturePreview.Attributes.Remove("css");
             imgSignaturePreview.Attributes.Add("css", "imgSignaturePreview");
+            string Signatures = dr["Signatures"].ToString(), SignaturesNew = "";
+            if (dr["SignaturesNew"] != DBNull.Value) SignaturesNew = dr["SignaturesNew"].ToString();
+            if (!String.IsNullOrEmpty(SignaturesNew))
+            {
+                lblNewSignature.Text = "New Signature";
+                imgSignaturePreview.ImageUrl = "~/" + bd.Customer.SignaturePath + "/" + SignaturesNew;
+                //
+                imgOldSignaturePreview.Attributes.Add("css", "imgSignaturePreview");
+                imgOldSignaturePreview.ImageUrl = "~/" + bd.Customer.SignaturePath + "/" + Signatures;
+                lblOldSignature.Visible = true;
+                imgOldSignaturePreview.Visible = true;
+            }
+            else
+            {
+                imgSignaturePreview.ImageUrl = "~/" + bd.Customer.SignaturePath + "/" + Signatures;
+            }
             string Status = dr["Status"].ToString();
             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.UNA);
@@ -49,7 +65,7 @@ namespace BankProject.TellerApplication.SignatureManagement
             switch (commandName)
             {
                 case bc.Commands.Commit:
-                    if (txtSignature.FileName != "")
+                    if (!String.IsNullOrEmpty(txtSignature.FileName))
                     {
                         try
                         {
@@ -61,9 +77,8 @@ namespace BankProject.TellerApplication.SignatureManagement
                             txtSignature.SaveAs(Server.MapPath(bd.Customer.SignaturePath) + @"\" + fileName);
                             //save to database
                             bd.Customer.InsertSignature(txtCustomerId.Text, fileName, this.UserInfo.Username);
-                            bc.Commont.SetEmptyFormControls(this.Controls);
                             //
-                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
+                            Response.Redirect("Default.aspx?tabid=" + this.TabId);
                         }
                         catch (Exception err)
                         {

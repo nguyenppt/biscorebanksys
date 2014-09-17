@@ -49,9 +49,13 @@
             </td>
     </tr>
     <tr>
-        <td class="MyLable" style="vertical-align:top;">Signature <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Signature require !" Display="None" ControlToValidate="txtSignature" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
+        <td class="MyLable" style="vertical-align:top;"><asp:Label ID="lblNewSignature" runat="server" Text="Signature"></asp:Label> <span class="Required">(*)</span><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Signature require !" Display="None" ControlToValidate="txtSignature" ValidationGroup="Commit"></asp:RequiredFieldValidator></td>
         <td class="MyContent" colspan="2"><asp:FileUpload ID="txtSignature" runat="server" CssClass="NoDisplay" /><asp:Button ID="cmdSelectSignatureImage" runat="server" Text="Select signature image" OnClientClick="return false;" /><asp:Label ID="lblSignatureImage" runat="server" Text=""></asp:Label>
             <br /><asp:Image ID="imgSignaturePreview" runat="server" /></td>
+    </tr>
+    <tr>
+        <td class="MyLable" style="vertical-align:top;"><asp:Label ID="lblOldSignature" runat="server" Text="Old Signature" Visible="false"></asp:Label></td>
+        <td class="MyContent" colspan="2"><asp:Image ID="imgOldSignaturePreview" runat="server" Visible="false" /></td>
     </tr>
 </table>
 <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" />
