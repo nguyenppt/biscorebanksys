@@ -94,6 +94,15 @@ namespace BankProject.TellerApplication.SignatureManagement {
         protected global::System.Web.UI.WebControls.Label lblCustomerName;
         
         /// <summary>
+        /// lblNewSignature control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNewSignature;
+        
+        /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
         /// <remarks>
@@ -137,6 +146,24 @@ namespace BankProject.TellerApplication.SignatureManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgSignaturePreview;
+        
+        /// <summary>
+        /// lblOldSignature control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOldSignature;
+        
+        /// <summary>
+        /// imgOldSignaturePreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgOldSignaturePreview;
         
         /// <summary>
         /// RadAjaxLoadingPanel1 control.

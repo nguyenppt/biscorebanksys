@@ -16,11 +16,11 @@ namespace BankProject.TellerApplication.SignatureManagement
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-            //
-            bc.Commont.SetTatusFormControls(this.Controls, false);
+            //            
             txtCustomerId.Enabled = true;
             txtCustomerId.Text = Request.QueryString["tid"];
             if (String.IsNullOrEmpty(txtCustomerId.Text)) return;
+            bc.Commont.SetTatusFormControls(this.Controls, false);
             //
             txtCustomerIdOld.Value = txtCustomerId.Text;
             if (loadSignature())
@@ -47,7 +47,7 @@ namespace BankProject.TellerApplication.SignatureManagement
                         try
                         {
                             //upload file
-                            string fileName = "Signature-" + txtCustomerId.Text.Trim() + "-1";//Signature-CIF-Order
+                            string fileName = "Signature-" + txtCustomerId.Text.Trim() + "-" + DateTime.Now.ToString("yyyyMMddhhmmss");//Signature-CIF-Order
                             int i = txtSignature.FileName.LastIndexOf(".");
                             string fileExt = txtSignature.FileName.Substring(i, txtSignature.FileName.Length - i);
                             fileName += fileExt;
