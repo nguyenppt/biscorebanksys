@@ -2362,7 +2362,11 @@ namespace BankProject.DataProvider
                                                                         , string SenderReceiverInfomation1
                                                                         , string SenderReceiverInfomation2
                                                                         , string SenderReceiverInfomation3
-                                                                        , string SenderReceiverInfomation4)
+                                                                        , string SenderReceiverInfomation4
+            , string ShipmentPeriod5
+            , string ShipmentPeriod6
+            , string SenderReceiverInfomation5
+            , string SenderReceiverInfomation6)
         {
             return sqldata.ndkExecuteDataset("B_BIMPORT_NORMAILLC_MT707_Insert", NormalLCCode
                                                                                 , ReceivingBank
@@ -2403,7 +2407,11 @@ namespace BankProject.DataProvider
                                                                                 , SenderReceiverInfomation1
                                                                                 , SenderReceiverInfomation2
                                                                                 , SenderReceiverInfomation3
-                                                                                , SenderReceiverInfomation4);
+                                                                                , SenderReceiverInfomation4
+                                                                                , ShipmentPeriod5
+                                                                                , ShipmentPeriod6
+                                                                                , SenderReceiverInfomation5
+                                                                                , SenderReceiverInfomation6);
         }
     }
 }
