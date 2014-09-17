@@ -10,7 +10,7 @@
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false" Enabled="false">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false" Enabled="true">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
             ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
@@ -19,10 +19,10 @@
             ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false">
+            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false" Enabled="false">
         </telerik:RadToolBarButton>
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" Enabled="false">
+            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" Enabled="true">
         </telerik:RadToolBarButton>
     </Items>
 </telerik:RadToolBar>
@@ -42,13 +42,18 @@
         </td>
     </tr>
 </table>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#tabs-demo').dnnTabs();
+    });
+</script>
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#ChristopherColumbus">Cash Withdrawals</a></li>
         <!--<li><a href="#blank">Audit</a></li>
         <li><a href="#blank">Full View</a></li>-->
     </ul>
-    <div id="ChristopherColumbus" class="dnnClear"><telerik:RadAjaxPanel ID="RadAjaxPanelTopInfo" runat="server" OnAjaxRequest="RadAjaxPanelAccount_AjaxRequest">
+    <div id="ChristopherColumbus" class="dnnClear">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Customer</td>
@@ -72,7 +77,8 @@
                     <telerik:RadComboBox ID="cmbCustomerAccount"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
-                        OnClientSelectedIndexChanged="cmbCustomerAccount_OnClientSelectedIndexChanged"
+                        AutoPostBack="true" 
+                        OnSelectedIndexChanged="cmbCustomerAccount_SelectedIndexChanged"
                         runat="server"           width="300"             >
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
@@ -94,10 +100,15 @@
         </table>
            <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Amt LCY</td>
-                <td class="MyContent"><asp:HiddenField ID="txtAmtLCYOldValue" Value="0" runat="server" />
-                    <telerik:RadNumericTextBox ID="txtAmtLCY" runat="server" Type="Number"/>
-                     <span>Exchange Rate: </span><telerik:RadNumericTextBox ID="txtExchangeRate" ReadOnly="true" TabIndex="0" runat="server" Type="Number" ClientEvents-OnValueChanged ="OnExchangeRateChanged" />
+                <td class="MyLable">Amt LCY<asp:HiddenField ID="txtAmtLCYOldValue" Value="0" runat="server" /></td>
+                <td class="MyContent">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td><telerik:RadNumericTextBox ID="txtAmtLCY" runat="server" Type="Number"/></td>
+                            <td style="padding-left: 10px; padding-right: 5px; color: darkgrey;">Exchange Rate: </td>
+                            <td style="color: darkgrey;"><telerik:RadNumericTextBox ID="txtExchangeRate" ReadOnly="true" TabIndex="0" runat="server" Type="Number" ClientEvents-OnValueChanged ="OnExchangeRateChanged" /></td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             <tr>
@@ -163,7 +174,7 @@
                     <telerik:RadNumericTextBox ID="lblNewCustBal" ReadOnly="true" TabIndex="0" runat="server" Type="Number" />
                 </td>
             </tr>
-        </table></telerik:RadAjaxPanel>
+        </table>
         <hr />
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -300,13 +311,23 @@
         
         });
     </script>
+<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" />
+</telerik:RadAjaxLoadingPanel>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
+    <AjaxSettings>        
+        <telerik:AjaxSetting AjaxControlID="cmbCustomerAccount">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lbCustomer" />
+                <telerik:AjaxUpdatedControl ControlID="lbCustomerName" />
+                <telerik:AjaxUpdatedControl ControlID="lbCurrency" />
+                <telerik:AjaxUpdatedControl ControlID="txtExchangeRate" />
+                <telerik:AjaxUpdatedControl ControlID="lblCustomerAccount" />                
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+    </AjaxSettings>
+</telerik:RadAjaxManager>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
 <script type="text/javascript">
-    function cmbCustomerAccount_OnClientSelectedIndexChanged(sender, eventArgs) {
-        var objMsg = $('#<%=lblCustomerAccount.ClientID%>');
-        $find("<%= RadAjaxPanelTopInfo.ClientID%>").ajaxRequestWithTarget("<%= RadAjaxPanelTopInfo.UniqueID %>", "loadTopInfo");
-    }
-
     function cmbCurrencyPaid_OnClientSelectedIndexChanged(sender, eventArgs) {
         var currencyValue = $find("<%= cmbCurrencyPaid.ClientID%>").get_value();
         var txtDealRate = $find("<%= txtDealRate.ClientID%>");
@@ -337,14 +358,8 @@
         }
 
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            var TTNo = $('#<%=txtId.ClientID%>').val();
-            if (TTNo == null || TTNo == '') {
-                alert('TT number require !');
-                return;
-            }
-            window.location = "Default.aspx?tabid=<%=this.TabId.ToString()%>&ttno=" + TTNo;
+            window.location = '<%=EditUrl("chitiet")%>&lst=4appr';
         }
-
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
             window.location = '<%=EditUrl("chitiet")%>';
         }
@@ -372,7 +387,7 @@
     $("#<%=txtId.ClientID%>")
         .keypress(function (event) {
             if (event.which == 13) {
-                $find('<%=RadToolBar1.ClientID%>').findItemByValue("btPreview").click();
+                window.location = 'Default.aspx?tabid=<%=this.TabId%>&tid=' + $('#<%=txtId.ClientID%>').val();
             }
         });
 
@@ -419,4 +434,4 @@
         $find("<%= lblNewCustBal.ClientID%>").set_value(amount * -1);
     }
   </script>
-    </telerik:RadCodeBlock>
+</telerik:RadCodeBlock>

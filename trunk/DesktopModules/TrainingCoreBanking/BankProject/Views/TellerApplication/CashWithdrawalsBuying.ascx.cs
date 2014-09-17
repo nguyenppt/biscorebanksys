@@ -15,25 +15,18 @@ namespace BankProject.Views.TellerApplication
         {
             if (IsPostBack) return;
             //
-            cmbCustomerAccount.DataSource = bd.Teller.AccountForBuyingTC();
-            cmbCustomerAccount.DataValueField = "AccountNo";
-            cmbCustomerAccount.DataTextField = "Display";
-            cmbCustomerAccount.DataBind();
+            bc.Commont.initRadComboBox(ref cmbCustomerAccount, "Display", "AccountNo", bd.Teller.AccountForBuyingTC());
+            bc.Commont.initRadComboBox(ref cmbCurrencyPaid, "Title", "Value", bd.Teller.ExchangeRate());
             //
-            cmbCurrencyPaid.DataSource = bd.Teller.ExchangeRate();
-            cmbCurrencyPaid.DataValueField = "Value";
-            cmbCurrencyPaid.DataTextField = "Title";
-            cmbCurrencyPaid.DataBind();
-            //
-            if (Request.QueryString["tid"] != null)
+            if (!String.IsNullOrEmpty(Request.QueryString["tid"]))
             {
+                bc.Commont.SetTatusFormControls(this.Controls, false);
                 txtId.Text = Request.QueryString["tid"];
                 string TTNo = txtId.Text;
                 DataTable dt = bd.Teller.CashWithrawalForBuyingTCDetail(TTNo);
                 if (dt == null || dt.Rows.Count <= 0)
                 {
-                    lblMessage.Text = "This TT does not exist.";
-                    bc.Commont.SetEmptyFormControls(this.Controls);
+                    lblMessage.Text = "This TT does not exist.";                    
                     return;
                 }
                 DataRow dr = dt.Rows[0];
@@ -61,9 +54,10 @@ namespace BankProject.Views.TellerApplication
                 txtNarrative.Text = dr["Narrative"].ToString();
                 lblAmtPaidToCust.Value = Convert.ToDouble(dr["AmtPaidToCust"]);
                 //
-                bc.Commont.SetTatusFormControls(this.Controls, false);
-                //
-                loadToolBar(dr["Status"].ToString());
+                if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
+                    loadToolBar(null);
+                else
+                    loadToolBar(dr["Status"].ToString());
             }
             else
             {
@@ -71,7 +65,6 @@ namespace BankProject.Views.TellerApplication
                 txtTellerId.Text = this.UserInfo.UserID + "";
                 //
                 bc.Commont.SetTatusFormControls(this.Controls, true);
-                //
                 loadToolBar(null);
             }
         }
@@ -82,7 +75,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btCommitData").Enabled = String.IsNullOrEmpty(Status);
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.UNA);
-            RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.AUT);
+            RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.UNA);
             RadToolBar1.FindItemByValue("btSearch").Enabled = true;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
             dvAudit.Visible = Status.Equals(bd.TransactionStatus.AUT);
@@ -154,6 +147,23 @@ namespace BankProject.Views.TellerApplication
                     txtExchangeRate.Value = Convert.ToDouble(dr["CurrencyRate"].ToString());
                     break;
             }
+        }
+
+        protected void cmbCustomerAccount_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            lblCustomerAccount.Text = "";
+            DataTable tDetail = bd.Teller.AccountForBuyingTC(cmbCustomerAccount.SelectedValue);
+            if (tDetail == null || tDetail.Rows.Count <= 0)
+            {
+                lblCustomerAccount.Text = "Account not found !";
+                return;
+            }
+            DataRow dr = tDetail.Rows[0];
+            //
+            lbCustomer.Text = dr["CustomerID"].ToString();
+            lbCustomerName.Text = dr["CustomerName"].ToString();
+            lbCurrency.Text = dr["Currency"].ToString();
+            txtExchangeRate.Value = Convert.ToDouble(dr["CurrencyRate"].ToString());
         }
     }
 }

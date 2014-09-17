@@ -15,21 +15,11 @@ namespace BankProject.Views.TellerApplication
             //
             try
             {
-                cmbTCCurrency.DataSource = bd.Teller.ExchangeRate();
-                cmbTCCurrency.DataValueField = "Value";
-                cmbTCCurrency.DataTextField = "Title";
-                cmbTCCurrency.DataBind();
-                //
-                rcbDrCurrency.DataSource = bd.Teller.ExchangeRate();
-                rcbDrCurrency.DataValueField = "Value";
-                rcbDrCurrency.DataTextField = "Title";
-                rcbDrCurrency.DataBind();
-                //
-                rcbCrAccount.DataSource = bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll();
-                rcbCrAccount.DataValueField = "Account";
-                rcbCrAccount.DataTextField = "Display";
-                rcbCrAccount.DataBind();
-                //
+                DataTable tList = bd.Teller.ExchangeRate();
+                bc.Commont.initRadComboBox(ref cmbTCCurrency, "Title", "Value", tList);
+                bc.Commont.initRadComboBox(ref rcbDrCurrency, "Title", "Value", tList);
+                //bc.Commont.initRadComboBox(ref rcbCrAccount, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetAll());
+                rcbCrAccount.Items.Clear();
             }
             catch (Exception err)
             {
@@ -84,7 +74,10 @@ namespace BankProject.Views.TellerApplication
                 //
                 bc.Commont.SetTatusFormControls(this.Controls, false);
                 //
-                loadToolBar(dr["Status"].ToString());
+                if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
+                    loadToolBar(dr["Status"].ToString());
+                else
+                    loadToolBar(null);
             }
             else
             {
@@ -103,7 +96,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btCommitData").Enabled = String.IsNullOrEmpty(Status);
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.UNA);
-            RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.AUT);
+            RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.UNA);
             RadToolBar1.FindItemByValue("btSearch").Enabled = true;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
             dvAudit.Visible = Status.Equals(bd.TransactionStatus.AUT);
@@ -164,23 +157,16 @@ namespace BankProject.Views.TellerApplication
                     break;
             }
         }
-
-        protected void RadAjaxPanelDebitAcc_AjaxRequest(object sender, AjaxRequestEventArgs e)
+        
+        protected void btLoadDebitAccount_Click(object sender, EventArgs e)
         {
-            switch (e.Argument)
-            {
-                case "loadDebitAcc":
-                    string Currency = "";
-                    if (cmbTCCurrency.SelectedIndex >= 0)
-                        Currency = cmbTCCurrency.Items[cmbTCCurrency.SelectedIndex].Text;
-                    rcbDebitAccount.DataSource = bd.Database.B_BDRFROMACCOUNT_GetByCustomer(tbCustomerName.Text, Currency);
-                    rcbDebitAccount.DataValueField = "Id";
-                    rcbDebitAccount.DataTextField = "DisplayHasCurrency";
-                    rcbDebitAccount.DataBind();
-                    break;
-                default:
-                    break;
-            }
+            string Currency = "";
+            if (cmbTCCurrency.SelectedIndex >= 0)
+                Currency = cmbTCCurrency.Items[cmbTCCurrency.SelectedIndex].Text;
+            rcbDebitAccount.DataSource = bd.Database.B_BDRFROMACCOUNT_GetByCustomer(tbCustomerName.Text, Currency);
+            rcbDebitAccount.DataValueField = "Id";
+            rcbDebitAccount.DataTextField = "DisplayHasCurrency";
+            rcbDebitAccount.DataBind();
         }
     }
 }

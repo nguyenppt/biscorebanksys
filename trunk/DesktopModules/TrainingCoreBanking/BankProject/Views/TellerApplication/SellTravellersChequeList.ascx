@@ -26,6 +26,7 @@
 </telerik:RadToolBar>
 </div>
 <div style="padding:10px;">
+    <%if (String.IsNullOrEmpty(lstType)){ %>
     <div>
         <table cellpadding="0" cellspacing="0">
             <tr>
@@ -42,6 +43,7 @@
             </tr>            
         </table>
     </div>
+    <%} %>
     <div><telerik:RadGrid runat="server" AutoGenerateColumns="False" ID="radGridReview" AllowPaging="True" OnNeedDataSource="radGridReview_OnNeedDataSource">
         <MasterTableView>
             <Columns>
@@ -57,7 +59,7 @@
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="150" />
-                    <ItemTemplate><%# BankProject.Controls.Commont.GenerateEnquiryButtons(Eval("TTNo").ToString(), Eval("Status").ToString(), this.TabId, this.TabId, this.TabId, this.TabId) %>
+                    <ItemTemplate><%# GenerateEnquiryButtons(Eval("TTNo").ToString()) %>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
             </Columns>
