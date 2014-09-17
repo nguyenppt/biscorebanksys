@@ -138,9 +138,9 @@
           <Property Name="ContingentExpiryDate" Type="datetime" />
           <Property Name="CancelRemark" Type="nvarchar" MaxLength="500" />
           <Property Name="AcceptedDate" Type="datetime" />
-          <Property Name="AcceptRemarks" Type="nvarchar" MaxLength="500" />
-          <Property Name="AcceptBy" Type="int" />
-          <Property Name="AcceptByDate" Type="datetime" />
+          <Property Name="AcceptedRemarks" Type="nvarchar" MaxLength="500" />
+          <Property Name="AcceptedBy" Type="int" />
+          <Property Name="AcceptedByDate" Type="datetime" />
           <Property Name="AcceptStatus" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="BOUTGOINGCOLLECTIONPAYMENT">
@@ -478,9 +478,9 @@
           <Property Type="DateTime" Name="ContingentExpiryDate" Precision="3" />
           <Property Type="String" Name="CancelRemark" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="AcceptedDate" Precision="3" />
-          <Property Type="String" Name="AcceptRemarks" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="AcceptBy" />
-          <Property Type="DateTime" Name="AcceptByDate" Precision="3" />
+          <Property Type="String" Name="AcceptedRemarks" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="AcceptedBy" />
+          <Property Type="DateTime" Name="AcceptedByDate" Precision="3" />
           <Property Type="String" Name="AcceptStatus" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
@@ -656,9 +656,9 @@
             <EntityTypeMapping TypeName="bisolutions_vvcbModel.BEXPORT_DOCUMETARYCOLLECTION">
               <MappingFragment StoreEntitySet="BEXPORT_DOCUMETARYCOLLECTION">
                 <ScalarProperty Name="AcceptStatus" ColumnName="AcceptStatus" />
-                <ScalarProperty Name="AcceptByDate" ColumnName="AcceptByDate" />
-                <ScalarProperty Name="AcceptBy" ColumnName="AcceptBy" />
-                <ScalarProperty Name="AcceptRemarks" ColumnName="AcceptRemarks" />
+                <ScalarProperty Name="AcceptedByDate" ColumnName="AcceptedByDate" />
+                <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
+                <ScalarProperty Name="AcceptedRemarks" ColumnName="AcceptedRemarks" />
                 <ScalarProperty Name="AcceptedDate" ColumnName="AcceptedDate" />
                 <ScalarProperty Name="CancelRemark" ColumnName="CancelRemark" />
                 <ScalarProperty Name="ContingentExpiryDate" ColumnName="ContingentExpiryDate" />
