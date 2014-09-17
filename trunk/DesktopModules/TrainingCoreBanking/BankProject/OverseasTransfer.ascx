@@ -101,7 +101,8 @@
                     <td style="width: 230px;" class="MyLable">Transaction Type<span class="Required"> (*)</span></td>
                     <td style="width: 150px" class="MyContent">
                         <telerik:RadComboBox width="355" DropDownCssClass="KDDL"  AppendDataBoundItems="True" 
-                            ID="comboTransactionType" Runat="server" AutoPostBack="True" OnSelectedIndexChanged="comboTransactionType_OnSelectedIndexChanged"
+                            ID="comboTransactionType" Runat="server" AutoPostBack="True" 
+                            OnSelectedIndexChanged="comboTransactionType_OnSelectedIndexChanged"
                             MarkFirstMatch="True" OnItemDataBound="commom_ItemDataBound"
                             AllowCustomText="false" >
                             <HeaderTemplate>
@@ -975,6 +976,7 @@
                             MarkFirstMatch="True"
                             AllowCustomText="false" >
                              <Items>
+                                 <telerik:RadComboBoxItem Value="" Text="" />
                                 <telerik:RadComboBoxItem Value="TTCHRGADV" Text="TTCHRGADV" />
                                 <telerik:RadComboBoxItem Value="TTCHRGREC" Text="TTCHRGREC" />
                                 <telerik:RadComboBoxItem Value="TTCHRGIND" Text="TTCHRGIND" />
@@ -1265,6 +1267,7 @@
                  <telerik:AjaxUpdatedControl ControlID="lbTransactionTypeName" />
                 <telerik:AjaxUpdatedControl ControlID="txtCommissionType" />
                 <telerik:AjaxUpdatedControl ControlID="comboCommoditySer" />
+                <telerik:AjaxUpdatedControl ControlID="comboCommissionType" />
                 
             </UpdatedControls>
         </telerik:AjaxSetting>
