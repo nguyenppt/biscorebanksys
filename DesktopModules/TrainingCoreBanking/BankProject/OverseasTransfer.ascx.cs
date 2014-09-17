@@ -115,9 +115,26 @@ namespace BankProject
         protected void comboTransactionType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             lbTransactionTypeName.Text = comboTransactionType.SelectedValue;
-            //txtCommissionType.Text = GetCommissionTypeByTransactionType(comboTransactionType.Text);
-
             LoadCommoditySerByTransactionType();
+
+            var transactionType = comboTransactionType.SelectedItem != null ? comboTransactionType.SelectedItem.Text : "";
+            switch (transactionType)
+            {
+                case "OTC1":
+                case "OTS1":
+                    comboCommissionType.SelectedValue = "TTCHRGADV";
+                    break;
+                case "OTC2":
+                case "OTS2":
+                    comboCommissionType.SelectedValue = "TTCHRGREC";
+                    break;
+                case "OTP1":
+                    comboCommissionType.SelectedValue = "TTCHRGIND";
+                    break;
+                default:
+                    comboCommissionType.SelectedValue = string.Empty;
+                    break;
+            }
         }
 
         protected void LoadCommoditySerByTransactionType()
