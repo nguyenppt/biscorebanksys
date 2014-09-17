@@ -10,10 +10,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 {
     public partial class DocumentWithNoDiscrepancy : PortalModuleBase
     {
-        protected const int TabDocsWithNoDiscrepancies = 206;
+        protected const int TabDocsWithNoDiscrepancies = 371;
         protected const int TabDocsWithDiscrepancies = 207;
         protected const int TabDocsReject = 208;
-        protected const int TabDocsAmend = 361;
+        protected const int TabDocsAmend = 373;
         protected const int TabDocsAccept = 210;
         //
         protected void Page_Load(object sender, EventArgs e)
