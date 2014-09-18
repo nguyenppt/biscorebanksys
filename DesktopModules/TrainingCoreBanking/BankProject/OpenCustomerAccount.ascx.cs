@@ -76,7 +76,7 @@ namespace BankProject
                 //this.cmbCurrency.SelectedValue = "VND";
                 this.LoadToolBar(false);
                 string SoTT = BankProject.DataProvider.Database.B_BMACODE_GetNewSoTT("BOPENACCOUNT").Tables[0].Rows[0]["SoTT"].ToString();
-                this.txtId.Text = "07." + SoTT.PadLeft(9, '0') + ".5";
+                this.txtId.Text = "07" + SoTT.PadLeft(9, '0') + "5";
             }
             
         }
@@ -110,7 +110,7 @@ namespace BankProject
 
                     BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                     string SoTT = BankProject.DataProvider.Database.B_BMACODE_GetNewSoTT("BOPENACCOUNT").Tables[0].Rows[0]["SoTT"].ToString();
-                    this.txtId.Text = "07." + SoTT.PadLeft(9, '0') + ".5";
+                    this.txtId.Text = "07" + SoTT.PadLeft(9, '0') + "5";
                 //}
             }
 

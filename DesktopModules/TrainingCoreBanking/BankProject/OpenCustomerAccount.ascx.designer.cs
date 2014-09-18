@@ -157,15 +157,6 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadTextBox txtShortTitle;
         
         /// <summary>
-        /// tbIntCaptoAC control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbIntCaptoAC;
-        
-        /// <summary>
         /// cmbAccountOfficer control.
         /// </summary>
         /// <remarks>
@@ -182,15 +173,6 @@ namespace BankProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox cmbChargeCode;
-        
-        /// <summary>
-        /// cmbRestrictTxn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbRestrictTxn;
         
         /// <summary>
         /// cmbIDJoinHolder control.
@@ -227,6 +209,24 @@ namespace BankProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtJoinNotes;
+        
+        /// <summary>
+        /// cmbRestrictTxn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbRestrictTxn;
+        
+        /// <summary>
+        /// tbIntCaptoAC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox tbIntCaptoAC;
         
         /// <summary>
         /// RadAjaxManager1 control.
