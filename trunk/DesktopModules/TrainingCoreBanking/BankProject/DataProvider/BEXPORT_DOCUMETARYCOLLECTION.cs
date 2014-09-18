@@ -76,9 +76,9 @@ namespace BankProject.DataProvider
         public Nullable<System.DateTime> ContingentExpiryDate { get; set; }
         public string CancelRemark { get; set; }
         public Nullable<System.DateTime> AcceptedDate { get; set; }
-        public string AcceptRemarks { get; set; }
-        public Nullable<int> AcceptBy { get; set; }
-        public Nullable<System.DateTime> AcceptByDate { get; set; }
+        public string AcceptedRemarks { get; set; }
+        public Nullable<int> AcceptedBy { get; set; }
+        public Nullable<System.DateTime> AcceptedByDate { get; set; }
         public string AcceptStatus { get; set; }
     }
 }
