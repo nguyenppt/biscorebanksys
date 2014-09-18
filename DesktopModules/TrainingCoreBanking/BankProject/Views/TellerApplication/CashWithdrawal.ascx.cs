@@ -5,7 +5,7 @@ using BankProject.Repository;
 using System.Data;
 using System.Configuration;
 using BankProject.Common;
-
+using BankProject.DataProvider;
 namespace BankProject.Views.TellerApplication
 {
     public partial class CashWithdrawal : PortalModuleBase
@@ -66,28 +66,25 @@ namespace BankProject.Views.TellerApplication
                     break;
 
                 case "Authorize":
+                    double SoDuTrong_TaiKhoan_tuongUng = 0;
+                    DataSet ds = TriTT.B_BCASHWITHDRAWAL_Load_Customer_WorkingAmt(rcbAccountType.SelectedValue ,cmbCustomerAccount.Text, cmbCurrency.Text);
+                    if(ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count> 0 )
+                    {
+                         SoDuTrong_TaiKhoan_tuongUng = Convert.ToDouble(ds.Tables[0].Rows[0]["WorkingAmount"].ToString());
+                    }
+                    if (txtAmtLCY_FCY.Value.Value > SoDuTrong_TaiKhoan_tuongUng)
+                    {
+                        var tkTuongUng = "Can not overdraft. Maximum is " + String.Format("{0:C}", SoDuTrong_TaiKhoan_tuongUng).Replace("$", "") + " " + cmbCurrency.Text;
+                        ShowMsgBox(tkTuongUng); return;
+                    }
                     DataProvider.Database.BCASHWITHRAWAL_UpdateStatus(rcbAccountType.SelectedValue, "AUT", txtId.Text, this.UserId.ToString());
                     Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-                    //LoadToolBar(false);
-                    //this.EnableControls(true);
-                    //this.SetDefaultValues();
-                    //lblAmtPaidToCust.Text = "";
-                    //lblCustBal.Text = "";
-                    //lblNewCustBal.Text = "";
                     break;
 
                 case "Reverse":
                     DataProvider.Database.BCASHWITHRAWAL_UpdateStatus(rcbAccountType.SelectedValue, "REV", txtId.Text, this.UserId.ToString());
                     Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-                    //LoadToolBar(false);
-                    //this.SetDefaultValues();
-                    //this.EnableControls(true);
                     break;
-
-                //case "print":
-                //    PrintDocument();
-                //    break;
-
             }
         }
 
@@ -271,7 +268,13 @@ namespace BankProject.Views.TellerApplication
                 lblCustBal.Text = "";
             }
         }
-
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
+        }
         protected void btSearch_Click(object sender, EventArgs e)
         {
             SetPreviewValues(txtId.Text);//
@@ -302,5 +305,6 @@ namespace BankProject.Views.TellerApplication
             cmbCashAccount.DataValueField = "ID";
             cmbCashAccount.DataBind();
         }
+       
     }
 }
