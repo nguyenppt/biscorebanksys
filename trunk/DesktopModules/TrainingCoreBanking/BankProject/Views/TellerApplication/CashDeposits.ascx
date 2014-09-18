@@ -63,11 +63,11 @@
             <td class="MyContent">
                 <telerik:RadComboBox id="rcbAccountType" runat="server" 
                         OnSelectedIndexChanged="rcbAccountType_OnSelectedIndexChanged" autopostback="true"
-                    AllowcustomText="false" MarkFirstMatch="true" AppendDataBoundItems="True" width="200" >
+                    AllowcustomText="false" MarkFirstMatch="true" AppendDataBoundItems="True" width="250" >
                     <ExpandAnimation Type="None" />
                     <CollapseAnimation Type="None" /> 
                     <Items>
-                        <telerik:RadComboBoxItem Value="1" Text="Non Term Saving Account" />
+                        <telerik:RadComboBoxItem Value="1" Text="Current & Non-Term Saving Account" />
                         <telerik:RadComboBoxItem Value="2" Text="Saving Account - Arrear" />
                         <telerik:RadComboBoxItem Value="3" Text="Saving Account - Periodic" />
                         <telerik:RadComboBoxItem Value="4" Text="Saving Account - Discounted" />

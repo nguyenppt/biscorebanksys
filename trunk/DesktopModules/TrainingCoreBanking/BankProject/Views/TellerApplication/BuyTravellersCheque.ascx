@@ -15,7 +15,7 @@
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false" Enabled="false">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
             ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">

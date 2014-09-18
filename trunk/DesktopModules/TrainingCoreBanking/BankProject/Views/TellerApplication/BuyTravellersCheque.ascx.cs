@@ -16,15 +16,9 @@ namespace BankProject.Views.TellerApplication
             //
             try
             {
-                cmbTCCurrency.DataSource = bd.Teller.ExchangeRate();
-                cmbTCCurrency.DataValueField = "Value";
-                cmbTCCurrency.DataTextField = "Title";
-                cmbTCCurrency.DataBind();
-                //
-                rcbCurrencyPaid.DataSource = bd.Teller.ExchangeRate();
-                rcbCurrencyPaid.DataValueField = "Value";
-                rcbCurrencyPaid.DataTextField = "Title";
-                rcbCurrencyPaid.DataBind();
+                DataTable tList = bd.Teller.ExchangeRate();
+                bc.Commont.initRadComboBox(ref cmbTCCurrency, "Title", "Value", tList);
+                bc.Commont.initRadComboBox(ref rcbCurrencyPaid, "Title", "Value", tList);
                 //
                 rcbCrAccount.DataSource = bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll();
                 rcbCrAccount.DataValueField = "Account";

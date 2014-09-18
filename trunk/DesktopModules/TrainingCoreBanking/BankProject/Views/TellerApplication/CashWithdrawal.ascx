@@ -2,7 +2,8 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="../../Controls/VVTextBox.ascx" TagPrefix="uc1" TagName="VVTextBox" %>
 
-<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
+<telerik:RadWindowManager id="RadWindowManager1"  runat="server" EnableShadow="true" />
+
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 
 <div>
@@ -61,11 +62,11 @@
             <td class="MyContent">
                 <telerik:RadComboBox id="rcbAccountType" runat="server" AllowcustomText="false" 
                         OnSelectedIndexChanged="rcbAccountType_OnSelectedIndexChanged" autopostback="true"
-                    MarkFirstMatch="true" AppendDataBoundItems="True" width="200" >
+                    MarkFirstMatch="true" AppendDataBoundItems="True" width="250" >
                     <ExpandAnimation Type="None" />
                     <CollapseAnimation Type="None" /> 
                     <Items>
-                        <telerik:RadComboBoxItem Value="1" Text="Non term Saving Account" />
+                        <telerik:RadComboBoxItem Value="1" Text="Current & Non-Term Saving Account" />
                         <telerik:RadComboBoxItem Value="2" Text="Saving Account - Arrear" />
                         <telerik:RadComboBoxItem Value="3" Text="Saving Account - Periodic" />
                         <telerik:RadComboBoxItem Value="4" Text="Saving Account - Discounted" />
@@ -399,7 +400,7 @@
         var CustBal = CustBalElement.get_value();
         var CurElement = $find("<%=cmbCurrency.ClientID%>");
         var CurValue = CurElement.get_value();
-        radconfirm("Can't overdraft. Maximum is " + CustBal.toLocaleString("en-IN") + " " + CurValue, confirmCallbackFunction2);
+        radconfirm("Can't overdraft. Maximum is " + CustBal.toLocaleString("en-US") + " " + CurValue, confirmCallbackFunction2);
     }
 
     function confirmCallbackFunction2(args) {
