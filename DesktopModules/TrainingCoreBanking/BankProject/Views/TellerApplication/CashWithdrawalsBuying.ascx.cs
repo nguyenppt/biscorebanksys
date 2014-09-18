@@ -104,11 +104,11 @@ namespace BankProject.Views.TellerApplication
                 case bc.Commands.Preview:
                     
                     break;
-                case bc.Commands.Authozize:
+                case bc.Commands.Authorize:
                 case bc.Commands.Reverse:
                     try
                     {
-                        if (commandName.Equals(bc.Commands.Authozize))
+                        if (commandName.Equals(bc.Commands.Authorize))
                         {
                             bd.Teller.UpdateCashWithrawalForBuyingTC(txtId.Text, bd.TransactionStatus.AUT);
                             bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Authozize complete !");
