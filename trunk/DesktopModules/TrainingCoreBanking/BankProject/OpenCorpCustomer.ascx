@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OpenCorpCustomer.ascx.cs" Inherits="BankProject.OpenCorpCustomer" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/Controls/VVTextBox.ascx" TagPrefix="uc1" TagName="VVTextBox" %>
+<telerik:RadWindowManager id="RadWindowManager1"  runat="server" EnableShadow="true" />
 
 <script type="text/javascript">
     jQuery(function ($) {
@@ -235,7 +236,17 @@
                 <td>
                     <table width="100%" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td class="MyLable" style="width: 80px;">Doc ID</td>
+                            <td class="MyLable" style="width: 80px;">Doc ID
+                                <span class="Required">(*)</span>
+                                       <asp:RequiredFieldValidator
+                                        runat="server" Display="None"
+                                        ID="RequiredFieldValidator10"
+                                        ControlToValidate="txtDocID"
+                                        ValidationGroup="Commit"
+                                        InitialValue=""
+                                        ErrorMessage="Doc ID is Required" ForeColor="Red">
+                                    </asp:RequiredFieldValidator>
+                            </td>
                             <td class="MyContent">
                                 <telerik:RadTextBox ID="txtDocID" Width="300" runat="server" ValidationGroup="Group1" TabIndex="12" />
                             </td>

@@ -162,15 +162,7 @@
 
            
 
-            <tr>
-                <td class="MyLable">Int. CAP to AC:</td>
-                <td class="MyContent">
-                    <telerik:RadTextBox ID="tbIntCaptoAC"
-                        MarkFirstMatch="True"
-                        AllowCustomText="false"
-                        Width="300" runat="server" ValidationGroup="Group1" />
-                </td>
-            </tr>
+            
 
             <tr>
                 <td class="MyLable">Account Officer:</td>
@@ -206,15 +198,7 @@
                 </td>
             </tr>
 
-            <tr>
-                <td class="MyLable">Restrict Txn:</td>
-                <td class="MyContent">
-                    <telerik:RadComboBox ID="cmbRestrictTxn"
-                        MarkFirstMatch="True"
-                        AllowCustomText="false"
-                        Width="300" runat="server" ValidationGroup="Group1" />
-                </td>
-            </tr>
+            
         </table>
 
         <fieldset>
@@ -260,9 +244,30 @@
                     <telerik:RadTextBox ID="txtJoinNotes" Width="285" runat="server" ValidationGroup="Group1" />
                 </td>
             </tr>
+            
         </table>
 
             </fieldset>
+        <table width="100%" cellpadding="0" cellspacing="0">
+        <tr style="visibility:hidden;">
+                <td class="MyLable" >Restrict Txn:</td>
+                <td class="MyContent">
+                    <telerik:RadComboBox ID="cmbRestrictTxn"
+                        MarkFirstMatch="True"
+                        AllowCustomText="false"
+                        Width="300" runat="server" ValidationGroup="Group1" />
+                </td>
+            </tr>
+            <tr style="visibility:hidden;">
+                <td class="MyLable">Int. CAP to AC:</td>
+                <td class="MyContent">
+                    <telerik:RadTextBox ID="tbIntCaptoAC"
+                        MarkFirstMatch="True"
+                        AllowCustomText="false"
+                        Width="300" runat="server" ValidationGroup="Group1" />
+                </td>
+            </tr>
+            </table>
     </div>
 </div>
 

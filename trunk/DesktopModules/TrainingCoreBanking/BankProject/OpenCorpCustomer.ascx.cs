@@ -197,6 +197,11 @@ namespace BankProject
                 case "commit":
                     //if (hdfDisable.Value == "0") return;       xem lai 
                     var Status = "UNA";
+                    if (TriTT.OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists("", "C", txtDocID.Text).Tables[0].Rows[0]["Exists"].ToString() == "YES")
+                    {
+                        ShowMsgBox("This Doc ID is existed. Please check again !");
+                        return;
+                    }
                     TriTT.OPEN_CORPORATE_CUSTOMER_Insert_Account(txtId.Text, Status, txtGBShortName.Text, txtGBFullName.Text, rdpIncorpDate.SelectedDate, txtGBStreet.Text
                 , txtGBDist.Text, cmbCity.SelectedValue, cmbCity.Text.Replace(cmbCity.SelectedValue + " - ", "")
                 , cmbCountry.SelectedValue, cmbCountry.Text.Replace(cmbCountry.SelectedValue + " - ", ""), cmbNationality.SelectedValue, cmbNationality.Text.Replace(cmbNationality.SelectedValue + " - ", "")
@@ -216,6 +221,11 @@ namespace BankProject
                     break;
                 case "authorize":
                     Status = "AUT";
+                    if (TriTT.OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists("", "C", txtDocID.Text).Tables[0].Rows[0]["Exists"].ToString() == "YES")
+                    {
+                        ShowMsgBox("This Doc ID is existed. Please check again !");
+                        return;
+                    }
                     TriTT.OPEN_CORPORATE_CUSTOMER_Authorize_Account(txtId.Text, Status);
                     Response.Redirect("Default.aspx?tabid=256&mid=744");
                     break;
@@ -467,6 +477,13 @@ namespace BankProject
                 txtLegacyRef.Text = ds.Tables[0].Rows[0]["LegacyRef"].ToString();
                 bientoancuc.StatusAccount_from_Search_action= ds.Tables[0].Rows[0]["Status"].ToString();
             }
+        }
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
         #endregion
 
