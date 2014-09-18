@@ -22,6 +22,15 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadToolBar RadToolBar1;
         
         /// <summary>
+        /// lblMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMessage;
+        
+        /// <summary>
         /// tbNewNormalLoan control.
         /// </summary>
         /// <remarks>
@@ -49,13 +58,13 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
-        /// rcbMainCategory control.
+        /// radcbMainCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbMainCategory;
+        protected global::Telerik.Web.UI.RadComboBox radcbMainCategory;
         
         /// <summary>
         /// RequiredFieldValidator2 control.
@@ -184,6 +193,15 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadDatePicker rdpOpenDate;
         
         /// <summary>
+        /// rdpDrawdown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker rdpDrawdown;
+        
+        /// <summary>
         /// rdpValueDate control.
         /// </summary>
         /// <remarks>
@@ -217,7 +235,7 @@ namespace BankProject.Views.TellerApplication {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox rcbCommitmentID;
+        protected global::Telerik.Web.UI.RadComboBox rcbCommitmentID;
         
         /// <summary>
         /// RequiredFieldValidator8 control.
@@ -256,6 +274,15 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadComboBox rcbAnnRepMet;
         
         /// <summary>
+        /// lblIntPayMethod control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIntPayMethod;
+        
+        /// <summary>
         /// RequiredFieldValidator7 control.
         /// </summary>
         /// <remarks>
@@ -274,13 +301,13 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadNumericTextBox tbInterestRate;
         
         /// <summary>
-        /// lblINTERESTBEARING control.
+        /// rcbInterestKey control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblINTERESTBEARING;
+        protected global::Telerik.Web.UI.RadComboBox rcbInterestKey;
         
         /// <summary>
         /// tbInSpread control.
@@ -292,24 +319,6 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadNumericTextBox tbInSpread;
         
         /// <summary>
-        /// rcbInterestKey control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbInterestKey;
-        
-        /// <summary>
-        /// lblLoanStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLoanStatus;
-        
-        /// <summary>
         /// rcbAutoSch control.
         /// </summary>
         /// <remarks>
@@ -319,13 +328,13 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadComboBox rcbAutoSch;
         
         /// <summary>
-        /// lblPastdueStatus control.
+        /// rcbDefineSch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPastdueStatus;
+        protected global::Telerik.Web.UI.RadComboBox rcbDefineSch;
         
         /// <summary>
         /// RequiredFieldValidator9 control.
@@ -346,13 +355,31 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadComboBox rcbRepaySchType;
         
         /// <summary>
-        /// txtTotalInterestAmt control.
+        /// lbLoanStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtTotalInterestAmt;
+        protected global::System.Web.UI.WebControls.Label lbLoanStatus;
+        
+        /// <summary>
+        /// lbTotalInterestAmt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbTotalInterestAmt;
+        
+        /// <summary>
+        /// lbPDStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbPDStatus;
         
         /// <summary>
         /// rcbChargeCode control.
@@ -407,6 +434,24 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbChargRepAccount;
+        
+        /// <summary>
+        /// tbExpectedLoss control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox tbExpectedLoss;
+        
+        /// <summary>
+        /// tbLossGiven control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox tbLossGiven;
         
         /// <summary>
         /// RequiredFieldValidator11 control.
@@ -481,6 +526,24 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadNumericTextBox rtbAmountAlloc;
         
         /// <summary>
+        /// rcbCountryRisk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbCountryRisk;
+        
+        /// <summary>
+        /// rtbLegacy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox rtbLegacy;
+        
+        /// <summary>
         /// ValidationSummary2 control.
         /// </summary>
         /// <remarks>
@@ -535,13 +598,13 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.UpdatePanel UpdatePanel5;
         
         /// <summary>
-        /// ListView1 control.
+        /// lvLoanControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView ListView1;
+        protected global::System.Web.UI.WebControls.ListView lvLoanControl;
         
         /// <summary>
         /// hfLoanAmount control.
@@ -571,15 +634,6 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.HiddenField hfCommit2;
         
         /// <summary>
-        /// SqlDataSource1xx control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1xx;
-        
-        /// <summary>
         /// RadAjaxManager1 control.
         /// </summary>
         /// <remarks>
@@ -587,14 +641,5 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
-        
-        /// <summary>
-        /// btSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btSearch;
     }
 }

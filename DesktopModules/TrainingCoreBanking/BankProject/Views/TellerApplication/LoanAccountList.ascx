@@ -11,7 +11,7 @@
             <telerik:GridTemplateColumn>
                 <ItemStyle Width="25" />
                 <ItemTemplate>
-                    <a href='Default.aspx?tabid=196&codeid=<%# Eval("Code") %>'>
+                    <a href='Default.aspx?tabid=<%# page %>&codeid=<%# Eval("Code") %>'>
                         <img src="Icons/bank/text_preview.png" alt="" title="" style="" />
                     </a>
                 </ItemTemplate>

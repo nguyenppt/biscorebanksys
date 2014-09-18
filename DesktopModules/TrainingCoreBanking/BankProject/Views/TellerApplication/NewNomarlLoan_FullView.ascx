@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewNomarlLoan_FullView.ascx.cs" Inherits="BankProject.Views.TellerApplication.NewNomarlLoan_FullView" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ register Assembly="DotNetNuke.web" Namespace="DotNetNuke.Web.UI.WebControls" TagPrefix="dnn"%>
-<%@ Register src="~/controls/LabelControl.ascx" TagPrefix="dnn" TagName="Label"%>
+<!--%@ Register src="~/controls/LabelControl.ascx" TagPrefix="dnn" TagName="Label"%-->
 
 <script type="text/javascript">
     jQuery(function ($) {
