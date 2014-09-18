@@ -89,11 +89,11 @@ namespace BankProject.TellerApplication.SignatureManagement
                 case bc.Commands.Preview:
                     //Xem Preview.ascx
                     break;
-                case bc.Commands.Authozize:
+                case bc.Commands.Authorize:
                 case bc.Commands.Reverse:
                     try
                     {
-                        if (commandName.Equals(bc.Commands.Authozize))
+                        if (commandName.Equals(bc.Commands.Authorize))
                             bd.Customer.UpdateSignatureStatus(txtCustomerId.Text, bd.TransactionStatus.AUT, this.UserInfo.Username);
                         else
                             bd.Customer.UpdateSignatureStatus(txtCustomerId.Text, bd.TransactionStatus.REV, this.UserInfo.Username);
