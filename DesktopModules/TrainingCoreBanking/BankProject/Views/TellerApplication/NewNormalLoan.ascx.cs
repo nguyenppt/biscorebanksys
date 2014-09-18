@@ -43,7 +43,7 @@ namespace BankProject.Views.TellerApplication
                 isEdit = true;
             }
 
-            
+
 
             if (IsPostBack) return;
             Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "clickMainTab();", true);
@@ -78,7 +78,7 @@ namespace BankProject.Views.TellerApplication
                 }
                 else
                 {
-                    
+
                 }
                 BindData2Field(normalLoanEntryM);
             }
@@ -296,8 +296,8 @@ namespace BankProject.Views.TellerApplication
             {
                 normalLoanEntry.UpdatedBy = this.UserId;
             }
-            
-            facade.Update(facade.GetById(normalLoanEntry.Code),normalLoanEntry);
+
+            facade.Update(facade.GetById(normalLoanEntry.Code), normalLoanEntry);
             facade.Commit();
         }
         private void BindField2Data(ref BNEWNORMALLOAN normalLoanEntry)
@@ -307,7 +307,7 @@ namespace BankProject.Views.TellerApplication
             {
                 normalLoanEntry = new BNEWNORMALLOAN();
             }
-            
+
             NormalLoanRepository facase = new NormalLoanRepository();
             if (isEdit || isAmendPage)
             {
@@ -346,7 +346,7 @@ namespace BankProject.Views.TellerApplication
 
             normalLoanEntry.InterestKey = rcbInterestKey.SelectedValue;
             normalLoanEntry.IntSpread = tbInSpread.Text;
-            normalLoanEntry.AutoSch = rcbAutoSch.SelectedValue;
+            //normalLoanEntry.AutoSch = rcbAutoSch.SelectedValue;
             normalLoanEntry.RepaySchType = rcbRepaySchType.SelectedValue;
             normalLoanEntry.Drawdown = rdpDrawdown.SelectedDate;
 
@@ -399,7 +399,7 @@ namespace BankProject.Views.TellerApplication
             tbInterestRate.Value = (double?)normalLoanEntry.InterestRate;
             tbInSpread.Value = double.Parse(!String.IsNullOrEmpty(normalLoanEntry.IntSpread) ? normalLoanEntry.IntSpread : "0");
             tbBusDayDef.Text = normalLoanEntry.BusDayDef;
-            rcbAutoSch.SelectedValue = normalLoanEntry.AutoSch;
+            //rcbAutoSch.SelectedValue = normalLoanEntry.AutoSch;
             rcbDefineSch.SelectedValue = normalLoanEntry.DefineSch;
             rcbRepaySchType.SelectedValue = normalLoanEntry.RepaySchType;
             tbCustomerRemarks.Text = normalLoanEntry.CustomerRemarks;
@@ -452,9 +452,9 @@ namespace BankProject.Views.TellerApplication
 
         private void LoadExistData(string code)
         {
-       
+
             NormalLoanRepository facde = new NormalLoanRepository();
-            var i = isAmendPage?facde.findCustomerCodeAUT(code):facde.findCustomerCode(code);
+            var i = isAmendPage ? facde.findCustomerCodeAUT(code) : facde.findCustomerCode(code);
             foreach (BNEWNORMALLOAN a in i)
             {
                 normalLoanEntryM = a;
@@ -520,45 +520,21 @@ namespace BankProject.Views.TellerApplication
             switch (commandName)
             {
                 case "commit":
-                    if (rcbAutoSch.SelectedValue == "N" && lvLoanControl.Items.Count == 0)
-                    {
-                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "test", "<script>alert('You need to schedule');</script>");
-                        return;
-                    }
-                    else
-                    {
-                        if (rcbAutoSch.SelectedValue == "Y" && lvLoanControl.Items.Count > 0)
-                        {
-                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "test", "<script>alert('The program automatically schedule');</script>");
-                            return;
-                        }
-                        else
-                        {
-                            if (rcbRateType.SelectedValue == "2" && tbInSpread.Value.HasValue == false && tbInSpread.Value.Value == 0)
-                            {
-                                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "test", "<script>alert('Int Spread is required');</script>");
-                                return;
-                            }
-                            else
-                            {
 
-                                BindField2Data(ref normalLoanEntryM);
-                                //Commit Data
-                                if (isAmendPage)
-                                {
-                                    normalLoanEntryM.AmendedBy = this.UserId;
-                                    normalLoanEntryM.Amend_UpdatedDate = DateTime.Today;
-                                    normalLoanEntryM.Amend_Status = "UNA";
-                                }
-                                
-                                CommitData(normalLoanEntryM);
 
-                                this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
-                            }
-                        }
-                        break;
+                    BindField2Data(ref normalLoanEntryM);
+                    //Commit Data
+                    if (isAmendPage)
+                    {
+                        normalLoanEntryM.AmendedBy = this.UserId;
+                        normalLoanEntryM.Amend_UpdatedDate = DateTime.Today;
+                        normalLoanEntryM.Amend_Status = "UNA";
                     }
-                //Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "clickFullTab();", true);
+
+                    CommitData(normalLoanEntryM);
+
+                    this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    break;
 
                 case "commit2":
 
@@ -589,7 +565,7 @@ namespace BankProject.Views.TellerApplication
                         normalLoanEntryM.Status = "AUT";
                         normalLoanEntryM.AuthorizedBy = this.UserId;
                         normalLoanEntryM.AuthorizedDate = DateTime.Today;
-                       
+
                     }
 
                     //normalLoanEntryM.AmendedBy
@@ -641,7 +617,7 @@ namespace BankProject.Views.TellerApplication
             rcbCurrency.Enabled = p;
             rdpOpenDate.Enabled = p;
             rdpValueDate.Enabled = p;
-            rcbAutoSch.Enabled = p;
+            //rcbAutoSch.Enabled = p;
             tbApprovedAmt.Enabled = p;
             rcbPrinRepAccount.Enabled = p;
             rcbIntRepAccount.Enabled = p;

@@ -343,7 +343,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="MyLable">Auto Sch (Y/N):</td>
+                        <%--<td class="MyLable">Auto Sch (Y/N):</td>
                         <td class="MyContent">
                             <telerik:radcombobox id="rcbAutoSch" runat="server" allowcustomtext="false" markfirstmatch="true" validationgroup="Group1">
                              <CollapseAnimation Type="None" />
@@ -354,8 +354,8 @@
                                  <telerik:RadComboBoxItem Value="N" Text="No" />
                              </Items>
                          </telerik:radcombobox>
-                        </td>
-                        <td class="MyLable">Define Sch (Y/N):</td>
+                        </td>--%>
+                        <td class="MyLable">Define Schedule (Y/N):</td>
                         <td class="MyContent">
                             <telerik:radcombobox id="rcbDefineSch" runat="server" allowcustomtext="false" markfirstmatch="true" validationgroup="Group1">
                              <CollapseAnimation Type="None" />
