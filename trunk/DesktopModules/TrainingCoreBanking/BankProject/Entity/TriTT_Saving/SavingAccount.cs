@@ -62,5 +62,6 @@ namespace BankProject.Entity.TriTT_Saving
         public string CustomerLiability { get; set; }
         public string ApprovedUser {get; set;}
         public string EmailAddress { get; set; }
+        public object Signatures { get; set; }
     }
 }

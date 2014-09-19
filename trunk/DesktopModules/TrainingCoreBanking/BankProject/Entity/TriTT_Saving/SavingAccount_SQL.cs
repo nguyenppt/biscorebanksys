@@ -39,14 +39,15 @@ namespace BankProject.Entity.TriTT_Saving
         private readonly string QUERY_GET_INDIVIDUAL_CUSTOMER_ACCOUNT_BY_STATUS = @"SELECT [CustomerID], [Status], [GBShortName] ,[TenTinhThanh], [NationalityName], [IndustryName], [TargetCode],[DocID] 
 		                                               FROM  [dbo].[BCUSTOMER_INFO] WHERE [Status]=@Status and CustomerType='P' ORDER BY ContactDate Desc";
 
-        private readonly string QUERY_GET_INDIVIDUAL_CUSTOMER_ACCOUNT_BY_ID = @"SELECT  [CustomerID], [Status], [FirstName] ,[LastName],[MiddleName],[GBShortName],[GBFullName],[BirthDay] ,[GBStreet],[GBDist]
+        private readonly string QUERY_GET_INDIVIDUAL_CUSTOMER_ACCOUNT_BY_ID = @"SELECT  cus.[CustomerID], cus.[Status], [FirstName] ,[LastName],[MiddleName],[GBShortName],[GBFullName],[BirthDay] ,[GBStreet],[GBDist]
                                                       ,[MobilePhone],[MaTinhThanh],[TenTinhThanh] ,[CountryCode] ,[CountryName] ,[NationalityCode],[NationalityName]
                                                       ,[ResidenceCode],[ResidenceName],[DocType],[DocID],[DocIssuePlace],[DocIssueDate],[DocExpiryDate],[SectorCode]
                                                       ,[SectorName],[SubSectorCode],[SubSectorName] ,[IndustryCode] ,[IndustryName] ,[SubIndustryCode],[SubIndustryName]
                                                       ,[TargetCode],[MaritalStatus] ,[AccountOfficer],[Gender],[Title] ,[ContactDate],[RelationCode],[OfficeNumber]
                                                       ,[FaxNumber],[NoOfDependant] ,[NoOfChildUnder15],[NoOfChildUnder25],[NoOfchildOver25] ,[HomeOwnerShip],[ResidenceType]
-                                                      ,[EmploymentStatus],[CompanyName],[Currency],[MonthlyIncome] ,[OfficeAddress],[CustomerLiability],[ApprovedUser],[EmailAddress]
-                                                         FROM [dbo].[BCUSTOMER_INFO] where [CustomerID]=@CustomerID";
+                                                      ,[EmploymentStatus],[CompanyName],[Currency],[MonthlyIncome] ,[OfficeAddress],[CustomerLiability],[ApprovedUser],[EmailAddress],[Signatures]
+                                                         FROM [dbo].[BCUSTOMER_INFO] as cus LEFT JOIN [B_CustomerSignature] as sig on cus.CustomerID = sig.[CustomerId] 
+                                                        where cus.[CustomerID]=@CustomerID";
         private readonly string UPDATE_SET_STATUS_FOR_INDIVIDUAL_CUSTOMER_ACCOUNT = @"UPDATE [dbo].[BCUSTOMER_INFO] SET [Status]=@Status where CustomerID = @CustomerID";
         #endregion
         private SqlDataProvider DataProvider
