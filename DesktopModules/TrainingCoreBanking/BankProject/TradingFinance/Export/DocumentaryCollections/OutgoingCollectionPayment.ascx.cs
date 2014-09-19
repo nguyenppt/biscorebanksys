@@ -9,12 +9,13 @@ using BankProject.DataProvider;
 using DotNetNuke.Common;
 using DotNetNuke.Common.Utilities;
 using Telerik.Web.UI;
+using BankProject.DBContext;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCollections
 {
     public partial class OutgoingCollectionPayment : DotNetNuke.Entities.Modules.PortalModuleBase
     {
-        private PhatEntities _entities = new PhatEntities();
+        private VietVictoryCoreBankingEntities _entities = new VietVictoryCoreBankingEntities();
         private string CodeId
         {
             get { return Request.QueryString["CodeID"]; }
@@ -94,7 +95,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         private bool CheckStatusExportDocumentCollection(BEXPORT_DOCUMETARYCOLLECTION expDoc)
         {
-            if (expDoc.Status != "AUT" || expDoc.Cancel_Status == "UNA" || expDoc.Amend_Status != "AUT")
+            if (expDoc.Status != "AUT" || expDoc.Cancel_Status == "UNA" || (expDoc.Amend_Status != null && expDoc.Amend_Status != "AUT"))
             {
                 lblError.Text = "Document was not authorized";
                 return false;
@@ -410,11 +411,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             mainToolbar.FindItemByValue("btReview").Enabled = true;
             if (string.IsNullOrWhiteSpace(CodeId)) return;
             lblCreditAmount.Text = GetAmountCredited(CodeId).ToString("");
-            if ( CodeId.Length == 14)
+            if (CodeId.Length == 14)
             {
                 lblCreditAmount.Text = GetAmountCredited(CodeId).ToString("#,##0.00");
-                
+
                 var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId);
+                if (expDoc == null)
+                {
+                    lblError.Text = "Document does not exists";
+                    return;
+                }
                 if (CheckStatusExportDocumentCollection(expDoc))
                 {
                     txtCode.Text = GetNextPaymentCode(CodeId);
@@ -441,6 +447,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     var expDocCode = CodeId.Substring(0, 14);
                     lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
                     var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode);
+                    if (expDoc == null)
+                    {
+                        lblError.Text = "Document does not exists";
+                        return;
+                    }
                     if (CheckStatusExportDocumentCollection(expDoc))
                     {
                         LoadExpDoc(expDoc);
@@ -479,6 +490,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     }
                 }
             }
+
 
         }
 
