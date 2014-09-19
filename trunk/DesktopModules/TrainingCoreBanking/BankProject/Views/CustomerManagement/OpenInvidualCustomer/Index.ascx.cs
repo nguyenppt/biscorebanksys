@@ -198,7 +198,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                 case "commit":
                     if (CommitSaveAcctoDB())
                     { Response.Redirect(string.Format("Default.aspx?tabid={0}&mid={1}", TabId, ModuleId)); }
-                    BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                    //BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                 break;
                 case "preview":
                     string[] param = new string[1];
@@ -206,6 +206,11 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                     Response.Redirect(EditUrl("", "", "Index_ListReview", param));
                 break;
                 case "authorize":
+                if (TriTT.OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists("", "P",txtDocID.Text).Tables[0].Rows[0]["Exists"].ToString() == "YES")
+                    {
+                        ShowMsgBox("This Doc ID is existed. Please check again !");
+                        return;
+                    }
                     SavingAccount_SQL.AuthorizeIndividualCustomerAccount(CustomerIDToReview);
                     Response.Redirect(string.Format("Default.aspx?tabid={0}&mid={1}", TabId, ModuleId));
                 break;
@@ -369,6 +374,11 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
         {
             var IndividualAccount = new IndividualAccount(); // tao 1 doi tuong co day du properties
             BuildSavingAccount(IndividualAccount); // gan gia tri hien co cho doi tuong
+            if (TriTT.OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists("", "P", IndividualAccount.DocID).Tables[0].Rows[0]["Exists"].ToString() == "YES")
+            {
+                ShowMsgBox("This Doc ID is existed. Please check again !");
+                return false;
+            }
             if (SavingAccount_SQL.CheckIndividualCustomerExist(IndividualAccount.CustomerID))
             {
                 IndividualAccount.AccountOfficer = this.cmbAccountOfficer.SelectedItem.Text;
@@ -444,6 +454,11 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
         }
         private void BindDataToControl(string CustomerIDToReview)
         {
+            if (CustomerIDToReview.StartsWith("2"))
+            {
+                ShowMsgBox("This is Corporate Customer. Please go to function Open Corporate Customer to view the information.");
+                return;
+            }
             // ham GetIndividualCustomer_ByID kem theo tham so CustomerIDToReview trong Class SavingAccount_SQL se tra ve 1 doi tuong co cac 
             // Attributes duoc mieu ta trong lop doi tuong Class SavingAccount
             var IndividualCustomer = SavingAccount_SQL.GetIndividualCustomer_ByID(CustomerIDToReview);
@@ -518,6 +533,13 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             StatusAccount_from_Search_action = IndividualCustomer.Status;
             if (IndividualCustomer.Status == "AUT")
             {
+                imgSignature.ImageUrl = "";
+                lnkSignature.NavigateUrl = "#";
+                if (IndividualCustomer.Signatures != null)
+                {
+                    imgSignature.ImageUrl = "~/" + BankProject.DataProvider.Customer.SignaturePath + "/" + IndividualCustomer.Signatures;
+                    lnkSignature.NavigateUrl = imgSignature.ImageUrl;
+                }
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                 LoadToolBar_AllFalse();
                 return;
@@ -552,6 +574,13 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                     RadToolBar1.FindItemByValue("btPrint").Enabled = false;
                     break;
             }
+        }
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
         
     }
