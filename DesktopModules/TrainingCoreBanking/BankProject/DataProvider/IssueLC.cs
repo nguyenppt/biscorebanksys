@@ -82,5 +82,19 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("P_ImportLCDocsList", Status, TabId).Tables[0];
         }
+
+        public static DataTable ImportLCIsValidToClose(string LCCode)
+        {
+            return sqldata.ndkExecuteDataset("P_ImportLCIsValidToClose", LCCode).Tables[0];
+        }
+
+        public static void ImportLCClose(string UserExecute, string LCCode, string Status)
+        {
+            ImportLCClose(UserExecute, LCCode, Status, null, null, null);
+        }
+        public static void ImportLCClose(string UserExecute, string LCCode, string Status, string GenerateDelivery, string ExternalReference, string Remark)
+        {
+            sqldata.ndkExecuteNonQuery("P_ImportLCClose", UserExecute, LCCode, Status, GenerateDelivery, ExternalReference, Remark);
+        }
     }
 }
