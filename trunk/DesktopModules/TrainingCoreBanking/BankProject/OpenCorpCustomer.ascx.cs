@@ -303,6 +303,13 @@ namespace BankProject
                 cmbIndustry.Text = cmbIndustry.SelectedValue+" - "+ ds.Tables[0].Rows[0]["SubIndustryName"].ToString();
                 cmbTarget.SelectedValue = ds.Tables[0].Rows[0]["TargetCode"].ToString();
                 cmbAccountOfficer.SelectedItem.Text = ds.Tables[0].Rows[0]["AccountOfficer"].ToString();
+                imgSignature.ImageUrl = "";
+                lnkSignature.NavigateUrl = "#";
+                if (Status_for_review_Or_audit == "AUT" && ds.Tables[0].Rows[0]["Signatures"] != null)
+                {
+                    imgSignature.ImageUrl = "~/" + BankProject.DataProvider.Customer.SignaturePath + "/" + ds.Tables[0].Rows[0]["Signatures"];
+                    lnkSignature.NavigateUrl = imgSignature.ImageUrl;
+                }
                 string date = ds.Tables[0].Rows[0]["ContactDate"].ToString();
                 if (date != "") 
                 {
@@ -411,6 +418,11 @@ namespace BankProject
 
         private void LoadDataToReview_Search_tai_Form(string CustomerID)  //load customer ACcount khi search tai form
         {
+            if (CustomerID.StartsWith("1"))
+            {
+                ShowMsgBox("This is Individual Customer. Please go to function Open Individual Customer to view the information.");
+                return;
+            }
             DataSet ds = TriTT.OPEN_CORPORATE_CUSTOMER_review_Account_search_tai_Form(CustomerID,"C");
             if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
             {
@@ -476,6 +488,13 @@ namespace BankProject
                 txtCustomerLiability.Text = ds.Tables[0].Rows[0]["CustomerLiability"].ToString();
                 txtLegacyRef.Text = ds.Tables[0].Rows[0]["LegacyRef"].ToString();
                 bientoancuc.StatusAccount_from_Search_action= ds.Tables[0].Rows[0]["Status"].ToString();
+                imgSignature.ImageUrl = "";
+                lnkSignature.NavigateUrl = "#";
+                if (bientoancuc.StatusAccount_from_Search_action == "AUT" && ds.Tables[0].Rows[0]["Signatures"] != null)
+                {
+                    imgSignature.ImageUrl = "~/" + BankProject.DataProvider.Customer.SignaturePath + "/" + ds.Tables[0].Rows[0]["Signatures"];
+                    lnkSignature.NavigateUrl = imgSignature.ImageUrl;
+                }
             }
         }
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
