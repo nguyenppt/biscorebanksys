@@ -19,7 +19,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected const int TabIssueLCAddNew = 92;
         protected const int TabIssueLCAmend = 204;
         protected const int TabIssueLCCancel = 205;
-        protected const int TabIssueLCClose = 264;
+        public const int TabIssueLCClose = 264;
         //
         protected double Amount = 0;
         protected double Amount_Old = 0;
@@ -55,11 +55,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             }
             else
-            {
-                GenerateVAT();
+            {                
                 if (TabId == TabIssueLCAddNew)
                 {
                     GenerateLCCode();
+                    GenerateVAT();
                 }
             }
 
@@ -77,7 +77,52 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
             if (TabId == TabIssueLCClose)
             {
-                
+                RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                if (dataRow != null)
+                {
+                    //divMT700.Visible = true;
+                    //divMT740.Visible = true;
+                    bc.Commont.SetTatusFormControls(this.Controls, false);                    
+                    //
+                    string CloseStatus = "";
+                    if (dataRow["CloseStatus"] != DBNull.Value) CloseStatus = dataRow["CloseStatus"].ToString();
+                    if (String.IsNullOrEmpty(CloseStatus))
+                    {
+                        //Kiểm tra xem LC có đủ điều kiện Close ?
+                        DataTable tbMessage = bd.IssueLC.ImportLCIsValidToClose(txtCode.Text);
+                        string Message = tbMessage.Rows[0]["Message"].ToString();
+                        if (String.IsNullOrEmpty(Message))
+                        {
+                            //Cho phep close
+                            RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                            divCloseLC.Visible = true;
+                            txtGenerateDelivery.Enabled = true;
+                            txtExternalReference.Enabled = true;
+                            txtClosingRemark.Enabled = true;
+                        }
+                        else
+                            lblError.Text = Message;
+                    }
+                    else if (CloseStatus.Equals(bd.TransactionStatus.UNA))
+                    {
+                        if (!String.IsNullOrEmpty(Request.QueryString["disable"]))
+                        {
+                            //approve
+                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                            divCloseLC.Visible = true;
+                            txtGenerateDelivery.Enabled = false;
+                            txtGenerateDelivery.Text = dataRow["CloseGenerateDelivery"].ToString();
+                            txtExternalReference.Enabled = false;
+                            txtExternalReference.Text = dataRow["CloseExternalReference"].ToString();
+                            txtClosingRemark.Enabled = false;
+                            txtClosingRemark.Text = dataRow["CloseRemark"].ToString();
+                        }
+                    }
+                    else
+                        lblError.Text = "This LC closed !";
+                }
             }
 
             Session["DataKey"] = txtCode.Text;
@@ -870,16 +915,19 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
             switch (commandName)
             {
-                case "commit":
-                    SaveData();
-
+                case bc.Commands.Commit:
+                    if (TabId == TabIssueLCClose)
+                        bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.UNA, txtGenerateDelivery.Text, txtExternalReference.Text, txtClosingRemark.Text);
+                    else
+                        SaveData();
                     Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
                     break;
 
-                case "Preview":
+                case bc.Commands.Preview:
                     switch (TabId)
                     {
                         case TabIssueLCAddNew: // Issue LC
+                        case TabIssueLCClose:
                             Response.Redirect(EditUrl("preview_issuelc"));
                             break;
 
@@ -893,23 +941,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     }
                     break;
 
-                case "authorize":
-                    bd.SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.AUT, UserId.ToString(), TabId);
+                case bc.Commands.Authorize:
+                    if (TabId == TabIssueLCClose)
+                        bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.AUT);
+                    else
+                        bd.SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.AUT, UserId.ToString(), TabId);
 
                     Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
                     break;
 
-                case "reverse":
-                    bd.SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.REV, UserId.ToString(), TabId);
+                case bc.Commands.Reverse:
+                    if (TabId == TabIssueLCClose)
+                        bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.REV);
+                    else
+                        bd.SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.REV, UserId.ToString(), TabId);
 
-                    // Active control
-                    SetDisableByReview(true);
-
-                    // ko cho Authorize/Preview
-                    LoadToolBar(false);
-                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                    RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                    Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
                     break;
             }
         }
@@ -2491,169 +2538,68 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }              
         
         #region Module Report
-        protected void btnIssueLC_MT700Report_Click(object sender, EventArgs e)
+        private void showDocuments(string templateFilePath, DataSet dsSource, string saveAsFileName)
         {
             Aspose.Words.License license = new Aspose.Words.License();
             license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_MT700.doc");
             //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_MT700_Report(txtCode.Text);
-
+            Aspose.Words.Document doc = new Aspose.Words.Document(templateFilePath);
             // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
+            doc.MailMerge.ExecuteWithRegions(dsSource);
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IssueLC_MT700_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save(saveAsFileName, Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+        }
+        protected void btnIssueLC_MT700Report_Click(object sender, EventArgs e)
+        {
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_MT700.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_MT700_Report(txtCode.Text), "IssueLC_MT700_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
         protected void btnIssueLC_MT740Report_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_MT740.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_MT740_Report(txtCode.Text);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IssueLC_MT740_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_MT740.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_MT740_Report(txtCode.Text), "IssueLC_MT740_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
         protected void btnIssueLC_VATReport_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_VAT.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_VAT_Report(txtCode.Text, UserInfo.Username, TabId);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IssueLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_VAT.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_VAT_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
         protected void btnIssueLC_NHapNgoaiBangReport_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_PHIEUNHAPNGOAIBANG.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username, TabId);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IssueLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_PHIEUNHAPNGOAIBANG.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
 
         protected void btnAmentLCReport_XuatNgoaiBang_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_PHIEUXUATNGOAIBANG.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("AmendLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_PHIEUXUATNGOAIBANG.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
         protected void btnAmentLCReport_NhapNgoaiBang_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_PHIEUNHAPNGOAIBANG.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUNHAPNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("AmendLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_PHIEUNHAPNGOAIBANG.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUNHAPNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
         protected void btnAmentLCReport_VAT_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_VAT.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionAmendmentsVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_VAT.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+        }
+        protected void btnAmentLCReport_MT707_Click(object sender, EventArgs e)
+        {
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT707.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_MT707_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
 
         protected void btnCancelLC_XUATNGOAIBANG_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_PHIEUXUATNGOAIBANG.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("CancelLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_PHIEUXUATNGOAIBANG.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "CancelLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
         protected void btnCancelLC_VAT_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_VAT.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("CancelLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_VAT.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "CancelLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
         }
         #endregion
 

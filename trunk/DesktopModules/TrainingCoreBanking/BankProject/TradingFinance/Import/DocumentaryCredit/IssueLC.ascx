@@ -22,7 +22,7 @@
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
             
-            if (button.get_commandName() == "print") {
+            if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
                 args.set_cancel(true);
 
                 switch (tabId) {
@@ -157,7 +157,7 @@
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
             </telerik:RadToolBarButton>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-                ToolTip="Preview" Value="btPreview" CommandName="Preview">
+                ToolTip="Preview" Value="btPreview" CommandName="preview">
             </telerik:RadToolBarButton>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
                 ToolTip="Authorize" Value="btAuthorize" CommandName="authorize">
@@ -198,8 +198,7 @@
         </ul>
     </telerik:RadCodeBlock>
     
-    <div id="Main" class="dnnClear">
-        
+    <div id="Main" class="dnnClear">        
         <div runat="server" id="divCancelLC">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
@@ -222,6 +221,37 @@
                         <telerik:RadTextBox ID="txtCancelRemark" runat="server" Width="355" />
                     </td>
                 </tr>
+                <tr><td colspan="2"><hr /></td></tr>
+            </table>
+        </div>
+
+        <div runat="server" id="divCloseLC" visible="false">
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="MyLable">Generate Delivery ?</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtGenerateDelivery" runat="server" Width="355" />
+                    </td>
+                </tr>
+                <tr style="color:#CCC;">
+                    <td class="MyLable">Closing Date</td>
+                    <td class="MyContent">
+                        <asp:Label ID="lblClosingDate" runat="server" Text=""></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">External Reference</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtExternalReference" runat="server" Width="355" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">Closing Remark</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtClosingRemark" runat="server" Width="355" />
+                    </td>
+                </tr>
+                <tr><td colspan="2"><hr /></td></tr>
             </table>
         </div>
 
@@ -4074,6 +4104,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />
 <div style="visibility:hidden;"><asp:Button ID="btnAmentLCReport_XuatNgoaiBang" runat="server" OnClick="btnAmentLCReport_XuatNgoaiBang_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnAmentLCReport_NhapNgoaiBang" runat="server" OnClick="btnAmentLCReport_NhapNgoaiBang_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnAmentLCReport_VAT" runat="server" OnClick="btnAmentLCReport_VAT_Click" Text="Search" /></div>
+<div style="visibility:hidden;"><asp:Button ID="btnAmentLCReport_MT707" runat="server" OnClick="btnAmentLCReport_MT707_Click" Text="Search" /></div>
 
 <div style="visibility:hidden;"><asp:Button ID="btnCancelLC_XUATNGOAIBANG" runat="server" OnClick="btnCancelLC_XUATNGOAIBANG_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnCancelLC_VAT" runat="server" OnClick="btnCancelLC_VAT_Click" Text="Search" /></div>
