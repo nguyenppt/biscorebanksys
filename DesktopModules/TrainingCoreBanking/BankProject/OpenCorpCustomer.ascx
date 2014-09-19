@@ -10,7 +10,7 @@
 </script>
 <div>
      <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%"
-        OnButtonClick="OnRadToolBarClick">
+        OnButtonClick="OnRadToolBarClick"  >
         <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
@@ -311,7 +311,7 @@
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Doc Issue Date:</td>
+                    <td class="MyLable">Doc Issue Date</td>
                     <td class="MyContent" width="300">
                         <telerik:RadDatePicker ID="RadDatePicker1" runat="server" TabIndex="19"></telerik:RadDatePicker>
                     </td>
@@ -336,7 +336,7 @@
 
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Position:</td>
+                <td class="MyLable">Position</td>
                 <td class="MyContent" width="300">
                     <telerik:RadTextBox ID="txtPosition" runat="server" TabIndex="22" ValidationGroup="Group1" />
                 </td>
@@ -488,6 +488,13 @@
                 <td class="MyLable">Company Book</td>
                    <td >CHI NHANH TAN BINH</td>
             </tr>
+                <tr>
+                    <td class="MyLable">Signature</td>
+                    <td class="MyContent">
+                         <asp:HyperLink ID="lnkSignature" runat="server" Target="_blank">
+                         <asp:Image ID="imgSignature" runat="server" CssClass="imgSignaturePreview" /></asp:HyperLink>
+                    </td>
+                </tr>
         </table>
 
     </div>
