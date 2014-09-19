@@ -230,23 +230,32 @@
                 <tr>
                     <td class="MyLable">Generate Delivery ?</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtGenerateDelivery" runat="server" Width="355" />
+                        <telerik:RadComboBox ID="cboGenerateDelivery"
+                        MarkFirstMatch="True"
+                        AllowCustomText="false"
+                        runat="server" Width="355">
+                        <Items>
+                            <telerik:RadComboBoxItem Value="" Text="" />
+                            <telerik:RadComboBoxItem Value="YES" Text="YES" />
+                            <telerik:RadComboBoxItem Value="NO" Text="NO" />
+                        </Items>
+                    </telerik:RadComboBox>
                     </td>
                 </tr>
                 <tr style="color:#CCC;">
-                    <td class="MyLable">Closing Date</td>
+                    <td class="MyLable">Closed Date</td>
                     <td class="MyContent">
-                        <asp:Label ID="lblClosingDate" runat="server" Text=""></asp:Label>
+                        <telerik:RadTextBox ID="txtClosedDate" runat="server" Width="355" Enabled="false" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">External Reference</td>
+                    <td class="MyLable">Contingent Expiry Date</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtExternalReference" runat="server" Width="355" />
+                        <telerik:RadDatePicker ID="txtExternalReference" runat="server" Width="355" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Closing Remark</td>
+                    <td class="MyLable">Closed Remark</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtClosingRemark" runat="server" Width="355" />
                     </td>

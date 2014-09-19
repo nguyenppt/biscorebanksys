@@ -96,7 +96,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             //Cho phep close
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                             divCloseLC.Visible = true;
-                            txtGenerateDelivery.Enabled = true;
+                            txtClosedDate.Text = DateTime.Now.ToString("MM/dd/yyyy");
+                            cboGenerateDelivery.Enabled = true;
                             txtExternalReference.Enabled = true;
                             txtClosingRemark.Enabled = true;
                         }
@@ -112,10 +113,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             RadToolBar1.FindItemByValue("btReverse").Enabled = true;
                             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
                             divCloseLC.Visible = true;
-                            txtGenerateDelivery.Enabled = false;
-                            txtGenerateDelivery.Text = dataRow["CloseGenerateDelivery"].ToString();
+                            txtClosedDate.Text = dataRow["CloseDate"].ToString();
+                            cboGenerateDelivery.Enabled = false;
+                            cboGenerateDelivery.SelectedValue = dataRow["CloseGenerateDelivery"].ToString();
                             txtExternalReference.Enabled = false;
-                            txtExternalReference.Text = dataRow["CloseExternalReference"].ToString();
+                            if (dataRow["CloseExternalReference"] != DBNull.Value && !String.IsNullOrEmpty(dataRow["CloseExternalReference"].ToString()))
+                                txtExternalReference.SelectedDate = Convert.ToDateTime(dataRow["CloseExternalReference"]);
                             txtClosingRemark.Enabled = false;
                             txtClosingRemark.Text = dataRow["CloseRemark"].ToString();
                         }
@@ -917,7 +920,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             {
                 case bc.Commands.Commit:
                     if (TabId == TabIssueLCClose)
-                        bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.UNA, txtGenerateDelivery.Text, txtExternalReference.Text, txtClosingRemark.Text);
+                    {
+                        string ExternalReference = "";
+                        if (txtExternalReference.SelectedDate.HasValue) ExternalReference = txtExternalReference.SelectedDate.Value.ToString("MM/dd/yyyy");
+                        bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.UNA, cboGenerateDelivery.SelectedValue, ExternalReference, txtClosingRemark.Text);
+                    }
                     else
                         SaveData();
                     Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
