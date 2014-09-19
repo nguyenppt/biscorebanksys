@@ -69,7 +69,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
             }
 
-          
+
         }
         //DateTime? startDate = null;
         //DateTime? endDate = null;
@@ -99,19 +99,20 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
             {
                 amount.Value = (double?)discountedAccount.DPAmountLCY.Value;
                 amountPri.Value = (double?)discountedAccount.AmmountLCY.Value;
-                lblAmount.Text = discountedAccount.AmmountLCY.ToString();
-                lbTotalIntAmt.Text = discountedAccount.DPAmountLCY.ToString();
+                lblAmount.Text = String.Format("{0:#,###.##}", discountedAccount.AmmountLCY.ToString());
+                lbTotalIntAmt.Text = String.Format("{0:#,###.##}", discountedAccount.DPAmountLCY);
             }
-            else {
+            else
+            {
                 amount.Value = (double?)discountedAccount.DPAmountFCY.Value;
                 amountPri.Value = (double?)discountedAccount.AmountFCY.Value;
-                lblAmount.Text = discountedAccount.AmountFCY.ToString();
-                lbTotalIntAmt.Text = discountedAccount.DPAmountFCY.ToString();
+                lblAmount.Text = String.Format("{0:#,###.##}", discountedAccount.AmountFCY.ToString());
+                lbTotalIntAmt.Text = String.Format("{0:#,###.##}", discountedAccount.DPAmountFCY);
             }
             lbValueDate.Text = discountedAccount.TDValueDate.Value.ToString("dd/MM/yyyy");
-           
+
             lbInterestRate.Text = discountedAccount.TDInterestRate.ToString();
-            
+
             lblCrAccforPrincipal.Text = string.Format("{0} - {1}", discountedAccount.TDWorkingAccountId, discountedAccount.TDWorkingAccountName);
             txtCrAccforInterest.Text = lblCrAccforPrincipal.Text;
 
@@ -119,7 +120,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
             DIlbCustomer.Text = lblCrAccforPrincipal.Text;
             DIlblCurrency.Text = discountedAccount.TDCurrency;
             DILblDrAccount.Text = string.Format("{0} - {1}", discountedAccount.DPDrAccountId, discountedAccount.DPDrAccountName);
-                       
+
             DIlbNarrative.Text = discountedAccount.DPNarrative;
             BuildCurrency(accountOpen.Currency);
             txtForTeller.Text = UserInfo.Username;
@@ -128,7 +129,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
             BuildCreditAccount(debitAccount);
             DIrcbCreditAccount.SelectedValue = discountedAccount.DebitAccount;
 
-            lblDebitAccount.Text = debitAccount.Where(r => r.Code == discountedAccount.DebitAccount).Select(r=>r.AccountTitle).FirstOrDefault();
+            lblDebitAccount.Text = debitAccount.Where(r => r.Code == discountedAccount.DebitAccount).Select(r => r.AccountTitle).FirstOrDefault();
 
             if (accountOpen.Currency == "VND")
             {
@@ -142,7 +143,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
                 DIlbAmtPaid.Value = (discountedAccount.DPAmountFCY.HasValue ? (double?)discountedAccount.DPAmountFCY.Value : 0);
             }
 
-             ComAmount(DateTime.Now, interestRate.Value);
+            ComAmount(DateTime.Now, interestRate.Value);
 
             //review
             rdpNewMatDate.SelectedDate = discountedAccount.CloseDate.HasValue ? (DateTime?)discountedAccount.CloseDate.Value : DateTime.Now;
@@ -170,10 +171,38 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
         private void ComAmount(DateTime? matDate, double? locInterestRate)
         {
             if (!locInterestRate.HasValue) return;
+            if (accountCurrency.Text.Equals("VND"))
+            {
+                locInterestRate = 1; //it should take from interested rate table
+            }
+            else if (accountCurrency.Text.Equals("USD"))
+            {
+                locInterestRate = 0.3;
+            }
+            else if (accountCurrency.Text.Equals("EUR"))
+            {
+                locInterestRate = 0.5;
+            }
+            else
+            {
+                locInterestRate = 1;
+            }
+            //var intAmt = String.IsNullOrEmpty(lbTotalIntAmt.Text) ? 0.0 : Double.Parse(lbTotalIntAmt.Text);//so tien lai ung truoc
+            //var amount = String.IsNullOrEmpty(lblAmount.Text) ? 0.0 : Double.Parse(lblAmount.Text);//so tien gui
+            //var interestPerDay = (locInterestRate / 36000) * amount;//
+            //var noOfInterestDay = matDate.Value.Subtract(startDate.SelectedDate.Value).Days;
+
+
+            //var totalAmount = (amount - intAmt) + (noOfInterestDay * interestPerDay);
+
+
+
+
             var dayTerm = endDate.SelectedDate.Value.Subtract(startDate.SelectedDate.Value).Days;
             var totalCloseDate = matDate.Value.Subtract(startDate.SelectedDate.Value).Days;
-            var n = totalCloseDate / dayTerm;
+            var n = (double)totalCloseDate / (double)dayTerm;
             var d = totalCloseDate - (dayTerm * n);
+
             var interestRateDay = locInterestRate.Value / 100 / 360;
             var amountPaid = d * interestRateDay * amountPri.Value;
 
@@ -195,7 +224,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
         protected void ServerComAmountNewInterestRate(object sender, EventArgs e)
         {
             ComAmount(RdpIntRateVDate.SelectedDate, rtbEligibleInterest.Value);
-           
+
         }
         private void BuildCreditAccount(IList<InternalBankAccount> debitAccount)
         {
@@ -207,9 +236,9 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
             DIrcbCreditAccount.DataTextField = "AccountTitle";
             DIrcbCreditAccount.DataSource = debitAccount;
             DIrcbCreditAccount.DataBind();
-            
+
         }
-        
+
         private void BuildCurrency(string currency)
         {
             var currentcys = new List<Currency>();
@@ -232,7 +261,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
                 DIrcbCurrencyPaid.Enabled = true;
             }
         }
-        
+
         private void LoadToolBar()
         {
             switch (Mode)
@@ -249,7 +278,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
         }
         private void LoadDataForDropdowns()
         {
-          
+
         }
         #endregion
 
@@ -257,7 +286,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
         {
             //lblCustomer.Text = rcbCustomerID.SelectedValue.ToString();
         }
-       
+
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
             var toolBarButton = e.Item as RadToolBarButton;
