@@ -121,22 +121,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCloseLC;
         
         /// <summary>
-        /// txtGenerateDelivery control.
+        /// cboGenerateDelivery control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtGenerateDelivery;
+        protected global::Telerik.Web.UI.RadComboBox cboGenerateDelivery;
         
         /// <summary>
-        /// lblClosingDate control.
+        /// txtClosedDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblClosingDate;
+        protected global::Telerik.Web.UI.RadTextBox txtClosedDate;
         
         /// <summary>
         /// txtExternalReference control.
@@ -145,7 +145,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtExternalReference;
+        protected global::Telerik.Web.UI.RadDatePicker txtExternalReference;
         
         /// <summary>
         /// txtClosingRemark control.
