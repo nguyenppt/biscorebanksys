@@ -2039,6 +2039,11 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT", code, userloginname, TabId);
         }
 
+        public static DataSet B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(string code, string userloginname, int TabId)
+        {
+            return sqldata.ndkExecuteDataset("B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT", code, userloginname, TabId);
+        }
+
         public static DataTable B_BFOREIGNEXCHANGE_GetByCreditAccount(string Code, string Currency, string CustomerName,
                                                                       string CallFrom)
         {
