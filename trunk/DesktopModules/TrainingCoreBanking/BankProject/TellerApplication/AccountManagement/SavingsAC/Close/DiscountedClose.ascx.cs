@@ -201,12 +201,13 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
             var dayTerm = endDate.SelectedDate.Value.Subtract(startDate.SelectedDate.Value).Days;
             var totalCloseDate = matDate.Value.Subtract(startDate.SelectedDate.Value).Days;
             var n = (double)totalCloseDate / (double)dayTerm;
-            var d = totalCloseDate - (dayTerm * n);
+            //var d = totalCloseDate - (dayTerm * n);
 
-            var interestRateDay = locInterestRate.Value / 100 / 360;
-            var amountPaid = d * interestRateDay * amountPri.Value;
+            var interestRateDay = (locInterestRate.Value * amountPri.Value) / 100 / 360;
+            var amountPaid = totalCloseDate * interestRateDay;
 
-            var totalAmount = amountPri.Value + (amount.Value * (n - 1)) + amountPaid;
+            //var totalAmount = amountPri.Value + (amount.Value * (n - 1)) + amountPaid;
+            var totalAmount = amountPri.Value - (amount.Value) + amountPaid;
             if (accountCurrency.Text == "VND")
             {
                 DItxtAmountLCY.Value = (double?)totalAmount;
