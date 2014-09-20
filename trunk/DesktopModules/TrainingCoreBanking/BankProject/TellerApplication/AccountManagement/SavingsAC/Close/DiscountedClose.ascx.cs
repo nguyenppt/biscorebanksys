@@ -187,27 +187,15 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
             {
                 locInterestRate = 1;
             }
-            //var intAmt = String.IsNullOrEmpty(lbTotalIntAmt.Text) ? 0.0 : Double.Parse(lbTotalIntAmt.Text);//so tien lai ung truoc
-            //var amount = String.IsNullOrEmpty(lblAmount.Text) ? 0.0 : Double.Parse(lblAmount.Text);//so tien gui
-            //var interestPerDay = (locInterestRate / 36000) * amount;//
-            //var noOfInterestDay = matDate.Value.Subtract(startDate.SelectedDate.Value).Days;
-
-
-            //var totalAmount = (amount - intAmt) + (noOfInterestDay * interestPerDay);
-
-
-
 
             var dayTerm = endDate.SelectedDate.Value.Subtract(startDate.SelectedDate.Value).Days;
             var totalCloseDate = matDate.Value.Subtract(startDate.SelectedDate.Value).Days;
-            var n = (double)totalCloseDate / (double)dayTerm;
-            //var d = totalCloseDate - (dayTerm * n);
+            var n = totalCloseDate / dayTerm;
+            var d = totalCloseDate - (dayTerm * n);
+            var interestRateDay = locInterestRate.Value / 100 / 360;
+            var amountPaid = d * interestRateDay * amountPri.Value;
 
-            var interestRateDay = (locInterestRate.Value * amountPri.Value) / 100 / 360;
-            var amountPaid = totalCloseDate * interestRateDay;
-
-            //var totalAmount = amountPri.Value + (amount.Value * (n - 1)) + amountPaid;
-            var totalAmount = amountPri.Value - (amount.Value) + amountPaid;
+            var totalAmount = amountPri.Value + (amount.Value * (n - 1)) + amountPaid;
             if (accountCurrency.Text == "VND")
             {
                 DItxtAmountLCY.Value = (double?)totalAmount;
@@ -216,6 +204,25 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
             {
                 DItxtAmountFCY.Value = (double?)totalAmount;
             }
+           
+            //var dayTerm = endDate.SelectedDate.Value.Subtract(startDate.SelectedDate.Value).Days;
+            //var totalCloseDate = matDate.Value.Subtract(startDate.SelectedDate.Value).Days;
+            //var n = (double)totalCloseDate / (double)dayTerm;
+            //var d = totalCloseDate - (dayTerm * n);
+
+            //var interestRateDay = (locInterestRate.Value * amountPri.Value) / 100 / 360;
+            //var amountPaid = totalCloseDate * interestRateDay;
+
+            ////var totalAmount = amountPri.Value + (amount.Value * (n - 1)) + amountPaid;
+            //var totalAmount = amountPri.Value - (amount.Value) + amountPaid;
+            //if (accountCurrency.Text == "VND")
+            //{
+            //    DItxtAmountLCY.Value = (double?)totalAmount;
+            //}
+            //else
+            //{
+            //    DItxtAmountFCY.Value = (double?)totalAmount;
+            //}
         }
         protected void ServerComAmount(object sender, EventArgs e)
         {
