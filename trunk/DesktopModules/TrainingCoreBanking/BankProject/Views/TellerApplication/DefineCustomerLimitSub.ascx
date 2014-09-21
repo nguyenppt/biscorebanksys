@@ -222,33 +222,7 @@
             
                </table>
         <table width="100%" cellpading="0" cellspacing="0">
-             <tr>
-                <td class="MyLable"width="150">Coll Reqd Amt:</td>
-                <td class="MyContent" width="330">
-                    <asp:Label ID="lblCollReqdAmt" runat="server" />
-                </td>
-                <td class="MyLable" >Coll Reqd Pct:</td>
-                <td class="MyContent">
-                    <asp:Label ID="lblColReqdPct" runat="server" />
-                </td>
-            </tr>
-            <tr>
-                <td class="MyLable">Up to Period:</td>
-                <td class="MyContent">
-                     <asp:Label ID="lblUpToPeriod" runat="server" />
-                </td>
-                <td class="MyLable"></td>
-                <td class="MyContent"></td>
-            </tr> <tr>
-                <td class="MyLable">Period Amount:</td>
-                <td class="MyContent">
-                    <asp:Label ID="lblPeriodAmt" runat="server" />
-                </td>
-                <td class="MyLable">Period Pct:</td>
-                <td class="MyContent">
-                    <asp:Label ID="lblPeriodPct" runat="server" />
-                </td>
-            </tr>
+             
             <tr>
                 <td class="MyLable">Maximum Secured:</td>
                 <td class="MyContent" width="150">
@@ -285,7 +259,7 @@
                 <td class="MyContent"></td>
             </tr>
             <tr>
-                <td class="MyLable">Collateral Right:</td>
+                <td class="MyLable">Collateral ID:</td>
                 <td class="MyContent">
                     <asp:Label ID="lblCollateralRight" runat="server" />
                 </td>
@@ -338,6 +312,33 @@
                         </telerik:RadComboBox>
                 </td>  
                 <td><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%></td>             
+            </tr>
+            <tr style="visibility:hidden;">
+                <td class="MyLable"width="150">Coll Reqd Amt:</td>
+                <td class="MyContent" width="330">
+                    <asp:Label ID="lblCollReqdAmt" runat="server" />
+                </td>
+                <td class="MyLable" >Coll Reqd Pct:</td>
+                <td class="MyContent">
+                    <asp:Label ID="lblColReqdPct" runat="server" />
+                </td>
+            </tr>
+            <tr style="visibility:hidden;">
+                <td class="MyLable">Up to Period:</td>
+                <td class="MyContent">
+                     <asp:Label ID="lblUpToPeriod" runat="server" />
+                </td>
+                <td class="MyLable"></td>
+                <td class="MyContent"></td>
+            </tr> <tr style="visibility:hidden;">
+                <td class="MyLable">Period Amount:</td>
+                <td class="MyContent">
+                    <asp:Label ID="lblPeriodAmt" runat="server" />
+                </td>
+                <td class="MyLable">Period Pct:</td>
+                <td class="MyContent">
+                    <asp:Label ID="lblPeriodPct" runat="server" />
+                </td>
             </tr>
                </table>
     </fieldset>

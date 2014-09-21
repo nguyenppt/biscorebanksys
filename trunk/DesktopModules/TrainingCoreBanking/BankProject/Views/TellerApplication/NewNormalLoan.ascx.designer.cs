@@ -229,15 +229,6 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadComboBox rcbCreditToAccount;
         
         /// <summary>
-        /// rcbCommitmentID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbCommitmentID;
-        
-        /// <summary>
         /// RequiredFieldValidator8 control.
         /// </summary>
         /// <remarks>
@@ -506,6 +497,33 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbCollateralID;
+        
+        /// <summary>
+        /// rcbCollateralID1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbCollateralID1;
+        
+        /// <summary>
+        /// rcbCollateralID2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbCollateralID2;
+        
+        /// <summary>
+        /// rcbCollateralID3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbCollateralID3;
         
         /// <summary>
         /// rtbAmountAlloc control.
