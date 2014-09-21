@@ -394,7 +394,7 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Close
             infoTb.Columns.Add("BranchName");
             infoTb.Columns.Add("BranchAdd");
             infoTb.Columns.Add("BranchTel");
-                       
+            infoTb.Columns.Add("SaveingAccountType");        /// added 20/9/2014   
             var row = infoTb.NewRow();
             if (From == "arrear")
             {
