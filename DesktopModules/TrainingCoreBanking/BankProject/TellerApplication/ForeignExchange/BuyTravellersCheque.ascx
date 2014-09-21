@@ -2,6 +2,11 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"  />
+<style>
+    .labelDisabled {
+        color: darkgray !important;
+    }
+</style>
 <script type="text/javascript">
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
@@ -69,8 +74,6 @@
                     </asp:RequiredFieldValidator>
                 </td>
             </tr>
-        </table>
-        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Address <span class="Required">(*)</span></td>
                 <td class="MyContent"><telerik:RadTextBox ID="tbAddress" runat="server" Width="410"></telerik:RadTextBox></td>
@@ -85,9 +88,6 @@
                     </asp:RequiredFieldValidator>
                 </td>
             </tr>
-        </table>
-
-        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Passport No. <span class="Required">(*)</span></td>
                 <td class="MyContent"><telerik:RadTextBox ID="tbPassportNo" runat="server" Width="160"></telerik:RadTextBox></td>
@@ -102,16 +102,14 @@
                     </asp:RequiredFieldValidator>
                 </td>
             </tr>
-        </table>
-        <table cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Date of isssue</td>
                 <td class="MyContent" style="width:160px;"><telerik:RadDatePicker ID="tbDateOfIsssue" runat="server" Width="140"></telerik:RadDatePicker></td>
-                <td class="MyLable" style="width:80px;">Place of Iss</td>
-                <td class="MyContent"><telerik:RadTextBox ID="tbPlaceOfIss" runat="server" Width="160"></telerik:RadTextBox></td>
+                <td><table><tr>
+                    <td class="MyLable" style="width:80px;">Place of Iss</td>
+                    <td class="MyContent"><telerik:RadTextBox ID="tbPlaceOfIss" runat="server" Width="160"></telerik:RadTextBox></td>
+                </tr></table></td>
             </tr>
-        </table>
-        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Phone No.</td>
                 <td class="MyContent">
@@ -121,6 +119,7 @@
                     DisplayMask="(###)###-####"></telerik:RadMaskedTextBox>--%>
 
                 </td>
+                <td></td>
             </tr>
         </table>
         <hr />
@@ -143,8 +142,6 @@
             </tr>
         </table>
         <hr />
-        <asp:UpdatePanel id="UpdatePanel1" runat="server" >
-            <ContentTemplate>
         <table width="100%" cellpadding="0" cellspacing="0">
              <tr>
                 <td class="MyLable">TC Currency
@@ -154,9 +151,9 @@
                     <telerik:RadComboBox ID="cmbTCCurrency"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
-                        OnClientSelectedIndexChanged="cmbTCCurrency_SelectedIndexChanged"
-                        AutoPostBack="true"
-                        runat="server" >
+                        AutoPostBack="false"
+                        runat="server"
+                        OnClientSelectedIndexChanged="cmbTCCurrency_OnClientSelectedIndexChanged">
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
                             <telerik:RadComboBoxItem Value="USD" Text="USD" />
@@ -181,22 +178,18 @@
             <tr>
                 <td class="MyLable">Dr Account</td>
                 <td class="MyContent" >
-                    <telerik:RadAjaxPanel ID="RadAjaxPanelDebitAcc" runat="server" OnAjaxRequest="RadAjaxPanelDebitAcc_AjaxRequest"><telerik:RadComboBox ID="rcbDrAccount"                        
-                        OnClientSelectedIndexChanged="DrAccount_OnClientSelectedIndexChanged"                        
+                    <telerik:RadComboBox ID="rcbDrAccount"                        
                         MarkFirstMatch="True"
                         AllowCustomText="false"
-                        runat="server" >
-                       
-                    </telerik:RadComboBox></telerik:RadAjaxPanel> <asp:Label ID="lbDrAccount" runat="server"></asp:Label></td>             
+                        runat="server" >                       
+                    </telerik:RadComboBox> <asp:Label ID="lbDrAccount" runat="server"></asp:Label></td>             
             </tr>
         </table>
-            </ContentTemplate>
-            </asp:UpdatePanel>
          <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">TC Amount <span class="Required">(*)</span></td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="tbTCAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="2" ClientEvents-OnValueChanged="OnAmountValueChanged"/>
+                    <telerik:RadNumericTextBox ID="tbTCAmount" runat="server" ClientEvents-OnValueChanged ="tbTCAmount_OnValueChanged" />
                 </td>
                 <td>
                     <asp:RequiredFieldValidator
@@ -219,7 +212,7 @@
                     <telerik:RadComboBox ID="rcbCurrencyPaid"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
-                        runat="server" >
+                        runat="server" Enabled="true" >
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
                             <telerik:RadComboBoxItem Value="USD" Text="USD" />
@@ -261,7 +254,6 @@
                         MarkFirstMatch="True"
                         AllowCustomText="false"
                         Width="160"
-                        OnClientSelectedIndexChanged="CrAccount_OnClientSelectedIndexChanged"
                         runat="server" >
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
@@ -278,7 +270,7 @@
             <tr>
                 <td class="MyLable">Exchange Rate</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="tbExchangeRate" runat="server"  NumberFormat-DecimalDigits="0" ClientEvents-OnValueChanged="OnAmountValueChanged" />
+                    <telerik:RadNumericTextBox ID="tbExchangeRate" runat="server" />
                 </td>
             </tr>
         </table>
@@ -286,24 +278,24 @@
             <tr>
                 <td class="MyLable">Charge Amt LCY</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="tbChargeAmtLCY" runat="server"  NumberFormat-DecimalDigits="0" />
+                    <telerik:RadNumericTextBox ID="tbChargeAmtLCY" runat="server" />
                 </td>
             </tr>
         </table>
 
          <table width="100%" cellpadding="0" cellspacing="0">
-            <tr>
+            <tr class="labelDisabled">
                 <td class="MyLable">Charge Amt FCY</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="tbChargeAmtFCY" ReadOnly="true" runat="server"  NumberFormat-DecimalDigits="2"/>
+                    <telerik:RadNumericTextBox ID="tbChargeAmtFCY" ReadOnly="true" runat="server" />
                 </td>
             </tr>
         </table>
               <table width="100%" cellpadding="0" cellspacing="0">
-            <tr>
+            <tr class="labelDisabled">
                 <td class="MyLable">Amount Paid</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="tbAmountPaid" ReadOnly="true" runat="server"  NumberFormat-DecimalDigits="2"/>
+                    <telerik:RadNumericTextBox ID="tbAmountPaid" ReadOnly="true" runat="server" />
                 </td>
             </tr>
         </table>
@@ -380,7 +372,7 @@
          </td>
          <td class="MyLable">Unit <span class="Required">(*)</span></td>
          <td class="MyContent">
-             <telerik:RadNumericTextBox ID="rcbUnit" runat="server" NumberFormat-DecimalDigits="0" > </telerik:RadNumericTextBox>
+             <telerik:RadNumericTextBox ID="rcbUnit" runat="server"> </telerik:RadNumericTextBox>
              <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldrcbUnit"
@@ -457,8 +449,6 @@
         </table>
     </div>
 </div>
-<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" />
-</telerik:RadAjaxLoadingPanel>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
 <script type="text/javascript">
     $(document).ready(
@@ -496,91 +486,37 @@
             });
 
     });
-    function ValidatorUpdateIsValid() {
-        var teller = $('#<%= txtTellerId.ClientID%>').val();
-        var CustomerName = $('#<%= tbCustomerName.ClientID%>').val();
-        var Address = $('#<%= tbAddress.ClientID%>').val();
-        var PassportNo = $('#<%= tbPassportNo.ClientID%>').val();
-        var TCCurrency = $('#<%= cmbTCCurrency.ClientID%>').val();
-
-        Page_IsValid = teller != "" && CustomerName != "" && Address != "" && PassportNo != "" && TCCurrency != "";
-    }
 
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         var ttNo = $('#<%= txtId.ClientID%>').val();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            if (ttNo == null || ttNo == '') {
-                alert('TTNo require !');
-                return;
-            }
-            window.location = 'Default.aspx?tabid=<%=this.TabId%>&ttno=' + ttNo;
+            window.location = '<%=EditUrl("list")%>&lst=4appr';
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
-            window.location = '<%=EditUrl("BuyTravellersSchequeList")%>';
+            window.location = '<%=EditUrl("list")%>';
         }
 
     }
 
-    var lastClickedItem = null;
-    var clickCalledAfterRadprompt = false;
-    var clickCalledAfterRadconfirm = false;
-
-    function confirmCallbackFunction1(args) {
-        radconfirm("Unauthorised overdraft of USD on account 050001688331", confirmCallbackFunction2); //" + amtFCYDeposited + "
-    }
-
-    function confirmCallbackFunction2(args) {
-        clickCalledAfterRadconfirm = true;
-        lastClickedItem.click();
-        lastClickedItem = null;
-    }
-
-    function rcbCrAccount_SelectedIndexChanged() {
-        var labelElement = $('#<%= lbCrAccount.ClientID%>');
-        labelElement.html("Accounts Pble");
-    }
-
-    $("#<%=txtId.ClientID%>")
-        .keypress(function (event) {
-            if (event.which == 13) {
-                $find('<%=RadToolBar1.ClientID%>').findItemByValue("btPreview").click();
-            }
-        });
-
-        function TCAmount_ValueChanged() {
-            calculateAmountDebited();
+    function cmbTCCurrency_OnClientSelectedIndexChanged(sender, eventArgs) {
+        var objCurPaid = $find("<%= rcbCurrencyPaid.ClientID%>");
+        var curValue = $find("<%= cmbTCCurrency.ClientID%>").get_text();
+        if (objCurPaid.get_text() == '') {
+            objCurPaid.set_text(curValue);
         }
-
-        function loadDebitAccount() {
-            //alert('loadDebitAccount');
-            $find("<%= RadAjaxPanelDebitAcc.ClientID%>").ajaxRequestWithTarget("<%= RadAjaxPanelDebitAcc.UniqueID %>", "loadDebitAcc");
-    }
-
-    function cmbTCCurrency_SelectedIndexChanged() {
-        loadDebitAccount();
-        calculateAmountDebited();
-    }
-
-    function isCustomerNameChanged() {
-        var custName = $("#<%=tbCustomerName.ClientID%>").val();
-        var custNameOld = $("#<%=tbCustomerNameOld.ClientID%>").val();
-        if (custName != custNameOld) {
-            $("#<%=tbCustomerNameOld.ClientID%>").val(custName);
+        if (curValue != '') {
+            tbTCAmount_OnValueChanged();
         }
-
-        return (custName != custNameOld);
     }
-    $("#<%=tbCustomerName.ClientID%>")
-        .focusout(function () {
-            if (isCustomerNameChanged())
-                loadDebitAccount();
-        })
-        .keypress(function (event) {
-            if (event.which == 13) {
-                if (isCustomerNameChanged())
-                    loadDebitAccount();
-            }
-        });
+
+    function tbTCAmount_OnValueChanged() {
+        var TCAmount = Number($find("<%= tbTCAmount.ClientID%>").get_value());
+        var ChargeAmtFCY = TCAmount * 0.01;
+        $find("<%= tbChargeAmtFCY.ClientID%>").set_value(ChargeAmtFCY);
+        var exchangeRate = Number($find("<%= cmbTCCurrency.ClientID%>").get_value().split('#')[1]);
+        $find("<%= tbChargeAmtLCY.ClientID%>").set_value(ChargeAmtFCY * exchangeRate);
+        $find("<%= tbAmountPaid.ClientID%>").set_value(TCAmount - ChargeAmtFCY);
+    }
   </script>
 </telerik:RadCodeBlock>

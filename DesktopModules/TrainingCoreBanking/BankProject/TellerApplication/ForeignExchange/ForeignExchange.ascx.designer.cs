@@ -49,13 +49,40 @@ namespace BankProject.Views.TellerApplication.ForeignExchange {
         protected global::System.Web.UI.WebControls.TextBox txtId;
         
         /// <summary>
-        /// tbCustomerName control.
+        /// lblMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbCustomerName;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
+        /// tbCustomerNameOld control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField tbCustomerNameOld;
+        
+        /// <summary>
+        /// txtCustomerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtCustomerName;
         
         /// <summary>
         /// RequiredFieldtbCustomerName control.
@@ -67,13 +94,13 @@ namespace BankProject.Views.TellerApplication.ForeignExchange {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldtbCustomerName;
         
         /// <summary>
-        /// tbAddress control.
+        /// txtAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbAddress;
+        protected global::Telerik.Web.UI.RadTextBox txtAddress;
         
         /// <summary>
         /// RequiredFieldtbAddress control.
@@ -83,6 +110,33 @@ namespace BankProject.Views.TellerApplication.ForeignExchange {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldtbAddress;
+        
+        /// <summary>
+        /// txtPassportNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtPassportNo;
+        
+        /// <summary>
+        /// txtDateOfIsssue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtDateOfIsssue;
+        
+        /// <summary>
+        /// txtPlaceOfIss control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtPlaceOfIss;
         
         /// <summary>
         /// txtPhoneNo control.
@@ -112,121 +166,121 @@ namespace BankProject.Views.TellerApplication.ForeignExchange {
         protected global::Telerik.Web.UI.RadTextBox txtTellerId;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// cboDebitCurrency control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::Telerik.Web.UI.RadComboBox cboDebitCurrency;
         
         /// <summary>
-        /// cmbDebitCurrency control.
+        /// RequiredFieldcboDebitCurrency control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbDebitCurrency;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldcboDebitCurrency;
         
         /// <summary>
-        /// RequiredFieldcmbTCCurrency control.
+        /// cboDebitAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldcmbTCCurrency;
+        protected global::Telerik.Web.UI.RadComboBox cboDebitAccount;
         
         /// <summary>
-        /// rcbDebitAccount control.
+        /// lblDebitAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbDebitAccount;
+        protected global::System.Web.UI.WebControls.Label lblDebitAccount;
         
         /// <summary>
-        /// lblDebitAmtLCY control.
+        /// txtDebitAmtLCY control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDebitAmtLCY;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtDebitAmtLCY;
         
         /// <summary>
-        /// tbDebitAmtFCY control.
+        /// txtDebitAmtFCY control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox tbDebitAmtFCY;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtDebitAmtFCY;
         
         /// <summary>
-        /// rcbCurrencyPaid control.
+        /// cboCurrencyPaid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbCurrencyPaid;
+        protected global::Telerik.Web.UI.RadComboBox cboCurrencyPaid;
         
         /// <summary>
-        /// lblCurrencyPaid control.
+        /// RequiredFieldrcbCurrencyPaid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCurrencyPaid;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldrcbCurrencyPaid;
         
         /// <summary>
-        /// tbTellerIDCR control.
+        /// txtCrTellerId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbTellerIDCR;
+        protected global::Telerik.Web.UI.RadTextBox txtCrTellerId;
         
         /// <summary>
-        /// rcbCrAccount control.
+        /// cboCreditAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbCrAccount;
+        protected global::Telerik.Web.UI.RadComboBox cboCreditAccount;
         
         /// <summary>
-        /// lbCreditAccount control.
+        /// lbCrAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCreditAccount;
+        protected global::System.Web.UI.WebControls.Label lbCrAccount;
         
         /// <summary>
-        /// tbDealRate control.
+        /// txtDealRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox tbDealRate;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtDealRate;
         
         /// <summary>
-        /// lblAmountPaidToCust control.
+        /// txtAmountPaid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAmountPaidToCust;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtAmountPaid;
         
         /// <summary>
         /// txtNarrative control.
@@ -245,5 +299,14 @@ namespace BankProject.Views.TellerApplication.ForeignExchange {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvAudit;
+        
+        /// <summary>
+        /// RadCodeBlock1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCodeBlock RadCodeBlock1;
     }
 }

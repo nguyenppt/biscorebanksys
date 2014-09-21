@@ -117,9 +117,8 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                         //                        
                         bd.Teller.SellTravellersChequeUpdate("new", txtId.Text, tbCustomerName.Text, tbAddress.Text, tbPassportNo.Text, DateOfIsssue, tbPlaceOfIss.Text, txtPhoneNo.Text,
                             txtTellerId.Text, cmbTCCurrency.SelectedValue, rcbDebitAccount.SelectedValue, tbTCAmount.Value, rcbDrCurrency.SelectedValue, rcbCrAccount.SelectedValue, tbAmountDebited.Value, tbExchangeRate.Value, txtNarrative.Text, this.UserInfo.Username);
-                        bc.Commont.SetEmptyFormControls(this.Controls);
-                        this.txtId.Text = bd.Teller.GenerateTTId();
-                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !", "Default.aspx?TabId=" + TabId);
                     }
                     catch (Exception err)
                     {
@@ -137,17 +136,13 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                         if (commandName.Equals(bc.Commands.Authorize))
                         {
                             bd.Teller.SellTravellersChequeUpdateStatus(txtId.Text, bd.TransactionStatus.AUT, this.UserInfo.Username);
-                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Authozize complete !");
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Authozize complete !", "Default.aspx?TabId=" + TabId);
                         }
                         else
                         {
                             bd.Teller.SellTravellersChequeUpdateStatus(txtId.Text, bd.TransactionStatus.REV, this.UserInfo.Username);
-                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Reverse complete !");
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Reverse complete !", "Default.aspx?TabId=" + TabId);
                         }
-                        bc.Commont.SetEmptyFormControls(this.Controls);
-                        bc.Commont.SetTatusFormControls(this.Controls, true);
-                        this.txtId.Text = bd.Teller.GenerateTTId();
-                        loadToolBar(null);
                     }
                     catch (Exception err)
                     {

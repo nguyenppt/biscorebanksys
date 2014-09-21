@@ -14,28 +14,21 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
         {
             if (IsPostBack) return;
             //
-            try
-            {
-                DataTable tList = bd.Teller.ExchangeRate();
-                bc.Commont.initRadComboBox(ref cmbTCCurrency, "Title", "Value", tList);
-                bc.Commont.initRadComboBox(ref rcbCurrencyPaid, "Title", "Value", tList);
-                //
-                rcbCrAccount.DataSource = bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll();
-                rcbCrAccount.DataValueField = "Account";
-                rcbCrAccount.DataTextField = "Display";
-                rcbCrAccount.DataBind();
-                //
-            }
-            catch (Exception err)
-            {
-                lblMessage.Text = err.StackTrace;
-            }
+            DataTable tList = bd.Teller.ExchangeRate();
+            bc.Commont.initRadComboBox(ref cmbTCCurrency, "Title", "Value", tList);
+            bc.Commont.initRadComboBox(ref rcbCurrencyPaid, "Title", "Value", tList);
+            //
+            tList = bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll().Tables[0];
+            bc.Commont.initRadComboBox(ref rcbDrAccount, "Display", "Account", tList);
+            bc.Commont.initRadComboBox(ref rcbCrAccount, "Display", "Account", tList);
+            //
+            bc.Commont.initRadComboBox(ref rcbTCIssuer, "Text", "Value", bd.Teller.TellerForeignExchangeIssuer(TabId));
             //
             if (Request.QueryString["tid"] != null)
             {
                 txtId.Text = Request.QueryString["tid"];
                 string TTNo = txtId.Text;
-                DataTable dt = bd.Teller.SellTravellersChequeDetailOrList(TTNo, null);
+                DataTable dt = bd.Teller.BuyTravellersChequeDetailOrList(TTNo, null);
                 if (dt == null || dt.Rows.Count <= 0)
                 {
                     bc.Commont.SetEmptyFormControls(this.Controls);
@@ -60,26 +53,40 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                         break;
                     }
                 }
-                /*rcbDebitAccount.SelectedValue = dr["DebitAccount"].ToString();
+                rcbDrAccount.SelectedValue = dr["DrAccount"].ToString();
                 tbTCAmount.Value = Convert.ToDouble(dr["TCAmount"]);
-                for (int i = 0; i < rcbDrCurrency.Items.Count; i++)
+                //
+                for (int i = 0; i < rcbCurrencyPaid.Items.Count; i++)
                 {
-                    if (rcbDrCurrency.Items[i].Text.Equals(dr["DrCurrency"].ToString()))
+                    if (rcbCurrencyPaid.Items[i].Text.Equals(dr["CurrencyPaid"].ToString()))
                     {
-                        rcbDrCurrency.SelectedIndex = i;
+                        rcbCurrencyPaid.SelectedIndex = i;
                         break;
                     }
                 }
+                tbTellerIDCR.Text = dr["CrTellerID"].ToString();
                 rcbCrAccount.SelectedValue = dr["CrAccount"].ToString();
-                tbAmountDebited.Text = dr["AmountDebited"].ToString();
-                tbExchangeRate.Value = null;
                 if (dr["ExchangeRate"] != DBNull.Value)
-                    tbExchangeRate.Value = Convert.ToDouble(dr["ExchangeRate"]);*/
+                    tbExchangeRate.Value = Convert.ToDouble(dr["ExchangeRate"]);
+                if (dr["ChargeAmtLCY"] != DBNull.Value)
+                    tbChargeAmtLCY.Value = Convert.ToDouble(dr["ChargeAmtLCY"]);
+                if (dr["ChargeAmtFCY"] != DBNull.Value)
+                    tbChargeAmtFCY.Value = Convert.ToDouble(dr["ChargeAmtFCY"]);
+                if (dr["AmountPaid"] != DBNull.Value)
+                    tbAmountPaid.Value = Convert.ToDouble(dr["AmountPaid"]);
                 txtNarrative.Text = dr["Narrative"].ToString();
+                //
+                rcbTCIssuer.SelectedValue = dr["TCIssuer"].ToString();
+                rcbDenomination.SelectedValue = dr["Denomination"].ToString();
+                rcbUnit.Text = dr["Unit"].ToString();
+                rcbSerialNo.Text = dr["SerialNo"].ToString();
                 //
                 bc.Commont.SetTatusFormControls(this.Controls, false);
                 //
-                loadToolBar(dr["Status"].ToString());
+                if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
+                    loadToolBar(dr["Status"].ToString());
+                else
+                    loadToolBar(null);
             }
             else
             {
@@ -98,7 +105,7 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
             RadToolBar1.FindItemByValue("btCommitData").Enabled = String.IsNullOrEmpty(Status);
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = Status.Equals(bd.TransactionStatus.UNA);
-            RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.AUT);
+            RadToolBar1.FindItemByValue("btReverse").Enabled = Status.Equals(bd.TransactionStatus.UNA);
             RadToolBar1.FindItemByValue("btSearch").Enabled = true;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
             dvAudit.Visible = Status.Equals(bd.TransactionStatus.AUT);
@@ -117,11 +124,12 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                         if (tbDateOfIsssue.SelectedDate != null)
                             DateOfIsssue = tbDateOfIsssue.SelectedDate.Value.ToString("yyyyMMdd");
                         //                        
-                        /*bd.Teller.SellTravellersChequeUpdate("new", txtId.Text, tbCustomerName.Text, tbAddress.Text, tbPassportNo.Text, DateOfIsssue, tbPlaceOfIss.Text, txtPhoneNo.Text,
-                            txtTellerId.Text, cmbTCCurrency.SelectedValue, rcbDebitAccount.SelectedValue, tbTCAmount.Value, rcbDrCurrency.SelectedValue, rcbCrAccount.SelectedValue, tbAmountDebited.Value, tbExchangeRate.Value, txtNarrative.Text, this.UserInfo.Username);*/
-                        bc.Commont.SetEmptyFormControls(this.Controls);
-                        this.txtId.Text = bd.Teller.GenerateTTId();
-                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
+                        bd.Teller.BuyTravellersChequeUpdate("new", txtId.Text, tbCustomerName.Text, tbAddress.Text, tbPassportNo.Text, DateOfIsssue, tbPlaceOfIss.Text, txtPhoneNo.Text,
+                            txtTellerId.Text, cmbTCCurrency.SelectedValue, rcbDrAccount.SelectedValue, tbTCAmount.Value, rcbCurrencyPaid.SelectedValue, tbTellerIDCR.Text, rcbCrAccount.SelectedValue,
+                            tbExchangeRate.Value, tbChargeAmtLCY.Value, tbChargeAmtFCY.Value, tbAmountPaid.Value, txtNarrative.Text, 
+                            rcbTCIssuer.SelectedValue, rcbDenomination.SelectedValue, rcbUnit.Text, rcbSerialNo.Text, this.UserInfo.Username);
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !", "Default.aspx?TabId=" + TabId);
                     }
                     catch (Exception err)
                     {
@@ -138,42 +146,20 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                     {
                         if (commandName.Equals(bc.Commands.Authorize))
                         {
-                            bd.Teller.SellTravellersChequeUpdateStatus(txtId.Text, bd.TransactionStatus.AUT, this.UserInfo.Username);
-                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Authozize complete !");
+                            bd.Teller.BuyTravellersChequeUpdateStatus(txtId.Text, bd.TransactionStatus.AUT, this.UserInfo.Username);
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Authozize complete !", "Default.aspx?TabId=" + TabId);
                         }
                         else
                         {
-                            bd.Teller.SellTravellersChequeUpdateStatus(txtId.Text, bd.TransactionStatus.REV, this.UserInfo.Username);
-                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Reverse complete !");
+                            bd.Teller.BuyTravellersChequeUpdateStatus(txtId.Text, bd.TransactionStatus.REV, this.UserInfo.Username);
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Reverse complete !", "Default.aspx?TabId=" + TabId);
                         }
-                        bc.Commont.SetEmptyFormControls(this.Controls);
-                        bc.Commont.SetTatusFormControls(this.Controls, true);
-                        this.txtId.Text = bd.Teller.GenerateTTId();
-                        loadToolBar(null);
                     }
                     catch (Exception err)
                     {
                         lblMessage.Text = err.StackTrace;
                         bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Error : " + err.Message);
                     }
-                    break;
-            }
-        }
-
-        protected void RadAjaxPanelDebitAcc_AjaxRequest(object sender, AjaxRequestEventArgs e)
-        {
-            switch (e.Argument)
-            {
-                case "loadDebitAcc":
-                    string Currency = "";
-                    if (cmbTCCurrency.SelectedIndex >= 0)
-                        Currency = cmbTCCurrency.Items[cmbTCCurrency.SelectedIndex].Text;
-                    /*rcbDebitAccount.DataSource = bd.Database.B_BDRFROMACCOUNT_GetByCustomer(tbCustomerName.Text, Currency);
-                    rcbDebitAccount.DataValueField = "Id";
-                    rcbDebitAccount.DataTextField = "DisplayHasCurrency";
-                    rcbDebitAccount.DataBind();*/
-                    break;
-                default:
                     break;
             }
         }

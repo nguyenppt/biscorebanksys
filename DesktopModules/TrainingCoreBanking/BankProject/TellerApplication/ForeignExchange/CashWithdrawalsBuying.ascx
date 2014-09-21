@@ -358,10 +358,10 @@
         }
 
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            window.location = '<%=EditUrl("chitiet")%>&lst=4appr';
+            window.location = '<%=EditUrl("list")%>&lst=4appr';
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
-            window.location = '<%=EditUrl("chitiet")%>';
+            window.location = '<%=EditUrl("list")%>';
         }
     }
 
@@ -383,13 +383,6 @@
             lastClickedItem = null;
         }
     }
-
-    $("#<%=txtId.ClientID%>")
-        .keypress(function (event) {
-            if (event.which == 13) {
-                window.location = 'Default.aspx?tabid=<%=this.TabId%>&tid=' + $('#<%=txtId.ClientID%>').val();
-            }
-        });
 
     function OnExchangeRateChanged() {
         var objAmtLCY = $find("<%= txtAmtLCY.ClientID %>");
