@@ -24,7 +24,7 @@ namespace BankProject.DataProvider
                                                                             CustomerId = @CustomerId AND Currency = @Currency AND [Status] = 'AUT' AND [AccountStatus] = 'OPEN'";
 
         private readonly string QUERY_GET_WORKING_ACCOUNT_BY_CUSTOMERID_FOR_OPEN = @"SELECT AccountCode FROM BOPENACCOUNT WHERE 
-                                                                            CustomerId = @CustomerId AND Currency = @Currency AND [Status] = 'AUT' AND [AccountStatus] = 'OPEN' AND  ProductLineID = '20003'";
+                                                                            CustomerId = @CustomerId AND Currency = @Currency AND [Status] = 'AUT' AND [AccountStatus] = 'OPEN' AND  ProductLineID = '10007'";
 
         private readonly string QUERY_GET_ALL_PRODUCT_TYPE_BY_CODE = @"SELECT * FROM BPRODUCTTYPE WHERE ProductCode = @ProductCode";
 
@@ -184,7 +184,7 @@ namespace BankProject.DataProvider
         private readonly string QUERY_GET_ALL_WORKING_ACCOUNT = @"SELECT [ID] ,[AccountCode],[CustomerID],[CustomerType],[CustomerName] ,[ProductLineID]
                                                                         ,[Currency]
                                                                         from [dbo].[BOPENACCOUNT]
-                                                                        WHERE [Status] = 'AUT' and [AccountStatus] = 'OPEN' AND CategoryType = 2
+                                                                        WHERE [Status] = 'AUT' and [AccountStatus] = 'OPEN' AND CategoryType = 1
                                                                         ORDER BY [ID] Desc";
 
         private readonly string QUERY_GET_ALL_ACCOUNT_OPEN_BY_ID = @"SELECT [ID] ,[AccountCode],[CustomerID],[CustomerType],[ProductLineID]
