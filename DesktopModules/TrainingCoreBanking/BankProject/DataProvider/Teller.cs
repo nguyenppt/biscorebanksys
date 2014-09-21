@@ -203,5 +203,34 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("P_WUXOOMCashAdvanceUpdateStatus", TTNo, Status, UserUpdate);
         }
         //
+        public static void ExchangeBanknotesManyDenoUpdate(string Command, string TTNo, string CustomerName, string CustomerAddress, string CustomerPassportNo,
+            string CustomerPassportDateOfIssue, string CustomerPassportPlaceOfIssue, string CustomerPhoneNo, string TellerID, string DebitCurrency,
+            string DebitAccount, double? DebitAmount, string Narrative, DateTime? ValueDate, string CrTellerID, string CreditAccount, double? ExchangeRate,
+            double? AmountPaid, string UserExecute)
+        {
+            sqldata.ndkExecuteNonQuery("P_ExchangeBanknotesManyDenoUpdate", Command, TTNo, CustomerName, CustomerAddress, CustomerPassportNo, CustomerPassportDateOfIssue,
+            CustomerPassportPlaceOfIssue, CustomerPhoneNo, TellerID, DebitCurrency, DebitAccount, DebitAmount, Narrative, ValueDate,
+            CrTellerID, CreditAccount, ExchangeRate, AmountPaid, UserExecute);
+        }
+        public static DataTable ExchangeBanknotesManyDenoDetailOrList(string Status)
+        {
+            return ExchangeBanknotesManyDenoDetailOrList(null, Status, null, null, null);
+        }
+        public static DataTable ExchangeBanknotesManyDenoDetailOrList(string TTNo, string Status)
+        {
+            return ExchangeBanknotesManyDenoDetailOrList(TTNo, Status, null, null, null);
+        }
+        public static DataTable ExchangeBanknotesManyDenoDetailOrList(string CustomerName, string PassportNo, string PhoneNo)
+        {
+            return ExchangeBanknotesManyDenoDetailOrList(null, null, CustomerName, PassportNo, PhoneNo);
+        }
+        private static DataTable ExchangeBanknotesManyDenoDetailOrList(string TTNo, string Status, string CustomerName, string PassportNo, string PhoneNo)
+        {
+            return sqldata.ndkExecuteDataset("P_ExchangeBanknotesManyDenoDetailOrList", TTNo, Status, CustomerName, PassportNo, PhoneNo).Tables[0];
+        }
+        public static void ExchangeBanknotesManyDenoUpdateStatus(string TTNo, string Status, string UserUpdate)
+        {
+            sqldata.ndkExecuteNonQuery("P_ExchangeBanknotesManyDenoUpdateStatus", TTNo, Status, UserUpdate);
+        }
     }
 }
