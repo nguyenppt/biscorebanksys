@@ -7,6 +7,25 @@ using System.Linq.Expressions;
 
 namespace BankProject.DBRespository
 {
+    /******************************************************************************
+     * Description:
+     *      Concerate Repository for Customer Limit Sub Remository
+     * Created By: 
+     *      Nghia Le
+     ******************************************************************************/
+
+
+    /**
+     * *****HISTORY****
+     * Date                 By                  Description of change
+     * **************************************************************************
+     * 10-Sep-2014          Nghia               Init code
+     *
+     * 
+     * 
+     * 
+     * ****************************************************************************
+     */
     public class CustomerLimitSubRepository:BaseRepository<BCUSTOMER_LIMIT_SUB>
     {
         public IQueryable<BCUSTOMER_LIMIT_SUB> FindLimitCusSub(string custID)

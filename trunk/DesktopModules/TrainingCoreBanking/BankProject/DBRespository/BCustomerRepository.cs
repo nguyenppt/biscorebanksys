@@ -7,6 +7,25 @@ using System.Web;
 
 namespace BankProject.DBRespository
 {
+    /******************************************************************************
+     * Description:
+     *      Concerate Repository for Accout Customer Infor
+     * Created By: 
+     *      Nghia Le
+     ******************************************************************************/
+
+
+    /**
+     * *****HISTORY****
+     * Date                 By                  Description of change
+     * **************************************************************************
+     * 10-Sep-2014          Nghia               Init code
+     *
+     * 
+     * 
+     * 
+     * ****************************************************************************
+     */
     public class BCustomerRepository:BaseRepository<BCUSTOMER_INFO>
     {
         public IQueryable<BCUSTOMER_INFO> getCustomerList(String _status)
