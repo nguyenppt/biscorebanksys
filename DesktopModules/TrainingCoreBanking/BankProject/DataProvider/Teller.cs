@@ -78,5 +78,130 @@ namespace BankProject.DataProvider
         {
             sqldata.ndkExecuteNonQuery("P_SellTravellersChequeUpdateStatus", TTNo, Status, UserUpdate);
         }
+        //
+        public static DataTable TellerForeignExchangeList(int TabId, string Status)
+        {
+            return sqldata.ndkExecuteDataset("P_TellerForeignExchangeList", TabId, Status).Tables[0];
+        }
+        //
+        public static DataTable TellerForeignExchangeIssuer(int TabId)
+        {
+            DataTable tbList = new DataTable();
+            tbList.Columns.Add(new DataColumn("Text", typeof(string)));
+            tbList.Columns.Add(new DataColumn("Value", typeof(string)));
+            //
+            DataRow dr = tbList.NewRow();
+            dr["Value"] = "AMEX";
+            dr["Text"] = dr["Value"];
+            tbList.Rows.Add(dr);
+            //
+            dr = tbList.NewRow();
+            dr["Value"] = "CITI CORP";
+            dr["Text"] = dr["Value"];
+            tbList.Rows.Add(dr);
+            //
+            dr = tbList.NewRow();
+            dr["Value"] = "MASTER CARD";
+            dr["Text"] = dr["Value"];
+            tbList.Rows.Add(dr);
+            //
+            dr = tbList.NewRow();
+            dr["Value"] = "THOMAS COOK";
+            dr["Text"] = dr["Value"];
+            tbList.Rows.Add(dr);
+            //
+            dr = tbList.NewRow();
+            dr["Value"] = "VISA";
+            dr["Text"] = dr["Value"];
+            tbList.Rows.Add(dr);
+
+            return tbList;
+        }
+        //
+        public static void BuyTravellersChequeUpdate(string Command, string TTNo, string CustomerName, string CustomerAddress, string CustomerPassportNo, string CustomerPassportDateOfIssue, string CustomerPassportPlaceOfIssue, string CustomerPhoneNo, string TellerID, string TCCurrency, string DrAccount, double? TCAmount, string CurrencyPaid, string CrTellerID, string CrAccount, double? ExchangeRate, double? ChargeAmtLCY, double? ChargeAmtFCY, double? AmountPaid, string Narrative, string TCIssuer, string Denomination, string Unit, string SerialNo, string UserExecute)
+        {
+            sqldata.ndkExecuteNonQuery("P_BuyTravellersChequeUpdate", Command, TTNo, CustomerName, CustomerAddress, CustomerPassportNo, CustomerPassportDateOfIssue , CustomerPassportPlaceOfIssue , CustomerPhoneNo , TellerID, TCCurrency, DrAccount , TCAmount, CurrencyPaid, CrTellerID, CrAccount , ExchangeRate , ChargeAmtLCY , ChargeAmtFCY , AmountPaid , Narrative , TCIssuer, Denomination, Unit, SerialNo, UserExecute);
+        }
+        public static DataTable BuyTravellersChequeDetailOrList(string Status)
+        {
+            return BuyTravellersChequeDetailOrList(null, Status, null, null, null);
+        }
+        public static DataTable BuyTravellersChequeDetailOrList(string TTNo, string Status)
+        {
+            return BuyTravellersChequeDetailOrList(TTNo, Status, null, null, null);
+        }
+        public static DataTable BuyTravellersChequeDetailOrList(string CustomerName, string PassportNo, string PhoneNo)
+        {
+            return BuyTravellersChequeDetailOrList(null, null, CustomerName, PassportNo, PhoneNo);
+        }
+        private static DataTable BuyTravellersChequeDetailOrList(string TTNo, string Status, string CustomerName, string PassportNo, string PhoneNo)
+        {
+            return sqldata.ndkExecuteDataset("P_BuyTravellersChequeDetailOrList", TTNo, Status, CustomerName, PassportNo, PhoneNo).Tables[0];
+        }
+        public static void BuyTravellersChequeUpdateStatus(string TTNo, string Status, string UserUpdate)
+        {
+            sqldata.ndkExecuteNonQuery("P_BuyTravellersChequeUpdateStatus", TTNo, Status, UserUpdate);
+        }
+        //
+        public static void ForeignExchangeUpdate(string Command, string TTNo, string CustomerName, string CustomerAddress, string CustomerPassportNo, 
+            string CustomerPassportDateOfIssue, string CustomerPassportPlaceOfIssue, string CustomerPhoneNo, string TellerID, string DebitCurrency, 
+            string DebitAccount, double? DebitAmtLCY, double? DebitAmtFCY, string CurrencyPaid, string CrTellerID, string CreditAccount, double? DealRate, 
+            double? AmountPaid, string Narrative, string UserExecute)
+        {
+            sqldata.ndkExecuteNonQuery("P_ForeignExchangeUpdate", Command, TTNo, CustomerName, CustomerAddress, CustomerPassportNo, CustomerPassportDateOfIssue,
+            CustomerPassportPlaceOfIssue, CustomerPhoneNo, TellerID, DebitCurrency, DebitAccount, DebitAmtLCY, DebitAmtFCY,
+            CurrencyPaid, CrTellerID, CreditAccount, DealRate, AmountPaid, Narrative, UserExecute);
+        }
+        public static DataTable ForeignExchangeDetailOrList(string Status)
+        {
+            return ForeignExchangeDetailOrList(null, Status, null, null, null);
+        }
+        public static DataTable ForeignExchangeDetailOrList(string TTNo, string Status)
+        {
+            return ForeignExchangeDetailOrList(TTNo, Status, null, null, null);
+        }
+        public static DataTable ForeignExchangeDetailOrList(string CustomerName, string PassportNo, string PhoneNo)
+        {
+            return ForeignExchangeDetailOrList(null, null, CustomerName, PassportNo, PhoneNo);
+        }
+        private static DataTable ForeignExchangeDetailOrList(string TTNo, string Status, string CustomerName, string PassportNo, string PhoneNo)
+        {
+            return sqldata.ndkExecuteDataset("P_ForeignExchangeDetailOrList", TTNo, Status, CustomerName, PassportNo, PhoneNo).Tables[0];
+        }
+        public static void ForeignExchangeUpdateStatus(string TTNo, string Status, string UserUpdate)
+        {
+            sqldata.ndkExecuteNonQuery("P_ForeignExchangeUpdateStatus", TTNo, Status, UserUpdate);
+        }
+        //
+        public static void WUXOOMCashAdvanceUpdate(string Command, string TTNo, string CustomerName, string CustomerAddress, string CustomerPassportNo,
+            string CustomerPassportDateOfIssue, string CustomerPassportPlaceOfIssue, string CustomerPhoneNo, string TellerID, string DebitCurrency,
+            string DebitAccount, double? DebitAmtLCY, double? DebitAmtFCY, string CreditCurrency, string CrTellerID, string CreditAccount, double? DealRate,
+            double? AmountPaid, string Narrative, string UserExecute)
+        {
+            sqldata.ndkExecuteNonQuery("P_WUXOOMCashAdvanceUpdate", Command, TTNo, CustomerName, CustomerAddress, CustomerPassportNo, CustomerPassportDateOfIssue,
+            CustomerPassportPlaceOfIssue, CustomerPhoneNo, TellerID, DebitCurrency, DebitAccount, DebitAmtLCY, DebitAmtFCY,
+            CreditCurrency, CrTellerID, CreditAccount, DealRate, AmountPaid, Narrative, UserExecute);
+        }
+        public static DataTable WUXOOMCashAdvanceDetailOrList(string Status)
+        {
+            return WUXOOMCashAdvanceDetailOrList(null, Status, null, null, null);
+        }
+        public static DataTable WUXOOMCashAdvanceDetailOrList(string TTNo, string Status)
+        {
+            return WUXOOMCashAdvanceDetailOrList(TTNo, Status, null, null, null);
+        }
+        public static DataTable WUXOOMCashAdvanceDetailOrList(string CustomerName, string PassportNo, string PhoneNo)
+        {
+            return WUXOOMCashAdvanceDetailOrList(null, null, CustomerName, PassportNo, PhoneNo);
+        }
+        private static DataTable WUXOOMCashAdvanceDetailOrList(string TTNo, string Status, string CustomerName, string PassportNo, string PhoneNo)
+        {
+            return sqldata.ndkExecuteDataset("P_WUXOOMCashAdvanceDetailOrList", TTNo, Status, CustomerName, PassportNo, PhoneNo).Tables[0];
+        }
+        public static void WUXOOMCashAdvanceUpdateStatus(string TTNo, string Status, string UserUpdate)
+        {
+            sqldata.ndkExecuteNonQuery("P_WUXOOMCashAdvanceUpdateStatus", TTNo, Status, UserUpdate);
+        }
+        //
     }
 }
