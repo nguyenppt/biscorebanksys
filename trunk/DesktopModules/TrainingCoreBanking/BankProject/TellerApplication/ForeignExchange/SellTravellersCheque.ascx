@@ -373,10 +373,10 @@
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
-            window.location = '<%=EditUrl("SellTravellersSchequeList")%>&lst=4appr';
+            window.location = '<%=EditUrl("list")%>&lst=4appr';
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
-            window.location = '<%=EditUrl("SellTravellersSchequeList")%>';
+            window.location = '<%=EditUrl("list")%>';
         }
     }
 
@@ -398,13 +398,6 @@
         var labelElement = $('#<%= lbCrAccount.ClientID%>');
         labelElement.html("Accounts Pble");
     }
-
-    $("#<%=txtId.ClientID%>")
-        .keypress(function (event) {
-            if (event.which == 13) {
-                window.location = 'Default.aspx?tabid=<%=this.TabId%>&tid=' + $('#<%=txtId.ClientID%>').val();
-            }
-        });
 
     function TCAmount_ValueChanged() {
         calculateAmountDebited();        

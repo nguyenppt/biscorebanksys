@@ -54,7 +54,7 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                 txtNarrative.Text = dr["Narrative"].ToString();
                 lblAmtPaidToCust.Value = Convert.ToDouble(dr["AmtPaidToCust"]);
                 //
-                if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
+                if (String.IsNullOrEmpty(Request.QueryString["lst"]))
                     loadToolBar(null);
                 else
                     loadToolBar(dr["Status"].ToString());
@@ -91,9 +91,8 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                     try
                     {
                         bd.Teller.InsertCashWithrawalForBuyingTC(txtId.Text, cmbCustomerAccount.SelectedItem.Text.Split('-')[0].Trim(), lbCurrency.Text, txtExchangeRate.Value, txtAmtLCY.Value, txtAmtFCY.Value, cmbCurrencyPaid.SelectedItem.Text, txtDealRate.Value, lblAmtPaidToCust.Value, txtTellerId.Text, cmbWaiveCharges.SelectedItem.Value, txtNarrative.Text, this.UserInfo.Username);
-                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !");
-                        bc.Commont.SetEmptyFormControls(this.Controls);
-                        this.txtId.Text = bd.Teller.GenerateTTId();
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !", "Default.aspx?TabId=" + TabId);
                     }
                     catch (Exception err)
                     {
@@ -111,17 +110,13 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                         if (commandName.Equals(bc.Commands.Authorize))
                         {
                             bd.Teller.UpdateCashWithrawalForBuyingTC(txtId.Text, bd.TransactionStatus.AUT);
-                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Authozize complete !");
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Authozize complete !", "Default.aspx?TabId=" + TabId);
                         }
                         else
                         {
                             bd.Teller.UpdateCashWithrawalForBuyingTC(txtId.Text, bd.TransactionStatus.REV);
-                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Reverse complete !");
+                            bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Reverse complete !", "Default.aspx?TabId=" + TabId);
                         }
-                        bc.Commont.SetEmptyFormControls(this.Controls);
-                        bc.Commont.SetTatusFormControls(this.Controls, true);
-                        this.txtId.Text = bd.Teller.GenerateTTId();
-                        loadToolBar(null);                        
                     }
                     catch (Exception err)
                     {
