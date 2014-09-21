@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
@@ -10,7 +7,7 @@ namespace BankProject.Controls
 {
     public class Commont
     {
-        public static void SetTatusFormControls(ControlCollection ChildCtrls,bool enabel)
+        public static void SetTatusFormControls(ControlCollection ChildCtrls, bool enabel)
         {
             foreach (Control Ctrl in ChildCtrls)
             {
@@ -34,8 +31,6 @@ namespace BankProject.Controls
                     ((VVNumberBox)Ctrl).SetEnable(enabel);
                 else if (Ctrl is VVDatePicker)
                     ((VVDatePicker)Ctrl).SetEnable(enabel);
-                else if (Ctrl is RadEditor)
-                    ((RadEditor)Ctrl).Enabled = enabel;
                 else
                     SetTatusFormControls(Ctrl.Controls, enabel);
             }
@@ -70,16 +65,20 @@ namespace BankProject.Controls
             }
         }
         //Xem Signature Management -> Amend.ascx
-        public static void ShowClientMessageBox(Page pageControl, System.Type typeOfPageControl, string contents, int width = 420, int hiegth = 150)
+        public static void ShowClientMessageBox(Page pageControl, System.Type typeOfPageControl, string contents, int width = 420, int heigth = 150)
+        {
+            ShowClientMessageBox(pageControl, typeOfPageControl, contents, null);
+        }
+        public static void ShowClientMessageBox(Page pageControl, System.Type typeOfPageControl, string contents, string redirectPage, int width = 420, int heigth = 150)
         {
             string radalertscript =
-                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
-                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + heigth +
+                "', 'Warning');" + (String.IsNullOrEmpty(redirectPage) ? "" : "window.location='" + redirectPage + "';") + " Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
             pageControl.ClientScript.RegisterStartupScript(typeOfPageControl, "radalert", radalertscript);
         }
         //Xem Signature Management -> Enquiry.ascx
         public static string GenerateEnquiryButtons(string TransId, string Status, int? viewTabId, int? amendTabId, int? reverseTabId, int? approveTabId)
-        {
+        { 
             return GenerateEnquiryButtons(TransId, Status, viewTabId, amendTabId, reverseTabId, approveTabId, false);
         }
         public static string GenerateEnquiryButtons(string TransId, string Status, int? viewTabId, int? amendTabId, int? reverseTabId, int? approveTabId, bool allowAmendAuthorizeTrans)
@@ -110,10 +109,10 @@ namespace BankProject.Controls
             if (!String.IsNullOrEmpty(amendURL))
             {
                 url = "#";
-                icon = "<img src=\"Icons/bank/edit.png\" class=\"enquiryButton enquiryButtonDisable\" />";
+                icon = "<img src=\"Icons/bank/edit.png\" class=\"enquiryButton enquiryButtonDisable\" />";                
                 if (Status.Equals(BankProject.DataProvider.TransactionStatus.UNA) ||
                     (Status.Equals(BankProject.DataProvider.TransactionStatus.AUT) && allowAmendAuthorizeTrans))
-                {
+                {                    
                     url = amendURL;
                     icon = "<img src=\"Icons/bank/edit.png\" class=\"enquiryButton\" />";
                 }
@@ -122,24 +121,24 @@ namespace BankProject.Controls
             //Reverse
             if (!String.IsNullOrEmpty(reverseURL))
             {
-                icon = "<img src=\"Icons/bank/delete.png\" class=\"enquiryButton\" />";
-                url = reverseURL;
-                if (!Status.Equals(BankProject.DataProvider.TransactionStatus.UNA))
+                url = "#";
+                icon = "<img src=\"Icons/bank/delete.png\" class=\"enquiryButton enquiryButtonDisable\" />";                
+                if (Status.Equals(BankProject.DataProvider.TransactionStatus.UNA))
                 {
-                    url = "#";
-                    icon = "<img src=\"Icons/bank/delete.png\" class=\"enquiryButton enquiryButtonDisable\" />";
+                    icon = "<img src=\"Icons/bank/delete.png\" class=\"enquiryButton\" />";
+                    url = reverseURL;
                 }
                 urls += "<a href=\"" + url + "\" title=\"Reverse\">" + icon + "</a>";
             }
             //Approve
             if (!String.IsNullOrEmpty(approveURL))
             {
-                icon = "<img src=\"Icons/bank/approve.png\" class=\"enquiryButton\" />";
-                url = approveURL;
-                if (!Status.Equals(BankProject.DataProvider.TransactionStatus.UNA))
+                url = "#";
+                icon = "<img src=\"Icons/bank/approve.png\" class=\"enquiryButton enquiryButtonDisable\" />";                
+                if (Status.Equals(BankProject.DataProvider.TransactionStatus.UNA))
                 {
-                    url = "#";
-                    icon = "<img src=\"Icons/bank/approve.png\" class=\"enquiryButton enquiryButtonDisable\" />";
+                    icon = "<img src=\"Icons/bank/approve.png\" class=\"enquiryButton\" />";
+                    url = approveURL;
                 }
                 urls += "<a href=\"" + url + "\" title=\"Approve\">" + icon + "</a>";
             }
@@ -148,7 +147,7 @@ namespace BankProject.Controls
         }
         //
         public static void initRadComboBox(ref RadComboBox cboList, string DataTextField, string DataValueField, object DataSource)
-        {            
+        {
             cboList.DataTextField = DataTextField;
             cboList.DataValueField = DataValueField;
             cboList.DataSource = DataSource;
