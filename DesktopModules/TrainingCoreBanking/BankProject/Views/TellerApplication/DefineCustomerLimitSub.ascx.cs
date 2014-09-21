@@ -168,7 +168,13 @@ namespace BankProject.Views.TellerApplication
                             // check Internal amount and Maximum Total
                             if ((tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0) < (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
                             { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
-                            //if (TriTT.B_CUSTOMER_LIMIT_SUB_check_SubLimitID(LimitID).Tables[0].Rows.Count == 0)
+                            //check Maximum Secured & Unsecured 
+
+                            if ((tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0) + (tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0) < (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
+                            {
+                                ShowMsgBox("Maximum Secured Value + Maximum Unsecured Value must be greater than Maximum Total Value");
+                                return;
+                            }
                             if (Global_Limit_Was_Created == false) //In case User co tinh tao HM con khi HM cha chua dc tao
                             {
                                 ShowMsgBox("The Product Limit that You have entered does not have Global Limit " + LimitID.Substring(8, 4) + ". Please Create Global Limit before do this action !");
@@ -180,7 +186,7 @@ namespace BankProject.Views.TellerApplication
                             , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
                             tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
                             , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
-                            Response.Redirect("Default.aspx?tabid="+ this.TabId.ToString());
+                            Response.Redirect("Default.aspx?tabid=361");
                             
                             //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
                         }
