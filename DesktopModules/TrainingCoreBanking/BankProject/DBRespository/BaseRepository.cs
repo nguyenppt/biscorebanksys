@@ -12,6 +12,27 @@ using System.Diagnostics;
 
 namespace BankProject.DBRespository
 {
+
+    /******************************************************************************
+     * Description:
+     *      Abstract Base repository to have commont CRUD method.
+     *      Don't recommend to change it, it is part of Framework
+     * Created By: 
+     *      Nghia Le
+     ******************************************************************************/
+
+
+    /**
+     * *****HISTORY****
+     * Date                 By                  Description of change
+     * **************************************************************************
+     * 10-Sep-2014          Nghia               Init code
+     *
+     * 
+     * 
+     * 
+     * ****************************************************************************
+     */
     public class BaseRepository<TEntity> : IRepositoryDB<TEntity> where TEntity : class
     {
         protected System.Data.Entity.DbContext context;
