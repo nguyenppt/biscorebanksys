@@ -40,7 +40,7 @@ namespace BankProject
 
             cmbCategory.Items.Add(new RadComboBoxItem("", ""));
             cmbCategory.AppendDataBoundItems = true;
-            cmbCategory.DataSource = DataProvider.DataTam.BCATEGORY_GetAll();
+            cmbCategory.DataSource = DataProvider.DataTam.BCATEGORY_GetAll_2();
             cmbCategory.DataTextField = "Display";
             cmbCategory.DataValueField = "ID";
             cmbCategory.DataBind();
