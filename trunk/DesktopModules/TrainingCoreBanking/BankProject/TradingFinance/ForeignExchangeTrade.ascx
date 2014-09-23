@@ -197,21 +197,14 @@
                 <td class="MyLable">Buy Currency
                     </td>
                 <td class="MyContent">
-                    <telerik:RadComboBox ID="rcbBuyCurrency"
+                    <telerik:RadComboBox AppendDataBoundItems="True"
+                        ID="rcbBuyCurrency"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
                         AutoPostBack="True"
                         OnSelectedIndexChanged="rcbBuyCurrency_OnSelectedIndexChanged"
                         OnClientSelectedIndexChanged="OnAmountValueChanged"
                         runat="server" >
-                        <Items>
-                            <telerik:RadComboBoxItem Value="" Text="" />
-                            <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                            <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                            <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                            <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                            <telerik:RadComboBoxItem Value="VND" Text="VND" />
-                        </Items>
                     </telerik:RadComboBox>
                 </td>
             </tr>
@@ -241,8 +234,6 @@
                             <telerik:RadComboBoxItem Value="" Text="" />
                             <telerik:RadComboBoxItem Value="USD" Text="USD" />
                             <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                            <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                            <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
                             <telerik:RadComboBoxItem Value="VND" Text="VND" />
                         </Items>
                     </telerik:RadComboBox>

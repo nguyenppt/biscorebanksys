@@ -4,6 +4,8 @@ using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using System.Data;
 using BankProject.Repository;
+using bd = BankProject.DataProvider;
+using bc = BankProject.Controls;
 
 namespace BankProject.Views.TellerApplication
 {
@@ -34,6 +36,10 @@ namespace BankProject.Views.TellerApplication
             rcbCounterparty.DataTextField = "CustomerName";
             rcbCounterparty.DataValueField = "CustomerID";
             rcbCounterparty.DataBind();
+
+            
+            var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
+            bc.Commont.initRadComboBox(ref rcbBuyCurrency, "Code", "Code", dsCurrency);
 
             if (Request.QueryString["IsAuthorize"] != null)
             {
