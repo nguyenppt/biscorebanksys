@@ -14,6 +14,8 @@ using BankProject.DBContext;
 using BankProject.Common;
 using BankProject.Business;
 
+
+
 namespace BankProject.Views.TellerApplication
 {
     public partial class NewNormalLoan : DotNetNuke.Entities.Modules.PortalModuleBase
@@ -21,6 +23,7 @@ namespace BankProject.Views.TellerApplication
         INewNormalLoanBusiness<BNEWNORMALLOAN> loanBusiness;
         BNEWNORMALLOAN normalLoanEntryM;
         DataTable dtchitiet = new DataTable();
+        bool isApprovalRole = false;
 
         private string REFIX_MACODE = "LD";
         bool isEdit = false;
@@ -28,6 +31,14 @@ namespace BankProject.Views.TellerApplication
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.Params["role"] != null)
+            {
+                if (Request.Params["role"].Equals("authorize"))
+                {
+                    isApprovalRole = true;
+                }
+            }
+
             if (Request.Params["tabid"] != null)
             {
                 if (Request.Params["tabid"] == "202")
@@ -118,7 +129,9 @@ namespace BankProject.Views.TellerApplication
                 case "search":
                     this.Response.Redirect(EditUrl("preview"));
                     break;
-
+                case "print":
+                    PrintLoanDocument();
+                    break;
                 default:
                     RadToolBar1.FindItemByValue("btnCommit").Enabled = true;
                     break;
@@ -135,7 +148,7 @@ namespace BankProject.Views.TellerApplication
 
         protected void rcbCustomerID_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadCollareralID(rcbCustomerID.SelectedValue, null, null, null,null);
+            LoadCollareralID(rcbCustomerID.SelectedValue, null, null, null, null);
             LoadLimitReferenceInfor(rcbCustomerID.SelectedValue, null);
             LoadAllAccount(rcbCustomerID.SelectedValue, rcbCurrency.SelectedValue, null, null, null, null);
         }
@@ -279,36 +292,61 @@ namespace BankProject.Views.TellerApplication
             //process Unauthorize
             if (isAmendPage)
             {
-                if (!isAuthorize)
+                if (!isAuthorize)//Khong du dieu kien de Amend
                 {
+
                     UpdateStatusAuthorizeAction(false, true, false, false, false, false);
                 }
-                else
+                else//du dieu kien de amend
                 {
-                    if (isAuthorizeAmend)
+                    if (isAuthorizeAmend) //amend da duoc authorize
                     {
-                        UpdateStatusAuthorizeAction(true, true, false, false, false, true);
+                        //approval user
+                        if (isApprovalRole)
+                        {
+                            UpdateStatusAuthorizeAction(false, true, false, false, false, false);
+                        }
+                        else//normal user
+                        {
+                            UpdateStatusAuthorizeAction(true, true, false, false, false, false);
+                        }
+
+
                     }
-                    else
+                    else // chua authorize hoac dang cho authorize
                     {
-                        UpdateStatusAuthorizeAction(true, true, true, true, false, true);
+                        if (isApprovalRole)
+                        {
+                            UpdateStatusAuthorizeAction(false, true, true, true, false, true);
+                        }
+                        else
+                        {
+                            UpdateStatusAuthorizeAction(true, true, false, false, false, false);
+                        }
                     }
                 }
 
             }
-            else
+            else //input page
             {
-                if (isAuthorize)
+                if (isAuthorize)//trang thai authorize
                 {
-                    UpdateStatusAuthorizeAction(false, true, false, false, false, true);
+                    UpdateStatusAuthorizeAction(false, true, false, false, false, false);
                 }
-                else if (isReverse)
+                else if (isReverse)//trang thai reserve
                 {
-                    UpdateStatusAuthorizeAction(true, true, false, false, false, true);
+                    UpdateStatusAuthorizeAction(true, true, false, false, false, false);
                 }
-                else
+                else //trang thai cho authorize
                 {
-                    UpdateStatusAuthorizeAction(true, true, true, true, false, false);
+                    if (isApprovalRole)//approval guy
+                    {
+                        UpdateStatusAuthorizeAction(false, true, true, true, false, true);
+                    }
+                    else//normal user
+                    {
+                        UpdateStatusAuthorizeAction(true, true, false, false, false, false);
+                    }
                 }
             }
 
@@ -321,21 +359,23 @@ namespace BankProject.Views.TellerApplication
             LoadGroup(null);
             LoadAccountOfficer(null);
             LoadInterestKey(null);
-            InitDefaultData();
+            //InitDefaultData();
 
             //Load data and binding it to UI
             loanBusiness.loadEntity(ref normalLoanEntryM);
             BindData2Field(normalLoanEntryM);
             LoadDataTolvLoanControl();
             //deside which action should be taken care
+            InitDefaultData();
             processApproriateAction();
+
         }
         private void InitDefaultData()
         {
-            rcbCurrency.SelectedValue = "VND";
-            rdpOpenDate.SelectedDate = DateTime.Now;
-            rdpValueDate.SelectedDate = DateTime.Now;
-            rdpMaturityDate.SelectedDate = DateTime.Now;
+            //rcbCurrency.SelectedValue = "VND";
+            //rdpOpenDate.SelectedDate = DateTime.Now;
+            //rdpValueDate.SelectedDate = DateTime.Now;
+            //rdpMaturityDate.SelectedDate = DateTime.Now;
             radcbMainCategory.Focus();
         }
         private void LoadInterestKey(string selectedid)
@@ -653,6 +693,12 @@ namespace BankProject.Views.TellerApplication
             tbForwardBackWard.Enabled = p;
             tbBaseDate.Enabled = p;
             lvLoanControl.Enabled = p;
+            tbExpectedLoss.Enabled = p;
+            tbLossGiven.Enabled = p;
+            rcbRepaySchType.Enabled = p;
+            rcbDefineSch.Enabled = p;
+            tbNewNormalLoan.Enabled = !isApprovalRole;
+
         }
 
         private void disableInCaseOfAmend(bool p)
@@ -665,34 +711,7 @@ namespace BankProject.Views.TellerApplication
             rdpDrawdown.Enabled = p;
             rdpValueDate.Enabled = p;
         }
-        private void processPermissionOnItem(string itemStatus)
-        {
-            if (String.IsNullOrEmpty(itemStatus))
-            {
-                UpdateStatusAuthorizeAction(true, false, false, false, true, false);
-                return;
-            }
 
-            if (itemStatus.Equals("AUT"))
-            {
-                if (isAmendPage)
-                {
-                    UpdateStatusAuthorizeAction(true, true, true, false, false, true);
-                }
-                else
-                {
-                    UpdateStatusAuthorizeAction(false, true, false, false, false, true);
-                }
-                return;
-            }
-
-            if (itemStatus.Equals("UAT"))
-            {
-                UpdateStatusAuthorizeAction(true, true, false, false, false, true);
-                return;
-            }
-
-        }
 
         private void UpdateStatusAuthorizeAction(bool allowCommit, bool allowPreview, bool allowAuthorize,
             bool allowReverse, bool allowSearch, bool allowPrint)
@@ -702,7 +721,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btnAuthorize").Enabled = allowAuthorize;
             RadToolBar1.FindItemByValue("btnReverse").Enabled = allowReverse;
             RadToolBar1.FindItemByValue("btnSearch").Enabled = allowSearch;
-            RadToolBar1.FindItemByValue("btnPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btnPrint").Enabled = allowPrint;
 
             SetEnabledControls(allowCommit);
             if (isAmendPage && allowCommit)
@@ -718,9 +737,148 @@ namespace BankProject.Views.TellerApplication
             StoreProRepository storePro = new StoreProRepository();
             return storePro.StoreProcessor().B_BMACODE_GetNewID("CRED_REVOLVING_CONTRACT", REFIX_MACODE, ".").First<string>();
         }
+
+        private void PrintLoanDocument()
+        {
+            Aspose.Cells.License license = new Aspose.Cells.License();
+            license.SetLicense("Aspose.Cells.lic");
+            //Open template
+            //string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/SavingAcc/NewLoanContract.docx");
+            ////Open the template document
+            //Aspose.Cells.document document = new Aspose.Words.Document(docPath);
+            ////Execute the mail merge.
+            //var ds = PrepareData2Print();
+            //// Fill the fields in the document with user data.
+            //document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+            //document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
+            //// Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
+            //document.Save("SavingAccount_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+
+            //Instantiating a Workbook object
+            Aspose.Cells.Workbook workbook = new Aspose.Cells.Workbook();
+            //Adding a new worksheet to the Workbook object
+            //int i = workbook.Worksheets.Add();
+            //Obtaining the reference of the newly added worksheet by passing its sheet index
+            Aspose.Cells.Worksheet worksheet = workbook.Worksheets[0];
+
+
+            PrepareData2Print(ref worksheet);
+            //Setting the name of the newly added worksheet
+            worksheet.Name = "New Loan Contract";
+
+            //Saving the Excel file
+            workbook.Save("LoanContract_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls", Aspose.Cells.FileFormatType.Excel2000,Aspose.Cells.SaveType.OpenInBrowser, Response);
+
+        }
+
+        private void PrepareData2Print(ref Aspose.Cells.Worksheet worksheet)
+        {
+
+            if (normalLoanEntryM == null)
+            {
+                normalLoanEntryM = new BNEWNORMALLOAN();
+                normalLoanEntryM.Code = tbNewNormalLoan.Text;
+                loanBusiness.loadEntity(ref normalLoanEntryM);
+            }
+            if (normalLoanEntryM == null)
+                return;
+
+            NewLoanControlRepository facade = new NewLoanControlRepository();
+            BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "P").FirstOrDefault();
+            int numberofday = ((DateTime)normalLoanEntryM.MaturityDate).Subtract((DateTime)normalLoanEntryM.ValueDate).Days;
+            int numofDay = 7;
+            int i = 1;
+
+            if (it == null)
+            {
+                return;
+            }
+
+            if (it.Freq.Equals("M"))
+            {
+                numofDay = 30;
+                worksheet.Cells["A7"].PutValue("Định kỳ trả nợ: Thang");
+            }
+            else if (it.Freq.Equals("Q"))
+            {
+                numofDay = 90;
+                worksheet.Cells["A7"].PutValue("Định kỳ trả nợ: Quy");
+            }
+            else if (it.Freq.Equals("Y"))
+            {
+                numofDay = 360;
+                worksheet.Cells["A7"].PutValue("Định kỳ trả nợ: Nam");
+            }
+
+            if (numberofday < numofDay)
+            {
+                i = 1;
+            }
+            else
+            {
+                if (numberofday % numofDay == 0)
+                {
+                    i = numberofday / numofDay;
+                }
+                else
+                {
+                    i = numberofday / numofDay + 1;
+                }
+            }
+
+            worksheet.Cells["A1"].PutValue("LỊCH TRẢ NỢ HỢP ĐỒNG TÍN DỤNG SỐ " + normalLoanEntryM.Code);
+            worksheet.Cells["A2"].PutValue("Ngày: " + DateTime.Now.ToString("dd/MM/yyyy"));
+            worksheet.Cells["A3"].PutValue("Khách hàng: Ông/Bà " + normalLoanEntryM.CustomerName);
+            worksheet.Cells["A4"].PutValue("Số tiền vay: " + normalLoanEntryM.LoanAmount);
+            worksheet.Cells["A5"].PutValue("Ngày rút tiền:  " + normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy"));
+            worksheet.Cells["A6"].PutValue("Thời hạn: " + normalLoanEntryM.InterestKey);
+            
+
+            worksheet.Cells["A9"].PutValue("Kỳ");
+            worksheet.Cells["B9"].PutValue("Ngày trả");
+            worksheet.Cells["C9"].PutValue("Số tiền phải trả");
+            worksheet.Cells["D9"].PutValue("Dư nợ còn lại");
+
+            int index = 10;
+
+            decimal amount = (decimal)normalLoanEntryM.LoanAmount / i;
+            decimal remain = (decimal)normalLoanEntryM.LoanAmount - amount;
+            DateTime stateDate = ((DateTime)normalLoanEntryM.ValueDate).AddDays(numofDay);
+            for (int j = 0; j < i; j++)
+            {
+                if (stateDate.Subtract((DateTime)normalLoanEntryM.MaturityDate).Days > 0)
+                {
+                    stateDate = (DateTime)normalLoanEntryM.MaturityDate;
+                }
+                worksheet.Cells["A" + index].PutValue(j + 1);
+                worksheet.Cells["B" + index].PutValue(stateDate.ToString("dd/MM/yyyy"));
+                worksheet.Cells["C" + index].PutValue(amount);
+                worksheet.Cells["D" + index].PutValue(remain);
+                remain = remain - amount;
+                stateDate = stateDate.AddDays(numofDay);
+                index++;
+            }
+
+
+            worksheet.Cells["A" + index].PutValue("Tp.HCM, Ngày " + DateTime.Now.ToString("dd") + " tháng " + DateTime.Now.ToString("MM") + " năm " + DateTime.Now.ToString("yyyy"));
+            index++;
+            worksheet.Cells["A" + index].PutValue("Bên vay");
+            worksheet.Cells["D" + index].PutValue("Bên cho vay");
+
+            
+
+        }
+
+
+        private void getDataLoan(ref Aspose.Cells.Worksheet worksheet, int index)
+        {
+            
+
+
+        }
         #endregion
 
-
+        
 
     }
 }

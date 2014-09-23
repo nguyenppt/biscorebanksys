@@ -170,7 +170,7 @@ namespace BankProject.Views.TellerApplication
                             { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
                             //check Maximum Secured & Unsecured 
 
-                            if ((tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0) + (tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0) < (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
+                            if ((tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0) + (tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0) <= (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
                             {
                                 ShowMsgBox("Maximum Secured Value + Maximum Unsecured Value must be greater than Maximum Total Value");
                                 return;
@@ -320,7 +320,8 @@ namespace BankProject.Views.TellerApplication
                 rcbCollateralType.SelectedValue = ds1.Tables[0].Rows[0]["CollateralTypeCode"].ToString();
                 rcbCollateralType.Text = rcbCollateralType.SelectedValue + " - " + ds1.Tables[0].Rows[0]["CollateralTypeName"].ToString();
                 LoadCollateralCode(rcbCollateralType.SelectedValue);
-
+                //string AmtSecured = (ds1.Tables[0].Rows[0]["AmtSecured"].ToString() != "" ? ds1.Tables[0].Rows[0]["AmtSecured"].ToString() : "0");
+                //lblAmtSecured.Text = string.Format("{0:C}",Convert.ToDouble ( AmtSecured) ).Replace("$", "");
                 rcbCollateral.SelectedValue = ds1.Tables[0].Rows[0]["CollateralCode"].ToString();
                 rcbCollateral.Text = rcbCollateral.SelectedValue + " - " + ds1.Tables[0].Rows[0]["CollateralName"].ToString();
                 lblCollReqdAmt.Text = ds1.Tables[0].Rows[0]["CollReqdAmt"].ToString();
@@ -333,7 +334,6 @@ namespace BankProject.Views.TellerApplication
                 tbMaxTotal.Text = ds1.Tables[0].Rows[0]["MaxTotal"].ToString();
                 lblOtherSecured.Text = ds1.Tables[0].Rows[0]["OtherSecured"].ToString();
                 lblCollateralRight.Text = ds1.Tables[0].Rows[0]["CollateralRight"].ToString();
-                lblAmtSecured.Text = ds1.Tables[0].Rows[0]["AmtSecured"].ToString();
                 lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
                 lblAvailableAmt.Text = ds1.Tables[0].Rows[0]["AvailableAmt"].ToString();
                 lblTotalOutstand.Text = ds1.Tables[0].Rows[0]["TotalOutstand"].ToString();

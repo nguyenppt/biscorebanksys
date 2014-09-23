@@ -261,8 +261,9 @@
                          <CollapseAnimation Type="None" />
                          <Items>
                              <telerik:RadComboBoxItem Value="" Text="" />
-                             <telerik:RadComboBoxItem Value="1" Text="1 - Fixed" />
-                             <telerik:RadComboBoxItem Value="2" Text="2 - Periodic Automatic" />
+                             <telerik:RadComboBoxItem Value="1" Text="1 - Fixed A" />
+                             <telerik:RadComboBoxItem Value="2" Text="2 - Fixed B" />
+                             <telerik:RadComboBoxItem Value="3" Text="3 - Periodic Automatic" />
                          </Items>
                      </telerik:radcombobox>
                     </td>
