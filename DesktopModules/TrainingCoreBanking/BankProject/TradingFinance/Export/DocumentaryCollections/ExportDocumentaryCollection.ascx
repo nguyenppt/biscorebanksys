@@ -1337,6 +1337,7 @@
     <script type="text/javascript">
         var amount =  parseFloat(<%= Amount %>);
         var amountOld = parseFloat(<%= AmountOld %>);
+        var chargeAmt = parseFloat('<%=ChargeAmount%>');
         var tabId = <%= TabId %>;
         var clickCalledAfterRadconfirm = false;
         $("#<%=txtCode.ClientID %>").keyup(function (event) {
@@ -1406,7 +1407,10 @@
             if (result) {
                 $("#<%=btnRegisterNhapNgoaiBang1.ClientID %>").click();
             }
-            radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file to Collecting Bank?", confirmCallbackRegisterXNB1, 420, 150, null, 'Download');
+            if (chargeAmt > 0) {
+                radconfirm("Do you want to download VAT file?", confirmCallbackVATRegister, 400, 150, null, 'Download');
+            }
+            //radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file to Collecting Bank?", confirmCallbackRegisterXNB1, 420, 150, null, 'Download');
         }
         function confirmCallbackRegisterXNB1(result) {
             clickCalledAfterRadconfirm = false;
@@ -1414,6 +1418,11 @@
                 $("#<%=btnRegisterXuatNgoaiBang1.ClientID %>").click();
             }
             radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Collecting Bank?", confirmCallbackRegisterNNB2, 420, 150, null, 'Download');
+        }
+        function confirmCallbackVATRegister(result) {
+            if (result) {
+                $("#<%=btnVATReport.ClientID %>").click();
+            }
         }
         function confirmCallbackRegisterNNB2(result) {
             clickCalledAfterRadconfirm = false;
@@ -1431,3 +1440,4 @@
 <div style="visibility:hidden;"><asp:Button ID="btnAmendXuatNgoaiBang" runat="server" OnClick="btnAmendXuatNgoaiBang_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnAmendNhapNgoaiBang" runat="server" OnClick="btnAmendNhapNgoaiBang_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnCancelPHIEUXUATNGOAIBANG" runat="server" OnClick="btnCancelPHIEUXUATNGOAIBANG_Click" Text="Search" /></div>
+<div style="visibility:hidden;"><asp:Button ID="btnVATReport" runat="server" OnClick="btnVATReport_Click" Text="Search" /></div>

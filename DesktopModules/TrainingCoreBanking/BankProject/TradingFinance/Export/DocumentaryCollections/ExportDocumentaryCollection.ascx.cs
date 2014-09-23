@@ -28,6 +28,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         public double AmountNew = 0;
         public double AmountOld = 0;
         public double AmountAut = 0;
+        public double ChargeAmount = 0;
         private DataRow _exportDoc;
         private ExportDocumentaryScreenType ScreenType
         {
@@ -1094,6 +1095,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblTaxAmt.Text = drow1["TaxAmt"].ToString();
 
                 tbChargeCode.SelectedValue = drow1["Chargecode"].ToString();
+
+                ChargeAmount += ConvertStringToFloat(drow1["ChargeAmt"].ToString());
+
             }
             else
             {
@@ -1146,6 +1150,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblTaxAmt2.Text = drow2["TaxAmt"].ToString();
 
                 tbChargeCode2.SelectedValue = drow2["Chargecode"].ToString();
+                ChargeAmount += ConvertStringToFloat(drow2["ChargeAmt"].ToString());
             }
             else
             {
@@ -1190,6 +1195,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblTaxAmt3.Text = drow3["TaxAmt"].ToString();
 
                 tbChargeCode3.SelectedValue = drow3["Chargecode"].ToString();
+                ChargeAmount += ConvertStringToFloat(drow3["ChargeAmt"].ToString());
             }
             else
             {
@@ -1787,5 +1793,26 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
             doc.Save("ExportDocumentaryCollectionCancelPHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
         }
+        protected void btnVATReport_Click(object sender, EventArgs e)
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+
+            //Open template
+            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionVAT.doc");
+            //Open the template document
+            Aspose.Words.Document doc = new Aspose.Words.Document(path);
+            //Execute the mail merge.
+            DataSet ds = new DataSet();
+            ds = SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username);
+            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToStringWithSign(ds.Tables[1].Rows[0]["TongSoTienThanhToan"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
+            ds.Tables[1].Rows[0]["TongSoTienThanhToan"] =
+                Convert.ToDecimal(ds.Tables[1].Rows[0]["TongSoTienThanhToan"].ToString()).ToString("#,##0.00");
+            // Fill the fields in the document with user data.
+            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
+            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
+            doc.Save("RegisterDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+        }
+
     }
 }
