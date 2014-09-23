@@ -1359,7 +1359,7 @@ namespace BankProject
             docMT400.UpdateTableLayout();
 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            docMT400.Save("PHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+            docMT400.Save("PHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void LoadDebitAcctNo(string customerName)
@@ -1423,7 +1423,7 @@ namespace BankProject
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("OverseasTransferVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+            doc.Save("OverseasTransferVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         
         protected void txtIntermediaryInstitutionNo_OnTextChanged(object sender, EventArgs e)
