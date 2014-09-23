@@ -18,6 +18,7 @@ namespace BankProject.DataProvider
             dtTemp.Columns.Add("Description", typeof (string));
             dtTemp.Columns.Add("Name", typeof (string));
 
+
             var drow = dtTemp.NewRow();
             switch (fieldType)
             {
@@ -1267,6 +1268,11 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTION_VAT_Report", code,
                                              currentuserlogin, ViewType);
+        }
+        public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(string code, string currentuserlogin)
+        {
+            return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report", code,
+                                             currentuserlogin);
         }
 
         // IncomingCollectionAmendment
