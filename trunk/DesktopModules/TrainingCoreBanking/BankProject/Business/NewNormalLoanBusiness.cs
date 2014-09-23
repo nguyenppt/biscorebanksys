@@ -10,19 +10,30 @@ namespace BankProject.Business
     public class NewNormalLoanBusiness : INewNormalLoanBusiness<BNEWNORMALLOAN>
     {
         NormalLoanRepository facade = new NormalLoanRepository();
-        
+
         public void loadEntity(ref BNEWNORMALLOAN entry)
         {
-            if (entry!= null && !String.IsNullOrEmpty(entry.Code))
+            BNEWNORMALLOAN temp = null;
+            if (entry != null && !String.IsNullOrEmpty(entry.Code))
             {
-                entry = facade.findCustomerCode(entry.Code).FirstOrDefault();
+                temp = facade.findCustomerCode(entry.Code).FirstOrDefault();
+            }
+
+            if (temp != null)
+            {
+
+                entry = temp;
+
             }
             else
             {
-          
-                entry = new BNEWNORMALLOAN();
-                entry.Code = entry.Code;
+                entry.Currency = "VND";
+                entry.OpenDate = DateTime.Now;
+                entry.ValueDate = DateTime.Now;
+                entry.MaturityDate = DateTime.Now;
             }
+
+
         }
 
         public void loadEntrities(ref List<BNEWNORMALLOAN> entries)
@@ -32,22 +43,24 @@ namespace BankProject.Business
 
         public void commitProcess(int userID)
         {
-            if(Entity== null || String.IsNullOrEmpty(Entity.Code)) return;
+            if (Entity == null || String.IsNullOrEmpty(Entity.Code)) return;
             BNEWNORMALLOAN existLoan = facade.findExistingLoan(Entity.Code, null, null).FirstOrDefault();
             if (existLoan != null)
             {
                 Entity.UpdatedBy = userID;
                 Entity.UpdatedDate = facade.GetSystemDatetime();
+                Entity.Status = "UNA";
                 facade.Update(existLoan, Entity);
             }
             else
             {
                 Entity.CreateBy = userID;
                 Entity.CreateDate = facade.GetSystemDatetime();
+                Entity.Status = "UNA";
                 facade.Add(Entity);
             }
-            Entity.Status = "UNA";
             
+
             facade.Commit();
         }
 
