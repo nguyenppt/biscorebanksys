@@ -440,14 +440,6 @@
                             ID="comboCurrency" runat="server"
                             MarkFirstMatch="True"
                             AllowCustomText="false">
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                                <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                                <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                                <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                                <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                                <telerik:RadComboBoxItem Value="VND" Text="VND" />
-                            </Items>
                         </telerik:RadComboBox>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
@@ -544,34 +536,12 @@
                 <tr>
                     <td class="MyLable">13 Commodity<span class="Required"> (*)</span></td>
                     <td style="width: 150px" class="MyContent">
-                        <telerik:RadComboBox Width="355" DropDownCssClass="KDDL"
-                            AppendDataBoundItems="True" AutoPostBack="true"
-                            OnSelectedIndexChanged="comboCommodity_SelectIndexChange"
-                            ID="comboCommodity" runat="server" OnItemDataBound="comboCommodity_ItemDataBound"
+                        <telerik:RadComboBox Width="355" 
+                            AppendDataBoundItems="True"
+                            
+                            ID="comboCommodity" runat="server" 
                             MarkFirstMatch="True"
                             AllowCustomText="false">
-                            <HeaderTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">Id
-                                        </td>
-                                        <td>Description
-                                        </td>
-                                    </tr>
-                                </table>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">
-                                            <%# DataBinder.Eval(Container.DataItem, "ID")%> 
-                                        </td>
-                                        <td>
-                                            <%# DataBinder.Eval(Container.DataItem, "Name2")%> 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ItemTemplate>
                         </telerik:RadComboBox>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
@@ -790,16 +760,7 @@
                                         ID="rcbChargeCcy" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy_OnSelectedIndexChanged"
                                         MarkFirstMatch="True" Width="150"
                                         AllowCustomText="false">
-                                        <ExpandAnimation Type="None" />
-                                        <CollapseAnimation Type="None" />
-                                        <Items>
-                                            <telerik:RadComboBoxItem Value="" Text="" />
-                                            <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                                            <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                                            <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                                            <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                                            <telerik:RadComboBoxItem Value="VND" Text="VND" />
-                                        </Items>
+
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
@@ -958,16 +919,7 @@
                                         ID="rcbChargeCcy2" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy2_OnSelectedIndexChanged"
                                         MarkFirstMatch="True" Width="150"
                                         AllowCustomText="false">
-                                        <ExpandAnimation Type="None" />
-                                        <CollapseAnimation Type="None" />
-                                        <Items>
-                                            <telerik:RadComboBoxItem Value="" Text="" />
-                                            <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                                            <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                                            <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                                            <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                                            <telerik:RadComboBoxItem Value="VND" Text="VND" />
-                                        </Items>
+                                       
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
@@ -1125,16 +1077,7 @@
                                         ID="rcbChargeCcy3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy3_OnSelectedIndexChanged"
                                         MarkFirstMatch="True" Width="150"
                                         AllowCustomText="false">
-                                        <ExpandAnimation Type="None" />
-                                        <CollapseAnimation Type="None" />
-                                        <Items>
-                                            <telerik:RadComboBoxItem Value="" Text="" />
-                                            <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                                            <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                                            <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                                            <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                                            <telerik:RadComboBoxItem Value="VND" Text="VND" />
-                                        </Items>
+                                     
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
@@ -1336,11 +1279,7 @@
             </UpdatedControls>
         </telerik:AjaxSetting>
         
-        <telerik:AjaxSetting AjaxControlID="comboCommodity">
-            <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="txtCommodityName" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
+       
         
         <telerik:AjaxSetting AjaxControlID="dteDocsReceivedDate">
             <UpdatedControls>
