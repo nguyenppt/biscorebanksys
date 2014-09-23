@@ -13,6 +13,7 @@ using Telerik.Web.UI.Calendar;
 using System.Globalization;
 using System.Text;
 using BankProject.Controls;
+using Aspose.Words;
 
 namespace BankProject.TradingFinance.Import.DocumentaryCredit
 {
@@ -2609,7 +2610,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }              
         
         #region Module Report
-        private void showDocuments(string templateFilePath, DataSet dsSource, string saveAsFileName)
+        private void showDocuments(string templateFilePath, DataSet dsSource, string saveAsFileName, SaveFormat formatFile = SaveFormat.Pdf)
         {
             Aspose.Words.License license = new Aspose.Words.License();
             license.SetLicense("Aspose.Words.lic");
@@ -2618,7 +2619,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(dsSource);
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save(saveAsFileName, Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+            doc.Save(saveAsFileName, formatFile, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnIssueLC_MT700Report_Click(object sender, EventArgs e)
         {
@@ -2633,28 +2634,28 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void btnIssueLC_VATReport_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_VAT.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_VAT_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_VAT_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
         protected void btnIssueLC_NHapNgoaiBangReport_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_PHIEUNHAPNGOAIBANG.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
 
         protected void btnAmentLCReport_XuatNgoaiBang_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_PHIEUXUATNGOAIBANG.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
         protected void btnAmentLCReport_NhapNgoaiBang_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_PHIEUNHAPNGOAIBANG.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUNHAPNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUNHAPNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
         protected void btnAmentLCReport_VAT_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_VAT.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
         protected void btnAmentLCReport_MT707_Click(object sender, EventArgs e)
         {
@@ -2665,12 +2666,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void btnCancelLC_XUATNGOAIBANG_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_PHIEUXUATNGOAIBANG.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "CancelLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "CancelLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
         protected void btnCancelLC_VAT_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_VAT.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "CancelLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "CancelLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
         #endregion
 
