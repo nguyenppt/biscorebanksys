@@ -1282,13 +1282,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox txtShipmentPeriod700_6;
         
         /// <summary>
-        /// tbDescrpofGoods control.
+        /// txtEdittor_DescrpofGoods control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbDescrpofGoods;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_DescrpofGoods;
         
         /// <summary>
         /// rcbDocsRequired control.
@@ -1300,40 +1300,40 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadComboBox rcbDocsRequired;
         
         /// <summary>
-        /// tbOrderDocs control.
+        /// txtEdittor_OrderDocs700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbOrderDocs;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_OrderDocs700;
         
         /// <summary>
-        /// tbAdditionalConditions control.
+        /// txtEdittor_AdditionalConditions700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbAdditionalConditions;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_AdditionalConditions700;
         
         /// <summary>
-        /// tbCharges control.
+        /// txtEdittor_Charges700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbCharges;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_Charges700;
         
         /// <summary>
-        /// tbPeriodforPresentation control.
+        /// txtEdittor_PeriodforPresentation700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbPeriodforPresentation;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_PeriodforPresentation700;
         
         /// <summary>
         /// rcbConfimationInstructions control.
@@ -1399,13 +1399,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox tbReimbBankAddr700_3;
         
         /// <summary>
-        /// tbNegotgBank control.
+        /// txtEdittor_NegotgBank700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbNegotgBank;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_NegotgBank700;
         
         /// <summary>
         /// comboAdviseThroughBankType700 control.
@@ -1462,13 +1462,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox txtAdviseThroughBankAddr700_3;
         
         /// <summary>
-        /// tbSendertoReceiverInfomation control.
+        /// txtEdittor_SendertoReceiverInfomation700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbSendertoReceiverInfomation;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_SendertoReceiverInfomation700;
         
         /// <summary>
         /// divMT740 control.
@@ -2155,13 +2155,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox txtPortofDischarge_707;
         
         /// <summary>
-        /// txtNarrative_707 control.
+        /// txtEdittor_Narrative_707 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtNarrative_707;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_Narrative_707;
         
         /// <summary>
         /// txtSenderToReceiverInformation_707_1 control.
@@ -2443,13 +2443,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInfomation_747_4;
         
         /// <summary>
-        /// txtNarrative_747 control.
+        /// txtEdittor_Narrative_747 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtNarrative_747;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_Narrative_747;
         
         /// <summary>
         /// comboWaiveCharges control.

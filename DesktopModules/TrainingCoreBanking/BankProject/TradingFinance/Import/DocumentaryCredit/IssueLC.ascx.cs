@@ -11,6 +11,8 @@ using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using Telerik.Web.UI.Calendar;
 using System.Globalization;
+using System.Text;
+using BankProject.Controls;
 
 namespace BankProject.TradingFinance.Import.DocumentaryCredit
 {
@@ -742,6 +744,62 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             numPercentageCreditAmountTolerance_707_2.Value = 0;
 
             txtSenderToReceiverInformation_707_1.Text = "PLEASE ADVISE THIS AMENDMENT TO THE BENEFICIARY THROUGH";
+
+            IntialEdittor(txtEdittor_DescrpofGoods);
+            IntialEdittor(txtEdittor_OrderDocs700);
+            IntialEdittor(txtEdittor_AdditionalConditions700);
+            IntialEdittor(txtEdittor_Charges700);
+            IntialEdittor(txtEdittor_PeriodforPresentation700);
+            IntialEdittor(txtEdittor_NegotgBank700);
+            IntialEdittor(txtEdittor_SendertoReceiverInfomation700);
+            IntialEdittor(txtEdittor_Narrative_747);
+            IntialEdittor(txtEdittor_Narrative_707);
+
+            txtEdittor_DescrpofGoods.Content = "+ COMMODITY: HOT ROLLED STEEL COILS <br />"+
+                                                "+ DESCRIPTION : <br />" +
+                                                ". THICKNESS: FROM 3.00 MM UP <br />" +
+                                                ". WIDTH: FROM 1,500 MM DOWN<br /" +
+                                                ". COIL WEIGHT: FROM 0.1 MT UP <br />" +
+                                                "+ QUANTITY: 55.00 MTS (+/-10PCT) <br />" +
+                                                "+ UNIT PRICE: USD530.00/MT <br />" +
+                                                "+ TOTAL AMOUNT: USD29,150.00 (+/-10PCT)<br />" +
+                                                "+ TRADE TERMS: CFR HOCHIMINH CITY PORT, VIETNAM (INCOTERMS 2010) <br />" +
+                                                "+ ORIGIN: EUROPEAN COMMUNITY<br />" +
+                                                "+ PACKING: IN CONTAINERS";
+
+            txtEdittor_OrderDocs700.Content = "1. SIGNED COMMERCIAL INVOICE IN 03 ORIGINALS ISSUED BY THE BENEFICIARY <br />" +
+                                                "2. FULL (3/3) SET OF ORIGINAL CLEAN SHIPPED ON BOARD BILL OF LADING MADE OUT TO ORDER OF TANPHU BRANCH, NOTIFY APPLICANT AND MARKED FREIGHT PREPAID, SHOWING THE NAME AND ADDRESS OF SHIPPING AGENT WHICH IS LOCATED IN VIETNAM. <br />" +
+                                                "3. QUANTITY AND QUALITY CERTIFICATE IN 01 ORIGINAL AND 02 COPIES ISSUED BY THE BENEFICIARY <br />" +
+                                                "4. CERTIFICATE OF ORIGIN IN 01 ORIGINAL AND 02 COPIES ISSUED BY ANY CHAMBER OF COMMERCE IN EUROPEAN COMMUNITY CERTIFYING THAT THE GOODS ARE OF EUROPEAN COMMUNITY ORIGIN <br />" +
+                                                "5. DETAILED PACKING LIST IN 03 ORIGINALS ISSUED BY THE BENEFICIARY";
+
+            txtEdittor_AdditionalConditions700.Content = "1. ALL REQUIRED DOCUMENTS AND ITS ATTACHED LIST (IF ANY) MUST BE SIGNED OR STAMPED BY ISSUER. <br />"+
+                                                        "2. ALL DRAFT(S) AND DOCUMENTS MUST BE MADE OUT IN ENGLISH. DOCUMENTS ISSUED IN ANY OTHER LANGUAGE THAN ENGLISH BUT WITH ENGLISH TRANSLATION ACCEPTABLE. PRE-PRINTED WORDING (IF ANY) ON DOCUMENTS MUST BE IN ENGLISH OR BILINGUAL BUT ONE OF ITS LANGUAGES MUST BE IN ENGLISH. <br />"+
+                                                        "3. ALL REQUIRED DOCUMENTS MUST INDICATE OUR L/C NUMBER. <br />"+
+                                                        "4. ALL REQUIRED DOCUMENTS MUST BE PRESENTED THROUGH BENEFICIARY'S BANK <br />"+
+                                                        "5. SHIPMENT MUST NOT BE EFFECTED BEFORE L/C ISSUANCE DATE.  <br />" +
+                                                        "6. THE TIME OF RECEIVING AND HANDLING CREDIT DOCUMENTS AT ISSUING BANK ARE LIMITED FROM 7:30 AM TO 04:00 PM. DOCUMENTS ARRIVING AT OUR COUNTER AFTER 04:00 PM LOCAL TIME WILL BE CONSIDERED TO BE RECEIVED ON THE NEXT BANKING DAY. <br />"+
+                                                        "7. PLEASE BE INFORMED THAT SATURDAY IS CONSIDERED AS NON-BANKING BUSINESS DAY FOR OUR TRADE FINANCE PROCESSING/OPERATIONS UNIT ALTHOUGH OUR BANK MAY OTHERWISE BE OPENED FOR BUSINESS. <br />"+
+                                                        "8. THIRD PARTY DOCUMENTS ARE ACCEPTABLE.";
+
+            txtEdittor_Charges700.Content = "ALL BANKING CHARGES OUTSIDE VIETNAM <br />"+
+                                            "PLUS ISSUING BANK'S HANDLING FEE <br />"+
+                                            "ARE FOR ACCOUNT OF BENEFICIARY";
+
+            txtEdittor_PeriodforPresentation700.Content = "NOT EARLIER THAN 21 DAYS AFTER SHIPMENT DATE BUT WITHIN THE VALIDITY OF THIS L/C.";
+
+            txtEdittor_NegotgBank700.Content = "1. USD70.00 DISCREPANCY FEE WILL BE DEDUCTED FROM THE PROCEEDS FOR EACH DISCREPANT SET OF DOCUMENTS PRESENTED UNDER THIS L/C. THE RELATIVE TELEX EXPENSES USD25.00, IF ANY, WILL BE ALSO FOR THE ACCOUNT OF BENEFICIARY. <br />"+
+                                                "2. EACH DRAWING MUST BE ENDORSED ON THE ORIGINAL L/C BY THE NEGOTIATING/PRESENTING BANK. <br />"+
+                                                "3. PLEASE SEND ALL DOCS TO VIET VICTORY BANK AT PLOOR 9TH, NO.10 PHO QUANG STREET, TAN BINH DISTRICT, HOCHIMINH CITY, VIETNAM IN ONE LOT BY THE COURIER SERVICES. <br />"+
+                                                "4. UPON RECEIPT OF DOCS REQUIRED IN COMPLIANCE WITH ALL TERMS AND CONDITIONS OF THE L/C, WE SHALL REMIT THE PROCEEDS TO YOU AS PER YOUR INSTRUCTIONS IN THE COVER LETTER.";
+
+            txtEdittor_SendertoReceiverInfomation700.Content = "PLEASE ACKNOWLEDGE YOUR RECEIPT OF THIS L/C BY MT730.";
+        }
+
+        protected void IntialEdittor(RadEditor txtEdittor)
+        {
+            txtEdittor.EditModes = EditModes.Design;
+            txtEdittor.Modules.Clear();
         }
         
         protected void LoadPartyCharged()
@@ -1272,6 +1330,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             double amount700 = 0;
             double percentCreditAmount1 = 0, percentCreditAmount2 = 0;
+            var stringBuilder = new StringBuilder();
+
+            if (Commont.CheckSpecialCharacter(txtBeneficiaryNo700.Text) == false) {
+                stringBuilder.Append("MT700 - 59.1 Beneficiary No. has special character.");
+            }
+
             if (numAmount700.Value > 0)
             {
                 amount700 = double.Parse(numAmount700.Value.ToString());
@@ -1331,14 +1395,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , tbPlaceoffinalindistination.Text.Trim()
                 , tbLatesDateofShipment.SelectedDate
                 , ""
-                , tbDescrpofGoods.Text
-                , tbOrderDocs.Text.Trim()//rcbDocsRequired.SelectedValue
-                , tbAdditionalConditions.Text.Trim()// 
-                , tbCharges.Text.Trim()
-                , tbPeriodforPresentation.Text.Trim()
+                , txtEdittor_DescrpofGoods.Content
+                , txtEdittor_OrderDocs700.Content
+                , txtEdittor_AdditionalConditions700.Content
+                , txtEdittor_Charges700.Content
+                , txtEdittor_PeriodforPresentation700.Content
                 , rcbConfimationInstructions.SelectedValue
-                , tbNegotgBank.Text.Trim()
-                , tbSendertoReceiverInfomation.Text.Trim()
+                , txtEdittor_NegotgBank700.Content
+                , txtEdittor_SendertoReceiverInfomation700.Content
                 , comboBeneficiaryType700.SelectedValue
                 , txtBeneficiaryNo700.Text.Trim()
                 , txtBeneficiaryName700.Text.Trim()
@@ -1462,7 +1526,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , txtShipmentPeriod_707_4.Text
                 , txtPortofloading_707.Text
                 , txtPortofDischarge_707.Text
-                , txtNarrative_707.Text
+                , txtEdittor_Narrative_707.Content
                 , txtSenderToReceiverInformation_707_1.Text
                 , txtSenderToReceiverInformation_707_2.Text
                 , txtSenderToReceiverInformation_707_3.Text
@@ -1723,14 +1787,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 tbPortofDischarge.Text = drow["PortOfDischarge"].ToString();
                 tbPlaceoffinalindistination.Text = drow["PlaceOfFinalInDistination"].ToString();
 
-                tbDescrpofGoods.Text = drow["DescrpGoodsBervices"].ToString();
-                tbOrderDocs.Text = drow["DocsRequired"].ToString();
-                tbAdditionalConditions.Text = drow["AdditionalConditions"].ToString();
-                tbCharges.Text = drow["Charges"].ToString();
-                tbPeriodforPresentation.Text = drow["PeriodForPresentation"].ToString();
+                txtEdittor_DescrpofGoods.Content = drow["DescrpGoodsBervices"].ToString();
+                txtEdittor_OrderDocs700.Content = drow["DocsRequired"].ToString();
+                txtEdittor_AdditionalConditions700.Content = drow["AdditionalConditions"].ToString();
+                txtEdittor_Charges700.Content = drow["Charges"].ToString();
+                txtEdittor_PeriodforPresentation700.Content = drow["PeriodForPresentation"].ToString();
                 rcbConfimationInstructions.SelectedValue = drow["ConfimationInstructions"].ToString();
-                tbNegotgBank.Text = drow["InstrToPaygAccptgNegotgBank"].ToString();
-                tbSendertoReceiverInfomation.Text = drow["SenderReceiverInfomation"].ToString();
+                txtEdittor_NegotgBank700.Content = drow["InstrToPaygAccptgNegotgBank"].ToString();
+                txtEdittor_SendertoReceiverInfomation700.Content = drow["SenderReceiverInfomation"].ToString();
 
                 if (!string.IsNullOrEmpty(drow["LatesDateOfShipment"].ToString())  && drow["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
                 {
@@ -2247,7 +2311,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
                 txtPortofloading_707.Text = drow["PortOfLoading"].ToString();
                 txtPortofDischarge_707.Text = drow["PortOfDischarge"].ToString();
-                txtNarrative_707.Text = drow["Narrative"].ToString();
+                txtEdittor_Narrative_707.Content = drow["Narrative"].ToString();
 
                 txtSenderToReceiverInformation_707_1.Text = drow["SenderReceiverInfomation1"].ToString();
                 txtSenderToReceiverInformation_707_2.Text = drow["SenderReceiverInfomation2"].ToString();
@@ -2300,7 +2364,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
                 txtPortofloading_707.Text = string.Empty;
                 txtPortofDischarge_707.Text = string.Empty;
-                txtNarrative_707.Text = string.Empty;
+                txtEdittor_Narrative_707.Content = string.Empty;
 
                 txtSenderToReceiverInformation_707_1.Text = "PLEASE ADVISE THIS AMENDMENT TO THE BENEFICIARY THROUGH";
                 txtSenderToReceiverInformation_707_2.Text = string.Empty;
@@ -2554,59 +2618,59 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(dsSource);
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save(saveAsFileName, Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save(saveAsFileName, Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnIssueLC_MT700Report_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_MT700.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_MT700_Report(txtCode.Text), "IssueLC_MT700_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_MT700_Report(txtCode.Text), "IssueLC_MT700_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
         protected void btnIssueLC_MT740Report_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_MT740.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_MT740_Report(txtCode.Text), "IssueLC_MT740_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_MT740_Report(txtCode.Text), "IssueLC_MT740_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
         protected void btnIssueLC_VATReport_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_VAT.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_VAT_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_VAT_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
         protected void btnIssueLC_NHapNgoaiBangReport_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/IssueLC_PHIEUNHAPNGOAIBANG.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username, TabId), "IssueLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
 
         protected void btnAmentLCReport_XuatNgoaiBang_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_PHIEUXUATNGOAIBANG.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
         protected void btnAmentLCReport_NhapNgoaiBang_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_PHIEUNHAPNGOAIBANG.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUNHAPNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_PHIEUNHAPNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "AmendLC_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
         protected void btnAmentLCReport_VAT_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_VAT.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
         protected void btnAmentLCReport_MT707_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT707.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_MT707_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_MT707_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
 
         protected void btnCancelLC_XUATNGOAIBANG_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_PHIEUXUATNGOAIBANG.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "CancelLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username), "CancelLC_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
         protected void btnCancelLC_VAT_Click(object sender, EventArgs e)
         {
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_VAT.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "CancelLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc");
+                    bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "CancelLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
         }
         #endregion
 
@@ -2802,7 +2866,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_2.Enabled = true;
                 txtSenderToReceiverInfomation_747_3.Enabled = true;
                 txtSenderToReceiverInfomation_747_4.Enabled = true;
-                txtNarrative_747.Enabled = true;
+                txtEdittor_Narrative_747.Enabled = true;
             }
             else
             {
@@ -2819,8 +2883,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_2.Enabled = false;
                 txtSenderToReceiverInfomation_747_3.Enabled = false;
                 txtSenderToReceiverInfomation_747_4.Enabled = false;
-                txtNarrative_747.Enabled = false;
+                txtEdittor_Narrative_747.Enabled = false;
             } 
-        }        
+        }
+
+     
     }
 }
