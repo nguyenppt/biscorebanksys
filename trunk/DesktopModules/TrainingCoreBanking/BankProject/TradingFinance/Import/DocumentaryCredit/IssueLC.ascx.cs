@@ -1332,9 +1332,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             double percentCreditAmount1 = 0, percentCreditAmount2 = 0;
             var stringBuilder = new StringBuilder();
 
-            if (Commont.CheckSpecialCharacter(txtBeneficiaryNo700.Text) == false) {
-                stringBuilder.Append("MT700 - 59.1 Beneficiary No. has special character.");
-            }
+            //if (Commont.CheckSpecialCharacter(txtBeneficiaryNo700.Text) == false) {
+            //    stringBuilder.Append("MT700 - 59.1 Beneficiary No. has special character.");
+            //}
 
             if (numAmount700.Value > 0)
             {
