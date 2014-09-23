@@ -423,8 +423,8 @@ namespace BankProject.DataProvider
                                                            , string AccountWithBankAcct
                                                            , string RemittanceInformation
                                                            , string DetailOfCharges
-                                                           , double SenderCharges
-                                                           , double ReceiverCharges
+                                                           , double? SenderCharges
+                                                           , double? ReceiverCharges
                                                            , string SenderToReceiveInfo
                                                            , string curentUserId
                                                            , string BeneficiaryCustomer1
@@ -580,7 +580,7 @@ namespace BankProject.DataProvider
                                                           string ExpressNo, string InvoiceNo,
                                                           string CancelRemark, string RemittingBankAddr2,
                                                           string RemittingBankAddr3, string comeFromUrl
-                                                          , string AcceptedDate, string AcceptRemarks
+                                                          , string AcceptedDate, string AcceptRemarks, string DraftNo
             )
         {
             sqldata.ndkExecuteNonQuery("B_BDOCUMETARYCOLLECTION_Insert", DocCollectCode
@@ -631,7 +631,8 @@ namespace BankProject.DataProvider
                                        , RemittingBankAddr3
                                        , comeFromUrl
                                        , AcceptedDate
-                                       , AcceptRemarks);
+                                       , AcceptRemarks
+                                       , DraftNo);
         }
 
         public static DataSet B_BDOCUMETARYCOLLECTION_GetByDocCollectCode(string DocCollectCode, int ViewType)
