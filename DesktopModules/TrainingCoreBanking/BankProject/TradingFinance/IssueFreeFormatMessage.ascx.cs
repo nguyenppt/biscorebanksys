@@ -22,6 +22,9 @@ namespace BankProject.TradingFinance
             InitToolBar(false);
             SetDefaultNarrative();
 
+            txtEdittor_Narrative.EditModes = EditModes.Design;
+            txtEdittor_Narrative.Modules.Clear();
+
             if (!string.IsNullOrEmpty(Request.QueryString["CodeID"]))
             {
                 hiddenId.Value = Request.QueryString["CodeID"];
@@ -165,7 +168,7 @@ namespace BankProject.TradingFinance
                 txtReviver.Text = dtSource.Rows[0]["ReviverCode"].ToString();
                 lblReviverCode.Text = dtSource.Rows[0]["ReviverDesc"].ToString(); 
                 txtRelatedReference.Text = dtSource.Rows[0]["RelatedReference"].ToString();
-                txtNarrative.Text = dtSource.Rows[0]["Narrative"].ToString();
+                txtEdittor_Narrative.Content = dtSource.Rows[0]["Narrative"].ToString();
             }
             else
             {
@@ -177,7 +180,7 @@ namespace BankProject.TradingFinance
         {
             SQLData.B_BFREETEXTMESSAGE_Insert(hiddenId.Value, comboWaiveCharges.SelectedValue, txtTFNo.Text.Trim(),
                                               comboCableType.SelectedValue, txtReviver.Text.Trim(), lblReviverCode.Text,
-                                              txtRelatedReference.Text.Trim(), txtNarrative.Text, UserId);
+                                              txtRelatedReference.Text.Trim(), txtEdittor_Narrative.Content, UserId);
         }
 
         protected void UpdateStatus(string status)
@@ -219,7 +222,7 @@ namespace BankProject.TradingFinance
 
         protected void SetDefaultNarrative()
         {
-            txtNarrative.Text = "";
+            txtEdittor_Narrative.Content = "";
         }
 
         protected void btnIssueFreeFormatMessage_Click(object sender, EventArgs e)
@@ -238,7 +241,7 @@ namespace BankProject.TradingFinance
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IssueFreeFormatMessage_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("IssueFreeFormatMessage_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
