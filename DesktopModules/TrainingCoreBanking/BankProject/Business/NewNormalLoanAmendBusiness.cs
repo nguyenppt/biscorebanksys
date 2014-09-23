@@ -22,8 +22,8 @@ namespace BankProject.Business
 
         public void loadEntrities(ref List<BNEWNORMALLOAN> entries)
         {
-            entries = facade.findAllNormalLoans("AUT", "UNA").
-                Union(facade.findAllNormalLoans("AUT", String.Empty)).ToList();
+            entries = facade.findAllNormalLoans("AUT", "UNA").ToList();
+                //Union(facade.findAllNormalLoans("AUT", String.Empty)).
         }
 
         public void commitProcess(int userID)
@@ -55,7 +55,7 @@ namespace BankProject.Business
                 Entity = existLoan;
                 Entity.UpdatedBy = userID;
                 Entity.UpdatedDate = facade.GetSystemDatetime();
-                Entity.Status = "REV";
+                Entity.Amend_Status = "REV";
                 facade.Update(existLoan, Entity);
                 facade.Commit();
             }
