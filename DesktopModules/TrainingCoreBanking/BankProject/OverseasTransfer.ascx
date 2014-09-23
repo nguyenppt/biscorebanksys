@@ -648,7 +648,8 @@
             <tr>    
                 <td class="MyLable">Receiver's Correspondent</td>
                 <td style="width: 150px" class="MyContent">
-                    <telerik:RadComboBox DropDownCssClass="KDDL"
+                    <telerik:RadTextBox ID="txtReceiverCorrespondent" runat="server"/>
+                    <%--<telerik:RadComboBox DropDownCssClass="KDDL"
                         AutoPostBack="true" Width="400" AppendDataBoundItems="True"
                     OnSelectedIndexChanged="comboReceiverCorrespondent_SelectIndexChange"
                         ID="comboReceiverCorrespondent" Runat="server" OnItemDataBound="commomSwiftCode_ItemDataBound"
@@ -678,7 +679,7 @@
                                       </tr> 
                                    </table> 
                            </ItemTemplate>
-                    </telerik:RadComboBox>
+                    </telerik:RadComboBox>--%>
                 </td>
                 <td><asp:Label ID="lblReceiverCorrespondentName" runat="server" />
             </tr>
@@ -859,14 +860,14 @@
             <tr>    
                 <td class="MyLable">Sender's Charges</td>
                 <td class="MyContent">
-                    <asp:Label ID="lblSenderCharges" runat="server" Text="0" />
+                    <asp:Label ID="lblSenderCharges" runat="server" />
                 </td>
             </tr>
 
             <tr>    
                 <td class="MyLable">Receiver's Charges</td>
                 <td class="MyContent">
-                    <asp:Label ID="lblReceiverCharges" runat="server" Text="0" />
+                    <asp:Label ID="lblReceiverCharges" runat="server" />
                 </td>
             </tr>
             
@@ -1216,7 +1217,7 @@
         <telerik:AjaxSetting AjaxControlID="comboCreditAccount">
             <UpdatedControls>
                  <telerik:AjaxUpdatedControl ControlID="lblCreditAccount" />
-                <telerik:AjaxUpdatedControl ControlID="comboReceiverCorrespondent" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondent" />
                 <telerik:AjaxUpdatedControl ControlID="lblReceiverCorrespondentName" />
                 <telerik:AjaxUpdatedControl ControlID="txtCreditCurrency" />
                 <telerik:AjaxUpdatedControl ControlID="comboCurrency" />
@@ -1341,6 +1342,8 @@
                 
                 <telerik:AjaxUpdatedControl ControlID="txtCommissionCurrency" />
                 <telerik:AjaxUpdatedControl ControlID="txtChargeCurrency" />
+
+                <telerik:AjaxUpdatedControl ControlID="lblSenderCharges" />                
             </UpdatedControls>
         </telerik:AjaxSetting>
         

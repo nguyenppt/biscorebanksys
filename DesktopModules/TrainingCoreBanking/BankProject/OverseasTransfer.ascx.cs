@@ -77,6 +77,8 @@ namespace BankProject
             dteProcessingDate.Enabled = false;
             SetChargeAcct();
             LoadCreditAccountByDebitCurrency();
+
+            txtReceiverCorrespondent.Enabled = false;
         }
         
         protected void comboTPKT_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -93,15 +95,15 @@ namespace BankProject
 
             if (drow.Length > 0)
             {
-                comboReceiverCorrespondent.SelectedValue = drow[0]["Code"].ToString();
-                lblReceiverCorrespondentName.Text = lblCreditAccount.Text;
+                txtReceiverCorrespondent.Text = drow[0]["Code"].ToString();
+                //lblReceiverCorrespondentName.Text = lblCreditAccount.Text;
                 txtCreditCurrency.Text = drow[0]["Currency"].ToString();
                 comboCurrency.SelectedValue = drow[0]["Currency"].ToString();
             }
             else
             {
-                comboReceiverCorrespondent.SelectedValue = string.Empty;
-                lblReceiverCorrespondentName.Text = string.Empty;
+                txtReceiverCorrespondent.Text = string.Empty;
+                //lblReceiverCorrespondentName.Text = string.Empty;
                 txtCreditCurrency.Text = string.Empty;
                 comboCurrency.SelectedValue = string.Empty;
             }
@@ -293,12 +295,12 @@ namespace BankProject
 
             var dsSwiftCode = SQLData.B_BSWIFTCODE_GetAll();
 
-            comboReceiverCorrespondent.Items.Clear();
-            comboReceiverCorrespondent.Items.Add(new RadComboBoxItem(""));
-            comboReceiverCorrespondent.DataValueField = "Code";
-            comboReceiverCorrespondent.DataTextField = "Code";
-            comboReceiverCorrespondent.DataSource = dsSwiftCode;
-            comboReceiverCorrespondent.DataBind();
+            //comboReceiverCorrespondent.Items.Clear();
+            //comboReceiverCorrespondent.Items.Add(new RadComboBoxItem(""));
+            //comboReceiverCorrespondent.DataValueField = "Code";
+            //comboReceiverCorrespondent.DataTextField = "Code";
+            //comboReceiverCorrespondent.DataSource = dsSwiftCode;
+            //comboReceiverCorrespondent.DataBind();
             
             comboTransactionType.Items.Clear();
             comboTransactionType.Items.Add(new RadComboBoxItem(""));
@@ -413,7 +415,10 @@ namespace BankProject
                     , txtOtherBy4.Text.Trim()
                     , txtOtherBy5.Text.Trim());
 
-            double InterBankSettleAmount = 0, InstancedAmount = 0, SenderCharges = 0, ReceiverCharges = 0;
+            double InterBankSettleAmount = 0, InstancedAmount = 0;
+            double? SenderCharges = null;
+            double? ReceiverCharges = null;
+
             if (!string.IsNullOrEmpty(lblInterBankSettleAmount.Text))
             {
                 InterBankSettleAmount = double.Parse(lblInterBankSettleAmount.Text);
@@ -423,12 +428,12 @@ namespace BankProject
                 InstancedAmount = double.Parse(lblInstancedAmount.Text);
             }
 
-            if (!string.IsNullOrEmpty(lblSenderCharges.Text))
+            if (!string.IsNullOrEmpty(lblSenderCharges.Text) && lblSenderCharges.Text != "0")
             {
                 SenderCharges = double.Parse(lblSenderCharges.Text);
             }
 
-            if (!string.IsNullOrEmpty(lblReceiverCharges.Text))
+            if (!string.IsNullOrEmpty(lblReceiverCharges.Text) && lblReceiverCharges.Text !=  "0")
             {
                 ReceiverCharges = double.Parse(lblReceiverCharges.Text);
             }
@@ -445,7 +450,7 @@ namespace BankProject
                 , comboOrderingCustAcc.SelectedValue
                 , txtOrderingInstitution.Text.Trim()
                 , lblSenderCorrespondent.Text
-                , comboReceiverCorrespondent.SelectedItem.Value
+                , txtReceiverCorrespondent.Text
                 , txtReceiverCorrBankAct.Text.Trim()
                 , txtIntermediaryInstitutionNo.Text.Trim()
                 , txtIntermediaryBankAcct.Text.Trim()
@@ -704,16 +709,23 @@ namespace BankProject
                     txtRemittanceInformation.Text = drow103["RemittanceInformation"].ToString();
                     comboDetailOfCharges.SelectedValue = drow103["DetailOfCharges"].ToString();
 
-                    lblSenderCharges.Text = String.Format("{0:C}", drow103["SenderCharges"]).Replace("$", "");
-                    lblReceiverCharges.Text = String.Format("{0:C}", drow103["ReceiverCharges"]).Replace("$", "");
+                    if (!string.IsNullOrEmpty(drow103["SenderCharges"].ToString()) && drow103["SenderCharges"].ToString() != "0")
+                    {
+                        lblSenderCharges.Text = String.Format("{0:C}", drow103["SenderCharges"]).Replace("$", "");
+                    }
+
+                    if (!string.IsNullOrEmpty(drow103["ReceiverCharges"].ToString()) && drow103["ReceiverCharges"].ToString() != "0")
+                    {
+                        lblReceiverCharges.Text = String.Format("{0:C}", drow103["ReceiverCharges"]).Replace("$", "");
+                    }
 
                     txtSenderToReceiverInfo.Text = drow103["SenderToReceiveInfo"].ToString();
 
                     txtAccountWithInstitutionNo.Text = drow103["AccountWithInstitution"].ToString();
                     lblAccountWithInstitutionName.Text = drow103["AccountWithInstitutionName"].ToString();
 
-                    comboReceiverCorrespondent.SelectedValue = drow103["ReceiverCorrespondent"].ToString();
-                    lblReceiverCorrespondentName.Text = comboReceiverCorrespondent.SelectedItem.Attributes["Description"];
+                    txtReceiverCorrespondent.Text = drow103["ReceiverCorrespondent"].ToString();
+                    //lblReceiverCorrespondentName.Text = comboReceiverCorrespondent.SelectedItem.Attributes["Description"];
 
                     comboAccountType.SelectedValue = drow103["AccountType"].ToString();
                     txtAccountWithBankAcct2.Text = drow103["AccountWithBankAcct2"].ToString();
@@ -754,7 +766,7 @@ namespace BankProject
                     txtOrderingInstitution.Text = string.Empty;
                     lblSenderCorrespondent.Text = string.Empty;
 
-                    comboReceiverCorrespondent.SelectedValue = string.Empty;
+                    txtReceiverCorrespondent.Text = string.Empty;
                     lblReceiverCorrespondentName.Text = string.Empty;
 
                     txtReceiverCorrBankAct.Text = string.Empty;
@@ -768,8 +780,8 @@ namespace BankProject
                     txtAccountWithBankAcct.Text = string.Empty;
                     txtRemittanceInformation.Text = string.Empty;
                     comboDetailOfCharges.SelectedValue = string.Empty;
-                    lblSenderCharges.Text = "0";
-                    lblReceiverCharges.Text = "0";
+                    lblSenderCharges.Text = "";
+                    lblReceiverCharges.Text = "";
                     txtSenderToReceiverInfo.Text = string.Empty;
 
                     txtOrderingCustomer1.Text = string.Empty;
@@ -994,6 +1006,7 @@ namespace BankProject
         {
             BankProject.Controls.Commont.SetTatusFormControls(this.Controls, flag);
             txtVATNo.Enabled = false;
+            txtReceiverCorrespondent.Enabled = false;
         }
 
         protected void numDebitAmount_OnTextChanged(object sender, EventArgs e)
@@ -1034,7 +1047,7 @@ namespace BankProject
 
         protected void comboReceiverCorrespondent_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblReceiverCorrespondentName.Text = comboReceiverCorrespondent.SelectedItem.Attributes["Description"];
+            //lblReceiverCorrespondentName.Text = comboReceiverCorrespondent.SelectedItem.Attributes["Description"];
         }
 
         protected void comboDetailOfCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -1046,6 +1059,25 @@ namespace BankProject
             SetChargeAcct();
 
             SetChargeAccByDebitAcctNo();
+
+            //---------------------
+            var type = comboDetailOfCharges.SelectedValue;
+            var totalAmount = numCommissionAmount.Value + numChargeAmount.Value;
+            var totalCharges = ((totalAmount) * (110)) / 100;
+
+            switch (type)
+            {
+                case "SHA":
+                case "OUR":
+                    lblSenderCharges.Text = string.Empty;
+                    break;
+                case "BEN":
+                    if (totalCharges > 0)
+                    {
+                        lblSenderCharges.Text = String.Format("{0:C}", totalCharges).Replace("$", "");
+                    }
+                    break;
+            }
         }
 
         protected void CalculatorInstructedAmount()
@@ -1191,8 +1223,21 @@ namespace BankProject
             totalCharges = ((totalAmount) * (110)) / 100;
             if (totalCharges > 0)
             {
-                lblTotalChargeAmount.Text = String.Format("{0:C}", totalCharges).Replace("$", "");
-                lblSenderCharges.Text = String.Format("{0:C}", totalCharges).Replace("$", "");
+                lblTotalChargeAmount.Text = String.Format("{0:C}", totalCharges).Replace("$", "");                
+            }
+
+            switch (type)
+            {
+                case "SHA":
+                case "OUR":
+                    lblSenderCharges.Text = string.Empty;
+                    break;
+                case "BEN":
+                    if (totalCharges > 0)
+                    {
+                        lblSenderCharges.Text = String.Format("{0:C}", totalCharges).Replace("$", "");
+                    }                    
+                    break;
             }
             
             lblTotalTaxAmount.Text = String.Format("{0:C}", (totalAmount * 0.1)).Replace("$", "");
@@ -1290,7 +1335,7 @@ namespace BankProject
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("OverseasTransferMT103_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("OverseasTransferMT103_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void btnPhieuCKReport_Click(object sender, EventArgs e)
@@ -1314,7 +1359,7 @@ namespace BankProject
             docMT400.UpdateTableLayout();
 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            docMT400.Save("PHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            docMT400.Save("PHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void LoadDebitAcctNo(string customerName)
@@ -1378,7 +1423,7 @@ namespace BankProject
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("OverseasTransferVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("OverseasTransferVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         
         protected void txtIntermediaryInstitutionNo_OnTextChanged(object sender, EventArgs e)
