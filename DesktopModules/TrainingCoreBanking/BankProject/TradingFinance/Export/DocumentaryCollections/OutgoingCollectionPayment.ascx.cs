@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -748,15 +749,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtOtherDocs.Text = expDoc.OtherDocs;
                 txtRemarks.Text = expDoc.Remarks;
 
-                if (expDoc.DocsReceivedDate != null)
+                if (expDoc.DocsReceivedDate.HasValue && expDoc.DocsReceivedDate.Value != new DateTime(1900,1,1))
                 {
                     dteDocsReceivedDate.SelectedDate = expDoc.DocsReceivedDate.Value;
                 }
-                if (expDoc.MaturityDate != null)
+                if (expDoc.MaturityDate.HasValue && expDoc.MaturityDate.Value != new DateTime(1900, 1, 1))
                 {
                     dteMaturityDate.SelectedDate = expDoc.MaturityDate.Value;
                 }
-                if (expDoc.TracerDate != null)
+                if (expDoc.TracerDate.HasValue && expDoc.TracerDate.Value != new DateTime(1900, 1, 1))
                 {
                     dteTracerDate.SelectedDate = expDoc.TracerDate.Value;
                 }

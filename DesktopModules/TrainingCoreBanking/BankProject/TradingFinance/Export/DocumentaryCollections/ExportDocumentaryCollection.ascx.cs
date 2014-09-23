@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Web.UI;
+using BankProject.Common;
 using BankProject.DataProvider;
+using BankProject.DBContext;
 using DotNetNuke.Common;
 using Telerik.Web.UI;
 using Telerik.Web.UI.Calendar;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCollections
 {
+    
     public enum ExportDocumentaryScreenType
     {
         Register,
@@ -19,6 +23,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
     public partial class ExportDocumentaryCollection : DotNetNuke.Entities.Modules.PortalModuleBase
     {
+        private VietVictoryCoreBankingEntities _entities = new VietVictoryCoreBankingEntities();
         public double Amount = 0;
         public double AmountNew = 0;
         public double AmountOld = 0;
@@ -360,9 +365,39 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboCommodity.Items.Clear();
             comboCommodity.Items.Add(new RadComboBoxItem(""));
             comboCommodity.DataValueField = "ID";
-            comboCommodity.DataTextField = "ID";
+            comboCommodity.DataTextField = "Name2";
             comboCommodity.DataSource = DataTam.B_BCOMMODITY_GetAll();
             comboCommodity.DataBind();
+
+
+            comboCurrency.Items.Clear();
+            comboCurrency.Items.Add(new RadComboBoxItem(""));
+            comboCurrency.DataValueField = "Code";
+            comboCurrency.DataTextField = "Code";
+            comboCurrency.DataSource = _entities.BCURRENCies.ToList();
+            comboCurrency.DataBind();
+
+            rcbChargeCcy.Items.Clear();
+            rcbChargeCcy.Items.Add(new RadComboBoxItem(""));
+            rcbChargeCcy.DataValueField = "Code";
+            rcbChargeCcy.DataTextField = "Code";
+            rcbChargeCcy.DataSource = _entities.BCURRENCies.ToList();
+            rcbChargeCcy.DataBind();
+
+            rcbChargeCcy2.Items.Clear();
+            rcbChargeCcy2.Items.Add(new RadComboBoxItem(""));
+            rcbChargeCcy2.DataValueField = "Code";
+            rcbChargeCcy2.DataTextField = "Code";
+            rcbChargeCcy2.DataSource = _entities.BCURRENCies.ToList();
+            rcbChargeCcy2.DataBind();
+
+            rcbChargeCcy3.Items.Clear();
+            rcbChargeCcy3.Items.Add(new RadComboBoxItem(""));
+            rcbChargeCcy3.DataValueField = "Code";
+            rcbChargeCcy3.DataTextField = "Code";
+            rcbChargeCcy3.DataSource = _entities.BCURRENCies.ToList();
+            rcbChargeCcy3.DataBind();
+
 
             tbChargeCode.SelectedValue = "EC.RECEIVE";
             tbChargeCode.Enabled = false;
@@ -934,7 +969,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 numReminderDays.Text = drow["ReminderDays"].ToString();
 
                 comboCommodity.SelectedValue = drow["Commodity"].ToString();
-                txtCommodityName.Text = comboCommodity.SelectedItem.Attributes["Name2"];
+                //txtCommodityName.Text = comboCommodity.SelectedItem.Attributes["Name2"];
 
                 comboDocsCode1.SelectedValue = drow["DocsCode1"].ToString();
                 numNoOfOriginals1.Text = drow["NoOfOriginals1"].ToString();
@@ -1258,17 +1293,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
         }
 
-        protected void comboCommodity_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            txtCommodityName.Text = comboCommodity.SelectedItem.Attributes["Name2"];
-        }
+        //protected void comboCommodity_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        //{
+        //    //txtCommodityName.Text = comboCommodity.Text;
+        //}
 
-        protected void comboCommodity_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
-        {
-            DataRowView row = e.Item.DataItem as DataRowView;
-            e.Item.Attributes["ID"] = row["ID"].ToString();
-            e.Item.Attributes["Name2"] = row["Name2"].ToString();
-        }
+        //protected void comboCommodity_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        //{
+        //    DataRowView row = e.Item.DataItem as DataRowView;
+        //    e.Item.Attributes["ID"] = row["ID"].ToString();
+        //    e.Item.Attributes["Name2"] = row["Name2"].ToString();
+        //}
 
         protected void btAddDocsCode_Click(object sender, ImageClickEventArgs e)
         {
@@ -1635,7 +1670,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report(txtCode.Text, UserInfo.Username);
-
+            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1661,7 +1696,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report(txtCode.Text, UserInfo.Username);
-
+            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1687,7 +1722,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report(txtCode.Text, UserInfo.Username);
-
+            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1710,7 +1745,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-
+            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1728,7 +1763,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-
+            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1746,7 +1781,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-
+            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
