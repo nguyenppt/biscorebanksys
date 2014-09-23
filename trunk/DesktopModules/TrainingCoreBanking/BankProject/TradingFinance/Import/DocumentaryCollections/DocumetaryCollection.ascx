@@ -884,16 +884,20 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Other Docs</td>
+                    <td class="MyLable" style="vertical-align: top;">Other Docs</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" Height="100" ID="txtOtherDocs" runat="server" TextMode="MultiLine" />
+                        <telerik:RadEditor runat="server" ID="txtEdittor_OtherDocs" Height="100" Width="355"
+                            ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
+                        <%--<telerik:RadTextBox Width="355" Height="100" ID="txtOtherDocs" runat="server" TextMode="MultiLine" />--%>
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Instruction to Cus</td>
+                    <td class="MyLable" style="vertical-align: top;">Instruction to Cus</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" Height="100" ID="txtInstructionToCus" runat="server" TextMode="MultiLine" />
+                        <telerik:RadEditor runat="server" ID="txtEdittor_InstructionToCus" Height="100" Width="355"
+                            ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
+                        <%--<telerik:RadTextBox Width="355" Height="100" ID="txtInstructionToCus" runat="server" TextMode="MultiLine" />--%>
                     </td>
                 </tr>
 
@@ -922,6 +926,13 @@
                     <td class="MyLable">Invoice No</td>
                     <td class="MyContent">
                         <telerik:RadTextBox Width="355" ID="txtInvoiceNo" runat="server" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="MyLable">Draft No.</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox Width="355" ID="txtDraftNo" runat="server" />
                     </td>
                 </tr>
             </table>
