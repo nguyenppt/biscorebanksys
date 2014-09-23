@@ -33,5 +33,11 @@ namespace BankProject.DBRespository
             Expression<Func<BNewLoanControl, bool>> query = t => t.Code == code;
             return Find(query);
         }
+
+        public IQueryable<BNewLoanControl> FindLoanControl(string code, string type)
+        {
+            Expression<Func<BNewLoanControl, bool>> query = t => t.Code == code && t.Type == type ;
+            return Find(query);
+        }
     }
 }
