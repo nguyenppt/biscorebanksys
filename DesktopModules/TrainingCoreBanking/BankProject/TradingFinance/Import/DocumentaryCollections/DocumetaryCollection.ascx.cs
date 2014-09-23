@@ -33,6 +33,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Incoming Collection Amendments => tabid=218
             // Documentary Collection Cancel => tabid=219
             // Incoming Collection Acception => tabid=281
+            IntialEdittor(txtEdittor_OtherDocs);
+            IntialEdittor(txtEdittor_InstructionToCus);
+
             lblError.Text = "";
             lblTaxAmt.Text = "0";
             lblTaxAmt2.Text = "0";
@@ -207,6 +210,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // never allow to edit
             comboRemittingType.Enabled = false;
             tbVatNo.Enabled = false;
+        }
+
+        protected void IntialEdittor(RadEditor txtEdittor)
+        {
+            txtEdittor.EditModes = EditModes.Design;
+            txtEdittor.Modules.Clear();
         }
 
         protected void InitDataChargeCode()
@@ -621,8 +630,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 numNoOfOriginals2.Text = drow["NoOfOriginals2"].ToString();
                 numNoOfCopies2.Text = drow["NoOfCopies2"].ToString();
 
-                txtOtherDocs.Text = drow["OtherDocs"].ToString();
-                txtInstructionToCus.Text = drow["InstructionToCus"].ToString();
+                txtEdittor_OtherDocs.Content = drow["OtherDocs"].ToString();
+                txtEdittor_InstructionToCus.Content = drow["InstructionToCus"].ToString();
 
                 txtRemarks.Text = drow["Remarks"].ToString();
 
@@ -677,6 +686,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 comboAccountOfficer.SelectedValue = drow["AccountOfficer"].ToString();
                 txtExpressNo.Text = drow["ExpressNo"].ToString();
                 txtInvoiceNo.Text = drow["InvoiceNo"].ToString();
+                txtDraftNo.Text = drow["DraftNo"].ToString();
                 
 
                 SetRelation_DrawerType();
@@ -723,8 +733,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 numNoOfOriginals2.Text = string.Empty;
                 numNoOfCopies2.Text = string.Empty;
 
-                txtOtherDocs.Text = string.Empty;
-                txtInstructionToCus.Text = string.Empty;
+                txtEdittor_OtherDocs.Content = string.Empty;
+                txtEdittor_InstructionToCus.Content = string.Empty;
 
                 lblCollectionTypeName.Text = string.Empty;
                 lblRemittingBankName.Text = string.Empty;
@@ -751,6 +761,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 comboAccountOfficer.SelectedValue = string.Empty;
                 txtExpressNo.Text = string.Empty;
                 txtInvoiceNo.Text = string.Empty;
+                txtDraftNo.Text = string.Empty;
                 txtCancelRemark.Text = string.Empty;
 
                 SetRelation_DrawerType();
@@ -956,8 +967,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 , comboDocsCode2.SelectedValue
                 , numNoOfOriginals2.Value.ToString()
                 , numNoOfCopies2.Value.ToString()
-                , txtOtherDocs.Text.Trim()
-                , txtInstructionToCus.Text.Trim()
+                , txtEdittor_OtherDocs.Content
+                , txtEdittor_InstructionToCus.Content
                 , UserId.ToString()
                 , txtDrawerAddr1.Text.Trim()
                 , txtDrawerAddr2.Text.Trim()
@@ -977,6 +988,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 , comeFromUrl
                 , dteAcceptedDate.SelectedDate.ToString()
                 , txtAcceptedRemarks.Text.Trim()
+                , txtDraftNo.Text
                 );
 
             if (tbChargeCode.SelectedValue != "")
@@ -1415,7 +1427,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("RegisterDocumentaryCollectionMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("RegisterDocumentaryCollectionMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnPhieuNgoaiBangReport_Click(object sender, EventArgs e)
         {
@@ -1433,7 +1445,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnVATReport_Click(object sender, EventArgs e)
         {
@@ -1451,7 +1463,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("RegisterDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("RegisterDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void btnIncomingCollectionAmendmentsPHIEUXUATNGOAIBANG_Click(object sender, EventArgs e)
@@ -1470,7 +1482,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionAmendmentsPHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("IncomingCollectionAmendmentsPHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnIncomingCollectionAmendmentsPHIEUNHAPNGOAIBANG_Click(object sender, EventArgs e)
         {
@@ -1488,7 +1500,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionAmendmentsPHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("IncomingCollectionAmendmentsPHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnIncomingCollectionAmendmentsVAT_Click(object sender, EventArgs e)
         {
@@ -1506,7 +1518,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionAmendmentsVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("IncomingCollectionAmendmentsVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void btnCancelDocumentaryVAT_Click(object sender, EventArgs e)
@@ -1525,7 +1537,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("DocumentaryCollectionCancelVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("DocumentaryCollectionCancelVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnCancelDocumentaryPHIEUXUATNGOAIBANG_Click(object sender, EventArgs e)
         {
@@ -1543,7 +1555,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("DocumentaryCollectionCancelPHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("DocumentaryCollectionCancelPHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void btnIncomingCollectionAcceptionMT412_Click(object sender, EventArgs e)
@@ -1562,7 +1574,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionAcceptionMT412_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("IncomingCollectionAcceptionMT412_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnIncomingCollectionAcceptionVAT_Click(object sender, EventArgs e)
         {
@@ -1580,7 +1592,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionAcceptionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("IncomingCollectionAcceptionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         protected void btnIncomingCollectionAcceptionPHIEUNHAPNGOAIBANG_Click(object sender, EventArgs e)
         {
@@ -1598,7 +1610,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionAcceptionPHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("IncomingCollectionAcceptionPHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         
         protected void ResetValueTabChargeIf()
@@ -1885,7 +1897,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionAmendmentsMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            doc.Save("IncomingCollectionAmendmentsMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void btnChargecode2_Click(object sender, ImageClickEventArgs e)

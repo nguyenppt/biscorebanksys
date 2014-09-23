@@ -625,22 +625,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadNumericTextBox numNoOfCopies2;
         
         /// <summary>
-        /// txtOtherDocs control.
+        /// txtEdittor_OtherDocs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtOtherDocs;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_OtherDocs;
         
         /// <summary>
-        /// txtInstructionToCus control.
+        /// txtEdittor_InstructionToCus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtInstructionToCus;
+        protected global::Telerik.Web.UI.RadEditor txtEdittor_InstructionToCus;
         
         /// <summary>
         /// txtRemarks control.
@@ -668,6 +668,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtInvoiceNo;
+        
+        /// <summary>
+        /// txtDraftNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtDraftNo;
         
         /// <summary>
         /// divTM410 control.
