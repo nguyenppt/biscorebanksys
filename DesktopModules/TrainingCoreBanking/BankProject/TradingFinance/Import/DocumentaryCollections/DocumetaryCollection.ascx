@@ -746,34 +746,12 @@
                 <tr>
                     <td class="MyLable">Commodity<span class="Required"> (*)</span></td>
                     <td style="width: 150px" class="MyContent">
-                        <telerik:RadComboBox Width="355" DropDownCssClass="KDDL"
+                        <telerik:RadComboBox Width="355"
                             AppendDataBoundItems="True" AutoPostBack="true"
                             OnSelectedIndexChanged="comboCommodity_SelectIndexChange"
                             ID="comboCommodity" runat="server" OnItemDataBound="comboCommodity_ItemDataBound"
                             MarkFirstMatch="True"
                             AllowCustomText="false">
-                            <HeaderTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">Id
-                                        </td>
-                                        <td>Description
-                                        </td>
-                                    </tr>
-                                </table>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">
-                                            <%# DataBinder.Eval(Container.DataItem, "ID")%> 
-                                        </td>
-                                        <td>
-                                            <%# DataBinder.Eval(Container.DataItem, "Name")%> 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ItemTemplate>
                         </telerik:RadComboBox>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
