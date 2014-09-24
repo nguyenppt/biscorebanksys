@@ -34,7 +34,7 @@ namespace BankProject.DataProvider
             string chuoi = sqldata.ndkExecuteDataset(StoredProc, MaCode, refix, flat).Tables[0].Rows[0]["Code"].ToString();
             return chuoi;
         }
-        public static string B_BMACODE_NewID_3par_CashRepayment(string MaCode, string refix, string flat = "/")
+        public static string B_BMACODE_NewID_3par_CashRepayment(string MaCode, string refix, string flat = ".")
         {
             string chuoi = sqldata.ndkExecuteDataset("B_BMACODE_NewID_3par_CashRepayment", refix, flat).Tables[0].Rows[0]["Code"].ToString();
             return chuoi;
@@ -151,11 +151,11 @@ namespace BankProject.DataProvider
             , TotalCapital, NoOfEmployee, TotalAssets, TotalRevenue, CustomerLiability, LegacyRef, ApprovedUser);
         }
         public static void B_OPEN_LOANWORK_ACCT_Insert_Update_Acct(string RefID, string CustomerID, string Status, string GBFullName, string DocType, string DocID, string DocIssuePlace
-            , DateTime? DocIssueDate, DateTime? DocExpiryDate, string CategoryCode, string CategoryName, string AccountName, string ShortTittle, string Mnemonic
+            , DateTime? DocIssueDate, string DocExpiryDate, string CategoryCode, string CategoryName, string AccountName, string ShortTittle, string Mnemonic
             , string CurrencyCode, string CurrencyDescr, string ProductLineCode, string ProductLineDescr, string AlternateAcct, string CreatedUser)
         {
             sqldata.ndkExecuteNonQuery("B_OPEN_LOANWORK_ACCT_Insert_Update_Acct", RefID, CustomerID, Status, GBFullName, DocType, DocID, DocIssuePlace
-            , DocIssueDate, DocExpiryDate, CategoryCode, CategoryName, AccountName, ShortTittle, Mnemonic
+            , DocIssueDate,DocExpiryDate == "" ? null : DocExpiryDate , CategoryCode, CategoryName, AccountName, ShortTittle, Mnemonic
             , CurrencyCode, CurrencyDescr, ProductLineCode, ProductLineDescr, AlternateAcct, CreatedUser);
         }
         public static DataSet OPEN_CORPORATE_CUSTOMER_review_Account(string CustomerID, string Status, string CustomerType, string LoadFor_List1_review2)
@@ -268,12 +268,12 @@ namespace BankProject.DataProvider
         public static void B_CUSTOMER_LIMIT_SUB_Insert_Update(string MainLimitID,string SubLimitID, string CustomerID,string SubCommitmentType, string STTSub, string mode, string CollateralTypeCode
             , string CollateralTypeName, string CollateralCode, string CollateralName, string CollReqdAmt, string CollReqdPct, string UptoPeriod, string PeriodAmt
             , string PeriodPct, decimal MaxSecured, decimal MaxUnSecured, decimal MaxTotal, string OtherSecured, string CollateralRight, string AmtSecured
-            , string Onlinelimit, string AvailableAmt, string TotalOutstand, string ApprovedUser, string MainComtType)
+            , string Onlinelimit, string AvailableAmt, string TotalOutstand, string ApprovedUser, string MainComtType, double? InternalLimitAmt, double? AdvisedAmt)
         {
             sqldata.ndkExecuteNonQuery("B_CUSTOMER_LIMIT_SUB_Insert_Update",MainLimitID, SubLimitID, CustomerID, SubCommitmentType, STTSub, mode, CollateralTypeCode
                                         , CollateralTypeName, CollateralCode, CollateralName, CollReqdAmt, CollReqdPct, UptoPeriod, PeriodAmt
                                         , PeriodPct, MaxSecured, MaxUnSecured, MaxTotal, OtherSecured, CollateralRight, AmtSecured
-                                        , Onlinelimit, AvailableAmt, TotalOutstand, ApprovedUser, MainComtType);
+                                        , Onlinelimit, AvailableAmt, TotalOutstand, ApprovedUser, MainComtType, InternalLimitAmt, AdvisedAmt);
         }
         public static DataSet B_CUSTOMER_LIMIT_SUB_check_SubLimitID(string SubLimitID)
         {
@@ -295,6 +295,14 @@ namespace BankProject.DataProvider
 
             { return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_LoadCustomerName", CustomerID).Tables[0].Rows[0]["CustomerName"].ToString(); }
             else return null;
+        }
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_them_data_SecuredAmt(string ProductLimitID)
+        {
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_SecuredAmt", ProductLimitID);
+        }
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(string ProductLimitID)
+        {
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt", ProductLimitID);
         }
         #endregion
         #region INPUT CUSTOMER_RIGHT_Load_SubLimitID
