@@ -571,6 +571,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation;
         
         /// <summary>
+        /// txtSenderToReceiverInformation2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation2;
+        
+        /// <summary>
+        /// txtSenderToReceiverInformation3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation3;
+        
+        /// <summary>
         /// comboCreateMT410 control.
         /// </summary>
         /// <remarks>
@@ -794,6 +812,42 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtDetailOfCharges2;
+        
+        /// <summary>
+        /// txtDetailOfCharges3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtDetailOfCharges3;
+        
+        /// <summary>
+        /// txtSenderToReceiverInformation1_400_1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation1_400_1;
+        
+        /// <summary>
+        /// txtSenderToReceiverInformation1_400_2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation1_400_2;
+        
+        /// <summary>
+        /// txtSenderToReceiverInformation1_400_3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInformation1_400_3;
         
         /// <summary>
         /// comboWaiveCharges control.

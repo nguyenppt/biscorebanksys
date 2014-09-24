@@ -751,13 +751,31 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadNumericTextBox numAmount_TabMT410;
         
         /// <summary>
-        /// txtSenderToReceiverInfo control.
+        /// txtSenderToReceiverInfo_410_1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::BankProject.Controls.VVTextBox txtSenderToReceiverInfo;
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInfo_410_1;
+        
+        /// <summary>
+        /// txtSenderToReceiverInfo_410_2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInfo_410_2;
+        
+        /// <summary>
+        /// txtSenderToReceiverInfo_410_3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInfo_410_3;
         
         /// <summary>
         /// UpdatePanel3 control.

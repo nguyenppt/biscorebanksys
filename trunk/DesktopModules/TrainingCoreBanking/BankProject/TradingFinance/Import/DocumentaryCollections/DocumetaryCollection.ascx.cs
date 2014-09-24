@@ -148,7 +148,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     txtRelatedReference.Enabled = true;
                     comboCurrency_TabMT410.Enabled = true;
                     numAmount_TabMT410.Enabled = true;
-                    txtSenderToReceiverInfo.SetEnable(true);
+                    //txtSenderToReceiverInfo.SetEnable(true);
                 }
                 
 
@@ -902,6 +902,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRelatedReference.Text = drowMT410["RelatedReference"].ToString();
                 comboCurrency_TabMT410.SelectedValue = drowMT410["Currency"].ToString();
                 numAmount_TabMT410.Text = drowMT410["Amount"].ToString();
+
+                txtSenderToReceiverInfo_410_1.Text = drowMT410["SenderToReceiverInfo1"].ToString();
+                txtSenderToReceiverInfo_410_2.Text = drowMT410["SenderToReceiverInfo2"].ToString();
+                txtSenderToReceiverInfo_410_3.Text = drowMT410["SenderToReceiverInfo3"].ToString();
             }
             else
             {
@@ -913,6 +917,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRelatedReference.Text = string.Empty;
                 comboCurrency_TabMT410.SelectedValue = string.Empty;
                 numAmount_TabMT410.Text = string.Empty;
+
+                txtSenderToReceiverInfo_410_1.Text = string.Empty;
+                txtSenderToReceiverInfo_410_2.Text = string.Empty;
+                txtSenderToReceiverInfo_410_3.Text = string.Empty;
             }
             #endregion
         }
@@ -1009,7 +1017,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtGeneralMT410_2.Text.Trim(),
                 txtSendingBankTRN.Text.Trim(),
                 txtRelatedReference.Text.Trim(),
-                comboCurrency_TabMT410.SelectedValue, numAmount_TabMT410.Text);
+                comboCurrency_TabMT410.SelectedValue, 
+                numAmount_TabMT410.Text, 
+                txtSenderToReceiverInfo_410_1.Text,
+                txtSenderToReceiverInfo_410_2.Text,
+                txtSenderToReceiverInfo_410_3.Text
+                );
         }
 
         protected void btAddDocsCode_Click(object sender, ImageClickEventArgs e)
@@ -1088,7 +1101,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         {
             BankProject.Controls.Commont.SetTatusFormControls(this.Controls, flag);
             btThem.Enabled = flag;
-            txtSenderToReceiverInfo.SetEnable(flag);
+            //txtSenderToReceiverInfo.SetEnable(flag);
             tbVatNo.Enabled = false;
         }
 
@@ -1265,7 +1278,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRelatedReference.Enabled = true;
                 comboCurrency_TabMT410.Enabled = true;
                 numAmount_TabMT410.Enabled = true;
-                txtSenderToReceiverInfo.SetEnable(true);
+                //txtSenderToReceiverInfo.SetEnable(true);
             }
             else
             {
@@ -1273,7 +1286,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRelatedReference.Enabled = false;
                 comboCurrency_TabMT410.Enabled = false;
                 numAmount_TabMT410.Enabled = false;
-                txtSenderToReceiverInfo.SetEnable(false);
+                //txtSenderToReceiverInfo.SetEnable(false);
             }
         }
 

@@ -642,6 +642,20 @@
                         <telerik:RadTextBox ID="txtSenderToReceiverInformation" runat="server" Width="400" />
                     </td>
                 </tr>
+
+                <tr>
+                    <td style="width: 200px" class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtSenderToReceiverInformation2" runat="server" Width="400" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 200px" class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtSenderToReceiverInformation3" runat="server" Width="400" />
+                    </td>
+                </tr>
             </table>
 
         </fieldset>
@@ -876,9 +890,37 @@
                     </tr>
 
                     <tr>
-                        <td style="width: 200px" class="MyLable">Sender to Receiver Information</td>
+                        <td style="width: 200px" class="MyLable"></td>
                         <td class="MyContent">
                             <telerik:RadTextBox ID="txtDetailOfCharges2" runat="server" Width="400" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 200px" class="MyLable"></td>
+                        <td class="MyContent">
+                            <telerik:RadTextBox ID="txtDetailOfCharges3" runat="server" Width="400" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 200px" class="MyLable">Sender to Receiver Information</td>
+                        <td class="MyContent">
+                            <telerik:RadTextBox ID="txtSenderToReceiverInformation1_400_1" runat="server" Width="400" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 200px" class="MyLable"></td>
+                        <td class="MyContent">
+                            <telerik:RadTextBox ID="txtSenderToReceiverInformation1_400_2" runat="server" Width="400" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 200px" class="MyLable"></td>
+                        <td class="MyContent">
+                            <telerik:RadTextBox ID="txtSenderToReceiverInformation1_400_3" runat="server" Width="400" />
                         </td>
                     </tr>
                 </table>
@@ -1643,6 +1685,8 @@
         <telerik:AjaxSetting AjaxControlID="comboNostroAcct">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblSenderCorrespondent1" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderCorrespondentNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderCorrespondentName" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         
@@ -1675,6 +1719,8 @@
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblAccountWithInstitutionError" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionName" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentName" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         
