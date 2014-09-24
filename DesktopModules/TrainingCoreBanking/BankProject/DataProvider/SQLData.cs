@@ -792,7 +792,10 @@ namespace BankProject.DataProvider
                                                                , string SendingBankTRN
                                                                , string RelatedReference
                                                                , string Currency
-                                                               , string Amount)
+                                                               , string Amount
+            , string SenderToReceiverInfo1
+            , string SenderToReceiverInfo2
+            , string SenderToReceiverInfo3)
         {
             sqldata.ndkExecuteNonQuery("B_BDOCUMETARYCOLLECTIONMT410_Insert", DocCollectCode
                                        , GeneralMT410_1
@@ -800,7 +803,10 @@ namespace BankProject.DataProvider
                                        , SendingBankTRN
                                        , RelatedReference
                                        , Currency
-                                       , Amount);
+                                       , Amount
+                                       , SenderToReceiverInfo1
+                                       , SenderToReceiverInfo2
+                                       , SenderToReceiverInfo3);
         }
 
         public static DataSet B_BDOCUMETARYCOLLECTION_Report(string code)
@@ -852,7 +858,8 @@ namespace BankProject.DataProvider
                                                                    , string BeneficiaryBankName
                                                                    , string BeneficiaryBankAddr1
                                                                    , string BeneficiaryBankAddr2
-                                                                   , string BeneficiaryBankAddr3)
+                                                                   , string BeneficiaryBankAddr3
+            , string SenderToReceiverInformation2, string SenderToReceiverInformation3)
         {
             sqldata.ndkExecuteNonQuery("B_INCOMINGCOLLECTIONPAYMENTMT202_Insert", CollectionPaymentCode
                                        , TransactionReferenceNumber
@@ -886,6 +893,8 @@ namespace BankProject.DataProvider
                                        , BeneficiaryBankAddr1
                                        , BeneficiaryBankAddr2
                                        , BeneficiaryBankAddr3
+                                       , SenderToReceiverInformation2
+                                       , SenderToReceiverInformation3
                 );
         }
 
@@ -929,6 +938,10 @@ namespace BankProject.DataProvider
                                                                     , string SenderCorrespondentAddr1
                                                                     , string SenderCorrespondentAddr2
                                                                     , string SenderCorrespondentAddr3
+            , string SenderToReceiverInformation1, 
+            string SenderToReceiverInformation2, 
+            string SenderToReceiverInformation3,
+            string DetailOfCharges3
 
 
             )
@@ -963,6 +976,10 @@ namespace BankProject.DataProvider
                                        , SenderCorrespondentAddr1
                                        , SenderCorrespondentAddr2
                                        , SenderCorrespondentAddr3
+                                       , SenderToReceiverInformation1
+                                       , SenderToReceiverInformation2
+                                       , SenderToReceiverInformation3
+                                       , DetailOfCharges3
 
 
                 );
