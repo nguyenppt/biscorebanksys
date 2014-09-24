@@ -23,6 +23,11 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("P_CashWithrawalForBuyingTCAccounts", AccountNo).Tables[0];
         }
+        //Cash Account
+        public static DataTable CashAccount()
+        {
+            return sqldata.ndkExecuteDataset("P_BINTERNALBANKACCOUNT").Tables[0];
+        }
 
         public static DataTable ExchangeRate()
         {
