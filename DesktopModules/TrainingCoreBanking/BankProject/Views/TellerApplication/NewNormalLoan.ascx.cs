@@ -258,6 +258,7 @@ namespace BankProject.Views.TellerApplication
             normalLoanEntryM.Code = tbNewNormalLoan.Text;
             loanBusiness.loadEntity(ref normalLoanEntryM);
             BindData2Field(normalLoanEntryM);
+            LoadDataTolvLoanControl();
             processApproriateAction();
         }
 
@@ -556,7 +557,7 @@ namespace BankProject.Views.TellerApplication
             normalLoanEntry.LoanGroupName = rcbLoadGroup.Text;
             normalLoanEntry.Currency = rcbCurrency.SelectedValue;
             normalLoanEntry.BusDayDef = tbBusDayDef.Text;
-            normalLoanEntry.BusDayDefName = "VIET NAM";
+ 
 
             normalLoanEntry.LoanAmount = tbLoanAmount.Text != "" ? decimal.Parse(tbLoanAmount.Text) : 0;
             normalLoanEntry.ApproveAmount = tbApprovedAmt.Value.HasValue ? (decimal)tbApprovedAmt.Value.Value : 0;
@@ -612,7 +613,7 @@ namespace BankProject.Views.TellerApplication
             LoadSubCategory(normalLoanEntry.MainCategory, normalLoanEntry.SubCategory);
             rcbPurposeCode.SelectedValue = normalLoanEntry.PurpostCode;
             rcbLoadGroup.SelectedValue = normalLoanEntry.LoanGroup;
-            tbLoanAmount.Text = normalLoanEntry.LoanAmount.ToString();
+            tbLoanAmount.Text = normalLoanEntry.LoanAmount!=null?((decimal)normalLoanEntry.LoanAmount).ToString("#,##"):null;
             tbApprovedAmt.Value = (double?)normalLoanEntry.ApproveAmount;
             rdpOpenDate.SelectedDate = normalLoanEntry.OpenDate;
             rdpValueDate.SelectedDate = normalLoanEntry.ValueDate;
@@ -753,7 +754,9 @@ namespace BankProject.Views.TellerApplication
             document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
             document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            document.Save("LichTraNoHDTinDung_" + tbNewNormalLoan.Text + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            document.Save("LichTraNoHDTinDung_" + tbNewNormalLoan.Text + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+
+            //doc.Save("RegisterDocumentaryCollectionMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         private DataSet PrepareData2Print()
@@ -816,6 +819,7 @@ namespace BankProject.Views.TellerApplication
             row["Drawdown"] = (normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy"));
             row["InterestKey"] = (int)numberofday / 30 + " Tháng";
             row["Freq"] = freg;
+            
             infoTb.Rows.Add(row);
             ds.Tables.Add(infoTb);
 
@@ -825,46 +829,66 @@ namespace BankProject.Views.TellerApplication
             itemTb.Columns.Add("sotientra");
             itemTb.Columns.Add("duno");
 
-            noOfCicle = numberofday / (30 * cicleMonth);
-            if (noOfCicle > 0)
-            {
-                moneyPercicle = (int)(money / noOfCicle);
-                DateTime plandate = startDate;
-                for (int i = 0; i < noOfCicle; i++)
-                {
-                    plandate = plandate.AddMonths(cicleMonth);
-                    money = money - moneyPercicle;
-                    if (money < 0)
-                    {
-                        money = 0;
-                    }
+            var rateType = 1;
+            rateType = String.IsNullOrEmpty(normalLoanEntryM.RateType) ? 1 : Int16.Parse(normalLoanEntryM.RateType);
 
-                    if (i == noOfCicle - 1)
+            if (rateType != 2)
+            {
+                noOfCicle = numberofday / (30 * cicleMonth);
+                if (noOfCicle > 0)
+                {
+                    moneyPercicle = (int)(money / noOfCicle);
+                    DateTime plandate = startDate;
+                    for (int i = 0; i < noOfCicle; i++)
                     {
-                        if (money > 0)
+                        plandate = plandate.AddMonths(cicleMonth);
+                        money = money - moneyPercicle;
+                        if (money < 0)
                         {
-                            moneyPercicle = (int)(moneyPercicle + money);
                             money = 0;
                         }
 
-                        if (plandate > endDate)
+                        if (i == noOfCicle - 1)
                         {
-                            plandate = endDate;
-                        }
-                    }
-                    row = itemTb.NewRow();
-                    row["ky"] = i + 1;
-                    row["ngaytra"] = plandate.ToString("dd/MM/yyyy");
-                    row["sotientra"] = moneyPercicle.ToString("#,###");
-                    row["duno"] = (money.ToString("#,###"));
-                    itemTb.Rows.Add(row);
+                            if (money > 0)
+                            {
+                                moneyPercicle = (int)(moneyPercicle + money);
+                                money = 0;
+                            }
 
+                            if (plandate > endDate)
+                            {
+                                plandate = endDate;
+                            }
+                        }
+                        row = itemTb.NewRow();
+                        row["ky"] = i + 1;
+                        row["ngaytra"] = plandate.ToString("dd/MM/yyyy");
+                        row["sotientra"] = moneyPercicle.ToString("#,###");
+                        row["duno"] = money==0? "0" : (money.ToString("#,###"));
+                        itemTb.Rows.Add(row);
+
+                    }
+                    ds.Tables.Add(itemTb);
                 }
+
+            }
+            else
+            {
+                row = itemTb.NewRow();
+                row["ky"] = 1;
+                row["ngaytra"] = ((DateTime)normalLoanEntryM.MaturityDate).ToString("dd/MM/yyyy");
+                row["sotientra"] = ((decimal)normalLoanEntryM.LoanAmount).ToString("#,###");
+                row["duno"] = "0";
+                itemTb.Rows.Add(row);
                 ds.Tables.Add(itemTb);
             }
-
-            
-
+            var dateCreateBill = new DataTable("DateInfor");
+            dateCreateBill.Columns.Add("ngaytao");
+            var rowD = dateCreateBill.NewRow();
+            rowD["ngaytao"] = "Ngày " + DateTime.Now.ToString("dd") + " tháng " + DateTime.Now.ToString("MM") + " năm " + DateTime.Now.ToString("yyyy");
+            ds.Tables.Add(dateCreateBill);
+           
             return ds;
 
         }
@@ -1004,6 +1028,11 @@ namespace BankProject.Views.TellerApplication
         }
 
         #endregion
+
+        protected void tbBusDayDef_TextChanged(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }
