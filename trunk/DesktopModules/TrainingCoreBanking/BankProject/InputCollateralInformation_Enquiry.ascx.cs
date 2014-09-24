@@ -38,6 +38,12 @@ namespace BankProject
         }
         protected void RadGrid_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
+            if (IsPostBack)
+            {
+                RadGrid.DataSource = TriTT.B_COLLATERAL_INFO_Enquiry(tbRightID.Text, tbCollInfoID.Text, tbFullName.Text, tbCustomerID.Text, rcbCollateralType.SelectedValue
+                   , rcbCollateral.SelectedValue, rcbCurrency.SelectedValue, Convert.ToDecimal(tbFromNominalValue.Value.HasValue ? tbFromNominalValue.Value : 0),
+                   Convert.ToDecimal(tbToNominalValue.Value.HasValue ? tbToNominalValue.Value : 0), tbContingentAccID.Text);
+            } else
             RadGrid.DataSource = TriTT.B_COLLATERAL_INFO_Enquiry("!!", "", "", "", "", "", "", 0, 0, "");
         }
         public string geturlReview(string CollInfoID)
