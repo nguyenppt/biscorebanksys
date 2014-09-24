@@ -167,6 +167,8 @@ namespace BankProject.Views.TellerApplication
                         var drow = dsF.Tables[0].Rows[0];
 
                         rcbTransactionType.SelectedValue = drow["TransactionType"].ToString();
+                        SetRelation_TransactionType();
+
                         txtFTNo.Text = drow["FTNo"].ToString();
                         rcbDealType.SelectedValue = drow["DealType"].ToString();
                         rcbCounterparty.SelectedValue = drow["Counterparty"].ToString();
@@ -299,10 +301,15 @@ namespace BankProject.Views.TellerApplication
                 case "TT":
                     txtFTNo.Enabled = false;
                     lblFTNoError.Text = "";
+
+                    SetSourceToSellCurrency(bd.SQLData.B_BCURRENCY_GetAll().Tables[0]);
+                    
                     break;
                 case "LC":
                 case "DP/DA":
                     txtFTNo.Enabled = true;
+
+                    SetSourceToSellCurrency(createSellCurrencySource());
                     break;
             }
         }
@@ -372,6 +379,35 @@ namespace BankProject.Views.TellerApplication
                 "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
                 "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
             Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
+        }
+  
+        protected void SetSourceToSellCurrency (DataTable dtSource) 
+        {
+            bc.Commont.initRadComboBox(ref rcbSellCurrency, "Code", "Code", dtSource);
+        }
+
+        protected DataTable createSellCurrencySource ()
+        {
+            var dtSource = new DataTable();
+            dtSource.Columns.Add("Code", typeof(string));
+            dtSource.Columns.Add("Description", typeof(string));
+
+            var drow = dtSource.NewRow();
+            drow["Code"] = "USD";
+            drow["Description"] = "USD";
+            dtSource.Rows.Add(drow);
+
+            drow = dtSource.NewRow();
+            drow["Code"] = "EUR";
+            drow["Description"] = "EUR";
+            dtSource.Rows.Add(drow);
+
+            drow = dtSource.NewRow();
+            drow["Code"] = "VND";
+            drow["Description"] = "VND";
+            dtSource.Rows.Add(drow);
+
+            return dtSource;
         }
     }
 }
