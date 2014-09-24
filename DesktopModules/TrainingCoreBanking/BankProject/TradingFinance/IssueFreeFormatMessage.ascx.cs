@@ -181,6 +181,7 @@ namespace BankProject.TradingFinance
             SQLData.B_BFREETEXTMESSAGE_Insert(hiddenId.Value, comboWaiveCharges.SelectedValue, txtTFNo.Text.Trim(),
                                               comboCableType.SelectedValue, txtReviver.Text.Trim(), lblReviverCode.Text,
                                               txtRelatedReference.Text.Trim(), txtEdittor_Narrative.Content, UserId);
+            SetDefaultNarrative();
         }
 
         protected void UpdateStatus(string status)

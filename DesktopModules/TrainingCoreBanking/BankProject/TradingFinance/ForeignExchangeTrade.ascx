@@ -55,7 +55,8 @@
                 <td class="MyLable">Transaction Type</td>
                 <td class="MyContent">
                      <telerik:RadComboBox 
-                        AutoPostBack="True" OnTextChanged="rcbTransactionType_OnTextChanged"
+                        AutoPostBack="True" 
+                         OnTextChanged="rcbTransactionType_OnTextChanged"
                         ID="rcbTransactionType"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
@@ -230,12 +231,6 @@
                         OnSelectedIndexChanged="rcbSellCurrency_OnSelectedIndexChanged"
                         OnClientSelectedIndexChanged="OnAmountValueChanged"
                         runat="server" >
-                        <Items>
-                            <telerik:RadComboBoxItem Value="" Text="" />
-                            <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                            <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                            <telerik:RadComboBoxItem Value="VND" Text="VND" />
-                        </Items>
                     </telerik:RadComboBox>
                 </td>
             </tr>
@@ -435,6 +430,7 @@
         <telerik:AjaxSetting AjaxControlID="rcbTransactionType">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="txtFTNo" />
+                <telerik:AjaxUpdatedControl ControlID="rcbSellCurrency" />                
             </UpdatedControls>
         </telerik:AjaxSetting>
         
