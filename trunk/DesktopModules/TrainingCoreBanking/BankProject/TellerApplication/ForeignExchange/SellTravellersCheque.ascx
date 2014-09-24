@@ -188,7 +188,7 @@
                     <telerik:RadComboBox ID="rcbDebitAccount"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
-                        runat="server" Width="350" ValidationGroup="Commit" >
+                        runat="server" Width="160" ValidationGroup="Commit" >
                     </telerik:RadComboBox>
                 </td>
              <td>&nbsp;</td>
@@ -233,7 +233,7 @@
                     <telerik:RadComboBox ID="rcbCrAccount"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
-                        Width="160"
+                        Width="350"
                         runat="server" >
                         <Items>
                              <telerik:RadComboBoxItem Value="" Text="" />

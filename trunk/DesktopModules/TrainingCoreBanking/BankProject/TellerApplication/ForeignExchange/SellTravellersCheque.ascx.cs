@@ -18,8 +18,9 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                 DataTable tList = bd.Teller.ExchangeRate();
                 bc.Commont.initRadComboBox(ref cmbTCCurrency, "Title", "Value", tList);
                 bc.Commont.initRadComboBox(ref rcbDrCurrency, "Title", "Value", tList);
-                //bc.Commont.initRadComboBox(ref rcbCrAccount, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetAll());
-                rcbCrAccount.Items.Clear();
+                //
+                bc.Commont.initRadComboBox(ref rcbDebitAccount, "Display", "Account", bd.Teller.CashAccount());
+                bc.Commont.initRadComboBox(ref rcbCrAccount, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetAll());
             }
             catch (Exception err)
             {
@@ -155,13 +156,13 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
         
         protected void btLoadDebitAccount_Click(object sender, EventArgs e)
         {
-            string Currency = "";
+            /*string Currency = "";
             if (cmbTCCurrency.SelectedIndex >= 0)
                 Currency = cmbTCCurrency.Items[cmbTCCurrency.SelectedIndex].Text;
             rcbDebitAccount.DataSource = bd.Database.B_BDRFROMACCOUNT_GetByCustomer(tbCustomerName.Text, Currency);
             rcbDebitAccount.DataValueField = "Id";
             rcbDebitAccount.DataTextField = "DisplayHasCurrency";
-            rcbDebitAccount.DataBind();
+            rcbDebitAccount.DataBind();*/
         }
     }
 }

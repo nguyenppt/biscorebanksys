@@ -19,9 +19,8 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
             bc.Commont.initRadComboBox(ref cboCurrencyPaid, "Title", "Value", tList);
             cboCurrencyPaid.SelectedValue = "VND";
             //
-            tList = bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll().Tables[0];
-            bc.Commont.initRadComboBox(ref cboDebitAccount, "Display", "Account", tList);
-            bc.Commont.initRadComboBox(ref cboCreditAccount, "Display", "Account", tList);
+            bc.Commont.initRadComboBox(ref cboDebitAccount, "Display", "Account", bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll().Tables[0]);
+            bc.Commont.initRadComboBox(ref cboCreditAccount, "Display", "Account", bd.Teller.CashAccount());
             //
             if (Request.QueryString["tid"] != null)
             {

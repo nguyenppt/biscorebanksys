@@ -18,9 +18,8 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
             bc.Commont.initRadComboBox(ref cmbTCCurrency, "Title", "Value", tList);
             bc.Commont.initRadComboBox(ref rcbCurrencyPaid, "Title", "Value", tList);
             //
-            tList = bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll().Tables[0];
-            bc.Commont.initRadComboBox(ref rcbDrAccount, "Display", "Account", tList);
-            bc.Commont.initRadComboBox(ref rcbCrAccount, "Display", "Account", tList);
+            bc.Commont.initRadComboBox(ref rcbDrAccount, "Display", "Account", bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll().Tables[0]);
+            bc.Commont.initRadComboBox(ref rcbCrAccount, "Display", "Account", bd.Teller.CashAccount());
             //
             bc.Commont.initRadComboBox(ref rcbTCIssuer, "Text", "Value", bd.Teller.TellerForeignExchangeIssuer(TabId));
             //
