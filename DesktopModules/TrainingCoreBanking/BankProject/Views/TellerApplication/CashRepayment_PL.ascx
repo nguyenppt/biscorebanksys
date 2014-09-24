@@ -5,15 +5,23 @@
     <telerik:RadGrid ID="RadGrid" runat="server" AllowPaging="true" AutoGenerateColumns="false" OnNeedDataSource="RadGrid_OnNeedDataSource">
         <MasterTableView>
             <Columns>
-                <telerik:GridBoundColumn  HeaderText="Customer Accoount" DataField="CustomerAccount"  HeaderStyle-Width="300px"/>
-                <telerik:GridBoundColumn  HeaderText="Cash Account" DataField="CashAccount" HeaderStyle-Width="400px" HeaderStyle-HorizontalAlign="Center"
-                                           ItemStyle-HorizontalAlign="center" />
-                <telerik:GridBoundColumn  HeaderText="Amount Deposited" DataField="AmtDeposited"  ItemStyle-HorizontalAlign="Right" 
+                <telerik:GridBoundColumn  HeaderText="ID" DataField="ID"  HeaderStyle-Width="70px"    HeaderStyle-HorizontalAlign="center"/>
+                                         
+                <telerik:GridBoundColumn  HeaderText="Customer Name" DataField="CustomerName" HeaderStyle-Width="190px"  />
+                <telerik:GridBoundColumn  HeaderText="Customer Account ID" DataField="CustomerAccountID"   HeaderStyle-Width="150px"/>
+                <telerik:GridBoundColumn  HeaderText="Cash Account ID" DataField="CashAccountID"  ItemStyle-HorizontalAlign="Right" 
+                                           HeaderStyle-HorizontalAlign="right" HeaderStyle-Width="190px"/>
+                <telerik:GridBoundColumn  HeaderText="Balance Amount" DataField="BalanceAmount"  ItemStyle-HorizontalAlign="Right" 
+                                           HeaderStyle-HorizontalAlign="right" HeaderStyle-Width="150px"/>
+                
+                <telerik:GridBoundColumn  HeaderText="Currency" DataField="Currency"   HeaderStyle-Width="150px" ItemStyle-HorizontalAlign="center" 
+                                           HeaderStyle-HorizontalAlign="center"/>
+                <telerik:GridBoundColumn  HeaderText="Amount Deposited" DataField="AmountDeposited"  ItemStyle-HorizontalAlign="Right" 
                                            HeaderStyle-HorizontalAlign="right" HeaderStyle-Width="200px"/>
                 <telerik:GridTemplateColumn>
                     <ItemStyle width="25" />
                     <ItemTemplate>
-                        <a href='<%# getUrlPreview(Eval("PLCode").ToString()) %>'> <img src="Icons/bank/text_preview.png" width="20"" /></a>
+                        <a href='<%# getUrlPreview(Eval("ID").ToString()) %>'> <img src="Icons/bank/text_preview.png" width="20" /></a>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
             </Columns>
