@@ -13,6 +13,7 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
+            litDenominations.Text = "";
             //
             DataTable tList = bd.Teller.ExchangeRate();
             bc.Commont.initRadComboBox(ref cboDebitCurrency, "Title", "Value", tList);
@@ -63,6 +64,28 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                 if (dr["AmountPaid"] != DBNull.Value)
                     txtAmountPaid.Value = Convert.ToDouble(dr["AmountPaid"]);
                 //
+                string DenominationsNum = dr["Denomination_Num"].ToString();
+                string DenominationsUnit = dr["Denomination_Unit"].ToString();
+                string DenominationsRate = dr["Denomination_Rate"].ToString();
+                if (!string.IsNullOrEmpty(DenominationsNum))
+                {
+                    trDenominations.Visible = false;
+                    litDenominations.Text = "";
+                    var arrNum = DenominationsNum.Split(',');
+                    var arrUnit = DenominationsUnit.Split(',');
+                    var arrRate = DenominationsRate.Split(',');
+                    for (int i = 0; i < arrNum.Length; i++)
+                    {
+                        litDenominations.Text += "<tr>"
+                                                    + "<td class=\"labelDisabled\" style=\"font-weight:bold; text-align:right; padding-right:5px; padding-bottom:5px;\">" + dr["DebitCurrency"] + "</td>"
+                                                    + "<td style=\"padding-bottom:5px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrNum[i].Trim() + "\" disabled=\"disabled\"></td>"
+                                                    + "<td style=\"padding-bottom:5px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrUnit[i].Trim() + "\" disabled=\"disabled\"></td>"
+                                                    + "<td style=\"padding-bottom:5px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrRate[i].Trim() + "\" disabled=\"disabled\"></td>"
+                                                    + "<td style=\"padding-bottom:5px;\"></td>"
+                                                + "</tr>";
+                    }
+                }
+                //
                 bc.Commont.SetTatusFormControls(this.Controls, false);
                 //
                 if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
@@ -103,10 +126,10 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                         string DateOfIsssue = "";
                         if (txtDateOfIsssue.SelectedDate != null)
                             DateOfIsssue = txtDateOfIsssue.SelectedDate.Value.ToString("yyyyMMdd");
-                        //                        
+                        //
                         bd.Teller.ExchangeBanknotesManyDenoUpdate("new", txtId.Text, txtCustomerName.Text, txtAddress.Text, txtPassportNo.Text, DateOfIsssue, txtPlaceOfIss.Text, txtPhoneNo.Text,
                             txtTellerId.Text, cboDebitCurrency.SelectedValue, cboDebitAccount.SelectedValue, txtDebitAmount.Value, txtNarrative.Text, txtValueDate.SelectedDate,
-                            txtCrTellerId.Text, cboCreditAccount.SelectedValue, txtExchangeRate.Value, txtAmountPaid.Value, this.UserInfo.Username);
+                            txtCrTellerId.Text, cboCreditAccount.SelectedValue, txtExchangeRate.Value, txtAmountPaid.Value, txtDenomination_Num.Text, txtDenomination_Unit.Text, txtDenomination_ExchangeRate.Text, this.UserInfo.Username);
                         bc.Commont.SetTatusFormControls(this.Controls, false);
                         bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !", "Default.aspx?TabId=" + TabId);
                     }

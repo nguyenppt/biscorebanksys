@@ -274,6 +274,69 @@ namespace BankProject.Views.TellerApplication.ForeignExchange {
         protected global::Telerik.Web.UI.RadNumericTextBox txtAmountPaid;
         
         /// <summary>
+        /// fDenominations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fDenominations;
+        
+        /// <summary>
+        /// titleAmend_Confirm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label titleAmend_Confirm;
+        
+        /// <summary>
+        /// litDenominations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDenominations;
+        
+        /// <summary>
+        /// trDenominations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trDenominations;
+        
+        /// <summary>
+        /// txtDenomination_Num control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDenomination_Num;
+        
+        /// <summary>
+        /// txtDenomination_Unit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDenomination_Unit;
+        
+        /// <summary>
+        /// txtDenomination_ExchangeRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDenomination_ExchangeRate;
+        
+        /// <summary>
         /// dvAudit control.
         /// </summary>
         /// <remarks>
