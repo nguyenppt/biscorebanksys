@@ -162,7 +162,7 @@
                              </telerik:radcombobox>
                     </td>
 
-                    <td class="MyLable">Bus Day Def:</td>
+                    <td class="MyLable">Business Day:</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="tbBusDayDef" runat="server" validationgroup="Group1" text="VN" />
                         <i>VIET NAM</i>&nbsp;&nbsp;
