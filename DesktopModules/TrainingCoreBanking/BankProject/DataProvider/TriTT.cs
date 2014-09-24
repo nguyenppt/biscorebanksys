@@ -170,14 +170,6 @@ namespace BankProject.DataProvider
         {
             sqldata.ndkExecuteNonQuery("OPEN_CORPORATE_CUSTOMER_Authorize_Account", CustomerID, Status);
         }
-        public static DataSet OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists(string CustomerID,string CustomerType, string DocID)
-        {
-            return sqldata.ndkExecuteDataset("OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists", CustomerID, CustomerType,  DocID);
-        }
-        public static DataSet B_BCASHWITHDRAWAL_Load_Customer_WorkingAmt(string AccountType, string CustomerAccountCode,string Currency)
-        {
-            return sqldata.ndkExecuteDataset("B_BCASHWITHDRAWAL_Load_Customer_WorkingAmt",AccountType ,CustomerAccountCode,Currency);
-        }
         #endregion
         #region B_OPEN_LOAN_WORKING_ACCOUNT
         public static void B_OPEN_LOANWORK_ACCT_Update_Status(string RefID, string CustomerID, string Status)
@@ -336,9 +328,20 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_CheckRightID", RightID);
         }
+        //public static void B_COLLATERAL_INFO_Insert_Update(string RightID, string CollateralInfoID, string CollateralTypeCode, string CollateralTypeName,
+        //    string CollateralCode, string CollateralName, string ContingentAcctID, string ContingentAcctName, string Description, string Address, string CollateralStatusID,
+        //    string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string Currency
+        //, string CountryCode, string CountryName, decimal? NominalValue, decimal? MaxValue, decimal? ProvisionValue, decimal? ExecutionValue, decimal? AllocatedAmt, DateTime? ValueDate,
+        //    DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser)
+        //{
+        //    sqldata.ndkExecuteNonQuery("B_COLLATERAL_INFO_Insert_Update", RightID, CollateralInfoID, CollateralTypeCode, CollateralTypeName, CollateralCode, CollateralName,
+        //        ContingentAcctID, ContingentAcctName, Description, Address, CollateralStatusID, CollateralStatusDesc, CustomerID, CustomreIDName, Note,
+        //        CompanyStorageID, CompanyStorageDesc, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
+        //        AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser);
+        //}
         public static void B_COLLATERAL_INFO_Insert_Update(string RightID, string CollateralInfoID, string CollateralTypeCode, string CollateralTypeName,
             string CollateralCode, string CollateralName, string ContingentAcctID, string ContingentAcctName, string Description, string Address, string CollateralStatusID,
-            string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID,string Currency
+            string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID, string Currency
         , string CountryCode, string CountryName, decimal? NominalValue, decimal? MaxValue, decimal? ProvisionValue, decimal? ExecutionValue, decimal? AllocatedAmt, DateTime? ValueDate,
             DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser)
         {
@@ -465,7 +468,7 @@ namespace BankProject.DataProvider
         }
         public static void BCHEQUE_TRANSFER_Insert_Update(string ID, string Status, string CustomerID, string CustomerName, string DebitCurrency, string DebitAcctCode
             , string DebitAcctName, double? DebitAmount, double? OldCustBalance, double? NewCustBalance, string ChequeType, string ChequeDesc
-            , double? ChequeNo, DateTime? DebitValueDate, string CreditCurrency, string CreditAcctCode, string CreditAcctName, decimal? DealRate, DateTime? ExposureDate, 
+            , double? ChequeNo, DateTime? DebitValueDate, string CreditCurrency, string CreditAcctCode, string CreditAcctName, double? DealRate, DateTime? ExposureDate, 
             double? AmtCreditForCust, DateTime? CreditValueDate, string WaiveCharge
             , string Narrative, string BeneficialName, string Address, string LegalID, DateTime? IssuedDate, string PlaceOfIssue, string ApprovedUser)
         {
@@ -595,6 +598,41 @@ namespace BankProject.DataProvider
         public static DataSet B_CHEQUE_RETURN_check_cheque_in_Returned(string ChequeType, double ChequeNo)
         {
             return sqldata.ndkExecuteDataset("B_CHEQUE_RETURN_check_cheque_in_Returned",ChequeType, ChequeNo);
+        }
+        #endregion
+        #region CASH REPAYMENT
+        public static DataSet B_CASHREPAYMENT_LoadCashAcct(string CurrencyDepostited)
+        {
+            return sqldata.ndkExecuteDataset("B_CASHREPAYMENT_LoadCashAcct", CurrencyDepostited);
+        }
+        public static DataSet B_CASHREPAYMENT_LoadCustomerInfo(string AccountCustomerID, string Currency)
+        {
+            return sqldata.ndkExecuteDataset("B_CASHREPAYMENT_LoadCustomerInfo", AccountCustomerID, Currency);
+        }
+        public static void B_CASHREPAYMENT_Insert_Update(string ID, string Status, string CustomerID, string CustomerName, string Currency, string CustomerAccountID
+      , decimal? BalanceAmount, decimal? NewBalanceAmount, string TellerID, string CurrencyDeposited, string CashAccountID, string CashAccountName, decimal? AmountDeposited
+      , decimal? NextTranCom, decimal? DealRate, string WaiveCharges, string Narrative, string Narrative2, decimal? PrintLnNoOfPS)
+        {
+            sqldata.ndkExecuteNonQuery("B_CASHREPAYMENT_Insert_Update", ID, Status, CustomerID, CustomerName, Currency, CustomerAccountID, BalanceAmount, NewBalanceAmount
+      , TellerID, CurrencyDeposited, CashAccountID, CashAccountName, AmountDeposited, NextTranCom, DealRate, WaiveCharges, Narrative, Narrative2, PrintLnNoOfPS);
+        }
+        public static DataSet B_CASHREPAYMENT_PreviewList()
+        {
+            return sqldata.ndkExecuteDataset("B_CASHREPAYMENT_PreviewList");
+        }
+        public static DataSet B_CASHREPAYMENT_LoadDetail(string ID)
+        {
+            return sqldata.ndkExecuteDataset("B_CASHREPAYMENT_LoadDetail", ID);
+        }
+        public static void B_CASHREPAYMENT_UpdateStatus(string ID, string Status, string AccountCustomerID, string Currency, double Amtdeposited)
+        {
+            sqldata.ndkExecuteNonQuery("B_CASHREPAYMENT_UpdateStatus", ID, Status, AccountCustomerID, Currency, Amtdeposited);
+        }
+        public static DataSet B_CASHREPAYMENT_Enquiry(string CashRepaymentID, string CustomerAccountID, string Currency, string CustomerID, string CustomerName
+            , string LegalID, double? FromDepositedAmt, double? ToDepositedAmt)
+        {
+            return sqldata.ndkExecuteDataset("B_CASHREPAYMENT_Enquiry", CashRepaymentID, CustomerAccountID, Currency, CustomerID, CustomerName, LegalID, FromDepositedAmt
+                , ToDepositedAmt);
         }
         #endregion
     }
