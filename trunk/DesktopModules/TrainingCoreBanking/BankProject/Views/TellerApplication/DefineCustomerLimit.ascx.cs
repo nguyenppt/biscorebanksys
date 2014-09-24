@@ -164,22 +164,22 @@ namespace BankProject.Views.TellerApplication
                     string HanMucCha="";
                     if (HanMucCon == "7700") { HanMucCha = "7000"; } else if (HanMucCon == "8700") { HanMucCha = "8000"; }
                     string STTSub = LimitID.Substring(13, 2);
-                    if (HanMucCon == "7700" || HanMucCon == "8700")
-                    {
-                        //if (TriTT.B_CUSTOMER_LIMIT_SUB_check_SubLimitID(LimitID).Tables[0].Rows.Count == 0)
-                        {
-                            TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
-                                , "", "",
-                                "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
-                                , lblPeriodAmt.Text, lblPeriodPct.Text,tbMaxSecured.Text !=""? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")):0, tbMaxUnsecured.Text!=""? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")):0,
-                                tbMaxTotal.Text!=""? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
-                                , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
-                            Response.Redirect("Default.aspx?tabid=192");
-                        }
-                        //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
-                    }
-                    else
-                    { ShowMsgBox("SubRevoling Limit ID or SubNon-Revoling Limit ID is Incorrect, '7700' for SubRevoling and '8700' for SubNon-Revolving, Please check again !"); return; }
+                    //if (HanMucCon == "7700" || HanMucCon == "8700")
+                    //{
+                    //    //if (TriTT.B_CUSTOMER_LIMIT_SUB_check_SubLimitID(LimitID).Tables[0].Rows.Count == 0)
+                    //    {
+                    //        TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
+                    //            , "", "",
+                    //            "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
+                    //            , lblPeriodAmt.Text, lblPeriodPct.Text,tbMaxSecured.Text !=""? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")):0, tbMaxUnsecured.Text!=""? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")):0,
+                    //            tbMaxTotal.Text!=""? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
+                    //            , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
+                    //        Response.Redirect("Default.aspx?tabid=192");
+                    //    }
+                    //    //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
+                    //}
+                    //else
+                    //{ ShowMsgBox("SubRevoling Limit ID or SubNon-Revoling Limit ID is Incorrect, '7700' for SubRevoling and '8700' for SubNon-Revolving, Please check again !"); return; }
                 }
                 else
                 {

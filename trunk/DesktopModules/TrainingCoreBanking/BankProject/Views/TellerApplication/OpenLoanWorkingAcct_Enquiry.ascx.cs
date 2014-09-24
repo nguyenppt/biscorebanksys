@@ -51,6 +51,11 @@ namespace BankProject.Views.TellerApplication
         #region Load Properties
         protected void RadGrid1_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
+            if (IsPostBack)
+            {
+                RadGrid.DataSource = TriTT.B_OPEN_LOANWORK_ACCT_Enquiry_Customer(tbAcctRef.Text, tbCustomerID.Text, tbFullName.Text, rcbCurrency.SelectedValue,
+                       rcbProductLine.SelectedValue, rcbCategory.SelectedValue, tbDocId.Text);
+            } else
             RadGrid.DataSource = TriTT.B_OPEN_LOANWORK_ACCT_Enquiry_Customer("!", "!", "", "", "", "", "");
         }
         private void LoadCurrency()

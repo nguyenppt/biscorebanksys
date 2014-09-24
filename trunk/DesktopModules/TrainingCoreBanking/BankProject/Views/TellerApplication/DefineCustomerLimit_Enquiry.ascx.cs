@@ -42,6 +42,12 @@ namespace BankProject.Views.TellerApplication
         }
         protected void RadGrid_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
+            if (IsPostBack)
+            {
+                RadGrid.DataSource = TriTT.B_CUSTOMER_LIMIT_ENQUIRY(tbMaHanMucCha.Text, tbMaHanMucCon.Text, tbFullName.Text, tbCustomerID.Text, rcbCollateralType.SelectedValue
+                       , rcbCollateral.SelectedValue, rcbCurrency.SelectedValue, tbFromIntLimitAmt.Value.HasValue ? tbFromIntLimitAmt.Value.Value : 0
+                       , tbToIntLimitAmt.Value.HasValue ? tbToIntLimitAmt.Value.Value : 0);
+            } else
             RadGrid.DataSource = TriTT.B_CUSTOMER_LIMIT_ENQUIRY("!","!","","","","","",-1,-1);
         }
         protected string geturlReview(string MainLimitID, string SubLimitID)

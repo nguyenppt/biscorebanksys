@@ -461,8 +461,9 @@ namespace BankProject.Views.TellerApplication
             , string selectedValue2, string selectedValue3, string selectedValue4)
         {
 
-            CollorateRightRepository facade = new CollorateRightRepository();
-            var src = facade.FindCollorateRightByCust(custId).ToList();
+            CollateralInformationRepository facade = new CollateralInformationRepository();
+            //var src = facade.FindCollorateRightByCust(custId).ToList();
+            var src = facade.FindCollorateInformationByCust(custId).ToList();
             Util.LoadData2RadCombo(rcbCollateralID, src, "RightID", "RightID", "-Select Collateral ID-");
             Util.LoadData2RadCombo(rcbCollateralID1, src, "RightID", "RightID", "-Select Collateral ID-");
             Util.LoadData2RadCombo(rcbCollateralID2, src, "RightID", "RightID", "-Select Collateral ID-");
@@ -752,7 +753,7 @@ namespace BankProject.Views.TellerApplication
             document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
             document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            document.Save("SavingAccount_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            document.Save("LichTraNoHDTinDung_" + tbNewNormalLoan.Text + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
         }
 
         private DataSet PrepareData2Print()
