@@ -236,6 +236,28 @@
                 <td></td>
             </tr>
         </table>
+        <fieldset id="fDenominations" runat="server">
+         <legend>
+              <div style="font-weight:bold; text-transform:uppercase;"><asp:Label ID="titleAmend_Confirm" runat="server" Text="Denominations"></asp:Label></div>
+                                </legend>
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width:50px; font-weight:bold;"></td>
+                    <td style="width:100px; font-weight:bold; padding-bottom:5px;">Denomination</td>
+                    <td style="width:100px; font-weight:bold; padding-bottom:5px;">Unit</td>
+                    <td style="width:100px; font-weight:bold; padding-bottom:5px;">Exchange Rate</td>
+                    <td></td>
+                </tr>
+                <asp:Literal ID="litDenominations" runat="server"></asp:Literal>
+                <tr id="trDenominations" runat="server">
+                    <td class="labelDisabled" style="font-weight:bold; text-align:right; padding-right:5px; padding-bottom:5px;"><span class="spanDebitCurrency"></span></td>
+                    <td style="padding-bottom:5px;"><asp:TextBox ID="txtDenomination_Num" runat="server" Width="80" /></td>
+                    <td style="padding-bottom:5px;"><asp:TextBox ID="txtDenomination_Unit" runat="server" Width="80" /></td>
+                    <td style="padding-bottom:5px;"><asp:TextBox ID="txtDenomination_ExchangeRate" runat="server" Width="80" /></td>
+                    <td style="padding-bottom:5px;"><a class="add" style="cursor:hand; cursor:pointer;"><img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
+                </tr>
+            </table>
+        </fieldset>
     </div>
     <div id="dvAudit" runat="server">
          <table width="100%" cellpadding="0" cellspacing="0">
@@ -289,48 +311,116 @@
 </div>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
 <script type="text/javascript">
-    $(document).ready(
-    function () {
-        $('a.add').live('click',
-            function () {
-                $(this)
-                    .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                    .removeClass('add')
-                    .addClass('remove')
-                ;
-                $(this)
-                    .closest('tr')
-                    .clone()
-                    .appendTo($(this).closest('table'));
-                $(this)
-                    .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                    .removeClass('remove')
-                    .addClass('add');
-            });
-        $('a.remove').live('click',
-            function () {
-                $(this)
-                    .closest('tr')
-                    .remove();
-            });
-        $('input:text').each(
-            function () {
-                var thisName = $(this).attr('name'),
-                    thisRrow = $(this)
-                                .closest('tr')
-                                .index();
-                $(this).attr('name', 'row' + thisRow + thisName);
-                $(this).attr('id', 'row' + thisRow + thisName);
-            });
-
+    $(document).ready(function () {
+            $('a.add').live('click',
+                function () {
+                    $(this)
+                        .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
+                        .removeClass('add')
+                        .addClass('remove')
+                    ;
+                    var objTr = $(this).closest('tr').clone();
+                    objTr.find('input[type="text"]').each(
+                            function () {
+                                this.value = '0';
+                            });
+                    objTr.appendTo($(this).closest('table'));
+                    $(this)
+                        .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
+                        .removeClass('remove')
+                        .addClass('add');
+                });
+            $('a.remove').live('click',
+                function () {
+                    $(this)
+                        .closest('tr')
+                        .remove();
+                });
+            /*$('input:text').each(
+                function () {
+                    var thisName = $(this).attr('name'),
+                        thisRrow = $(this)
+                                    .closest('tr')
+                                    .index();
+                    $(this).attr('name', 'row' + thisRow + thisName);
+                    $(this).attr('id', 'row' + thisRow + thisName);
+                });*/            
     });
-
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
-        var ttNo = $('#<%= txtId.ClientID%>').val();
+        //
+        if (button.get_commandName() == "<%=BankProject.Controls.Commands.Commit%>") {
+            args.set_cancel(true);//cancel commit
+            var isOK = true;
+            var Denominations = new Array();
+            var DenominationsIndex = 0;
+            var objTable = $('#<%=trDenominations.ClientID%>').parent();
+            //
+            objTable.find('input[id="<%=txtDenomination_Num.ClientID%>"]').map(function () {
+                var num = this.value;
+                if (!($.isNumeric(num) && Math.floor(num) == num)) {
+                    alert('Please, enter integer number !');
+                    this.focus();
+                    isOK = false;
+                    return;
+                }
+                else {
+                    Denominations[DenominationsIndex] = new Array(3);
+                    Denominations[DenominationsIndex][0] = num;
+                    DenominationsIndex += 1;
+                }
+            });
+            if (!isOK) return;
+            //            
+            DenominationsIndex = 0;
+            objTable.find('input[id="<%=txtDenomination_Unit.ClientID%>"]').map(function () {
+                var num = this.value;
+                if (!($.isNumeric(num) && Math.floor(num) == num)) {
+                    alert('Please, enter integer number !');
+                    this.focus();
+                    isOK = false;
+                    return;
+                }
+                else {
+                    Denominations[DenominationsIndex][1] = num;
+                    DenominationsIndex += 1;
+                }
+            });
+            if (!isOK) return;
+            //
+            DenominationsIndex = 0;
+            objTable.find('input[id="<%=txtDenomination_ExchangeRate.ClientID%>"]').map(function () {
+                var num = this.value;
+                if (!($.isNumeric(num))) {
+                    alert('Please, enter number !');
+                    this.focus();
+                    isOK = false;
+                    return;
+                }
+                else {
+                    Denominations[DenominationsIndex][2] = num;
+                    DenominationsIndex += 1;
+                }
+            });
+            if (!isOK) return;
+            //
+            var DebitAmount = Number($find("<%= txtDebitAmount.ClientID%>").get_value());
+            for (DenominationsIndex = 0; DenominationsIndex < Denominations.length; DenominationsIndex++) {
+                DebitAmount -= Denominations[DenominationsIndex][0] * Denominations[DenominationsIndex][1];
+            }
+            if (DebitAmount != 0) {
+                alert('Debit Amount does not equal total Denomination !');
+                return;
+            }
+            //
+            //alert('OK');
+            args.set_cancel(false);
+        }
+        //
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
             window.location = '<%=EditUrl("list")%>&lst=4appr';
         }
+        //
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>") {
             window.location = '<%=EditUrl("list")%>';
         }
@@ -352,6 +442,7 @@
     function calculateAmountPaid() {
         var objAmtPaid = $find("<%= txtAmountPaid.ClientID%>");
         var objCurDebit = $find("<%= cboDebitCurrency.ClientID%>");
+        $('.spanDebitCurrency').text(objCurDebit.get_text());
         if (objCurDebit.get_text() == '') {
             objAmtPaid.set_value();
             return;
