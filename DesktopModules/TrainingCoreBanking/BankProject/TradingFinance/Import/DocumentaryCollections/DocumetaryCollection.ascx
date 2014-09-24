@@ -1,5 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocumetaryCollection.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCollections.DocumetaryCollection" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="../../../Controls/VVTextBox.ascx" TagPrefix="uc1" TagName="VVTextBox" %>
 
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true" />
@@ -989,8 +988,29 @@
                         <telerik:RadNumericTextBox ID="numAmount_TabMT410" runat="server" />
                     </td>
                 </tr>
+
+                <tr>
+                    <td class="MyLable">Sender to Receiver Info</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_1" runat="server" Width="355" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_2" runat="server" Width="355" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_3" runat="server" Width="355" />
+                    </td>
+                </tr>
             </table>
-            <uc1:VVTextBox runat="server" id="txtSenderToReceiverInfo" VVTLabel="Sender to Receiver Info" Width="355" />
+            <%--<uc1:VVTextBox runat="server" id="txtSenderToReceiverInfo" VVTLabel="Sender to Receiver Info" Width="355" />--%>
         </fieldset>
         </div>
     </div>
@@ -1616,3 +1636,5 @@
 <div style="visibility:hidden;"><asp:Button ID="btnIncomingCollectionAcceptionMT412" runat="server" OnClick="btnIncomingCollectionAcceptionMT412_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnIncomingCollectionAcceptionVAT" runat="server" OnClick="btnIncomingCollectionAcceptionVAT_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnIncomingCollectionAcceptionPHIEUNHAPNGOAIBANG" runat="server" OnClick="btnIncomingCollectionAcceptionPHIEUNHAPNGOAIBANG_Click" Text="Search" /></div>
+
+

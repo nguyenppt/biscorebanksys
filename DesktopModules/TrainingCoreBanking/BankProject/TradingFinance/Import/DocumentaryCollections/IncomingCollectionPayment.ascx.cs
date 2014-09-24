@@ -513,6 +513,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     txtBeneficiaryBank.Text = drowMT202["BeneficiaryBank"].ToString();
                     txtSenderToReceiverInformation.Text = drowMT202["SenderToReceiverInformation"].ToString();
+                    txtSenderToReceiverInformation2.Text = drowMT202["SenderToReceiverInformation2"].ToString();
+                    txtSenderToReceiverInformation3.Text = drowMT202["SenderToReceiverInformation3"].ToString();
 
                     comboIntermediaryBankType.SelectedValue = drowMT202["IntermediaryBankType"].ToString();
 
@@ -554,6 +556,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     txtAccountWithInstitution.Text = string.Empty;
                     txtBeneficiaryBank.Text = string.Empty;
                     txtSenderToReceiverInformation.Text = string.Empty;
+                    txtSenderToReceiverInformation2.Text = string.Empty;
+                    txtSenderToReceiverInformation3.Text = string.Empty;
 
                     comboIntermediaryBankType.SelectedValue = string.Empty;
 
@@ -610,6 +614,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     txtDetailOfCharges1.Text = drowMT400["DetailOfCharges1"].ToString();
                     txtDetailOfCharges2.Text = drowMT400["DetailOfCharges2"].ToString();
+                    txtDetailOfCharges3.Text = drowMT400["DetailOfCharges3"].ToString();
+                    txtSenderToReceiverInformation1_400_1.Text = drowMT400["SenderToReceiverInformation1"].ToString();
+                    txtSenderToReceiverInformation1_400_2.Text = drowMT400["SenderToReceiverInformation2"].ToString();
+                    txtSenderToReceiverInformation1_400_3.Text = drowMT400["SenderToReceiverInformation3"].ToString();
 
                     comboReceiverCorrespondentType.SelectedValue = drowMT400["ReceiverCorrespondentType"].ToString();
                     txtReceiverCorrespondentNo.Text = drowMT400["ReceiverCorrespondentNo"].ToString();
@@ -649,6 +657,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     txtDetailOfCharges1.Text = string.Empty;
                     txtDetailOfCharges2.Text = string.Empty;
+                    txtDetailOfCharges3.Text = string.Empty;
+                    txtSenderToReceiverInformation1_400_1.Text = string.Empty;
+                    txtSenderToReceiverInformation1_400_2.Text = string.Empty;
+                    txtSenderToReceiverInformation1_400_3.Text = string.Empty;
 
                     comboReceiverCorrespondentType.SelectedValue = string.Empty;
                     txtReceiverCorrespondentNo.Text = string.Empty;
@@ -1025,7 +1037,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                                                             , txtBeneficiaryBankName.Text.Trim()
                                                             , txtBeneficiaryBankAddr1.Text.Trim()
                                                             , txtBeneficiaryBankAddr2.Text.Trim()
-                                                            , txtBeneficiaryBankAddr3.Text.Trim());
+                                                            , txtBeneficiaryBankAddr3.Text.Trim()
+                                                            , txtSenderToReceiverInformation2.Text
+                                                            , txtSenderToReceiverInformation3.Text);
 
             // tab MT 400
             SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT400_Insert(txtCode.Text.Trim()
@@ -1039,7 +1053,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                                                              //, comboSenderCorrespondentMT400.SelectedValue
                                                              //, comboReceiverCorrespondentMT400.SelectedValue
                                                              , txtDetailOfCharges1.Text.Trim()
-                                                             , txtDetailOfCharges2.Text.Trim()
+                                                             , txtDetailOfCharges2.Text
                                                              , ""//lblSenderCorrespondentNameMT4001.Text
                                                              , ""//lblSenderCorrespondentNameMT4002.Text
                                                              , lblReceiverCorrespondentNameMT4001.Text
@@ -1057,6 +1071,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                                                              , txtSenderCorrespondentAddress1.Text.Trim()
                                                              , txtReceiverCorrespondentAddr2.Text.Trim()
                                                              , txtSenderCorrespondentAddress3.Text.Trim()
+                                                             , txtSenderToReceiverInformation1_400_1.Text
+                                                             , txtSenderToReceiverInformation1_400_2.Text
+                                                             , txtSenderToReceiverInformation1_400_3.Text
+                                                              , txtDetailOfCharges3.Text
             );
         }
 
@@ -1347,6 +1365,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 numAmount_MT400.Enabled = true;
                 txtDetailOfCharges1.Enabled = true;
                 txtDetailOfCharges2.Enabled = true;
+                txtDetailOfCharges3.Enabled = true;
+                txtSenderToReceiverInformation1_400_1.Enabled = true;
+                txtSenderToReceiverInformation1_400_2.Enabled = true;
+                txtSenderToReceiverInformation1_400_3.Enabled = true;
                 
                 txtRelatedReferenceMT400.Enabled = true;
                 comboSenderCorrespondentType.Enabled = true;
@@ -1364,6 +1386,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 numAmount_MT400.Enabled = false;
                 txtDetailOfCharges1.Enabled = false;
                 txtDetailOfCharges2.Enabled = false;
+                txtDetailOfCharges3.Enabled = false;
+                txtSenderToReceiverInformation1_400_1.Enabled = false;
+                txtSenderToReceiverInformation1_400_2.Enabled = false;
+                txtSenderToReceiverInformation1_400_3.Enabled = false;
                 txtRelatedReferenceMT400.Enabled = false;
                 comboSenderCorrespondentType.Enabled = false;
                 txtSenderCorrespondentNo.Enabled = false;
@@ -1380,7 +1406,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         protected void comboNostroAcct_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             lblSenderCorrespondent1.Text = comboNostroAcct.SelectedValue + " - " +
-                                           comboNostroAcct.SelectedItem.Attributes["Description"];
+                                           comboNostroAcct.SelectedItem.Attributes["Description"];            
+
+
+            if (comboCreateMT410.SelectedValue == "YES")
+            {
+                txtSenderCorrespondentNo.Text = comboNostroAcct.SelectedValue;
+                txtSenderCorrespondentName.Text = comboNostroAcct.SelectedItem != null ? comboNostroAcct.SelectedItem.Attributes["Description"] : "";
+            }    
         }
 
         protected void comboReceiverCorrespondentType_OnSelectedIndexChanged(object sender,
@@ -1674,6 +1707,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     txtAccountWithInstitutionName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
+
+                    if (comboCreateMT410.SelectedValue == "YES")
+                    {
+                        txtReceiverCorrespondentNo.Text = txtAccountWithInstitution.Text;
+                        txtReceiverCorrespondentName.Text = txtAccountWithInstitutionName.Text;
+                    }                    
                 }
                 else
                 {
@@ -1993,7 +2032,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             txtSenderCorrespondentAddress3.Enabled = flag;
 
             txtDetailOfCharges1.Enabled = flag;
-            txtDetailOfCharges2.Enabled = flag;
+            txtSenderToReceiverInformation1_400_1.Enabled = flag;
+            txtSenderToReceiverInformation1_400_2.Enabled = flag;
+            txtSenderToReceiverInformation1_400_3.Enabled = flag;
         }
 
         protected void comboSenderCorrespondentType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
