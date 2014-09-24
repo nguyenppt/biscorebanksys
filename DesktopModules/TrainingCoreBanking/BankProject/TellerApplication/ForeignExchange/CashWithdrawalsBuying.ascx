@@ -321,7 +321,10 @@
                 <telerik:AjaxUpdatedControl ControlID="lbCustomerName" />
                 <telerik:AjaxUpdatedControl ControlID="lbCurrency" />
                 <telerik:AjaxUpdatedControl ControlID="txtExchangeRate" />
-                <telerik:AjaxUpdatedControl ControlID="lblCustomerAccount" />                
+                <telerik:AjaxUpdatedControl ControlID="lblCustomerAccount" />
+                <telerik:AjaxUpdatedControl ControlID="txtAmtLCY" />
+                <telerik:AjaxUpdatedControl ControlID="lblAmtPaidToCust" />
+                <telerik:AjaxUpdatedControl ControlID="lblNewCustBal" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>

@@ -17,9 +17,8 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
             DataTable tList = bd.Teller.ExchangeRate();
             bc.Commont.initRadComboBox(ref cboDebitCurrency, "Title", "Value", tList);
             //
-            tList = bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll().Tables[0];
-            bc.Commont.initRadComboBox(ref cboDebitAccount, "Display", "Account", tList);
-            bc.Commont.initRadComboBox(ref cboCreditAccount, "Display", "Account", tList);
+            bc.Commont.initRadComboBox(ref cboDebitAccount, "Display", "Account", bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll().Tables[0]);
+            bc.Commont.initRadComboBox(ref cboCreditAccount, "Display", "Account", bd.Teller.CashAccount());
             //
             if (Request.QueryString["tid"] != null)
             {

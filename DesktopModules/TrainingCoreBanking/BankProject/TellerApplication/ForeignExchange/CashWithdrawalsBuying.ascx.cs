@@ -159,6 +159,15 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
             lbCustomerName.Text = dr["CustomerName"].ToString();
             lbCurrency.Text = dr["Currency"].ToString();
             txtExchangeRate.Value = Convert.ToDouble(dr["CurrencyRate"].ToString());
+            if (txtAmtFCY.Value.HasValue)
+            {
+                txtAmtLCY.Value = txtAmtFCY.Value.Value * txtExchangeRate.Value.Value;
+                if (txtDealRate.Value.HasValue)
+                {
+                    lblAmtPaidToCust.Value = txtAmtLCY.Value.Value / txtDealRate.Value.Value;
+                    lblNewCustBal.Value = lblAmtPaidToCust.Value.Value * -1;
+                }
+            }
         }
     }
 }
