@@ -740,19 +740,138 @@ namespace BankProject.Views.TellerApplication
 
         private void PrintLoanDocument()
         {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+            //Open template
+            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LoanContractDealSlip.docx");
+            //Open the template document
+            Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+            //Execute the mail merge.
+            var ds = PrepareData2Print();
+            // Fill the fields in the document with user data.
+            document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+            document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
+            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
+            document.Save("SavingAccount_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+        }
+
+        private DataSet PrepareData2Print()
+        {
+            if (normalLoanEntryM == null)
+            {
+                normalLoanEntryM = new BNEWNORMALLOAN();
+                normalLoanEntryM.Code = tbNewNormalLoan.Text;
+                loanBusiness.loadEntity(ref normalLoanEntryM);
+            }
+            if (normalLoanEntryM == null)
+                return null;
+            NewLoanControlRepository facade = new NewLoanControlRepository();
+            BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "P").FirstOrDefault();           
+
+            DateTime startDate = (DateTime)normalLoanEntryM.ValueDate;
+            DateTime endDate = (DateTime)normalLoanEntryM.MaturityDate;
+            int numberofday = (endDate).Subtract(startDate).Days;
+            decimal money = (decimal)normalLoanEntryM.LoanAmount;
+            int cicleMonth = 7;
+            int noOfCicle = 0;
+            int moneyPercicle = 0;
+            string freg = "";
+
+            if (it == null)
+            {
+                return null;
+            }
+
+            if (it.Freq.Equals("M"))
+            {
+                cicleMonth = 1;
+               freg = "1 Tháng";
+            }
+            else if (it.Freq.Equals("Q"))
+            {
+                cicleMonth = 3;
+                freg = "1 Quý";
+            }
+            else if (it.Freq.Equals("Y"))
+            {
+                cicleMonth = 12;
+                freg = "1 Năm";
+            }
+
+
+            var ds = new DataSet();
+            var infoTb = new DataTable("Info");
+            infoTb.Columns.Add("Code");
+            infoTb.Columns.Add("Customer");
+            infoTb.Columns.Add("LoanAmount");
+            infoTb.Columns.Add("Drawdown");
+            infoTb.Columns.Add("InterestKey");
+            infoTb.Columns.Add("Freq");
+
+            var row = infoTb.NewRow();
+            row["Code"] = normalLoanEntryM.Code;
+            row["Customer"] = normalLoanEntryM.CustomerName;
+            row["LoanAmount"] = ((decimal)normalLoanEntryM.LoanAmount).ToString("#,###");
+            row["Drawdown"] = (normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy"));
+            row["InterestKey"] = (int)numberofday / 30 + " Tháng";
+            row["Freq"] = freg;
+            infoTb.Rows.Add(row);
+            ds.Tables.Add(infoTb);
+
+            var itemTb = new DataTable("Items");
+            itemTb.Columns.Add("ky");
+            itemTb.Columns.Add("ngaytra");
+            itemTb.Columns.Add("sotientra");
+            itemTb.Columns.Add("duno");
+
+            noOfCicle = numberofday / (30 * cicleMonth);
+            if (noOfCicle > 0)
+            {
+                moneyPercicle = (int)(money / noOfCicle);
+                DateTime plandate = startDate;
+                for (int i = 0; i < noOfCicle; i++)
+                {
+                    plandate = plandate.AddMonths(cicleMonth);
+                    money = money - moneyPercicle;
+                    if (money < 0)
+                    {
+                        money = 0;
+                    }
+
+                    if (i == noOfCicle - 1)
+                    {
+                        if (money > 0)
+                        {
+                            moneyPercicle = (int)(moneyPercicle + money);
+                            money = 0;
+                        }
+
+                        if (plandate > endDate)
+                        {
+                            plandate = endDate;
+                        }
+                    }
+                    row = itemTb.NewRow();
+                    row["ky"] = i + 1;
+                    row["ngaytra"] = plandate.ToString("dd/MM/yyyy");
+                    row["sotientra"] = moneyPercicle.ToString("#,###");
+                    row["duno"] = (money.ToString("#,###"));
+                    itemTb.Rows.Add(row);
+
+                }
+                ds.Tables.Add(itemTb);
+            }
+
+            
+
+            return ds;
+
+        }
+
+        private void PrintLoanDocument2()
+        {
             Aspose.Cells.License license = new Aspose.Cells.License();
             license.SetLicense("Aspose.Cells.lic");
-            //Open template
-            //string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/SavingAcc/NewLoanContract.docx");
-            ////Open the template document
-            //Aspose.Cells.document document = new Aspose.Words.Document(docPath);
-            ////Execute the mail merge.
-            //var ds = PrepareData2Print();
-            //// Fill the fields in the document with user data.
-            //document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
-            //document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
-            //// Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            //document.Save("SavingAccount_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
 
             //Instantiating a Workbook object
             Aspose.Cells.Workbook workbook = new Aspose.Cells.Workbook();
@@ -765,9 +884,11 @@ namespace BankProject.Views.TellerApplication
             PrepareData2Print(ref worksheet);
             //Setting the name of the newly added worksheet
             worksheet.Name = "New Loan Contract";
-
+            worksheet.AutoFitColumn(1);
+            worksheet.AutoFitColumn(2);
+            worksheet.Cells.Merge(1, 1, 1, 4);
             //Saving the Excel file
-            workbook.Save("LoanContract_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls", Aspose.Cells.FileFormatType.Excel2000,Aspose.Cells.SaveType.OpenInBrowser, Response);
+            workbook.Save("LichTraNoHDTinDung_" + tbNewNormalLoan.Text + ".xls", Aspose.Cells.FileFormatType.Excel2000, Aspose.Cells.SaveType.OpenInBrowser, Response);
 
         }
 
@@ -785,100 +906,103 @@ namespace BankProject.Views.TellerApplication
 
             NewLoanControlRepository facade = new NewLoanControlRepository();
             BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "P").FirstOrDefault();
-            int numberofday = ((DateTime)normalLoanEntryM.MaturityDate).Subtract((DateTime)normalLoanEntryM.ValueDate).Days;
-            int numofDay = 7;
-            int i = 1;
+
+            DateTime startDate = (DateTime)normalLoanEntryM.ValueDate;
+            DateTime endDate = (DateTime)normalLoanEntryM.MaturityDate;
+            int numberofday = (endDate).Subtract(startDate).Days;
+            decimal money = (decimal)normalLoanEntryM.LoanAmount;
+            int cicleMonth = 7;
+            int noOfCicle = 0;
+            int moneyPercicle = 0;
 
             if (it == null)
             {
                 return;
             }
 
+            int index = 1;
+            worksheet.AutoFitColumn(1);
+            worksheet.Cells["A" + index++].PutValue("LỊCH TRẢ NỢ HỢP ĐỒNG TÍN DỤNG SỐ " + normalLoanEntryM.Code);
+            worksheet.Cells["B" + index++].PutValue("Ngày: " + DateTime.Now.ToString("dd/MM/yyyy"));
+            index++;
+            worksheet.Cells["A" + index++].PutValue("Khách hàng: Ông/Bà " + normalLoanEntryM.CustomerName);
+            worksheet.Cells["A" + index++].PutValue("Số tiền vay: " + ((decimal)normalLoanEntryM.LoanAmount).ToString("#,###"));
+            worksheet.Cells["A" + index++].PutValue("Ngày rút tiền:  " + (normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy")));
+            worksheet.Cells["A" + index++].PutValue("Thời hạn: " + (int)numberofday / 30 + " Tháng");
             if (it.Freq.Equals("M"))
             {
-                numofDay = 30;
-                worksheet.Cells["A7"].PutValue("Định kỳ trả nợ: Thang");
+                cicleMonth = 1;
+                worksheet.Cells["A" + index++].PutValue("Định kỳ trả nợ: 1 Tháng");
             }
             else if (it.Freq.Equals("Q"))
             {
-                numofDay = 90;
-                worksheet.Cells["A7"].PutValue("Định kỳ trả nợ: Quy");
+                cicleMonth = 3;
+                worksheet.Cells["A" + index++].PutValue("Định kỳ trả nợ: 1 Quý");
             }
             else if (it.Freq.Equals("Y"))
             {
-                numofDay = 360;
-                worksheet.Cells["A7"].PutValue("Định kỳ trả nợ: Nam");
+                cicleMonth = 12;
+                worksheet.Cells["A" + index++].PutValue("Định kỳ trả nợ: 1 Năm");
             }
+            index++;
+            worksheet.Cells["A" + index].PutValue("Kỳ");
+            worksheet.Cells["B" + index].PutValue("Ngày trả");
+            worksheet.Cells["C" + index].PutValue("Số tiền phải trả");
+            worksheet.Cells["D" + index].PutValue("Dư nợ còn lại");
 
-            if (numberofday < numofDay)
+            index++;
+
+            //if (numberofday % (30*cicleMonth) == 0)
+            //{
+            noOfCicle = numberofday / (30 * cicleMonth);
+            //}
+            //else
+            //{
+            //    noOfCicle = (numberofday / cicleMonth) + 1;
+            //}
+            if (noOfCicle > 0)
             {
-                i = 1;
-            }
-            else
-            {
-                if (numberofday % numofDay == 0)
+                moneyPercicle = (int)(money / noOfCicle);
+                DateTime plandate = startDate;
+                for (int i = 0; i < noOfCicle; i++)
                 {
-                    i = numberofday / numofDay;
-                }
-                else
-                {
-                    i = numberofday / numofDay + 1;
+                    plandate = plandate.AddMonths(cicleMonth);
+                    money = money - moneyPercicle;
+                    if (money < 0)
+                    {
+                        money = 0;
+                    }
+
+                    if (i == noOfCicle - 1)
+                    {
+                        if (money > 0)
+                        {
+                            moneyPercicle = (int)(moneyPercicle + money);
+                            money = 0;
+                        }
+
+                        if (plandate > endDate)
+                        {
+                            plandate = endDate;
+                        }
+                    }
+                    worksheet.Cells["A" + index].PutValue(i + 1);
+                    worksheet.Cells["B" + index].PutValue(plandate.ToString("dd/MM/yyyy"));
+                    worksheet.Cells["C" + index].PutValue(moneyPercicle.ToString("#,###"));
+                    worksheet.Cells["D" + index].PutValue(money.ToString("#,###"));
+
+                    index++;
                 }
             }
-
-            worksheet.Cells["A1"].PutValue("LỊCH TRẢ NỢ HỢP ĐỒNG TÍN DỤNG SỐ " + normalLoanEntryM.Code);
-            worksheet.Cells["A2"].PutValue("Ngày: " + DateTime.Now.ToString("dd/MM/yyyy"));
-            worksheet.Cells["A3"].PutValue("Khách hàng: Ông/Bà " + normalLoanEntryM.CustomerName);
-            worksheet.Cells["A4"].PutValue("Số tiền vay: " + normalLoanEntryM.LoanAmount);
-            worksheet.Cells["A5"].PutValue("Ngày rút tiền:  " + normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy"));
-            worksheet.Cells["A6"].PutValue("Thời hạn: " + normalLoanEntryM.InterestKey);
-            
-
-            worksheet.Cells["A9"].PutValue("Kỳ");
-            worksheet.Cells["B9"].PutValue("Ngày trả");
-            worksheet.Cells["C9"].PutValue("Số tiền phải trả");
-            worksheet.Cells["D9"].PutValue("Dư nợ còn lại");
-
-            int index = 10;
-
-            decimal amount = (decimal)normalLoanEntryM.LoanAmount / i;
-            decimal remain = (decimal)normalLoanEntryM.LoanAmount - amount;
-            DateTime stateDate = ((DateTime)normalLoanEntryM.ValueDate).AddDays(numofDay);
-            for (int j = 0; j < i; j++)
-            {
-                if (stateDate.Subtract((DateTime)normalLoanEntryM.MaturityDate).Days > 0)
-                {
-                    stateDate = (DateTime)normalLoanEntryM.MaturityDate;
-                }
-                worksheet.Cells["A" + index].PutValue(j + 1);
-                worksheet.Cells["B" + index].PutValue(stateDate.ToString("dd/MM/yyyy"));
-                worksheet.Cells["C" + index].PutValue(amount);
-                worksheet.Cells["D" + index].PutValue(remain);
-                remain = remain - amount;
-                stateDate = stateDate.AddDays(numofDay);
-                index++;
-            }
-
-
+            index++;
             worksheet.Cells["A" + index].PutValue("Tp.HCM, Ngày " + DateTime.Now.ToString("dd") + " tháng " + DateTime.Now.ToString("MM") + " năm " + DateTime.Now.ToString("yyyy"));
             index++;
             worksheet.Cells["A" + index].PutValue("Bên vay");
             worksheet.Cells["D" + index].PutValue("Bên cho vay");
 
-            
-
         }
 
-
-        private void getDataLoan(ref Aspose.Cells.Worksheet worksheet, int index)
-        {
-            
-
-
-        }
         #endregion
-
-        
 
     }
 }
