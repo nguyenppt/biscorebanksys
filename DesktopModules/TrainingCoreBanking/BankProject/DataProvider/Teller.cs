@@ -211,11 +211,11 @@ namespace BankProject.DataProvider
         public static void ExchangeBanknotesManyDenoUpdate(string Command, string TTNo, string CustomerName, string CustomerAddress, string CustomerPassportNo,
             string CustomerPassportDateOfIssue, string CustomerPassportPlaceOfIssue, string CustomerPhoneNo, string TellerID, string DebitCurrency,
             string DebitAccount, double? DebitAmount, string Narrative, DateTime? ValueDate, string CrTellerID, string CreditAccount, double? ExchangeRate,
-            double? AmountPaid, string UserExecute)
+            double? AmountPaid, string DenominationNum, string DenominationUnit, string DenominationRate, string UserExecute)
         {
             sqldata.ndkExecuteNonQuery("P_ExchangeBanknotesManyDenoUpdate", Command, TTNo, CustomerName, CustomerAddress, CustomerPassportNo, CustomerPassportDateOfIssue,
             CustomerPassportPlaceOfIssue, CustomerPhoneNo, TellerID, DebitCurrency, DebitAccount, DebitAmount, Narrative, ValueDate,
-            CrTellerID, CreditAccount, ExchangeRate, AmountPaid, UserExecute);
+            CrTellerID, CreditAccount, ExchangeRate, AmountPaid, DenominationNum, DenominationUnit, DenominationRate, UserExecute);
         }
         public static DataTable ExchangeBanknotesManyDenoDetailOrList(string Status)
         {
