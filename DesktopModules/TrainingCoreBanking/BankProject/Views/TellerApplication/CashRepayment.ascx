@@ -46,8 +46,6 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="# blank1">Cash Deposits</a></li>
-        <li><a href="#blank2">Audit</a></li>
-        <li><a href="#blank3">Full Preview</a></li>
     </ul>
     <div id="blank1" class="dnnClear">
         <fieldset>

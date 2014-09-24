@@ -163,7 +163,7 @@
             <tr>
                 <td class="MyLable">Internal Limit Amt:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1">
+                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1" OnClientValueChanged="tbIntLimitAmt_OnclientValueChanged">
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:RadTextBox>
                    
@@ -362,6 +362,10 @@
             $("#<%=btSearch.ClientID%>").click();
         }
     });
+    function tbIntLimitAmt_OnclientValueChanged(sender, args)
+    {
+        $find("<%=tbAdvisedAmt .ClientID%>").set_value($find("<%=tbIntLimitAmt .ClientID%>").get_value().toLocaleString("en-US"));
+    }
     function CurrencyChanged_forNote(sender, args) {
         var Note = $find("<%=tbNote.ClientID%>");
         var Currency = $find("<%=rcbCurrency.ClientID%>").get_selectedItem().get_value();

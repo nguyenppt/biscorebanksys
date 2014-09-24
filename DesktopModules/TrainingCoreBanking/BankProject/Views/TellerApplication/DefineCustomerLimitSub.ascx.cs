@@ -185,7 +185,8 @@ namespace BankProject.Views.TellerApplication
                             "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
                             , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
                             tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
-                            , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
+                            , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha,
+                            tbIntLimitAmt.Text != "" ? Convert.ToDouble(tbIntLimitAmt.Text.Replace(",", "")) : 0, tbAdvisedAmt.Text != "" ? Convert.ToDouble(tbAdvisedAmt.Text.Replace(",", "")) : 0);
                             Response.Redirect("Default.aspx?tabid=361");
                             
                             //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
@@ -341,7 +342,21 @@ namespace BankProject.Views.TellerApplication
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                 Enable_toAudit = true; // flag cho phep audit thong tin , Acct exists trong DB roi
 
+                //load them thong tin de view theo yeu cau nghiep vu
+                DataSet ds2 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_SecuredAmt(SubLimitID);
+                if (ds2.Tables != null && ds2.Tables.Count > 0 && ds2.Tables[0].Rows.Count > 0)
+                {
+                    lblAmtSecured.Text = ds2.Tables[0].Rows[0]["SecuredAmount"].ToString();
+                    lblOnlineLimit.Text = tbIntLimitAmt.Text;
+                }
+                DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID);
+                if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
+                {
+                    lblAvailableAmt.Text = ds3.Tables[0].Rows[0]["AvailableAmount"].ToString();
+                    lblTotalOutstand.Text = ds3.Tables[0].Rows[0]["TotalOutStand"].ToString();
+                }
             }
+
         }
         
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)

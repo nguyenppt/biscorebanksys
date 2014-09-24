@@ -44,13 +44,27 @@ namespace BankProject.Views.TellerApplication
 
         private void LoadData()
         {
-            radGridReview.DataSource = BankProject.DataProvider.Database.BNEWNORMALLOAN_Enquiry(txtRefCode.Text,  rcbCustomerType.SelectedValue, tbCustomerID.Text,
-                                                                                              tbGBFullName.Text, tbDocID.Text, rcbcategory.SelectedValue, rcbCurrency.SelectedValue, rcbSubCategory.SelectedValue);
-            radGridReview.DataBind();
+            if (IsPostBack)
+            {
+                radGridReview.DataSource = BankProject.DataProvider.Database.BNEWNORMALLOAN_Enquiry(txtRefCode.Text, rcbCustomerType.SelectedValue, tbCustomerID.Text,
+                                                                                                  tbGBFullName.Text, tbDocID.Text, rcbcategory.SelectedValue, rcbCurrency.SelectedValue, rcbSubCategory.SelectedValue);
+                radGridReview.DataBind();
+            }
+            else
+            {
+                radGridReview.DataSource = BankProject.DataProvider.Database.BNEWNORMALLOAN_Enquiry(txtRefCode.Text, rcbCustomerType.SelectedValue, tbCustomerID.Text,
+                                                                                                  tbGBFullName.Text, tbDocID.Text, rcbcategory.SelectedValue, rcbCurrency.SelectedValue, rcbSubCategory.SelectedValue);
+            }
         }
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
+            if (IsPostBack)
+            {
+                radGridReview.DataSource = BankProject.DataProvider.Database.BNEWNORMALLOAN_Enquiry(txtRefCode.Text, rcbCustomerType.SelectedValue, tbCustomerID.Text,
+                                                                                                  tbGBFullName.Text, tbDocID.Text, rcbcategory.SelectedValue, rcbCurrency.SelectedValue, rcbSubCategory.SelectedValue);
+            }
+            else
             radGridReview.DataSource = BankProject.DataProvider.Database.BNEWNORMALLOAN_Enquiry("NOTdata", "NOTdata", "NOTdata", "NOTdata", "NOTdata", "NOTdata", "", "NOTdata");
         }
 

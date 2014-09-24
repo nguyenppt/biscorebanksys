@@ -53,7 +53,7 @@ namespace BankProject.Views.TellerApplication
                 {
                     TriTT.B_OPEN_LOANWORK_ACCT_Insert_Update_Acct(tbID.Text, rcbCustomerID.SelectedValue, "UNA", rcbCustomerID.SelectedItem.Attributes["GBFullName"], rcbCustomerID.SelectedItem.Attributes["DocType"],
                          rcbCustomerID.SelectedItem.Attributes["DocID"], rcbCustomerID.SelectedItem.Attributes["DocIssuePlace"], DateTime.Parse(rcbCustomerID.SelectedItem.Attributes["DocIssueDate"]),
-                         DateTime.Parse(rcbCustomerID.SelectedItem.Attributes["DocExpiryDate"]), rcbCategory.SelectedValue, rcbCategory.Text.Replace(rcbCategory.SelectedValue + " - ", ""), txtAccountName.Text, tbShortTitle.Text, tbMnemonic.Text,
+                         rcbCustomerID.SelectedItem.Attributes["DocExpiryDate"].ToString() , rcbCategory.SelectedValue, rcbCategory.Text.Replace(rcbCategory.SelectedValue + " - ", ""), txtAccountName.Text, tbShortTitle.Text, tbMnemonic.Text,
                          rcbCurrency.SelectedValue, rcbCurrency.SelectedValue, rcbProductLine.SelectedValue, rcbProductLine.Text.Replace(rcbProductLine.SelectedValue + " - ", ""),
                          tbAlternateAcct.Text, UserInfo.Username.ToString());
                     Response.Redirect("Default.aspx?tabid=184");
