@@ -151,11 +151,11 @@ namespace BankProject.DataProvider
             , TotalCapital, NoOfEmployee, TotalAssets, TotalRevenue, CustomerLiability, LegacyRef, ApprovedUser);
         }
         public static void B_OPEN_LOANWORK_ACCT_Insert_Update_Acct(string RefID, string CustomerID, string Status, string GBFullName, string DocType, string DocID, string DocIssuePlace
-            , DateTime? DocIssueDate, string DocExpiryDate, string CategoryCode, string CategoryName, string AccountName, string ShortTittle, string Mnemonic
+            , string DocIssueDate, string DocExpiryDate, string CategoryCode, string CategoryName, string AccountName, string ShortTittle, string Mnemonic
             , string CurrencyCode, string CurrencyDescr, string ProductLineCode, string ProductLineDescr, string AlternateAcct, string CreatedUser)
         {
             sqldata.ndkExecuteNonQuery("B_OPEN_LOANWORK_ACCT_Insert_Update_Acct", RefID, CustomerID, Status, GBFullName, DocType, DocID, DocIssuePlace
-            , DocIssueDate,DocExpiryDate == "" ? null : DocExpiryDate , CategoryCode, CategoryName, AccountName, ShortTittle, Mnemonic
+                , DocIssueDate==""? null: DocIssueDate,DocExpiryDate == "" ? null : DocExpiryDate , CategoryCode, CategoryName, AccountName, ShortTittle, Mnemonic
             , CurrencyCode, CurrencyDescr, ProductLineCode, ProductLineDescr, AlternateAcct, CreatedUser);
         }
         public static DataSet OPEN_CORPORATE_CUSTOMER_review_Account(string CustomerID, string Status, string CustomerType, string LoadFor_List1_review2)
