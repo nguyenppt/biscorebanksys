@@ -163,7 +163,7 @@
             <tr>
                 <td class="MyLable">Internal Limit Amt:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1" OnClientValueChanged="tbIntLimitAmt_OnclientValueChanged">
+                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1" ClientEvents-OnValueChanged="tbIntLimitAmt_OnclientValueChanged">
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:RadTextBox>
                    

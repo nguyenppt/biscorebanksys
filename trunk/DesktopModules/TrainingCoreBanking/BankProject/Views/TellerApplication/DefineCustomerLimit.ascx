@@ -162,7 +162,7 @@
             <tr>
                 <td class="MyLable">Internal Limit Amt:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1"  >
+                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1" ClientEvents-OnvalueChanged="tbIntLimitAmt_OnvalueChanged" >
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:RadTextBox>
                    
@@ -361,139 +361,143 @@
             $("#<%=btSearch.ClientID%>").click();
         }
     });
-    function CurrencyChanged_forNote(sender,args)
+    function tbIntLimitAmt_OnvalueChanged()
     {
-        var Note = $find("<%=tbNote.ClientID%>");
-        var Currency = $find("<%=rcbCurrency.ClientID%>").get_selectedItem().get_value(); 
-        var CustomerName = $('#<%=lblCustomerName.ClientID%>').html();
-        if (CustomerName && Currency) {
-            Note.set_value("Mo Han Muc Global " + Currency + " cho khach hang " + CustomerName);
-        } else Note.set_value("");
+        $find("<%=tbAdvisedAmt.ClientID%>").set_value($find("<%=tbIntLimitAmt .ClientID%>").get_value());
     }
-    function setID(sender, args)
-    {
-        var GlobalID = $find("<%=rcbGlobalLimit.ClientID%>").get_selectedItem().get_value();
-        var CustomerID = $find("<%=rcbCustomerID.ClientID%>").get_selectedItem().get_text();
-        if (CustomerID && GlobalID) {
-            $('#<%=tbLimitID.ClientID%>').val(CustomerID.substring(0, 7) + "." + GlobalID);
-        } else
+        function CurrencyChanged_forNote(sender,args)
         {
-            $('#<%=tbLimitID.ClientID%>').val("");
+            var Note = $find("<%=tbNote.ClientID%>");
+            var Currency = $find("<%=rcbCurrency.ClientID%>").get_selectedItem().get_value(); 
+            var CustomerName = $('#<%=lblCustomerName.ClientID%>').html();
+            if (CustomerName && Currency) {
+                Note.set_value("Mo Han Muc Global " + Currency + " cho khach hang " + CustomerName);
+            } else Note.set_value("");
         }
-    }
-    function GenerateZero(k) {
-        n = 1;
-        for (var i = 0; i < k.length; i++) {
-            n *= 10;
-        }
-        return n;
-    }
-    function addCommas(str) {
-        var parts = (str + "").split("."),
-            main = parts[0],
-            len = main.length,
-            output = "",
-            i = len - 1;
-
-        while (i >= 0) {
-            output = main.charAt(i) + output;
-            if ((len - i) % 3 === 0 && i > 0) {
-                output = "," + output;
+        function setID(sender, args)
+        {
+            var GlobalID = $find("<%=rcbGlobalLimit.ClientID%>").get_selectedItem().get_value();
+            var CustomerID = $find("<%=rcbCustomerID.ClientID%>").get_selectedItem().get_text();
+            if (CustomerID && GlobalID) {
+                $('#<%=tbLimitID.ClientID%>').val(CustomerID.substring(0, 7) + "." + GlobalID);
+            } else
+            {
+                $('#<%=tbLimitID.ClientID%>').val("");
             }
-            --i;
         }
-        return output + ".00";
-    }
-    function ClearCommas(sender, args) {
-        var m = sender.get_value().replace(".00", "").replace(/,/g, '');
-        console.log(m);
-        sender.set_value(m);
-    }
-    function SetNumber(sender, args) {
-        //sender.set_value(sender.get_value().toUpperCase());
-        var number;
-        var m = sender.get_value().substring(sender.get_value().length - 1);
-        if (isNaN(m)) {
-            var val = sender.get_value().substring(0, sender.get_value().length - 1).split(".");
-            switch (m.toUpperCase()) {
-
-                case "T":
-                    var n1 = val[0] * 1000;
-                    var n2 = 0;
-                    if (val[1] != null)
-                        n2 = (val[1] / GenerateZero(val[1])) * 1000;
-                    number = n1 + n2;
-                    sender.set_value(addCommas(number));
-                    break;
-                case "M":
-                    var n1 = val[0] * 1000000;
-                    var n2 = 0;
-                    if (val[1] != null)
-                        n2 = (val[1] / GenerateZero(val[1])) * 1000000;
-                    number = n1 + n2;
-                    sender.set_value(addCommas(number));
-                    break;
-                case "B":
-                    var n1 = val[0] * 1000000000;
-                    var n2 = 0;
-                    if (val[1] != null)
-                        n2 = (val[1] / GenerateZero(val[1])) * 1000000000;
-                    number = n1 + n2;
-                    sender.set_value(addCommas(number));
-                    break;
-                default:
-                    alert("Character is not valid. Please use T, M and B character");
-                    $find('<%=tbIntLimitAmt.ClientID %>').focus();
-                    $find('<%=tbAdvisedAmt.ClientID %>').focus();
-                    $find('<%=tbMaxSecured.ClientID %>').focus();
-                    $find('<%=tbMaxUnsecured.ClientID %>').focus();
-                    $find('<%=tbMaxTotal.ClientID %>').focus();
-                    return false;
-                    break;
+        function GenerateZero(k) {
+            n = 1;
+            for (var i = 0; i < k.length; i++) {
+                n *= 10;
             }
-        } else {
-            console.log("is number" + m);
-            number = sender.get_value();
-            sender.set_value(addCommas(number));
-
+            return n;
         }
-        //var num = sender.get_value();
-        document.getElementById("<%= hfInternalLimit.ClientID%>").value = number;
-    }
-    $(document).ready(
-  function () {
-      $('a.add').live('click',
-          function () {
-              $(this)
-                  .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                  .removeClass('add')
-                  .addClass('remove');
-              $(this)
-                  .closest('tr')
-                  .clone()
-                  .appendTo($(this).closest('table'));
-              $(this)
-                  .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                  .removeClass('remove')
-                  .addClass('add');
-          });
-      $('a.remove').live('click',
-          function () {
-              $(this)
-                  .closest('tr')
-                  .remove();
-          });
-      $('input:text').each(
-          function () {
-              var thisName = $(this).attr('name'),
-                  thisRrow = $(this)
-                              .closest('tr')
-                              .index();
-              $(this).attr('name', 'row' + thisRow + thisName);
-              $(this).attr('id', 'row' + thisRow + thisName);
-          });
+        function addCommas(str) {
+            var parts = (str + "").split("."),
+                main = parts[0],
+                len = main.length,
+                output = "",
+                i = len - 1;
 
-  });
+            while (i >= 0) {
+                output = main.charAt(i) + output;
+                if ((len - i) % 3 === 0 && i > 0) {
+                    output = "," + output;
+                }
+                --i;
+            }
+            return output + ".00";
+        }
+        function ClearCommas(sender, args) {
+            var m = sender.get_value().replace(".00", "").replace(/,/g, '');
+            console.log(m);
+            sender.set_value(m);
+        }
+        function SetNumber(sender, args) {
+            //sender.set_value(sender.get_value().toUpperCase());
+            var number;
+            var m = sender.get_value().substring(sender.get_value().length - 1);
+            if (isNaN(m)) {
+                var val = sender.get_value().substring(0, sender.get_value().length - 1).split(".");
+                switch (m.toUpperCase()) {
+
+                    case "T":
+                        var n1 = val[0] * 1000;
+                        var n2 = 0;
+                        if (val[1] != null)
+                            n2 = (val[1] / GenerateZero(val[1])) * 1000;
+                        number = n1 + n2;
+                        sender.set_value(addCommas(number));
+                        break;
+                    case "M":
+                        var n1 = val[0] * 1000000;
+                        var n2 = 0;
+                        if (val[1] != null)
+                            n2 = (val[1] / GenerateZero(val[1])) * 1000000;
+                        number = n1 + n2;
+                        sender.set_value(addCommas(number));
+                        break;
+                    case "B":
+                        var n1 = val[0] * 1000000000;
+                        var n2 = 0;
+                        if (val[1] != null)
+                            n2 = (val[1] / GenerateZero(val[1])) * 1000000000;
+                        number = n1 + n2;
+                        sender.set_value(addCommas(number));
+                        break;
+                    default:
+                        alert("Character is not valid. Please use T, M and B character");
+                        $find('<%=tbIntLimitAmt.ClientID %>').focus();
+                        $find('<%=tbAdvisedAmt.ClientID %>').focus();
+                        $find('<%=tbMaxSecured.ClientID %>').focus();
+                        $find('<%=tbMaxUnsecured.ClientID %>').focus();
+                        $find('<%=tbMaxTotal.ClientID %>').focus();
+                        return false;
+                        break;
+                }
+            } else {
+                console.log("is number" + m);
+                number = sender.get_value();
+                sender.set_value(addCommas(number));
+
+            }
+            //var num = sender.get_value();
+            document.getElementById("<%= hfInternalLimit.ClientID%>").value = number;
+        }
+        $(document).ready(
+      function () {
+          $('a.add').live('click',
+              function () {
+                  $(this)
+                      .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
+                      .removeClass('add')
+                      .addClass('remove');
+                  $(this)
+                      .closest('tr')
+                      .clone()
+                      .appendTo($(this).closest('table'));
+                  $(this)
+                      .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
+                      .removeClass('remove')
+                      .addClass('add');
+              });
+          $('a.remove').live('click',
+              function () {
+                  $(this)
+                      .closest('tr')
+                      .remove();
+              });
+          $('input:text').each(
+              function () {
+                  var thisName = $(this).attr('name'),
+                      thisRrow = $(this)
+                                  .closest('tr')
+                                  .index();
+                  $(this).attr('name', 'row' + thisRow + thisName);
+                  $(this).attr('id', 'row' + thisRow + thisName);
+              });
+
+      });
   </script>
     </telerik:RadCodeBlock>
 <div style="visibility:hidden;">
