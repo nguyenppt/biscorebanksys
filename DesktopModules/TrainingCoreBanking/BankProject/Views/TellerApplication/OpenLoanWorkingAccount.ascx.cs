@@ -52,7 +52,7 @@ namespace BankProject.Views.TellerApplication
                 if (ds.Tables != null && ds.Tables[0].Rows.Count == 0) // tai khoan chua ton tai o DB , co the tao new dc
                 {
                     TriTT.B_OPEN_LOANWORK_ACCT_Insert_Update_Acct(tbID.Text, rcbCustomerID.SelectedValue, "UNA", rcbCustomerID.SelectedItem.Attributes["GBFullName"], rcbCustomerID.SelectedItem.Attributes["DocType"],
-                         rcbCustomerID.SelectedItem.Attributes["DocID"], rcbCustomerID.SelectedItem.Attributes["DocIssuePlace"], DateTime.Parse(rcbCustomerID.SelectedItem.Attributes["DocIssueDate"]),
+                         rcbCustomerID.SelectedItem.Attributes["DocID"], rcbCustomerID.SelectedItem.Attributes["DocIssuePlace"], rcbCustomerID.SelectedItem.Attributes["DocIssueDate"].ToString(),
                          rcbCustomerID.SelectedItem.Attributes["DocExpiryDate"].ToString() , rcbCategory.SelectedValue, rcbCategory.Text.Replace(rcbCategory.SelectedValue + " - ", ""), txtAccountName.Text, tbShortTitle.Text, tbMnemonic.Text,
                          rcbCurrency.SelectedValue, rcbCurrency.SelectedValue, rcbProductLine.SelectedValue, rcbProductLine.Text.Replace(rcbProductLine.SelectedValue + " - ", ""),
                          tbAlternateAcct.Text, UserInfo.Username.ToString());

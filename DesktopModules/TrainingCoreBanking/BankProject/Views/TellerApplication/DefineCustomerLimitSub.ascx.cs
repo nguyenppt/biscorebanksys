@@ -170,9 +170,9 @@ namespace BankProject.Views.TellerApplication
                             { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
                             //check Maximum Secured & Unsecured 
 
-                            if ((tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0) + (tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0) <= (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
+                            if ((tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0) + (tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0) > (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
                             {
-                                ShowMsgBox("Maximum Secured Value + Maximum Unsecured Value must be greater than Maximum Total Value");
+                                ShowMsgBox("Maximum Secured Value + Maximum Unsecured Value must be less than Maximum Total Value");
                                 return;
                             }
                             if (Global_Limit_Was_Created == false) //In case User co tinh tao HM con khi HM cha chua dc tao
