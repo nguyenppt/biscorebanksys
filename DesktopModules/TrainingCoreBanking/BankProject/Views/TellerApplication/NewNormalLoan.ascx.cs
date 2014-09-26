@@ -754,7 +754,7 @@ namespace BankProject.Views.TellerApplication
             document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
             document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            document.Save("LichTraNoHDTinDung_" + tbNewNormalLoan.Text + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+            document.Save("LichTraNoHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
 
             //doc.Save("RegisterDocumentaryCollectionMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
