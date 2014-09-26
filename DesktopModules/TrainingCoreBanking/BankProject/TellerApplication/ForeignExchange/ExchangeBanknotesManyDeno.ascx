@@ -245,7 +245,8 @@
                     <td style="width:50px; font-weight:bold;"></td>
                     <td style="width:100px; font-weight:bold; padding-bottom:5px;">Denomination</td>
                     <td style="width:100px; font-weight:bold; padding-bottom:5px;">Unit</td>
-                    <td style="width:100px; font-weight:bold; padding-bottom:5px;">Exchange Rate</td>
+                    <td style="width:100px; font-weight:bold; padding-bottom:5px;">Rate</td>
+                    <td style="width:100px; font-weight:bold; padding-bottom:5px;">Amt LCY</td>
                     <td></td>
                 </tr>
                 <asp:Literal ID="litDenominations" runat="server"></asp:Literal>
@@ -254,6 +255,7 @@
                     <td style="padding-bottom:5px;"><asp:TextBox ID="txtDenomination_Num" runat="server" Width="80" /></td>
                     <td style="padding-bottom:5px;"><asp:TextBox ID="txtDenomination_Unit" runat="server" Width="80" /></td>
                     <td style="padding-bottom:5px;"><asp:TextBox ID="txtDenomination_ExchangeRate" runat="server" Width="80" /></td>
+                    <td style="padding-bottom:5px;"><asp:Label ID="lblDenomination_AmtLCY" runat="server" Width="80" /></td>
                     <td style="padding-bottom:5px;"><a class="add" style="cursor:hand; cursor:pointer;"><img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
                 </tr>
             </table>
@@ -324,6 +326,7 @@
                             function () {
                                 this.value = '0';
                             });
+                    objTr.find('#<%=lblDenomination_AmtLCY.ClientID%>').text('');
                     objTr.appendTo($(this).closest('table'));
                     $(this)
                         .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
@@ -449,10 +452,54 @@
         }
         var CurDebitRate = Number(objCurDebit.get_value().split('#')[1]);
         var DebitAmount = Number($find("<%= txtDebitAmount.ClientID%>").get_value());
-        //        
+        //
         var DealRate = $find("<%= txtExchangeRate.ClientID%>").get_value();
         objAmtPaid.set_value(DebitAmount * DealRate);
     }
-
+    //
+    function calculateDenominationAmtLCY(ctr) {
+        var parentTR = $(ctr).parent().parent();
+        var Num = Number(parentTR.find('#<%=txtDenomination_Num.ClientID%>').val());
+        var Unit = Number(parentTR.find('#<%=txtDenomination_Unit.ClientID%>').val());
+        var Rate = Number(parentTR.find('#<%=txtDenomination_ExchangeRate.ClientID%>').val());
+        parentTR.find('#<%=lblDenomination_AmtLCY.ClientID%>').text(Num * Unit * Rate);
+        //
+        var totalAmtLCY = 0;
+        $(parentTR).parent().find('#<%=lblDenomination_AmtLCY.ClientID%>').each(
+                            function () {
+                                if ($(this).text() != '') {
+                                    totalAmtLCY += Number($(this).text());
+                                }
+                            });
+        var avgRate = 0;
+        if (totalAmtLCY > 0) {
+            avgRate = totalAmtLCY / Number($('#<%=txtDebitAmount.ClientID%>').val());
+        }
+        $find('<%=txtExchangeRate.ClientID%>').set_value(avgRate);
+    }
+    $(document).on("keypress", "#<%=txtDenomination_Num.ClientID%>", function (event) {
+        if (event.keyCode < 48 || event.keyCode > 57) {
+            if (event.keyCode != 13) {
+                return false;
+            }
+            calculateDenominationAmtLCY(this);
+        }
+    });
+    $(document).on("keypress", "#<%=txtDenomination_Unit.ClientID%>", function (event) {
+        if (event.keyCode < 48 || event.keyCode > 57) {
+            if (event.keyCode != 13) {
+                return false;
+            }
+            calculateDenominationAmtLCY(this);
+        }
+    });
+    $(document).on("keypress", "#<%=txtDenomination_ExchangeRate.ClientID%>", function (event) {
+        if (event.keyCode < 48 || event.keyCode > 57) {
+            if (event.keyCode != 13) {
+                return false;
+            }
+            calculateDenominationAmtLCY(this);
+        }
+    });
   </script>
 </telerik:RadCodeBlock>

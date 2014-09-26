@@ -337,6 +337,15 @@ namespace BankProject.Views.TellerApplication.ForeignExchange {
         protected global::System.Web.UI.WebControls.TextBox txtDenomination_ExchangeRate;
         
         /// <summary>
+        /// lblDenomination_AmtLCY control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDenomination_AmtLCY;
+        
+        /// <summary>
         /// dvAudit control.
         /// </summary>
         /// <remarks>

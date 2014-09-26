@@ -19,8 +19,8 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                 bc.Commont.initRadComboBox(ref cmbTCCurrency, "Title", "Value", tList);
                 bc.Commont.initRadComboBox(ref rcbDrCurrency, "Title", "Value", tList);
                 //
-                bc.Commont.initRadComboBox(ref rcbDebitAccount, "Display", "Account", bd.Teller.CashAccount());
-                bc.Commont.initRadComboBox(ref rcbCrAccount, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetAll());
+                bc.Commont.initRadComboBox(ref rcbDebitAccount, "Display", "Account", bd.Teller.InternalBankAccount());
+                bc.Commont.initRadComboBox(ref rcbCrAccount, "Display", "Account", bd.Teller.InternalBankPaymentAccount("11484"));
             }
             catch (Exception err)
             {
@@ -74,7 +74,6 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                 txtNarrative.Text = dr["Narrative"].ToString();
                 //
                 bc.Commont.SetTatusFormControls(this.Controls, false);
-                //
                 if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
                     loadToolBar(dr["Status"].ToString());
                 else
@@ -83,10 +82,9 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
             else
             {
                 this.txtId.Text = bd.Teller.GenerateTTId();
-                txtTellerId.Text = this.UserInfo.UserID + "";
+                txtTellerId.Text = this.UserInfo.Username;
                 //
                 bc.Commont.SetTatusFormControls(this.Controls, true);
-                //
                 loadToolBar(null);
             }
         }
