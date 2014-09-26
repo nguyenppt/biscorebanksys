@@ -30,7 +30,7 @@ namespace BankProject.Business
                 entry.Currency = "VND";
                 entry.OpenDate = DateTime.Now;
                 entry.ValueDate = DateTime.Now;
-                entry.MaturityDate = DateTime.Now;
+                entry.Drawdown = DateTime.Now;
             }
 
 
