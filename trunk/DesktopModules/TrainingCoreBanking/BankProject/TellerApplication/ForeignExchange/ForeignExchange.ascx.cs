@@ -19,8 +19,9 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
             bc.Commont.initRadComboBox(ref cboCurrencyPaid, "Title", "Value", tList);
             cboCurrencyPaid.SelectedValue = "VND";
             //
-            bc.Commont.initRadComboBox(ref cboDebitAccount, "Display", "Account", bd.SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll().Tables[0]);
-            bc.Commont.initRadComboBox(ref cboCreditAccount, "Display", "Account", bd.Teller.CashAccount());
+            tList = bd.Teller.InternalBankAccount();
+            bc.Commont.initRadComboBox(ref cboDebitAccount, "Display", "Account", tList);
+            bc.Commont.initRadComboBox(ref cboCreditAccount, "Display", "Account", tList);
             //
             if (Request.QueryString["tid"] != null)
             {
@@ -84,10 +85,10 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
             else
             {
                 this.txtId.Text = bd.Teller.GenerateTTId();
-                txtTellerId.Text = this.UserInfo.UserID + "";
+                txtTellerId.Text = this.UserInfo.Username;
+                txtCrTellerId.Text = this.UserInfo.Username;
                 //
                 bc.Commont.SetTatusFormControls(this.Controls, true);
-                //
                 loadToolBar(null);
             }
         }
