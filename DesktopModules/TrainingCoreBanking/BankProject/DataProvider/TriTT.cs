@@ -268,12 +268,13 @@ namespace BankProject.DataProvider
         public static void B_CUSTOMER_LIMIT_SUB_Insert_Update(string MainLimitID,string SubLimitID, string CustomerID,string SubCommitmentType, string STTSub, string mode, string CollateralTypeCode
             , string CollateralTypeName, string CollateralCode, string CollateralName, string CollReqdAmt, string CollReqdPct, string UptoPeriod, string PeriodAmt
             , string PeriodPct, decimal MaxSecured, decimal MaxUnSecured, decimal MaxTotal, string OtherSecured, string CollateralRight, string AmtSecured
-            , string Onlinelimit, string AvailableAmt, string TotalOutstand, string ApprovedUser, string MainComtType, double? InternalLimitAmt, double? AdvisedAmt)
+            , string Onlinelimit, string AvailableAmt, string TotalOutstand, string ApprovedUser, string MainComtType, double? InternalLimitAmt, double? AdvisedAmt
+            ,string ProductID , string ProductName)
         {
             sqldata.ndkExecuteNonQuery("B_CUSTOMER_LIMIT_SUB_Insert_Update",MainLimitID, SubLimitID, CustomerID, SubCommitmentType, STTSub, mode, CollateralTypeCode
                                         , CollateralTypeName, CollateralCode, CollateralName, CollReqdAmt, CollReqdPct, UptoPeriod, PeriodAmt
                                         , PeriodPct, MaxSecured, MaxUnSecured, MaxTotal, OtherSecured, CollateralRight, AmtSecured
-                                        , Onlinelimit, AvailableAmt, TotalOutstand, ApprovedUser, MainComtType, InternalLimitAmt, AdvisedAmt);
+                                        , Onlinelimit, AvailableAmt, TotalOutstand, ApprovedUser, MainComtType, InternalLimitAmt, AdvisedAmt, ProductID, ProductName);
         }
         public static DataSet B_CUSTOMER_LIMIT_SUB_check_SubLimitID(string SubLimitID)
         {
@@ -303,6 +304,10 @@ namespace BankProject.DataProvider
         public static DataSet B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(string ProductLimitID)
         {
             return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt", ProductLimitID);
+        }
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_Product()
+        {
+            return sqldata.ndkExecuteDataset("B_BRPODCATEGORY_GetAll_IdOver200");
         }
         #endregion
         #region INPUT CUSTOMER_RIGHT_Load_SubLimitID
