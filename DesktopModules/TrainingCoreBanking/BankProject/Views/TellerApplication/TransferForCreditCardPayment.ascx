@@ -42,7 +42,7 @@
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width: 200px; padding: 5px 0 5px 20px;">
-            <asp:TextBox ID="txtID" runat="server" Width="200" />
+            <asp:TextBox ID="txtID" runat="server" Width="200" ReadOnly="true" />
             <i>
                 <asp:Label ID="lblID" runat="server" /></i></td>
     </tr>
@@ -51,8 +51,6 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#ChristopherColumbus">Transfer For Credit Card Payment</a></li>
-        <li><a href="#blank">Audit</a></li>
-        <li><a href="#blank">Full View</a></li>
     </ul>
     <div id="ChristopherColumbus" class="dnnClear">
         <fieldset>
@@ -69,19 +67,14 @@
                         <asp:Label ID="lblCustomerName" runat="server" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Currency:</td>
+                    <td class="MyLable">Debit Currency:</td>
                     <td class="MyContent">
                         <telerik:RadComboBox ID="cmbDebitCurrency"
-                            MarkFirstMatch="True" 
+                            MarkFirstMatch="True" AutoPostBack="true" OnselectedIndexChanged="cmbDebitCurrency_OnselectedIndexChanged"
                             AllowCustomText="false"
                             runat="server" ValidationGroup="Group1" OnClientSelectedIndexChanged="OnIndexChanged_rcbDebitAccount" >
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
-                                <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                                <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                                <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                                <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                                <telerik:RadComboBoxItem Value="VND" Text="VND" />
                             </Items>
                         </telerik:RadComboBox>
                     </td>
@@ -92,25 +85,18 @@
                 <tr>
                     <td class="MyLable">Debit Account:<span class="Required">(*)</span>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" display="None" 
-                            ControltoValidate="rcbDebitAccount" ValidationGroup="Commit" InitialValue="" ErrorMessage="Debit Account is Required !"
+                            ControltoValidate="tbDebitAccount" ValidationGroup="Commit" InitialValue="" ErrorMessage="Debit Account is Required !"
                             ForeColor="Red" />
                     </td>
                     <td class="MyContent" width="300">
-                        <telerik:RadComboBox ID="rcbDebitAccount" OnClientSelectedIndexChanged="OnIndexChanged_rcbDebitAccount"
-                            MarkFirstMatch="True" 
-                            AllowCustomText="false"
+                        <telerik:RadTextBox ID="tbDebitAccount" 
                             Width="300" runat="server" ValidationGroup="Group1">
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                                <telerik:RadComboBoxItem Value="0" Text="07.000259529.8 - TGTT" />
-                                <telerik:RadComboBoxItem Value="1" Text="07.000259530.8 - TGTT" />
-                                <telerik:RadComboBoxItem Value="2" Text="07.000259540.8 - TGTT" />
-                                <telerik:RadComboBoxItem Value="3" Text="07.000259545.8 - TGTT" />
-                            </Items>
-                        </telerik:RadComboBox>
+                        </telerik:RadTextBox>
                     </td>
-                    <td><a class="add">
-                        <img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
+                    <td class="MyContent">
+                        <asp:Label ID="lblAccountTitle" runat="server" Width="250"></asp:Label>
+                    </td>
+                    <td class="MyContent"></td>
                 </tr>
             </table>
 
@@ -130,11 +116,13 @@
                 </tr>
                 <tr>
                     <td class="MyLable">Old Customer Balance:</td>
-                    <td><asp:Label ID="lblOldCustBal" runat="server" />  </td>
+                    
+                    <td><telerik:radnumerictextbox runat="server" id="tbOldBalance" borderwidth="0" readonly="true"></telerik:radnumerictextbox>
+                       </td>
                 <tr>
                     <td class="MyLable">New Customer Balance:</td>
-                    <td>
-                        <asp:Label runat="server" ID="lblNewCustBal" /></td>
+                    <td><telerik:radnumerictextbox runat="server" id="tbNewBalance" borderwidth="0" readonly="true"></telerik:radnumerictextbox>
+                        </td>
                 </tr>
                 <tr>
                     <td class="MyLable">Value Date:</td>
@@ -143,23 +131,18 @@
                     </td>
                 </tr>
              <tr>
-                   <%-- <td class="MyLable">Old Cus Acc:</td>--%>
+                 
                 </tr>
             </table>
             </fieldset>
         <fieldset>
             <legend style="font-weight:bold; text-transform:uppercase" >Credit Information</legend>
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td class="MyLable">Customer:</td>
-                    <td class="MyContent">
-                        <asp:Label ID="lblCreditCustomerName" runat="server" />
-                    </td>
-                </tr>
+                
                 <tr>
                     <td class="MyLable">Credit Account:<span class="Required">(*)</span>
                          <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" display="None" 
-                            ControltoValidate="rcbDebitAccount" ValidationGroup="Commit" InitialValue="" 
+                            ControltoValidate="cmbCreditAccount" ValidationGroup="Commit" InitialValue="" 
                             ForeColor="Red" ErrorMessage="Credit Account is Required !"/>
                     </td>
                     <td class="MyContent">
@@ -169,11 +152,7 @@
                             Width="300" runat="server" ValidationGroup="Group1" OnClientSelectedIndexChanged="OnCurrencyMatch" >
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
-                                <telerik:RadComboBoxItem Value="EUR" Text="EUR-19322-0002-0001 - Thu ho, chi ho EUR" />
-                                <telerik:RadComboBoxItem Value="GBP" Text="GBP-12321-0002-0001 - Thu ho, chi ho GBP" />
-                                <telerik:RadComboBoxItem Value="JPY" Text="JPY-14325-0002-0001 -  Thu ho, chi ho JPY" />
-                                <telerik:RadComboBoxItem Value="USD" Text="USD-12346-0002-0001 - Thu ho, chi ho USD" />
-                                <telerik:RadComboBoxItem Value="VND" Text="VND-22215-0002-0001 - Thu ho, chi ho VND" />
+                                
                             </Items>
                         </telerik:RadComboBox>
                     </td>
@@ -182,36 +161,24 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Currency:</td>
+                    <td class="MyLable">Credit Currency:</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox ID="cmbCreditCurrency"
-                            MarkFirstMatch="True" 
+                        <telerik:RadComboBox ID="cmbCreditCurrency" enabled="false"
+                            MarkFirstMatch="True"  readOnly="true"
                             AllowCustomText="false" Height="150"
                             runat="server" ValidationGroup="Group1" OnClientSelectedIndexChanged="OnCurrencyMatch" >
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
-                                <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                                <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                                <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                                <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                                <telerik:RadComboBoxItem Value="VND" Text="VND" />
                             </Items>
                         </telerik:RadComboBox>
                     </td>
                    
                 </tr>
-                <tr>
-                    <td class="MyLable">Deal Rate:</td>
-                    <td class="MyContent">
-                        <telerik:RadNumericTextBox ID="txtDealRate" runat="server" ValidationGroup="Group1" NumberFormat-DecimalDigits="6"
-                              ClientEvents-OnValueChanged="txtDebitAmtLCYOnValueChanged">
-                        </telerik:RadNumericTextBox>
-                    </td>
-                </tr>
+                
                 <tr>
                     <td class="MyLable">Amt Credit for Cust:</td>
                     <td>
-                        <asp:label ID="lblAmForCust" runat="server" />
+                        <telerik:radnumerictextbox runat="server" id="tbAmtCredit" borderwidth="0" readonly="true" />
                     </td>
                 </tr>
                 <tr>
@@ -235,6 +202,8 @@
                         <telerik:RadNumericTextBox ID="tbCreditCardNum" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator=""
                              runat="server" ValidationGroup="Group1" />
                     </td>
+                    <td class="MyLable"></td>
+                    <td class="MyContent"></td>
                 </tr>
                 <tr>
                     <td class="MyLable">Waive Charges ?:</td>
@@ -255,115 +224,70 @@
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">Narative:</td>
-                    <td class="MyContent" width="300">
-                        <telerik:RadTextBox ID="txtNarrative" Width="300"
+                    <td class="MyContent" width="450">
+                        <telerik:RadTextBox ID="txtNarrative" Width="450"
                             runat="server" ValidationGroup="Group1" />
                     </td>
-                    <td><a class="add">
-                        <img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
+                    <td class="MyLable"></td>
+                    <td class="MyContent"></td>
+                </tr>
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent" width="450">
+                        <telerik:RadTextBox ID="txtNarrative2" Width="450"
+                            runat="server" ValidationGroup="Group1" />
+                    </td>
+                </tr>
+                <tr style="visibility:hidden;">
+                    <td class="MyLable">Customer:</td>
+                    <td class="MyContent">
+                        <asp:Label ID="lblCreditCustomerName" runat="server" />
+                    </td>
+                </tr>
+                <tr style="visibility:hidden;">
+                    <td class="MyLable">Deal Rate:</td>
+                    <td class="MyContent">
+                        <telerik:RadNumericTextBox ID="txtDealRate" runat="server" ValidationGroup="Group1" NumberFormat-DecimalDigits="5"
+                              ClientEvents-OnValueChanged="txtDebitAmtLCYOnValueChanged">
+                        </telerik:RadNumericTextBox>
+                    </td>
                 </tr>
             </table>
             </fieldset>
         </div>
     </div>
     <div id="blank" />
-
+<telerik:RadCodeBlock runat="server">
 <script type="text/javascript">
+    $("#<%=tbDebitAccount.ClientID%>").keyup(function (event) {
+
+        if (event.keyCode == 13) {
+            $("#<%=btSearch.ClientID%>").click();
+        }
+    });
     function OnIndexChanged_rcbDebitAccount() {
-         var lblCustomerIDElement = $('#<%=lblCustomerID.ClientID%>');
+        var lblCustomerIDElement = $('#<%=lblCustomerID.ClientID%>');
         var lblCustomerNameElement = $('#<%=lblCustomerName.ClientID%>');
         var lblCreditCustomerNameElement = $('#<%=lblCreditCustomerName.ClientID%>');
 
-         var debitAccountElement = $find("<%= rcbDebitAccount.ClientID %>");
+        var debitAccountElement = $find("<%= tbDebitAccount.ClientID %>");
         var debitAccountValue = debitAccountElement.get_value();
-
-        if (debitAccountValue.length == 0 || !debitAccountValue.trim()) {
-            var NewCustBalElement = $('#<%= lblNewCustBal.ClientID%>');
-            var amtforcustElement = $('#<%= lblAmForCust.ClientID%>');
-            NewCustBalElement.html("");
-            amtforcustElement.html("");
+        var DebitCurrency = $find("<%=cmbDebitCurrency.ClientID%>").get_value();
+        if (DebitCurrency.length == 0 || !DebitCurrency.trim()) {
+            var NewCustBalElement = $find("<%= tbNewBalance.ClientID%>");
+            var AmtCredit = $find("<%= tbAmtCredit.ClientID%>");
+            NewCustBalElement.set_value("");
+            AmtCredit.set_value("");
+            $find("<%=tbOldBalance.ClientID%>").set_value("")
         }
         else
         {
-            switch (debitAccountValue)
-            {
-                case "0":
-                    lblCustomerIDElement.html("1101532");
-                    lblCustomerNameElement.html("TRAN NHAT TAN");
-                    lblCreditCustomerNameElement.html("TRAN NHAT TAN");
-                    
-                    break;
-                case "1":
-                    lblCustomerIDElement.html("1100002");
-                    lblCustomerNameElement.html("DINH TIEN HOANG");
-                    lblCreditCustomerNameElement.html("DINH TIEN HOANG");
-                    break;
-                case "2":
-                    lblCustomerIDElement.html("2102925");
-                    lblCustomerNameElement.html("CONG TY TNHH SONG HONG");
-                    lblCreditCustomerNameElement.html("CONG TY TNHH SONG HONG");
-                    break;
-                case "3":
-                    lblCustomerIDElement.html("1100005");
-                    lblCustomerNameElement.html("TRUONG CONG DINH");
-                    lblCreditCustomerNameElement.html("TRUONG CONG DINH");
-                    break;
-
-            }
-            // lay gia tri va` hien len man hinh gia tri cua old Cus Balance, nho khai bao bien va chu y 
-            // pham vi su dung cua cac bien cuc bo
-            var oldCusBalElement = $('#<%=lblOldCustBal.ClientID%>');
-            oldCusBalElement.html("");
+            var oldCusBalElement = $find("<%=tbOldBalance.ClientID%>");
+            oldCusBalElement.set_value("");
             var oldcusBalValue = getOldCustBallance();
-            oldCusBalElement.html(oldcusBalValue.toLocaleString("en-US"));
-        }
-
-        //gan cho credit account va readonly
-        var DebitcurrencyDepositedElement = $find("<%= cmbDebitCurrency.ClientID %>");
-        if (DebitcurrencyDepositedElement) {
-            var CreditAccountElement = $find("<%= cmbCreditAccount.ClientID %>");
-            var CreditCurrency = $find("<%= cmbCreditCurrency.ClientID %>")
-            CreditAccountElement.enabled = true;
-            CreditAccountElement.enable();
-
-            var debititem = CreditAccountElement.findItemByValue(DebitcurrencyDepositedElement.get_value());
-            if (debititem != null) {
-                CreditAccountElement.trackChanges();
-                CreditAccountElement.get_items().getItem(debititem.get_index()).select();
-                CreditAccountElement.updateClientState();
-                CreditAccountElement.disable();
-                CreditAccountElement.enabled = false;
-                CreditAccountElement.commitChanges();
-
-                CreditCurrency.trackChanges();
-                CreditCurrency.get_items().getItem(debititem.get_index()).select();
-                CreditCurrency.updateClientState();
-                CreditCurrency.commitChanges();
-            }
+            oldCusBalElement.set_value(oldcusBalValue.toLocaleString("en-US"));
         }
     }
-
-    /////// ham tinh toan cho gia tri deal rate : ////////////
-    function getDealRate()
-    {
-        var dealrateElement = $find("<%=txtDealRate.ClientID%>");
-        var dealrateValue = dealrateElement.get_value();
-        var debitCurElement = $find("<%=cmbDebitCurrency.ClientID%>");
-        var debitCur = debitCurElement.get_value();
-        var creditCurElement = $find("<%=cmbCreditCurrency.ClientID%>");
-        var creditCur = creditCurElement.get_value();
-        var debitAmountElement = $find("<%=txtDebitAmtLCY.ClientID%>");
-        var debitAmount = debitAmountElement.get_value();
-        var creditAmountElement = $('#<%=lblAmForCust.ClientID%>');
-        
-        if (!dealrateValue || creditCur == debitCur)
-        {
-            dealrateValue = 1;
-            
-        }
-        return dealrateValue;
-    }
-   
     //////// tinh chuyen doi tien te ////////////
     function txtDebitAmtLCYOnValueChanged() {
          //// khai bao cac element va gia tri cho cac field can su dung
@@ -372,32 +296,18 @@
         var creditCurrencyElement = $find("<%= cmbCreditCurrency.ClientID%>");
         var creditCurrencyValue = creditCurrencyElement.get_value();
         var dealrateElement = $find("<%= txtDealRate.ClientID%>");
-        var oldCusBalElement = $('#<%=lblOldCustBal.ClientID%>');
+        var oldCusBalElement = $find("<%=tbOldBalance.ClientID%>");
         var oldCusBalValue = getOldCustBallance();
-        var creditAmtForCustElement = $('#<%=lblAmForCust.ClientID%>');  
-        var newCusBalElement = $('#<%=lblNewCustBal.ClientID%>');
-        newCusBalElement.html("");
-        
-        var dealrateValue="";       
+        var AmtCredit = $find("<%=tbAmtCredit.ClientID%>");  
+        var newCusBalElement = $find("<%=tbNewBalance.ClientID%>");
+        newCusBalElement.set_value("");
         // tinh gia tri cho Amt Credit For Customer //////
         if (oldCusBalValue < debitAmtLCY ) { showMessage(); }
         else {
-            
-             dealrateValue = getDealRate();
-            switch (creditCurrencyValue)
-            {
-                case "":
-                    creditAmtForCustElement.html("");
-                    break;
-                case "VND":
-                    var tempCreditAmt = dealrateValue * debitAmtLCY;
-                    if (tempCreditAmt) { creditAmtForCustElement.html(tempCreditAmt.toLocaleString("en-US")); }
-                default:
-                    var tempCreditAmt = dealrateValue * debitAmtLCY;
-                    if (tempCreditAmt) { creditAmtForCustElement.html(tempCreditAmt.toLocaleString("en-US", { useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2 })); }
-            }
+             var NewBalance = oldCusBalValue - debitAmtLCY;
+             AmtCredit.set_value(debitAmtLCY.toLocaleString("en-US"));
             /// tinh lai gia tri cho new cus Ballance
-            if (debitAmtLCY) { newCusBalElement.html((oldCusBalValue - debitAmtLCY).toLocaleString("en-US")); }
+             if (debitAmtLCY) { newCusBalElement.set_value(NewBalance.toLocaleString("en-US")); }
         }
     }
        
@@ -412,7 +322,7 @@
         var debitCurrency = debitCurrencyElement.get_value();
         var debitAmtLCYElement = $find("<%= txtDebitAmtLCY.ClientID%>");
         var debitAmtLCY = debitAmtLCYElement.get_value();
-        var creditAmtForCustElement = $('#<%=lblAmForCust.ClientID%>'); 
+        var creditAmtForCustElement = $find("<%=tbAmtCredit.ClientID%>"); 
 
         //do tự nhay credit account nen không kiểm
         //if (CreditAccount && CreditCurreny && (CreditCurreny != CreditAccount)) {
@@ -430,10 +340,9 @@
         //}
         //////// neu cung loai tien te thi khong can them ty gia, gia tri cuoi = gia tri dau luon !!!
         if (debitCurrency && CreditCurreny && (CreditCurreny == debitCurrency)) 
-        { creditAmtForCustElement.html(debitAmtLCY.toLocaleString("en-US")); }
+        { creditAmtForCustElement.set_value(debitAmtLCY.toLocaleString("en-US")); }
 
         ShowLabelAutoRecord();
-       // OnChangeDealRate();
         return true;
     }
 
@@ -443,23 +352,15 @@
 
         var AutoRecordElement = $('#<%=lblAutoRecord.ClientID%>')
         if (CreditAccountValue) {
-            //AutoRecordElement.html("RECORD.AUTOMATICALLY.OPENED");
         }
         else {
             AutoRecordElement.html("");
         }
     }
-     
-    
-
     function getOldCustBallance() {
-        var debitCurElement = $find("<%=cmbDebitCurrency.ClientID%>");
-         var debitCurValue = debitCurElement.get_value();
-         var oldCusBal = 0;
-         if (debitCurValue == "VND") oldCusBal = 1000000000; else oldCusBal = 50000;
+         var oldCusBal = $find("<%=tbOldBalance.ClientID%>").get_value();
          return oldCusBal;
     }
-   
     function showMessage() {
         var oldCusBal = getOldCustBallance();
         var debitCurElement = $find("<%=cmbDebitCurrency.ClientID%>");
@@ -477,8 +378,6 @@
         lastclickedItem.click();
         lastclickedItem = null;
     }
-
-    
 
     $(document).ready(
   function () {
@@ -516,3 +415,19 @@
   });
 
   </script>
+    </telerik:RadCodeBlock>
+<div style="visibility:hidden;">
+    <asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" />
+</div>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" 
+    DefaultLoadingPanelID="AjaxLoadingPanel1" >
+    <AjaxSettings>
+
+        <telerik:AjaxSetting AjaxControlID="cmbDebitCurrency">
+            <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="cmbCreditCurrency" />
+                 <telerik:AjaxUpdatedControl ControlID="cmbCreditAccount" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+    </AjaxSettings>
+</telerik:RadAjaxManager>
