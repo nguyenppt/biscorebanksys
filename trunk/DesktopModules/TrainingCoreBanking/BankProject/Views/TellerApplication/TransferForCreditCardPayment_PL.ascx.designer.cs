@@ -13,12 +13,12 @@ namespace BankProject.Views.TellerApplication {
     public partial class TransferForCreditCardPayment_PL {
         
         /// <summary>
-        /// RadGridPreview control.
+        /// radGridReview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGridPreview;
+        protected global::Telerik.Web.UI.RadGrid radGridReview;
     }
 }
