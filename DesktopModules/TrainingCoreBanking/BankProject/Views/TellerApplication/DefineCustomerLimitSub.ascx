@@ -85,6 +85,19 @@
                 </i>
             </td>
             </tr>
+        <tr>
+            <td class="MyLable" style="padding:5px 0 5px 17px;">Product:</td>
+            <td class="MyContent" style="padding:5px 0px 5px 5px;">
+                <telerik:RadComboBox ID="rcbProduct" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true"
+                       width="40%"   >
+                            <CollapseAnimation Type="None" />
+                            <ExpandAnimation Type="None" />
+                            <Items>                     
+                                    <telerik:RadComboBoxItem Value="" Text="" />
+                            </Items>
+                        </telerik:RadComboBox>
+            </td>
+        </tr>
         </table>
 </div>
 <div class="dnnForm" id="tabs-demo">

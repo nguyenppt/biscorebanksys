@@ -46,6 +46,7 @@ namespace BankProject.Views.TellerApplication
             RdpProposalDate.SelectedDate = DateTime.Now;
             LoadCustomerID();
             rcbFandA.SelectedValue = "Variable";
+            LoadProduct();
         }
         protected void LoadCountries()
         {
@@ -69,6 +70,22 @@ namespace BankProject.Views.TellerApplication
             rcbCurrency.DataValueField = "Code";
             rcbCurrency.DataTextField = "Code";
             rcbCurrency.DataBind();
+        }
+        protected void LoadProduct()
+        {
+            rcbProduct.Items.Clear();
+            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Load_Product();
+            if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].NewRow();
+                dr["catid"] = "";
+                dr["Display"] = "";
+                ds.Tables[0].Rows.InsertAt(dr, 0);
+            }
+            rcbProduct.DataSource = ds;
+            rcbProduct.DataValueField = "catid";
+            rcbProduct.DataTextField = "Display";
+            rcbProduct.DataBind();
         }
         private void LoadCustomerID()
         {
@@ -186,7 +203,8 @@ namespace BankProject.Views.TellerApplication
                             , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
                             tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
                             , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha,
-                            tbIntLimitAmt.Text != "" ? Convert.ToDouble(tbIntLimitAmt.Text.Replace(",", "")) : 0, tbAdvisedAmt.Text != "" ? Convert.ToDouble(tbAdvisedAmt.Text.Replace(",", "")) : 0);
+                            tbIntLimitAmt.Text != "" ? Convert.ToDouble(tbIntLimitAmt.Text.Replace(",", "")) : 0, tbAdvisedAmt.Text != "" ? Convert.ToDouble(tbAdvisedAmt.Text.Replace(",", "")) : 0
+                            ,rcbProduct.SelectedValue, rcbProduct.Text);
                             Response.Redirect("Default.aspx?tabid=361");
                             
                             //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
@@ -316,6 +334,7 @@ namespace BankProject.Views.TellerApplication
             if (ds1.Tables != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
             {
                 //= ds1.Tables[0].Rows[0]["SubLimitID"].ToString();
+                rcbProduct.SelectedValue = ds1.Tables[0].Rows[0]["ProductID"].ToString();
                 rcbFandA.SelectedValue = "Variable"; // gan mac dinh khi chua tao han muc con 
                 rcbFandA.SelectedValue = ds1.Tables[0].Rows[0]["Mode"].ToString();// gan lai gia tri Khi han muc con da duoc tao
                 rcbCollateralType.SelectedValue = ds1.Tables[0].Rows[0]["CollateralTypeCode"].ToString();
