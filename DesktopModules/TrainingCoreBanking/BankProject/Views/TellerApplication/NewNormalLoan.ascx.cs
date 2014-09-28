@@ -263,6 +263,16 @@ namespace BankProject.Views.TellerApplication
         }
 
 
+        protected void btnPrintLai_Click(object sender, EventArgs e)
+        {
+            PrintLoanDocument2();
+        }
+
+        protected void btnPrintVon_Click(object sender, EventArgs e)
+        {
+            PrintLoanDocument1();
+        }
+
         #endregion
 
 
@@ -360,6 +370,7 @@ namespace BankProject.Views.TellerApplication
             LoadGroup(null);
             LoadAccountOfficer(null);
             LoadInterestKey(null);
+            LoadBusinessDay(null);
             //InitDefaultData();
 
             //Load data and binding it to UI
@@ -382,13 +393,25 @@ namespace BankProject.Views.TellerApplication
         private void LoadInterestKey(string selectedid)
         {
 
-            BInterestTermRepository facade = new BInterestTermRepository();
+            NewLoanInterestedKeyRepository facade = new NewLoanInterestedKeyRepository();
             var src = facade.GetAll().ToList();
-            Util.LoadData2RadCombo(rcbInterestKey, src, "Id", "description", "-Select Interest Key-");
+            Util.LoadData2RadCombo(rcbInterestKey, src, "Id", "LoanInterest_Key", "-Select Interest Key-");
 
             if (!String.IsNullOrEmpty(selectedid))
             {
                 rcbInterestKey.SelectedValue = selectedid;
+            }
+        }
+        private void LoadBusinessDay(string selectedid)
+        {
+
+            CountryRepository facade = new CountryRepository();
+            var src = facade.GetAll().ToList();
+            Util.LoadData2RadCombo(rcbBusDay, src, "MaQuocGia", "MaQuocGia", "-Select Business Day-");
+
+            if (!String.IsNullOrEmpty(selectedid))
+            {
+                rcbBusDay.SelectedValue = selectedid;
             }
         }
         private void LoadAccountOfficer(string selectedid)
@@ -556,7 +579,7 @@ namespace BankProject.Views.TellerApplication
             normalLoanEntry.LoanGroup = rcbLoadGroup.SelectedValue;
             normalLoanEntry.LoanGroupName = rcbLoadGroup.Text;
             normalLoanEntry.Currency = rcbCurrency.SelectedValue;
-            normalLoanEntry.BusDayDef = tbBusDayDef.Text;
+            normalLoanEntry.BusDayDef = rcbBusDay.SelectedValue;
 
 
             normalLoanEntry.LoanAmount = tbLoanAmount.Text != "" ? decimal.Parse(tbLoanAmount.Text) : 0;
@@ -628,7 +651,7 @@ namespace BankProject.Views.TellerApplication
             rcbInterestKey.SelectedValue = normalLoanEntry.InterestKey;
             tbInterestRate.Value = (double?)normalLoanEntry.InterestRate;
             tbInSpread.Value = double.Parse(!String.IsNullOrEmpty(normalLoanEntry.IntSpread) ? normalLoanEntry.IntSpread : "0");
-            tbBusDayDef.Text = normalLoanEntry.BusDayDef;
+            rcbBusDay.SelectedValue = normalLoanEntry.BusDayDef;
             //rcbAutoSch.SelectedValue = normalLoanEntry.AutoSch;
             rcbDefineSch.SelectedValue = normalLoanEntry.DefineSch;
             rcbRepaySchType.SelectedValue = normalLoanEntry.RepaySchType;
@@ -685,7 +708,7 @@ namespace BankProject.Views.TellerApplication
             tbCustomerRemarks.Enabled = p;
             cmbAccountOfficer.Enabled = p;
             rcbChargRepAccount.Enabled = p;
-            tbBusDayDef.Enabled = p;
+            rcbBusDay.Enabled = p;
             rcbCollateralID.Enabled = p;
             rcbCollateralID1.Enabled = p;
             rcbCollateralID2.Enabled = p;
@@ -778,35 +801,7 @@ namespace BankProject.Views.TellerApplication
             //doc.Save("RegisterDocumentaryCollectionMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
-        private void PrintLoanDocument()
-        {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-            //Open template
-            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraVon.docx");
-            string docPath2 = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraLai.docx");
-            //Open the template document
-            Aspose.Words.Document document = new Aspose.Words.Document(docPath);
-            Aspose.Words.Document document2 = new Aspose.Words.Document(docPath2);
-            //Execute the mail merge.
-            var ds = PrepareData2Print();
-            // Fill the fields in the document with user data.
-            document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
-            document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
-            document.MailMerge.ExecuteWithRegions(ds.Tables["DateInfor"]);
-
-            var ds2 = PrepareInterestDate2Print();
-            // Fill the fields in the document with user data.
-            document2.MailMerge.ExecuteWithRegions(ds2.Tables["Info"]);
-            document2.MailMerge.ExecuteWithRegions(ds2.Tables["Items"]);
-            document2.MailMerge.ExecuteWithRegions(ds2.Tables["DateInfor"]);
-
-            document.AppendDocument(document2, Aspose.Words.ImportFormatMode.KeepSourceFormatting);
-            //document2.Save("LichTraVonHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInBrowser, Response);
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            document.Save("LichTraVonLaiHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInBrowser, Response);
-
-        }
+        
 
 
 
@@ -877,7 +872,7 @@ namespace BankProject.Views.TellerApplication
 
             ds.Tables.Add(GetCusomerInformation(normalLoanEntryM, fregString, interestedKey, interestedValue));
             ds.Tables.Add(GetInterestTableScheduler(rateType, numberOfCircle, loanAmount, circleDuration, startIdentifyIntDate,
-                endDate, interestedValue));
+                endDate, interestedValue, drawDownDate));
 
             DataTable dateReport = new DataTable("DateInfor");
             dateReport.Columns.Add("day");
@@ -894,10 +889,10 @@ namespace BankProject.Views.TellerApplication
             return ds;
         }
 
-        private DataTable GetInterestTableScheduler(string rateType, int numberOfCircle, decimal loanAmount, int circleDuration, DateTime startIdentifyIntDate, DateTime endDate, decimal interestValued)
+        private DataTable GetInterestTableScheduler(string rateType, int numberOfCircle, decimal loanAmount, int circleDuration, DateTime startIdentifyIntDate, DateTime endDate, decimal interestValued, DateTime drawdowndate)
         {
             DateTime beginDate = startIdentifyIntDate;
-            DateTime previoudDate = (DateTime)normalLoanEntryM.ValueDate;
+            DateTime previoudDate = drawdowndate;
             DataTable dtItems = new DataTable("Items");
             dtItems.Columns.Add("ky");
             dtItems.Columns.Add("ngaytra");
@@ -1093,10 +1088,10 @@ namespace BankProject.Views.TellerApplication
             itemTb.Columns.Add("sotientra");
             itemTb.Columns.Add("duno");
 
-            var rateType = 1;
-            rateType = String.IsNullOrEmpty(normalLoanEntryM.RateType) ? 1 : Int16.Parse(normalLoanEntryM.RateType);
+            var schType = "I";//Intallment, N: Non-redemption
+            schType = String.IsNullOrEmpty(normalLoanEntryM.RepaySchType) ? "I" : normalLoanEntryM.RepaySchType;
 
-            if (rateType != 2)
+            if (schType.Equals("I"))
             {
                 noOfCicle = numberofday / (30 * cicleMonth);
                 if (noOfCicle > 0)
@@ -1283,15 +1278,7 @@ namespace BankProject.Views.TellerApplication
 
         }
 
-        protected void btnPrintLai_Click(object sender, EventArgs e)
-        {
-            PrintLoanDocument2();
-        }
-
-        protected void btnPrintVon_Click(object sender, EventArgs e)
-        {
-            PrintLoanDocument1();
-        }
+        
 
     }
 }

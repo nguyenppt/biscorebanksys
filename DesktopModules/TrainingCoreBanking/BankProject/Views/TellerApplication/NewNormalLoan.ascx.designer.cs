@@ -13,6 +13,15 @@ namespace BankProject.Views.TellerApplication {
     public partial class NewNormalLoan {
         
         /// <summary>
+        /// RadWindowManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindowManager RadWindowManager1;
+        
+        /// <summary>
         /// RadToolBar1 control.
         /// </summary>
         /// <remarks>
@@ -139,13 +148,13 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadComboBox rcbCurrency;
         
         /// <summary>
-        /// tbBusDayDef control.
+        /// rcbBusDay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbBusDayDef;
+        protected global::Telerik.Web.UI.RadComboBox rcbBusDay;
         
         /// <summary>
         /// RequiredFieldValidator5 control.

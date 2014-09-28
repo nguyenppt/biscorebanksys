@@ -10,6 +10,7 @@
     })
 </script>
     </telerik:radcodeblock>
+<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" onbuttonclick="RadToolBar1_ButtonClick" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit" 
@@ -162,11 +163,15 @@
 
                     <td class="MyLable">Business Day:</td>
                     <td class="MyContent">
-                        <telerik:radtextbox id="tbBusDayDef" runat="server" validationgroup="Group1" text="VN" />
-                        <i>VIET NAM</i>&nbsp;&nbsp;
-                             <a style="display: none" class="add">
-                                 <img src="Icons/Sigma/Add_16X16_Standard.png" />
-                             </a>
+                        <telerik:radcombobox id="rcbBusDay" autopostback="True" width="159px"  runat="server" allowcustomtext="false" markfirstmatch="true">
+                                 <ExpandAnimation Type="None" />
+                                 <CollapseAnimation Type="None" />
+                                 <ItemTemplate>
+                                           <%# DataBinder.Eval(Container.DataItem,"MaQuocGia") %> - 
+                                           <%# DataBinder.Eval(Container.DataItem,"TenTA") %>
+                                           </ItemTemplate> 
+                             </telerik:radcombobox>
+
                     </td>
                 </tr>
 
@@ -960,6 +965,7 @@
           });
 
   });
+    var clickCalledAfterRadconfirm = false;
     function GenerateZero(k) {
         n = 1;
         for (var i = 0; i < k.length; i++) {
@@ -1086,10 +1092,29 @@
     }
 
     function RadToolBar1_OnClientButtonClicking(sender, args) {
+
         var button = args.get_item();
-        if (button.get_commandName() == "print") {
-            OnClientPrint();
+        if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
+            clickCalledAfterRadconfirm = true;
+            args.set_cancel(true);
+            radconfirm("Do you want to print Principle Payment schedule?", PrintVon, 340, 150, null, 'Download');
         }
+    }
+
+    function PrintVon(result) {
+        clickCalledAfterRadconfirm = false;
+        if (result) {
+            $("#<%=btnPrintVon.ClientID %>").click();
+        }
+        radconfirm("Do you want to print Interesting Payment schedule?", PrintLai, 340, 150, null, 'Download');
+    }
+
+    function PrintLai(result) {
+        clickCalledAfterRadconfirm = false;
+        if (result) {
+            $("#<%=btnPrintLai.ClientID %>").click();
+        }
+        
     }
 
   </script>
