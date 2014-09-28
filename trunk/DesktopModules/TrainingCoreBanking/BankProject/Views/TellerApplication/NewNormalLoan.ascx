@@ -10,7 +10,7 @@
     })
 </script>
     </telerik:radcodeblock>
-<telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" onbuttonclick="RadToolBar1_ButtonClick">
+<telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" onbuttonclick="RadToolBar1_ButtonClick" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit" 
             ToolTip="Commit Data" Value="btnCommit" CommandName="commit">
@@ -179,7 +179,7 @@
                             ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                     <td class="MyContent">
-                        <telerik:radtextbox id="tbLoanAmount" runat="server" validationgroup="Group1" >
+                        <telerik:radtextbox id="tbLoanAmount" runat="server" validationgroup="Group1">
                                  <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                              </telerik:radtextbox>
                     </td>
@@ -228,7 +228,7 @@
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
-                
+
                 <tr>
                     <td class="MyLable">Limit Reference:<span class="Required">(*)</span>
                         <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator8"
@@ -317,7 +317,7 @@
                         </td>
                     </tr>
                     <tr>
-                        
+
                         <td class="MyLable">Define Schedule (Y/N):</td>
                         <td class="MyContent">
                             <telerik:radcombobox id="rcbDefineSch" runat="server" allowcustomtext="false" markfirstmatch="true" validationgroup="Group1">
@@ -470,11 +470,11 @@
                 <tr>
                     <td class="MyLable">Customer Remarks <span class="Required">(*)</span>
                         <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator11"
-                            ControlToValidate="tbCustomerRemarks" ValidationGroup="Commit"  InitialValue="" ErrorMessage="Customer Remarks is required"
+                            ControlToValidate="tbCustomerRemarks" ValidationGroup="Commit" InitialValue="" ErrorMessage="Customer Remarks is required"
                             ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                     <td class="MyContent">
-                        <telerik:radtextbox id="tbCustomerRemarks" runat="server" validationgroup="Group1" width="350" TextMode="Multiline"></telerik:radtextbox>
+                        <telerik:radtextbox id="tbCustomerRemarks" runat="server" validationgroup="Group1" width="350" textmode="Multiline"></telerik:radtextbox>
                         <%--<a class="add">
                             <img src="Icons/Sigma/Add_16X16_Standard.png" />
                         </a>--%>
@@ -805,7 +805,7 @@
                                 <asp:Label ID="DateLabel" runat="server" Text='<%# Eval("Date") %>' />
                             </td>
                             <td>
-                               
+
                                 <telerik:radnumerictextbox id="AmountActionLabel" runat="server" readonly="true" borderwidth="0" value='<%# Bind("AmountAction") %>'>
                                 <EnabledStyle HorizontalAlign="Right" />
                                 </telerik:radnumerictextbox>
@@ -844,7 +844,7 @@
                                             <th runat="server">Frequency</th>
                                             <th runat="server"></th>
                                         </tr>
-                                        <tr ID="itemPlaceholder" runat="server">
+                                        <tr id="itemPlaceholder" runat="server">
                                         </tr>
                                     </table>
                                 </td>
@@ -898,6 +898,10 @@
     <asp:HiddenField ID="hfCommitNumber" Value="0" runat="server" />
     <asp:HiddenField ID="hfCommit2" Value="0" runat="server" />
 </div>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnPrintLai" runat="server" OnClick="btnPrintLai_Click" Text="In Lai" /></div>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnPrintVon" runat="server" OnClick="btnPrintVon_Click" Text="In Von" /></div>
 
 <telerik:radajaxmanager id="RadAjaxManager1" runat="server"
     defaultloadingpanelid="AjaxLoadingPanel1">
@@ -1057,6 +1061,39 @@
             document.getElementById("amountAllocID").style.display = ""
         }
     }
+    function OnClientPrint() {
+
+        
+        var r1 = confirm("Do you want to print Lich Tra Von khong?");
+        if (r1 == true) {
+            PrintVon();
+        }
+        PrintVon();
+        var r2 = confirm("Do you want to print Lich Tra Lai khong?");
+        if (r2 == true) {
+            PrintLai();
+        }
+       
+       
+        
+
+        
+    }
+
+    function PrintLai() {
+        $("#<%=btnPrintLai.ClientID %>").click();
+    }
+    function PrintVon() {
+        $("#<%=btnPrintVon.ClientID %>").click();
+    }
+
+    function RadToolBar1_OnClientButtonClicking(sender, args) {
+        var button = args.get_item();
+        if (button.get_commandName() == "print") {
+            OnClientPrint();
+        }
+    }
+
   </script>
 
 </telerik:radcodeblock>
