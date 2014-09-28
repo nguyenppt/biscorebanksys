@@ -31,6 +31,7 @@ namespace BankProject.Business
                 entry.OpenDate = DateTime.Now;
                 entry.ValueDate = DateTime.Now;
                 entry.Drawdown = DateTime.Now;
+                entry.BusDayDef = "VN";
             }
 
 
