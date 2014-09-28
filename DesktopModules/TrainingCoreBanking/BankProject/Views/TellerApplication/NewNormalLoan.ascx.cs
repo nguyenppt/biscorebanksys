@@ -129,9 +129,9 @@ namespace BankProject.Views.TellerApplication
                 case "search":
                     this.Response.Redirect(EditUrl("preview"));
                     break;
-                case "print":
-                    PrintLoanDocument();
-                    break;
+                //case "print":
+                //    PrintLoanDocument();
+                //    break;
                 default:
                     RadToolBar1.FindItemByValue("btnCommit").Enabled = true;
                     break;

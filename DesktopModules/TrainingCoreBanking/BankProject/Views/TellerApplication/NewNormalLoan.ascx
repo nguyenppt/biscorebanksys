@@ -117,15 +117,13 @@
                             ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                     <td class="MyContent">
-
                         <telerik:radcombobox id="rcbCustomerID" autopostback="true" onselectedindexchanged="rcbCustomerID_SelectedIndexChanged" runat="server" width="330" allowcustomtext="false" markfirstmatch="true">
                                      <ExpandAnimation Type="None" />
                                      <CollapseAnimation Type="None" />
                                        <ItemTemplate>
                                            <%# DataBinder.Eval(Container.DataItem,"CustomerID") %> - 
                                            <%# DataBinder.Eval(Container.DataItem,"GBFullName") %>
-                                           </ItemTemplate>
-                                     
+                                           </ItemTemplate>                                    
                                  </telerik:radcombobox>
                     </td>
                 </tr>
@@ -1064,12 +1062,12 @@
     function OnClientPrint() {
 
         
-        var r1 = confirm("Do you want to print Lich Tra Von khong?");
+        var r1 = confirm("Do you want to print Principle Payment schedule?");
         if (r1 == true) {
             PrintVon();
         }
-        PrintVon();
-        var r2 = confirm("Do you want to print Lich Tra Lai khong?");
+      
+        var r2 = confirm("Do you want to print Interesting Payment schedule?");
         if (r2 == true) {
             PrintLai();
         }
