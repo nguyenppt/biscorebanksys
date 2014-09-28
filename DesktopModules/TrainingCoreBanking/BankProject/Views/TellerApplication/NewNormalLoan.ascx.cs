@@ -740,43 +740,43 @@ namespace BankProject.Views.TellerApplication
             return storePro.StoreProcessor().B_BMACODE_GetNewID("CRED_REVOLVING_CONTRACT", REFIX_MACODE, ".").First<string>();
         }
 
-        //private void PrintLoanDocument1()
-        //{
-        //    Aspose.Words.License license = new Aspose.Words.License();
-        //    license.SetLicense("Aspose.Words.lic");
-        //    //Open template
-        //    string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraVon.docx");
-        //    //Open the template document
-        //    Aspose.Words.Document document = new Aspose.Words.Document(docPath);
-        //    //Execute the mail merge.
-        //    var ds = PrepareData2Print();
-        //    // Fill the fields in the document with user data.
-        //    document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
-        //    document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
-        //    document.MailMerge.ExecuteWithRegions(ds.Tables["DateInfor"]);
-        //    // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-        //    document.Save("LichTraVonHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInBrowser, Response);
-        //}
+        private void PrintLoanDocument1()
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+            //Open template
+            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraVon.docx");
+            //Open the template document
+            Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+            //Execute the mail merge.
+            var ds = PrepareData2Print();
+            // Fill the fields in the document with user data.
+            document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+            document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
+            document.MailMerge.ExecuteWithRegions(ds.Tables["DateInfor"]);
+            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
+            document.Save("LichTraVonHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+        }
 
-        //private void PrintLoanDocument2()
-        //{
-        //    Aspose.Words.License license = new Aspose.Words.License();
-        //    license.SetLicense("Aspose.Words.lic");
-        //    //Open template
-        //    string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraLai.docx");
-        //    //Open the template document
-        //    Aspose.Words.Document document = new Aspose.Words.Document(docPath);
-        //    //Execute the mail merge.
-        //    var ds = PrepareInterestDate2Print();
-        //    // Fill the fields in the document with user data.
-        //    document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
-        //    document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
-        //    document.MailMerge.ExecuteWithRegions(ds.Tables["DateInfor"]);
-        //    // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-        //    document.Save("LichTraLaiHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInBrowser, Response);
+        private void PrintLoanDocument2()
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+            //Open template
+            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraLai.docx");
+            //Open the template document
+            Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+            //Execute the mail merge.
+            var ds = PrepareInterestDate2Print();
+            // Fill the fields in the document with user data.
+            document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+            document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
+            document.MailMerge.ExecuteWithRegions(ds.Tables["DateInfor"]);
+            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
+            document.Save("LichTraLaiHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
 
-        //    //doc.Save("RegisterDocumentaryCollectionMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
-        //}
+            //doc.Save("RegisterDocumentaryCollectionMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+        }
 
         private void PrintLoanDocument()
         {
@@ -1281,6 +1281,16 @@ namespace BankProject.Views.TellerApplication
         protected void tbBusDayDef_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void btnPrintLai_Click(object sender, EventArgs e)
+        {
+            PrintLoanDocument2();
+        }
+
+        protected void btnPrintVon_Click(object sender, EventArgs e)
+        {
+            PrintLoanDocument1();
         }
 
     }
