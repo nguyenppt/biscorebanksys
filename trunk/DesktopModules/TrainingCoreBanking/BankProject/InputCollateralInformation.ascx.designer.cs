@@ -211,13 +211,13 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadNumericTextBox tbNominalValue;
         
         /// <summary>
-        /// lblProvisionValue control.
+        /// tbProvisionValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProvisionValue;
+        protected global::Telerik.Web.UI.RadNumericTextBox tbProvisionValue;
         
         /// <summary>
         /// tbExeValue control.
@@ -263,6 +263,15 @@ namespace BankProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker rdpReviewDate;
+        
+        /// <summary>
+        /// tbRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox tbRate;
         
         /// <summary>
         /// tbMaxValue control.

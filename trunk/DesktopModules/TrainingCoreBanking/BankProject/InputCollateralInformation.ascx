@@ -76,7 +76,8 @@
                     <td class="MyLable">Collateral Code:</td> 
                     <td class="MyContent">
                         <telerik:RadComboBox ID="rcbCollateralCode" runat="server" MarkFirstMatch="true" AllowCustomText="false" 
-                            width="350" >
+                            width="350" AutoPostBack="true" OnSelectedIndexChanged="rcbCollateralCode_OnSelectedIndexChanged" 
+                            >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -230,7 +231,7 @@
                     <td class="MyLable">Nominal Value:</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="tbNominalValue" runat="server" ValidationGroup="Group1" Width="150"
-                            NumberFormat-DecimalDigits="0" >
+                            NumberFormat-DecimalDigits="2" >
                              <ClientEvents OnBlur="clientEvent_NominalValue" />
                         </telerik:RadNumericTextBox>
                        
@@ -240,7 +241,7 @@
                 <tr>
                     <td class="MyLable">Provision Value:</td>
                     <td class="MyContent">
-                        <asp:Label ID="lblProvisionValue" runat="server" /></td>
+                        <telerik:radnumerictextbox runat="server" id="tbProvisionValue" borderwidth="0" readonly="true"></telerik:radnumerictextbox>
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
@@ -248,7 +249,7 @@
                     <td class="MyLable">Maximum Loan Value:</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="tbExeValue" runat="server" ValidationGroup="Group1" Width="150"
-                            NumberFormat-DecimalDigits="0" >
+                            NumberFormat-DecimalDigits="2" >
                         </telerik:RadNumericTextBox>
                     </td>                   
                 </tr>
@@ -274,7 +275,12 @@
                     <td class="MyLable">Review Date Freq:</td>
                     <td class="MyContent">
                         <telerik:raddatepicker runat="server" ID="rdpReviewDate"  Width="150"></telerik:raddatepicker>
-                    </td>                   
+                    </td>  
+                    <td style="visibility:hidden;">
+                         <telerik:radnumerictextbox runat="server" ID="tbRate" NumberFormat-DecimalDigits="5"
+                              ClientEvents-OnBlur="clientEvent_NominalValue" >
+                         </telerik:radnumerictextbox>
+                     </td>                 
                 </tr>
             </table>
         </fieldset>
@@ -510,7 +516,7 @@
                      <td class="MyContent" width="350">
                          <telerik:RadTextBox ID="tbNarrative" runat="server" ValidationGroup="Group1" Width="350" TextMode="MultiLine" />
                      </td>
-                     <td ><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png" /></a> --%></td>
+                     
                      
                  </tr>
              </table>
@@ -533,6 +539,10 @@
         var ExecutionValue = $find("<%= tbExeValue.ClientID%>");
         ExecutionValue.set_value(NominalValue.get_value()*0.7) ;
         $find("<%=tbAmount.ClientID%>").set_value(NominalValue.get_value());
+        var Rate = $find("<%=tbRate.ClientID%>").get_value();
+        if (Rate != "0.00000") {
+            $find("<%= tbProvisionValue.ClientID%>").set_value(Rate * NominalValue.get_value());
+        } else { $find("<%= tbProvisionValue.ClientID%>").set_value("");}
     }
 
     $(document).ready(
@@ -593,6 +603,12 @@
             <UpdatedControls>  
                  <telerik:AjaxUpdatedControl ControlID="rcbContingentAcct" /> 
                 <telerik:AjaxUpdatedControl ControlID="rcbAccountNo" />
+            </UpdatedControls>
+        </telerik:AjaxSetting> 
+        <telerik:AjaxSetting AjaxControlID="rcbCollateralCode">
+            <UpdatedControls>  
+                <telerik:AjaxUpdatedControl ControlID="tbRate" />
+                <telerik:AjaxUpdatedControl ControlID="tbProvisionValue" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>
