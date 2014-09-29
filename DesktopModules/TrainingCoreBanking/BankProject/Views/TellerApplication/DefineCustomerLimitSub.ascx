@@ -74,7 +74,7 @@
             </td>
         </tr>
         <tr>
-            <td class="MyLable" style="padding:5px 0 5px 17px;">ID:</td>
+            <td class="MyLable" style="padding:5px 0 5px 17px;">Product Limit No:</td>
             <td class="MyContent" style="padding:5px 0px 5px 5px;">
                 <asp:TextBox Width="40%" ID="tbLimitID" runat="server" /><span class="Required">(*)</span>
                 <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator2"
