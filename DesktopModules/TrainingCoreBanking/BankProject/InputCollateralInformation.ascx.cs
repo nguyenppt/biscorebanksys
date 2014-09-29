@@ -49,8 +49,9 @@ namespace BankProject
                 var CollInfoID = tbCollInfoID.Text.Trim();
                 if (CollInfoID.Length == 10 && CollInfoID.Substring(7, 1) == ".")
                 {
-                    string RightID = CollInfoID.Substring(0,10); 
-                    var ProvisionValue = decimal.Parse(lblProvisionValue.Text  == "" ? "0" : lblProvisionValue.Text);
+                    string RightID = CollInfoID.Substring(0,10);
+                    var ProvisionValue = decimal.Parse(tbProvisionValue.Text == "" ? "0" : tbProvisionValue.Text);
+                    var Rate = (tbRate.Text == "" ? 0 : tbRate.Value.Value);
                     var AllocatedAmt = decimal.Parse(lblAllocatedAmt.Text == "" ? "0" : lblAllocatedAmt.Text);
                     TriTT.B_COLLATERAL_INFO_Insert_Update(RightID, CollInfoID, rcbCollateralType.SelectedValue, rcbCollateralType.Text.Replace(rcbCollateralType.SelectedValue + " - ", "")
                         , rcbCollateralCode.SelectedValue, rcbCollateralCode.Text.Replace(rcbCollateralCode.SelectedValue+" - ", ""),rcbContingentAcct.SelectedValue
@@ -60,7 +61,7 @@ namespace BankProject
                         ,rcbProductLimit.SelectedValue , rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.SelectedItem.Text.Replace(rcbCountry.SelectedValue+" - ",""),
                         Convert.ToDecimal(tbNominalValue.Value.HasValue? tbNominalValue.Value : 0),Convert.ToDecimal( tbMaxValue.Value.HasValue? tbMaxValue.Value : 0),ProvisionValue ,
                         Convert.ToDecimal( tbExeValue.Value.HasValue? tbExeValue.Value:0),
-                        AllocatedAmt, rdpValueDate.SelectedDate, rdpExpiryDate.SelectedDate, rdpReviewDate.SelectedDate, UserInfo.Username.ToString());
+                        AllocatedAmt, rdpValueDate.SelectedDate, rdpExpiryDate.SelectedDate, rdpReviewDate.SelectedDate, UserInfo.Username.ToString(), Rate);
                     TriTT.B_CONTINGENT_ENTRY_Insert_Update(CollInfoID, tbContingentEntryID.Text, tbCustomerIDName_Cont.Text.Substring(0, 7), tbAddress_cont.Text, tbIDTaxCode.Text
                         , tbDateOfIssue.Text == "" ? "" : tbDateOfIssue.Text, rcbTransactionCode.SelectedValue, rcbTransactionCode.Text.Replace(rcbTransactionCode.SelectedValue + " - ", "")
                         , rcbDebitOrCredit.SelectedValue, rcbDebitOrCredit.Text.Replace(rcbDebitOrCredit.SelectedValue + " - ", ""), rcbCurrency.SelectedValue,
@@ -132,7 +133,9 @@ namespace BankProject
                     tbNominalValue.Text = (dr["NominalValue"].ToString());
                     tbMaxValue.Text = (dr["MaxValue"].ToString());
                     if (dr["ProvisionValue"].ToString() == "0.00")
-                    { lblProvisionValue.Text = ""; }
+                    { tbProvisionValue.Text = ""; }
+                    else tbProvisionValue.Text = dr["ProvisionValue"].ToString();
+                    tbRate.Text = dr["Rate"].ToString();
                     tbExeValue.Text = (dr["ExecutionValue"].ToString());
                     if(dr["AllocatedAmt"].ToString() =="0.00")
                     {lblAllocatedAmt.Text ="" ;}
@@ -282,6 +285,24 @@ namespace BankProject
         {
             LoadCollateralCode(rcbCollateralType.SelectedValue);
             LoadContingetnAcct(rcbCollateralType.SelectedValue, rcbCurrency.SelectedValue);
+        }
+        protected void rcbCollateralCode_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            Load_Rate(rcbCollateralCode.SelectedValue);
+        }
+        protected void Load_Rate(string CollateralCode)
+        {
+            DataSet ds = TriTT.B_COLLATERAL_INFO_LoadRate(CollateralCode);
+            tbRate.Text = ds.Tables[0].Rows[0]["Rate"].ToString();
+            if (tbNominalValue.Value.HasValue) // change collateralcode lan 2,3...thi tinh toan lai
+            {   var provisionValue = tbRate.Value.Value * tbNominalValue.Value.Value;
+                if(provisionValue != 0)
+                {
+                tbProvisionValue.Text = provisionValue.ToString();
+                } else
+                tbProvisionValue.Text = string.Empty;
+            }
+           
         }
         protected void LoadCurrencies(string CustomerID)
         {
