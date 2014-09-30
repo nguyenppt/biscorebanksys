@@ -112,6 +112,14 @@
             <telerik:GridBoundColumn HeaderText="Currency" HeaderStyle-Width = "5%" DataField="Currency" />
             <telerik:GridBoundColumn HeaderText="Loan Amount" DataField="LoanAmount" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "15%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal"  DataFormatString="{0:N}" />
             <telerik:GridBoundColumn HeaderText="Approve Amount" DataField="ApproveAmount" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "15%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal" DataFormatString="{0:N}" />
+            <telerik:GridTemplateColumn>
+                <ItemStyle Width="25" />
+                <ItemTemplate>
+                    <a href='Default.aspx?tabid=196&role=authorize&codeid=<%# Eval("Code") %>'>
+                        <img src="Icons/bank/text_preview.png" alt="" title="" style="" />
+                    </a>
+                </ItemTemplate>
+            </telerik:GridTemplateColumn>
         </Columns>
     </MasterTableView>
 </telerik:RadGrid>
