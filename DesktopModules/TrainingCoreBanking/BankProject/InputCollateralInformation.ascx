@@ -49,7 +49,7 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#blank1">Collateral Information</a></li>
-        <li><a href="#blank2">Contingent Entry Information</a></li>
+        <li style="visibility:hidden;"><a href="#blank2">Contingent Entry Information</a></li>
     </ul>
     <div id="blank1" class="dnnClear">
          <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
@@ -408,7 +408,7 @@
                  <tr>
                      <td class="MyLable">Transaction Code:<span class="Required">(*)</span>
                          <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator5"
-                     ControlToValidate="rcbTransactionCode" ValidationGroup="Commit" InitialValue="" ErrorMessage="Transaction Code is required"
+                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Transaction Code is required"
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                      </td>
                      <td class="MyContent">
@@ -428,7 +428,7 @@
                  <tr>
                      <td class="MyLable">Debit or Credit:<span class="Required">(*)</span>
                           <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator6"
-                     ControlToValidate="rcbDebitOrCredit" ValidationGroup="Commit" InitialValue="" ErrorMessage="Debit or Credit is required"
+                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Debit or Credit is required"
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                      </td>
                      <td class="MyContent">
@@ -460,7 +460,7 @@
                  <tr>
                      <td class="MyLable">Account No:<span class="Required">(*)</span>
                          <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator7"
-                     ControlToValidate="rcbAccountNo" ValidationGroup="Commit" InitialValue="" ErrorMessage="CategoryID is required"
+                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="CategoryID is required"
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                      </td>
                      <td class="MyContent">
@@ -499,7 +499,7 @@
                  <tr>
                      <td class="MyLable">Reference No:<span class="Required">(*)</span>
                          <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator8"
-                     ControlToValidate="tbReferenceNo" ValidationGroup="Commit" InitialValue="" ErrorMessage="Reference No is required"
+                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Reference No is required"
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                      </td>
                      <td class="MyContent">
@@ -510,7 +510,7 @@
                  <tr>
                      <td class="MyLable">Narrative:<span class="Required">(*)</span>
                          <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator9"
-                     ControlToValidate="tbNarrative" ValidationGroup="Commit" InitialValue="" ErrorMessage="Narrative is required"
+                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Narrative is required"
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                      </td>
                      <td class="MyContent" width="350">
