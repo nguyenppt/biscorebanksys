@@ -1,10 +1,14 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ExchangeBanknotesManyDeno.ascx.cs" Inherits="BankProject.Views.TellerApplication.ForeignExchange.ExchangeBanknotesManyDeno" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Src="~/DesktopModules/TrainingCoreBanking/BankProject/Controls/MultiNarrative.ascx" TagPrefix="uc1" TagName="MultiNarrative" %>
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"  />
 <style>
     .labelDisabled {
         color: darkgray !important;
+    }
+    .addDenominationRow, .removeDenominationRow {
+        cursor:hand; cursor:pointer;
     }
 </style>
 <script type="text/javascript">
@@ -180,14 +184,8 @@
                 <td></td>
             </tr>
              <tr>
-                <td class="MyLable">Narrative</td>
-                <td class="MyContent" style="width:350px; ">
-                    <telerik:RadTextBox ID="txtNarrative" Width="350"
-                        runat="server"  />
-                </td>
-                <td><a class="add">
-                    <img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
-            </tr>
+                 <td colspan="3"><uc1:MultiNarrative runat="server" id="MultiNarratives" /></td>
+             </tr>
              <tr>
                  <td class="MyLable">Value Date</td>
                 <td class="MyContent"><telerik:RadDatePicker ID="txtValueDate" runat="server"></telerik:RadDatePicker></td>
@@ -256,7 +254,7 @@
                     <td style="padding-bottom:5px;"><asp:TextBox ID="txtDenomination_Unit" runat="server" Width="80" /></td>
                     <td style="padding-bottom:5px;"><asp:TextBox ID="txtDenomination_ExchangeRate" runat="server" Width="80" /></td>
                     <td style="padding-bottom:5px;"><asp:Label ID="lblDenomination_AmtLCY" runat="server" Width="80" /></td>
-                    <td style="padding-bottom:5px;"><a class="add" style="cursor:hand; cursor:pointer;"><img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
+                    <td style="padding-bottom:5px;"><a class="addDenominationRow"><img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
                 </tr>
             </table>
         </fieldset>
@@ -313,47 +311,35 @@
 </div>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
 <script type="text/javascript">
-    $(document).ready(function () {
-            $('a.add').live('click',
+    $(document).on("click", "a.addDenominationRow", function () {
+        $(this)
+            .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
+            .removeClass('addDenominationRow')
+            .addClass('removeDenominationRow')
+        ;
+        var objTr = $(this).closest('tr').clone();
+        objTr.find('input[type="text"]').each(
                 function () {
-                    $(this)
-                        .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                        .removeClass('add')
-                        .addClass('remove')
-                    ;
-                    var objTr = $(this).closest('tr').clone();
-                    objTr.find('input[type="text"]').each(
-                            function () {
-                                this.value = '0';
-                            });
-                    objTr.find('#<%=lblDenomination_AmtLCY.ClientID%>').text('');
-                    objTr.appendTo($(this).closest('table'));
-                    $(this)
-                        .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                        .removeClass('remove')
-                        .addClass('add');
+                    this.value = '';
                 });
-            $('a.remove').live('click',
-                function () {
-                    $(this)
-                        .closest('tr')
-                        .remove();
-                });
-            /*$('input:text').each(
-                function () {
-                    var thisName = $(this).attr('name'),
-                        thisRrow = $(this)
-                                    .closest('tr')
-                                    .index();
-                    $(this).attr('name', 'row' + thisRow + thisName);
-                    $(this).attr('id', 'row' + thisRow + thisName);
-                });*/            
+        objTr.find('#<%=lblDenomination_AmtLCY.ClientID%>').text('');
+        objTr.appendTo($(this).closest('table'));
+        $(this)
+                .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
+                .removeClass('removeDenominationRow')
+                .addClass('addDenominationRow');
+    });
+    $(document).on("click", "a.removeDenominationRow", function () {
+        $(this)
+            .closest('tr')
+            .remove();
     });
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         //
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Commit%>") {
             args.set_cancel(true);//cancel commit
+            //
             var isOK = true;
             var Denominations = new Array();
             var DenominationsIndex = 0;
@@ -414,8 +400,7 @@
             if (DebitAmount != 0) {
                 alert('Debit Amount does not equal total Denomination !');
                 return;
-            }
-            //
+            }            
             //alert('OK');
             args.set_cancel(false);
         }
