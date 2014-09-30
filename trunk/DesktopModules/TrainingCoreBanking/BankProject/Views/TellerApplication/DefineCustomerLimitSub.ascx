@@ -215,25 +215,7 @@
         <legend>
             <div style="font-weight:bold; text-transform:uppercase">Orther Details</div>
         </legend>
-           <table width="100%" cellpading="0" cellspacing="0">
-            <tr>
-                <td class="MyLable">Fixed / Variable:</td>
-                <td class="MyContent" width="370">
-                     <telerik:RadComboBox ID="rcbFandA" runat="server"  width="150"
-                         AllowCustomText="false" MarkFirstMatch="true"  > 
-                        <ExpandAnimation Type="none" />
-                        <CollapseAnimation Type="None" />
-                        <Items>
-                            <telerik:RadComboBoxItem Value="Fixed" Text="Fixed" /> 
-                            <telerik:RadComboBoxItem Value="Variable" Text="Variable" />                          
-                        </Items>
-                        </telerik:RadComboBox>
-                </td>
-                <td class="MyLable"></td>               
-                <td class="MyContent"></td>               
-            </tr>
-            
-               </table>
+           
         <table width="100%" cellpading="0" cellspacing="0">
              
             <tr>
@@ -281,7 +263,7 @@
                     <asp:Label ID="lblAmtSecured" runat="server" />
                 </td>
             </tr> <tr>
-                <td class="MyLable">Online Limit:</td>
+                <td class="MyLable">Total Limit:</td>
                 <td class="MyContent">
                     <asp:Label ID="lblOnlineLimit" runat="server" />
                 </td>
@@ -353,6 +335,25 @@
                     <asp:Label ID="lblPeriodPct" runat="server" />
                 </td>
             </tr>
+               </table>
+        <table width="100%" cellpading="0" cellspacing="0">
+            <tr style="visibility:hidden;">
+                <td class="MyLable">Fixed / Variable:</td>
+                <td class="MyContent" width="370">
+                     <telerik:RadComboBox ID="rcbFandA" runat="server"  width="150"
+                         AllowCustomText="false" MarkFirstMatch="true"  > 
+                        <ExpandAnimation Type="none" />
+                        <CollapseAnimation Type="None" />
+                        <Items>
+                            <telerik:RadComboBoxItem Value="Fixed" Text="Fixed" /> 
+                            <telerik:RadComboBoxItem Value="Variable" Text="Variable" />                          
+                        </Items>
+                        </telerik:RadComboBox>
+                </td>
+                <td class="MyLable"></td>               
+                <td class="MyContent"></td>               
+            </tr>
+            
                </table>
     </fieldset>
     <asp:HiddenField ID="hfInternalLimit" runat="server" />

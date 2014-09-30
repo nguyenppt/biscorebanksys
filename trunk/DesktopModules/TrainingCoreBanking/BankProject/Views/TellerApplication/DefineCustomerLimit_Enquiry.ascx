@@ -91,6 +91,7 @@
             <columns>
                 <telerik:GridBoundColumn HeaderText="MainLimit ID" DataField="MainLimitID" />
                 <telerik:GridBoundColumn HeaderText="SubLimit ID" DataField="SubLimitID" />
+                <telerik:GridBoundColumn HeaderText="Product" DataField="Product" />
                 <telerik:GridBoundColumn HeaderText="Customer Name" DataField="CustomerName" />
                 <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" ItemStyle-horizontalAlign="center"  HeaderStyle-horizontalAlign="center" />
                 <telerik:GridBoundColumn HeaderText="InternalLimitAmt" DataField="InternalLimitAmt"  headerStyle-HorizontalAlign="right"
