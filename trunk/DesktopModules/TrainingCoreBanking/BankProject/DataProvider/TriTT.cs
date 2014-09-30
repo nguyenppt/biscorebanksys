@@ -265,6 +265,13 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_Load_Customer_Limit", CustomerLimitID);
         }
+        public static DataSet B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(string MainLimitID,string CustomerID)
+        {
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists", MainLimitID,CustomerID);
+            //if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            //    return ds.Tables[0].Rows[0]["CustomerID"].ToString();
+            //else return "";
+        }
         public static void B_CUSTOMER_LIMIT_SUB_Insert_Update(string MainLimitID,string SubLimitID, string CustomerID,string SubCommitmentType, string STTSub, string mode, string CollateralTypeCode
             , string CollateralTypeName, string CollateralCode, string CollateralName, string CollReqdAmt, string CollReqdPct, string UptoPeriod, string PeriodAmt
             , string PeriodPct, decimal MaxSecured, decimal MaxUnSecured, decimal MaxTotal, string OtherSecured, string CollateralRight, string AmtSecured
@@ -308,6 +315,14 @@ namespace BankProject.DataProvider
         public static DataSet B_CUSTOMER_LIMIT_SUB_Load_Product()
         {
             return sqldata.ndkExecuteDataset("B_BRPODCATEGORY_GetAll_IdOver200");
+        }
+        public static string B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit(string MainLimitID)
+        {
+            if (sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit", MainLimitID).Tables[0].Rows.Count > 0)
+            {
+                return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit", MainLimitID).Tables[0].Rows[0]["TotalInternalLimitAmt"].ToString();
+            }
+            else return "";
         }
         #endregion
         #region INPUT CUSTOMER_RIGHT_Load_SubLimitID
