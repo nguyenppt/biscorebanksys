@@ -90,8 +90,6 @@
                                            HeaderStyle-HorizontalAlign="center"/>
                 <telerik:GridBoundColumn  HeaderText="Amount Deposited" DataField="AmountDeposited"  ItemStyle-HorizontalAlign="Right" 
                                            HeaderStyle-HorizontalAlign="right" HeaderStyle-Width="170px"/>
-                <telerik:GridBoundColumn  HeaderText="Status" DataField="Status"  HeaderStyle-Width="50px"    HeaderStyle-HorizontalAlign="center"
-                     ItemStyle-HorizontalAlign="center"/>
                 <telerik:GridTemplateColumn>
                     <ItemStyle width="25" />
                     <ItemTemplate>
