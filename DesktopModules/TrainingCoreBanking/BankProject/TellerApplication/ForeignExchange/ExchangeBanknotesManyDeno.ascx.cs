@@ -54,7 +54,7 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                 cboDebitAccount.SelectedValue = dr["DebitAccount"].ToString();
                 if (dr["DebitAmount"] != DBNull.Value)
                     txtDebitAmount.Value = Convert.ToDouble(dr["DebitAmount"]);
-                txtNarrative.Text = dr["Narrative"].ToString();
+                ((BankProject.Controls.MultiNarrative)MultiNarratives).setText(dr["Narrative"].ToString(), true);
                 if (dr["ValueDate"] != DBNull.Value)
                     txtValueDate.SelectedDate = Convert.ToDateTime(dr["ValueDate"]);
                 //
@@ -79,15 +79,14 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                     {
                         litDenominations.Text += "<tr>"
                                                     + "<td class=\"labelDisabled\" style=\"font-weight:bold; text-align:right; padding-right:5px; padding-bottom:5px;\">" + dr["DebitCurrency"] + "</td>"
-                                                    + "<td style=\"padding-bottom:5px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrNum[i].Trim() + "\" disabled=\"disabled\"></td>"
-                                                    + "<td style=\"padding-bottom:5px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrUnit[i].Trim() + "\" disabled=\"disabled\"></td>"
-                                                    + "<td style=\"padding-bottom:5px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrRate[i].Trim() + "\" disabled=\"disabled\"></td>"
+                                                    + "<td style=\"padding-bottom:5px;\"><span class=\"riSingle RadInput RadInput_Default\" style=\"width:80px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrNum[i].Trim() + "\" readonly readonly class=\"riTextBox riDisabled\"></span></td>"
+                                                    + "<td style=\"padding-bottom:5px;\"><span class=\"riSingle RadInput RadInput_Default\" style=\"width:80px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrUnit[i].Trim() + "\" readonly readonly class=\"riTextBox riDisabled\"></span></td>"
+                                                    + "<td style=\"padding-bottom:5px;\"><span class=\"riSingle RadInput RadInput_Default\" style=\"width:80px;\"><input type=\"text\" style=\"width:80px;\" value=\"" + arrRate[i].Trim() + "\" readonly readonly class=\"riTextBox riDisabled\"></span></td>"
                                                     + "<td style=\"padding-bottom:5px;\">" + (Convert.ToInt64(arrNum[i]) * Convert.ToInt64(arrUnit[i]) * Convert.ToInt64(arrRate[i])) + "</td>"
                                                     + "<td style=\"padding-bottom:5px;\"></td>"
                                                 + "</tr>";
                     }
                 }
-                //
                 bc.Commont.SetTatusFormControls(this.Controls, false);
                 //
                 if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
@@ -131,7 +130,7 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                             DateOfIsssue = txtDateOfIsssue.SelectedDate.Value.ToString("yyyyMMdd");
                         //
                         bd.Teller.ExchangeBanknotesManyDenoUpdate("new", txtId.Text, txtCustomerName.Text, txtAddress.Text, txtPassportNo.Text, DateOfIsssue, txtPlaceOfIss.Text, txtPhoneNo.Text,
-                            txtTellerId.Text, cboDebitCurrency.SelectedValue, cboDebitAccount.SelectedValue, txtDebitAmount.Value, txtNarrative.Text, txtValueDate.SelectedDate,
+                            txtTellerId.Text, cboDebitCurrency.SelectedValue, cboDebitAccount.SelectedValue, txtDebitAmount.Value, ((BankProject.Controls.MultiNarrative)MultiNarratives).getText(), txtValueDate.SelectedDate,
                             txtCrTellerId.Text, cboCreditAccount.SelectedValue, txtExchangeRate.Value, txtAmountPaid.Value, txtDenomination_Num.Text, txtDenomination_Unit.Text, txtDenomination_ExchangeRate.Text, this.UserInfo.Username);
                         bc.Commont.SetTatusFormControls(this.Controls, false);
                         bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !", "Default.aspx?TabId=" + TabId);
