@@ -201,25 +201,7 @@
         <legend>
             <div style="font-weight:bold; text-transform:uppercase">Orther Details</div>
         </legend>
-           <table width="100%" cellpading="0" cellspacing="0">
-            <tr>
-                <td class="MyLable">Fixed / Variable:</td>
-                <td class="MyContent" width="370">
-                     <telerik:RadComboBox ID="rcbFandA" runat="server"  width="150"
-                         AllowCustomText="false" MarkFirstMatch="true"  > 
-                        <ExpandAnimation Type="none" />
-                        <CollapseAnimation Type="None" />
-                        <Items>
-                            <telerik:RadComboBoxItem Value="Fixed" Text="Fixed" /> 
-                            <telerik:RadComboBoxItem Value="Variable" Text="Variable" />                          
-                        </Items>
-                        </telerik:RadComboBox>
-                </td>
-                <td class="MyLable"></td>               
-                <td class="MyContent"></td>               
-            </tr>
-            
-               </table>
+           
         <table width="100%" cellpading="0" cellspacing="0">
              
             <tr>
@@ -338,6 +320,24 @@
                 <td class="MyContent">
                     <asp:Label ID="lblPeriodPct" runat="server" />
                 </td>
+            </tr>
+               </table>
+        <table width="100%" cellpading="0" cellspacing="0">
+            <tr style="visibility:hidden;">
+                <td class="MyLable">Fixed / Variable:</td>
+                <td class="MyContent" width="370">
+                     <telerik:RadComboBox ID="rcbFandA" runat="server"  width="150"
+                         AllowCustomText="false" MarkFirstMatch="true"  > 
+                        <ExpandAnimation Type="none" />
+                        <CollapseAnimation Type="None" />
+                        <Items>
+                            <telerik:RadComboBoxItem Value="Fixed" Text="Fixed" /> 
+                            <telerik:RadComboBoxItem Value="Variable" Text="Variable" />                          
+                        </Items>
+                        </telerik:RadComboBox>
+                </td>
+                <td class="MyLable"></td>               
+                <td class="MyContent"></td>               
             </tr>
                </table>
     </fieldset>

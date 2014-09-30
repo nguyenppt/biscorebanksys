@@ -211,15 +211,6 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadNumericTextBox tbOriginalLimit;
         
         /// <summary>
-        /// rcbFandA control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbFandA;
-        
-        /// <summary>
         /// tbMaxSecured control.
         /// </summary>
         /// <remarks>
@@ -362,6 +353,15 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPeriodPct;
+        
+        /// <summary>
+        /// rcbFandA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbFandA;
         
         /// <summary>
         /// hfInternalLimit control.

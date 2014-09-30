@@ -144,6 +144,21 @@ namespace BankProject.Views.TellerApplication
                         // check Internal amount and Maximum Total
                         if ((tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0 )<( tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
                         { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
+                        if (TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID,CustomerID).Tables != null &&
+                            TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID, CustomerID).Tables[0].Rows.Count>0 )
+                        { 
+                            var ds = TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID, CustomerID).Tables[0];
+                            if (ds.Rows[0]["CommitmentType"].ToString() == "7000")
+                            {
+                                ShowMsgBox("You had already created a Revoling Global Limit. You can not create additional one.");
+                                return;
+                            }
+                            else 
+                            {
+                                ShowMsgBox("You had already created a Non-Revolving Global Limit. You can not create additional one.");
+                                return;
+                            }
+                        }
                         if ( TriTT.B_CUSTOMER_LIMIT_Check_CustomerID(CustomerID) != "")
                         { 
                             TriTT.B_CUSTOMER_LIMIT_Insert_Update(LimitID, CustomerID, HanMucCha, rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.Text.Replace(rcbCountry.SelectedValue + " - ", "")

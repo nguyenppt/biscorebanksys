@@ -316,7 +316,7 @@ namespace BankProject.Views.TellerApplication
                         //approval user
                         if (isApprovalRole)
                         {
-                            UpdateStatusAuthorizeAction(false, true, false, false, false, false);
+                            UpdateStatusAuthorizeAction(false, true, false, false, false, true);
                         }
                         else//normal user
                         {
@@ -749,6 +749,11 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btnSearch").Enabled = allowSearch;
             RadToolBar1.FindItemByValue("btnPrint").Enabled = allowPrint;
 
+
+            if (isApprovalRole)
+            {
+                RadToolBar1.FindItemByValue("btnPrint").Enabled = true;
+            }
             SetEnabledControls(allowCommit);
             if (isAmendPage && allowCommit)
             {

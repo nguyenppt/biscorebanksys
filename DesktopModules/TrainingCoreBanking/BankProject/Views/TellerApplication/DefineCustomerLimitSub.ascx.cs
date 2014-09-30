@@ -354,7 +354,7 @@ namespace BankProject.Views.TellerApplication
                 tbMaxTotal.Text = ds1.Tables[0].Rows[0]["MaxTotal"].ToString();
                 lblOtherSecured.Text = ds1.Tables[0].Rows[0]["OtherSecured"].ToString();
                 lblCollateralRight.Text = ds1.Tables[0].Rows[0]["CollateralRight"].ToString();
-                lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
+                //lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
                 lblAvailableAmt.Text = ds1.Tables[0].Rows[0]["AvailableAmt"].ToString();
                 lblTotalOutstand.Text = ds1.Tables[0].Rows[0]["TotalOutstand"].ToString();
                 LoadToolBar_AllFalse();
@@ -366,7 +366,6 @@ namespace BankProject.Views.TellerApplication
                 if (ds2.Tables != null && ds2.Tables.Count > 0 && ds2.Tables[0].Rows.Count > 0)
                 {
                     lblAmtSecured.Text = ds2.Tables[0].Rows[0]["SecuredAmount"].ToString();
-                    lblOnlineLimit.Text = tbIntLimitAmt.Text;
                 }
                 DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID);
                 if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
@@ -374,6 +373,8 @@ namespace BankProject.Views.TellerApplication
                     lblAvailableAmt.Text = ds3.Tables[0].Rows[0]["AvailableAmount"].ToString();
                     lblTotalOutstand.Text = ds3.Tables[0].Rows[0]["TotalOutStand"].ToString();
                 }
+                lblOnlineLimit.Text = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit(SubLimitID.Substring(0,7));//load theo yeu cau cua nghiep vu 
+
             }
 
         }
