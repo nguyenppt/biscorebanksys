@@ -1068,10 +1068,10 @@
     function OnClientPrint() {
 
         
-        var r1 = confirm("Do you want to print Principle Payment schedule?");
-        if (r1 == true) {
-            PrintVon();
-        }
+        //var r1 = confirm("Do you want to print Principle Payment schedule?");
+        //if (r1 == true) {
+        //    PrintVon();
+        //}
       
         var r2 = confirm("Do you want to print Interesting Payment schedule?");
         if (r2 == true) {
@@ -1093,12 +1093,14 @@
 
     function RadToolBar1_OnClientButtonClicking(sender, args) {
 
-        var button = args.get_item();
-        if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
-            clickCalledAfterRadconfirm = true;
-            args.set_cancel(true);
-            radconfirm("Do you want to print Principle Payment schedule?", PrintVon, 340, 150, null, 'Download');
-        }
+        //var button = args.get_item();
+        //if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
+        //    clickCalledAfterRadconfirm = true;
+        //    args.set_cancel(true);
+        //    //radconfirm("Do you want to print Principle Payment schedule?", PrintVon, 340, 150, null, 'Download');
+            
+
+        //}
     }
 
     function PrintVon(result) {

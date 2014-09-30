@@ -13,6 +13,7 @@ using BankProject.DBRespository;
 using BankProject.DBContext;
 using BankProject.Common;
 using BankProject.Business;
+using System.Globalization;
 
 
 
@@ -116,7 +117,7 @@ namespace BankProject.Views.TellerApplication
                     BindField2Data(ref normalLoanEntryM);
                     loanBusiness.Entity = normalLoanEntryM;
                     loanBusiness.authorizeProcess(this.UserId);
-
+                    //UpdateSchedulePaymentToDB();
                     this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
                     break;
 
@@ -129,9 +130,9 @@ namespace BankProject.Views.TellerApplication
                 case "search":
                     this.Response.Redirect(EditUrl("preview"));
                     break;
-                //case "print":
-                //    PrintLoanDocument();
-                //    break;
+                case "print":
+                    PrintLoanDocument2();
+                    break;
                 default:
                     RadToolBar1.FindItemByValue("btnCommit").Enabled = true;
                     break;
@@ -786,7 +787,8 @@ namespace BankProject.Views.TellerApplication
             Aspose.Words.License license = new Aspose.Words.License();
             license.SetLicense("Aspose.Words.lic");
             //Open template
-            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraLai.docx");
+            //string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraLai.docx");
+            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraNoHopDongVay.docx");
             //Open the template document
             Aspose.Words.Document document = new Aspose.Words.Document(docPath);
             //Execute the mail merge.
@@ -796,15 +798,101 @@ namespace BankProject.Views.TellerApplication
             document.MailMerge.ExecuteWithRegions(ds.Tables["Items"]);
             document.MailMerge.ExecuteWithRegions(ds.Tables["DateInfor"]);
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            document.Save("LichTraLaiHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+            document.Save("LichTraNoHDTinDung_" + tbNewNormalLoan.Text + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
 
             //doc.Save("RegisterDocumentaryCollectionMT410_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
-        
+        private void UpdateSchedulePaymentToDB()
+        {
+            UpdateDataToPriciplePaymentSchedule();
+            UpdateDataToInterestPaymentSchedule();
+        }
 
+        private void UpdateDataToPriciplePaymentSchedule()
+        {
+            NormalLoanPrinciplePaymentSchedule facde = new NormalLoanPrinciplePaymentSchedule();
+            var ds = PrepareData2Print();
+            DataTable dtInfor = ds.Tables["Info"];
+            DataTable dtItems = ds.Tables["Items"];
 
+            if (dtInfor == null || dtItems == null)
+            {
+                return;
+            }
+            facde.DeleteAllScheduleOfContract(dtInfor.Rows[0]["Code"].ToString());
 
+            foreach (DataRow it in dtItems.Rows)
+            {
+                B_NORMALLOAN_PRINCIPLE_PAYMENT_SCHEDULE princleSchedue = new B_NORMALLOAN_PRINCIPLE_PAYMENT_SCHEDULE();
+                princleSchedue.Code = dtInfor.Rows[0]["Code"].ToString();
+                princleSchedue.CustomerID = dtInfor.Rows[0]["CustomerID"].ToString();
+                princleSchedue.LoanAmount = decimal.Parse((dtInfor.Rows[0]["LoanAmount"].ToString().Replace(",", "")));
+                if (!String.IsNullOrEmpty(dtInfor.Rows[0]["Drawdown"].ToString()))
+                    princleSchedue.Drawdown = DateTime.ParseExact(dtInfor.Rows[0]["Drawdown"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                princleSchedue.InterestKey = dtInfor.Rows[0]["InterestKey"].ToString();
+                princleSchedue.Freq = dtInfor.Rows[0]["Freq"].ToString();
+
+                if (!String.IsNullOrEmpty(it["ky"].ToString()))
+                    princleSchedue.Period = long.Parse(it["ky"].ToString());
+                if (!String.IsNullOrEmpty(it["ngaytra"].ToString()))
+                    princleSchedue.MaturityDate = DateTime.ParseExact(it["ngaytra"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                if (!String.IsNullOrEmpty(it["sotientra"].ToString()))
+                    princleSchedue.AmountOfCapitalPaid = decimal.Parse((it["sotientra"].ToString().Replace(",", "")));
+                if (!String.IsNullOrEmpty(it["duno"].ToString()))
+                    princleSchedue.OutstandingLoanAmount = decimal.Parse((it["duno"].ToString().Replace(",", "")));
+                princleSchedue.CreateBy = this.UserId;
+                princleSchedue.CreateDate = facde.GetSystemDatetime();
+
+                facde.Add(princleSchedue);
+
+            }
+            facde.Commit();
+        }
+
+        private void UpdateDataToInterestPaymentSchedule()
+        {
+            NormalLoanInterestPaymentSchedule facde = new NormalLoanInterestPaymentSchedule();
+            var ds = PrepareInterestDate2Print();
+            DataTable dtInfor = ds.Tables["Info"];
+            DataTable dtItems = ds.Tables["Items"];
+
+            if (dtInfor == null || dtItems == null)
+            {
+                return;
+            }
+
+            facde.DeleteAllScheduleOfContract(dtInfor.Rows[0]["Code"].ToString());
+
+            foreach (DataRow it in dtItems.Rows)
+            {
+                B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE interestSchedule = new B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE();
+                interestSchedule.Code = dtInfor.Rows[0]["Code"].ToString();
+                interestSchedule.CustomerID = dtInfor.Rows[0]["CustomerID"].ToString();
+                interestSchedule.LoanAmount = decimal.Parse((dtInfor.Rows[0]["LoanAmount"].ToString().Replace(",", "")));
+                if (!String.IsNullOrEmpty(dtInfor.Rows[0]["Drawdown"].ToString()))
+                    interestSchedule.Drawdown = DateTime.ParseExact(dtInfor.Rows[0]["Drawdown"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                interestSchedule.InterestKey = dtInfor.Rows[0]["InterestKey"].ToString();
+                interestSchedule.Freq = dtInfor.Rows[0]["Freq"].ToString();
+                if (!String.IsNullOrEmpty(dtInfor.Rows[0]["interest"].ToString()))
+                    interestSchedule.Interest = long.Parse(dtInfor.Rows[0]["interest"].ToString());
+
+                interestSchedule.Period = long.Parse(it["ky"].ToString());
+                if (!String.IsNullOrEmpty(it["ngaytra"].ToString()))
+                    interestSchedule.MaturityDate = DateTime.ParseExact(it["ngaytra"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                if (!String.IsNullOrEmpty(it["sotientra"].ToString()))
+                    interestSchedule.InterestedAmount = decimal.Parse((it["sotientra"].ToString().Replace(",", "")));
+                if (!String.IsNullOrEmpty(it["duno"].ToString()))
+                    interestSchedule.OutstandingLoanAmount = decimal.Parse((it["duno"].ToString().Replace(",", "")));
+                interestSchedule.CreateBy = this.UserId;
+                interestSchedule.CreateDate = facde.GetSystemDatetime();
+
+                facde.Add(interestSchedule);
+
+            }
+
+            facde.Commit();
+        }
         private DataSet PrepareInterestDate2Print()
         {
             if (normalLoanEntryM == null)
@@ -819,7 +907,7 @@ namespace BankProject.Views.TellerApplication
             DataSet ds = new DataSet();
 
             NewLoanControlRepository facade = new NewLoanControlRepository();
-            BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "I").FirstOrDefault();
+            BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "P").FirstOrDefault();//All get Priciple date
 
             //condition check;
             bool canProcessInterest = true;
@@ -894,27 +982,32 @@ namespace BankProject.Views.TellerApplication
             DateTime beginDate = startIdentifyIntDate;
             DateTime previoudDate = drawdowndate;
             DataTable dtItems = new DataTable("Items");
-            dtItems.Columns.Add("ky");
-            dtItems.Columns.Add("ngaytra");
-            dtItems.Columns.Add("sotientra");
-            dtItems.Columns.Add("duno");
+            dtItems.Columns.Add("Perios");
+            dtItems.Columns.Add("DueDate");
+            dtItems.Columns.Add("Principle");
+            dtItems.Columns.Add("InterestAmount");
+            dtItems.Columns.Add("PrinOS");
 
             Int32 moneyPercicle = (Int32)(loanAmount / numberOfCircle);
+            decimal pricipleAmount = 0;
             decimal remainLoanAmount = loanAmount;
             decimal interestAmount = 0;
+            var schType = "I";//Intallment, N: Non-redemption
+            schType = String.IsNullOrEmpty(normalLoanEntryM.RepaySchType) ? "I" : normalLoanEntryM.RepaySchType;
 
             for (int i = 0; i < numberOfCircle; i++)
             {
 
                 interestAmount = ((beginDate.Subtract(previoudDate).Days * ((interestValued / 36000) * remainLoanAmount)));
 
-                if (rateType.Equals("2"))
+                if (schType.Equals("N"))
                 {
-                    //do nothing;
+                    pricipleAmount = 0;
                 }
                 else
                 {
                     remainLoanAmount = remainLoanAmount - moneyPercicle;
+                    pricipleAmount = moneyPercicle;
                 }
 
                 if (remainLoanAmount < 0)
@@ -928,7 +1021,7 @@ namespace BankProject.Views.TellerApplication
                     {
                         moneyPercicle = (int)(moneyPercicle + remainLoanAmount);
                         interestAmount += ((beginDate.Subtract(previoudDate).Days * ((interestValued / 36000) * remainLoanAmount)));
-
+                        pricipleAmount = remainLoanAmount;
                         remainLoanAmount = 0;
                     }
 
@@ -939,10 +1032,11 @@ namespace BankProject.Views.TellerApplication
                 }
 
                 var row = dtItems.NewRow();
-                row["ky"] = i + 1;
-                row["ngaytra"] = beginDate.ToString("dd/MM/yyyy");
-                row["sotientra"] = interestAmount.ToString("#,###");
-                row["duno"] = remainLoanAmount == 0 ? "0" : (remainLoanAmount.ToString("#,###"));
+                row["Perios"] = i + 1;
+                row["DueDate"] = beginDate.ToString("dd/MM/yyyy");
+                row["Principle"] = pricipleAmount == 0? "0": pricipleAmount.ToString("#,###");
+                row["InterestAmount"] = interestAmount.ToString("#,###");
+                row["PrinOS"] = remainLoanAmount == 0 ? "0" : (remainLoanAmount.ToString("#,###"));
                 dtItems.Rows.Add(row);
                 previoudDate = beginDate;
                 beginDate = beginDate.AddMonths(circleDuration);
@@ -956,6 +1050,7 @@ namespace BankProject.Views.TellerApplication
             DataTable infoTb = new DataTable("Info");
             infoTb.Columns.Add("Code");
             infoTb.Columns.Add("Customer");
+            infoTb.Columns.Add("CustomerID");
             infoTb.Columns.Add("LoanAmount");
             infoTb.Columns.Add("Drawdown");
             infoTb.Columns.Add("InterestKey");
@@ -965,6 +1060,7 @@ namespace BankProject.Views.TellerApplication
             var row = infoTb.NewRow();
             row["Code"] = normalLoanEntryM.Code;
             row["Customer"] = normalLoanEntryM.CustomerName;
+            row["CustomerID"] = normalLoanEntryM.CustomerID;
             row["LoanAmount"] = ((decimal)normalLoanEntryM.LoanAmount).ToString("#,###");
             row["Drawdown"] = (normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy"));
             row["InterestKey"] = (int)interestedKey + " Tháng";
@@ -1066,6 +1162,7 @@ namespace BankProject.Views.TellerApplication
             var infoTb = new DataTable("Info");
             infoTb.Columns.Add("Code");
             infoTb.Columns.Add("Customer");
+            infoTb.Columns.Add("CustomerID");
             infoTb.Columns.Add("LoanAmount");
             infoTb.Columns.Add("Drawdown");
             infoTb.Columns.Add("InterestKey");
@@ -1074,6 +1171,7 @@ namespace BankProject.Views.TellerApplication
             var row = infoTb.NewRow();
             row["Code"] = normalLoanEntryM.Code;
             row["Customer"] = normalLoanEntryM.CustomerName;
+            row["CustomerID"] = normalLoanEntryM.CustomerID;
             row["LoanAmount"] = ((decimal)normalLoanEntryM.LoanAmount).ToString("#,###");
             row["Drawdown"] = (normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy"));
             row["InterestKey"] = (int)numberofday / 30 + " Tháng";
@@ -1160,125 +1258,11 @@ namespace BankProject.Views.TellerApplication
 
         }
 
-
-        private void PrepareData2Print(ref Aspose.Cells.Worksheet worksheet)
-        {
-
-            if (normalLoanEntryM == null)
-            {
-                normalLoanEntryM = new BNEWNORMALLOAN();
-                normalLoanEntryM.Code = tbNewNormalLoan.Text;
-                loanBusiness.loadEntity(ref normalLoanEntryM);
-            }
-            if (normalLoanEntryM == null)
-                return;
-
-            NewLoanControlRepository facade = new NewLoanControlRepository();
-            BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "P").FirstOrDefault();
-
-            DateTime startDate = (DateTime)normalLoanEntryM.ValueDate;
-            DateTime endDate = (DateTime)normalLoanEntryM.MaturityDate;
-            int numberofday = (endDate).Subtract(startDate).Days;
-            decimal money = (decimal)normalLoanEntryM.LoanAmount;
-            int cicleMonth = 7;
-            int noOfCicle = 0;
-            int moneyPercicle = 0;
-
-            if (it == null)
-            {
-                return;
-            }
-
-            int index = 1;
-            worksheet.AutoFitColumn(1);
-            worksheet.Cells["A" + index++].PutValue("LỊCH TRẢ NỢ HỢP ĐỒNG TÍN DỤNG SỐ " + normalLoanEntryM.Code);
-            worksheet.Cells["B" + index++].PutValue("Ngày: " + DateTime.Now.ToString("dd/MM/yyyy"));
-            index++;
-            worksheet.Cells["A" + index++].PutValue("Khách hàng: Ông/Bà " + normalLoanEntryM.CustomerName);
-            worksheet.Cells["A" + index++].PutValue("Số tiền vay: " + ((decimal)normalLoanEntryM.LoanAmount).ToString("#,###"));
-            worksheet.Cells["A" + index++].PutValue("Ngày rút tiền:  " + (normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy")));
-            worksheet.Cells["A" + index++].PutValue("Thời hạn: " + (int)numberofday / 30 + " Tháng");
-            if (it.Freq.Equals("M"))
-            {
-                cicleMonth = 1;
-                worksheet.Cells["A" + index++].PutValue("Định kỳ trả nợ: 1 Tháng");
-            }
-            else if (it.Freq.Equals("Q"))
-            {
-                cicleMonth = 3;
-                worksheet.Cells["A" + index++].PutValue("Định kỳ trả nợ: 1 Quý");
-            }
-            else if (it.Freq.Equals("Y"))
-            {
-                cicleMonth = 12;
-                worksheet.Cells["A" + index++].PutValue("Định kỳ trả nợ: 1 Năm");
-            }
-            index++;
-            worksheet.Cells["A" + index].PutValue("Kỳ");
-            worksheet.Cells["B" + index].PutValue("Ngày trả");
-            worksheet.Cells["C" + index].PutValue("Số tiền phải trả");
-            worksheet.Cells["D" + index].PutValue("Dư nợ còn lại");
-
-            index++;
-
-            //if (numberofday % (30*cicleMonth) == 0)
-            //{
-            noOfCicle = numberofday / (30 * cicleMonth);
-            //}
-            //else
-            //{
-            //    noOfCicle = (numberofday / cicleMonth) + 1;
-            //}
-            if (noOfCicle > 0)
-            {
-                moneyPercicle = (int)(money / noOfCicle);
-                DateTime plandate = startDate;
-                for (int i = 0; i < noOfCicle; i++)
-                {
-                    plandate = plandate.AddMonths(cicleMonth);
-                    money = money - moneyPercicle;
-                    if (money < 0)
-                    {
-                        money = 0;
-                    }
-
-                    if (i == noOfCicle - 1)
-                    {
-                        if (money > 0)
-                        {
-                            moneyPercicle = (int)(moneyPercicle + money);
-                            money = 0;
-                        }
-
-                        if (plandate > endDate)
-                        {
-                            plandate = endDate;
-                        }
-                    }
-                    worksheet.Cells["A" + index].PutValue(i + 1);
-                    worksheet.Cells["B" + index].PutValue(plandate.ToString("dd/MM/yyyy"));
-                    worksheet.Cells["C" + index].PutValue(moneyPercicle.ToString("#,###"));
-                    worksheet.Cells["D" + index].PutValue(money.ToString("#,###"));
-
-                    index++;
-                }
-            }
-            index++;
-            worksheet.Cells["A" + index].PutValue("Tp.HCM, Ngày " + DateTime.Now.ToString("dd") + " tháng " + DateTime.Now.ToString("MM") + " năm " + DateTime.Now.ToString("yyyy"));
-            index++;
-            worksheet.Cells["A" + index].PutValue("Bên vay");
-            worksheet.Cells["D" + index].PutValue("Bên cho vay");
-
-        }
-
         #endregion
 
-        protected void tbBusDayDef_TextChanged(object sender, EventArgs e)
-        {
 
-        }
 
-        
+
 
     }
 }
