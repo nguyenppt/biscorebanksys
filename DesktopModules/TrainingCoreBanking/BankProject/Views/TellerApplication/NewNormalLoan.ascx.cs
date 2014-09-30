@@ -1017,11 +1017,17 @@ namespace BankProject.Views.TellerApplication
 
                 if (i == numberOfCircle - 1)
                 {
+                    if (schType.Equals("N"))
+                    {
+                        pricipleAmount = remainLoanAmount;
+                        remainLoanAmount = 0;
+                    }
+
                     if (remainLoanAmount > 0)
                     {
                         moneyPercicle = (int)(moneyPercicle + remainLoanAmount);
                         interestAmount += ((beginDate.Subtract(previoudDate).Days * ((interestValued / 36000) * remainLoanAmount)));
-                        pricipleAmount = remainLoanAmount;
+                        pricipleAmount = moneyPercicle;
                         remainLoanAmount = 0;
                     }
 
