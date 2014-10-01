@@ -377,7 +377,7 @@ namespace BankProject.Views.TellerApplication
                 {
                     lblAmtSecured.Text = ds2.Tables[0].Rows[0]["SecuredAmount"].ToString();
                 }
-                DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0,7));
+                DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0,7), "VND");
                 if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
                 {
                     lblAvailableAmt.Text = ds3.Tables[0].Rows[0]["Avaiable_Amt"].ToString();
