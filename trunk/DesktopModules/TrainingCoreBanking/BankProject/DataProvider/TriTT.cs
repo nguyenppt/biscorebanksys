@@ -308,9 +308,9 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_SecuredAmt", ProductLimitID);
         }
-        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(string ProductLimitID)
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(string CustomerID)
         {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt", ProductLimitID);
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt", CustomerID);
         }
         public static DataSet B_CUSTOMER_LIMIT_SUB_Load_Product()
         {
@@ -323,6 +323,10 @@ namespace BankProject.DataProvider
                 return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit", MainLimitID).Tables[0].Rows[0]["TotalInternalLimitAmt"].ToString();
             }
             else return "";
+        }
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType)
+        {
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType);
         }
         #endregion
         #region INPUT CUSTOMER_RIGHT_Load_SubLimitID
