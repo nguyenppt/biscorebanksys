@@ -117,7 +117,7 @@ namespace BankProject.Views.TellerApplication
                     BindField2Data(ref normalLoanEntryM);
                     loanBusiness.Entity = normalLoanEntryM;
                     loanBusiness.authorizeProcess(this.UserId);
-                    //UpdateSchedulePaymentToDB();
+                    UpdateSchedulePaymentToDB();
                     this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
                     break;
 
@@ -459,8 +459,9 @@ namespace BankProject.Views.TellerApplication
         private void LoadCustomerCombobox(string SelectedCus)
         {
             BCustomerRepository facade1 = new BCustomerRepository();
-            var db = facade1.getCustomerList("AUT").ToList();
-            Util.LoadData2RadCombo(rcbCustomerID, db, "CustomerID", "GBFullName", "-Select Customer Code-");
+            var db = facade1.getCustomerList("AUT");
+            List<BCUSTOMER_INFO> hh = db.ToList<BCUSTOMER_INFO>();
+            Util.LoadData2RadCombo(rcbCustomerID, hh, "CustomerID", "ID_FullName", "-Select Customer Code-");
 
 
             if (!String.IsNullOrEmpty(SelectedCus))
@@ -811,53 +812,12 @@ namespace BankProject.Views.TellerApplication
         private void UpdateSchedulePaymentToDB()
         {
             UpdateDataToPriciplePaymentSchedule();
-            UpdateDataToInterestPaymentSchedule();
+           
         }
 
         private void UpdateDataToPriciplePaymentSchedule()
         {
-            NormalLoanPrinciplePaymentSchedule facde = new NormalLoanPrinciplePaymentSchedule();
-            var ds = PrepareData2Print();
-            DataTable dtInfor = ds.Tables["Info"];
-            DataTable dtItems = ds.Tables["Items"];
-
-            if (dtInfor == null || dtItems == null)
-            {
-                return;
-            }
-            facde.DeleteAllScheduleOfContract(dtInfor.Rows[0]["Code"].ToString());
-
-            foreach (DataRow it in dtItems.Rows)
-            {
-                B_NORMALLOAN_PRINCIPLE_PAYMENT_SCHEDULE princleSchedue = new B_NORMALLOAN_PRINCIPLE_PAYMENT_SCHEDULE();
-                princleSchedue.Code = dtInfor.Rows[0]["Code"].ToString();
-                princleSchedue.CustomerID = dtInfor.Rows[0]["CustomerID"].ToString();
-                princleSchedue.LoanAmount = decimal.Parse((dtInfor.Rows[0]["LoanAmount"].ToString().Replace(",", "")));
-                if (!String.IsNullOrEmpty(dtInfor.Rows[0]["Drawdown"].ToString()))
-                    princleSchedue.Drawdown = DateTime.ParseExact(dtInfor.Rows[0]["Drawdown"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                princleSchedue.InterestKey = dtInfor.Rows[0]["InterestKey"].ToString();
-                princleSchedue.Freq = dtInfor.Rows[0]["Freq"].ToString();
-
-                if (!String.IsNullOrEmpty(it["ky"].ToString()))
-                    princleSchedue.Period = long.Parse(it["ky"].ToString());
-                if (!String.IsNullOrEmpty(it["ngaytra"].ToString()))
-                    princleSchedue.MaturityDate = DateTime.ParseExact(it["ngaytra"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                if (!String.IsNullOrEmpty(it["sotientra"].ToString()))
-                    princleSchedue.AmountOfCapitalPaid = decimal.Parse((it["sotientra"].ToString().Replace(",", "")));
-                if (!String.IsNullOrEmpty(it["duno"].ToString()))
-                    princleSchedue.OutstandingLoanAmount = decimal.Parse((it["duno"].ToString().Replace(",", "")));
-                princleSchedue.CreateBy = this.UserId;
-                princleSchedue.CreateDate = facde.GetSystemDatetime();
-
-                facde.Add(princleSchedue);
-
-            }
-            facde.Commit();
-        }
-
-        private void UpdateDataToInterestPaymentSchedule()
-        {
-            NormalLoanInterestPaymentSchedule facde = new NormalLoanInterestPaymentSchedule();
+            NormalLoanPaymentSchedule facde = new NormalLoanPaymentSchedule();
             var ds = PrepareInterestDate2Print();
             DataTable dtInfor = ds.Tables["Info"];
             DataTable dtItems = ds.Tables["Items"];
@@ -866,38 +826,40 @@ namespace BankProject.Views.TellerApplication
             {
                 return;
             }
-
             facde.DeleteAllScheduleOfContract(dtInfor.Rows[0]["Code"].ToString());
 
             foreach (DataRow it in dtItems.Rows)
             {
-                B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE interestSchedule = new B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE();
-                interestSchedule.Code = dtInfor.Rows[0]["Code"].ToString();
-                interestSchedule.CustomerID = dtInfor.Rows[0]["CustomerID"].ToString();
-                interestSchedule.LoanAmount = decimal.Parse((dtInfor.Rows[0]["LoanAmount"].ToString().Replace(",", "")));
+                B_NORMALLOAN_PAYMENT_SCHEDULE princleSchedue = new B_NORMALLOAN_PAYMENT_SCHEDULE();
+                princleSchedue.Code = dtInfor.Rows[0]["Code"].ToString();
+                princleSchedue.CustomerID = dtInfor.Rows[0]["CustomerID"].ToString();
+                princleSchedue.LoanAmount = decimal.Parse((dtInfor.Rows[0]["LoanAmount"].ToString().Replace(",", "")));
                 if (!String.IsNullOrEmpty(dtInfor.Rows[0]["Drawdown"].ToString()))
-                    interestSchedule.Drawdown = DateTime.ParseExact(dtInfor.Rows[0]["Drawdown"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                interestSchedule.InterestKey = dtInfor.Rows[0]["InterestKey"].ToString();
-                interestSchedule.Freq = dtInfor.Rows[0]["Freq"].ToString();
+                    princleSchedue.Drawdown = DateTime.ParseExact(dtInfor.Rows[0]["Drawdown"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                princleSchedue.InterestKey = dtInfor.Rows[0]["InterestKey"].ToString();
+                princleSchedue.Freq = dtInfor.Rows[0]["Freq"].ToString();
                 if (!String.IsNullOrEmpty(dtInfor.Rows[0]["interest"].ToString()))
-                    interestSchedule.Interest = long.Parse(dtInfor.Rows[0]["interest"].ToString());
+                princleSchedue.Interest = Int16.Parse(dtInfor.Rows[0]["interest"].ToString());
 
-                interestSchedule.Period = long.Parse(it["ky"].ToString());
-                if (!String.IsNullOrEmpty(it["ngaytra"].ToString()))
-                    interestSchedule.MaturityDate = DateTime.ParseExact(it["ngaytra"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                if (!String.IsNullOrEmpty(it["sotientra"].ToString()))
-                    interestSchedule.InterestedAmount = decimal.Parse((it["sotientra"].ToString().Replace(",", "")));
-                if (!String.IsNullOrEmpty(it["duno"].ToString()))
-                    interestSchedule.OutstandingLoanAmount = decimal.Parse((it["duno"].ToString().Replace(",", "")));
-                interestSchedule.CreateBy = this.UserId;
-                interestSchedule.CreateDate = facde.GetSystemDatetime();
-
-                facde.Add(interestSchedule);
+                if (!String.IsNullOrEmpty(it["Perios"].ToString()))
+                    princleSchedue.Period = long.Parse(it["Perios"].ToString());
+                if (!String.IsNullOrEmpty(it["DueDate"].ToString()))
+                    princleSchedue.DueDate = DateTime.ParseExact(it["DueDate"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                if (!String.IsNullOrEmpty(it["Principle"].ToString()))
+                    princleSchedue.PrincipalAmount = decimal.Parse((it["Principle"].ToString().Replace(",", "")));
+                if (!String.IsNullOrEmpty(it["PrinOS"].ToString()))
+                    princleSchedue.PrinOS = decimal.Parse((it["PrinOS"].ToString().Replace(",", "")));
+                if (!String.IsNullOrEmpty(it["InterestAmount"].ToString()))
+                    princleSchedue.InterestAmount = decimal.Parse((it["InterestAmount"].ToString().Replace(",", "")));
+                princleSchedue.CreateBy = this.UserId;
+                princleSchedue.CreateDate = facde.GetSystemDatetime();
+                facde.Add(princleSchedue);
 
             }
-
             facde.Commit();
         }
+
+        
         private DataSet PrepareInterestDate2Print()
         {
             if (normalLoanEntryM == null)
