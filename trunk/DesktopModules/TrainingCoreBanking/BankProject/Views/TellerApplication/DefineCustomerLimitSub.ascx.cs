@@ -377,14 +377,17 @@ namespace BankProject.Views.TellerApplication
                 {
                     lblAmtSecured.Text = ds2.Tables[0].Rows[0]["SecuredAmount"].ToString();
                 }
-                DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0,7), "VND");
+                DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0,7), "VND","AvailableAmt");
                 if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
                 {
                     lblAvailableAmt.Text = ds3.Tables[0].Rows[0]["Avaiable_Amt"].ToString();
-                    lblTotalOutstand.Text = ds3.Tables[0].Rows[0]["Outstanding_Loan_Amt"].ToString();
+                }
+                DataSet ds4 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0, 7), "VND", "OutstandingAmt");
+                if (ds4.Tables != null && ds4.Tables.Count > 0 && ds4.Tables[0].Rows.Count > 0)
+                {
+                    lblTotalOutstand.Text = ds4.Tables[0].Rows[0]["Outstanding_Loan_Amt"].ToString();
                 }
                 lblOnlineLimit.Text = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit(SubLimitID.Substring(0,7));//load theo yeu cau cua nghiep vu 
-
             }
 
         }
