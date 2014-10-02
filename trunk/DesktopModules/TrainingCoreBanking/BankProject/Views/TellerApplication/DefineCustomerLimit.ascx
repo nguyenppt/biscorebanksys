@@ -47,7 +47,7 @@
             <td class="MyLable" style="padding:5px 0px 5px 17px;">Customer ID:</td>
             <td class="MyContent" style="padding:5px 0px 5px 5px;">
                 <telerik:RadCombobox id="rcbCustomerID" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true"
-                    width="40%" height="150" OnClientSelectedIndexChanged="setID">
+                    width="40%" height="150" OnClientSelectedIndexChanged="setID" AutoPostBack="true" OnSelectedIndexChanged="rcbGlobalLimit_OnSelectedIndexChanged">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                                 <Items>                     
@@ -61,7 +61,7 @@
             <td class="MyLable" style="padding:5px 0 5px 17px;">Global Limit:</td>
             <td class="MyContent" style="padding:5px 0px 5px 5px;">
                 <telerik:RadCombobox id="rcbGlobalLimit" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" 
-                  width="40%"  OnClientSelectedIndexChanged="setID"  >
+                  width="40%"  OnClientSelectedIndexChanged="setID" AutoPostBack="true" OnSelectedIndexChanged="rcbGlobalLimit_OnSelectedIndexChanged" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                                 <Items>                     

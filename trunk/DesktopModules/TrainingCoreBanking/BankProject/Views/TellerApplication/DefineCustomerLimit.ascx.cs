@@ -31,99 +31,7 @@ namespace BankProject.Views.TellerApplication
                 LoadToolBar(true);
             }
         }
-        #region Properties
-        protected void FirstLoad()
-        {
-            LoadCountries();
-            LoadCurrencies();
-            rcbCurrency.SelectedValue = "";
-            rcbCurrency.Focus();
-            LoadCollateralType();
-            RdpApprovedDate.SelectedDate = DateTime.Now;
-            RdpOfferedUnit.SelectedDate = DateTime.Now;
-            RdpAvailableDate.SelectedDate = DateTime.Now;
-            RdpProposalDate.SelectedDate = DateTime.Now;
-            LoadCustomerID();
-        }
-        protected void LoadCountries()
-        {
-            rcbCountry.DataSource = DataProvider.TriTT.B_BCOUNTRY_GetAll();
-            rcbCountry.DataTextField = "TenTA";
-            rcbCountry.DataValueField = "MaQuocGia";
-            rcbCountry.DataBind();
-        }
-        protected void LoadCurrencies()
-        {
-            rcbCurrency.Items.Clear();
-            DataSet ds = TriTT.B_LoadCurrency("USD","VND");
-                if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
-                {
-                    DataRow dr = ds.Tables[0].NewRow();
-                    dr["Code"] = "";
-                    dr["Code"] = "";
-                    ds.Tables[0].Rows.InsertAt(dr, 0);
-                }
-                rcbCurrency.DataSource = ds;
-                rcbCurrency.DataValueField = "Code";
-                rcbCurrency.DataTextField = "Code";
-            rcbCurrency.DataBind();
-        }
-        private void LoadCustomerID()
-        {
-            rcbCustomerID.DataSource = DataProvider.TriTT.B_OPEN_LOANWORK_ACCT_Get_ALLCustomerID();
-            rcbCustomerID.DataTextField = "CustomerHasName";
-            rcbCustomerID.DataValueField = "CustomerID";
-            rcbCustomerID.DataBind();
-        }
-        private void LoadToolBar(bool isauthorize)
-        {
-            RadToolBar1.FindItemByValue("btCommitData").Enabled = isauthorize;
-            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-            RadToolBar1.FindItemByValue("btEdit").Enabled = false;
-        }
-        protected void LoadToolBar_AllFalse()
-        {
-            RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
-            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-            RadToolBar1.FindItemByValue("btEdit").Enabled = true;
-        }
-        protected void LoadCollateralType()
-        {
-            rcbCollateralType.DataSource = TriTT.B_CUSTOMER_LIMIT_Load_CollateralType();
-            rcbCollateralType.DataValueField = "CollateralTypeCode";
-            rcbCollateralType.DataTextField = "CollateralTypeHasName";
-            rcbCollateralType.DataBind();
-        }
-        protected void LoadCollateralCode(string CollateralTypeCode)
-        {
-            rcbCollateral.Items.Clear();
-            rcbCollateral.Text = "";
-            DataSet ds = TriTT.B_CUSTOMER_LIMIT_Load_CollateralCode(CollateralTypeCode);
-            if (ds.Tables != null & ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            {
-                DataRow dr = ds.Tables[0].NewRow();
-                dr["CollateralCode"] = "";
-                dr["CollateralHasName"] = "";
-                ds.Tables[0].Rows.InsertAt(dr, 0);
-            }
-            rcbCollateral.DataSource = ds;
-            rcbCollateral.DataValueField = "CollateralCode";
-            rcbCollateral.DataTextField = "CollateralHasName";
-            rcbCollateral.DataBind();
-        }
-        protected void rcbCollateralType_ONSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            LoadCollateralCode(rcbCollateralType.SelectedValue);
-        }
-        #endregion
+       
         
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
@@ -144,22 +52,22 @@ namespace BankProject.Views.TellerApplication
                         // check Internal amount and Maximum Total
                         if ((tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0 )<( tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
                         { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
-                        if (TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID,CustomerID).Tables != null &&
-                            TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID, CustomerID).Tables[0].Rows.Count>0 )
-                        { 
-                            var ds = TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID, CustomerID).Tables[0];
-                            if (ds.Rows[0]["CommitmentType"].ToString() == "7000")
-                            {
-                                ShowMsgBox("You had already created a Revoling Global Limit. You can not create additional one.");
-                                return;
-                            }
-                            else 
-                            {
-                                ShowMsgBox("You had already created a Non-Revolving Global Limit. You can not create additional one.");
-                                return;
-                            }
-                        }
-                        if ( TriTT.B_CUSTOMER_LIMIT_Check_CustomerID(CustomerID) != "")
+                        //if (TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID,CustomerID).Tables != null &&
+                        //    TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID, CustomerID).Tables[0].Rows.Count>0 )
+                        //{ 
+                        //    var ds = TriTT.B_CUSTOMER_LIMIT_Check_LimitMain_CustomerID_Exists(LimitID, CustomerID).Tables[0];
+                        //    if (ds.Rows[0]["CommitmentType"].ToString() == "7000")
+                        //    {
+                        //        ShowMsgBox("You had already created a Revoling Global Limit. You can not create additional one.");
+                        //        return;
+                        //    }
+                        //    else 
+                        //    {
+                        //        ShowMsgBox("You had already created a Non-Revolving Global Limit. You can not create additional one.");
+                        //        return;
+                        //    }
+                        //}
+                        if (TriTT.B_CUSTOMER_LIMIT_Check_CustomerID(CustomerID) != "Not_Exists")
                         { 
                             TriTT.B_CUSTOMER_LIMIT_Insert_Update(LimitID, CustomerID, HanMucCha, rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.Text.Replace(rcbCountry.SelectedValue + " - ", "")
                                 , RdpApprovedDate.SelectedDate, RdpOfferedUnit.SelectedDate, rdpExpiryDate.SelectedDate, RdpProposalDate.SelectedDate, RdpAvailableDate.SelectedDate
@@ -405,6 +313,104 @@ namespace BankProject.Views.TellerApplication
                 rcbCollateral.Enabled= rcbCollateralType.Enabled= rcbFandA.Enabled = false;
             }
         }
+        #region Properties
+        protected void FirstLoad()
+        {
+            LoadCountries();
+            LoadCurrencies();
+            rcbCurrency.SelectedValue = "";
+            rcbCurrency.Focus();
+            LoadCollateralType();
+            RdpApprovedDate.SelectedDate = DateTime.Now;
+            RdpOfferedUnit.SelectedDate = DateTime.Now;
+            RdpAvailableDate.SelectedDate = DateTime.Now;
+            RdpProposalDate.SelectedDate = DateTime.Now;
+            LoadCustomerID();
+        }
+        protected void LoadCountries()
+        {
+            rcbCountry.DataSource = DataProvider.TriTT.B_BCOUNTRY_GetAll();
+            rcbCountry.DataTextField = "TenTA";
+            rcbCountry.DataValueField = "MaQuocGia";
+            rcbCountry.DataBind();
+        }
+        protected void LoadCurrencies()
+        {
+            rcbCurrency.Items.Clear();
+            DataSet ds = TriTT.B_LoadCurrency("USD", "VND");
+            if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].NewRow();
+                dr["Code"] = "";
+                dr["Code"] = "";
+                ds.Tables[0].Rows.InsertAt(dr, 0);
+            }
+            rcbCurrency.DataSource = ds;
+            rcbCurrency.DataValueField = "Code";
+            rcbCurrency.DataTextField = "Code";
+            rcbCurrency.DataBind();
+        }
+        private void LoadCustomerID()
+        {
+            rcbCustomerID.DataSource = DataProvider.TriTT.B_OPEN_LOANWORK_ACCT_Get_ALLCustomerID();
+            rcbCustomerID.DataTextField = "CustomerHasName";
+            rcbCustomerID.DataValueField = "CustomerID";
+            rcbCustomerID.DataBind();
+        }
+        private void LoadToolBar(bool isauthorize)
+        {
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = isauthorize;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = false;
+        }
+        protected void LoadToolBar_AllFalse()
+        {
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = true;
+        }
+        protected void LoadCollateralType()
+        {
+            rcbCollateralType.DataSource = TriTT.B_CUSTOMER_LIMIT_Load_CollateralType();
+            rcbCollateralType.DataValueField = "CollateralTypeCode";
+            rcbCollateralType.DataTextField = "CollateralTypeHasName";
+            rcbCollateralType.DataBind();
+        }
+        protected void LoadCollateralCode(string CollateralTypeCode)
+        {
+            rcbCollateral.Items.Clear();
+            rcbCollateral.Text = "";
+            DataSet ds = TriTT.B_CUSTOMER_LIMIT_Load_CollateralCode(CollateralTypeCode);
+            if (ds.Tables != null & ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].NewRow();
+                dr["CollateralCode"] = "";
+                dr["CollateralHasName"] = "";
+                ds.Tables[0].Rows.InsertAt(dr, 0);
+            }
+            rcbCollateral.DataSource = ds;
+            rcbCollateral.DataValueField = "CollateralCode";
+            rcbCollateral.DataTextField = "CollateralHasName";
+            rcbCollateral.DataBind();
+        }
+        protected void rcbCollateralType_ONSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            LoadCollateralCode(rcbCollateralType.SelectedValue);
+        }
+        protected void rcbGlobalLimit_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            if (rcbGlobalLimit.SelectedValue != "" && rcbCustomerID.SelectedValue != "")
+                Load_MainLimit_ForLimitDetail(tbLimitID.Text.Trim());
+        }
+        #endregion
        
     }
 }
