@@ -251,6 +251,9 @@ namespace BankProject.DataProvider
         }
         public static string B_CUSTOMER_LIMIT_Check_CustomerID(string CustomerID)
         {
+            DataSet ds = sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_Check_CustomerID", CustomerID);
+            if (ds.Tables != null && ds.Tables[0].Rows.Count == 0) return "Not_Exists";
+            else
             return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_Check_CustomerID", CustomerID).Tables[0].Rows[0]["CustomerID"].ToString();
         }
         public static DataSet B_CUSTOMER_LIMIT_Load_CollateralType()
