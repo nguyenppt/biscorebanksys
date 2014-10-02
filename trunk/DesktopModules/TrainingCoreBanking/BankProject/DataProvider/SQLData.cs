@@ -2156,7 +2156,10 @@ namespace BankProject.DataProvider
                                                                , int CurrentUserId
                                                                , int ViewType
                                                                , string Discrepancies
-                                                               , string DisposalOfDocs)
+                                                               , string DisposalOfDocs
+                                                               , string WaiveCharges
+                                                               , string ChargeRemarks
+                                                               , string VATNo)
         {
             sqldata.ndkExecuteNonQuery("B_BIMPORT_DOCUMENTPROCESSING_Insert", DocumentType
                                        , LCCode
@@ -2189,7 +2192,10 @@ namespace BankProject.DataProvider
                                        , CurrentUserId
                                        , ViewType
                                        , Discrepancies
-                                       , DisposalOfDocs);
+                                       , DisposalOfDocs
+                                       ,  WaiveCharges
+                                                               ,  ChargeRemarks
+                                                               ,  VATNo);
         }
 
         public static DataSet B_BIMPORT_DOCUMENTPROCESSING_GetByCode(string Code, int ViewType, int CurrentUserId)
@@ -2202,11 +2208,13 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BIMPORT_NORMAILLC_GetOne", Code).Tables[0];
         }
 
-        public static void B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(string code, string Status, int ViewType,
-                                                                     int CurrentUserId)
+        public static void B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(string code, string Status, int ViewType, int CurrentUserId)
         {
-            sqldata.ndkExecuteNonQuery("B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus", code, Status, ViewType,
-                                       CurrentUserId);
+            B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(code, Status, ViewType, CurrentUserId, null);
+        }
+        public static void B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(string code, string Status, int ViewType, int CurrentUserId, string AcceptRemarts)
+        {
+            sqldata.ndkExecuteNonQuery("B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus", code, Status, ViewType, CurrentUserId, AcceptRemarts);
         }
 
         public static DataSet B_BIMPORT_DOCUMENTPROCESSING_GetByReview(int ViewType, int CurrentUserId)

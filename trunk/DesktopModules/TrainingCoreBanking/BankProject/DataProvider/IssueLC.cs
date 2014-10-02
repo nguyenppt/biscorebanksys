@@ -96,5 +96,10 @@ namespace BankProject.DataProvider
         {
             sqldata.ndkExecuteNonQuery("P_ImportLCClose", UserExecute, LCCode, Status, GenerateDelivery, ExternalReference, Remark);
         }
+
+        public static DataSet ImportLCDocumentReport(int ReportType, string PaymentId, string UserId)
+        {
+            return sqldata.ndkExecuteDataset("P_ImportLCDocumenyReport", ReportType, PaymentId, UserId);
+        }
     }
 }
