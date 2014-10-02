@@ -26,7 +26,7 @@ namespace BankProject.DBRespository
      * 
      * ****************************************************************************
      */
-    public class BCustomerRepository:BaseRepository<BCUSTOMER_INFO>
+    public class BCustomerRepository : BaseRepository<BCUSTOMER_INFO>
     {
         public IQueryable<BCUSTOMER_INFO> getCustomerList(String _status)
         {
