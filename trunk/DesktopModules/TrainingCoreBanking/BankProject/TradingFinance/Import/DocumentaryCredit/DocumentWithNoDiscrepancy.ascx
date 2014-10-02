@@ -18,10 +18,22 @@
                 window.location = '<%=EditUrl("preview_nodiscrepancy")%>';
             }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
-                alert('Function not define !');
+                //MT734 chua co mau : Nguyen dang xin
+                //radconfirm("Do you want to download MT734 file?", confirmCallbackFunction_MT734, 340, 150, null, 'Download');
+                radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT, 340, 150, null, 'Download');
             }
         }
         
+        function confirmCallbackFunction_MT734(result) {
+            if (result) {
+                $("#<%=btDownloadMT734.ClientID %>").click();
+            }
+        }
+        function confirmCallbackFunction_VAT(result) {
+            if (result) {
+                $("#<%=btDownloadVAT.ClientID %>").click();
+            }
+        }
     </script>
 </telerik:RadCodeBlock>
 <telerik:RadToolBar runat="server" ID="RadToolBar1" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking"
@@ -56,7 +68,7 @@
     <telerik:RadCodeBlock ID="RadCodeBlock3" runat="server">
         <ul class="dnnAdminTabNav">
             <li><a href="#Main">Main</a></li>
-            <% if (TabId == TabDocsWithDiscrepancies) %>
+            <% if (TabId == TabDocsWithDiscrepancies || DocsType == TabDocsWithDiscrepancies) %>
                 <%{ %>
                 <li><a href="#tabMT734">MT734</a></li>
                 <li><a href="#tabCharge">Charge</a></li>
@@ -69,6 +81,20 @@
     </telerik:RadCodeBlock>    
     <div id="Main" class="dnnClear">        
         <table width="100%" cellpadding="0" cellspacing="0">
+            <%if (TabId == TabDocsAccept){ %>
+            <tr>
+                <td class="MyLable">Accept Date</td>
+                <td class="MyContent">
+                    <telerik:RadDatePicker ID="txtAcceptDate" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable">Accept Remarks</td>
+                <td class="MyContent">
+                    <telerik:Radtextbox runat="server" ID="txtAcceptRemarks" Width="355" />
+                </td>
+            </tr>
+            <%} %>
             <tr>
                 <td class="MyLable" style="width: 180px">1. Draw Type</td>
                 <td class="MyContent">
@@ -113,7 +139,7 @@
             <tr>
                 <td class="MyLable">29. Presentor Ref. No.</td>
                 <td class="MyContent">
-                    <telerik:Radtextbox runat="server" ID="txtPresentorRefNo" Width="355" />
+                    <telerik:Radtextbox runat="server" ID="txtPresentorRefNo" Width="355" ClientEvents-OnValueChanged ="txtPresentorRefNo_OnValueChanged" />
                 </td>
             </tr>
         </table>
@@ -130,7 +156,7 @@
             <tr>
                 <td class="MyLable">3. Document Amount<span class="Required"> (*)</span></td>
                 <td class="MyContent">
-                    <telerik:Radnumerictextbox runat="server" ID="numAmount" />
+                    <telerik:Radnumerictextbox runat="server" ID="numAmount" ClientEvents-OnValueChanged ="numAmount_OnValueChanged" />
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldValidator1"
@@ -152,7 +178,7 @@
             <tr>
                 <td class="MyLable">69.4 Docs Received Date<span class="Required"> (*)</span></td>
                 <td class="MyContent">
-                    <telerik:RadDatePicker ID="dteDocsReceivedDate" runat="server" />
+                    <telerik:RadDatePicker ID="dteDocsReceivedDate" runat="server" ClientEvents-OnDateSelected ="dteDocsReceivedDate_OnValueChanged" />
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldValidator2"
@@ -203,7 +229,7 @@
                 </tr>
             </table>
         </div>        
-        <div runat="server" ID="divDocsCode2">
+        <div runat="server" ID="divDocsCode2" visible="false">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 180px">41.1 Docs Code</td>
@@ -239,7 +265,7 @@
                 </tr>
             </table>
         </div>        
-        <div runat="server" ID="divDocsCode3">
+        <div runat="server" ID="divDocsCode3" visible="false">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 180px">44.1 Docs Code</td>
@@ -307,9 +333,9 @@
             
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable" style="width: 170px">31. Discrepancies</td>
+                    <td class="MyLable" style="width: 170px">33.1 Discrepancies</td>
                     <td class="MyContent">
-                        <telerik:Radtextbox runat="server" ID="txtDiscrepancies" Width="355" />
+                        <telerik:Radtextbox runat="server" ID="txtDiscrepancies" Width="355" ClientEvents-OnValueChanged ="txtDiscrepancies_OnValueChanged" />
                     </td>
                 </tr>
                 
@@ -367,14 +393,13 @@
             </table>
         </fieldset>
         </div>
-    </div>
-    
+    </div>   
    
     <div id="tabMT734" class="dnnClear" style="display:none;">
         <div runat="server" ID="divMT734">
             <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable" style="width: 200px">Presentor Cus No</td>
+                <td class="MyLable" style="width: 200px">Presentor No</td>
                 <td class="MyContent">
                     <telerik:RadComboBox 
                         AppendDataBoundItems="True"   
@@ -405,14 +430,14 @@
             </tr>
             
              <tr>
-                <td class="MyLable">Presentor Addr.</td>
+                <td class="MyLable">Presentor City.</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtPresentorAddr_734_2" runat="server" Width="355" />
                 </td>
             </tr>
             
             <tr>
-                <td class="MyLable">Presentor Addr.</td>
+                <td class="MyLable">Presentor Country.</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtPresentorAddr_734_3" runat="server" Width="355" />
                 </td>
@@ -433,10 +458,11 @@
             </tr>
             
             <tr>
-                <td class="MyLable">32.A Date and Amount of Utilization</td>
+                <td class="MyLable">32.A Date and Amt of Utilization</td>
                 <td class="MyContent" >
                     <telerik:Raddatepicker runat="server" ID="dteDateUtilization"/>
                     <telerik:Radnumerictextbox runat="server" ID="numAmountUtilization" />
+                    <asp:Label ID="lblUtilizationCurrency" runat="server" />
                 </td>
                
             </tr>
@@ -479,7 +505,7 @@
             <tr>
                 <td class="MyLable">77.B Disposal of Docs</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtDisposalOfDocs_734" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="txtDisposalOfDocs_734" runat="server" Width="355" Text="WE ARE HOLDING DOCS AS PER ARTICLE 16c(iii) B OF UCP 600" enabled="false" />
                 </td>
             </tr>
         </table>
@@ -1085,6 +1111,11 @@
         <telerik:AjaxSetting AjaxControlID="comboPresentorNo">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorName" />
+                <telerik:AjaxUpdatedControl ControlID="comboPresentorNo_734" />
+                <telerik:AjaxUpdatedControl ControlID="txtPresentorName_734" />
+                <telerik:AjaxUpdatedControl ControlID="txtPresentorAddr_734_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtPresentorAddr_734_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtPresentorAddr_734_3" />
             </UpdatedControls>
         </telerik:AjaxSetting>        
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy">
@@ -1122,6 +1153,29 @@
                 $("#<%=btSearch.ClientID %>").click();
             }
         });
+
+        function txtPresentorRefNo_OnValueChanged() {
+            var txt = $find("<%=txtPresentorRefNo.ClientID%>").get_value();
+            $find("<%=txtPresentingBankRef.ClientID %>").set_value(txt);
+        };
+        
+        function numAmount_OnValueChanged() {
+            var txt = $find("<%=numAmount.ClientID%>").get_value();
+            $find("<%=numAmountUtilization.ClientID %>").set_value(txt);
+        };
+
+        function dteDocsReceivedDate_OnValueChanged() {
+            var txt = $find("<%=dteDocsReceivedDate.ClientID%>").get_selectedDate();
+            $find("<%=dteDateUtilization.ClientID %>").set_selectedDate(txt);
+        };
+
+        function txtDiscrepancies_OnValueChanged() {
+            var txt = $find("<%=txtDiscrepancies.ClientID%>").get_value();
+            $find("<%=txtDiscrepancies_734.ClientID %>").set_value(txt);
+        };
+        
     </script>
 </telerik:RadCodeBlock>
 <div style="visibility: hidden;"><asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" /></div>
+<div style="visibility: hidden;"><asp:Button ID="btDownloadMT734" runat="server" OnClick="btDownloadMT734_Click" Text="DownloadMT734" /></div>
+<div style="visibility: hidden;"><asp:Button ID="btDownloadVAT" runat="server" OnClick="btDownloadVAT_Click" Text="DownloadVAT" /></div>
