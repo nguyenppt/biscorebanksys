@@ -308,9 +308,9 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_SecuredAmt", ProductLimitID);
         }
-        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(string CustomerID)
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(string CustomerID, string Currency)
         {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt", CustomerID);
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt", CustomerID, Currency);
         }
         public static DataSet B_CUSTOMER_LIMIT_SUB_Load_Product()
         {
