@@ -577,7 +577,7 @@ namespace BankProject.Views.TellerApplication
             normalLoanEntry.PurpostCode = rcbPurposeCode.SelectedValue;
             normalLoanEntry.PurpostName = rcbPurposeCode.Text;
             normalLoanEntry.CustomerID = rcbCustomerID.SelectedValue;
-            normalLoanEntry.CustomerName = rcbCustomerID.Text;
+            normalLoanEntry.CustomerName = rcbCustomerID.Text.Remove(0, rcbCustomerID.Text.IndexOf("-") + 1);
             normalLoanEntry.LoanGroup = rcbLoadGroup.SelectedValue;
             normalLoanEntry.LoanGroupName = rcbLoadGroup.Text;
             normalLoanEntry.Currency = rcbCurrency.SelectedValue;
