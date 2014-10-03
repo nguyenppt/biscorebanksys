@@ -31,7 +31,7 @@ namespace BankProject.Controls
                     ((VVNumberBox)Ctrl).SetEnable(enabel);
                 else if (Ctrl is VVDatePicker)
                     ((VVDatePicker)Ctrl).SetEnable(enabel);
-                else if (Ctrl is VVDatePicker)
+                else if (Ctrl is RadEditor)
                     ((RadEditor)Ctrl).Enabled = enabel;
                 else
                     SetTatusFormControls(Ctrl.Controls, enabel);
@@ -62,7 +62,7 @@ namespace BankProject.Controls
                     ((VVNumberBox)Ctrl).SetTextDefault("");
                 else if (Ctrl is VVDatePicker)
                     ((VVDatePicker)Ctrl).SetTextDefault("");
-                if (Ctrl is VVDatePicker)
+                if (Ctrl is RadEditor)
                     ((RadEditor)Ctrl).Content = string.Empty;
                 else
                     SetEmptyFormControls(Ctrl.Controls);
