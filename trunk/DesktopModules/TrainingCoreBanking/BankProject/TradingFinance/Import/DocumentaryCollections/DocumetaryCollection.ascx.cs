@@ -148,6 +148,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     txtRelatedReference.Enabled = true;
                     comboCurrency_TabMT410.Enabled = true;
                     numAmount_TabMT410.Enabled = true;
+                    txtSenderToReceiverInfo_410_1.Enabled = true;
+                    txtSenderToReceiverInfo_410_2.Enabled = true;
+                    txtSenderToReceiverInfo_410_3.Enabled = true;
                     //txtSenderToReceiverInfo.SetEnable(true);
                 }
                 
@@ -886,6 +889,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 tbChargecode2.SelectedValue = string.Empty;
                 lblPartyCharged2.Text = string.Empty;
             }
+
+            WaiveCharge_Changed();
+
             #endregion
 
             #region tab MT410
@@ -999,12 +1005,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 , txtDraftNo.Text
                 );
 
-            if (tbChargeCode.SelectedValue != "")
-            {
-                SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue, tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue, tbChargePeriod.Text,
-                    rcbChargeCcy.SelectedValue, tbExcheRate.Text, tbChargeAmt.Text, rcbPartyCharged.SelectedValue, rcbOmortCharge.SelectedValue, "", "",
-                    rcbChargeStatus.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode.Text, lblTaxCcy.Text, lblTaxAmt.Text, "", "", "1", TabId);
-            }
+            SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue, tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue, tbChargePeriod.Text,
+                     rcbChargeCcy.SelectedValue, tbExcheRate.Text, tbChargeAmt.Text, rcbPartyCharged.SelectedValue, rcbOmortCharge.SelectedValue, "", "",
+                     rcbChargeStatus.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode.Text, lblTaxCcy.Text, lblTaxAmt.Text, "", "", "1", TabId);
 
             //Ban đầu tạo 2 code phí, sau đó xóa đi 1 code phí, thì hệ thống không ghi nhận (không xóa được code phí)
             //-> Xư lý dấu '-' remove all value control 2
@@ -1336,6 +1339,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         }
 
         protected void comboWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            WaiveCharge_Changed();
+        }
+
+        private void WaiveCharge_Changed()
         {
             if (comboWaiveCharges.SelectedValue == "NO")
             {
