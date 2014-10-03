@@ -36,7 +36,7 @@ namespace BankProject.Views.TellerApplication
 
                 case "Commit":
                     BankProject.DataProvider.Database.BOPENACCOUNT_BLOCK_Update(txtId.Text, txtAmount.Value.HasValue ? txtAmount.Value.Value : 0,dtpFromDate.SelectedDate
-                                                                                , dptToDate.SelectedDate,txtDescription.Text);
+                        , dptToDate.SelectedDate, txtDescription.Text, chbBlockAccount.Checked ? chbBlockAccount.Checked : false);
 
                     firstload();
                     break;
@@ -88,7 +88,7 @@ namespace BankProject.Views.TellerApplication
                 lbCustomerName.Text = ds.Tables[0].Rows[0]["CustomerName"].ToString();
                 txtId.Text = ds.Tables[0].Rows[0]["AccountCode"].ToString();
                 lbAccount.Text = ds.Tables[0].Rows[0]["AccountCode"].ToString();
-
+                chbBlockAccount.Checked = ds.Tables[0].Rows[0]["BlockAccount"].ToString() == "True";
                 if (ds.Tables[0].Rows[0]["Block_Amount"] != null && ds.Tables[0].Rows[0]["Block_Amount"] != DBNull.Value)
                 {
                     txtAmount.Value = double.Parse(ds.Tables[0].Rows[0]["Block_Amount"].ToString());
@@ -119,6 +119,7 @@ namespace BankProject.Views.TellerApplication
             BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
             dtpFromDate.SelectedDate = DateTime.Now;
             this.dptToDate.SelectedDate = DateTime.Now.AddDays(5);
+            chbBlockAccount.Checked = false;
         }
 
         void filldata(string code)
@@ -148,9 +149,10 @@ namespace BankProject.Views.TellerApplication
 
                 bool isautho = ds.Tables[0].Rows[0]["Block_Status"].ToString() == "AUT";
                 bool isrev = ds.Tables[0].Rows[0]["Block_Status"].ToString() == "REV";
+                chbBlockAccount.Checked = ds.Tables[0].Rows[0]["BlockAccount"].ToString() == "True";
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, Request.QueryString["BlockId"] == null && !isautho);
                 LoadToolBar(Request.QueryString["BlockId"] != null);
-
+               
                 if (isautho)
                 {
                     RadToolBar1.FindItemByValue("btCommit").Enabled = false;

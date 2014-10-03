@@ -76,17 +76,7 @@
             </tr>
 
             <tr>
-                <td class="MyLable">Amount
-                    <span class="Required">(*)</span>
-                    <asp:RequiredFieldValidator
-                        runat="server" Display="None"
-                        ID="RequiredFieldValidator1"
-                        ControlToValidate="txtAmount"
-                        ValidationGroup="Commit"
-                        InitialValue=""
-                        ErrorMessage="Amount is Required" ForeColor="Red">
-                    </asp:RequiredFieldValidator>
-                </td>
+                <td class="MyLable">Amount</td>
                 <td class="MyContent">
                     <telerik:RadNumericTextBox ID="txtAmount" runat="server"                         
                         ValidationGroup="Group1">
@@ -94,7 +84,12 @@
                     </telerik:RadNumericTextBox>                    
                 </td>
             </tr>
-
+            <tr>
+            <td class="MyLable">Block Account</td>
+            <td class="MyContent">
+                <asp:CheckBox ID="chbBlockAccount" runat="server" />
+            </td>
+        </tr>
             <tr>
                 <td class="MyLable">From Date:</td>
                 <td class="MyContent">

@@ -46,7 +46,6 @@ namespace BankProject.Views.TellerApplication
             RdpProposalDate.SelectedDate = DateTime.Now;
             LoadCustomerID();
             rcbFandA.SelectedValue = "Variable";
-            LoadProduct();
         }
         protected void LoadCountries()
         {
@@ -70,22 +69,6 @@ namespace BankProject.Views.TellerApplication
             rcbCurrency.DataValueField = "Code";
             rcbCurrency.DataTextField = "Code";
             rcbCurrency.DataBind();
-        }
-        protected void LoadProduct()
-        {
-            rcbProduct.Items.Clear();
-            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Load_Product();
-            if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
-            {
-                DataRow dr = ds.Tables[0].NewRow();
-                dr["catid"] = "";
-                dr["Display"] = "";
-                ds.Tables[0].Rows.InsertAt(dr, 0);
-            }
-            rcbProduct.DataSource = ds;
-            rcbProduct.DataValueField = "catid";
-            rcbProduct.DataTextField = "Display";
-            rcbProduct.DataBind();
         }
         private void LoadCustomerID()
         {
@@ -185,37 +168,19 @@ namespace BankProject.Views.TellerApplication
                             // check Internal amount and Maximum Total
                             if ((tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0) < (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
                             { ShowMsgBox("Maximum Total Amount must be less than Internal Limit Amount, Please check again !"); return; }
-                            //check Maximum Secured & Unsecured 
-                            double ProductLimitAmt = (tbMaxSecured.Text != "" ? Convert.ToDouble(tbMaxSecured.Text.Replace(",", "")) : 0) + (tbMaxUnsecured.Text != "" ? Convert.ToDouble(tbMaxUnsecured.Text.Replace(",", "")) : 0);
-                            if ((tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0) + (tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0) > (tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0))
-                            {
-                                ShowMsgBox("Maximum Secured Value + Maximum Unsecured Value must be less than Maximum Total Value");
-                                return;
-                            }
+                            //if (TriTT.B_CUSTOMER_LIMIT_SUB_check_SubLimitID(LimitID).Tables[0].Rows.Count == 0)
                             if (Global_Limit_Was_Created == false) //In case User co tinh tao HM con khi HM cha chua dc tao
                             {
                                 ShowMsgBox("The Product Limit that You have entered does not have Global Limit " + LimitID.Substring(8, 4) + ". Please Create Global Limit before do this action !");
                                 break;
                             }
-                            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon);
-                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                            {
-                                if (Convert.ToDouble(ds.Tables[0].Rows[0]["ProductLimitAvailable"].ToString()) < ProductLimitAmt)
-                                {
-                                    ShowMsgBox("You can not create this Product Limit due to the rest of Global Limit Available amount is " + string.Format("{0:C}",Convert.ToDouble( ds.Tables[0].Rows[0]["ProductLimitAvailable"].ToString())).Replace("$","")
-                                        + " .Please check again "); return;
-                                }
-                            }
-
-                            TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
-                            , "", "",
-                            "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
-                            , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
-                            tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
-                            , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha,
-                            tbIntLimitAmt.Text != "" ? Convert.ToDouble(tbIntLimitAmt.Text.Replace(",", "")) : 0, tbAdvisedAmt.Text != "" ? Convert.ToDouble(tbAdvisedAmt.Text.Replace(",", "")) : 0
-                            ,rcbProduct.SelectedValue,rcbProduct.SelectedValue!=""? rcbProduct.Text.Replace(rcbProduct.SelectedValue+" - ",""):"");
-                            Response.Redirect("Default.aspx?tabid=361");
+                            //TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
+                            //, "", "",
+                            //"", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
+                            //, lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
+                            //tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
+                            //, lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
+                            //Response.Redirect("Default.aspx?tabid="+ this.TabId.ToString());
                             
                             //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
                         }
@@ -344,14 +309,12 @@ namespace BankProject.Views.TellerApplication
             if (ds1.Tables != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
             {
                 //= ds1.Tables[0].Rows[0]["SubLimitID"].ToString();
-                rcbProduct.SelectedValue = ds1.Tables[0].Rows[0]["ProductID"].ToString();
                 rcbFandA.SelectedValue = "Variable"; // gan mac dinh khi chua tao han muc con 
                 rcbFandA.SelectedValue = ds1.Tables[0].Rows[0]["Mode"].ToString();// gan lai gia tri Khi han muc con da duoc tao
                 rcbCollateralType.SelectedValue = ds1.Tables[0].Rows[0]["CollateralTypeCode"].ToString();
                 rcbCollateralType.Text = rcbCollateralType.SelectedValue + " - " + ds1.Tables[0].Rows[0]["CollateralTypeName"].ToString();
                 LoadCollateralCode(rcbCollateralType.SelectedValue);
-                //string AmtSecured = (ds1.Tables[0].Rows[0]["AmtSecured"].ToString() != "" ? ds1.Tables[0].Rows[0]["AmtSecured"].ToString() : "0");
-                //lblAmtSecured.Text = string.Format("{0:C}",Convert.ToDouble ( AmtSecured) ).Replace("$", "");
+
                 rcbCollateral.SelectedValue = ds1.Tables[0].Rows[0]["CollateralCode"].ToString();
                 rcbCollateral.Text = rcbCollateral.SelectedValue + " - " + ds1.Tables[0].Rows[0]["CollateralName"].ToString();
                 lblCollReqdAmt.Text = ds1.Tables[0].Rows[0]["CollReqdAmt"].ToString();
@@ -364,32 +327,15 @@ namespace BankProject.Views.TellerApplication
                 tbMaxTotal.Text = ds1.Tables[0].Rows[0]["MaxTotal"].ToString();
                 lblOtherSecured.Text = ds1.Tables[0].Rows[0]["OtherSecured"].ToString();
                 lblCollateralRight.Text = ds1.Tables[0].Rows[0]["CollateralRight"].ToString();
-                //lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
-                //lblAvailableAmt.Text = ds1.Tables[0].Rows[0]["AvailableAmt"].ToString();
-                //lblTotalOutstand.Text = ds1.Tables[0].Rows[0]["TotalOutstand"].ToString();
+                lblAmtSecured.Text = ds1.Tables[0].Rows[0]["AmtSecured"].ToString();
+                lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
+                lblAvailableAmt.Text = ds1.Tables[0].Rows[0]["AvailableAmt"].ToString();
+                lblTotalOutstand.Text = ds1.Tables[0].Rows[0]["TotalOutstand"].ToString();
                 LoadToolBar_AllFalse();
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                 Enable_toAudit = true; // flag cho phep audit thong tin , Acct exists trong DB roi
 
-                //load them thong tin de view theo yeu cau nghiep vu
-                DataSet ds2 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_SecuredAmt(SubLimitID);
-                if (ds2.Tables != null && ds2.Tables.Count > 0 && ds2.Tables[0].Rows.Count > 0)
-                {
-                    lblAmtSecured.Text = ds2.Tables[0].Rows[0]["SecuredAmount"].ToString();
-                }
-                DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0,7), "VND","AvailableAmt");
-                if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
-                {
-                    lblAvailableAmt.Text = ds3.Tables[0].Rows[0]["Avaiable_Amt"].ToString();
-                }
-                DataSet ds4 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0, 7), "VND", "OutstandingAmt");
-                if (ds4.Tables != null && ds4.Tables.Count > 0 && ds4.Tables[0].Rows.Count > 0)
-                {
-                    lblTotalOutstand.Text = ds4.Tables[0].Rows[0]["Outstanding_Loan_Amt"].ToString();
-                }
-                lblOnlineLimit.Text = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit(SubLimitID.Substring(0,7));//load theo yeu cau cua nghiep vu 
             }
-
         }
         
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)

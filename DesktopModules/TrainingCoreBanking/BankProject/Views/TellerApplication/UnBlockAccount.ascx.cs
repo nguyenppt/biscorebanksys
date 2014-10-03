@@ -34,18 +34,18 @@ namespace BankProject.Views.TellerApplication
                     this.Response.Redirect(urlFTAccountClose);
                     break;
 
-                case "Commit":
-                   DataProvider.Database.BOPENACCOUNT_UnBLOCK_UpdateStatus("UNA", txtId.Text, this.UserId.ToString());
+                case "Commit": //check or not check thi van unblock account 
+                   DataProvider.Database.BOPENACCOUNT_UnBLOCK_UpdateStatus("UNA", txtId.Text, this.UserId.ToString(), false);
                    firstload();
                     break;
 
                 case "Authorize":
-                   DataProvider.Database.BOPENACCOUNT_UnBLOCK_UpdateStatus("AUT", txtId.Text, this.UserId.ToString());
+                    DataProvider.Database.BOPENACCOUNT_UnBLOCK_UpdateStatus("AUT", txtId.Text, this.UserId.ToString(), false);
                     firstload();
                     break;
 
                 case "Reverse":
-                    DataProvider.Database.BOPENACCOUNT_UnBLOCK_UpdateStatus("REV", txtId.Text, this.UserId.ToString());
+                    DataProvider.Database.BOPENACCOUNT_UnBLOCK_UpdateStatus("REV", txtId.Text, this.UserId.ToString(), false);
                     firstload();
                     break;
             }
@@ -92,7 +92,8 @@ namespace BankProject.Views.TellerApplication
                 txtDescription.Text = ds.Tables[0].Rows[0]["Block_Description"].ToString();
                 txtAmount.Value = double.Parse(ds.Tables[0].Rows[0]["Block_Amount"].ToString());
                 lbAccount.Text = ds.Tables[0].Rows[0]["AccountCode"].ToString();
-
+                chbBlockAccount.Checked = ds.Tables[0].Rows[0]["BlockAccount"].ToString() == "True";
+                chbBlockAccount.Enabled = false;
                 if (ds.Tables[0].Rows[0]["Block_FromDate"] != null && ds.Tables[0].Rows[0]["Block_FromDate"] != DBNull.Value)
                     dtpFromDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["Block_FromDate"].ToString());
 
@@ -131,7 +132,11 @@ namespace BankProject.Views.TellerApplication
                 txtDescription.Text = ds.Tables[0].Rows[0]["Block_Description"].ToString();
                 txtAmount.Value = double.Parse(ds.Tables[0].Rows[0]["Block_Amount"].ToString());
                 lbAccount.Text = ds.Tables[0].Rows[0]["AccountCode"].ToString();
-
+                if (code != "")
+                {
+                    chbBlockAccount.Checked = ds.Tables[0].Rows[0]["blockAccount"].ToString() == "True";
+                }
+                chbBlockAccount.Enabled = false;
                 if (ds.Tables[0].Rows[0]["Block_FromDate"] != null && ds.Tables[0].Rows[0]["Block_FromDate"] != DBNull.Value)
                     dtpFromDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["Block_FromDate"].ToString());
 

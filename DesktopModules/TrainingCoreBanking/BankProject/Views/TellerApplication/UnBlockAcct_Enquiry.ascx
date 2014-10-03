@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CloseAccountList.ascx.cs" Inherits="BankProject.Views.TellerApplication.CloseAccountList" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UnBlockAcct_Enquiry.ascx.cs" Inherits="BankProject.Views.TellerApplication.UnBlockAcct_Enquiry" %>
 <%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 <telerik:RadToolBar runat="server" ID="RadToolBar2" EnableRoundedCorners="true" EnableShadows="true" width="100%" OnButtonClick="radtoolbar2_onbuttonclick" >
     <Items>
