@@ -1,11 +1,15 @@
-﻿using DotNetNuke.Entities.Modules;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using System.Data;
 using Telerik.Web.UI;
 
 namespace BankProject.Views.TellerApplication
 {
-    public partial class CloseAccountList : PortalModuleBase
+    public partial class UnBlockAcct_Enquiry : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,7 +49,7 @@ namespace BankProject.Views.TellerApplication
         {
             if (IsPostBack)
             {
-                radGridReview.DataSource = BankProject.DataProvider.Database.BOPENACCOUNT_Search(txtAccountCode.Text, ckLocked.Checked, rcbCustomerType.SelectedValue, tbCustomerID.Text,
+                radGridReview.DataSource = BankProject.DataProvider.Database.BOPENACCOUNT_Search_BLocked_Acct(txtAccountCode.Text, ckLocked.Checked, rcbCustomerType.SelectedValue, tbCustomerID.Text,
                                                                                                   tbGBFullName.Text, tbDocID.Text, rcbcategory.SelectedValue, rcbCurrency.SelectedValue, rcbProductLine.SelectedValue);
                 radGridReview.DataBind();
             }
@@ -55,10 +59,11 @@ namespace BankProject.Views.TellerApplication
         {
             if (IsPostBack)
             {
-                radGridReview.DataSource = BankProject.DataProvider.Database.BOPENACCOUNT_Search(txtAccountCode.Text, ckLocked.Checked, rcbCustomerType.SelectedValue, tbCustomerID.Text,
+                radGridReview.DataSource = BankProject.DataProvider.Database.BOPENACCOUNT_Search_BLocked_Acct(txtAccountCode.Text, ckLocked.Checked, rcbCustomerType.SelectedValue, tbCustomerID.Text,
                                                                                                  tbGBFullName.Text, tbDocID.Text, rcbcategory.SelectedValue, rcbCurrency.SelectedValue, rcbProductLine.SelectedValue);
-            } else
-            radGridReview.DataSource = BankProject.DataProvider.Database.BOPENACCOUNT_Search("NOTdata", false, "NOTdata", "NOTdata", "NOTdata", "NOTdata", "NOTdata","", "NOTdata");
+            }
+            else
+                radGridReview.DataSource = BankProject.DataProvider.Database.BOPENACCOUNT_Search_BLocked_Acct("NOTdata", false, "NOTdata", "NOTdata", "NOTdata", "NOTdata", "NOTdata", "", "NOTdata");
         }
 
         protected void cmbCategory_onitemdatabound(object sender, RadComboBoxItemEventArgs e)
@@ -96,7 +101,7 @@ namespace BankProject.Views.TellerApplication
                     break;
             }
 
-            return strUrl + "&codeid=" + id; 
+            return strUrl + "&codeid=" + id;
         }
     }
 }

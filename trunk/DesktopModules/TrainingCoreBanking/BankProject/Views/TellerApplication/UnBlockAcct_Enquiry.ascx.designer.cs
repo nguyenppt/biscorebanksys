@@ -10,141 +10,114 @@
 namespace BankProject.Views.TellerApplication {
     
     
-    public partial class UnBlockAccount {
+    public partial class UnBlockAcct_Enquiry {
         
         /// <summary>
-        /// ValidationSummary1 control.
+        /// RadToolBar2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
+        protected global::Telerik.Web.UI.RadToolBar RadToolBar2;
         
         /// <summary>
-        /// RadToolBar1 control.
+        /// txtAccountCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolBar RadToolBar1;
+        protected global::System.Web.UI.WebControls.TextBox txtAccountCode;
         
         /// <summary>
-        /// txtId control.
+        /// rcbCurrency control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtId;
+        protected global::Telerik.Web.UI.RadComboBox rcbCurrency;
         
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// ckLocked control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.CheckBox ckLocked;
         
         /// <summary>
-        /// lblDepositCode control.
+        /// rcbCustomerType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDepositCode;
+        protected global::Telerik.Web.UI.RadComboBox rcbCustomerType;
         
         /// <summary>
-        /// lbCustomerID control.
+        /// tbCustomerID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCustomerID;
+        protected global::System.Web.UI.WebControls.TextBox tbCustomerID;
         
         /// <summary>
-        /// lbCustomerName control.
+        /// tbGBFullName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCustomerName;
+        protected global::System.Web.UI.WebControls.TextBox tbGBFullName;
         
         /// <summary>
-        /// lbAccount control.
+        /// tbDocID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbAccount;
+        protected global::System.Web.UI.WebControls.TextBox tbDocID;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// rcbcategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::Telerik.Web.UI.RadComboBox rcbcategory;
         
         /// <summary>
-        /// txtAmount control.
+        /// rcbProductLine control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtAmount;
+        protected global::Telerik.Web.UI.RadComboBox rcbProductLine;
         
         /// <summary>
-        /// chbBlockAccount control.
+        /// radGridReview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chbBlockAccount;
+        protected global::Telerik.Web.UI.RadGrid radGridReview;
         
         /// <summary>
-        /// dtpFromDate control.
+        /// RadAjaxManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::BankProject.Controls.CustomDataTimePicker dtpFromDate;
-        
-        /// <summary>
-        /// dptToDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::BankProject.Controls.CustomDataTimePicker dptToDate;
-        
-        /// <summary>
-        /// txtDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtDescription;
-        
-        /// <summary>
-        /// btSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btSearch;
+        protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
     }
 }
