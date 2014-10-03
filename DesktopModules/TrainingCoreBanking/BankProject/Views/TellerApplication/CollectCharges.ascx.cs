@@ -37,7 +37,7 @@ namespace BankProject.Views.TellerApplication
             }
             else
             {
-                LoadData("");
+                LoadData(Request.QueryString["codeid"].ToString());
             }
 
         }
@@ -73,11 +73,12 @@ namespace BankProject.Views.TellerApplication
                     if (hdfCheckCustomer.Value == "0") return;
 
                     string CategoryPL = rcbCategoryPL.Text != "" ? rcbCategoryPL.Text.Split('-')[1].Trim() : "";
-                    BankProject.DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_Insert(rcbAccountType.SelectedValue, tbDepositCode.Text, lbAccountId.Text, tbChargeAmountLCY.Value.HasValue ? tbChargeAmountLCY.Value.Value : 0
+                    BankProject.DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_Insert(rcbAccountType.SelectedValue, tbDepositCode.Text, rcbDebitAccount.Text, tbChargeAmountLCY.Value.HasValue ? tbChargeAmountLCY.Value.Value : 0
                                                         , tbChargeAmountFCY.Value.HasValue ? tbChargeAmountFCY.Value.Value : 0, rdpValueDate.SelectedDate, rcbCategoryPL.SelectedValue, CategoryPL
                                                         , txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0, tbVATAmountLCY.Value.HasValue ? tbVATAmountLCY.Value.Value : 0
                                                         , tbVATAmount.Value.HasValue ? tbVATAmount.Value.Value : 0, tbTotalAmountLCY.Value.HasValue ? tbTotalAmountLCY.Value.Value : 0
-                                                        , tbTotalAmount.Value.HasValue ? tbTotalAmount.Value.Value : 0, tbVATSerialNo.Text, tbNarrative.Text, this.UserId);
+                                                        , tbTotalAmount.Value.HasValue ? tbTotalAmount.Value.Value : 0, tbVATSerialNo.Text, tbNarrative.Text, this.UserId
+                                                        , lblCustomerID.Text, lblCustomerName.Text, rcbCurrency.Text);
 
                     BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                     firstLoad();
@@ -89,11 +90,21 @@ namespace BankProject.Views.TellerApplication
                     break;
 
                 case "authorize":
-                    DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_UpdateStatus(rcbAccountType.SelectedValue, "AUT", tbDepositCode.Text, this.UserId.ToString());
-                    LoadToolBar(false);
-                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                    firstLoad();
-
+                    DataSet ds = Database.BCOLLECTCHARGESFROMACCOUNT_Check_Available_Amt(rcbAccountType.SelectedValue, tbDepositCode.Text);
+                    if (ds.Tables[0].Rows[0]["Update_Status"].ToString() == "OK")
+                    {
+                        DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_UpdateStatus(rcbAccountType.SelectedValue, "AUT", tbDepositCode.Text, this.UserId.ToString());
+                        LoadToolBar(false);
+                        BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                        firstLoad();
+                    }
+                    else
+                    {
+                        ShowMsgBox("You can not Authorize this transaction, Your available Account Amount is " + 
+                            string.Format("{0:C}", Convert.ToDouble( ds.Tables[0].Rows[0]["Available_Amt"].ToString())).Replace("$","")
+                            + " .Please check again !"); 
+                        return;
+                    }
                     break;
 
                 case "reverse":
@@ -260,47 +271,83 @@ namespace BankProject.Views.TellerApplication
         private void LoadData(string code)
         {
             DataSet ds;
-            if (code != "")
-                ds = DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_GetByCode(code);
-            else
-                ds = DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_GetByID(int.Parse(Request.QueryString["codeid"].ToString()));
+            //if (code != "")
+            //    ds = DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_GetByCode(code);
+            //else
+                ds = DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_GetByCodeDebit(Request.QueryString["codeid"].ToString());
             if (ds.Tables[0].Rows.Count > 0)
             {
                 tbDepositCode.Text = ds.Tables[0].Rows[0]["Code"].ToString();
-                this.rcbDebitAccount.Text = ds.Tables[0].Rows[0]["AccountCode"].ToString();
-                this.lbAccountId.Text = ds.Tables[0].Rows[0]["CustomerAccount"].ToString();
-                this.rcbAccountType.SelectedValue = ds.Tables[0].Rows[0]["AccountType"].ToString();
-                cmbCustomerAccount_TextChanged(rcbDebitAccount, null);
+                this.rcbDebitAccount.Text = ds.Tables[0].Rows[0]["CustomerAccount"].ToString();
+                lblCustomerID.Text = ds.Tables[0].Rows[0]["CustomerID"].ToString();
+                lblCustomerName.Text = ds.Tables[0].Rows[0]["CustomerName"].ToString();
+                rcbCurrency.Text = ds.Tables[0].Rows[0]["Currency"].ToString();
+                if (Convert.ToDouble(ds.Tables[0].Rows[0]["ChargAmountLCY"].ToString()) != 0)
+                {
+                    tbChargeAmountLCY.Text = ds.Tables[0].Rows[0]["ChargAmountLCY"].ToString();
+                }
+                if (Convert.ToDouble(ds.Tables[0].Rows[0]["ChargAmountFCY"].ToString()) != 0)
+                {
+                    tbChargeAmountFCY.Text = ds.Tables[0].Rows[0]["ChargAmountFCY"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["ValueDate"].ToString() != "")
+                {
+                    rdpValueDate.SelectedDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["ValueDate"].ToString());
+                }
                 rcbCategoryPL.SelectedValue = ds.Tables[0].Rows[0]["CategoryPLCode"].ToString();
-                if (ds.Tables[0].Rows[0]["ValueDate"] != null && ds.Tables[0].Rows[0]["ValueDate"] != DBNull.Value)
-                    rdpValueDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["ValueDate"].ToString());
-
-                this.tbChargeAmountLCY.Value = ds.Tables[0].Rows[0]["ChargAmountLCY"] != null && ds.Tables[0].Rows[0]["ChargAmountLCY"] != DBNull.Value ?
-                                                double.Parse(ds.Tables[0].Rows[0]["ChargAmountLCY"].ToString()) : 0;
-
-                this.tbChargeAmountFCY.Value = ds.Tables[0].Rows[0]["ChargAmountFCY"] != null && ds.Tables[0].Rows[0]["ChargAmountFCY"] != DBNull.Value ?
-                                              double.Parse(ds.Tables[0].Rows[0]["ChargAmountFCY"].ToString()) : 0;
-
-                this.txtDealRate.Value = ds.Tables[0].Rows[0]["DealRate"] != null && ds.Tables[0].Rows[0]["DealRate"] != DBNull.Value ?
-                                      double.Parse(ds.Tables[0].Rows[0]["DealRate"].ToString()) : 0;
-
-                this.tbVATAmountLCY.Value = ds.Tables[0].Rows[0]["VatAmountLCY"] != null && ds.Tables[0].Rows[0]["VatAmountLCY"] != DBNull.Value ?
-                                                double.Parse(ds.Tables[0].Rows[0]["VatAmountLCY"].ToString()) : 0;
-
-                this.tbVATAmount.Value = ds.Tables[0].Rows[0]["VatAmountFCY"] != null && ds.Tables[0].Rows[0]["VatAmountFCY"] != DBNull.Value ?
-                                              double.Parse(ds.Tables[0].Rows[0]["VatAmountFCY"].ToString()) : 0;
-
-                this.tbTotalAmountLCY.Value = ds.Tables[0].Rows[0]["TotalAmountLCY"] != null && ds.Tables[0].Rows[0]["TotalAmountLCY"] != DBNull.Value ?
-                                              double.Parse(ds.Tables[0].Rows[0]["TotalAmountLCY"].ToString()) : 0;
-
-                this.tbTotalAmount.Value = ds.Tables[0].Rows[0]["TotalAmountFCY"] != null && ds.Tables[0].Rows[0]["TotalAmountFCY"] != DBNull.Value ?
-                                              double.Parse(ds.Tables[0].Rows[0]["TotalAmountFCY"].ToString()) : 0;             
-
+                rcbAccountType.SelectedValue = ds.Tables[0].Rows[0]["AccountType"].ToString();
+                if (Convert.ToDouble(ds.Tables[0].Rows[0]["DealRate"].ToString()) != 0)
+                {
+                    txtDealRate.Text = ds.Tables[0].Rows[0]["DealRate"].ToString();
+                }
+                if (Convert.ToDouble(ds.Tables[0].Rows[0]["VatAmountLCY"].ToString()) != 0)
+                {
+                    tbVATAmountLCY.Text = ds.Tables[0].Rows[0]["VatAmountLCY"].ToString();
+                }
+                if (Convert.ToDouble(ds.Tables[0].Rows[0]["VatAmountFCY"].ToString()) != 0)
+                {
+                    tbVATAmount.Text = ds.Tables[0].Rows[0]["VatAmountFCY"].ToString();
+                }
+                if (Convert.ToDouble(ds.Tables[0].Rows[0]["TotalAmountLCY"].ToString()) != 0)
+                {
+                    tbTotalAmountLCY.Text = ds.Tables[0].Rows[0]["TotalAmountLCY"].ToString();
+                }
+                if (Convert.ToDouble(ds.Tables[0].Rows[0]["TotalAmountFCY"].ToString()) != 0)
+                {
+                    tbTotalAmount.Text = ds.Tables[0].Rows[0]["TotalAmountFCY"].ToString();
+                }
                 tbNarrative.Text = ds.Tables[0].Rows[0]["Narrative"].ToString();
                 tbVATSerialNo.Text = ds.Tables[0].Rows[0]["VatSerialNo"].ToString();
+
+                //cmbCustomerAccount_TextChanged(rcbDebitAccount, null);
+                //this.lbAccountId.Text = ds.Tables[0].Rows[0]["CustomerAccount"].ToString();
+                //this.rcbAccountType.SelectedValue = ds.Tables[0].Rows[0]["AccountType"].ToString();
+                //if (ds.Tables[0].Rows[0]["ValueDate"] != null && ds.Tables[0].Rows[0]["ValueDate"] != DBNull.Value)
+                //    rdpValueDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["ValueDate"].ToString());
+
+                //this.tbChargeAmountLCY.Value = ds.Tables[0].Rows[0]["ChargAmountLCY"] != null && ds.Tables[0].Rows[0]["ChargAmountLCY"] != DBNull.Value ?
+                //                                double.Parse(ds.Tables[0].Rows[0]["ChargAmountLCY"].ToString()) : 0;
+
+                //this.tbChargeAmountFCY.Value = ds.Tables[0].Rows[0]["ChargAmountFCY"] != null && ds.Tables[0].Rows[0]["ChargAmountFCY"] != DBNull.Value ?
+                //                              double.Parse(ds.Tables[0].Rows[0]["ChargAmountFCY"].ToString()) : 0;
+
+                //this.txtDealRate.Value = ds.Tables[0].Rows[0]["DealRate"] != null && ds.Tables[0].Rows[0]["DealRate"] != DBNull.Value ?
+                //                      double.Parse(ds.Tables[0].Rows[0]["DealRate"].ToString()) : 0;
+
+                //this.tbVATAmountLCY.Value = ds.Tables[0].Rows[0]["VatAmountLCY"] != null && ds.Tables[0].Rows[0]["VatAmountLCY"] != DBNull.Value ?
+                //                                double.Parse(ds.Tables[0].Rows[0]["VatAmountLCY"].ToString()) : 0;
+
+                //this.tbVATAmount.Value = ds.Tables[0].Rows[0]["VatAmountFCY"] != null && ds.Tables[0].Rows[0]["VatAmountFCY"] != DBNull.Value ?
+                //                              double.Parse(ds.Tables[0].Rows[0]["VatAmountFCY"].ToString()) : 0;
+
+                //this.tbTotalAmountLCY.Value = ds.Tables[0].Rows[0]["TotalAmountLCY"] != null && ds.Tables[0].Rows[0]["TotalAmountLCY"] != DBNull.Value ?
+                //                              double.Parse(ds.Tables[0].Rows[0]["TotalAmountLCY"].ToString()) : 0;
+
+                //this.tbTotalAmount.Value = ds.Tables[0].Rows[0]["TotalAmountFCY"] != null && ds.Tables[0].Rows[0]["TotalAmountFCY"] != DBNull.Value ?
+                //                              double.Parse(ds.Tables[0].Rows[0]["TotalAmountFCY"].ToString()) : 0;             
+
                 //this.txtNarrative.Text = ds.Tables[0].Rows[0]["Narrative"].ToString();
                 //this.txtPrintLnNoOfPS.Text = ds.Tables[0].Rows[0]["PrintLnNoOfPS"].ToString();
-
                 bool isautho = ds.Tables[0].Rows[0]["Status"].ToString() == "AUT";
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, Request.QueryString["codeid"] == null && !isautho);
                 LoadToolBar(Request.QueryString["codeid"] != null);
@@ -315,6 +362,13 @@ namespace BankProject.Views.TellerApplication
                     RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 }
             }
+        }
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
 
     }

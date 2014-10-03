@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register Assembly="BankProject" Namespace="BankProject.Controls" TagPrefix="customControl" %>
-
+<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <!--tao the tab-->
 <script type="text/javascript">
     jQuery(function ($) {
@@ -161,15 +161,10 @@
                          Initial="" ForeColor="Red" display="None"  ControlToValidate="rcbCategoryPL" ValidationGroup="Commit" />
                  </td>
                  <td class="MyContent">
-                    <telerik:RadComboBox width="300px"  
+                    <telerik:RadComboBox width="450px"  
                           ID="rcbCategoryPL"  
                           validationGroup="Group1" RunAt="server" MarkFirstMatch="true" 
                          AllowCustomText="false"> 
-                        
-                     <Items>
-                         <telerik:RadComboBoxItem value=""  text="" />
-                         <telerik:RadComboBoxItem value="PL-62153"  text="PL-62153 - Fees on Counting&Checking Charges" />
-                     </Items>
                          </telerik:RadComboBox>  
             
                  </td>
@@ -221,7 +216,7 @@
                 <tr>    
                     <td  class="MyLable">Narrative:</td>
                     <td  class="MyContent">
-                        <telerik:RadTextBox width="300" ID="tbNarrative" runat="server"/>
+                        <telerik:RadTextBox width="450" ID="tbNarrative" runat="server"/>
                     </td>
                 </tr>
             </table>

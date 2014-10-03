@@ -13,12 +13,12 @@ namespace BankProject.Views.TellerApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (IsPostBack) return;
         }
 
         private void LoadData()
         {
-            radGridReview.DataSource = BankProject.DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_GetbyStatus("UNA", this.UserId.ToString());
+            radGridReview.DataSource = BankProject.DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_GetbyStatus_2();
         }
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
