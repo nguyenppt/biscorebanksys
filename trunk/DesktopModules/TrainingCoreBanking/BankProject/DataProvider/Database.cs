@@ -475,12 +475,19 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("BCOLLECTCHARGESFROMACCOUNT_GetbyStatus", Status, UserID);
         }
-
+        public static DataSet BCOLLECTCHARGESFROMACCOUNT_GetbyStatus_2()
+        {
+            return sqldata.ndkExecuteDataset("BCOLLECTCHARGESFROMACCOUNT_GetbyStatus_2");
+        }
+        public static DataSet BCOLLECTCHARGESFROMACCOUNT_Check_Available_Amt(string AccountType, string AccountCode)
+        {
+            return sqldata.ndkExecuteDataset("BCOLLECTCHARGESFROMACCOUNT_Check_Available_Amt", AccountType, AccountCode);
+        }
         public static void BCOLLECTCHARGESFROMACCOUNT_UpdateStatus(string AccountType, string Status, string NormalLCCode, string userid)
         {
-            sqldata.ndkExecuteNonQuery("BCOLLECTCHARGESFROMACCOUNT_UpdateStatus", AccountType, Status, NormalLCCode, userid);
+             sqldata.ndkExecuteNonQuery("BCOLLECTCHARGESFROMACCOUNT_UpdateStatus", AccountType, Status, NormalLCCode, userid);
         }
-
+        
         public static DataSet BCOLLECTCHARGESFROMACCOUNT_GetByID(int  Code)
         {
             return sqldata.ndkExecuteDataset("BCOLLECTCHARGESFROMACCOUNT_GetByID", Code);
