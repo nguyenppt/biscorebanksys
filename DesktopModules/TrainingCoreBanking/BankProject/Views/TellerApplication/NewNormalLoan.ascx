@@ -452,13 +452,13 @@
             <legend style="text-transform: uppercase; font-weight: bold">Credit Scoring Details</legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Expected Loss</td>
+                    <td class="MyLable">Credit Scoring</td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="tbExpectedLoss" runat="server" validationgroup="Group1" width="150"></telerik:radnumerictextbox>
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Loss Given Def.</td>
+                    <td class="MyLable">Credit rating</td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="tbLossGiven" runat="server" validationgroup="Group1" width="150"></telerik:radnumerictextbox>
                     </td>
