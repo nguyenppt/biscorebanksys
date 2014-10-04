@@ -303,13 +303,14 @@ namespace BankProject.Views.TellerApplication
                 {
                     RdpAvailableDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["Availabledate"].ToString());
                 }
-                tbIntLimitAmt.Text = ds.Tables[0].Rows[0]["InternalLimitAmt"].ToString();
+                //tbIntLimitAmt.Text = ds.Tables[0].Rows[0]["InternalLimitAmt"].ToString(); chinh sua theo nghiep vu ngay 4/10/2014
+                //tbAdvisedAmt.Text = ds.Tables[0].Rows[0]["AdvisedAmt"].ToString();
+
                 //tbIntLimitAmt.Text = String.Format("{0:C}",Convert.ToDecimal( ds.Tables[0].Rows[0]["InternalLimitAmt"].ToString())).Replace("$", "");
-                tbAdvisedAmt.Text = ds.Tables[0].Rows[0]["AdvisedAmt"].ToString();
                 tbOriginalLimit.Text = ds.Tables[0].Rows[0]["OriginalLimit"].ToString();
                 tbNote.Text = ds.Tables[0].Rows[0]["Note"].ToString();
                 rcbFandA.SelectedValue = ds.Tables[0].Rows[0]["Mode"].ToString();
-                tbMaxTotal.Text = ds.Tables[0].Rows[0]["MaxTotal"].ToString();
+                //tbMaxTotal.Text = ds.Tables[0].Rows[0]["MaxTotal"].ToString();
                 Global_Limit_Was_Created = true;// tra Flag ve trang thai true nhu luc dau
             }
             else
@@ -361,7 +362,7 @@ namespace BankProject.Views.TellerApplication
                 lblPeriodPct.Text = ds1.Tables[0].Rows[0]["PeriodPct"].ToString();
                 tbMaxSecured.Text = ds1.Tables[0].Rows[0]["MaxSecured"].ToString();
                 tbMaxUnsecured.Text = ds1.Tables[0].Rows[0]["MaxUnSecured"].ToString();
-                tbMaxTotal.Text = ds1.Tables[0].Rows[0]["MaxTotal"].ToString();
+                //tbMaxTotal.Text = ds1.Tables[0].Rows[0]["MaxTotal"].ToString();
                 lblOtherSecured.Text = ds1.Tables[0].Rows[0]["OtherSecured"].ToString();
                 lblCollateralRight.Text = ds1.Tables[0].Rows[0]["CollateralRight"].ToString();
                 //lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
@@ -436,12 +437,12 @@ namespace BankProject.Views.TellerApplication
                 {
                     RdpAvailableDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["Availabledate"].ToString());
                 }
-                tbIntLimitAmt.Text = ds.Tables[0].Rows[0]["InternalLimitAmt"].ToString();
-                tbAdvisedAmt.Text = ds.Tables[0].Rows[0]["AdvisedAmt"].ToString();
+                //tbIntLimitAmt.Text = ds.Tables[0].Rows[0]["InternalLimitAmt"].ToString(); modified 4/10/2014
+                //tbAdvisedAmt.Text = ds.Tables[0].Rows[0]["AdvisedAmt"].ToString();
                 tbOriginalLimit.Text = ds.Tables[0].Rows[0]["OriginalLimit"].ToString();
                 tbNote.Text = ds.Tables[0].Rows[0]["Note"].ToString();
                 rcbFandA.SelectedValue = ds.Tables[0].Rows[0]["Mode"].ToString();
-                tbMaxTotal.Text = ds.Tables[0].Rows[0]["MaxTotal"].ToString();
+                //tbMaxTotal.Text = ds.Tables[0].Rows[0]["MaxTotal"].ToString();
                 is_New_edit_hanMucCha = true;// cho phep enable form va disable collateral type
             }
             else // han muc cha chua co o DB, tao moi, khong disable form
