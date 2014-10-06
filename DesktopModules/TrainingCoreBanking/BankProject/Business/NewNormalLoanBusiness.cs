@@ -32,6 +32,8 @@ namespace BankProject.Business
                 entry.ValueDate = DateTime.Now;
                 entry.Drawdown = DateTime.Now;
                 entry.BusDayDef = "VN";
+                entry.DefineSch = "Y";
+                entry.RateType = "1";//Default is Fix A
             }
 
 
