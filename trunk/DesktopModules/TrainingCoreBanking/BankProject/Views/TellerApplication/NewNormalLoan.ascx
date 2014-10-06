@@ -929,7 +929,7 @@
             <telerik:AjaxUpdatedControl ControlID="rcbSubCategory" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-         <telerik:AjaxSetting AjaxControlID="rcbCustomerID">
+         <telerik:AjaxSetting AjaxControlID="rcbCurrency">
             <UpdatedControls>
             <telerik:AjaxUpdatedControl ControlID="rcbCreditToAccount" />
             <telerik:AjaxUpdatedControl ControlID="rcbPrinRepAccount" />
