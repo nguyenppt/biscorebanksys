@@ -263,10 +263,10 @@
                          <CollapseAnimation Type="None" />
                          <CollapseAnimation Type="None" />
                          <Items>
-                             <telerik:RadComboBoxItem Value="" Text="" />
-                             <telerik:RadComboBoxItem Value="1" Text="1 - Fixed A" />
-                             <telerik:RadComboBoxItem Value="2" Text="2 - Fixed B" />
-                             <telerik:RadComboBoxItem Value="3" Text="3 - Periodic Automatic" />
+<%--                             <telerik:RadComboBoxItem Value="" Text="" />--%>
+                             <telerik:RadComboBoxItem Value="1" Text="1 - Fixed A" /> <%--Du no giam dan--%>
+                             <telerik:RadComboBoxItem Value="2" Text="2 - Fixed B" /> <%--Du no ban dau--%>
+                             <telerik:RadComboBoxItem Value="3" Text="3 - Periodic Automatic" /> <%--Du no giam dan, truot lai xuat + Ins speed--%>
                          </Items>
                      </telerik:radcombobox>
                     </td>
@@ -276,15 +276,8 @@
                 <tr>
                     <td class="MyLable">Interest Basis:</td>
                     <td class="MyContent"><i>366/360</i></td>
-                    <td class="MyLable">Annuity Rep Met:</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:radcombobox id="rcbAnnRepMet" runat="server" allowcustomtext="false" markfirstmatch="true" validationgroup="Group1">
-                         <CollapseAnimation Type="None" />
-                         <ExpandAnimation Type="None" />
-                         <Items>
-                             <telerik:RadComboBoxItem Value="" Text="" />
-                         </Items>
-                     </telerik:radcombobox>
                     </td>
                 </tr>
                 <table width="100%" cellpadding="0" cellspacing="0">
@@ -304,9 +297,9 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">Interest Key:</td>
+                        <td class="MyLable">Deposit Rate:</td>
                         <td class="MyContent">
-                            <telerik:radcombobox id="rcbInterestKey" runat="server" allowcustomtext="false" markfirstmatch="true" validationgroup="Group1">
+                            <telerik:radcombobox id="rcbDepositeRate" runat="server" allowcustomtext="false" markfirstmatch="true" validationgroup="Group1">
                          <CollapseAnimation Type="None" />
                          <ExpandAnimation Type="None" />
                          <Items>
@@ -333,33 +326,21 @@
                              </Items>
                          </telerik:radcombobox>
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="MyLable">Repay Sch Type:<span class="Required">(*)</span>
-                            <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator9"
-                                ControlToValidate="rcbRepaySchType" ValidationGroup="Commit" InitialValue="" ErrorMessage="Repay Sch Type is required"
-                                ForeColor="Red" />
-                        </td>
-                        <td class="MyContent">
-                            <telerik:radcombobox id="rcbRepaySchType" runat="server" allowcustomtext="false" markfirstmatch="true" validationgroup="Group1">
-                         <CollapseAnimation Type="None" />
-                         <ExpandAnimation Type="None" />
-                         <Items>
-                             <telerik:RadComboBoxItem Value="" Text="" />
-                             <telerik:RadComboBoxItem Value="I" Text="I - INSTALLMENT" />
-                             <telerik:RadComboBoxItem Value="N" Text="N - NON-REDEMPTION" />
-                         </Items>
-                     </telerik:radcombobox>
-                        </td>
                         <td class="MyLable">Loan Status:<asp:Label ID="lbLoanStatus" runat="server" Text=""></asp:Label></td>
                         <td class="MyContent"></td>
                     </tr>
                     <tr>
-                        <td class="MyLable">Total Interest Amt:<asp:Label ID="lbTotalInterestAmt" runat="server" Text=""></asp:Label></td>
-                        <td class="MyContent"></td>
-                        <td class="MyLable">PD Status:<asp:Label ID="lbPDStatus" runat="server" Text=""></asp:Label></td>
+                        <td class="MyLable">Total Interest Amt:</td>
+                        <td class="MyContent"><asp:Label ID="lbTotalInterestAmt" runat="server" Text=""></asp:Label></td>
+                        <td class="MyLable">Past Due Amount:<asp:Label ID="lbPDStatus" runat="server" Text=""></asp:Label></td>
                         <td class="MyContent"></td>
                     </tr>
+                    <%--<tr>
+                        <td class="MyLable"></td>
+                        <td class="MyContent"></td>
+                        <td class="MyLable">Past Due Amount:<asp:Label ID="lbPDStatus" runat="server" Text=""></asp:Label></td>
+                        <td class="MyContent"></td>
+                    </tr>--%>
                 </table>
         </fieldset>
 
@@ -452,13 +433,13 @@
             <legend style="text-transform: uppercase; font-weight: bold">Credit Scoring Details</legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Credit Scoring</td>
+                    <td class="MyLable">Expected Loss</td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="tbExpectedLoss" runat="server" validationgroup="Group1" width="150"></telerik:radnumerictextbox>
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Credit rating</td>
+                    <td class="MyLable">Loss Given Def.</td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="tbLossGiven" runat="server" validationgroup="Group1" width="150"></telerik:radnumerictextbox>
                     </td>
@@ -694,8 +675,10 @@
                                     <asp:ListItem Selected="True"></asp:ListItem>
                                     <asp:ListItem>I</asp:ListItem>
                                     <asp:ListItem>P</asp:ListItem>
+                                    <asp:ListItem>I+P</asp:ListItem>
                                     <asp:ListItem>AC</asp:ListItem>
                                     <asp:ListItem>B</asp:ListItem>
+                                    <asp:ListItem>EP</asp:ListItem>
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"
                                     ErrorMessage="Please choose Type"
@@ -727,7 +710,22 @@
                                 </telerik:radnumerictextbox>
                             </td>
                             <td>
-                                <asp:TextBox ID="FreqTextBox" runat="server" Text='<%# Bind("Freq") %>' />
+                                <asp:DropDownList ID="FreqTextBox" runat="server" SelectedValue='<%# Bind("Freq") %>'>
+                                    <asp:ListItem Selected="True"></asp:ListItem>
+                                    <asp:ListItem Value="1">M</asp:ListItem>
+                                    <asp:ListItem Value="2">2M</asp:ListItem>
+                                    <asp:ListItem Value="3">3M</asp:ListItem>
+                                    <asp:ListItem Value="4">4M</asp:ListItem>
+                                    <asp:ListItem Value="5">5M</asp:ListItem>
+                                    <asp:ListItem Value="6">6M</asp:ListItem>
+                                    <asp:ListItem Value="7">7M</asp:ListItem>
+                                    <asp:ListItem Value="8">8M</asp:ListItem>
+                                    <asp:ListItem Value="9">9M</asp:ListItem>
+                                    <asp:ListItem Value="10">10M</asp:ListItem>
+                                    <asp:ListItem Value="11">11M</asp:ListItem>
+                                    <asp:ListItem Value="12">12M</asp:ListItem>
+                                    <asp:ListItem Value="E">E</asp:ListItem>
+                                </asp:DropDownList>
                             </td>
                             <td>
                                 <asp:ImageButton ImageUrl="~/Icons/Sigma/Save_16X16_Standard.png" ID="Button1" runat="server" CommandName="Update" Text="Update" />
@@ -755,8 +753,10 @@
                                     <asp:ListItem Selected="True"></asp:ListItem>
                                     <asp:ListItem>I</asp:ListItem>
                                     <asp:ListItem>P</asp:ListItem>
+                                    <asp:ListItem>I+P</asp:ListItem>
                                     <asp:ListItem>AC</asp:ListItem>
                                     <asp:ListItem>B</asp:ListItem>
+                                    <asp:ListItem>EP</asp:ListItem><%--cho phép user định nghĩa số tiền cần phải trả trong Kỳ Cuối--%>
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"
                                     ErrorMessage="Please choose Type"
@@ -788,7 +788,22 @@
                                 </telerik:radnumerictextbox>
                             </td>
                             <td>
-                                <asp:TextBox ID="FreqTextBox" runat="server" Text='<%# Bind("Freq") %>' />
+                                <asp:DropDownList ID="FreqTextBox" runat="server" SelectedValue='<%# Bind("Freq") %>'>
+                                    <asp:ListItem Selected="True"></asp:ListItem>
+                                    <asp:ListItem Value="1">M</asp:ListItem>
+                                    <asp:ListItem Value="2">2M</asp:ListItem>
+                                    <asp:ListItem Value="3">3M</asp:ListItem>
+                                    <asp:ListItem Value="4">4M</asp:ListItem>
+                                    <asp:ListItem Value="5">5M</asp:ListItem>
+                                    <asp:ListItem Value="6">6M</asp:ListItem>
+                                    <asp:ListItem Value="7">7M</asp:ListItem>
+                                    <asp:ListItem Value="8">8M</asp:ListItem>
+                                    <asp:ListItem Value="9">9M</asp:ListItem>
+                                    <asp:ListItem Value="10">10M</asp:ListItem>
+                                    <asp:ListItem Value="11">11M</asp:ListItem>
+                                    <asp:ListItem Value="12">12M</asp:ListItem><%--12M: Định kỳ trả 12 tháng--%>
+                                    <asp:ListItem Value="E">E</asp:ListItem> <%--E:   Thanh toán Cuối kỳ--%>
+                                </asp:DropDownList>
                             </td>
                             <td>
                                 <asp:ImageButton ImageUrl="~/Icons/Sigma/Save_16X16_Standard.png" ID="InsertButton" ValidationGroup="myVGInsert" runat="server" CommandName="Insert" Text="Insert" />&nbsp;&nbsp;&nbsp
@@ -914,7 +929,7 @@
             <telerik:AjaxUpdatedControl ControlID="rcbSubCategory" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-         <telerik:AjaxSetting AjaxControlID="rcbCurrency">
+         <telerik:AjaxSetting AjaxControlID="rcbCustomerID">
             <UpdatedControls>
             <telerik:AjaxUpdatedControl ControlID="rcbCreditToAccount" />
             <telerik:AjaxUpdatedControl ControlID="rcbPrinRepAccount" />
