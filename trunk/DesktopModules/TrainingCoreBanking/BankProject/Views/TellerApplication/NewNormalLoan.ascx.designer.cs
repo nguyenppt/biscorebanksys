@@ -265,15 +265,6 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadComboBox rcbRateType;
         
         /// <summary>
-        /// rcbAnnRepMet control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbAnnRepMet;
-        
-        /// <summary>
         /// lblIntPayMethod control.
         /// </summary>
         /// <remarks>
@@ -301,13 +292,13 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadNumericTextBox tbInterestRate;
         
         /// <summary>
-        /// rcbInterestKey control.
+        /// rcbDepositeRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbInterestKey;
+        protected global::Telerik.Web.UI.RadComboBox rcbDepositeRate;
         
         /// <summary>
         /// tbInSpread control.
@@ -326,24 +317,6 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbDefineSch;
-        
-        /// <summary>
-        /// RequiredFieldValidator9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator9;
-        
-        /// <summary>
-        /// rcbRepaySchType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbRepaySchType;
         
         /// <summary>
         /// lbLoanStatus control.
