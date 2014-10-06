@@ -362,7 +362,9 @@ namespace BankProject.Views.TellerApplication
                 lblPeriodPct.Text = ds1.Tables[0].Rows[0]["PeriodPct"].ToString();
                 tbMaxSecured.Text = ds1.Tables[0].Rows[0]["MaxSecured"].ToString();
                 tbMaxUnsecured.Text = ds1.Tables[0].Rows[0]["MaxUnSecured"].ToString();
-                //tbMaxTotal.Text = ds1.Tables[0].Rows[0]["MaxTotal"].ToString();
+                tbMaxTotal.Text = ds1.Tables[0].Rows[0]["MaxTotal"].ToString();
+                tbAdvisedAmt.Text = ds1.Tables[0].Rows[0]["AdvisedAmt"].ToString();
+                tbIntLimitAmt.Text = ds1.Tables[0].Rows[0]["InternalLimitAmt"].ToString();
                 lblOtherSecured.Text = ds1.Tables[0].Rows[0]["OtherSecured"].ToString();
                 lblCollateralRight.Text = ds1.Tables[0].Rows[0]["CollateralRight"].ToString();
                 //lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
