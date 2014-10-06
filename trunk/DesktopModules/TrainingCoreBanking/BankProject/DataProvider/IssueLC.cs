@@ -101,5 +101,34 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("P_ImportLCDocumenyReport", ReportType, PaymentId, UserId);
         }
+
+        public static void ImportLCPaymentMT756Update(long PaymentId, string PaymentCode, string General, string SendingBankTRN, string RelatedReference, double? AmountCollected, System.DateTime? ValueDate, 
+				string Currency, double? Amount, string SenderCorrespondent1, string SenderCorrespondent2, string ReceiverCorrespondent1, string ReceiverCorrespondent2, 
+				string DetailOfCharges1, string DetailOfCharges2,string ReceiverCorrespondentType,string ReceiverCorrespondentNo,string ReceiverCorrespondentName,string 
+				ReceiverCorrespondentAddr1,string ReceiverCorrespondentAddr2,string ReceiverCorrespondentAddr3,string SenderCorrespondentType,string 
+				SenderCorrespondentNo,string SenderCorrespondentName,string SenderCorrespondentAddr1,string SenderCorrespondentAddr2,string SenderCorrespondentAddr3,string 
+				SenderToReceiverInformation1,string SenderToReceiverInformation2,string SenderToReceiverInformation3,string DetailOfCharges3)
+        {
+            sqldata.ndkExecuteNonQuery("P_ImportLCPaymentMT756Update", PaymentId, PaymentCode, General, SendingBankTRN, RelatedReference, AmountCollected, ValueDate,
+                Currency, Amount, SenderCorrespondent1, SenderCorrespondent2, ReceiverCorrespondent1, ReceiverCorrespondent2,
+                DetailOfCharges1, DetailOfCharges2, ReceiverCorrespondentType, ReceiverCorrespondentNo, ReceiverCorrespondentName,
+                ReceiverCorrespondentAddr1, ReceiverCorrespondentAddr2, ReceiverCorrespondentAddr3, SenderCorrespondentType,
+                SenderCorrespondentNo, SenderCorrespondentName, SenderCorrespondentAddr1, SenderCorrespondentAddr2, SenderCorrespondentAddr3,
+                SenderToReceiverInformation1, SenderToReceiverInformation2, SenderToReceiverInformation3, DetailOfCharges3);
+        }
+        public static void ImportLCPaymentMT202Update(long PaymentId, string PaymentCode, string TransactionReferenceNumber, string RelatedReference, System.DateTime? ValueDate, string Currency, double? 
+				Amount,string OrderingInstitution,string SenderCorrespondent1,string SenderCorrespondent2,string ReceiverCorrespondent1,string ReceiverCorrespondent2,string 
+				IntermediaryBank,string AccountWithInstitution,string BeneficiaryBank,string SenderToReceiverInformation,string IntermediaryBankType,string IntermediaryBankName,string 
+				IntermediaryBankAddr1,string IntermediaryBankAddr2,string IntermediaryBankAddr3,string AccountWithInstitutionType,string AccountWithInstitutionName,string 
+				AccountWithInstitutionAddr1,string AccountWithInstitutionAddr2,string AccountWithInstitutionAddr3,string BeneficiaryBankType,string BeneficiaryBankName,string 
+				BeneficiaryBankAddr1,string BeneficiaryBankAddr2,string BeneficiaryBankAddr3,string SenderToReceiverInformation2,string SenderToReceiverInformation3)
+        {
+            sqldata.ndkExecuteNonQuery("P_ImportLCPaymentMT202Update", PaymentId, PaymentCode, TransactionReferenceNumber, RelatedReference, ValueDate, Currency,
+                Amount, OrderingInstitution, SenderCorrespondent1, SenderCorrespondent2, ReceiverCorrespondent1, ReceiverCorrespondent2,
+                IntermediaryBank, AccountWithInstitution, BeneficiaryBank, SenderToReceiverInformation, IntermediaryBankType, IntermediaryBankName,
+                IntermediaryBankAddr1, IntermediaryBankAddr2, IntermediaryBankAddr3, AccountWithInstitutionType, AccountWithInstitutionName,
+                AccountWithInstitutionAddr1, AccountWithInstitutionAddr2, AccountWithInstitutionAddr3, BeneficiaryBankType, BeneficiaryBankName,
+                BeneficiaryBankAddr1, BeneficiaryBankAddr2, BeneficiaryBankAddr3, SenderToReceiverInformation2, SenderToReceiverInformation3);
+        }
     }
 }
