@@ -197,16 +197,15 @@ namespace BankProject.Views.TellerApplication
                                 ShowMsgBox("The Product Limit that You have entered does not have Global Limit " + LimitID.Substring(8, 4) + ". Please Create Global Limit before do this action !");
                                 break;
                             }
-                            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon);
-                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon, CustomerID+"."+HanMucCha,LimitID );
+                            DataSet ds1 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt(CustomerID + "." + HanMucCha);
+                            double InternalLimitAmt_Global = Convert.ToDouble(ds1.Tables[0].Rows[0]["InternalLimitAmt"].ToString());
+                            double Sum_Product_InternalAmt = Convert.ToDouble((ds.Tables[0].Rows.Count == 0 ? "0" : ds.Tables[0].Rows[0]["Sum_Product_InternalAmt"].ToString()));
+                            if (Sum_Product_InternalAmt + Convert.ToDouble(tbIntLimitAmt.Text.Replace(",", "")) > InternalLimitAmt_Global)
                             {
-                                if (Convert.ToDouble(ds.Tables[0].Rows[0]["ProductLimitAvailable"].ToString()) < ProductLimitAmt)
-                                {
-                                    ShowMsgBox("You can not create this Product Limit due to the rest of Global Limit Available amount is " + string.Format("{0:C}",Convert.ToDouble( ds.Tables[0].Rows[0]["ProductLimitAvailable"].ToString())).Replace("$","")
-                                        + " .Please check again "); return;
-                                }
+                                ShowMsgBox("This Product Limit can not be able to create because total of Product Amount can not exceed Global Amount"); return;
                             }
-
+                            
                             TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
                             , "", "",
                             "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text

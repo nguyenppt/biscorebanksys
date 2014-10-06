@@ -116,7 +116,7 @@ namespace BankProject.Views.TellerApplication
                     BindField2Data(ref normalLoanEntryM);
                     loanBusiness.Entity = normalLoanEntryM;
                     loanBusiness.authorizeProcess(this.UserId);
-                    UpdateSchedulePaymentToDB();
+                    //UpdateSchedulePaymentToDB();
                     this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
                     break;
 
