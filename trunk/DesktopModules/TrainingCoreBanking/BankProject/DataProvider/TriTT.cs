@@ -327,9 +327,13 @@ namespace BankProject.DataProvider
             }
             else return "";
         }
-        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType)
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType, string GlobalLimitID, string ProductLimitID)
         {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType);
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType, GlobalLimitID, ProductLimitID);
+        }
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt(string GlobalLimitID)
+        {
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt",  GlobalLimitID);
         }
         #endregion
         #region INPUT CUSTOMER_RIGHT_Load_SubLimitID
