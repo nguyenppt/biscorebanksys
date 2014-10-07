@@ -181,14 +181,13 @@
                 <tr>
                     <td class="MyLable">Nostro Acct</td>
                     <td class="MyContent">
-                        <telerik:radcombobox
-                            appenddatabounditems="True"
+                        <telerik:radcombobox AutoPostBack="false"
+                            OnItemDataBound="cboNostroAcct_ItemDataBound"
                             id="cboNostroAcct" runat="server"
                             markfirstmatch="True" width="300"
-                            allowcustomtext="false">
+                            allowcustomtext="false" OnClientSelectedIndexChanged="cboNostroAcct_OnClientSelectedIndexChanged">
                             <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            
+                            <CollapseAnimation Type="None" />                            
                         </telerik:radcombobox> <asp:Label ID="lblNostroAcctName" runat="server" /></td>
                 </tr>
                 <tr>
@@ -753,7 +752,7 @@
                 </table>
 
                 <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
+                    <tr style="display:none;">
                         <td style="width: 200px" class="MyLable">Detail of Charges</td>
                         <td class="MyContent">
                             <telerik:RadTextBox ID="txtDetailOfCharges1" runat="server" Width="400" />
@@ -858,7 +857,7 @@
                                     <ExpandAnimation Type="None" />
                                     <CollapseAnimation Type="None" />
                                     <Items>
-                                        <telerik:RadComboBoxItem Value="ILC.CABLE" Text="CABLE CHARGE FOR IMPORT LC" />
+                                        <telerik:RadComboBoxItem Value="ILC.CABLE" Text="ILC.CABLE" />
                                     </Items>
                                 </telerik:RadComboBox>
                             </td>
@@ -992,7 +991,7 @@
                                     <ExpandAnimation Type="None" />
                                     <CollapseAnimation Type="None" />
                                     <Items>
-                                        <telerik:RadComboBoxItem Value="ILC.PAYMENT" Text="PAYMENT CHARGE FOR IMPORT LC" />
+                                        <telerik:RadComboBoxItem Value="ILC.PAYMENT" Text="ILC.PAYMENT" />
                                     </Items>
                                 </telerik:RadComboBox>
                             </td>
@@ -1126,7 +1125,7 @@
                                     <ExpandAnimation Type="None" />
                                     <CollapseAnimation Type="None" />
                                     <Items>
-                                        <telerik:RadComboBoxItem Value="ILC.HANDLING" Text="HANDLING  CHARGE FOR IMPORT LC" />
+                                        <telerik:RadComboBoxItem Value="ILC.HANDLING" Text="ILC.HANDLING" />
                                     </Items>
                                 </telerik:RadComboBox>
                             </td>
@@ -1260,7 +1259,7 @@
                                     <ExpandAnimation Type="None" />
                                     <CollapseAnimation Type="None" />
                                     <Items>
-                                        <telerik:RadComboBoxItem Value="ILC.DISCRP" Text="DISCREPANCY  CHARGE FOR IMPORT LC" />
+                                        <telerik:RadComboBoxItem Value="ILC.DISCRP" Text="ILC.DISCRP" />
                                     </Items>
                                 </telerik:RadComboBox>
                             </td>
@@ -1394,7 +1393,7 @@
                                     <ExpandAnimation Type="None" />
                                     <CollapseAnimation Type="None" />
                                     <Items>
-                                        <telerik:RadComboBoxItem Value="ILC.OTHER" Text="OTHER CHARGE  CHARGE FOR IMPORT LC" />
+                                        <telerik:RadComboBoxItem Value="ILC.OTHER" Text="ILC.OTHER" />
                                     </Items>
                                 </telerik:RadComboBox>
                             </td>
@@ -1596,6 +1595,10 @@
                 objW.css("display", "none");
             else
                 objW.css("display", "");
+        }
+        function cboNostroAcct_OnClientSelectedIndexChanged() {
+            var swiftCode = $find("<%=cboNostroAcct.ClientID%>").get_selectedItem().get_attributes().getAttribute("Code");
+            $find("<%=txtSenderCorrespondentNo.ClientID%>").set_value(swiftCode);
         }
     </script>
 </telerik:RadCodeBlock>

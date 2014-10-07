@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocumentWithNoDiscrepancy.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCredit.DocumentWithNoDiscrepancy" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Src="~/DesktopModules/TrainingCoreBanking/BankProject/Controls/MultiTextBox.ascx" TagPrefix="uc1" TagName="MultiTextBox" %>
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
@@ -20,7 +21,8 @@
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
                 //MT734 chua co mau : Nguyen dang xin
                 //radconfirm("Do you want to download MT734 file?", confirmCallbackFunction_MT734, 340, 150, null, 'Download');
-                radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT, 340, 150, null, 'Download');
+                if ($find("<%=comboWaiveCharges.ClientID%>").get_value() == "YES")
+                    radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT, 340, 150, null, 'Download');
             }
         }
         
@@ -332,13 +334,7 @@
             </legend>
             
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td class="MyLable" style="width: 170px">33.1 Discrepancies</td>
-                    <td class="MyContent">
-                        <telerik:Radtextbox runat="server" ID="txtDiscrepancies" Width="355" ClientEvents-OnValueChanged ="txtDiscrepancies_OnValueChanged" />
-                    </td>
-                </tr>
-                
+                <tr><td colspan="2"><uc1:MultiTextBox runat="server" id="txtDiscrepancies" Label="33.1 Discrepancies" /></td></tr>     
                 <tr>
                     <td class="MyLable">69.5.1 Disposal of Docs</td>
                     <td class="MyContent">
