@@ -2214,11 +2214,11 @@ namespace BankProject.DataProvider
 
         public static void B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(string code, string Status, int ViewType, int CurrentUserId)
         {
-            B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(code, Status, ViewType, CurrentUserId, null);
+            B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(code, Status, ViewType, CurrentUserId, null, null);
         }
-        public static void B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(string code, string Status, int ViewType, int CurrentUserId, string AcceptRemarts)
+        public static void B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(string code, string Status, int ViewType, int CurrentUserId, DateTime? AcceptDate, string AcceptRemarts)
         {
-            sqldata.ndkExecuteNonQuery("B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus", code, Status, ViewType, CurrentUserId, AcceptRemarts);
+            sqldata.ndkExecuteNonQuery("B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus", code, Status, ViewType, CurrentUserId, AcceptDate, AcceptRemarts);
         }
 
         public static DataSet B_BIMPORT_DOCUMENTPROCESSING_GetByReview(int ViewType, int CurrentUserId)
