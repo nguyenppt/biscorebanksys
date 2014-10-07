@@ -582,8 +582,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRemittingBankRef.Text = drow["RemittingBankRef"].ToString();
 
                 comboDraweeCusNo.SelectedValue = drow["DraweeCusNo"].ToString();
-                txtDraweeCusName.Text = comboDraweeCusNo.SelectedItem.Attributes["CustomerName2"];
-
+                txtDraweeCusName.Text = drow["DraweeCusName"].ToString();
                 txtDraweeAddr1.Text = drow["DraweeAddr1"].ToString();
                 txtDraweeAddr2.Text = drow["DraweeAddr2"].ToString();
                 txtDraweeAddr3.Text = drow["DraweeAddr3"].ToString();
@@ -592,7 +591,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                 txtDrawerCusNo.Text = drow["DrawerCusNo"].ToString();
                 txtDrawerCusName.Text = drow["DrawerCusName"].ToString();
-
                 txtDrawerAddr.Text = drow["DrawerAddr"].ToString();
                 txtDrawerAddr1.Text = drow["DrawerAddr1"].ToString();
                 txtDrawerAddr2.Text = drow["DrawerAddr2"].ToString();
