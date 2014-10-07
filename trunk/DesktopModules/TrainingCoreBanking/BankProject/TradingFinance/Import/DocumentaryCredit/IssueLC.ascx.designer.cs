@@ -3064,6 +3064,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.WebControls.Button btnAmentLCReport_MT707;
         
         /// <summary>
+        /// btnAmentLCReport_MT747 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAmentLCReport_MT747;
+        
+        /// <summary>
         /// btnCancelLC_XUATNGOAIBANG control.
         /// </summary>
         /// <remarks>
