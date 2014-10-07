@@ -31,25 +31,30 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             bc.Commont.initRadComboBox(ref tabDiscrepenciesCharge_cboChargeCode, "Name_EN", "Code", tblList);
             bc.Commont.initRadComboBox(ref tabOtherCharge_cboChargeCode, "Name_EN", "Code", tblList);*/
             //ChargeCcy
-            tblList = bd.Database.ExchangeRate();
-            bc.Commont.initRadComboBox(ref tabCableCharge_cboChargeCcy, "Title", "Value", tblList);
-            bc.Commont.initRadComboBox(ref tabPaymentCharge_cboChargeCcy, "Title", "Value", tblList);
-            bc.Commont.initRadComboBox(ref tabHandlingCharge_cboChargeCcy, "Title", "Value", tblList);
-            bc.Commont.initRadComboBox(ref tabDiscrepenciesCharge_cboChargeCcy, "Title", "Value", tblList);
-            bc.Commont.initRadComboBox(ref tabOtherCharge_cboChargeCcy, "Title", "Value", tblList);
-            bc.Commont.initRadComboBox(ref comboCurrency, "Title", "Value", tblList);
-            bc.Commont.initRadComboBox(ref comboCurrency_MT400, "Title", "Value", tblList);
+            tblList = bd.SQLData.B_BCURRENCY_GetAll().Tables[0]; //bd.Database.ExchangeRate();
+            bc.Commont.initRadComboBox(ref tabCableCharge_cboChargeCcy, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref tabPaymentCharge_cboChargeCcy, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref tabHandlingCharge_cboChargeCcy, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref tabDiscrepenciesCharge_cboChargeCcy, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref tabOtherCharge_cboChargeCcy, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref comboCurrency, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref comboCurrency_MT400, "Code", "Code", tblList);
             //Party Charged
             tblList = createTableList();
-            addData2TableList(ref tblList, "A");
-            addData2TableList(ref tblList, "AC");
-            addData2TableList(ref tblList, "B");
+            //addData2TableList(ref tblList, "A");
+            //addData2TableList(ref tblList, "AC");
+            //addData2TableList(ref tblList, "B");
             addData2TableList(ref tblList, "BC");
             bc.Commont.initRadComboBox(ref tabCableCharge_cboPartyCharged, "Text", "Value", tblList);
+            tabCableCharge_cboPartyCharged.SelectedValue = "BC";
             bc.Commont.initRadComboBox(ref tabPaymentCharge_cboPartyCharged, "Text", "Value", tblList);
+            tabPaymentCharge_cboPartyCharged.SelectedValue = "BC";
             bc.Commont.initRadComboBox(ref tabHandlingCharge_cboPartyCharged, "Text", "Value", tblList);
+            tabHandlingCharge_cboPartyCharged.SelectedValue = "BC";
             bc.Commont.initRadComboBox(ref tabDiscrepenciesCharge_cboPartyCharged, "Text", "Value", tblList);
+            tabDiscrepenciesCharge_cboPartyCharged.SelectedValue = "BC";
             bc.Commont.initRadComboBox(ref tabOtherCharge_cboPartyCharged, "Text", "Value", tblList);
+            tabOtherCharge_cboPartyCharged.SelectedValue = "BC";
             //Amort Charges
             tblList = createTableList();
             addData2TableList(ref tblList, bd.YesNo.NO);
@@ -596,6 +601,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtFullyUtilised.Text = bd.YesNo.NO;
                 //MT202
                 lblTransactionReferenceNumber.Text = txtCode.Text;
+                txtRelatedReference.Text = dr["PresentorRefNo"].ToString();
                 dteValueDate_MT202.SelectedDate = DateTime.Now;
                 setCurrency(ref comboCurrency, lblCurrency.Text);
                 numAmount.Value = txtDrawingAmount.Value;                
@@ -771,6 +777,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
                 }
             }
+        }
+
+        protected void cboNostroAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        {
+            var row = e.Item.DataItem as DataRowView;
+            e.Item.Attributes["Code"] = row["Code"].ToString();
+            e.Item.Attributes["Description"] = row["Description"].ToString();
+            e.Item.Attributes["Account"] = row["AccountNo"].ToString();
         }
     }
 }

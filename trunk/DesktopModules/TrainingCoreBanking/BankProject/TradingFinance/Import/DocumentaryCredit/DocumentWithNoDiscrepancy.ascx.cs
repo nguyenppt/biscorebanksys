@@ -141,7 +141,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             fieldsetDiscrepancies.Visible = isDocsDiscrepancies;
             if (isDocsDiscrepancies)
             {                
-                txtDiscrepancies.Text = drDetail["Discrepancies"].ToString();
+                ((bc.MultiTextBox)txtDiscrepancies).setText(drDetail["Discrepancies"].ToString(), true);
                 txtDisposalOfDocs.Text = drDetail["DisposalOfDocs"].ToString();
             }
             comboWaiveCharges.SelectedValue = drDetail["WaiveCharges"].ToString();
@@ -415,7 +415,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             break;
                         case TabDocsReject:
                         case TabDocsAccept:
-                            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId, txtAcceptRemarks.Text);
+                            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId, txtAcceptDate.SelectedDate, txtAcceptRemarks.Text);
                             Response.Redirect("Default.aspx?tabid=" + TabId);
                             break;
                     }
@@ -468,7 +468,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                                         , ""
                                                         , UserId
                                                         , TabId
-                                                        , txtDiscrepancies.Text
+                                                        , ((bc.MultiTextBox)txtDiscrepancies).getText()
                                                         , txtDisposalOfDocs.Text
                                                         , comboWaiveCharges.SelectedValue
                                                         , tbChargeRemarks.Text
@@ -737,7 +737,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         case TabDocsAccept:
                             comboDrawType.SelectedValue = "AC";
                             txtAcceptDate.SelectedDate = DateTime.Now;
-                            txtAcceptRemarks.Enabled = true;
                             break;
                     }                    
 
@@ -847,7 +846,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtPresentorRefNo_Supplemental.Text = drow["PresentorRefNo_Supplemental"].ToString();
                 txtDocs_Supplemental1.Text = drow["Docs_Supplemental1"].ToString();
 
-                txtDiscrepancies.Text = drow["Discrepancies"].ToString();
+                ((bc.MultiTextBox)txtDiscrepancies).setText(drow["Discrepancies"].ToString(), true);
                 txtDisposalOfDocs.Text = drow["DisposalOfDocs"].ToString();
             }
             else
@@ -886,8 +885,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
                 txtPresentorRefNo_Supplemental.Text = string.Empty;
                 txtDocs_Supplemental1.Text = string.Empty;
-
-                txtDiscrepancies.Text = string.Empty;
                 txtDisposalOfDocs.Text = string.Empty;
             }
 
