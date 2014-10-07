@@ -12,8 +12,6 @@
 
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
             args.set_cancel(true);
-
-
         }
     }
     </script>
@@ -45,6 +43,7 @@
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width:200px; padding:5px 0 5px 20px;"><asp:TextBox ID="tbEssurLCCode" runat="server" Width="200" />&nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" /></td>
+
     </tr>
 </table>
     <div class="dnnForm" id="tabs-demo">
