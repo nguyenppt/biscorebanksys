@@ -107,15 +107,19 @@
             // Neu amount > amount_old -> tu chinh tang tienb, xuat phieu [nhap ngoai bang]
             //amount < amount_Old -> tu chinh giam tien,xuat phieu [xuat phieu ngoai bang]
             // amount = amoun_old -> ko xuat phieu xuat nhap ngoai bang
-            if (amount_Old == amount) {
-                if (chargeAmount > 0) {
-                    radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT_Amendments, 350, 150, null, 'Download');
-                }
-            } else if (amount_Old > 0 && amount > amount_Old) {//b4_AUT_Amount
+           if (amount_Old > 0 && amount > amount_Old) {//b4_AUT_Amount
                 radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
             } else if (amount_Old > 0 && amount < amount_Old) {
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
-            } else if (amount_Old === 0 && amount < b4_AUT_Amount) {
+            } 
+            else if (amount_Old > 0 && amount > b4_AUT_Amount) {
+                radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
+            }
+            else if (amount_Old > 0 && amount < b4_AUT_Amount) {
+                
+                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
+            }
+            else if (amount_Old === 0 && amount < b4_AUT_Amount) {
                 radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
             } else if (amount_Old === 0 && amount > b4_AUT_Amount) {
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
