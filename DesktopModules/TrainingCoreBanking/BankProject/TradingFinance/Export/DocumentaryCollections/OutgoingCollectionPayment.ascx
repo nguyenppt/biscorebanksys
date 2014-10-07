@@ -394,7 +394,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">2.4 Drawer Ref No.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDrawerRefNo" runat="server" Width="355" Enabled="false"/>
@@ -469,7 +469,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">3.3 Collecting Bank Acct</td>
                     <td class="MyContent">
                         <telerik:RadComboBox
@@ -490,7 +490,7 @@
 
 
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">4.1 Drawee Cus No</td>
                     <td  class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeCusNo" runat="server"
@@ -530,7 +530,7 @@
             </table>
 
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">5 Nostro Cus No</td>
                     <td style="width: 150px;" class="MyContent">
                         <telerik:RadComboBox Width="400" DropDownCssClasscomboCommodity="KDDL"

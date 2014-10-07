@@ -2,7 +2,6 @@
 using System.Data;
 using System.Linq;
 using System.Web.UI;
-using BankProject.Common;
 using BankProject.DataProvider;
 using BankProject.DBContext;
 using DotNetNuke.Common;
@@ -1224,7 +1223,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void Authorize()
         {
             SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString(),ScreenType.ToString("G"));
-
+            
             Response.Redirect(Globals.NavigateURL(TabId));
         }
 
@@ -1676,7 +1675,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report(txtCode.Text, UserInfo.Username);
-            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1702,7 +1700,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report(txtCode.Text, UserInfo.Username);
-            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1728,7 +1725,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report(txtCode.Text, UserInfo.Username);
-            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1751,7 +1747,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1769,7 +1764,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1787,7 +1781,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToString(ds.Tables[1].Rows[0]["Amount"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
@@ -1805,9 +1798,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //Execute the mail merge.
             DataSet ds = new DataSet();
             ds = SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username);
-            ds.Tables[1].Rows[0]["SoTienVietBangChu"] = CommonHeplers.UsdToStringWithSign(ds.Tables[1].Rows[0]["TongSoTienThanhToan"].ToString(), ds.Tables[1].Rows[0]["CurrencyName"].ToString());
-            ds.Tables[1].Rows[0]["TongSoTienThanhToan"] =
-                Convert.ToDecimal(ds.Tables[1].Rows[0]["TongSoTienThanhToan"].ToString()).ToString("#,##0.00");
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
