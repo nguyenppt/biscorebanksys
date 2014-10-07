@@ -29,6 +29,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected double B4_AUT_Amount = 0;
         protected double TotalChargeAmt = 0;
         protected string Generate740 = string.Empty;
+        protected string Generate747 = string.Empty;
         protected string ReceivingBank_700 = string.Empty;
         protected string ReceivingBank_740 = string.Empty;
 
@@ -1564,6 +1565,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , txtSenderToReceiverInfomation_747_2.Text
                 , txtSenderToReceiverInfomation_747_3.Text
                 , txtSenderToReceiverInfomation_747_4.Text
+                , txtEdittor_Narrative_747.Content
             );
         }
 
@@ -2130,6 +2132,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             {
                 var drow = dsDoc.Tables[6].Rows[0];
                 comboGenerateMT747.SelectedValue = drow["GenerateMT747"].ToString();
+                Generate747 = comboGenerateMT747.SelectedValue;
+
                 txtReceivingBank_747.Text = drow["ReceivingBank"].ToString();
                 lblDocumentaryCreditNumber_747.Text = drow["DocumentaryCreditNumber"].ToString();
                 comboReimbBankType_747.SelectedValue = drow["ReimbBankType"].ToString();
@@ -2168,6 +2172,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_3.Text = drow["SenderToReceiverInformation3"].ToString();
                 txtSenderToReceiverInfomation_747_4.Text = drow["SenderToReceiverInformation4"].ToString();
 
+                txtEdittor_Narrative_747.Content = drow["Narrative"].ToString();
+
                 GenerateMT747();
             }
             else
@@ -2203,6 +2209,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_2.Text = string.Empty;
                 txtSenderToReceiverInfomation_747_3.Text = string.Empty;
                 txtSenderToReceiverInfomation_747_4.Text = string.Empty;
+
+                txtEdittor_Narrative_747.Content = string.Empty;
 
                 // set default values
                 if (dsDoc.Tables[0].Rows.Count > 0)
@@ -2657,11 +2665,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_VAT.doc"),
                     bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
-        protected void btnAmentLCReport_MT707_Click(object sender, EventArgs e)
-        {
-            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT707.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_MT707_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
-        }
 
         protected void btnCancelLC_XUATNGOAIBANG_Click(object sender, EventArgs e)
         {
@@ -2887,6 +2890,20 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtEdittor_Narrative_747.Enabled = false;
             } 
         }
+
+        protected void btnAmentLCReport_MT707_Click(object sender, EventArgs e)
+        {
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT707.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(txtCode.Text), "AmendLC_MT707_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+        }
+
+        protected void btnAmentLCReport_MT747_Click(object sender, EventArgs e)
+        {
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT747.doc"),
+                bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT747_REPORT(txtCode.Text), "AmendLC_MT747_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+        }
+
+
 
      
     }

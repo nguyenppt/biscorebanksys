@@ -14,6 +14,7 @@
         var receivingBank_700 = '<%= ReceivingBank_700 %>';
         var receivingBank_740 = '<%= ReceivingBank_740 %>';
         var generateMT740 = '<%= Generate740 %>';
+        var generateMT747 = '<%= Generate747 %>';
         var waiveCharges = '<%= WaiveCharges %>';
         
         jQuery(function ($) {
@@ -53,15 +54,18 @@
             // Neu amount > amount_old -> tu chinh tang tienb, xuat phieu [nhap ngoai bang]
             //amount < amount_Old -> tu chinh giam tien,xuat phieu [xuat phieu ngoai bang]
             // amount = amoun_old -> ko xuat phieu xuat nhap ngoai bang
-            if (amount_Old == amount) {
-                if (waiveCharges === 'NO' && chargeAmount > 0) {
-                    radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT_Amendments, 350, 150, null, 'Download');
-                }
-            } else if (amount_Old > 0 && amount > amount_Old) {//b4_AUT_Amount
+            if (amount_Old > 0 && amount > amount_Old) {//b4_AUT_Amount
                 radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
             } else if (amount_Old > 0 && amount < amount_Old) {
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
-            } else if (amount_Old === 0 && amount < b4_AUT_Amount) {
+            } 
+            else if (amount_Old > 0 && amount > b4_AUT_Amount) {
+                radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
+            }
+            else if (amount_Old > 0 && amount < b4_AUT_Amount) {                
+                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
+            }
+            else if (amount_Old === 0 && amount < b4_AUT_Amount) {
                 radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
             } else if (amount_Old === 0 && amount > b4_AUT_Amount) {
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
@@ -109,20 +113,37 @@
                 $("#<%=btnAmentLCReport_XuatNgoaiBang.ClientID %>").click();
             }
             
-            if (waiveCharges === 'NO' && chargeAmount > 0) {
-                radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT_Amendments, 420, 150, null, 'Download');
-            }
+            radconfirm("Do you want to download MT707 file?", confirmCallbackFunction_MT707_Amendments, 420, 150, null, 'Download');
         }
         
         function confirmCallbackFunction_NhapNgoaiBang_Amendments(result) {
             if (result) {
                 $("#<%=btnAmentLCReport_NhapNgoaiBang.ClientID %>").click();
             }
+            radconfirm("Do you want to download MT707 file?", confirmCallbackFunction_MT707_Amendments, 420, 150, null, 'Download');
+        }
+
+        function confirmCallbackFunction_MT707_Amendments(result) {
+            if (result) {
+                $("#<%=btnAmentLCReport_MT707.ClientID %>").click();
+            }
+
+            if (generateMT747 === 'YES') {
+                radconfirm("Do you want to download MT747 file?", confirmCallbackFunction_MT747_Amendments, 420, 150, null, 'Download');
+            } else if (waiveCharges === 'NO' && chargeAmount > 0) {
+                radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT_Amendments, 420, 150, null, 'Download');    
+            }
+        }
+
+        function confirmCallbackFunction_MT747_Amendments(result) {
+            if (result) {
+                $("#<%=btnAmentLCReport_MT747.ClientID %>").click();
+            }
             if (waiveCharges === 'NO' && chargeAmount > 0) {
                 radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT_Amendments, 420, 150, null, 'Download');    
             }
         }
-        
+
         function confirmCallbackFunction_VAT_Amendments(result) {
             if (result) {
                 $("#<%=btnAmentLCReport_VAT.ClientID %>").click();
@@ -4150,7 +4171,9 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 <div style="visibility: hidden;">
     <asp:Button ID="btnAmentLCReport_VAT" runat="server" OnClick="btnAmentLCReport_VAT_Click" Text="Search" /></div>
 <div style="visibility: hidden;">
-    <asp:Button ID="btnAmentLCReport_MT707" runat="server" OnClick="btnAmentLCReport_MT707_Click" Text="Search" /></div>
+    <asp:Button ID="btnAmentLCReport_MT707" runat="server" OnClick="btnAmentLCReport_MT707_Click"  Text="Search" /></div>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnAmentLCReport_MT747" runat="server" OnClick="btnAmentLCReport_MT747_Click" Text="Search" /></div>
 
 <div style="visibility: hidden;">
     <asp:Button ID="btnCancelLC_XUATNGOAIBANG" runat="server" OnClick="btnCancelLC_XUATNGOAIBANG_Click" Text="Search" /></div>
