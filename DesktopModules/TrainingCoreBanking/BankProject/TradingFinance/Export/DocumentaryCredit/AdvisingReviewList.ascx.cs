@@ -17,6 +17,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             Register,
             Amend,
             Cancel,
+            Close,
             RegisterCc,
             Acception
         }
@@ -30,6 +31,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         return AdvisingAndNegotiationScreenType.Amend;
                     case 237:
                         return AdvisingAndNegotiationScreenType.Cancel;
+                    case 265:
+                        return AdvisingAndNegotiationScreenType.Close;
                     default:
                         return AdvisingAndNegotiationScreenType.Register;
                 }
@@ -52,6 +55,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case AdvisingAndNegotiationScreenType.Cancel:
                     radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.CancelStatus == "UNA" || q.CancelStatus == "REV").Select(q => new { q.NormalLCCode, Status = q.CancelStatus }).ToList();
                     break;
+                case AdvisingAndNegotiationScreenType.Close:
+                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.CloseStatus == "UNA" || q.CancelStatus == "REV").Select(q => new { q.NormalLCCode, Status=q.CloseStatus }).ToList();
+                    break;
+                //case AdvisingAndNegotiationScreenType.Amend:
+                //    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.AmendStatus == "UNA" || q.AmendStatus =="REV").Select(q => new { q.NormalLCCode, Status = q.AmendStatus }).ToList();
+                //    break;
+                //case AdvisingAndNegotiationScreenType.Cancel:
+                //    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.CancelStatus == "UNA" || q.CancelStatus == "REV").Select(q => new { q.NormalLCCode, Status = q.CancelStatus }).ToList();
+                //    break;
             }
         }
         public string geturlReview(string id)
