@@ -2063,9 +2063,13 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT", code, userloginname, TabId);
         }
 
-        public static DataSet B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(string code, string userloginname, int TabId)
+        public static DataSet B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(string code)
         {
-            return sqldata.ndkExecuteDataset("B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT", code, userloginname, TabId);
+            return sqldata.ndkExecuteDataset("B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT", code);
+        }
+        public static DataSet B_BIMPORT_NORMAILLC_AMEND_MT747_REPORT(string code)
+        {
+            return sqldata.ndkExecuteDataset("B_BIMPORT_NORMAILLC_AMEND_MT747_REPORT", code);
         }
 
         public static DataTable B_BFOREIGNEXCHANGE_GetByCreditAccount(string Code, string Currency, string CustomerName,
@@ -2331,7 +2335,8 @@ namespace BankProject.DataProvider
                                                             , string SenderToReceiverInformation1
                                                             , string SenderToReceiverInformation2
                                                             , string SenderToReceiverInformation3
-                                                            , string SenderToReceiverInformation4)
+                                                            , string SenderToReceiverInformation4
+            , string Narrative)
         {
             sqldata.ndkExecuteNonQuery("B_BIMPORT_NORMAILLC_MT747_Insert",  NormalLCCode 
                                                                         ,  GenerateMT747  
@@ -2357,7 +2362,8 @@ namespace BankProject.DataProvider
                                                                         ,  SenderToReceiverInformation1   
                                                                         ,  SenderToReceiverInformation2   
                                                                         ,  SenderToReceiverInformation3   
-                                                                        ,  SenderToReceiverInformation4   );
+                                                                        ,  SenderToReceiverInformation4
+                                                                        , Narrative);
         }
 
         public static DataSet B_BIMPORT_NORMAILLC_MT707_Insert(string NormalLCCode
