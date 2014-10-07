@@ -657,7 +657,7 @@
                                 <asp:Label ID="NoLabel" runat="server" Text='<%# Eval("No") %>' />
                             </td>
                             <td>
-                                <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq") %>' />
+                                <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq_display") %>' />
                             </td>
                             <td>
                                 <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="Button3" runat="server" CommandName="Delete" Text="Delete" />&nbsp;&nbsp;&nbsp
@@ -838,7 +838,7 @@
                                 <asp:Label ID="NoLabel" runat="server" Text='<%# Eval("No") %>' />
                             </td>
                             <td>
-                                <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq") %>' />
+                                <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq_display") %>' />
                             </td>
                             <td>
                                 <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="Button5" runat="server" CommandName="Delete" Text="Delete" />&nbsp;&nbsp;&nbsp
@@ -899,7 +899,7 @@
                                 <asp:Label ID="NoLabel" runat="server" Text='<%# Eval("No") %>' />
                             </td>
                             <td>
-                                <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq") %>' />
+                                <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq_display") %>' />
                             </td>
                             <td>
                                 <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="DeleteButton" runat="server" CommandName="Delete" Text="Delete" />

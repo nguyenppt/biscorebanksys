@@ -116,7 +116,7 @@ namespace BankProject.Views.TellerApplication
                     BindField2Data(ref normalLoanEntryM);
                     loanBusiness.Entity = normalLoanEntryM;
                     loanBusiness.authorizeProcess(this.UserId);
-                    //UpdateSchedulePaymentToDB();
+                    UpdateSchedulePaymentToDB();
                     this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
                     break;
 
@@ -151,6 +151,7 @@ namespace BankProject.Views.TellerApplication
             LoadCollareralID(rcbCustomerID.SelectedValue, null, null, null, null);
             LoadLimitReferenceInfor(rcbCustomerID.SelectedValue, null);
             LoadAllAccount(rcbCustomerID.SelectedValue, rcbCurrency.SelectedValue, null, null, null, null);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "clickMainTab();", true);
         }
 
 
@@ -808,8 +809,8 @@ namespace BankProject.Views.TellerApplication
                 princleSchedue.Code = dtInfor.Rows[0]["Code"].ToString();
                 princleSchedue.CustomerID = dtInfor.Rows[0]["CustomerID"].ToString();
                 princleSchedue.LoanAmount = decimal.Parse((dtInfor.Rows[0]["LoanAmount"].ToString().Replace(",", "")));
-                
-                if(dtInfor.Rows[0]["Drawdown"]!=null)
+
+                if (dtInfor.Rows[0]["Drawdown"] != null)
                     princleSchedue.Drawdown = (DateTime)dtInfor.Rows[0]["Drawdown"];
                 princleSchedue.InterestKey = dtInfor.Rows[0]["InterestKey"].ToString();
                 princleSchedue.Freq = dtInfor.Rows[0]["Freq"].ToString();
@@ -852,7 +853,8 @@ namespace BankProject.Views.TellerApplication
             drInfor[dsOut.Cl_code] = normalLoanEntryM.Code;
             drInfor[dsOut.Cl_custID] = normalLoanEntryM.CustomerID;
             drInfor[dsOut.Cl_cust] = normalLoanEntryM.CustomerName;
-            drInfor[dsOut.Cl_drawdown] = normalLoanEntryM.Drawdown;
+            if (normalLoanEntryM.Drawdown != null)
+                drInfor[dsOut.Cl_drawdown] = normalLoanEntryM.Drawdown;
             drInfor[dsOut.Cl_loadAmount] = normalLoanEntryM.LoanAmount;
             drInfor[dsOut.Cl_interestKey] = "";
             drInfor[dsOut.Cl_interest] = 0;
@@ -934,13 +936,17 @@ namespace BankProject.Views.TellerApplication
                     dr = ds.DtItems.NewRow();
                     dr[ds.Cl_dueDate] = startInterestDate;
                     dr[ds.Cl_isInterestedRow] = true;
+                    dr[ds.Cl_isPaymentRow] = false;
                     dr[ds.Cl_principle] = 0;
+                    dr[ds.Cl_PrintOs] = 0;
                     ds.DtItems.Rows.Add(dr);
                 }
+                dr[ds.Cl_durationDate] = startInterestDate.Subtract(prevInterestDate).Days;
+
                 prevInterestDate = startInterestDate;
                 startInterestDate = startInterestDate.AddMonths(freq);
 
-                dr[ds.Cl_durationDate] = startInterestDate.Subtract(prevInterestDate).Days;
+
 
                 if (startInterestDate.Subtract(endDate).Days > 0)
                     startInterestDate = endDate;
@@ -955,9 +961,9 @@ namespace BankProject.Views.TellerApplication
             for (int i = 0; i < ds.DtItems.Rows.Count; i++)
             {
                 DataRow dr = ds.DtItems.Rows[i];
-                if (dr["IntestedRow"] != null && (Boolean)dr["IntestedRow"])
+                if (dr["IntestedRow"] != null && (bool)dr["IntestedRow"])
                 {
-                    if (String.IsNullOrEmpty(dr["PrinOS"].ToString()))
+                    if (dr["PaymentRow"] != null && !(bool)dr["PaymentRow"])
                     {
                         dr["PrinOS"] = currentAmount;
                     }
@@ -1025,6 +1031,8 @@ namespace BankProject.Views.TellerApplication
                     dr[ds.Cl_dueDate] = periosDate;
                     dr[ds.Cl_principle] = instalmant;
                     dr[ds.Cl_PrintOs] = remainAmount;
+                    dr[ds.Cl_isInterestedRow] = false;
+                    dr[ds.Cl_isPaymentRow] = true;
                     ds.DtItems.Rows.Add(dr);
                     periosDate = ((DateTime)periosDate).AddMonths(fregV);
                 }
@@ -1032,6 +1040,8 @@ namespace BankProject.Views.TellerApplication
                 dr[ds.Cl_dueDate] = endDate;
                 dr[ds.Cl_principle] = instalmantEnd;
                 dr[ds.Cl_PrintOs] = 0;
+                dr[ds.Cl_isInterestedRow] = false;
+                dr[ds.Cl_isPaymentRow] = true;
                 ds.DtItems.Rows.Add(dr);
 
 
@@ -1040,7 +1050,9 @@ namespace BankProject.Views.TellerApplication
             {
                 ds.DtInfor.Rows[0][ds.Cl_freq] = "Cuối kỳ";
                 NewLoanControlRepository facade = new NewLoanControlRepository();
-                BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "EP").FirstOrDefault();//All get Priciple date
+                BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "EP")
+                    .Union(facade.FindLoanControl(normalLoanEntryM.Code, "P"))
+                    .Union(facade.FindLoanControl(normalLoanEntryM.Code, "I+P")).FirstOrDefault();//All get Priciple date
                 if (it != null)
                 {
                     instalmantEnd = it.AmountAction == null ? (decimal)normalLoanEntryM.LoanAmount : (decimal)it.AmountAction;
@@ -1051,6 +1063,8 @@ namespace BankProject.Views.TellerApplication
                 dr[ds.Cl_dueDate] = endDate == null ? normalLoanEntryM.MaturityDate : endDate;
                 dr[ds.Cl_principle] = instalmantEnd == 0 ? normalLoanEntryM.LoanAmount : instalmantEnd;
                 dr[ds.Cl_PrintOs] = 0;
+                dr[ds.Cl_isInterestedRow] = false;
+                dr[ds.Cl_isPaymentRow] = true;
                 ds.DtItems.Rows.Add(dr);
 
             }
@@ -1100,14 +1114,15 @@ namespace BankProject.Views.TellerApplication
             {
                 DateTime startDate = (DateTime)normalLoanEntryM.ValueDate;
                 DateTime endDate = (DateTime)normalLoanEntryM.MaturityDate;
-                int durationLoan = endDate.Subtract(startDate).Days;
+                //int durationLoan = endDate.Subtract(startDate).Days;
+                int durationMonthLoan = ((endDate.Year - startDate.Year) * 12) + endDate.Month - startDate.Month;
                 int fregV = freg * 30;
 
 
 
-                if (fregV > 0)
+                if (freg > 0)
                 {
-                    numberOfPerios = durationLoan / fregV;
+                    numberOfPerios = durationMonthLoan / freg;
                 }
 
             }
@@ -1124,7 +1139,7 @@ namespace BankProject.Views.TellerApplication
 
             }
 
-            if (numberOfPerios > 0)
+            if (numberOfPerios > 0 && (it.No == null || it.No == 0))
             {
                 numberOfPerios--;
             }
@@ -1151,228 +1166,6 @@ namespace BankProject.Views.TellerApplication
 
 
 
-        private DataSet PrepareDate2Print()
-        {
-            if (normalLoanEntryM == null)
-            {
-                normalLoanEntryM = new BNEWNORMALLOAN();
-                normalLoanEntryM.Code = tbNewNormalLoan.Text;
-                loanBusiness.loadEntity(ref normalLoanEntryM);
-            }
-
-            if (normalLoanEntryM == null)
-                return null;
-            DataSet ds = new DataSet();
-
-            NewLoanControlRepository facade = new NewLoanControlRepository();
-            BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, "P").FirstOrDefault();//All get Priciple date
-
-            //condition check;
-            bool canProcessInterest = true;
-
-            //variable data for 
-
-            string rateType = "1"; //1 = Fix A, 2 = Fix B, 3 = Ferioric;
-            decimal interestedValue = 0;
-
-            int durationDays = 0;//day
-            int circleDuration = 0; //month
-            int numberOfCircle = 0;
-            decimal loanAmount = 0;
-            int interestedKey = 0;
-
-            string fregString = "Unknown";
-
-            DateTime drawDownDate;
-            DateTime startDate;
-            DateTime endDate;
-            DateTime startIdentifyIntDate;
-
-            //init master data:
-            startDate = (DateTime)normalLoanEntryM.ValueDate;
-            endDate = (DateTime)normalLoanEntryM.MaturityDate;
-            drawDownDate = normalLoanEntryM.Drawdown == null ? startDate : (DateTime)normalLoanEntryM.Drawdown;
-            loanAmount = (decimal)normalLoanEntryM.LoanAmount;
-
-            durationDays = endDate.Subtract(startDate).Days;
-            DateTime? tempDate = null;
-            canProcessInterest = FillInterestInformation(it, ref fregString, ref circleDuration, ref tempDate);
-            startIdentifyIntDate = tempDate == null ? drawDownDate : (DateTime)tempDate;
-
-            numberOfCircle = durationDays / (30 * circleDuration);
-            if (numberOfCircle <= 0)
-            {
-                numberOfCircle = 1;
-            }
-            rateType = String.IsNullOrEmpty(normalLoanEntryM.RateType) ? "1" : normalLoanEntryM.RateType;
-            if (rateType.Equals("3"))//periodic interest = interestedRate + int speed
-            {
-                interestedValue = (normalLoanEntryM.InterestRate == null ? 0 : (decimal)normalLoanEntryM.InterestRate)
-                    + (String.IsNullOrEmpty(normalLoanEntryM.IntSpread) ? 0 : Decimal.Parse(normalLoanEntryM.IntSpread));
-            }
-            else // interest = interestedRate
-            {
-                interestedValue = (normalLoanEntryM.InterestRate == null ? 0 : (decimal)normalLoanEntryM.InterestRate);
-            }
-            interestedKey = (int)(durationDays / 30);
-
-            ds.Tables.Add(GetCusomerInformation(normalLoanEntryM, fregString, interestedKey, interestedValue));
-            ds.Tables.Add(GetInterestTableScheduler(rateType, numberOfCircle, loanAmount, circleDuration, startIdentifyIntDate,
-                endDate, interestedValue, drawDownDate));
-
-            DataTable dateReport = new DataTable("DateInfor");
-            dateReport.Columns.Add("day");
-            dateReport.Columns.Add("month");
-            dateReport.Columns.Add("year");
-            var rowD = dateReport.NewRow();
-            DateTime today = DateTime.Today;
-            rowD["day"] = today.ToString("dd");
-            rowD["month"] = today.ToString("MM");
-            rowD["year"] = today.ToString("yyyy");
-            dateReport.Rows.Add(rowD);
-            ds.Tables.Add(dateReport);
-
-            return ds;
-        }
-
-        private DataTable GetInterestTableScheduler(string rateType, int numberOfCircle, decimal loanAmount, int circleDuration,
-            DateTime startIdentifyIntDate, DateTime endDate, decimal interestValued, DateTime drawdowndate)
-        {
-            DateTime beginDate = startIdentifyIntDate;
-            DateTime previoudDate = drawdowndate;
-            DataTable dtItems = new DataTable("Items");
-            dtItems.Columns.Add("Perios");
-            dtItems.Columns.Add("DueDate");
-            dtItems.Columns.Add("Principle");
-            dtItems.Columns.Add("InterestAmount");
-            dtItems.Columns.Add("PrinOS");
-
-            Int32 moneyPercicle = (Int32)(loanAmount / numberOfCircle);
-            decimal pricipleAmount = 0;
-            decimal remainLoanAmount = loanAmount;
-            decimal interestAmount = 0;
-            var schType = "I";//Intallment, N: Non-redemption
-            schType = String.IsNullOrEmpty(normalLoanEntryM.RepaySchType) ? "I" : normalLoanEntryM.RepaySchType;
-
-            for (int i = 0; i < numberOfCircle; i++)
-            {
-
-                interestAmount = ((beginDate.Subtract(previoudDate).Days * ((interestValued / 36000) * remainLoanAmount)));
-
-                if (schType.Equals("N"))
-                {
-                    pricipleAmount = 0;
-                }
-                else
-                {
-                    remainLoanAmount = remainLoanAmount - moneyPercicle;
-                    pricipleAmount = moneyPercicle;
-                }
-
-                if (remainLoanAmount < 0)
-                {
-                    remainLoanAmount = 0;
-                }
-
-                if (i == numberOfCircle - 1)
-                {
-                    if (schType.Equals("N"))
-                    {
-                        pricipleAmount = remainLoanAmount;
-                        remainLoanAmount = 0;
-                    }
-
-                    if (remainLoanAmount > 0)
-                    {
-                        moneyPercicle = (int)(moneyPercicle + remainLoanAmount);
-                        interestAmount += ((beginDate.Subtract(previoudDate).Days * ((interestValued / 36000) * remainLoanAmount)));
-                        pricipleAmount = moneyPercicle;
-                        remainLoanAmount = 0;
-                    }
-
-                    if (beginDate > endDate)
-                    {
-                        beginDate = endDate;
-                    }
-                }
-
-                var row = dtItems.NewRow();
-                row["Perios"] = i + 1;
-                row["DueDate"] = beginDate.ToString("dd/MM/yyyy");
-                row["Principle"] = pricipleAmount == 0 ? "0" : pricipleAmount.ToString("#,###");
-                row["InterestAmount"] = interestAmount.ToString("#,###");
-                row["PrinOS"] = remainLoanAmount == 0 ? "0" : (remainLoanAmount.ToString("#,###"));
-                dtItems.Rows.Add(row);
-                previoudDate = beginDate;
-                beginDate = beginDate.AddMonths(circleDuration);
-            }
-
-            return dtItems;
-        }
-
-        private DataTable GetCusomerInformation(BNEWNORMALLOAN normalLoanEntryM, string fregString, int interestedKey, decimal interestedValue)
-        {
-            DataTable infoTb = new DataTable("Info");
-            infoTb.Columns.Add("Code");
-            infoTb.Columns.Add("Customer");
-            infoTb.Columns.Add("CustomerID");
-            infoTb.Columns.Add("LoanAmount");
-            infoTb.Columns.Add("Drawdown");
-            infoTb.Columns.Add("InterestKey");
-            infoTb.Columns.Add("Freq");
-            infoTb.Columns.Add("interest");
-
-            var row = infoTb.NewRow();
-            row["Code"] = normalLoanEntryM.Code;
-            row["Customer"] = normalLoanEntryM.CustomerName;
-            row["CustomerID"] = normalLoanEntryM.CustomerID;
-            row["LoanAmount"] = ((decimal)normalLoanEntryM.LoanAmount).ToString("#,###");
-            row["Drawdown"] = (normalLoanEntryM.Drawdown == null ? "" : ((DateTime)normalLoanEntryM.Drawdown).ToString("dd/MM/yyyy"));
-            row["InterestKey"] = (int)interestedKey + " Tháng";
-            row["Freq"] = fregString;
-            row["interest"] = interestedValue.ToString("#,###.##");
-
-            infoTb.Rows.Add(row);
-
-
-            return infoTb;
-        }
-
-        private bool FillInterestInformation(BNewLoanControl loanControl, ref string fregStr, ref int circleDuration, ref DateTime? interestedStartDate)
-        {
-            if (loanControl == null)
-            {
-                return false;
-            }
-
-            interestedStartDate = loanControl.Date;
-            if (String.IsNullOrEmpty(loanControl.Freq))
-            {
-                return false;
-            }
-            string freg = loanControl.Freq.ToUpper();
-
-            if (freg.Equals("M"))
-            {
-                circleDuration = 1;
-                fregStr = "1 Tháng";
-            }
-            else if (freg.Equals("Q"))
-            {
-                circleDuration = 3;
-                fregStr = "1 Quý";
-            }
-            else if (freg.Equals("Y"))
-            {
-                circleDuration = 12;
-                fregStr = "1 Năm";
-            }
-            else
-            {
-                return false;
-            }
-            return true;
-        }
 
 
         #endregion
@@ -1506,6 +1299,14 @@ namespace BankProject.Views.TellerApplication
             set { cl_isInterestedRow = value; }
         }
 
+        DataColumn cl_isPaymentRow = new DataColumn("PaymentRow", Type.GetType("System.Boolean"));
+
+        public DataColumn Cl_isPaymentRow
+        {
+            get { return cl_isPaymentRow; }
+            set { cl_isPaymentRow = value; }
+        }
+
         DataColumn cl_durationDate = new DataColumn("duration_day");
 
         public DataColumn Cl_durationDate
@@ -1533,6 +1334,7 @@ namespace BankProject.Views.TellerApplication
             dtItems.Columns.Add(cl_principle);
             dtItems.Columns.Add(cl_interestAmount);
             dtItems.Columns.Add(cl_PrintOs);
+            dtItems.Columns.Add(cl_isPaymentRow);
             dtItems.Columns.Add(cl_isInterestedRow);
             dtItems.Columns.Add(cl_durationDate);
 
