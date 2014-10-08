@@ -570,6 +570,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             rcbOmortCharges2.SelectedValue = "NO";
             rcbOmortCharges3.SelectedValue = "NO";
 
+            //==================
+            comGenerate.SelectedValue = "NO";
+            GenerateMT740();
+            //==================
+
             tbChargeAmt.Value = 0;
             tbChargeAmt2.Value = 0;
             tbChargeAmt3.Value = 0;
@@ -757,17 +762,18 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             IntialEdittor(txtEdittor_Narrative_747);
             IntialEdittor(txtEdittor_Narrative_707);
 
-            txtEdittor_DescrpofGoods.Content = "+ COMMODITY: HOT ROLLED STEEL COILS <br />"+
-                                                "+ DESCRIPTION : <br />" +
-                                                ". THICKNESS: FROM 3.00 MM UP <br />" +
-                                                ". WIDTH: FROM 1,500 MM DOWN<br /" +
-                                                ". COIL WEIGHT: FROM 0.1 MT UP <br />" +
-                                                "+ QUANTITY: 55.00 MTS (+/-10PCT) <br />" +
-                                                "+ UNIT PRICE: USD530.00/MT <br />" +
-                                                "+ TOTAL AMOUNT: USD29,150.00 (+/-10PCT)<br />" +
-                                                "+ TRADE TERMS: CFR HOCHIMINH CITY PORT, VIETNAM (INCOTERMS 2010) <br />" +
-                                                "+ ORIGIN: EUROPEAN COMMUNITY<br />" +
-                                                "+ PACKING: IN CONTAINERS";
+            txtEdittor_DescrpofGoods.Content = "";
+            //txtEdittor_DescrpofGoods.Content = "+ COMMODITY: HOT ROLLED STEEL COILS <br />"+
+            //                                    "+ DESCRIPTION : <br />" +
+            //                                    ". THICKNESS: FROM 3.00 MM UP <br />" +
+            //                                    ". WIDTH: FROM 1,500 MM DOWN<br /" +
+            //                                    ". COIL WEIGHT: FROM 0.1 MT UP <br />" +
+            //                                    "+ QUANTITY: 55.00 MTS (+/-10PCT) <br />" +
+            //                                    "+ UNIT PRICE: USD530.00/MT <br />" +
+            //                                    "+ TOTAL AMOUNT: USD29,150.00 (+/-10PCT)<br />" +
+            //                                    "+ TRADE TERMS: CFR HOCHIMINH CITY PORT, VIETNAM (INCOTERMS 2010) <br />" +
+            //                                    "+ ORIGIN: EUROPEAN COMMUNITY<br />" +
+            //                                    "+ PACKING: IN CONTAINERS";
 
             txtEdittor_OrderDocs700.Content = "1. SIGNED COMMERCIAL INVOICE IN 03 ORIGINALS ISSUED BY THE BENEFICIARY <br />" +
                                                 "2. FULL (3/3) SET OF ORIGINAL CLEAN SHIPPED ON BOARD BILL OF LADING MADE OUT TO ORDER OF TANPHU BRANCH, NOTIFY APPLICANT AND MARKED FREIGHT PREPAID, SHOWING THE NAME AND ADDRESS OF SHIPPING AGENT WHICH IS LOCATED IN VIETNAM. <br />" +
@@ -1364,11 +1370,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , tbPlaceOfExpiry.Text.Trim()
                 , comboAvailableRule.SelectedValue
                 , rcbApplicantBankType700.SelectedValue
-                , tbApplicantNo700.Text
-                , tbApplicantName700.Text.Trim()
-                , tbApplicantAddr700_1.Text.Trim()
-                , tbApplicantAddr700_2.Text.Trim()
-                , tbApplicantAddr700_3.Text.Trim()
+                , rcbApplicantID.SelectedValue
+                , tbApplicantName.Text.Trim()
+                , tbApplicantAddr1.Text.Trim()
+                , tbApplicantAddr2.Text.Trim()
+                , tbApplicantAddr3.Text.Trim()
                 , comboCurrency700.SelectedValue
                 , amount700
                 , percentCreditAmount1

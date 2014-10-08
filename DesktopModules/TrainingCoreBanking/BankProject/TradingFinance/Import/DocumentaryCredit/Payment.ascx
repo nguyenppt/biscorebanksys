@@ -589,7 +589,6 @@
                         </td>
                     </tr>
                 </table>
-
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td style="width: 200px" class="MyLable">Currency Code/Amount</td>
