@@ -21,11 +21,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private BAdvisingAndNegotiationLC _exportDoc;
         protected const int TabIssueLCAmend = 235;
         protected const int TabIssueLCCancel = 237;
+        protected const int TabIssueLCClose = 265;
         public enum AdvisingAndNegotiationScreenType
         {
             Register,
             Amend,
             Cancel,
+            Close,
             RegisterCc, 
             Acception
         }
@@ -48,6 +50,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         return AdvisingAndNegotiationScreenType.Amend;
                     case 237:
                         return AdvisingAndNegotiationScreenType.Cancel;
+                    case TabIssueLCClose:
+                        return AdvisingAndNegotiationScreenType.Close;
                     //case 227:
                     //    return ExportDocumentaryScreenType.RegisterCc;
                     //case 377:
@@ -94,6 +98,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case AdvisingAndNegotiationScreenType.Cancel:
                     InitToolBarForCancel();
                     break;
+                case AdvisingAndNegotiationScreenType.Close:
+                    InitToolBarForClose();
+                    tbEssurLCCode.Enabled = true;
+                    break;
                 //case ExportDocumentaryScreenType.Cancel:
                 //    InitToolBarForCancel();
 
@@ -121,6 +129,69 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //LoadToolBar(false);
             //InitDataSource();
         }
+        protected void InitToolBarForClose()
+        {
+            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            if (_exportDoc != null)
+            {
+                if (Disable)//Authorizing
+                {
+                    if (_exportDoc.Status != "AUT")//Authorized
+                    {
+                        lblError.Text = "This Documentary was not authorized";
+                    }
+                    else if (!string.IsNullOrEmpty(_exportDoc.AmendStatus) && _exportDoc.AmendStatus == "UNA")
+                    {
+                        lblError.Text = "This Amend Documentary was not authorized";
+                    }
+                    else if (!string.IsNullOrEmpty(_exportDoc.CancelStatus) && _exportDoc.CancelStatus == "UNA")
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        lblError.Text = "This Documentary was not authorized for cancel";
+                    }
+                    //else if (!string.IsNullOrEmpty(_exportDoc.CloseStatus) && _exportDoc.CloseStatus == "UNA")
+                    //{
+                    //    lblError.Text = "This Documentary was closed and waited for approve";
+                    //}
+                    else if (!string.IsNullOrEmpty(_exportDoc.CloseStatus) && _exportDoc.CloseStatus == "AUT")
+                    {
+                        lblError.Text = "This Documentary had closed";
+                    }
+                    else // Not yet authorize
+                    {
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                    }
+                    SetDisableByReview(false);
+                }
+                else //Edit
+                {
+                    if (_exportDoc.Status != "AUT")//Authorized
+                    {
+                        lblError.Text = "This Documentary was not authorized";
+                    }
+                    else if (!string.IsNullOrEmpty(_exportDoc.AmendStatus) && _exportDoc.AmendStatus == "UNA")
+                    {
+                        lblError.Text = "This Amend Documentary was not authorized";
+                    }
+                    else if (!string.IsNullOrEmpty(_exportDoc.CancelStatus) && _exportDoc.CancelStatus == "UNA")
+                    {
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        lblError.Text = "This Documentary was not authorized";
+                    }
+                    else if (!string.IsNullOrEmpty(_exportDoc.CloseStatus) && _exportDoc.CloseStatus == "UNA")
+                    {
+                        lblError.Text = "This Documentary was closed and waited for approve";
+                    }
+                    else // Not yet authorize
+                    {
+                        RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                    }
+                    SetDisableByReview(false);
+                }
+            }
+        }
         protected void InitToolBarForCancel()
         {
             if (TabId == TabIssueLCCancel)// Cancel LC
@@ -139,11 +210,62 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                 if (_exportDoc != null)
                 {
-                    if (_exportDoc.AmendStatus!=null)//Authorizing
+                    if (Disable) // Authorizing
                     {
-                        if (_exportDoc.Status != "AUT")
+                        if (_exportDoc.Status != "AUT" && _exportDoc.Status != null)
                         {
                             lblError.Text = "This Documentary was not authorized";
+                        }
+                        else if (!string.IsNullOrEmpty(_exportDoc.AmendStatus) && _exportDoc.AmendStatus != "AUT")
+                        {
+                            lblError.Text = "This Amend Documentary was not authorized";
+                        }
+                        else if (_exportDoc.CancelStatus == "AUT")
+                        {
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            lblError.Text = "This Cancel Documentary was authorized";
+                        }
+                        else if (_exportDoc.CloseStatus == "AUT" || _exportDoc.CloseStatus == "UNA")
+                        {
+                            lblError.Text = "This Documentary was closed or waiting for approving closing";
+                        }
+                        else // Not yet authorize
+                        {
+                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        }
+                        SetDisableByReview(false);
+                    }
+                    else // Editing
+                    {
+                        if (_exportDoc.Status != "AUT") // Authorized
+                        {
+                            lblError.Text = "This Documentary was not authorized";
+                        }
+                        else if (!string.IsNullOrEmpty(_exportDoc.AmendStatus) && _exportDoc.AmendStatus != "AUT")
+                        {
+                            lblError.Text = "This Amend Documentary was not authorized";
+                        }
+                        else if (_exportDoc.CancelStatus == "AUT")
+                        {
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            lblError.Text = "This Cancel Documentary was authorized";
+                        }
+                        else if (_exportDoc.CloseStatus == "AUT" || _exportDoc.CloseStatus == "UNA")
+                        {
+                            lblError.Text = "This Documentary was closed or waiting for approving closing";
+                        }
+                        else // Not yet authorize
+                        {
+                            RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                        }
+                        SetDisableByReview(false);
+                        if (_exportDoc.CancelStatus != "AUT")
+                        {
+                            dteCancelDate.Enabled = true;
+                            dteContingentExpiryDate.Enabled = true;
+                            txtCancelRemark.Enabled = true;
                         }
                     }
                 }
@@ -156,7 +278,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 if (Disable) // Authorizing
                 {
-                    if (_exportDoc.Status != "AUT") // Authorized
+                    if (_exportDoc.Status != "AUT"&&_exportDoc.Status!=null) // Authorized
                     {
                         lblError.Text = "This Documentary was not authorized";
                     }
@@ -169,6 +291,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was canceled";
+                    }
+                    else if (_exportDoc.CloseStatus == "AUT" || _exportDoc.CloseStatus == "UNA")
+                    {
+                        lblError.Text = "This Documentary was closed or waiting for approving closing";
                     }
                     else // Not yet authorize
                     {
@@ -180,7 +306,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
                 else // Editing
                 {
-                    if (_exportDoc.Status != "AUT") // Authorized
+                    if (_exportDoc.Status != "AUT" && _exportDoc.Status != null) // Authorized
                     {
                         lblError.Text = "This Documentary was not authorized";
                         SetDisableByReview(false);
@@ -195,6 +321,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Amend Documentary was authorized";
                         SetDisableByReview(false);
+                    }
+                    else if (_exportDoc.CloseStatus == "AUT" || _exportDoc.CloseStatus == "UNA")
+                    {
+                        lblError.Text = "This Documentary was closed or waiting for approving closing";
                     }
                     else // Not yet authorize
                     {
@@ -220,6 +350,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was authorized";
                     }
+                    else if (_exportDoc.CloseStatus == "AUT" || _exportDoc.CloseStatus == "UNA")
+                    {
+                        lblError.Text = "This Documentary was closed or waiting for approving closing";
+                    }
                     else // Not yet authorize
                     {
                         RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
@@ -235,6 +369,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was authorized";
                         SetDisableByReview(false);
+                    }
+                    else if (_exportDoc.CloseStatus == "AUT" || _exportDoc.CloseStatus == "UNA")
+                    {
+                        lblError.Text = "This Documentary was closed or waiting for approving closing";
                     }
                     else // Not yet authorize
                     {
@@ -267,43 +405,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 var dt = entContext.BAdvisingAndNegotiationLCs.Where(dr => dr.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
                 if (dt != null)
                 {
-                    //check Status
-                    if (dt.Status == "UNA")
-                    {
-                        lblError.Text = " This LC has not authorized yet";
-                        return false;
-                    }
-                    else if (dt.Status == "AUT" && dt.CancelStatus == "AUT")
-                    {
-                        lblError.Text = " This LC was canceled";
-                        return false;
-                    }
-                    if (TabId == TabIssueLCAmend)
-                    {
-                        if (dt.Status == "UNA")
-                        {
-                            dt = null;
-
-                            lblError.Text = "This Amend Documentary " + tbEssurLCCode.Text + " was not authorized ";
-                            tbEssurLCCode.Text = "";
-                            return false;
-                        }
-                    }
-                    else if (TabId == TabIssueLCCancel)
-                    {
-                        if (dt.CancelRemark != null)
-                        {
-                            lblError.Text = "This Documentary was canceled";
-
-                        }
-                        else if (dt.AmendStatus != null)
-                        {
-                            if (dt.Status != "AUT")
-                            {
-                                lblError.Text = "This Documentary was not authorized";
-                            }
-                        }
-                    }
+                    
 
                     //
                     _exportDoc = dt;
@@ -437,11 +539,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         var ds = from M in entContext.BIMPORT_NORMAILLC_MT700
                                  join N in entContext.BIMPORT_NORMAILLC on M.NormalLCCode equals N.NormalLCCode
                                  where (M.NormalLCCode == tbEssurLCCode.Text)
-                                 select new {M,N};
+                                 select new { M, N };
                         //
 
                         //
-                        if (ds == null|| ds.Count()==0)
+                        if (ds == null || ds.Count() == 0)
                         {
                             lblError.Text = "This LC can not find";
                             txtCancelRemark.Text = string.Empty;
@@ -546,6 +648,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                     lblError.Text = " This LC was canceled";
                                     return false;
                                 }
+                                else if (BM.CloseStatus == "AUT" || BM.CloseStatus == "UNA")
+                                {
+                                    lblError.Text = "This Amend Documentary was closed or waiting for Approve Closing";
+                                    return false;
+                                }
                                 if (TabId == TabIssueLCAmend)
                                 {
                                     if (BM.Status == "UNA")
@@ -571,8 +678,35 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                             lblError.Text = "This Documentary was not authorized";
                                         }
                                     }
+                                    else if (BM.CloseStatus == "AUT" || BM.CloseStatus == "UNA")
+                                    {
+                                        lblError.Text = "This Amend Documentary was closed or waiting for approve closing";
+                                        return false;
+                                    }
                                 }
-
+                                else if (TabId == TabIssueLCClose)
+                                {
+                                    if (BM.Status != "AUT")
+                                    {
+                                        lblError.Text = "This Documentary was not authorized";
+                                        return false;
+                                    }
+                                    else if (BM.Amend_Status == "UNA")
+                                    {
+                                        lblError.Text = "This Amend Documentary was not authorized";
+                                        return false;
+                                    }
+                                    else if (BM.Cancel_Status == "UNA")
+                                    {
+                                        lblError.Text = "This Cancel Documentary was not authorized";
+                                        return false;
+                                    }
+                                    else if (BM.CloseStatus != null)
+                                    {
+                                        lblError.Text = "This Documentary was closed or wait for approve closing";
+                                        return false;
+                                    }
+                                }
 
                                 //
                                 txtRevivingBank700.Text = BMT700.ReceivingBank;
@@ -687,6 +821,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 txtShipmentPeriod700_6.Text = BMT700.ShipmentPeriod6;
                             }
                         }
+                    }
+                    else {
+                        lblError.Text = "This LC can not find.";
                     }
                 }
             }
@@ -882,24 +1019,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
             }
         }
-        protected void LoadChargeAcct2()
+        
+        protected void LoadChargeAcct2(ref RadComboBox cboChargeAcct)
         {
-            rcbChargeAcct2.Items.Clear();
-            rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct2.DataValueField = "Id";
-            rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantBankType700.SelectedItem != null ? rcbApplicantBankType700.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy2.SelectedValue);
-            rcbChargeAcct2.DataBind();
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDraweeCusName.Text ?? "XXXXX", comboDraweeCusNo700.SelectedValue));
         }
 
-        protected void LoadChargeAcct3()
+        protected void LoadChargeAcct3(ref RadComboBox cboChargeAcct)
         {
-            rcbChargeAcct3.Items.Clear();
-            rcbChargeAcct3.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct3.DataValueField = "Id";
-            rcbChargeAcct3.DataTextField = "Id";
-            rcbChargeAcct3.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantBankType700.SelectedItem != null ? rcbApplicantBankType700.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy3.SelectedValue);
-            rcbChargeAcct3.DataBind();
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDraweeCusName.Text ?? "XXXXX", comboDraweeCusNo700.SelectedValue));
         }
         protected void LoadDataChargeAcct()
         {
@@ -979,7 +1107,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void rcbChargeCcy3_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct3();
+            LoadChargeAcct3(ref rcbChargeAcct3);
         }
         protected void rcbPartyCharged2_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
@@ -1007,7 +1135,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void rcbChargeCcy2_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct2();
+            LoadChargeAcct2(ref rcbChargeAcct2);
         }
         protected void LoadChargeAcct(ref RadComboBox cboChargeAcct)
         {
@@ -1016,7 +1144,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //rcbChargeAcct.DataValueField = "Id";
             //rcbChargeAcct.DataTextField = "Id";
             //rcbChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantBankType700.SelectedItem != null ? rcbApplicantBankType700.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy.SelectedValue);
-            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantBankType700.SelectedItem != null ? rcbApplicantBankType700.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy.SelectedValue));
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDraweeCusName.Text ?? "XXXXX", comboDraweeCusNo700.SelectedValue));
             //rcbChargeAcct.DataBind();
 
         }
@@ -1198,7 +1326,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         if (ori.AmendStatus != null)
                         {
-                            if (ori.Status != "AUT")
+                            if (ori.Status != "AUT" && ori.Status != null)
                             {
                                 lblError.Text = "This Documentary " + tbEssurLCCode.Text + " was not authorized";
                                 return false;
@@ -1207,7 +1335,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     }
                     else
                     {
-                        if (ori.Status != "UNA")
+                        if (ori.Status != "UNA"&&ori.Status!=null)
                         {
                             lblError.Text = "This Amend Documentary " + tbEssurLCCode.Text + " was authorized";
                             return false;
@@ -1303,11 +1431,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             ori.ContingentExpiryDate = dteContingentExpiryDate.SelectedDate;
                             ori.CancelRemark = txtCancelRemark.Text;
                         }
-                        else if (TabId != TabIssueLCAmend)
+                        else if (TabId == TabIssueLCAmend)
                         {
-                            ori.Status = "UNA";    
+                            ori.AmendStatus = "UNA";
                         }
-                        
+                        else if (TabId == TabIssueLCClose)
+                        {
+                            ori.CloseStatus = "UNA";
+                        }
+                        else
+                        {
+                            ori.Status = "UNA";
+                        }
+                     
                         
                     }
                 }
@@ -1457,10 +1593,28 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                         break;
                     case AdvisingAndNegotiationScreenType.Cancel:
-                        //obj.Status = status;
-                        //obj.AuthorizedBy = UserId.ToString();
-                        //obj.AuthorizedDate = DateTime.Now;
+                        if (status == "REV")
+                        {
+                            obj.CancelStatus = status;
+                        }
+                        else
+                        {
+                            obj.CancelStatus = status;
+                            obj.CancelBy = UserId.ToString();
+                        }
                         break;
+                    case AdvisingAndNegotiationScreenType.Close:
+                        if (status == "REV")
+                        {
+                            obj.CloseStatus = status;
+                        }
+                        else
+                        {
+                            obj.CloseStatus = status;
+                            obj.CloseBy = UserId.ToString();
+                        }
+                        break;
+         
                 }
                 entContext.SaveChanges();
             }

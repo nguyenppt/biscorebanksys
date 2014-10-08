@@ -213,13 +213,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">50.4 Applicant Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbApplicantAddr700_2" runat="server" Width="355" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">50.5 Applicant Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbApplicantAddr700_3" runat="server" Width="355" />
                     </td>
@@ -268,13 +268,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">59.4 Beneficiary Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtBeneficiaryAddr700_2" runat="server" Width="355" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">59.5 Beneficiary Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtBeneficiaryAddr700_3" runat="server" Width="355" />
                     </td>
@@ -344,7 +344,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 250px" class="MyLable">39C.2 Additional Amounts Covered</td>
+                    <td style="width: 250px" class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox runat="server" ID="txtAdditionalAmountsCovered700_2" Width="355" />
                     </td>
@@ -408,14 +408,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">41D.5 Available With Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbAvailableWithAddr2" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">41D.6 Available With Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbAvailableWithAddr3" runat="server" Width="355" />
                     </td>
@@ -452,7 +452,7 @@
                             ClientEvents-OnValueChanged="txtDraftsAt700_1_OnClientSelectedIndexChanged" />
                 </tr>
                 <tr>
-                    <td style="width: 250px" class="MyLable">42C.2 Drafts At</td>
+                    <td style="width: 250px" class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox runat="server" ID="txtDraftsAt700_2" Width="355" ClientEvents-OnValueChanged="txtDraftsAt700_2_OnClientSelectedIndexChanged" />
                     </td>
@@ -513,13 +513,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">42A.5 Drawee Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeAddr2" runat="server" Width="355" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">42A.6 Drawee Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeAddr3" runat="server" Width="355" />
                     </td>
@@ -842,14 +842,14 @@ ARE FOR ACCOUNT OF BENEFICIARY " />--%>
                 </tr>
 
                 <tr>
-                    <td class="MyLable" style="width: 250px;">53.5 Reimb. Bank Addr.</td>
+                    <td class="MyLable" style="width: 250px;"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbReimbBankAddr700_2" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable" style="width: 250px;">53.6 Reimb. Bank Addr.</td>
+                    <td class="MyLable" style="width: 250px;"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbReimbBankAddr700_3" runat="server" Width="355" />
                     </td>
@@ -921,14 +921,14 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 </tr>
 
                 <tr>
-                    <td class="MyLable" style="width: 250px;">57.4 Advise Through Addr.</td>
+                    <td class="MyLable" style="width: 250px;"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtAdviseThroughBankAddr700_2" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable" style="width: 250px;">57.5 Advise Through Addr.</td>
+                    <td class="MyLable" style="width: 250px;"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtAdviseThroughBankAddr700_3" runat="server" Width="355" />
                     </td>
