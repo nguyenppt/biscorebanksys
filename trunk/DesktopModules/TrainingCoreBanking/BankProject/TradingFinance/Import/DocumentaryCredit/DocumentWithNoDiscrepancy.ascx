@@ -12,6 +12,10 @@
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
             //
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Commit%>') {
+                dnn_ctr1017_DocumentWithNoDiscrepancy_txtDiscrepancies_divMultiTextBox_submit();
+                dnn_ctr1017_DocumentWithNoDiscrepancy_txtDiscrepancies_734_divMultiTextBox_submit();
+            }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Preview%>') {
                 window.location = '<%=EditUrl("preview_nodiscrepancy")%>&lst=4appr';
             }
@@ -19,10 +23,7 @@
                 window.location = '<%=EditUrl("preview_nodiscrepancy")%>';
             }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
-                //MT734 chua co mau : Nguyen dang xin
-                //radconfirm("Do you want to download MT734 file?", confirmCallbackFunction_MT734, 340, 150, null, 'Download');
-                if ($find("<%=comboWaiveCharges.ClientID%>").get_value() == "YES")
-                    radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT, 340, 150, null, 'Download');
+                radconfirm("Do you want to download MT734 file?", confirmCallbackFunction_MT734, 340, 150, null, 'Download');                
             }
         }
         
@@ -30,6 +31,8 @@
             if (result) {
                 $("#<%=btDownloadMT734.ClientID %>").click();
             }
+            if ($find("<%=comboWaiveCharges.ClientID%>").get_value() == "YES")
+                radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT, 340, 150, null, 'Download');
         }
         function confirmCallbackFunction_VAT(result) {
             if (result) {
@@ -306,7 +309,7 @@
         
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable" style="width: 180px">69.3.1 Other Docs</td>
+                <td class="MyLable" style="width: 180px">69.3.1 Full docs amount</td>
                 <td class="MyContent">
                     <telerik:Radtextbox runat="server" ID="txtOtherDocs1" Width="355" />
                 </td>
@@ -334,7 +337,7 @@
             </legend>
             
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr><td colspan="2"><uc1:MultiTextBox runat="server" id="txtDiscrepancies" Label="33.1 Discrepancies" /></td></tr>     
+                <tr><td colspan="2"><uc1:MultiTextBox runat="server" id="txtDiscrepancies" Label="33.1 Discrepancies" /></td></tr>
                 <tr>
                     <td class="MyLable">69.5.1 Disposal of Docs</td>
                     <td class="MyContent">
@@ -490,14 +493,7 @@
                     <telerik:RadTextBox ID="tbSendertoReceiverInfomation" runat="server" Width="355" />
                 </td>
             </tr>
-            
-            <tr>
-                <td class="MyLable">77.J Discrepancies</td>
-                <td class="MyContent">
-                    <telerik:RadTextBox ID="txtDiscrepancies_734" runat="server" Width="355" />
-                </td>
-            </tr>
-            
+            <tr><td colspan="2"><uc1:MultiTextBox runat="server" id="txtDiscrepancies_734" Label="77.J Discrepancies" LabelWidth="200" /></td></tr>            
             <tr>
                 <td class="MyLable">77.B Disposal of Docs</td>
                 <td class="MyContent">

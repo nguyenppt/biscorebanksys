@@ -375,27 +375,27 @@
             <tr>
                 <td class="MyLable">2.2 Applicant Name</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbApplicantName" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="tbApplicantName" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantName_OnValueChanged"/>
                 </td>
             </tr>
             <tr>
                 <td class="MyLable">2.3 Applicant Addr.</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbApplicantAddr1" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="tbApplicantAddr1" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr1_OnValueChanged"/>
                 </td>
             </tr>
 
             <tr>
                 <td class="MyLable">2.4 Applicant Addr.</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbApplicantAddr2" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="tbApplicantAddr2" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr2_OnValueChanged"/>
                 </td>
             </tr>
 
             <tr>
                 <td class="MyLable">2.5 Applicant Addr.</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbApplicantAddr3" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="tbApplicantAddr3" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr3_OnValueChanged"/>
                 </td>
             </tr>
         </table>
@@ -644,28 +644,28 @@
                 <tr>
                     <td class="MyLable">12.2 Advise Bank Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseBankName" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAdviseBankName" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">12.3 Advise Bank Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseBankAddr1" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAdviseBankAddr1" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">12.4 Advise Bank Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseBankAddr2" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAdviseBankAddr2" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">12.5 Advise Bank Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseBankAddr3" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAdviseBankAddr3" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
             </table>
@@ -720,7 +720,7 @@
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbReimbBankName" runat="server" Width="355"
                             AutoPostBack="False" OnTextChanged="tbReimbBankName_tbReimbBankName"
-                            ClientEvents-OnValueChanged="tbReimbBankName_OnClientSelectedIndexChanged" />
+                            ClientEvents-OnValueChanged="tbReimbBankName_OnClientSelectedIndexChanged" MaxLength="35"/>
                     </td>
                 </tr>
 
@@ -729,7 +729,7 @@
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbReimbBankAddr1" runat="server" Width="355"
                             AutoPostBack="False" OnTextChanged="tbReimbBankAddr1_OnTextChanged"
-                            ClientEvents-OnValueChanged="tbReimbBankAddr1_OnClientSelectedIndexChanged" />
+                            ClientEvents-OnValueChanged="tbReimbBankAddr1_OnClientSelectedIndexChanged" MaxLength="35"/>
                     </td>
                 </tr>
 
@@ -738,7 +738,7 @@
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbReimbBankAddr2" runat="server" Width="355"
                             AutoPostBack="False" OnTextChanged="tbReimbBankAddr2_OnTextChanged"
-                            ClientEvents-OnValueChanged="tbReimbBankAddr2_OnClientSelectedIndexChanged" />
+                            ClientEvents-OnValueChanged="tbReimbBankAddr2_OnClientSelectedIndexChanged" MaxLength="35"/>
                     </td>
                 </tr>
 
@@ -747,7 +747,7 @@
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbReimbBankAddr3" runat="server" Width="355"
                             AutoPostBack="False" OnTextChanged="tbReimbBankAddr3_OnTextChanged"
-                            ClientEvents-OnValueChanged="tbReimbBankAddr3_OnClientSelectedIndexChanged" />
+                            ClientEvents-OnValueChanged="tbReimbBankAddr3_OnClientSelectedIndexChanged" MaxLength="35"/>
                     </td>
                 </tr>
             </table>
@@ -796,28 +796,28 @@
                 <tr>
                     <td class="MyLable">14.3 Advise Thru Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseThruName" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAdviseThruName" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">14.4 Advise Thru Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseThruAddr1" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAdviseThruAddr1" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">14.5 Advise Thru Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseThruAddr2" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAdviseThruAddr2" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">14.6 Advise Thru Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseThruAddr3" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAdviseThruAddr3" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
             </table>
@@ -3607,8 +3607,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
         function txtBeneficiaryBankAddr1_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_1 = $find('<%=txtBeneficiaryAddr700_1.ClientID %>');
             var txtBeneficiaryBankAddr1 = $find('<%=txtBeneficiaryBankAddr1.ClientID %>'),
-                txtBeneficiaryAddr_707_1 = $find('<%=txtBeneficiaryAddr_707_1.ClientID %>'),
-                tbApplicantAddr700_1 = $find('<%=tbApplicantAddr700_1.ClientID %>');
+                txtBeneficiaryAddr_707_1 = $find('<%=txtBeneficiaryAddr_707_1.ClientID %>');
 
             if (txtBeneficiaryAddr700_1) {
                 txtBeneficiaryAddr700_1.set_value(txtBeneficiaryBankAddr1.get_value());
@@ -3617,17 +3616,12 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (txtBeneficiaryAddr_707_1) {
                 txtBeneficiaryAddr_707_1.set_value(txtBeneficiaryBankAddr1.get_value());
             }
-
-            if (tbApplicantAddr700_1) {
-                tbApplicantAddr700_1.set_value(txtBeneficiaryBankAddr1.get_value());
-            }
         }
         
         function txtBeneficiaryBankAddr2_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_2 = $find('<%=txtBeneficiaryAddr700_2.ClientID %>');
             var txtBeneficiaryBankAddr2 = $find('<%=txtBeneficiaryBankAddr2.ClientID %>'),
-                txtBeneficiaryAddr_707_2 = $find('<%=txtBeneficiaryAddr_707_2.ClientID %>'),
-                tbApplicantAddr700_2 = $find('<%=tbApplicantAddr700_2.ClientID %>');
+                txtBeneficiaryAddr_707_2 = $find('<%=txtBeneficiaryAddr_707_2.ClientID %>');
 
             if (txtBeneficiaryAddr700_2) {
                 txtBeneficiaryAddr700_2.set_value(txtBeneficiaryBankAddr2.get_value());
@@ -3636,17 +3630,12 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (txtBeneficiaryAddr_707_2) {
                 txtBeneficiaryAddr_707_2.set_value(txtBeneficiaryBankAddr2.get_value());
             }
-
-            if (tbApplicantAddr700_2) {
-                tbApplicantAddr700_2.set_value(txtBeneficiaryBankAddr2.get_value());
-            }
         }
         
         function txtBeneficiaryBankAddr3_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_3 = $find('<%=txtBeneficiaryAddr700_3.ClientID %>');
             var txtBeneficiaryBankAddr3 = $find('<%=txtBeneficiaryBankAddr3.ClientID %>'),
-                txtBeneficiaryAddr_707_3 = $find('<%=txtBeneficiaryAddr_707_3.ClientID %>'),
-                tbApplicantAddr700_3 = $find('<%=tbApplicantAddr700_3.ClientID %>');
+                txtBeneficiaryAddr_707_3 = $find('<%=txtBeneficiaryAddr_707_3.ClientID %>');
 
             if (txtBeneficiaryAddr700_3) {
                 txtBeneficiaryAddr700_3.set_value(txtBeneficiaryBankAddr3.get_value());
@@ -3654,18 +3643,14 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             
             if (txtBeneficiaryAddr_707_3) {
                 txtBeneficiaryAddr_707_3.set_value(txtBeneficiaryBankAddr3.get_value());
-            }
-
-            if (tbApplicantAddr700_3) {
-                tbApplicantAddr700_3.set_value(txtBeneficiaryBankAddr3.get_value());
-            }
+            }            
         }
         
         function txtBeneficiaryBankName_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryName700 = $find('<%=txtBeneficiaryName700.ClientID %>');
             var txtBeneficiaryBankName = $find('<%=txtBeneficiaryBankName.ClientID %>'),
-                txtBeneficiaryName_707 = $find('<%=txtBeneficiaryName_707.ClientID %>'),
-                tbApplicantName700 = $find('<%=tbApplicantName700.ClientID %>');
+                txtBeneficiaryName_707 = $find('<%=txtBeneficiaryName_707.ClientID %>');
+                ;
 
             if (txtBeneficiaryName700) {
                 txtBeneficiaryName700.set_value(txtBeneficiaryBankName.get_value());
@@ -3673,11 +3658,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             
             if (txtBeneficiaryName_707) {
                 txtBeneficiaryName_707.set_value(txtBeneficiaryBankName.get_value());
-            }
-
-            if (tbApplicantName700) {
-                tbApplicantName700.set_value(txtBeneficiaryBankName.get_value());
-            }
+            }            
         }
 
         function tbReimbBankName_OnClientSelectedIndexChanged(sender, eventArgs) {
@@ -3739,13 +3720,27 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 tbApplicantName = $find('<%=tbApplicantName.ClientID %>'),
                 tbApplicantAddr1 = $find('<%=tbApplicantAddr1.ClientID %>'),
                 tbApplicantAddr2 = $find('<%=tbApplicantAddr2.ClientID %>'),
-                tbApplicantAddr3 = $find('<%=tbApplicantAddr3.ClientID %>');                       
+                tbApplicantAddr3 = $find('<%=tbApplicantAddr3.ClientID %>'),
+                
+                tbApplicantNo700 = $find('<%=tbApplicantNo700.ClientID %>'),
+                tbApplicantName700 = $find('<%=tbApplicantName700.ClientID %>'),
+                tbApplicantAddr700_1 = $find('<%=tbApplicantAddr700_1.ClientID %>'),
+                tbApplicantAddr700_2 = $find('<%=tbApplicantAddr700_2.ClientID %>'),
+                tbApplicantAddr700_3 = $find('<%=tbApplicantAddr700_3.ClientID %>');                       
             
             if (tbApplicantName) {
                 tbApplicantName.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("CustomerName"));
                 tbApplicantAddr1.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Address"));
                 tbApplicantAddr2.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("City"));
                 tbApplicantAddr3.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Country"));
+            }
+
+            if (tbApplicantNo700) {
+                tbApplicantNo700.set_value(rcbApplicantID.get_value());
+                tbApplicantName700.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("CustomerName"));
+                tbApplicantAddr700_1.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Address"));
+                tbApplicantAddr700_2.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("City"));
+                tbApplicantAddr700_3.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Country"));
             }
         }
         
@@ -3754,8 +3749,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 bankCode = txtBeneficiaryNo.get_value(),
                 txtBeneficiaryNo700 = $find('<%=txtBeneficiaryNo700.ClientID %>'),                
                 tbBeneficiaryNo740 = $find('<%=tbBeneficiaryNo740.ClientID %>'),                
-                txtBeneficiaryNo_707 = $find('<%=txtBeneficiaryNo_707.ClientID %>'),
-                tbApplicantNo700 = $find('<%=tbApplicantNo700.ClientID %>');
+                txtBeneficiaryNo_707 = $find('<%=txtBeneficiaryNo_707.ClientID %>');
             
             if (txtBeneficiaryNo700) {
                 txtBeneficiaryNo700.set_value(bankCode);
@@ -3770,13 +3764,45 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (txtBeneficiaryNo_707) {
                 txtBeneficiaryNo_707.set_value(bankCode);
                 //txtBeneficiaryName_707.set_value(bankName);
-            }
+            }            
+        }
 
-            if (tbApplicantNo700) {
-                tbApplicantNo700.set_value(bankCode);
+        function tbApplicantName_OnValueChanged () {
+            var val = $find('<%=tbApplicantName.ClientID %>').get_value(),
+                tbApplicantName700 = $find('<%=tbApplicantName700.ClientID %>');
+
+            if (tbApplicantName700) {
+                tbApplicantName700.set_value(val);
             }
         }
-        
+
+        function tbApplicantAddr1_OnValueChanged () {
+            var val = $find('<%=tbApplicantAddr1.ClientID %>').get_value(),
+                tbApplicantAddr700_1 = $find('<%=tbApplicantAddr700_1.ClientID %>');
+
+            if (tbApplicantAddr700_1) {
+                tbApplicantAddr700_1.set_value(val);
+            }
+        }
+
+        function tbApplicantAddr2_OnValueChanged () {
+            var val = $find('<%=tbApplicantAddr2.ClientID %>').get_value(),
+                tbApplicantAddr700_2 = $find('<%=tbApplicantAddr700_2.ClientID %>');
+
+            if (tbApplicantAddr700_2) {
+                tbApplicantAddr700_2.set_value(val);
+            }
+        }
+
+        function tbApplicantAddr3_OnValueChanged () {
+            var val = $find('<%=tbApplicantAddr3.ClientID %>').get_value(),
+                tbApplicantAddr700_3 = $find('<%=tbApplicantAddr700_3.ClientID %>');
+
+            if (tbApplicantAddr700_3) {
+                tbApplicantAddr700_3.set_value(val);
+            }
+        }
+
         function rcbAdviseThruNo_OnClientSelectedIndexChanged() {
             var rcbAdviseThruNo = $find('<%=rcbAdviseThruNo.ClientID %>'),
                 bankCode = rcbAdviseThruNo.get_value(),

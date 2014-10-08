@@ -141,7 +141,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             fieldsetDiscrepancies.Visible = isDocsDiscrepancies;
             if (isDocsDiscrepancies)
             {                
-                ((bc.MultiTextBox)txtDiscrepancies).setText(drDetail["Discrepancies"].ToString(), true);
+                ((bc.MultiTextBox)txtDiscrepancies).setText(drDetail["Discrepancies"].ToString());
                 txtDisposalOfDocs.Text = drDetail["DisposalOfDocs"].ToString();
             }
             comboWaiveCharges.SelectedValue = drDetail["WaiveCharges"].ToString();
@@ -174,7 +174,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblTotalAmountClaimed.Text = drDetail["TotalAmountClaimed"].ToString();
                 txtAccountWithBank.Text = drDetail["AccountWithBankNo"].ToString();
                 tbSendertoReceiverInfomation.Text = drDetail["SendertoReceiverInfomation"].ToString();
-                txtDiscrepancies_734.Text = drDetail["Discrepancies"].ToString();
+                ((bc.MultiTextBox)txtDiscrepancies_734).setText(drDetail["Discrepancies"].ToString());
                 txtDisposalOfDocs_734.Text = drDetail["DisposalOfDocs"].ToString();
             }
             //Tab Charge
@@ -560,7 +560,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     , txtAccountWithBank.Text
                     , ""
                     , tbSendertoReceiverInfomation.Text
-                    , txtDiscrepancies_734.Text
+                    , ((bc.MultiTextBox)txtDiscrepancies_734).getText()
                     , txtDisposalOfDocs_734.Text);
             }
         }
@@ -662,6 +662,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     lblUtilizationCurrency.Text = lblCurrency.Text;
                     numAmount.Value = Convert.ToDouble(drDetail["Amount"]) - Convert.ToDouble(drDetail["TotalDocsAmount"]);
                     numAmountUtilization.Value = numAmount.Value;
+                    txtOtherDocs1.Text = drDetail["Amount"].ToString();
                     dteBookingDate.SelectedDate = DateTime.Now;
                     comboDrawType.SelectedValue = "CO";
                     comboDrawType.Enabled = false;
@@ -1296,6 +1297,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         saveName = "DocumentMT734_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
                         saveFormat = Aspose.Words.SaveFormat.Pdf;
                         reportData = bd.IssueLC.ImportLCDocumentReport(1, txtCode.Text.Trim(), this.UserInfo.Username);
+                        reportData.Tables[0].TableName = "Table1";
                         break;
                     case 2://VAT
                         reportTemplate = Context.Server.MapPath(reportTemplate + "VAT.doc");
