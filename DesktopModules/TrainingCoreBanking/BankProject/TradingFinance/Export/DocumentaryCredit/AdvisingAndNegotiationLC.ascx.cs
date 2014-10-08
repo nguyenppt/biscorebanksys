@@ -230,7 +230,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
                 else // Editing
                 {
-                    if (_exportDoc.Status.ToString() == "AUT") // Authorized
+                    if (_exportDoc.Status== "AUT") // Authorized
                     {
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was authorized";
@@ -265,96 +265,109 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
 
                 var dt = entContext.BAdvisingAndNegotiationLCs.Where(dr => dr.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
-                if (TabId == TabIssueLCAmend)
-                {
-                    if (dt.Status == "UNA")
-                    {
-                        dt = null;
-
-                        lblError.Text = "This Amend Documentary "+tbEssurLCCode.Text+ " was not authorized ";
-                        tbEssurLCCode.Text = "";
-                        return false;
-                    }
-                }
-                else if (TabId == TabIssueLCCancel)
-                {
-                    if (dt.CancelRemark != null)
-                    {
-                        lblError.Text = "This Documentary was canceled";
-                        
-                    }
-                    else if(dt.AmendStatus!=null)
-                    {
-                        if (dt.Status != "AUT")
-                        {
-                            lblError.Text = "This Documentary was not authorized";
-                        }
-                    }
-                }
                 if (dt != null)
                 {
-                    _exportDoc = dt;
-                    txtRevivingBank700.Text = dt.ReceivingBank.ToString();
-                    tbBaquenceOfTotal.Text = dt.SequenceOfTotal.ToString();
-                    comboFormOfDocumentaryCredit.SelectedValue = dt.FormDocumentaryCredit.ToString();
-                    lblDocumentaryCreditNumber.Text = dt.DocumentaryCreditNumber.ToString();
-                    tbPlaceOfExpiry.Text = dt.PlaceOfExpiry.ToString();
-                    comboAvailableRule.SelectedValue = dt.ApplicationRule.ToString();
+                    //check Status
+                    if (dt.Status == "UNA")
+                    {
+                        lblError.Text = " This LC has not authorized yet";
+                        return false;
+                    }
+                    else if (dt.Status == "AUT" && dt.CancelStatus == "AUT")
+                    {
+                        lblError.Text = " This LC was canceled";
+                        return false;
+                    }
+                    if (TabId == TabIssueLCAmend)
+                    {
+                        if (dt.Status == "UNA")
+                        {
+                            dt = null;
 
-                    rcbApplicantBankType700.SelectedValue = dt.ApplicantType.ToString();
-                    tbApplicantNo700.Text = dt.ApplicantNo.ToString();
-                    tbApplicantName700.Text = dt.ApplicantName.ToString();
-                    tbApplicantAddr700_1.Text = dt.ApplicantAddr1.ToString();
-                    tbApplicantAddr700_2.Text = dt.ApplicantAddr2.ToString();
-                    tbApplicantAddr700_3.Text = dt.ApplicantAddr3.ToString();
+                            lblError.Text = "This Amend Documentary " + tbEssurLCCode.Text + " was not authorized ";
+                            tbEssurLCCode.Text = "";
+                            return false;
+                        }
+                    }
+                    else if (TabId == TabIssueLCCancel)
+                    {
+                        if (dt.CancelRemark != null)
+                        {
+                            lblError.Text = "This Documentary was canceled";
+
+                        }
+                        else if (dt.AmendStatus != null)
+                        {
+                            if (dt.Status != "AUT")
+                            {
+                                lblError.Text = "This Documentary was not authorized";
+                            }
+                        }
+                    }
+
+                    //
+                    _exportDoc = dt;
+                    txtRevivingBank700.Text = dt.ReceivingBank;
+                    tbBaquenceOfTotal.Text = dt.SequenceOfTotal;
+                    comboFormOfDocumentaryCredit.SelectedValue = dt.FormDocumentaryCredit??"";
+                    lblDocumentaryCreditNumber.Text = dt.DocumentaryCreditNumber;
+                    tbPlaceOfExpiry.Text = dt.PlaceOfExpiry;
+                    comboAvailableRule.SelectedValue = dt.ApplicationRule??"";
+
+                    rcbApplicantBankType700.SelectedValue = dt.ApplicantType??"";
+                    tbApplicantNo700.Text = dt.ApplicantNo;
+                    tbApplicantName700.Text = dt.ApplicantName;
+                    tbApplicantAddr700_1.Text = dt.ApplicantAddr1;
+                    tbApplicantAddr700_2.Text = dt.ApplicantAddr2;
+                    tbApplicantAddr700_3.Text = dt.ApplicantAddr3;
 
                     //draw
-                    comboDraweeCusType.SelectedValue = dt.DraweeType.ToString();
-                    comboDraweeCusNo700.SelectedValue = dt.DraweeNo.ToString();
+                    comboDraweeCusType.SelectedValue = dt.DraweeType??"";
+                    comboDraweeCusNo700.SelectedValue = dt.DraweeNo??"";
                     //txtDraweeCusNo.SelectedValue = dt.DraweeNo.ToString();
-                    txtDraweeCusName.Text = dt.DraweeName.ToString();
-                    txtDraweeAddr1.Text = dt.DraweeAddr1.ToString();
-                    txtDraweeAddr2.Text = dt.DraweeAddr2.ToString();
-                    txtDraweeAddr3.Text = dt.DraweeAddr3.ToString();
+                    txtDraweeCusName.Text = dt.DraweeName;
+                    txtDraweeAddr1.Text = dt.DraweeAddr1;
+                    txtDraweeAddr2.Text = dt.DraweeAddr2;
+                    txtDraweeAddr3.Text = dt.DraweeAddr3;
 
 
                     //
-                    comboBeneficiaryType700.SelectedValue = dt.BeneficiaryType.ToString();
-                    txtBeneficiaryNo700.Text = dt.BeneficiaryNo.ToString();
-                    txtBeneficiaryName700.Text = dt.BeneficiaryName.ToString();
-                    txtBeneficiaryAddr700_1.Text = dt.BeneficiaryAddr1.ToString();
-                    txtBeneficiaryAddr700_2.Text = dt.BeneficiaryAddr2.ToString();
-                    txtBeneficiaryAddr700_3.Text = dt.BeneficiaryAddr3.ToString();
+                    comboBeneficiaryType700.SelectedValue = dt.BeneficiaryType??"";
+                    txtBeneficiaryNo700.Text = dt.BeneficiaryNo;
+                    txtBeneficiaryName700.Text = dt.BeneficiaryName;
+                    txtBeneficiaryAddr700_1.Text = dt.BeneficiaryAddr1;
+                    txtBeneficiaryAddr700_2.Text = dt.BeneficiaryAddr2;
+                    txtBeneficiaryAddr700_3.Text = dt.BeneficiaryAddr3;
 
-                    comboCurrency700.SelectedValue = dt.Currency.ToString();
+                    comboCurrency700.SelectedValue = dt.Currency??"";
                     numAmount700.Value = (double?)dt.Amount;
                     numPercentCreditAmount1.Value = (double?)dt.PercentageCredit;
                     numPercentCreditAmount2.Value = (double?)dt.AmountTolerance;
-                    comboMaximumCreditAmount700.SelectedValue = dt.MaximumCreditAmount.ToString();
+                    comboMaximumCreditAmount700.SelectedValue = dt.MaximumCreditAmount??"";
 
-                    rcbAvailableWithType.SelectedValue = dt.AvailableWithType.ToString();
-                    comboAvailableWithNo.SelectedValue = dt.AvailableWithNo.ToString();
-                    tbAvailableWithName.Text = dt.AvailableWithName.ToString();
-                    tbAvailableWithAddr1.Text = dt.AvailableWithAddr1.ToString();
-                    tbAvailableWithAddr2.Text = dt.AvailableWithAddr2.ToString();
-                    tbAvailableWithAddr3.Text = dt.AvailableWithAddr3.ToString();
+                    rcbAvailableWithType.SelectedValue = dt.AvailableWithType??"";
+                    comboAvailableWithNo.SelectedValue = dt.AvailableWithNo??"";
+                    tbAvailableWithName.Text = dt.AvailableWithName;
+                    tbAvailableWithAddr1.Text = dt.AvailableWithAddr1;
+                    tbAvailableWithAddr2.Text = dt.AvailableWithAddr2;
+                    tbAvailableWithAddr3.Text = dt.AvailableWithAddr3;
 
-                    comboAvailableWithBy.SelectedValue = dt.Available_By.ToString();
+                    comboAvailableWithBy.SelectedValue = dt.Available_By??"";
 
-                    rcbPatialShipment.SelectedValue = dt.PatialShipment.ToString();
-                    rcbTranshipment.SelectedValue = dt.Transhipment.ToString();
-                    tbPlaceoftakingincharge.Text = dt.PlaceOfTakingInCharge.ToString();
-                    tbPortofDischarge.Text = dt.PortOfDischarge.ToString();
-                    tbPlaceoffinalindistination.Text = dt.PlaceOfFinalInDistination.ToString();
+                    rcbPatialShipment.SelectedValue = dt.PatialShipment??"";
+                    rcbTranshipment.SelectedValue = dt.Transhipment??"";
+                    tbPlaceoftakingincharge.Text = dt.PlaceOfTakingInCharge;
+                    tbPortofDischarge.Text = dt.PortOfDischarge;
+                    tbPlaceoffinalindistination.Text = dt.PlaceOfFinalInDistination;
 
-                    txtEdittor_DescrpofGoods.Content = dt.DescrpGoodsBervices.ToString();
-                    txtEdittor_OrderDocs700.Content = dt.DocsRequired.ToString();
-                    txtEdittor_AdditionalConditions700.Content = dt.AdditionalConditions.ToString();
-                    txtEdittor_Charges700.Content = dt.Charges.ToString();
-                    txtEdittor_PeriodforPresentation700.Content = dt.PeriodForPresentation.ToString();
-                    rcbConfimationInstructions.SelectedValue = dt.ConfimationInstructions.ToString();
-                    txtEdittor_NegotgBank700.Content = dt.InstrToPaygAccptgNegotgBank.ToString();
-                    txtEdittor_SendertoReceiverInfomation700.Content = dt.SenderReceiverInfomation.ToString();
+                    txtEdittor_DescrpofGoods.Content = dt.DescrpGoodsBervices;
+                    txtEdittor_OrderDocs700.Content = dt.DocsRequired;
+                    txtEdittor_AdditionalConditions700.Content = dt.AdditionalConditions;
+                    txtEdittor_Charges700.Content = dt.Charges;
+                    txtEdittor_PeriodforPresentation700.Content = dt.PeriodForPresentation;
+                    rcbConfimationInstructions.SelectedValue = dt.ConfimationInstructions??"";
+                    txtEdittor_NegotgBank700.Content = dt.InstrToPaygAccptgNegotgBank;
+                    txtEdittor_SendertoReceiverInfomation700.Content = dt.SenderReceiverInfomation;
 
                     if ((!String.IsNullOrEmpty(dt.LatesDateOfShipment.ToString())) && (dt.LatesDateOfShipment.ToString().IndexOf("1/1/1900") == -1))
                     {
@@ -368,43 +381,43 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         dteDateOfIssue.SelectedDate = DateTime.Parse(dt.DateOfIssue.ToString());
                     }
-                    comboAdviseThroughBankType700.SelectedValue = dt.AdviseThroughBankType.ToString();
-                    comboAdviseThroughBankNo700.SelectedValue = dt.AdviseThroughBankNo.ToString();
-                    txtAdviseThroughBankName700.Text = dt.AdviseThroughBankName.ToString();
-                    txtAdviseThroughBankAddr700_1.Text = dt.AdviseThroughBankAddr1.ToString();
-                    txtAdviseThroughBankAddr700_2.Text = dt.AdviseThroughBankAddr2.ToString();
-                    txtAdviseThroughBankAddr700_3.Text = dt.AdviseThroughBankAddr3.ToString();
+                    comboAdviseThroughBankType700.SelectedValue = dt.AdviseThroughBankType??"";
+                    comboAdviseThroughBankNo700.SelectedValue = dt.AdviseThroughBankNo??"";
+                    txtAdviseThroughBankName700.Text = dt.AdviseThroughBankName;
+                    txtAdviseThroughBankAddr700_1.Text = dt.AdviseThroughBankAddr1;
+                    txtAdviseThroughBankAddr700_2.Text = dt.AdviseThroughBankAddr2;
+                    txtAdviseThroughBankAddr700_3.Text = dt.AdviseThroughBankAddr3;
 
-                    comboReimbBankType700.SelectedValue = dt.ReimbBankType.ToString();
-                    rcbReimbBankNo700.SelectedValue = dt.ReimbBankNo.ToString();
-                    tbReimbBankName700.Text = dt.ReimbBankName.ToString();
-                    tbReimbBankAddr700_1.Text = dt.ReimbBankAddr1.ToString();
-                    tbReimbBankAddr700_2.Text = dt.ReimbBankAddr2.ToString();
-                    tbReimbBankAddr700_3.Text = dt.ReimbBankAddr3.ToString();
-
-
-                    txtAdditionalAmountsCovered700_1.Text = dt.AdditionalAmountsCovered1.ToString();
-                    txtAdditionalAmountsCovered700_2.Text = dt.AdditionalAmountsCovered2.ToString();
-                    txtDraftsAt700_1.Text = dt.DraftsAt1.ToString();
-                    txtDraftsAt700_2.Text = dt.DraftsAt2.ToString();
+                    comboReimbBankType700.SelectedValue = dt.ReimbBankType??"";
+                    rcbReimbBankNo700.SelectedValue = dt.ReimbBankNo??"";
+                    tbReimbBankName700.Text = dt.ReimbBankName;
+                    tbReimbBankAddr700_1.Text = dt.ReimbBankAddr1;
+                    tbReimbBankAddr700_2.Text = dt.ReimbBankAddr2;
+                    tbReimbBankAddr700_3.Text = dt.ReimbBankAddr3;
 
 
-                    txtMixedPaymentDetails700_1.Text = dt.MixedPaymentDetails1.ToString();
-                    txtMixedPaymentDetails700_2.Text = dt.MixedPaymentDetails2.ToString();
-                    txtMixedPaymentDetails700_3.Text = dt.MixedPaymentDetails3.ToString();
-                    txtMixedPaymentDetails700_4.Text = dt.MixedPaymentDetails4.ToString();
+                    txtAdditionalAmountsCovered700_1.Text = dt.AdditionalAmountsCovered1;
+                    txtAdditionalAmountsCovered700_2.Text = dt.AdditionalAmountsCovered2;
+                    txtDraftsAt700_1.Text = dt.DraftsAt1;
+                    txtDraftsAt700_2.Text = dt.DraftsAt2;
 
-                    txtDeferredPaymentDetails700_1.Text = dt.DeferredPaymentDetails1.ToString();
-                    txtDeferredPaymentDetails700_2.Text = dt.DeferredPaymentDetails2.ToString();
-                    txtDeferredPaymentDetails700_3.Text = dt.DeferredPaymentDetails3.ToString();
-                    txtDeferredPaymentDetails700_4.Text = dt.DeferredPaymentDetails4.ToString();
 
-                    txtShipmentPeriod700_1.Text = dt.ShipmentPeriod1.ToString();
-                    txtShipmentPeriod700_2.Text = dt.ShipmentPeriod2.ToString();
-                    txtShipmentPeriod700_3.Text = dt.ShipmentPeriod3.ToString();
-                    txtShipmentPeriod700_4.Text = dt.ShipmentPeriod4.ToString();
-                    txtShipmentPeriod700_5.Text = dt.ShipmentPeriod3.ToString();
-                    txtShipmentPeriod700_6.Text = dt.ShipmentPeriod4.ToString();
+                    txtMixedPaymentDetails700_1.Text = dt.MixedPaymentDetails1;
+                    txtMixedPaymentDetails700_2.Text = dt.MixedPaymentDetails2;
+                    txtMixedPaymentDetails700_3.Text = dt.MixedPaymentDetails3;
+                    txtMixedPaymentDetails700_4.Text = dt.MixedPaymentDetails4;
+
+                    txtDeferredPaymentDetails700_1.Text = dt.DeferredPaymentDetails1;
+                    txtDeferredPaymentDetails700_2.Text = dt.DeferredPaymentDetails2;
+                    txtDeferredPaymentDetails700_3.Text = dt.DeferredPaymentDetails3;
+                    txtDeferredPaymentDetails700_4.Text = dt.DeferredPaymentDetails4;
+
+                    txtShipmentPeriod700_1.Text = dt.ShipmentPeriod1;
+                    txtShipmentPeriod700_2.Text = dt.ShipmentPeriod2;
+                    txtShipmentPeriod700_3.Text = dt.ShipmentPeriod3;
+                    txtShipmentPeriod700_4.Text = dt.ShipmentPeriod4;
+                    txtShipmentPeriod700_5.Text = dt.ShipmentPeriod5;
+                    txtShipmentPeriod700_6.Text = dt.ShipmentPeriod6;
                     if (!string.IsNullOrEmpty(dt.CancelDate.ToString()) && dt.CancelDate.ToString().IndexOf("1/1/1900") == -1)
                     {
                         dteCancelDate.SelectedDate = DateTime.Parse(dt.CancelDate.ToString());
@@ -421,10 +434,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     if (TabId != TabIssueLCAmend)
                     {
                         //find in BIMPORT_NORMAILLC_MT700 if cannot find, find in BAdvisingAndNegotiationLCs
-                        var ds = entContext.BIMPORT_NORMAILLC_MT700.Where(dr => dr.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
+                        var ds = from M in entContext.BIMPORT_NORMAILLC_MT700
+                                 join N in entContext.BIMPORT_NORMAILLC on M.NormalLCCode equals N.NormalLCCode
+                                 where (M.NormalLCCode == tbEssurLCCode.Text)
+                                 select new {M,N};
+                        //
 
-                        if (ds == null)
+                        //
+                        if (ds == null|| ds.Count()==0)
                         {
+                            lblError.Text = "This LC can not find";
                             txtCancelRemark.Text = string.Empty;
                             txtRevivingBank700.Text = string.Empty;
                             tbBaquenceOfTotal.Text = string.Empty;
@@ -502,117 +521,171 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             txtShipmentPeriod700_4.Text = string.Empty;
                             txtShipmentPeriod700_5.Text = string.Empty;
                             txtShipmentPeriod700_6.Text = string.Empty;
+                            return false;
                         }
                         else
                         {
-                            txtRevivingBank700.Text = ds.ReceivingBank.ToString();
-                            tbBaquenceOfTotal.Text = ds.SequenceOfTotal.ToString();
-                            comboFormOfDocumentaryCredit.SelectedValue = ds.FormDocumentaryCredit.ToString();
-                            lblDocumentaryCreditNumber.Text = ds.DocumentaryCreditNumber.ToString();
-                            tbPlaceOfExpiry.Text = ds.PlaceOfExpiry.ToString();
-                            comboAvailableRule.SelectedValue = ds.ApplicationRule.ToString();
-
-                            rcbApplicantBankType700.SelectedValue = dt.DraweeType.ToString(); ;
-                            tbApplicantNo700.Text = dt.DraweeNo.ToString();
-                            tbApplicantName700.Text = dt.DraweeName.ToString();
-                            tbApplicantAddr700_1.Text = dt.DraweeAddr1.ToString();
-                            tbApplicantAddr700_2.Text = dt.DraweeAddr2.ToString();
-                            tbApplicantAddr700_3.Text = dt.DraweeAddr3.ToString();
-
-                            //drawee type load nguoc
-                            comboDraweeCusType.SelectedValue = ds.ApplicantType.ToString();
-                            //txtDraweeCusNo.Text = ds.ApplicantNo.ToString();
-                            txtDraweeCusName.Text = ds.ApplicantName.ToString();
-                            txtDraweeAddr1.Text = ds.ApplicantAddr1.ToString();
-                            txtDraweeAddr2.Text = ds.ApplicantAddr2.ToString();
-                            txtDraweeAddr3.Text = ds.ApplicantAddr3.ToString();
-                            //
-                            comboBeneficiaryType700.SelectedValue = ds.BeneficiaryType.ToString();
-                            txtBeneficiaryNo700.Text = ds.BeneficiaryNo.ToString();
-                            txtBeneficiaryName700.Text = ds.BeneficiaryName.ToString();
-                            txtBeneficiaryAddr700_1.Text = ds.BeneficiaryAddr1.ToString();
-                            txtBeneficiaryAddr700_2.Text = ds.BeneficiaryAddr2.ToString();
-                            txtBeneficiaryAddr700_3.Text = ds.BeneficiaryAddr3.ToString();
-
-                            comboCurrency700.SelectedValue = ds.Currency.ToString();
-                            numAmount700.Value = (double?)ds.Amount;
-                            numPercentCreditAmount1.Value = (double?)ds.PercentageCredit;
-                            numPercentCreditAmount2.Value = (double?)ds.AmountTolerance;
-                            comboMaximumCreditAmount700.SelectedValue = ds.MaximumCreditAmount.ToString();
-
-                            rcbAvailableWithType.SelectedValue = ds.AvailableWithType.ToString();
-                            comboAvailableWithNo.SelectedValue = ds.AvailableWithNo.ToString();
-                            tbAvailableWithName.Text = ds.AvailableWithName.ToString();
-                            tbAvailableWithAddr1.Text = ds.AvailableWithAddr1.ToString();
-                            tbAvailableWithAddr2.Text = ds.AvailableWithAddr2.ToString();
-                            tbAvailableWithAddr3.Text = ds.AvailableWithAddr3.ToString();
-
-                            comboAvailableWithBy.SelectedValue = ds.Available_By.ToString();
-
-                            rcbPatialShipment.SelectedValue = ds.PatialShipment.ToString();
-                            rcbTranshipment.SelectedValue = ds.Transhipment.ToString();
-                            tbPlaceoftakingincharge.Text = ds.PlaceOfTakingInCharge.ToString();
-                            tbPortofDischarge.Text = ds.PortOfDischarge.ToString();
-                            tbPlaceoffinalindistination.Text = ds.PlaceOfFinalInDistination.ToString();
-
-                            txtEdittor_DescrpofGoods.Content = ds.DescrpGoodsBervices.ToString();
-                            txtEdittor_OrderDocs700.Content = ds.DocsRequired.ToString();
-                            txtEdittor_AdditionalConditions700.Content = ds.AdditionalConditions.ToString();
-                            txtEdittor_Charges700.Content = ds.Charges.ToString();
-                            txtEdittor_PeriodforPresentation700.Content = ds.PeriodForPresentation.ToString();
-                            rcbConfimationInstructions.SelectedValue = ds.ConfimationInstructions.ToString();
-                            txtEdittor_NegotgBank700.Content = ds.InstrToPaygAccptgNegotgBank.ToString();
-                            txtEdittor_SendertoReceiverInfomation700.Content = ds.SenderReceiverInfomation.ToString();
-
-                            if ((!String.IsNullOrEmpty(ds.LatesDateOfShipment.ToString())) && (ds.LatesDateOfShipment.ToString().IndexOf("1/1/1900") != -1))
+                            //filter status="UNA" from ds
+                            var BMT700 = new BIMPORT_NORMAILLC_MT700();
+                            var BM = new BIMPORT_NORMAILLC();
+                            foreach (var item in ds)
                             {
-                                tbLatesDateofShipment.SelectedDate = DateTime.Parse(ds.LatesDateOfShipment.ToString());
+                                BMT700 = item.M;
+                                BM = item.N;
                             }
-                            if ((!String.IsNullOrEmpty(ds.DateExpiry.ToString())) && (ds.DateExpiry.ToString().IndexOf("1/1/1900") != -1))
+                            if (BMT700 != null && BM != null)
                             {
-                                dteMT700DateAndPlaceOfExpiry.SelectedDate = DateTime.Parse(ds.DateExpiry.ToString());
+                                //
+                                if (BM.Status == "UNA")
+                                {
+                                    lblError.Text = " This LC has not authorized yet";
+                                    return false;
+                                }
+                                else if (BM.Status == "AUT" && BM.Cancel_Status == "AUT")
+                                {
+                                    lblError.Text = " This LC was canceled";
+                                    return false;
+                                }
+                                if (TabId == TabIssueLCAmend)
+                                {
+                                    if (BM.Status == "UNA")
+                                    {
+                                        dt = null;
+
+                                        lblError.Text = "This Amend Documentary " + tbEssurLCCode.Text + " was not authorized ";
+                                        tbEssurLCCode.Text = "";
+                                        return false;
+                                    }
+                                }
+                                else if (TabId == TabIssueLCCancel)
+                                {
+                                    if (BM.CancelRemark != null)
+                                    {
+                                        lblError.Text = "This Documentary was canceled";
+
+                                    }
+                                    else if (BM.Amend_Status != null)
+                                    {
+                                        if (BM.Status != "AUT")
+                                        {
+                                            lblError.Text = "This Documentary was not authorized";
+                                        }
+                                    }
+                                }
+
+
+                                //
+                                txtRevivingBank700.Text = BMT700.ReceivingBank;
+                                tbBaquenceOfTotal.Text = BMT700.SequenceOfTotal;
+                                comboFormOfDocumentaryCredit.SelectedValue = BMT700.FormDocumentaryCredit ?? "";
+                                lblDocumentaryCreditNumber.Text = BMT700.DocumentaryCreditNumber;
+                                tbPlaceOfExpiry.Text = BMT700.PlaceOfExpiry;
+                                comboAvailableRule.SelectedValue = BMT700.ApplicationRule ?? "";
+
+                                if (dt != null)
+                                {
+                                    rcbApplicantBankType700.SelectedValue = dt.DraweeType ?? "";
+                                    tbApplicantNo700.Text = dt.DraweeNo;
+                                    tbApplicantName700.Text = dt.DraweeName;
+                                    tbApplicantAddr700_1.Text = dt.DraweeAddr1;
+                                    tbApplicantAddr700_2.Text = dt.DraweeAddr2;
+                                    tbApplicantAddr700_3.Text = dt.DraweeAddr3;
+                                }
+                                //drawee type load nguoc
+                                comboDraweeCusType.SelectedValue = BMT700.ApplicantType ?? "";
+                                //txtDraweeCusNo.Text = ds.ApplicantNo;
+                                txtDraweeCusName.Text = BMT700.ApplicantName;
+                                txtDraweeAddr1.Text = BMT700.ApplicantAddr1;
+                                txtDraweeAddr2.Text = BMT700.ApplicantAddr2;
+                                txtDraweeAddr3.Text = BMT700.ApplicantAddr3;
+                                //
+                                comboBeneficiaryType700.SelectedValue = BMT700.BeneficiaryType ?? "";
+                                txtBeneficiaryNo700.Text = BMT700.BeneficiaryNo;
+                                txtBeneficiaryName700.Text = BMT700.BeneficiaryName;
+                                txtBeneficiaryAddr700_1.Text = BMT700.BeneficiaryAddr1;
+                                txtBeneficiaryAddr700_2.Text = BMT700.BeneficiaryAddr2;
+                                txtBeneficiaryAddr700_3.Text = BMT700.BeneficiaryAddr3;
+
+                                comboCurrency700.SelectedValue = BMT700.Currency ?? "";
+                                numAmount700.Value = (double?)BMT700.Amount;
+                                numPercentCreditAmount1.Value = (double?)BMT700.PercentageCredit;
+                                numPercentCreditAmount2.Value = (double?)BMT700.AmountTolerance;
+                                comboMaximumCreditAmount700.SelectedValue = BMT700.MaximumCreditAmount ?? "";
+
+                                rcbAvailableWithType.SelectedValue = BMT700.AvailableWithType ?? "";
+                                comboAvailableWithNo.SelectedValue = BMT700.AvailableWithNo ?? "";
+                                tbAvailableWithName.Text = BMT700.AvailableWithName;
+                                tbAvailableWithAddr1.Text = BMT700.AvailableWithAddr1;
+                                tbAvailableWithAddr2.Text = BMT700.AvailableWithAddr2;
+                                tbAvailableWithAddr3.Text = BMT700.AvailableWithAddr3;
+
+                                comboAvailableWithBy.SelectedValue = BMT700.Available_By ?? "";
+
+                                rcbPatialShipment.SelectedValue = BMT700.PatialShipment ?? "";
+                                rcbTranshipment.SelectedValue = BMT700.Transhipment ?? "";
+                                tbPlaceoftakingincharge.Text = BMT700.PlaceOfTakingInCharge;
+                                tbPortofDischarge.Text = BMT700.PortOfDischarge;
+                                tbPlaceoffinalindistination.Text = BMT700.PlaceOfFinalInDistination;
+
+                                txtEdittor_DescrpofGoods.Content = BMT700.DescrpGoodsBervices;
+                                txtEdittor_OrderDocs700.Content = BMT700.DocsRequired;
+                                txtEdittor_AdditionalConditions700.Content = BMT700.AdditionalConditions;
+                                txtEdittor_Charges700.Content = BMT700.Charges;
+                                txtEdittor_PeriodforPresentation700.Content = BMT700.PeriodForPresentation ?? "";
+                                rcbConfimationInstructions.SelectedValue = BMT700.ConfimationInstructions ?? "";
+                                txtEdittor_NegotgBank700.Content = BMT700.InstrToPaygAccptgNegotgBank;
+                                txtEdittor_SendertoReceiverInfomation700.Content = BMT700.SenderReceiverInfomation;
+
+                                if ((!String.IsNullOrEmpty(BMT700.LatesDateOfShipment.ToString())) && (BMT700.LatesDateOfShipment.ToString().IndexOf("1/1/1900") != -1))
+                                {
+                                    tbLatesDateofShipment.SelectedDate = DateTime.Parse(BMT700.LatesDateOfShipment.ToString());
+                                }
+                                if ((!String.IsNullOrEmpty(BMT700.DateExpiry.ToString())) && (BMT700.DateExpiry.ToString().IndexOf("1/1/1900") != -1))
+                                {
+                                    dteMT700DateAndPlaceOfExpiry.SelectedDate = DateTime.Parse(BMT700.DateExpiry.ToString());
+                                }
+                                if ((!String.IsNullOrEmpty(BMT700.DateOfIssue.ToString())) && (BMT700.DateOfIssue.ToString().IndexOf("1/1/1900") != -1))
+                                {
+                                    dteDateOfIssue.SelectedDate = DateTime.Parse(BMT700.DateOfIssue.ToString());
+                                }
+                                comboAdviseThroughBankType700.SelectedValue = BMT700.AdviseThroughBankType ?? "";
+                                comboAdviseThroughBankNo700.SelectedValue = BMT700.AdviseThroughBankNo ?? "";
+                                txtAdviseThroughBankName700.Text = BMT700.AdviseThroughBankName;
+                                txtAdviseThroughBankAddr700_1.Text = BMT700.AdviseThroughBankAddr1;
+                                txtAdviseThroughBankAddr700_2.Text = BMT700.AdviseThroughBankAddr2;
+                                txtAdviseThroughBankAddr700_3.Text = BMT700.AdviseThroughBankAddr3;
+
+                                comboReimbBankType700.SelectedValue = BMT700.ReimbBankType ?? "";
+                                rcbReimbBankNo700.SelectedValue = BMT700.ReimbBankNo ?? "";
+                                tbReimbBankName700.Text = BMT700.ReimbBankName;
+                                tbReimbBankAddr700_1.Text = BMT700.ReimbBankAddr1;
+                                tbReimbBankAddr700_2.Text = BMT700.ReimbBankAddr2;
+                                tbReimbBankAddr700_3.Text = BMT700.ReimbBankAddr3;
+
+
+                                txtAdditionalAmountsCovered700_1.Text = BMT700.AdditionalAmountsCovered1;
+                                txtAdditionalAmountsCovered700_2.Text = BMT700.AdditionalAmountsCovered2;
+                                txtDraftsAt700_1.Text = BMT700.DraftsAt1;
+                                txtDraftsAt700_2.Text = BMT700.DraftsAt2;
+
+
+                                txtMixedPaymentDetails700_1.Text = BMT700.MixedPaymentDetails1;
+                                txtMixedPaymentDetails700_2.Text = BMT700.MixedPaymentDetails2;
+                                txtMixedPaymentDetails700_3.Text = BMT700.MixedPaymentDetails3;
+                                txtMixedPaymentDetails700_4.Text = BMT700.MixedPaymentDetails4;
+
+                                txtDeferredPaymentDetails700_1.Text = BMT700.DeferredPaymentDetails1;
+                                txtDeferredPaymentDetails700_2.Text = BMT700.DeferredPaymentDetails2;
+                                txtDeferredPaymentDetails700_3.Text = BMT700.DeferredPaymentDetails3;
+                                txtDeferredPaymentDetails700_4.Text = BMT700.DeferredPaymentDetails4;
+
+                                txtShipmentPeriod700_1.Text = BMT700.ShipmentPeriod1;
+                                txtShipmentPeriod700_2.Text = BMT700.ShipmentPeriod2;
+                                txtShipmentPeriod700_3.Text = BMT700.ShipmentPeriod3;
+                                txtShipmentPeriod700_4.Text = BMT700.ShipmentPeriod4;
+                                txtShipmentPeriod700_5.Text = BMT700.ShipmentPeriod5;
+                                txtShipmentPeriod700_6.Text = BMT700.ShipmentPeriod6;
                             }
-                            if ((!String.IsNullOrEmpty(ds.DateOfIssue.ToString())) && (ds.DateOfIssue.ToString().IndexOf("1/1/1900") != -1))
-                            {
-                                dteDateOfIssue.SelectedDate = DateTime.Parse(ds.DateOfIssue.ToString());
-                            }
-                            comboAdviseThroughBankType700.SelectedValue = ds.AdviseThroughBankType.ToString();
-                            comboAdviseThroughBankNo700.SelectedValue = ds.AdviseThroughBankNo.ToString();
-                            txtAdviseThroughBankName700.Text = ds.AdviseThroughBankName.ToString();
-                            txtAdviseThroughBankAddr700_1.Text = ds.AdviseThroughBankAddr1.ToString();
-                            txtAdviseThroughBankAddr700_2.Text = ds.AdviseThroughBankAddr2.ToString();
-                            txtAdviseThroughBankAddr700_3.Text = ds.AdviseThroughBankAddr3.ToString();
-
-                            comboReimbBankType700.SelectedValue = ds.ReimbBankType.ToString();
-                            rcbReimbBankNo700.SelectedValue = ds.ReimbBankNo.ToString();
-                            tbReimbBankName700.Text = ds.ReimbBankName.ToString();
-                            tbReimbBankAddr700_1.Text = ds.ReimbBankAddr1.ToString();
-                            tbReimbBankAddr700_2.Text = ds.ReimbBankAddr2.ToString();
-                            tbReimbBankAddr700_3.Text = ds.ReimbBankAddr3.ToString();
-
-
-                            txtAdditionalAmountsCovered700_1.Text = ds.AdditionalAmountsCovered1.ToString();
-                            txtAdditionalAmountsCovered700_2.Text = ds.AdditionalAmountsCovered2.ToString();
-                            txtDraftsAt700_1.Text = ds.DraftsAt1.ToString();
-                            txtDraftsAt700_2.Text = ds.DraftsAt2.ToString();
-
-
-                            txtMixedPaymentDetails700_1.Text = ds.MixedPaymentDetails1.ToString();
-                            txtMixedPaymentDetails700_2.Text = ds.MixedPaymentDetails2.ToString();
-                            txtMixedPaymentDetails700_3.Text = ds.MixedPaymentDetails3.ToString();
-                            txtMixedPaymentDetails700_4.Text = ds.MixedPaymentDetails4.ToString();
-
-                            txtDeferredPaymentDetails700_1.Text = ds.DeferredPaymentDetails1.ToString();
-                            txtDeferredPaymentDetails700_2.Text = ds.DeferredPaymentDetails2.ToString();
-                            txtDeferredPaymentDetails700_3.Text = ds.DeferredPaymentDetails3.ToString();
-                            txtDeferredPaymentDetails700_4.Text = ds.DeferredPaymentDetails4.ToString();
-
-                            txtShipmentPeriod700_1.Text = ds.ShipmentPeriod1.ToString();
-                            txtShipmentPeriod700_2.Text = ds.ShipmentPeriod2.ToString();
-                            txtShipmentPeriod700_3.Text = ds.ShipmentPeriod3.ToString();
-                            txtShipmentPeriod700_4.Text = ds.ShipmentPeriod4.ToString();
-                            txtShipmentPeriod700_5.Text = ds.ShipmentPeriod3.ToString();
-                            txtShipmentPeriod700_6.Text = ds.ShipmentPeriod4.ToString();
                         }
                     }
                 }
@@ -621,39 +694,39 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             var dsCharge = entContext.BAdvisingAndNegotiationLCCharges.Where(dr => dr.DocCollectCode == tbEssurLCCode.Text).FirstOrDefault();
             if (dsCharge != null)
             {
-                tbChargeRemarks.Text = dsCharge.ChargeRemarks.ToString();
-                tbVatNo.Text = dsCharge.VATNo.ToString();
-                tbChargeCode.SelectedValue = dsCharge.Chargecode.ToString();
-                rcbChargeCcy.SelectedValue = dsCharge.ChargeCcy.ToString();
-                comboWaiveCharges.SelectedValue = dsCharge.WaiveCharges.ToString();
-                rcbChargeAcct.SelectedValue = dsCharge.ChargeAcct.ToString();
+                tbChargeRemarks.Text = dsCharge.ChargeRemarks;
+                tbVatNo.Text = dsCharge.VATNo;
+                tbChargeCode.SelectedValue = dsCharge.Chargecode??"";
+                rcbChargeCcy.SelectedValue = dsCharge.ChargeCcy??"";
+                comboWaiveCharges.SelectedValue = dsCharge.WaiveCharges??"";
+                rcbChargeAcct.SelectedValue = dsCharge.ChargeAcct??"";
                 tbChargeAmt.Text = dsCharge.ChargeAmt.ToString();
-                rcbPartyCharged.SelectedValue = dsCharge.PartyCharged.ToString();
-                rcbOmortCharge.SelectedValue = dsCharge.OmortCharges.ToString();
-                rcbChargeStatus.SelectedValue = dsCharge.ChargeStatus.ToString();
-                lblChargeStatus.Text = dsCharge.ChargeStatus.ToString();
-                lblTaxCode.Text = dsCharge.TaxCode.ToString();
-                lblTaxAmt.Text = dsCharge.TaxAmt.ToString();
+                rcbPartyCharged.SelectedValue = dsCharge.PartyCharged??"";
+                rcbOmortCharge.SelectedValue = dsCharge.OmortCharges??"";
+                rcbChargeStatus.SelectedValue = dsCharge.ChargeStatus??"";
+                lblChargeStatus.Text = dsCharge.ChargeStatus;
+                lblTaxCode.Text = dsCharge.TaxCode;
+                lblTaxAmt.Text = dsCharge.TaxAmt;
                 //
-                tbChargeCode2.SelectedValue = dsCharge.Chargecode.ToString();
-                rcbChargeCcy2.SelectedValue = dsCharge.ChargeCcy.ToString();
-                rcbChargeAcct2.SelectedValue = dsCharge.ChargeAcct.ToString();
+                tbChargeCode2.SelectedValue = dsCharge.Chargecode??"";
+                rcbChargeCcy2.SelectedValue = dsCharge.ChargeCcy??"";
+                rcbChargeAcct2.SelectedValue = dsCharge.ChargeAcct;
                 tbChargeAmt2.Text = dsCharge.ChargeAmt.ToString();
-                rcbPartyCharged2.SelectedValue = dsCharge.PartyCharged.ToString();
-                rcbOmortCharge2.SelectedValue = dsCharge.OmortCharges.ToString();
-                rcbChargeStatus2.SelectedValue = dsCharge.ChargeStatus.ToString();
-                lblTaxCode2.Text = dsCharge.TaxCode.ToString();
-                lblTaxAmt2.Text = dsCharge.TaxAmt.ToString();
+                rcbPartyCharged2.SelectedValue = dsCharge.PartyCharged??"";
+                rcbOmortCharge2.SelectedValue = dsCharge.OmortCharges??"";
+                rcbChargeStatus2.SelectedValue = dsCharge.ChargeStatus??"";
+                lblTaxCode2.Text = dsCharge.TaxCode;
+                lblTaxAmt2.Text = dsCharge.TaxAmt;
                 //
-                tbChargeCode3.SelectedValue = dsCharge.Chargecode.ToString();
-                rcbChargeCcy3.SelectedValue = dsCharge.ChargeCcy.ToString();
-                rcbChargeAcct3.SelectedValue = dsCharge.ChargeAcct.ToString();
+                tbChargeCode3.SelectedValue = dsCharge.Chargecode??"";
+                rcbChargeCcy3.SelectedValue = dsCharge.ChargeCcy??"";
+                rcbChargeAcct3.SelectedValue = dsCharge.ChargeAcct??"";
                 tbChargeAmt3.Text = dsCharge.ChargeAmt.ToString();
-                rcbPartyCharged3.SelectedValue = dsCharge.PartyCharged.ToString();
-                rcbOmortCharge3.SelectedValue = dsCharge.OmortCharges.ToString();
-                rcbChargeStatus3.SelectedValue = dsCharge.ChargeStatus.ToString();
-                lblTaxCode3.Text = dsCharge.TaxCode.ToString();
-                lblTaxAmt3.Text = dsCharge.TaxAmt.ToString();
+                rcbPartyCharged3.SelectedValue = dsCharge.PartyCharged??"";
+                rcbOmortCharge3.SelectedValue = dsCharge.OmortCharges??"";
+                rcbChargeStatus3.SelectedValue = dsCharge.ChargeStatus??"";
+                lblTaxCode3.Text = dsCharge.TaxCode;
+                lblTaxAmt3.Text = dsCharge.TaxAmt;
             }
             else
             {
@@ -766,21 +839,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 tbChargeCode.Items.Clear();
                 tbChargeCode.Items.Add(new RadComboBoxItem(""));
                 tbChargeCode.DataValueField = "ID";
-                tbChargeCode.DataTextField = "Code";
+                tbChargeCode.DataTextField = "ID";
                 tbChargeCode.DataSource = datasource;
                 tbChargeCode.DataBind();
 
                 tbChargeCode2.Items.Clear();
                 tbChargeCode2.Items.Add(new RadComboBoxItem(""));
                 tbChargeCode2.DataValueField = "ID";
-                tbChargeCode2.DataTextField = "Code";
+                tbChargeCode2.DataTextField = "ID";
                 tbChargeCode2.DataSource = datasource;
                 tbChargeCode2.DataBind();
 
                 tbChargeCode3.Items.Clear();
                 tbChargeCode3.Items.Add(new RadComboBoxItem(""));
                 tbChargeCode3.DataValueField = "ID";
-                tbChargeCode3.DataTextField = "Code";
+                tbChargeCode3.DataTextField = "ID";
                 tbChargeCode3.DataSource = datasource;
                 tbChargeCode3.DataBind();
 
@@ -834,34 +907,34 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (dataCharge != null)
             {
                 RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                comboWaiveCharges.SelectedValue = dataCharge.WaiveCharges.ToString();
-                rcbChargeAcct.SelectedValue = dataCharge.ChargeAcct.ToString();
+                comboWaiveCharges.SelectedValue = dataCharge.WaiveCharges;
+                rcbChargeAcct.SelectedValue = dataCharge.ChargeAcct;
 
-                    //tbChargePeriod.Text = drow1["ChargePeriod"].ToString();
-                rcbChargeCcy.SelectedValue = dataCharge.ChargeCcy.ToString();
-                    tbChargeAmt.Text = dataCharge.ChargeAmt.ToString();
-                    rcbPartyCharged.SelectedValue = dataCharge.PartyCharged.ToString();
-                    lblPartyCharged.Text = dataCharge.PartyCharged.ToString();
-                    rcbOmortCharge.SelectedValue = dataCharge.OmortCharges.ToString();
-                    rcbChargeStatus.SelectedValue = dataCharge.ChargeStatus.ToString();
-                    lblChargeStatus.Text = dataCharge.ChargeStatus.ToString();
+                    //tbChargePeriod.Text = drow1["ChargePeriod"];
+                rcbChargeCcy.SelectedValue = dataCharge.ChargeCcy;
+                tbChargeAmt.Text = dataCharge.ChargeAmt.ToString();
+                    rcbPartyCharged.SelectedValue = dataCharge.PartyCharged;
+                    lblPartyCharged.Text = dataCharge.PartyCharged;
+                    rcbOmortCharge.SelectedValue = dataCharge.OmortCharges;
+                    rcbChargeStatus.SelectedValue = dataCharge.ChargeStatus;
+                    lblChargeStatus.Text = dataCharge.ChargeStatus;
 
-                    tbChargeRemarks.Text = dataCharge.ChargeRemarks.ToString();
-                    tbVatNo.Text = dataCharge.VATNo.ToString();
-                    lblTaxCode.Text = dataCharge.TaxCode.ToString();
-                    //lblTaxCcy.Text = drow1["TaxCcy"].ToString();
-                    lblTaxAmt.Text = dataCharge.TaxAmt.ToString();
+                    tbChargeRemarks.Text = dataCharge.ChargeRemarks;
+                    tbVatNo.Text = dataCharge.VATNo;
+                    lblTaxCode.Text = dataCharge.TaxCode;
+                    //lblTaxCcy.Text = drow1["TaxCcy"];
+                    lblTaxAmt.Text = dataCharge.TaxAmt;
 
-                    tbChargeCode.SelectedValue = dataCharge.Chargecode.ToString();
+                    tbChargeCode.SelectedValue = dataCharge.Chargecode;
 
-                    //ChargeAmount += ConvertStringToFloat(drow1["ChargeAmt"].ToString());
+                    //ChargeAmount += ConvertStringToFloat(drow1["ChargeAmt"]);
                 
 
             }
         }
         protected void rcbChargeCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct();
+            LoadChargeAcct(ref rcbChargeAcct);
         }
         protected void rcbChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
@@ -936,14 +1009,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             LoadChargeAcct2();
         }
-        protected void LoadChargeAcct()
+        protected void LoadChargeAcct(ref RadComboBox cboChargeAcct)
         {
-            rcbChargeAcct.Items.Clear();
-            rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct.DataValueField = "Id";
-            rcbChargeAcct.DataTextField = "Id";
-            rcbChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantBankType700.SelectedItem != null ? rcbApplicantBankType700.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy.SelectedValue);
-            rcbChargeAcct.DataBind();
+            //rcbChargeAcct.Items.Clear();
+            //rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
+            //rcbChargeAcct.DataValueField = "Id";
+            //rcbChargeAcct.DataTextField = "Id";
+            //rcbChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantBankType700.SelectedItem != null ? rcbApplicantBankType700.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy.SelectedValue);
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantBankType700.SelectedItem != null ? rcbApplicantBankType700.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy.SelectedValue));
+            //rcbChargeAcct.DataBind();
 
         }
         protected void SetRelation_AvailableWithType()
