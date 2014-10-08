@@ -513,6 +513,12 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("BCOLLECTCHARGESFROMACCOUNT_Insert", AccountType, Code, CustomerAccount, ChargAmountLCY, ChargAmountFCY, ValueDate, CategoryPLCode, CategoryPLName, DealRate,
                                     VatAmountLCY, VatAmountFCY, TotalAmountLCY, TotalAmountFCY, VatSerialNo, Narrative, UserId, CustomerID,CustomerName,Currency);
         }
+        public static DataSet BCOLLECTCHARGESFROMACCOUNT_Enquiry(string CollectionType, string RefID, string AccountType, string AccountID, string CustomerID
+            , string CustomerName, string LegalID, double FromChargesAmt, double ToChargesAmt)
+        {
+            return sqldata.ndkExecuteDataset("BCOLLECTCHARGESFROMACCOUNT_Enquiry", CollectionType, RefID, AccountType, AccountID, CustomerID, CustomerName, LegalID
+                , FromChargesAmt, ToChargesAmt);
+        }
         #endregion
 		
         #region BCOLLECTCHARGESBYCASH
