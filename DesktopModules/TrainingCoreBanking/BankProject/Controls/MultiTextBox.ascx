@@ -30,6 +30,7 @@
         var txtI = txt.lastIndexOf('.1');
         txt = txt.substring(0, txtI);
         objTr.find('.MyLable').text(txt + '.' + <%=divMultiTextBox.ClientID%>_MultiTextBoxRow);
+        objTr.find('.MyLable').text('');
         //
         objTr.appendTo($(this).closest('table'));
         $(this)
@@ -47,16 +48,14 @@
         objNar.val('');
         $('#<%=divMultiTextBox.ClientID%> table').children().find("input:text").each(function () {
             //alert($(this).val() + '^' + $(this).text());
-            if ($(this).val() != '') {
+            var txt = $(this).val();
+            if (txt != '') {
                 if (objNar.val() == '')
-                    objNar.val($(this).val());
+                    objNar.val(txt);
                 else
-                    objNar.val(objNar.val() + '\n' + $(this).val());
+                    objNar.val(objNar.val() + '\n' + txt);
             }
         });
         //alert(objNar.val() + '^' + objNar.attr('id'));
     }
-    //$(document).on("change", $('#<%=divMultiTextBox.ClientID%> table').children("input:text"), function () {
-        //<%=divMultiTextBox.ClientID%>_submit()
-    //});
 </script>

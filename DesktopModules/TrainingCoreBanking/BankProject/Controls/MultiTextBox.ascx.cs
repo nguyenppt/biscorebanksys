@@ -11,6 +11,7 @@ namespace BankProject.Controls
     {
         protected int MultiTextBoxRow = 1;
         private string _Label = "";
+        private int _LabelWidth = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
@@ -22,6 +23,11 @@ namespace BankProject.Controls
         {
             get { return _Label; }
             set { _Label = value; }
+        }
+        public int LabelWidth
+        {
+            get { return _LabelWidth; }
+            set { _LabelWidth = value; }
         }
         //
         public void setText(string text)
@@ -49,8 +55,8 @@ namespace BankProject.Controls
         private string createTextBox(string text, bool readOnly, int order)
         {
             return "<tr>"
-                        + "<td class=\"MyLable\">" + _Label + "." + order + "</td>"
-                        + "<td class=\"MyContent\" style=\"width:350px;\">" + (readOnly ? "<span class=\"riSingle RadInput RadInput_Default\">" : "") + "<input name=\"txtMultiTextBox\" id=\"txtMultiTextBox\" style=\"width:350px;\" type=\"text\" value=\"" + text.Replace("\"", "\"\"") + "\" " + (readOnly ? "readonly" : "") + (readOnly ? " class=\"riTextBox riDisabled\"" : "") + " />" + (readOnly ? "</span>" : "") + "</td>"
+                + "<td class=\"MyLable\"" + (_LabelWidth > 0 ? " style=\"Width:" + _LabelWidth + "px\"" : "") + ">" + _Label + "</td>" //+ "." + order 
+                        + "<td class=\"MyContent\" style=\"width:350px;\">" + (readOnly ? "<span class=\"riSingle RadInput RadInput_Default\">" : "") + "<input style=\"width:350px;\" type=\"text\" value=\"" + text.Replace("\"", "\"\"") + "\" " + (readOnly ? "readonly" : "") + (readOnly ? " class=\"riTextBox riDisabled\"" : "") + " />" + (readOnly ? "</span>" : "") + "</td>"
                         + "<td>" + (String.IsNullOrEmpty(text) ? "<a class=\"MultiTextBoxAddRow\"><img src=\"Icons/Sigma/Add_16X16_Standard.png\"></a>" : "") + "</td>"
                     + "</tr>";
         }
