@@ -539,7 +539,7 @@ namespace BankProject.DataProvider
 
         public static DataSet BCOLLECTCHARGESBYCASH_Print_GetByCode(string code)
         {
-            return sqldata.ndkExecuteDataset("BCOLLECTCHARGESBYCASH_Print_GetByCode", code);
+            return sqldata.ndkExecuteDataset("BCOLLECTCHARGESBYCASH_Print_GetByCode_2", code); // old store : BCOLLECTCHARGESBYCASH_Print_GetByCode
         }
 		
         public static DataSet BCOLLECTCHARGESBYCASH_GetByCode(string code)
@@ -549,12 +549,13 @@ namespace BankProject.DataProvider
 		
         public static void BCOLLECTCHARGESBYCASH_Insert(string AccountType, string Code, string customerid, string customerAddress, string docid, DateTime? docissuedate, string docissueplace,
                                                     string teller, string currency, string CustomerAccount, double ChargAmountLCY, double ChargAmountFCY, DateTime? ValueDate, string CategoryPLCode,
-                                                    string CategoryPLName, double DealRate, double VatAmountLCY, double VatAmountFCY, double TotalAmountLCY, double TotalAmountFCY, string VatSerialNo, string Narrative, int UserId
-            )
+                                                    string CategoryPLName, double DealRate, double VatAmountLCY, double VatAmountFCY, double TotalAmountLCY, double TotalAmountFCY, string VatSerialNo,
+                string Narrative, int UserId, string CustomerName, string CustomerName_Vanglai, string AccountID)
+            
         {
             sqldata.ndkExecuteNonQuery("BCOLLECTCHARGESBYCASH_Insert", AccountType, Code, customerid, customerAddress, docid, docissuedate, docissueplace,
                                     teller, currency, CustomerAccount, ChargAmountLCY, ChargAmountFCY, ValueDate, CategoryPLCode, CategoryPLName, DealRate,
-                                    VatAmountLCY, VatAmountFCY, TotalAmountLCY, TotalAmountFCY, VatSerialNo, Narrative, UserId);
+                                    VatAmountLCY, VatAmountFCY, TotalAmountLCY, TotalAmountFCY, VatSerialNo, Narrative, UserId, CustomerName, CustomerName_Vanglai, AccountID);
         }
         #endregion
 		
