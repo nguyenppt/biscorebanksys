@@ -58,13 +58,31 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.TextBox txtId;
         
         /// <summary>
-        /// rcbCustomerID control.
+        /// tbCustomerID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbCustomerID;
+        protected global::Telerik.Web.UI.RadTextBox tbCustomerID;
+        
+        /// <summary>
+        /// lblCustomerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCustomerName;
+        
+        /// <summary>
+        /// tbCustomerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox tbCustomerName;
         
         /// <summary>
         /// tbAddress control.
@@ -281,6 +299,24 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox tbNarrative;
+        
+        /// <summary>
+        /// rcbCustomerID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbCustomerID;
+        
+        /// <summary>
+        /// code control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCodeBlock code;
         
         /// <summary>
         /// btSearch control.

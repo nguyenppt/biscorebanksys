@@ -111,6 +111,9 @@ namespace BankProject.Views.TellerApplication
                     DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_UpdateStatus(rcbAccountType.SelectedValue, "REV", tbDepositCode.Text, this.UserId.ToString());
                     LoadToolBar(false);
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                    if (rcbCurrency.Text == "VND")
+                        tbChargeAmountFCY.Enabled = false;
+                    else tbChargeAmountLCY.Enabled = false;
                     //firstLoad();
                     break;
 

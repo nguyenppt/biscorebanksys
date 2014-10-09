@@ -45,9 +45,12 @@ namespace BankProject.Views.TellerApplication
                         tbToAmt.Value.HasValue ? tbToAmt.Value.Value : 0);
             }
         }
-         protected string getUrlPreview(string Code)
+         protected string getUrlPreview(string Code, string form)
          {
-             return string.Format("Default.aspx?tabid=140&codeid={0}", Code);
+             if (form == "Account")
+                 return string.Format("Default.aspx?tabid=140&codeid={0}", Code);
+             else 
+                 return string.Format("Default.aspx?tabid=141&codeid={0}", Code);
          }
          protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
          {

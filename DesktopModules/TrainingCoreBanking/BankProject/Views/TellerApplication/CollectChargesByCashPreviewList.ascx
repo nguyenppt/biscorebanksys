@@ -10,7 +10,7 @@
             <telerik:GridTemplateColumn>
                 <ItemStyle Width="25" />
                 <ItemTemplate>  
-                    <a href='Default.aspx?tabid=141&codeid=<%# Eval("Id") %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" /> </a> 
+                    <a href='Default.aspx?tabid=141&codeid=<%# Eval("Code") %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" /> </a> 
                 </itemtemplate>
             </telerik:GridTemplateColumn>
         </Columns>

@@ -49,28 +49,26 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#ChristopherColumbus">Collect Charges</a></li>
-        <%--<li><a href="#blank">Audit</a></li>
-        <li><a href="#blank">Full View</a></li>--%>
     </ul>
     <div id="ChristopherColumbus" class="dnnClear">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Customer ID</td>
-                <td class="MyContent" >
-                    <telerik:RadComboBox AppendDataBoundItems="True"  
-                    ID="rcbCustomerID" Runat="server"
-                    MarkFirstMatch="True" Width="350" Height="150px" 
-                         OnItemDataBound="rcbCustomerID_ItemDataBound"
-                        OnClientSelectedIndexChanged="Customer_OnClientSelectedIndexChanged"
-                    AllowCustomText="false" >
-                    <ExpandAnimation Type="None" />
-                    <CollapseAnimation Type="None" />
-                    <Items>
-                        <telerik:RadComboBoxItem Value="" Text="" />
-                    </Items>
-                </telerik:RadComboBox>
+                <td class="MyContent" width="350">
+                    <telerik:RadTextBox id="tbCustomerID" runat="server" width="350" 
+                         AutoPostBack="true" OnTextChanged="tbCustomerID_TextChanged"></telerik:RadTextBox>
                 </td>
+                <td class="MyLable">
+                <asp:Label ID="lblCustomerName" runat="server"></asp:Label>
+                </td>
+                <td class="MyContent"></td>
             </tr>
+              <tr>
+                  <td class="MyLable">Customer Name</td>
+                  <td class="MyContent">
+                      <telerik:RadTextBox id="tbCustomerName" runat="server" width="350"></telerik:RadTextBox>
+                  </td>
+              </tr>
         </table>
 
          <table width="100%" cellpadding="0" cellspacing="0">
@@ -146,11 +144,6 @@
                         <CollapseAnimation Type="None" />
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
-                            <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                            <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                            <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                            <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                            <telerik:RadComboBoxItem Value="VND" Text="VND" />
                         </Items>
                     </telerik:RadcomboBox>   
 
@@ -158,7 +151,7 @@
        </tr>
          </table>
         <table width="100%" cellpadding="0" cellspacing="0">
-
+            <tr>
  <td class="MyLable">Account Type</td>
             <td class="MyContent">
                 <telerik:RadComboBox id="rcbAccountType" runat="server" 
@@ -174,6 +167,7 @@
                     </Items>
                 </telerik:RadComboBox>
             </td>
+                </tr>
          </table>
         <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
@@ -233,13 +227,9 @@
                         
                      <Items>
                          <telerik:RadComboBoxItem value=""  text="" />
-                         <telerik:RadComboBoxItem value="PL-62153"  text="PL-62153 - Fees on Counting&Checking Charges" />
                      </Items>
                          </telerik:RadComboBox>  
-            
                  </td>
-              
-                 
              </tr>
         <tr>
                   <td class="MyLable">Deal Rate</td>
@@ -294,52 +284,34 @@
 
         <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
-                    <td class="MyLable" ">Narrative</td>
-                      <td class="MyContent">
-                     <telerik:RadTextBox id="tbNarrative" runat="server" width="350"  />
+                    <td class="MyLable">Narrative</td>
+                      <td class="MyContent" width="550">
+                     <telerik:RadTextBox id="tbNarrative" runat="server" width="550"  />
                  </td>
+                    <td class="MyContent" style="visibility:hidden;" >
+                    <telerik:RadComboBox AppendDataBoundItems="True"  
+                    ID="rcbCustomerID" Runat="server"
+                    MarkFirstMatch="True" Height="150px" 
+                         OnItemDataBound="rcbCustomerID_ItemDataBound"
+                        OnClientSelectedIndexChanged="Customer_OnClientSelectedIndexChanged"
+                    AllowCustomText="false" >
+                    <ExpandAnimation Type="None" />
+                    <CollapseAnimation Type="None" />
+                    <Items>
+                        <telerik:RadComboBoxItem Value="" Text="" />
+                    </Items>
+                </telerik:RadComboBox>
+                </td>
                 </tr>
             </table>  
     </div>
     
 </div>
+<telerik:RadCodeBlock id="code" runat="server">
 <script type="text/javascript">
-    $(document).ready(function ()
-    {
-        $('a.add').live('click', function ()
-        {
-            $(this)
-                .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                .removeClass('add')
-                .addClass('remove')
-            ;
-            $(this)
-                .closest('tr')
-                .clone()
-                .appendTo($(this).closest('table'));
-            $(this)
-                .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                .removeClass('remove')
-                .addClass('add');
-        });
-        $('a.remove').live('click', function ()
-        {
-            $(this)
-                .closest('tr')
-                .remove();
-        });
-        $('input:text').each(function ()
-        {
-            var thisName = $(this).attr('name'),
-                thisRrow = $(this)
-                            .closest('tr')
-                            .index();
-            $(this).attr('name', 'row' + thisRow + thisName);
-            $(this).attr('id', 'row' + thisRow + thisName);
-        });
-
-});
-
+    $('#<%=txtId.ClientID%>').keyup(function (event) {
+        if (event.keyCode == 13) { $("#<%=btSearch.ClientID%>").click(); }
+     });
     function ValidatorUpdateIsValid() {
         //var i;
         //for (i = 0; i < Page_Validators.length; i++) {
@@ -445,14 +417,16 @@
 
         var PlaceOfIssElement = $find("<%= tbPlaceOfIss.ClientID %>");
         PlaceOfIssElement.set_value(customerElement.get_selectedItem().get_attributes().getAttribute("IssuePlace"));
-
-        var datesplit = customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate").split('/');
         var IsssuedDateElement = $find("<%= tbIsssuedDate.ClientID %>");
-        IsssuedDateElement.set_selectedDate(new Date(datesplit[2].substring(0, 4), datesplit[0], datesplit[1]));
+        var date = customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate");
+        if (date != "") {
+            var datesplit = customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate").split('/');
+            IsssuedDateElement.set_selectedDate(new Date(datesplit[2].substring(0, 4), datesplit[0], datesplit[1]));
+        } else { IsssuedDateElement.set_selectedDate(null); }
     }
   </script>
-
+</telerik:RadCodeBlock>
 <div style="visibility:hidden;">
-    <asp:Button ID="btSearch" runat="server" Text="Search" OnClick="btSearch_Click"  />
+    <asp:Button ID="btSearch" runat="server" Text="Search" onclick="btSearch_Click1" />
     <asp:hiddenfield ID="hdfCheckCustomer" runat="server" value="1"></asp:hiddenfield>
 </div>
