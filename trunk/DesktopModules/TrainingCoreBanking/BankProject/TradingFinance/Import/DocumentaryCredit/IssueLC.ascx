@@ -71,6 +71,8 @@
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
             } else if (waiveCharges === 'NO' && chargeAmount > 0) {
                 radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT_Amendments, 350, 150, null, 'Download');
+            } else {
+                radconfirm("Do you want to download MT707 file?", confirmCallbackFunction_MT707_Amendments, 420, 150, null, 'Download');
             }
         }
 
@@ -1131,7 +1133,7 @@
                     <td class="MyLable" style="width: 250px">59.1 Beneficiary No.</td>
                     <td class="MyContent" style="width: 150px">
                         <telerik:RadTextBox ID="txtBeneficiaryNo700" runat="server" Width="355"
-                            AutoPostBack="True" OnTextChanged="txtBeneficiaryNo700_OnTextChanged" />
+                            AutoPostBack="false" OnTextChanged="txtBeneficiaryNo700_OnTextChanged" />
                     </td>
                     <td>
                         <asp:Label ID="lblBeneficiaryNo700Error" runat="server" Text="" ForeColor="red" />
@@ -1980,7 +1982,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td style="width: 250px" class="MyLable">59.2 Beneficiary No.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbBeneficiaryNo740" runat="server" Width="355" AutoPostBack="True"
+                        <telerik:RadTextBox ID="tbBeneficiaryNo740" runat="server" Width="355" AutoPostBack="false"
                             OnTextChanged="tbBeneficiaryNo740_OnTextChanged" />
                     </td>
                     <td>
@@ -3506,7 +3508,9 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             var numPercentCreditAmount1 = $find("<%= numPercentCreditAmount1.ClientID %>"),
                 numPercentageCreditAmountTolerance740_1 = $find("<%= numPercentageCreditAmountTolerance740_1.ClientID %>"),
                 numPercentageCreditAmountTolerance_707_1 = $find("<%= numPercentageCreditAmountTolerance_707_1.ClientID %>"),
+                numPercentageCreditTolerance_747_1 = $find("<%= numPercentageCreditTolerance_747_1.ClientID %>"),
                 toleranceVal = $find('<%=tbcrTolerance.ClientID %>').get_value();
+            
             
             if (numPercentCreditAmount1) {
                 numPercentCreditAmount1.set_value(toleranceVal);
@@ -3519,12 +3523,17 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (numPercentageCreditAmountTolerance_707_1) {
                 numPercentageCreditAmountTolerance_707_1.set_value(toleranceVal);
             }
+            
+            if (numPercentageCreditTolerance_747_1) {
+                numPercentageCreditTolerance_747_1.set_value(toleranceVal);
+            }
         }
 
         function tbdrTolerance_TextChanged(sender, eventArgs) {
             var numPercentCreditAmount2 = $find("<%= numPercentCreditAmount2.ClientID %>"),
                 numPercentageCreditAmountTolerance740_2 = $find("<%= numPercentageCreditAmountTolerance740_2.ClientID %>"),
                 numPercentageCreditAmountTolerance_707_2 = $find("<%= numPercentageCreditAmountTolerance_707_2.ClientID %>"),
+                numPercentageCreditTolerance_747_2 = $find("<%= numPercentageCreditTolerance_747_2.ClientID %>"),
                 tbdrTolerance = $find('<%=tbdrTolerance.ClientID %>').get_value();
             
             if (numPercentCreditAmount2)
@@ -3538,6 +3547,10 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             
             if (numPercentageCreditAmountTolerance_707_2) {
                 numPercentageCreditAmountTolerance_707_2.set_value(tbdrTolerance);
+            }
+
+            if (numPercentageCreditTolerance_747_2) {
+                numPercentageCreditTolerance_747_2.set_value(tbdrTolerance);
             }
         }
 
@@ -3607,7 +3620,8 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
         function txtBeneficiaryBankAddr1_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_1 = $find('<%=txtBeneficiaryAddr700_1.ClientID %>');
             var txtBeneficiaryBankAddr1 = $find('<%=txtBeneficiaryBankAddr1.ClientID %>'),
-                txtBeneficiaryAddr_707_1 = $find('<%=txtBeneficiaryAddr_707_1.ClientID %>');
+                txtBeneficiaryAddr_707_1 = $find('<%=txtBeneficiaryAddr_707_1.ClientID %>'),
+                tbBeneficiaryAddr740_1 = $find('<%=tbBeneficiaryAddr740_1.ClientID %>');
 
             if (txtBeneficiaryAddr700_1) {
                 txtBeneficiaryAddr700_1.set_value(txtBeneficiaryBankAddr1.get_value());
@@ -3616,12 +3630,17 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (txtBeneficiaryAddr_707_1) {
                 txtBeneficiaryAddr_707_1.set_value(txtBeneficiaryBankAddr1.get_value());
             }
+
+            if (tbBeneficiaryAddr740_1) {
+                tbBeneficiaryAddr740_1.set_value(txtBeneficiaryBankAddr1.get_value());
+            }
         }
         
         function txtBeneficiaryBankAddr2_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_2 = $find('<%=txtBeneficiaryAddr700_2.ClientID %>');
             var txtBeneficiaryBankAddr2 = $find('<%=txtBeneficiaryBankAddr2.ClientID %>'),
-                txtBeneficiaryAddr_707_2 = $find('<%=txtBeneficiaryAddr_707_2.ClientID %>');
+                txtBeneficiaryAddr_707_2 = $find('<%=txtBeneficiaryAddr_707_2.ClientID %>'),
+                tbBeneficiaryAddr740_2 = $find('<%=tbBeneficiaryAddr740_2.ClientID %>');
 
             if (txtBeneficiaryAddr700_2) {
                 txtBeneficiaryAddr700_2.set_value(txtBeneficiaryBankAddr2.get_value());
@@ -3630,12 +3649,17 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (txtBeneficiaryAddr_707_2) {
                 txtBeneficiaryAddr_707_2.set_value(txtBeneficiaryBankAddr2.get_value());
             }
+
+            if (tbBeneficiaryAddr740_2) {
+                tbBeneficiaryAddr740_2.set_value(txtBeneficiaryBankAddr2.get_value());
+            }
         }
         
         function txtBeneficiaryBankAddr3_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryAddr700_3 = $find('<%=txtBeneficiaryAddr700_3.ClientID %>');
             var txtBeneficiaryBankAddr3 = $find('<%=txtBeneficiaryBankAddr3.ClientID %>'),
-                txtBeneficiaryAddr_707_3 = $find('<%=txtBeneficiaryAddr_707_3.ClientID %>');
+                txtBeneficiaryAddr_707_3 = $find('<%=txtBeneficiaryAddr_707_3.ClientID %>'),
+                tbBeneficiaryAddr740_3 = $find('<%=tbBeneficiaryAddr740_3.ClientID %>');
 
             if (txtBeneficiaryAddr700_3) {
                 txtBeneficiaryAddr700_3.set_value(txtBeneficiaryBankAddr3.get_value());
@@ -3644,14 +3668,19 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (txtBeneficiaryAddr_707_3) {
                 txtBeneficiaryAddr_707_3.set_value(txtBeneficiaryBankAddr3.get_value());
             }            
+
+            if (tbBeneficiaryAddr740_3) {
+                tbBeneficiaryAddr740_3.set_value(txtBeneficiaryBankAddr3.get_value());
+            } 
         }
         
         function txtBeneficiaryBankName_OnValueChanged (sender, eventArgs) {
             var txtBeneficiaryName700 = $find('<%=txtBeneficiaryName700.ClientID %>');
             var txtBeneficiaryBankName = $find('<%=txtBeneficiaryBankName.ClientID %>'),
-                txtBeneficiaryName_707 = $find('<%=txtBeneficiaryName_707.ClientID %>');
-                ;
+                txtBeneficiaryName_707 = $find('<%=txtBeneficiaryName_707.ClientID %>'),
+                tbBeneficiaryName740 = $find('<%=tbBeneficiaryName740.ClientID %>');
 
+            
             if (txtBeneficiaryName700) {
                 txtBeneficiaryName700.set_value(txtBeneficiaryBankName.get_value());
             }
@@ -3659,6 +3688,10 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (txtBeneficiaryName_707) {
                 txtBeneficiaryName_707.set_value(txtBeneficiaryBankName.get_value());
             }            
+
+            if (tbBeneficiaryName740) {
+                tbBeneficiaryName740.set_value(txtBeneficiaryBankName.get_value());
+            } 
         }
 
         function tbReimbBankName_OnClientSelectedIndexChanged(sender, eventArgs) {

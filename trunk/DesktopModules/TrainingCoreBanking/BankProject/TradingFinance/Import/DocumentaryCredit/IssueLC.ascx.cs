@@ -713,11 +713,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     divMT707.Visible = true;
                     tbIssuingDate.Enabled = false;
 
-                    RadTabStrip3.Tabs[1].Text = "Amendment Charge";
+                    RadTabStrip3.Tabs[1].Text = "Amend Charge";
                     RadTabStrip3.Tabs[2].Visible = false;
 
                     tbChargeCode.SelectedValue = "ILC.CABLE";
-                    tbChargeCode2.SelectedValue = "IC.AMEND";
+                    tbChargeCode2.SelectedValue = "ILC.AMEND";
                     break;
                 case TabIssueLCCancel: //Cancel LC
 
@@ -1029,7 +1029,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     else
                         bd.SQLData.B_BIMPORT_NORMAILLC_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.REV, UserId.ToString(), TabId);
 
-                    Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
+                    Response.Redirect("Default.aspx?tabid=" + TabId.ToString() + "&CodeID=" + txtCode.Text);
                     break;
             }
         }
@@ -2234,7 +2234,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     txtReimbBankAddr_747_3.Text = drow["ReimbBankAddr3"].ToString();
 
                     numPercentageCreditTolerance_747_1.Text = drow["CrTolerance"].ToString();
-                    numPercentageCreditTolerance_747_1.Text = drow["DrTolerance"].ToString();
+                    numPercentageCreditTolerance_747_2.Text = drow["DrTolerance"].ToString();
 
                     comboCurrency_747.SelectedValue = drow["Currency"].ToString();
                     numAmount_747.Text = drow["Amount"].ToString();
