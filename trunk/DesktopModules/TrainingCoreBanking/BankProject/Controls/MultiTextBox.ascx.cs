@@ -16,7 +16,7 @@ namespace BankProject.Controls
         {
             if (IsPostBack) return;
             litMultiTextBox.Text = createTextBox();
-            Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), divMultiTextBox.ClientID + "Submit", divMultiTextBox.ClientID + "_submit();");
+            //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), divMultiTextBox.ClientID + "Submit", divMultiTextBox.ClientID + "_submit();");
         }
         //
         public string Label
