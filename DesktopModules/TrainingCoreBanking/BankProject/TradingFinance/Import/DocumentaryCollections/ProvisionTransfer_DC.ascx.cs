@@ -184,7 +184,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 hdfCheckDebitAcc.Text = "";
                 foreach (DataRow dr in dsDA.Tables[0].Rows)
                 {
-                    hdfCheckDebitAcc.Text += dr["ID"] + ";";
+                    //hdfCheckDebitAcc.Text += dr["ID"] + ";";
+                    hdfCheckDebitAcc.Text += dr["DR_CustomerID"] + ";";
                 }
 
                 rcbDebitCurrency.SelectedValue = ds.Tables[0].Rows[0]["Currency"].ToString();
