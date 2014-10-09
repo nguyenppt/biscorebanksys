@@ -415,7 +415,7 @@ namespace BankProject.Views.TellerApplication {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox tbLossGiven;
+        protected global::Telerik.Web.UI.RadTextBox tbLossGiven;
         
         /// <summary>
         /// RequiredFieldValidator11 control.

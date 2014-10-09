@@ -264,8 +264,8 @@
                          <CollapseAnimation Type="None" />
                          <Items>
 <%--                             <telerik:RadComboBoxItem Value="" Text="" />--%>
-                             <telerik:RadComboBoxItem Value="1" Text="1 - Fixed A" /> <%--Du no giam dan--%>
-                             <telerik:RadComboBoxItem Value="2" Text="2 - Fixed B" /> <%--Du no ban dau--%>
+                             <telerik:RadComboBoxItem Value="1" Text="1 - Fixed for Balance" /> <%--Du no giam dan--%>
+                             <telerik:RadComboBoxItem Value="2" Text="2 - Fixed for Initial" /> <%--Du no ban dau--%>
                              <telerik:RadComboBoxItem Value="3" Text="3 - Periodic Automatic" /> <%--Du no giam dan, truot lai xuat + Ins speed--%>
                          </Items>
                      </telerik:radcombobox>
@@ -433,15 +433,16 @@
             <legend style="text-transform: uppercase; font-weight: bold">Credit Scoring Details</legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Expected Loss</td>
+                    <td class="MyLable">Credit scoring</td>
                     <td class="MyContent">
-                        <telerik:radnumerictextbox id="tbExpectedLoss" runat="server" validationgroup="Group1" width="150"></telerik:radnumerictextbox>
+                        <telerik:radnumerictextbox id="tbExpectedLoss" NumberFormat-DecimalDigits="0" runat="server" validationgroup="Group1" width="150"
+                            OnTextChanged="tbExpectedLoss_TextChanged" AutoPostBack="True"></telerik:radnumerictextbox>
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Loss Given Def.</td>
+                    <td class="MyLable">Credit rating</td>
                     <td class="MyContent">
-                        <telerik:radnumerictextbox id="tbLossGiven" runat="server" validationgroup="Group1" width="150"></telerik:radnumerictextbox>
+                        <telerik:radtextbox id="tbLossGiven" runat="server" validationgroup="Group1" width="150"></telerik:radtextbox>
                     </td>
                 </tr>
             </table>
@@ -935,6 +936,11 @@
             <telerik:AjaxUpdatedControl ControlID="rcbPrinRepAccount" />
             <telerik:AjaxUpdatedControl ControlID="rcbIntRepAccount" />
             <telerik:AjaxUpdatedControl ControlID="rcbChargRepAccount" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbExpectedLoss">
+            <UpdatedControls>
+            <telerik:AjaxUpdatedControl ControlID="tbLossGiven" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="ListView1">
