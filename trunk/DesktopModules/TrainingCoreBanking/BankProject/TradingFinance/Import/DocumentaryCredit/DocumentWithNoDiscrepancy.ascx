@@ -13,8 +13,13 @@
             var button = args.get_item();
             //
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Commit%>') {
+                try{
                 dnn_ctr1017_DocumentWithNoDiscrepancy_txtDiscrepancies_divMultiTextBox_submit();
+                }catch(e){
+                }
+                try{
                 dnn_ctr1017_DocumentWithNoDiscrepancy_txtDiscrepancies_734_divMultiTextBox_submit();
+                }catch(e){}
             }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Preview%>') {
                 window.location = '<%=EditUrl("preview_nodiscrepancy")%>&lst=4appr';
@@ -394,8 +399,8 @@
         </div>
     </div>   
    
-    <div id="tabMT734" class="dnnClear" style="display:none;">
-        <div runat="server" ID="divMT734">
+    <div id="tabMT734" class="dnnClear">
+        <div runat="server" ID="divMT734" visible="false">
             <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable" style="width: 200px">Presentor No</td>

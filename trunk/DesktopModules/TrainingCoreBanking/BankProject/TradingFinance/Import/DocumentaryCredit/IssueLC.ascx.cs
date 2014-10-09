@@ -2404,6 +2404,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     txtBeneficiaryAddr_707_1.Text = drow["BeneficiaryAddr1"].ToString();
                     txtBeneficiaryAddr_707_2.Text = drow["BeneficiaryAddr2"].ToString();
                     txtBeneficiaryAddr_707_3.Text = drow["BeneficiaryAddr3"].ToString();
+
+                    comboAvailableRule_707.SelectedValue = drow["ApplicationRule"].ToString();
                 }                
 
                 if (dsDoc.Tables[1].Rows.Count > 0)
