@@ -26,27 +26,13 @@ namespace BankProject.DBRespository
      * 
      * ****************************************************************************
      */
-    public class NormalLoanInterestPaymentSchedule:BaseRepository<B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE>
+    public class LoanCreditScoringRepository:BaseRepository<B_LOAN_CREDIT_SCORING> 
     {
-        // Summary:
-        // Get All perios payment plan of a loan contract     
-        public IQueryable<B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE> GetScheduleDetail(string code)
+        public IQueryable<B_LOAN_CREDIT_SCORING> GetRatingScoring(int score)
         {
-            Expression<Func<B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE, bool>> query = t => t.Code.Equals(code);
+            Expression<Func<B_LOAN_CREDIT_SCORING, bool>> query = t => score >= t.ScoreFrom;
 
             return Find(query);
-        }
-
-        public void DeleteAllScheduleOfContract(String code)
-        {
-            Expression<Func<B_NORMALLOAN_INTERESTING_PAYMENT_SCHEDULE, bool>> query = t => t.Code.Equals(code);
-            var ites = Find(query);
-
-            foreach (var it in ites)
-            {
-                Delete(it);
-            }
-            Commit();
         }
     }
 }
