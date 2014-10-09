@@ -841,6 +841,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 tbVatNo.Text = dsCharge.VATNo;
                 //tbChargeCode.SelectedValue = dsCharge.Chargecode??"";
                 rcbChargeCcy.SelectedValue = dsCharge.ChargeCcy??"";
+                if (dsCharge.ChargeCcy != null && dsCharge.ChargeCcy.Count() > 0)
+                {
+                    LoadChargeAcct(ref rcbChargeAcct);
+                    LoadChargeAcct(ref rcbChargeAcct2);
+                    LoadChargeAcct(ref rcbChargeAcct3);
+                }
                 comboWaiveCharges.SelectedValue = dsCharge.WaiveCharges??"";
                 rcbChargeAcct.SelectedValue = dsCharge.ChargeAcct??"";
                 tbChargeAmt.Text = dsCharge.ChargeAmt.ToString();

@@ -1080,7 +1080,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                                         <ExpandAnimation Type="None" />
                                         <CollapseAnimation Type="None" />
                                     </telerik:RadComboBox>
-                                    <asp:Label ID="lblPartyCharged" runat="server" />
+                                    <asp:Label ID="lblPartyCharged" runat="server" Visible="false" />
                                 </td>
                                 <td>
                                 </td>
@@ -1232,7 +1232,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
                                         </telerik:RadComboBox>
-                                        <asp:Label ID="lblPartyCharged2" runat="server" />
+                                        <asp:Label ID="lblPartyCharged2" runat="server" Visible="false" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -1384,7 +1384,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
                                         </telerik:RadComboBox>
-                                        <asp:Label ID="lblPartyCharged3" runat="server" />
+                                        <asp:Label ID="lblPartyCharged3" runat="server" Visible="false" />
                                     </td>
                             </tr>
                             <tr>
@@ -1485,6 +1485,41 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="rcbPartyCharged">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbPartyCharged" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbPartyCharged2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbPartyCharged2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbPartyCharged3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbPartyCharged3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbChargeAmt" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbChargeAmt2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbChargeAmt3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+
 
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
             <UpdatedControls>
