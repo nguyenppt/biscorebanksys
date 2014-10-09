@@ -716,36 +716,34 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 tbPlaceOfExpiry.Text = BMT700.PlaceOfExpiry;
                                 comboAvailableRule.SelectedValue = BMT700.ApplicationRule ?? "";
 
-                                if (dt != null)
-                                {
-                                    rcbApplicantBankType700.SelectedValue = dt.DraweeType ?? "";
-                                    tbApplicantNo700.Text = dt.DraweeNo;
-                                    tbApplicantName700.Text = dt.DraweeName;
-                                    tbApplicantAddr700_1.Text = dt.DraweeAddr1;
-                                    tbApplicantAddr700_2.Text = dt.DraweeAddr2;
-                                    tbApplicantAddr700_3.Text = dt.DraweeAddr3;
-                                }
+                                //change two value
+                                    
+                                 
+                                rcbApplicantBankType700.SelectedValue = BMT700.BeneficiaryType ?? "";
+                                tbApplicantNo700.Text = BMT700.BeneficiaryNo;
+                                tbApplicantName700.Text = BMT700.BeneficiaryName;
+                                tbApplicantAddr700_1.Text = BMT700.BeneficiaryAddr1;
+                                tbApplicantAddr700_2.Text = BMT700.BeneficiaryAddr2;
+                                tbApplicantAddr700_3.Text = BMT700.BeneficiaryAddr3;
+
+                                comboBeneficiaryType700.SelectedValue = BMT700.ApplicantType ?? "";
+                                txtBeneficiaryNo700.Text = BMT700.ApplicantNo;
+                                txtBeneficiaryName700.Text = BMT700.ApplicantName;
+                                txtBeneficiaryAddr700_1.Text = BMT700.ApplicantAddr1;
+                                txtBeneficiaryAddr700_2.Text = BMT700.ApplicantAddr2;
+                                txtBeneficiaryAddr700_3.Text = BMT700.ApplicantAddr3;
+
+                                    
+                                
                                 //drawee type load nguoc
-                                comboDraweeCusType.SelectedValue = BMT700.ApplicantType ?? "";
+                                comboDraweeCusType.SelectedValue = BMT700.DraweeType ?? "";
                                 //txtDraweeCusNo.Text = ds.ApplicantNo;
-                                txtDraweeCusName.Text = BMT700.ApplicantName;
-                                txtDraweeAddr1.Text = BMT700.ApplicantAddr1;
-                                txtDraweeAddr2.Text = BMT700.ApplicantAddr2;
-                                txtDraweeAddr3.Text = BMT700.ApplicantAddr3;
+                                txtDraweeCusName.Text = BMT700.DraweeName;
+                                txtDraweeAddr1.Text = BMT700.DraweeAddr1;
+                                txtDraweeAddr2.Text = BMT700.DraweeAddr2;
+                                txtDraweeAddr3.Text = BMT700.DraweeAddr3;
+                                comboDraweeCusNo700.SelectedValue = BMT700.DraweeNo ?? "";
                                 //
-                                comboBeneficiaryType700.SelectedValue = BMT700.BeneficiaryType ?? "";
-                                txtBeneficiaryNo700.Text = BMT700.BeneficiaryNo;
-                                txtBeneficiaryName700.Text = BMT700.BeneficiaryName;
-                                txtBeneficiaryAddr700_1.Text = BMT700.BeneficiaryAddr1;
-                                txtBeneficiaryAddr700_2.Text = BMT700.BeneficiaryAddr2;
-                                txtBeneficiaryAddr700_3.Text = BMT700.BeneficiaryAddr3;
-
-                                comboCurrency700.SelectedValue = BMT700.Currency ?? "";
-                                numAmount700.Value = (double?)BMT700.Amount;
-                                numPercentCreditAmount1.Value = (double?)BMT700.PercentageCredit;
-                                numPercentCreditAmount2.Value = (double?)BMT700.AmountTolerance;
-                                comboMaximumCreditAmount700.SelectedValue = BMT700.MaximumCreditAmount ?? "";
-
                                 rcbAvailableWithType.SelectedValue = BMT700.AvailableWithType ?? "";
                                 comboAvailableWithNo.SelectedValue = BMT700.AvailableWithNo ?? "";
                                 tbAvailableWithName.Text = BMT700.AvailableWithName;
@@ -753,6 +751,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 tbAvailableWithAddr2.Text = BMT700.AvailableWithAddr2;
                                 tbAvailableWithAddr3.Text = BMT700.AvailableWithAddr3;
 
+
+                                comboCurrency700.SelectedValue = BMT700.Currency ?? "";
+                                numAmount700.Value = (double?)BMT700.Amount;
+                                numPercentCreditAmount1.Value = (double?)BMT700.PercentageCredit;
+                                numPercentCreditAmount2.Value = (double?)BMT700.AmountTolerance;
+                                comboMaximumCreditAmount700.SelectedValue = BMT700.MaximumCreditAmount ?? "";
+
+                                
                                 comboAvailableWithBy.SelectedValue = BMT700.Available_By ?? "";
 
                                 rcbPatialShipment.SelectedValue = BMT700.PatialShipment ?? "";
@@ -833,7 +839,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 tbChargeRemarks.Text = dsCharge.ChargeRemarks;
                 tbVatNo.Text = dsCharge.VATNo;
-                tbChargeCode.SelectedValue = dsCharge.Chargecode??"";
+                //tbChargeCode.SelectedValue = dsCharge.Chargecode??"";
                 rcbChargeCcy.SelectedValue = dsCharge.ChargeCcy??"";
                 comboWaiveCharges.SelectedValue = dsCharge.WaiveCharges??"";
                 rcbChargeAcct.SelectedValue = dsCharge.ChargeAcct??"";
@@ -845,7 +851,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 lblTaxCode.Text = dsCharge.TaxCode;
                 lblTaxAmt.Text = dsCharge.TaxAmt;
                 //
-                tbChargeCode2.SelectedValue = dsCharge.Chargecode??"";
+                //tbChargeCode2.SelectedValue = dsCharge.Chargecode??"";
                 rcbChargeCcy2.SelectedValue = dsCharge.ChargeCcy??"";
                 rcbChargeAcct2.SelectedValue = dsCharge.ChargeAcct;
                 tbChargeAmt2.Text = dsCharge.ChargeAmt.ToString();
@@ -855,7 +861,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 lblTaxCode2.Text = dsCharge.TaxCode;
                 lblTaxAmt2.Text = dsCharge.TaxAmt;
                 //
-                tbChargeCode3.SelectedValue = dsCharge.Chargecode??"";
+                //tbChargeCode3.SelectedValue = dsCharge.Chargecode??"";
                 rcbChargeCcy3.SelectedValue = dsCharge.ChargeCcy??"";
                 rcbChargeAcct3.SelectedValue = dsCharge.ChargeAcct??"";
                 tbChargeAmt3.Text = dsCharge.ChargeAmt.ToString();
@@ -869,7 +875,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 tbChargeRemarks.Text = string.Empty;
                 tbVatNo.Text = string.Empty;
-                tbChargeCode.SelectedValue = string.Empty;
+                //tbChargeCode.SelectedValue = string.Empty;
                 rcbChargeCcy.SelectedValue = string.Empty;
                 comboWaiveCharges.SelectedValue = string.Empty;
                 rcbChargeAcct.SelectedValue = string.Empty;
@@ -881,7 +887,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 lblTaxCode.Text = string.Empty;
                 lblTaxAmt.Text = string.Empty;
                 //
-                tbChargeCode2.SelectedValue = string.Empty;
+                //tbChargeCode2.SelectedValue = string.Empty;
                 rcbChargeCcy2.SelectedValue = string.Empty;
                 rcbChargeAcct2.SelectedValue = string.Empty;
                 tbChargeAmt2.Text = string.Empty;
@@ -891,7 +897,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 lblTaxCode2.Text = string.Empty;
                 lblTaxAmt2.Text = string.Empty;
                 //
-                tbChargeCode3.SelectedValue = string.Empty;
+                //tbChargeCode3.SelectedValue = string.Empty;
                 rcbChargeCcy3.SelectedValue = string.Empty;
                 rcbChargeAcct3.SelectedValue = string.Empty;
                 tbChargeAmt3.Text = string.Empty;
@@ -958,7 +964,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //
             bc.Commont.initRadComboBox(ref comboDraweeCusNo700, "SwiftCode", "SwiftCode", dsall);
             //load tab Charge
-            var dsChargeCode = entContext.BCHARGECODEs.Where(x => x.AdviseELC == "X").ToList();
+            var dsChargeCode = new List<BCHARGECODE>();
+            if (TabId == TabIssueLCAmend)
+            {
+                dsChargeCode = entContext.BCHARGECODEs.Where(x => x.AmendELC == "X").ToList();
+            }
+            else if (TabId == TabIssueLCCancel)
+            {
+                dsChargeCode = entContext.BCHARGECODEs.Where(x => x.CancelELC == "X").ToList();
+            }
+            else
+            {
+                dsChargeCode = entContext.BCHARGECODEs.Where(x => x.AdviseELC == "X").ToList();
+            }
             DataTable tbl1 = new DataTable();
             tbl1.Columns.Add("ID");
             tbl1.Columns.Add("Code");
@@ -967,7 +985,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 tbl1.Rows.Add(item.Code, item.Name_EN);
             }
 
-            DataSet datasource = new DataSet();
+            DataSet datasource = new DataSet();//Tab1
             datasource.Tables.Add(tbl1);
 
             var lstChargeCode = new List<string>();
@@ -979,6 +997,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 tbChargeCode.DataTextField = "ID";
                 tbChargeCode.DataSource = datasource;
                 tbChargeCode.DataBind();
+
 
                 tbChargeCode2.Items.Clear();
                 tbChargeCode2.Items.Add(new RadComboBoxItem(""));
@@ -994,6 +1013,36 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 tbChargeCode3.DataSource = datasource;
                 tbChargeCode3.DataBind();
 
+                if (TabId == TabIssueLCAmend)
+                {
+                    tbChargeCode.SelectedValue = "ELC.ADAMEND";
+                    tbChargeCode.Enabled = false;
+                    tbChargeCode2.SelectedValue = "ELC.CONFIRM";
+                    tbChargeCode2.Enabled = false;
+                    tbChargeCode3.SelectedValue = "ELC.OTHER";
+                    tbChargeCode3.Enabled = false;
+                }
+                else if (TabId == TabIssueLCCancel)
+                {
+                    tbChargeCode.SelectedValue = "ELC.CANCEL";
+                    tbChargeCode.Enabled = false;
+                    tbChargeCode2.SelectedValue = "ELC.COURIER";
+                    tbChargeCode2.Enabled = false;
+                    tbChargeCode3.SelectedValue = "ELC.OTHER";
+                    tbChargeCode3.Enabled = false;
+
+                }
+                else
+                {
+                    tbChargeCode.SelectedValue = "ELC.ADVISE";
+                    tbChargeCode.Enabled = false;
+                    tbChargeCode2.SelectedValue = "ELC.CONFIRM";
+                    tbChargeCode2.Enabled = false;
+                    tbChargeCode3.SelectedValue = "ELC.OTHER";
+                    tbChargeCode3.Enabled = false;
+
+                    
+                }
                 //set currency
                 rcbChargeCcy.Items.Clear();
                 rcbChargeCcy.Items.Add(new RadComboBoxItem(""));
@@ -1001,6 +1050,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 rcbChargeCcy.DataTextField = "Code";
                 rcbChargeCcy.DataSource = entContext.BCURRENCies.ToList();
                 rcbChargeCcy.DataBind();
+                rcbChargeCcy.Items.Insert(0, new RadComboBoxItem { Text = string.Empty, Value = "-1" });
+                rcbChargeCcy.SelectedIndex = 0;
 
                 rcbChargeCcy2.Items.Clear();
                 rcbChargeCcy2.Items.Add(new RadComboBoxItem(""));
@@ -1008,6 +1059,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 rcbChargeCcy2.DataTextField = "Code";
                 rcbChargeCcy2.DataSource = entContext.BCURRENCies.ToList();
                 rcbChargeCcy2.DataBind();
+                rcbChargeCcy2.Items.Insert(0, new RadComboBoxItem { Text = string.Empty, Value = "-1" });
+                rcbChargeCcy2.SelectedIndex = 0;
 
                 rcbChargeCcy3.Items.Clear();
                 rcbChargeCcy3.Items.Add(new RadComboBoxItem(""));
@@ -1015,13 +1068,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 rcbChargeCcy3.DataTextField = "Code";
                 rcbChargeCcy3.DataSource = entContext.BCURRENCies.ToList();
                 rcbChargeCcy3.DataBind();
-                //
-
+                rcbChargeCcy3.Items.Insert(0, new RadComboBoxItem { Text = string.Empty, Value = "-1" });
+                rcbChargeCcy3.SelectedIndex = 0;
+                //LOAD PARTYCHARGED
+                LoadDataSourceComboPartyCharged();
             }
         }
         
         protected void LoadChargeAcct2(ref RadComboBox cboChargeAcct)
         {
+            
             bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDraweeCusName.Text ?? "XXXXX", comboDraweeCusNo700.SelectedValue));
         }
 
@@ -1053,7 +1109,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     //lblTaxCcy.Text = drow1["TaxCcy"];
                     lblTaxAmt.Text = dataCharge.TaxAmt;
 
-                    tbChargeCode.SelectedValue = dataCharge.Chargecode;
+                    //tbChargeCode.SelectedValue = dataCharge.Chargecode;
 
                     //ChargeAmount += ConvertStringToFloat(drow1["ChargeAmt"]);
                 
@@ -1099,6 +1155,35 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //CalcTax2();
 
         }
+        //
+        protected void LoadDataSourceComboPartyCharged()
+        {
+            var dtSource = SQLData.CreateGenerateDatas("PartyCharged");
+
+            rcbPartyCharged.Items.Clear();
+            rcbPartyCharged.DataValueField = "Id";
+            rcbPartyCharged.DataTextField = "Id";
+            rcbPartyCharged.DataSource = dtSource;
+            rcbPartyCharged.DataBind();
+            lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
+
+            rcbPartyCharged2.Items.Clear();
+            rcbPartyCharged2.DataValueField = "Id";
+            rcbPartyCharged2.DataTextField = "Id";
+            rcbPartyCharged2.DataSource = dtSource;
+            rcbPartyCharged2.DataBind();
+            lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
+
+            rcbPartyCharged3.Items.Clear();
+            rcbPartyCharged3.DataValueField = "Id";
+            rcbPartyCharged3.DataTextField = "Id";
+            rcbPartyCharged3.DataSource = dtSource;
+            rcbPartyCharged3.DataBind();
+            lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
+
+            
+        }
+        //
         protected void rcbChargeAcct3_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             DataRowView row = e.Item.DataItem as DataRowView;
@@ -1107,7 +1192,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void rcbChargeCcy3_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct3(ref rcbChargeAcct3);
+            LoadChargeAcct(ref rcbChargeAcct3);
         }
         protected void rcbPartyCharged2_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
@@ -1135,17 +1220,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void rcbChargeCcy2_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct2(ref rcbChargeAcct2);
+            LoadChargeAcct(ref rcbChargeAcct2);
         }
         protected void LoadChargeAcct(ref RadComboBox cboChargeAcct)
         {
-            //rcbChargeAcct.Items.Clear();
-            //rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
-            //rcbChargeAcct.DataValueField = "Id";
-            //rcbChargeAcct.DataTextField = "Id";
-            //rcbChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantBankType700.SelectedItem != null ? rcbApplicantBankType700.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy.SelectedValue);
-            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDraweeCusName.Text ?? "XXXXX", comboDraweeCusNo700.SelectedValue));
-            //rcbChargeAcct.DataBind();
+            var obj = entContext.BDRFROMACCOUNTs.Where(x => x.CustomerID == txtBeneficiaryNo700.Text && x.Currency == "USD").FirstOrDefault();
+            DataTable tbl1 = new DataTable();
+            tbl1.Columns.Add("Id");
+            tbl1.Columns.Add("Name");
+            tbl1.Rows.Add(obj.Id, obj.Name);
+
+            cboChargeAcct.Items.Clear();
+
+            DataSet datasource = new DataSet();//Tab1
+            datasource.Tables.Add(tbl1);
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id",datasource);
+            
 
         }
         protected void SetRelation_AvailableWithType()
