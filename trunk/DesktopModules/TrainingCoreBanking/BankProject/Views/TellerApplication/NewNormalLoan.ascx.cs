@@ -274,6 +274,13 @@ namespace BankProject.Views.TellerApplication
 
         }
 
+        protected void tbExpectedLoss_TextChanged(object sender, EventArgs e)
+        {
+            LoanCreditScoringRepository facade = new LoanCreditScoringRepository();
+            var score = facade.GetRatingScoring((int)tbExpectedLoss.Value).FirstOrDefault();
+            tbLossGiven.Text = score.Rating;
+
+        }
         #endregion
 
 
@@ -603,7 +610,7 @@ namespace BankProject.Views.TellerApplication
 
             normalLoanEntry.ChrgRepAccount = rcbChargRepAccount.SelectedValue;
             normalLoanEntry.ExpectedLoss = (decimal?)tbExpectedLoss.Value;
-            normalLoanEntry.LossGivenDef = (decimal?)tbLossGiven.Value;
+            normalLoanEntry.LossGivenDef = tbLossGiven.Text;
             normalLoanEntry.CustomerRemarks = tbCustomerRemarks.Text;
             normalLoanEntry.AccountOfficer = cmbAccountOfficer.SelectedValue;
             normalLoanEntry.AccountOfficerName = cmbAccountOfficer.Text;
@@ -657,7 +664,7 @@ namespace BankProject.Views.TellerApplication
             cmbAccountOfficer.SelectedValue = normalLoanEntry.AccountOfficer;
             rcbSecured.SelectedValue = normalLoanEntry.Secured;
             tbExpectedLoss.Value = (double?)normalLoanEntry.ExpectedLoss;
-            tbLossGiven.Value = (double?)normalLoanEntry.LossGivenDef;
+            tbLossGiven.Text = normalLoanEntry.LossGivenDef;
             rtbAmountAlloc.Value = (double?)normalLoanEntry.AmountAlloc;
             lbLoanStatus.Text = normalLoanEntry.LoanStatus;
             lbTotalInterestAmt.Text = "" + normalLoanEntry.TotalInterestAmt;
@@ -714,7 +721,7 @@ namespace BankProject.Views.TellerApplication
             tbBaseDate.Enabled = p;
             lvLoanControl.Enabled = p;
             tbExpectedLoss.Enabled = p;
-            tbLossGiven.Enabled = p;
+            tbLossGiven.Enabled = false;
             rcbDefineSch.Enabled = p;
             tbNewNormalLoan.Enabled = !isApprovalRole;
 
