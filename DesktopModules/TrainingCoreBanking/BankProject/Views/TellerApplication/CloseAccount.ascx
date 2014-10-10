@@ -146,21 +146,6 @@
             </tr>
 
             <tr>
-                <td class="MyLable">Close Mode:</td>
-                <td class="MyContent">
-                    <telerik:RadComboBox MarkFirstMatch="True"
-                        AllowCustomText="false" 
-                        ID="cmbCloseMode" runat="server" ValidationGroup="Group1">
-                        <Items>
-                            <telerik:RadComboBoxItem Value="" Text="" />
-                            <telerik:RadComboBoxItem Value="FT" Text="FT" />
-                            <telerik:RadComboBoxItem Value="TELLER" Text="TELLER" />
-                        </Items>
-                    </telerik:RadComboBox>
-                </td>
-            </tr>
-
-            <tr>
                 <td class="MyLable">Currency:</td>
                 <td class="MyContent">
                     <asp:Label ID="lblCurrency" runat="server">VND</asp:Label>
@@ -485,6 +470,22 @@
                     </asp:Label>
                 </td>
             </tr>
+            
+            <tr style="visibility:hidden;">
+                <td class="MyLable">Close Mode:</td>
+                <td class="MyContent">
+                    <telerik:RadComboBox MarkFirstMatch="True"
+                        AllowCustomText="false" 
+                        ID="cmbCloseMode" runat="server" ValidationGroup="Group1">
+                        <Items>
+                            <telerik:RadComboBoxItem Value="" Text="" />
+                            <telerik:RadComboBoxItem Value="FT" Text="FT" />
+                            <telerik:RadComboBoxItem Value="TELLER" Text="TELLER" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </td>
+            </tr>
+
         </table>
     </div>
 </div>

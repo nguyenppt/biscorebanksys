@@ -76,15 +76,6 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadComboBox cmbCloseOnline;
         
         /// <summary>
-        /// cmbCloseMode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbCloseMode;
-        
-        /// <summary>
         /// lblCurrency control.
         /// </summary>
         /// <remarks>
@@ -344,6 +335,15 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label4;
+        
+        /// <summary>
+        /// cmbCloseMode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbCloseMode;
         
         /// <summary>
         /// btSearch control.
