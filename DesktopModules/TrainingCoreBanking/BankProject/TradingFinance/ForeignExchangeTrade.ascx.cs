@@ -139,9 +139,9 @@ namespace BankProject.Views.TellerApplication
 
             if (commandName == "authorize" || commandName == "reverse")
             {
-                int provitionTransferId = SQLData.B_BFOREIGNEXCHANGE_ValidationLCNoExst_PROVISIONTRANSFER_DC(txtId.Text.Trim());
+                int provitionTransferId = SQLData.B_BFOREIGNEXCHANGE_ValidationLCNoExst_PROVISIONTRANSFER_DC(txtFTNo.Text.Trim());
 
-                if (provitionTransferId <= 0)
+                if (txtFTNo.Text !="" && provitionTransferId <= 0)
                 {
                     ShowMsgBox("There is no Provision Transfer information. Please process function Provision Transfer");
                     return;
