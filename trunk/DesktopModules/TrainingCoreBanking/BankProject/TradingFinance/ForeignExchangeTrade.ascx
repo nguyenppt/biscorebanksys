@@ -46,8 +46,6 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#ChristopherColumbus">Input</a></li>
-        <li><a href="#blank">Audit</a></li>
-        <li><a href="#blank">Full View</a></li>
     </ul>
     <div id="ChristopherColumbus" class="dnnClear">
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -215,7 +213,7 @@
             <tr>
                 <td class="MyLable">Buy Amount </td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtBuyAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="0" ClientEvents-OnValueChanged="OnAmountValueChanged"/>
+                    <telerik:RadNumericTextBox ID="txtBuyAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="0"/>
                 </td>
             </tr>
         </table>
@@ -240,7 +238,8 @@
             <tr>
                 <td class="MyLable">Sell Amount</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtSellAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="2" />
+                    <telerik:RadNumericTextBox ID="txtSellAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="2"
+                         ClientEvents-OnValueChanged="OnAmountValueChanged" />
                 </td>
             </tr>
         </table>
@@ -557,15 +556,15 @@ function () {
         }
     
         function OnAmountValueChanged() {
-            var BuyAmountElement = $find("<%= txtBuyAmount.ClientID%>");
-            var BuyAmount = BuyAmountElement.get_value();
+            var SellAmountElement = $find("<%= txtSellAmount.ClientID%>");
+            var SellAmount = SellAmountElement.get_value();
 
-            var SellAmountFCYElement = $find("<%= txtSellAmount.ClientID%>");
-
-            if (BuyAmount) {
+            var BuyAmountFCYElement = $find("<%= txtBuyAmount.ClientID%>");
+            var DealRate = $find("<%= txtRate.ClientID%>").get_value();
+            if (SellAmount && DealRate) {
                 var ExchangeRate = CalculateDealRate();
-                var fcy = BuyAmount * ExchangeRate;
-                SellAmountFCYElement.set_value(fcy);
+                var fcy = SellAmount * ExchangeRate;
+                BuyAmountFCYElement.set_value(fcy);
             }
 
         }
