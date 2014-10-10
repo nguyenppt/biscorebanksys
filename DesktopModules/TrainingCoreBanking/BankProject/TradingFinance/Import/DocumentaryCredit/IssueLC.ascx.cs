@@ -414,8 +414,25 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void rcbAvailableWithType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_AvailableWithType();
-
             rcbAvailableWithType740.SelectedValue = rcbAvailableWithType.SelectedValue;
+
+            switch (rcbAvailableWithType.SelectedValue)
+            {
+                case "A":
+                    tbAvailableWithName740.Text = string.Empty;
+                    tbAvailableWithAddr740_1.Text = string.Empty;
+                    tbAvailableWithAddr740_2.Text = string.Empty;
+                    tbAvailableWithAddr740_3.Text = string.Empty;
+                    break;
+                case "B":
+                case "D":
+                    tbAvailableWithNo740.Text = string.Empty;
+                    tbAvailableWithName740.Text = string.Empty;
+                    tbAvailableWithAddr740_1.Text = string.Empty;
+                    tbAvailableWithAddr740_2.Text = string.Empty;
+                    tbAvailableWithAddr740_3.Text = string.Empty;
+                    break;
+            }            
         }
 
         protected void rcbAvailableWithType740_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -427,6 +444,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void rcbBeneficiaryType740_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_Beneficiary740();
+
+            //tbBeneficiaryNo740.SetRenderMethodDelegat
+            //tbBeneficiaryName740.Enabled = false;
+            //tbBeneficiaryAddr740_1.Enabled = false;
+            //tbBeneficiaryAddr740_2.Enabled = false;
+            //tbBeneficiaryAddr740_3.Enabled = false;
         }
 
         protected void comGenerate_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -458,7 +481,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void comboReimbBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            SetRelation_ReimbBankType();        
+            SetRelation_ReimbBankType();
+            comboReimbBankType700.SelectedValue = comboReimbBankType.SelectedValue;
+            
+            rcbReimbBankNo.SelectedValue = string.Empty;
+            tbReimbBankName.Text = string.Empty;
+            tbReimbBankAddr1.Text = string.Empty;
+            tbReimbBankAddr2.Text = string.Empty;
+            tbReimbBankAddr3.Text = string.Empty;           
         }
         
         protected void comboAvailableWithNo_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -472,11 +502,30 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void rcbAdviseThruType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_AdviseThruType();
+            comboAdviseThroughBankType700.SelectedValue = rcbAdviseThruType.SelectedValue;
+
+            rcbAdviseThruNo.SelectedValue = string.Empty;
+            tbAdviseThruName.Text = string.Empty;
+            tbAdviseThruAddr1.Text = string.Empty;
+            tbAdviseThruAddr2.Text = string.Empty;
+            tbAdviseThruAddr3.Text = string.Empty;
+
+            comboAdviseThroughBankNo700.SelectedValue = string.Empty;
+            txtAdviseThroughBankName700.Text = string.Empty;
+            txtAdviseThroughBankAddr700_1.Text = string.Empty;
+            txtAdviseThroughBankAddr700_2.Text = string.Empty;
+            txtAdviseThroughBankAddr700_3.Text = string.Empty;
         }
 
         protected void comboDraweeCusType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_DraweeCusType700();
+
+            comboDraweeCusNo700.SelectedValue = string.Empty;
+            txtDraweeCusName.Text = string.Empty;
+            txtDraweeAddr1.Text = string.Empty;
+            txtDraweeAddr2.Text = string.Empty;
+            txtDraweeAddr3.Text = string.Empty;
         }
 
         protected void comboAvailableRule_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -1077,6 +1126,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
                 case "B":
                 case "D":
+                    comboAvailableWithNo.SelectedValue = string.Empty;
+                    tbAvailableWithName.Text = string.Empty;
+
                     comboAvailableWithNo.Enabled = false;
                     tbAvailableWithName.Enabled = true;
                     tbAvailableWithAddr1.Enabled = true;
@@ -1231,7 +1283,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , tbReimbBankAddr1.Text.Trim()
                 , tbReimbBankAddr2.Text.Trim()
                 , tbReimbBankAddr3.Text.Trim()
-                , "A"
+                , rcbAdviseThruType.SelectedValue
                 , rcbAdviseThruNo.SelectedValue
                 , tbAdviseThruName.Text.Trim()
                 , tbAdviseThruAddr1.Text.Trim()
@@ -1419,11 +1471,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , txtBeneficiaryAddr700_3.Text.Trim()
 
                 , comboAdviseThroughBankType700.SelectedValue
-                , comboAdviseThroughBankNo700.SelectedValue
-                , txtAdviseThroughBankName700.Text
-                , txtAdviseThroughBankAddr700_1.Text
-                , txtAdviseThroughBankAddr700_2.Text
-                , txtAdviseThroughBankAddr700_3.Text
+                , rcbAdviseThruNo.SelectedValue
+                , tbAdviseThruName.Text
+                , tbAdviseThruAddr1.Text
+                , tbAdviseThruAddr2.Text
+                , tbAdviseThruAddr3.Text
 
                 , comboReimbBankType700.SelectedValue
                 , rcbReimbBankNo700.SelectedValue
@@ -1621,6 +1673,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtBeneficiaryBankAddr1.Text = drow["BeneficiaryAddr1"].ToString();
                 txtBeneficiaryBankAddr2.Text = drow["BeneficiaryAddr2"].ToString();
                 txtBeneficiaryBankAddr3.Text = drow["BeneficiaryAddr3"].ToString();
+                //
                 rcbAdviseBankNo.SelectedValue = drow["AdviseBankNo"].ToString();
                 tbAdviseBankName.Text = drow["AdviseBankName"].ToString();
                 tbAdviseBankAddr1.Text = drow["AdviseBankAddr1"].ToString();
@@ -1634,6 +1687,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 tbReimbBankAddr2.Text = drow["ReimbBankAddr2"].ToString();
                 tbReimbBankAddr3.Text = drow["ReimbBankAddr3"].ToString();
 
+                rcbAdviseThruType.SelectedValue = drow["AdviseThruType"].ToString();
                 rcbAdviseThruNo.SelectedValue = drow["AdviseThruNo"].ToString();
                 tbAdviseThruName.Text = drow["AdviseThruName"].ToString();
                 tbAdviseThruAddr1.Text = drow["AdviseThruAddr1"].ToString();
@@ -2770,26 +2824,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy.SelectedValue));
         }
-
-        /*protected void LoadChargeAcct2()
-        {
-            rcbChargeAcct2.Items.Clear();
-            rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct2.DataValueField = "Id";
-            rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy2.SelectedValue);
-            rcbChargeAcct2.DataBind();
-        }
-
-        protected void LoadChargeAcct3()
-        {
-            rcbChargeAcct3.Items.Clear();
-            rcbChargeAcct3.Items.Add(new RadComboBoxItem(""));
-            rcbChargeAcct3.DataValueField = "Id";
-            rcbChargeAcct3.DataTextField = "Id";
-            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(rcbApplicantID.SelectedItem != null ? rcbApplicantID.SelectedItem.Attributes["CustomerName"] : "XXXXX", rcbChargeCcy3.SelectedValue);
-            rcbChargeAcct3.DataBind();
-        }*/
         
         protected void SetRelation_ReimbBankType()
         {
@@ -2800,11 +2834,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     tbReimbBankName.Enabled = false;
                     tbReimbBankAddr1.Enabled = false;
                     tbReimbBankAddr2.Enabled = false;
-                    tbReimbBankAddr3.Enabled = false;
-
-                    tbReimbBankAddr1.Text = string.Empty;
-                    tbReimbBankAddr2.Text = string.Empty;
-                    tbReimbBankAddr3.Text = string.Empty;
+                    tbReimbBankAddr3.Enabled = false;                    
                     break;
                 case "B":
                 case "D":
