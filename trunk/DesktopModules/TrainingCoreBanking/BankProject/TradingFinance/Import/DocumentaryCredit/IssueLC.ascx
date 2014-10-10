@@ -377,27 +377,27 @@
             <tr>
                 <td class="MyLable">2.2 Applicant Name</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbApplicantName" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantName_OnValueChanged"/>
+                    <telerik:RadTextBox ID="tbApplicantName" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantName_OnValueChanged" MaxLength="35"/>
                 </td>
             </tr>
             <tr>
                 <td class="MyLable">2.3 Applicant Addr.</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbApplicantAddr1" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr1_OnValueChanged"/>
+                    <telerik:RadTextBox ID="tbApplicantAddr1" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr1_OnValueChanged" MaxLength="35"/>
                 </td>
             </tr>
 
             <tr>
                 <td class="MyLable">2.4 Applicant Addr.</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbApplicantAddr2" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr2_OnValueChanged"/>
+                    <telerik:RadTextBox ID="tbApplicantAddr2" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr2_OnValueChanged" MaxLength="35"/>
                 </td>
             </tr>
 
             <tr>
                 <td class="MyLable">2.5 Applicant Addr.</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbApplicantAddr3" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr3_OnValueChanged"/>
+                    <telerik:RadTextBox ID="tbApplicantAddr3" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr3_OnValueChanged" MaxLength="35"/>
                 </td>
             </tr>
         </table>
@@ -798,28 +798,32 @@
                 <tr>
                     <td class="MyLable">14.3 Advise Thru Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseThruName" runat="server" Width="355" MaxLength="35"/>
+                        <telerik:RadTextBox ID="tbAdviseThruName" runat="server" Width="355" MaxLength="35" 
+                            ClientEvents-OnValueChanged="tbAdviseThruName_OnClientSelectedIndexChanged"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">14.4 Advise Thru Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseThruAddr1" runat="server" Width="355" MaxLength="35"/>
+                        <telerik:RadTextBox ID="tbAdviseThruAddr1" runat="server" Width="355" MaxLength="35" 
+                            ClientEvents-OnValueChanged="tbAdviseThruAddr1_OnClientSelectedIndexChanged"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">14.5 Advise Thru Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseThruAddr2" runat="server" Width="355" MaxLength="35"/>
+                        <telerik:RadTextBox ID="tbAdviseThruAddr2" runat="server" Width="355" MaxLength="35" 
+                            ClientEvents-OnValueChanged="tbAdviseThruAddr2_OnClientSelectedIndexChanged"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">14.6 Advise Thru Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseThruAddr3" runat="server" Width="355" MaxLength="35"/>
+                        <telerik:RadTextBox ID="tbAdviseThruAddr3" runat="server" Width="355" MaxLength="35" 
+                            ClientEvents-OnValueChanged="tbAdviseThruAddr3_OnClientSelectedIndexChanged"/>
                     </td>
                 </tr>
             </table>
@@ -1296,28 +1300,32 @@
                 <tr>
                     <td style="width: 250px" class="MyLable">41D.3 Available With Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAvailableWithName" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAvailableWithName" runat="server" Width="355"  
+                            ClientEvents-OnValueChanged="tbAvailableWithName_OnValueChanged" />
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">41D.4 Available With Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAvailableWithAddr1" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAvailableWithAddr1" runat="server" Width="355" 
+                            ClientEvents-OnValueChanged="tbAvailableWithAddr1_OnValueChanged"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">41D.5 Available With Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAvailableWithAddr2" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAvailableWithAddr2" runat="server" Width="355" 
+                            ClientEvents-OnValueChanged="tbAvailableWithAddr2_OnValueChanged"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">41D.6 Available With Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAvailableWithAddr3" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbAvailableWithAddr3" runat="server" Width="355" 
+                            ClientEvents-OnValueChanged="tbAvailableWithAddr3_OnValueChanged"/>
                     </td>
                 </tr>
             </table>
@@ -3856,6 +3864,42 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             }
         }
 
+        function tbAdviseThruName_OnClientSelectedIndexChanged () {
+            var txtAdviseThroughBankName700 = $find('<%=txtAdviseThroughBankName700.ClientID %>'),
+                tbAdviseThruName = $find('<%=tbAdviseThruName.ClientID %>');
+
+            if (txtAdviseThroughBankName700) {
+                txtAdviseThroughBankName700.set_value(tbAdviseThruName.get_value());
+            }
+        }
+
+        function tbAdviseThruAddr1_OnClientSelectedIndexChanged () {
+            var txtAdviseThroughBankAddr700_1 = $find('<%=txtAdviseThroughBankAddr700_1.ClientID %>'),
+                tbAdviseThruAddr1 = $find('<%=tbAdviseThruAddr1.ClientID %>');
+
+            if (txtAdviseThroughBankAddr700_1) {
+                txtAdviseThroughBankAddr700_1.set_value(tbAdviseThruAddr1.get_value());
+            }
+        }
+
+        function tbAdviseThruAddr2_OnClientSelectedIndexChanged () {
+            var txtAdviseThroughBankAddr700_2 = $find('<%=txtAdviseThroughBankAddr700_2.ClientID %>'),
+                 tbAdviseThruAddr2 = $find('<%= tbAdviseThruAddr2.ClientID %>');
+
+            if (txtAdviseThroughBankAddr700_2) {
+                txtAdviseThroughBankAddr700_2.set_value(tbAdviseThruAddr2.get_value());
+            }
+        }
+
+        function tbAdviseThruAddr3_OnClientSelectedIndexChanged () {
+            var txtAdviseThroughBankAddr700_3 = $find('<%=txtAdviseThroughBankAddr700_3.ClientID %>'),
+                 tbAdviseThruAddr3 = $find('<%= tbAdviseThruAddr3.ClientID %>');
+
+            if (txtAdviseThroughBankAddr700_3) {
+                txtAdviseThroughBankAddr700_3.set_value(tbAdviseThruAddr3.get_value());
+            }
+        }
+
         function comboReimbBankType_OnClientSelectedIndexChanged () {
             var comboReimbBankType = $find('<%=comboReimbBankType.ClientID %>'),
                 comboReimbBankType700 = $find('<%=comboReimbBankType700.ClientID %>'),
@@ -4030,6 +4074,11 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr3" />
 
                 <telerik:AjaxUpdatedControl ControlID="rcbAvailableWithType740" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithNo740" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithName740" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr740_1" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr740_2" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr740_3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
@@ -4153,6 +4202,10 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr3" />
+
+                <telerik:AjaxUpdatedControl ControlID="comboReimbBankType" />
+
+
             </UpdatedControls>
         </telerik:AjaxSetting>
 
@@ -4163,6 +4216,13 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr3" />
+
+                <telerik:AjaxUpdatedControl ControlID="comboAdviseThroughBankType700" />
+                <telerik:AjaxUpdatedControl ControlID="comboAdviseThroughBankNo700" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankName700" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
