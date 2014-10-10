@@ -126,9 +126,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             numAmountUtilization.Value = numAmount.Value;
             lblUtilizationCurrency.Text = lblCurrency.Text;
             //
-            setDocsCodeData(drDetail, 1, ref comboDocsCode1, ref numNoOfOriginals1, ref numNoOfCopies1, ref txtOtherDocs1);
+            setDocsCodeData(drDetail, 1, ref comboDocsCode1, ref numNoOfOriginals1, ref numNoOfCopies1, ref txtOtherDocs2);
             setDocsCodeData(drDetail, 2, ref comboDocsCode2, ref numNoOfOriginals2, ref numNoOfCopies2, ref txtOtherDocs2);
             setDocsCodeData(drDetail, 3, ref comboDocsCode3, ref numNoOfOriginals3, ref numNoOfCopies3, ref txtOtherDocs3);
+            if (drDetail["OtherDocs1"] != DBNull.Value)
+                txtOtherDocs1.Value = Convert.ToDouble(drDetail["OtherDocs1"]);
             //
             if (drDetail["TraceDate"] != DBNull.Value)
                 dteTraceDate.SelectedDate = Convert.ToDateTime(drDetail["TraceDate"]);
@@ -607,6 +609,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void btSearch_Click(object sender, EventArgs e)
         {
             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
             lblError.Text = "";
             DataSet dsDetail;
             DataTable tbDetail;
@@ -616,6 +623,37 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 case TabDocsWithDiscrepancies:                    
                 case TabDocsWithNoDiscrepancies:                    
                     fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
+                    //
+                    if (!String.IsNullOrEmpty(txtCode.Text) && txtCode.Text.LastIndexOf(".") > 0)
+                    {
+                        dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, txtCode.Text);
+                        if (dsDetail == null || dsDetail.Tables.Count <= 0 || dsDetail.Tables[0].Rows.Count <= 0)
+                        {
+                            lblError.Text = "This Docs not found !";
+                            return;
+                        }
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        //Hiển thị thông tin docs
+                        drDetail = dsDetail.Tables[0].Rows[0];
+                        switch (drDetail["Status"].ToString())
+                        {
+                            case bd.TransactionStatus.UNA:
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                                bc.Commont.SetTatusFormControls(this.Controls, true);
+                                break;
+                            case bd.TransactionStatus.AUT:
+                                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                                RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                                bc.Commont.SetTatusFormControls(this.Controls, true);
+                                break;
+                        }
+                        loadDocsDetail(dsDetail);
+                        
+                        return;
+                    }
                     //Có docs nào đang chờ duyệt ?
                     dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(txtCode.Text, null);
                     if (dsDetail != null && dsDetail.Tables.Count > 0 && dsDetail.Tables[0].Rows.Count > 0)
