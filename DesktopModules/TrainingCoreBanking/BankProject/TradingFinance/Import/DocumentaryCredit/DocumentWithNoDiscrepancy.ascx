@@ -28,7 +28,10 @@
                 window.location = '<%=EditUrl("preview_nodiscrepancy")%>';
             }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
-                radconfirm("Do you want to download MT734 file?", confirmCallbackFunction_MT734, 340, 150, null, 'Download');                
+                <%if (TabId == TabDocsWithDiscrepancies)
+                  {%>
+                radconfirm("Do you want to download MT734 file?", confirmCallbackFunction_MT734, 340, 150, null, 'Download');
+                <%}%>
             }
         }
         
@@ -405,7 +408,7 @@
     </div>   
    
     <div id="tabMT734" class="dnnClear">
-        <div runat="server" ID="divMT734" visible="false">
+        <div runat="server" ID="divMT734" style="display:none;">
             <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable" style="width: 200px">Presentor No</td>
@@ -527,8 +530,8 @@
                             MarkFirstMatch="True"
                             AllowCustomText="false">
                             <Items>
-                                <telerik:RadComboBoxItem Value="NO" Text="NO" />
-                                <telerik:RadComboBoxItem Value="YES" Text="YES" />
+                                <telerik:RadComboBoxItem Value="NO" Text="YES" />
+                                <telerik:RadComboBoxItem Value="YES" Text="NO" />
                             </Items>
                         </telerik:RadComboBox>
                     </td>
