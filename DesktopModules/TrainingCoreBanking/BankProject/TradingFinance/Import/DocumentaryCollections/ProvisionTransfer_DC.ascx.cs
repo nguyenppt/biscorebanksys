@@ -123,6 +123,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             {
                 rcbDebitAccount.Text = dtDebitAcc.Rows[0]["Id"].ToString();
                 lblDebitAccountName.Text = dtDebitAcc.Rows[0]["Name"].ToString();
+                hdDebitAccount_CustomerID.Text = dtDebitAcc.Rows[0]["CustomerID"].ToString();
             }
         }
 
@@ -158,6 +159,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             rdpCreditDate.Enabled = false;
             txtAddRemarks1.Text = "";
             txtAddRemarks2.Text = "";
+            hdDebitAccount_CustomerID.Text = string.Empty;
         }
         private void LoadDataChangeLCNo()
         {

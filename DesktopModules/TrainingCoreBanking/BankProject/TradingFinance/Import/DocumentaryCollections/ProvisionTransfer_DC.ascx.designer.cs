@@ -166,6 +166,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.WebControls.Label lblDebitAccountName;
         
         /// <summary>
+        /// hdDebitAccount_CustomerID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox hdDebitAccount_CustomerID;
+        
+        /// <summary>
         /// tbDebitAmout control.
         /// </summary>
         /// <remarks>
