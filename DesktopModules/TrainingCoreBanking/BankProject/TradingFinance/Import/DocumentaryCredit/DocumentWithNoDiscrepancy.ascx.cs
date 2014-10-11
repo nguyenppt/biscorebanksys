@@ -129,8 +129,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             setDocsCodeData(drDetail, 1, ref comboDocsCode1, ref numNoOfOriginals1, ref numNoOfCopies1, ref txtOtherDocs2);
             setDocsCodeData(drDetail, 2, ref comboDocsCode2, ref numNoOfOriginals2, ref numNoOfCopies2, ref txtOtherDocs2);
             setDocsCodeData(drDetail, 3, ref comboDocsCode3, ref numNoOfOriginals3, ref numNoOfCopies3, ref txtOtherDocs3);
-            if (drDetail["OtherDocs1"] != DBNull.Value)
-                txtOtherDocs1.Value = Convert.ToDouble(drDetail["OtherDocs1"]);
+            if (drDetail["FullDocsAmount"] != DBNull.Value)
+                txtOtherDocs1.Value = Convert.ToDouble(drDetail["FullDocsAmount"]);
             //
             if (drDetail["TraceDate"] != DBNull.Value)
                 dteTraceDate.SelectedDate = Convert.ToDateTime(drDetail["TraceDate"]);
@@ -474,7 +474,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                                         , txtDisposalOfDocs.Text
                                                         , comboWaiveCharges.SelectedValue
                                                         , tbChargeRemarks.Text
-                                                        , tbVatNo.Text);
+                                                        , tbVatNo.Text
+                                                        , txtFullDocsAmount.Value);
             if (divCharge.Visible && comboWaiveCharges.SelectedValue.Equals("YES"))
             {
                 double chargeAmt = 0, chargeAmt2 = 0, chargeAmt3 = 0;

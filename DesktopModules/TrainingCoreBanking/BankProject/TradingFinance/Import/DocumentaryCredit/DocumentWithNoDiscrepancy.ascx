@@ -316,10 +316,15 @@
             <tr>
                 <td class="MyLable" style="width: 180px">69.3.1 Full docs amount</td>
                 <td class="MyContent">
+                    <telerik:RadNumericTextBox runat="server" ID="txtFullDocsAmount" Width="355" />
+                </td>
+            </tr>
+            <tr style="display:none;">
+                <td class="MyLable" style="width: 180px">69.3.1 Other Docs</td>
+                <td class="MyContent">
                     <telerik:RadNumericTextBox runat="server" ID="txtOtherDocs1" Width="355" />
                 </td>
             </tr>
-            
             <tr style="display:none;">
                 <td class="MyLable">69.3.2 Other Docs</td>
                 <td class="MyContent">
