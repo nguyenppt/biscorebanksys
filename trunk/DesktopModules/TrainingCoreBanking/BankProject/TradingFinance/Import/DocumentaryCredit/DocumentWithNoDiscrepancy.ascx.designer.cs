@@ -337,6 +337,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadNumericTextBox numNoOfCopies3;
         
         /// <summary>
+        /// txtFullDocsAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox txtFullDocsAmount;
+        
+        /// <summary>
         /// txtOtherDocs1 control.
         /// </summary>
         /// <remarks>
