@@ -43,7 +43,7 @@
             .closest('tr')
             .remove();
     });
-    function <%=divMultiTextBox.ClientID%>_submit() {
+    function <%=getJSFunction()%>() {
         var objNar = $('#<%=txtMultiTextBoxString.ClientID%>');
         objNar.val('');
         $('#<%=divMultiTextBox.ClientID%> table').children().find("input:text").each(function () {
