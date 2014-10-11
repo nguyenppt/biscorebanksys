@@ -11,7 +11,10 @@
     function checkDebitCredit() {
         var rcbDebitAccount = $find('<%= rcbDebitAccount.ClientID %>');
         var hdfCheckDebitAcc = $find('<%= hdfCheckDebitAcc.ClientID %>');
-        var mySplitResult = hdfCheckDebitAcc.get_value().split(rcbDebitAccount.get_value());
+        var hdDebitAccount_CustomerID = $find('<%= hdDebitAccount_CustomerID.ClientID %>');
+        
+        //var mySplitResult = hdfCheckDebitAcc.get_value().split(rcbDebitAccount.get_value());
+        var mySplitResult = hdfCheckDebitAcc.get_value().split(hdDebitAccount_CustomerID.get_value());
         
         if (mySplitResult == null || (mySplitResult != null && mySplitResult.length == 1)) {
             radconfirm("Debit Account is not existed. Please check again!!!", confirmCallbackFunction1);
@@ -212,9 +215,13 @@
                            AutoPostBack="True"
                            OnTextChanged="rcbDebitAccount_OnTextChanged"
                             Width="350" ></telerik:RadTextBox>
+                      
                    </td>
                     <td>
                         <asp:Label ID="lblDebitAccountName" runat="server"></asp:Label>
+                    </td>
+                    <td style="display:none">
+                         <telerik:RadTextBox runat="server" ID="hdDebitAccount_CustomerID" />
                     </td>
                </tr>
                 
