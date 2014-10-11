@@ -1990,8 +1990,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td style="width: 250px" class="MyLable">59.2 Beneficiary No.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbBeneficiaryNo740" runat="server" Width="355" AutoPostBack="false"
-                            OnTextChanged="tbBeneficiaryNo740_OnTextChanged" />
+                        <telerik:RadTextBox ID="tbBeneficiaryNo740" runat="server" Width="355"  />
                     </td>
                     <td>
                         <asp:Label ID="lblBeneficiaryError740" runat="server" Text="" ForeColor="red" />
@@ -2770,37 +2769,64 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td class="MyLable" style="width: 250px;">72. Sender to Receiver Information</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtSenderToReceiverInfomation_747_1" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="txtSenderToReceiverInfomation_747_1" runat="server" Width="355" MaxLength="35" />
                     </td>
                 </tr>
                 <tr>
                     <td class="MyLable" style="width: 250px;"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtSenderToReceiverInfomation_747_2" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="txtSenderToReceiverInfomation_747_2" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="MyLable" style="width: 250px;"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtSenderToReceiverInfomation_747_3" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="txtSenderToReceiverInfomation_747_3" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="MyLable" style="width: 250px;"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtSenderToReceiverInfomation_747_4" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="txtSenderToReceiverInfomation_747_4" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable" style="width: 250px; vertical-align: top">77A. Narrative</td>
                     <td class="MyContent">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_Narrative_747" Height="200"  Width="355"
-ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
-                        <%--<telerik:RadTextBox ID="txtNarrative_747" runat="server" Width="355" TextMode="MultiLine" Height="200" />--%>
+                        <telerik:RadTextBox ID="txtNarrative_747_1" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
-
+                <tr>
+                    <td class="MyLable" style="width: 250px; vertical-align: top"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtNarrative_747_2" runat="server" Width="355" MaxLength="35"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable" style="width: 250px; vertical-align: top"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtNarrative_747_3" runat="server" Width="355" MaxLength="35"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable" style="width: 250px; vertical-align: top"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtNarrative_747_4" runat="server" Width="355" MaxLength="35"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable" style="width: 250px; vertical-align: top"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtNarrative_747_5" runat="server" Width="355" MaxLength="35"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable" style="width: 250px; vertical-align: top"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtNarrative_747_6" runat="server" Width="355" MaxLength="35"/>
+                    </td>
+                </tr>
 
             </table>
         </div>
@@ -3794,17 +3820,14 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             
             if (txtBeneficiaryNo700) {
                 txtBeneficiaryNo700.set_value(bankCode);
-                //txtBeneficiaryName700.set_value(bankName);
             }
             
             if (tbBeneficiaryNo740) {
                 tbBeneficiaryNo740.set_value(bankCode);
-                //tbBeneficiaryName740.set_value(bankName);
             }
             
             if (txtBeneficiaryNo_707) {
                 txtBeneficiaryNo_707.set_value(bankCode);
-                //txtBeneficiaryName_707.set_value(bankName);
             }            
         }
 
@@ -3931,7 +3954,56 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 $find('<%=txtReimbBankAddr_747_2.ClientID %>').set_value('');
                 $find('<%=txtReimbBankAddr_747_3.ClientID %>').set_value('');
             }
+        }
 
+        function rcbAvailableWithType_OnSelectedIndexChanged (sender, eventArgs) {
+            var rcbAvailableWithType = $find('<%=rcbAvailableWithType.ClientID %>'),
+                rcbAvailableWithType740 = $find('<%=rcbAvailableWithType.ClientID %>');
+
+            if (rcbAvailableWithType740) {
+                rcbAvailableWithType740.set_value(rcbAvailableWithType.get_value());
+                rcbAvailableWithType740.set_text(rcbAvailableWithType.get_value());
+            }
+        }
+
+        function tbAvailableWithName_OnValueChanged (sender, eventArgs) {
+            var tbAvailableWithName = $find('<%=tbAvailableWithName.ClientID %>'),
+                tbAvailableWithName740 = $find('<%=tbAvailableWithName740.ClientID %>');
+
+            
+            if (tbAvailableWithName740) {
+                tbAvailableWithName740.set_value(tbAvailableWithName.get_value());
+            }
+        }
+
+        function tbAvailableWithAddr1_OnValueChanged (sender, eventArgs) {
+            var tbAvailableWithAddr1 = $find('<%=tbAvailableWithAddr1.ClientID %>'),
+                tbAvailableWithAddr740_1 = $find('<%=tbAvailableWithAddr740_1.ClientID %>');
+
+            
+            if (tbAvailableWithAddr740_1) {
+                tbAvailableWithAddr740_1.set_value(tbAvailableWithAddr1.get_value());
+            }
+        }
+
+        function tbAvailableWithAddr2_OnValueChanged (sender, eventArgs) {
+            var tbAvailableWithAddr2 = $find('<%=tbAvailableWithAddr2.ClientID %>'),
+                tbAvailableWithAddr740_2 = $find('<%=tbAvailableWithAddr740_2.ClientID %>');
+
+            
+            if (tbAvailableWithAddr740_2) {
+                tbAvailableWithAddr740_2.set_value(tbAvailableWithAddr2.get_value());
+            }
+        }
+
+        function tbAvailableWithAddr3_OnValueChanged (sender, eventArgs) {
+            var tbAvailableWithAddr3 = $find('<%=tbAvailableWithAddr3.ClientID %>'),
+                tbAvailableWithAddr740_3 = $find('<%=tbAvailableWithAddr740_3.ClientID %>');
+
+            
+            if (tbAvailableWithAddr740_3) {
+                tbAvailableWithAddr740_3.set_value(tbAvailableWithAddr3.get_value());
+            }
         }
 
     </script>
@@ -4264,7 +4336,12 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfomation_747_2" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfomation_747_3" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfomation_747_4" />
-                <telerik:AjaxUpdatedControl ControlID="txtEdittor_Narrative_747" />
+                <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_3" />
+                <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_4" />
+                <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_5" />
+                <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_6" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
