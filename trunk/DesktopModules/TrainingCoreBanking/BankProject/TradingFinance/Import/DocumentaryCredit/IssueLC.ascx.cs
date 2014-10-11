@@ -399,12 +399,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             e.Item.Attributes["Continent"] = row["Continent"].ToString();
             e.Item.Attributes["SwiftCode"] = row["SwiftCode"].ToString();
         }
-
-        //protected void rcbAdviseBankNo_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        //{
-        //    tbAdviseBankName.Text = rcbAdviseBankNo.SelectedItem.Attributes["BankName"];
-            
-        //}
         
         protected void rcbApplicantBankType700_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
@@ -414,25 +408,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void rcbAvailableWithType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_AvailableWithType();
-            rcbAvailableWithType740.SelectedValue = rcbAvailableWithType.SelectedValue;
 
-            switch (rcbAvailableWithType.SelectedValue)
-            {
-                case "A":
-                    tbAvailableWithName740.Text = string.Empty;
-                    tbAvailableWithAddr740_1.Text = string.Empty;
-                    tbAvailableWithAddr740_2.Text = string.Empty;
-                    tbAvailableWithAddr740_3.Text = string.Empty;
-                    break;
-                case "B":
-                case "D":
-                    tbAvailableWithNo740.Text = string.Empty;
-                    tbAvailableWithName740.Text = string.Empty;
-                    tbAvailableWithAddr740_1.Text = string.Empty;
-                    tbAvailableWithAddr740_2.Text = string.Empty;
-                    tbAvailableWithAddr740_3.Text = string.Empty;
-                    break;
-            }            
+            rcbAvailableWithType740.SelectedValue = rcbAvailableWithType.SelectedValue;
+            tbAvailableWithNo740.Text = string.Empty;
+            tbAvailableWithName740.Text = string.Empty;
+            tbAvailableWithAddr740_1.Text = string.Empty;
+            tbAvailableWithAddr740_2.Text = string.Empty;
+            tbAvailableWithAddr740_3.Text = string.Empty;       
         }
 
         protected void rcbAvailableWithType740_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -443,13 +425,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
        
         protected void rcbBeneficiaryType740_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            SetRelation_Beneficiary740();
-
-            //tbBeneficiaryNo740.SetRenderMethodDelegat
-            //tbBeneficiaryName740.Enabled = false;
-            //tbBeneficiaryAddr740_1.Enabled = false;
-            //tbBeneficiaryAddr740_2.Enabled = false;
-            //tbBeneficiaryAddr740_3.Enabled = false;
+            SetRelation_Beneficiary740();            
         }
 
         protected void comGenerate_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -808,7 +784,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             IntialEdittor(txtEdittor_PeriodforPresentation700);
             IntialEdittor(txtEdittor_NegotgBank700);
             IntialEdittor(txtEdittor_SendertoReceiverInfomation700);
-            IntialEdittor(txtEdittor_Narrative_747);
+            //IntialEdittor(txtEdittor_Narrative_747);
             IntialEdittor(txtEdittor_Narrative_707);
 
             txtEdittor_DescrpofGoods.Content = "";
@@ -1126,9 +1102,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
                 case "B":
                 case "D":
-                    comboAvailableWithNo.SelectedValue = string.Empty;
-                    tbAvailableWithName.Text = string.Empty;
-
                     comboAvailableWithNo.Enabled = false;
                     tbAvailableWithName.Enabled = true;
                     tbAvailableWithAddr1.Enabled = true;
@@ -1519,7 +1492,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 tb31DPlaceOfExpiry.Text.Trim(),
                 rcbBeneficiaryType740.SelectedValue,
                 tbBeneficiaryNo740.Text.Trim(),
-                tbBeneficiaryName740.Text.Trim(),
+                txtBeneficiaryBankName.Text,//tbBeneficiaryName740.Text.Trim(),
                 tbBeneficiaryAddr740_1.Text.Trim(),
                 tbBeneficiaryAddr740_2.Text.Trim(),
                 tbBeneficiaryAddr740_3.Text.Trim(),
@@ -1623,7 +1596,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , txtSenderToReceiverInfomation_747_2.Text
                 , txtSenderToReceiverInfomation_747_3.Text
                 , txtSenderToReceiverInfomation_747_4.Text
-                , txtEdittor_Narrative_747.Content
+                , txtNarrative_747_1.Text
+                , txtNarrative_747_2.Text
+                , txtNarrative_747_3.Text
+                , txtNarrative_747_4.Text
+                , txtNarrative_747_5.Text
+                , txtNarrative_747_6.Text
             );
         }
 
@@ -2232,7 +2210,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_3.Text = drow["SenderToReceiverInformation3"].ToString();
                 txtSenderToReceiverInfomation_747_4.Text = drow["SenderToReceiverInformation4"].ToString();
 
-                txtEdittor_Narrative_747.Content = drow["Narrative"].ToString();
+                txtNarrative_747_1.Text = drow["Narrative1"].ToString();
+                txtNarrative_747_2.Text = drow["Narrative2"].ToString();
+                txtNarrative_747_3.Text = drow["Narrative3"].ToString();
+                txtNarrative_747_4.Text = drow["Narrative4"].ToString();
+                txtNarrative_747_5.Text = drow["Narrative5"].ToString();
+                txtNarrative_747_6.Text = drow["Narrative6"].ToString();
 
                 GenerateMT747();
             }
@@ -2270,7 +2253,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_3.Text = string.Empty;
                 txtSenderToReceiverInfomation_747_4.Text = string.Empty;
 
-                txtEdittor_Narrative_747.Content = string.Empty;
+                txtNarrative_747_1.Text = string.Empty;
+                txtNarrative_747_2.Text = string.Empty;
+                txtNarrative_747_3.Text = string.Empty;
+                txtNarrative_747_4.Text = string.Empty;
+                txtNarrative_747_5.Text = string.Empty;
+                txtNarrative_747_6.Text = string.Empty;
 
                 // set default values
                 if (dsDoc.Tables[0].Rows.Count > 0)
@@ -2908,7 +2896,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_2.Enabled = true;
                 txtSenderToReceiverInfomation_747_3.Enabled = true;
                 txtSenderToReceiverInfomation_747_4.Enabled = true;
-                txtEdittor_Narrative_747.Enabled = true;
+                //txtEdittor_Narrative_747.Enabled = true;
+                txtNarrative_747_1.Enabled = true;
+                txtNarrative_747_2.Enabled = true;
+                txtNarrative_747_3.Enabled = true;
+                txtNarrative_747_4.Enabled = true;
+                txtNarrative_747_5.Enabled = true;
+                txtNarrative_747_6.Enabled = true;
             }
             else
             {
@@ -2925,7 +2919,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtSenderToReceiverInfomation_747_2.Enabled = false;
                 txtSenderToReceiverInfomation_747_3.Enabled = false;
                 txtSenderToReceiverInfomation_747_4.Enabled = false;
-                txtEdittor_Narrative_747.Enabled = false;
+                //txtEdittor_Narrative_747.Enabled = false;
+                txtNarrative_747_1.Enabled = false;
+                txtNarrative_747_2.Enabled = false;
+                txtNarrative_747_3.Enabled = false;
+                txtNarrative_747_4.Enabled = false;
+                txtNarrative_747_5.Enabled = false;
+                txtNarrative_747_6.Enabled = false;
             } 
         }
 

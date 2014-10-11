@@ -2443,13 +2443,58 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInfomation_747_4;
         
         /// <summary>
-        /// txtEdittor_Narrative_747 control.
+        /// txtNarrative_747_1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadEditor txtEdittor_Narrative_747;
+        protected global::Telerik.Web.UI.RadTextBox txtNarrative_747_1;
+        
+        /// <summary>
+        /// txtNarrative_747_2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtNarrative_747_2;
+        
+        /// <summary>
+        /// txtNarrative_747_3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtNarrative_747_3;
+        
+        /// <summary>
+        /// txtNarrative_747_4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtNarrative_747_4;
+        
+        /// <summary>
+        /// txtNarrative_747_5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtNarrative_747_5;
+        
+        /// <summary>
+        /// txtNarrative_747_6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtNarrative_747_6;
         
         /// <summary>
         /// comboWaiveCharges control.
