@@ -118,12 +118,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void SetDebitAcc()
         {
-            var dtDebitAcc = SQLData.B_BFOREIGNEXCHANGE_GetByDebitAccount("", rcbDebitCurrency.SelectedValue, rcbOrderedby.SelectedValue != null ? rcbOrderedby.SelectedItem.Attributes["ApplicantName"] : "", "bullcurrency_change");
+            var dtDebitAcc = SQLData.B_BFOREIGNEXCHANGE_GetByDebitAccount("", rcbDebitCurrency.SelectedValue, rcbOrderedby.SelectedValue , "provision_transfers");
             if (dtDebitAcc != null && dtDebitAcc.Rows.Count > 0)
             {
                 rcbDebitAccount.Text = dtDebitAcc.Rows[0]["Id"].ToString();
                 lblDebitAccountName.Text = dtDebitAcc.Rows[0]["Name"].ToString();
                 hdDebitAccount_CustomerID.Text = dtDebitAcc.Rows[0]["CustomerID"].ToString();
+                hdfCheckDebitAcc.Text = dtDebitAcc.Rows[0]["CustomerID"].ToString() + ";";
             }
         }
 
