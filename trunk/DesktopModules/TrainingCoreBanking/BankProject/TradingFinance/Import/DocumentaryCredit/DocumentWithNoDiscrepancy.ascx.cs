@@ -154,7 +154,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             parseDocsCode(2, drDetail, ref divDocsCode2, ref comboDocsCode2, ref numNoOfOriginals2, ref numNoOfCopies2);
             parseDocsCode(3, drDetail, ref divDocsCode3, ref comboDocsCode3, ref numNoOfOriginals3, ref numNoOfCopies3);
             //Tab MT734
-            divMT734.Visible = isDocsDiscrepancies;
+            divMT734.Attributes.CssStyle.Remove("display");
+            if (!isDocsDiscrepancies)
+                divMT734.Attributes.CssStyle.Add("display", "none");
             tbDetail = dsDetail.Tables[1];
             if (tbDetail != null && tbDetail.Rows.Count > 0)
             {
@@ -293,8 +295,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             comboDrawType.Enabled = false;
 
-            fieldsetDiscrepancies.Visible = false;
-            divMT734.Visible = false;
+            fieldsetDiscrepancies.Visible = false;            
+            divMT734.Attributes.CssStyle.Add("display", "none");
             divCharge.Visible = false;
 
             divPresentorNo.Visible = true;
@@ -308,7 +310,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 case TabDocsWithDiscrepancies: // Docs With Discrepancies
                     comboDrawType.SelectedValue = "CO";
                     fieldsetDiscrepancies.Visible = true;
-                    divMT734.Visible = true;
+                    divMT734.Attributes.CssStyle.Remove("display");
                     divCharge.Visible = true;
                     break;
                 case TabDocsReject: // Reject Docs Sent For Collection
@@ -545,7 +547,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                                           TabId);
 
             }
-            if (divMT734.Visible)
+            if (this.TabId == TabDocsWithDiscrepancies)
             {
                 bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_MT734_Insert(txtCode.Text
                     , comboPresentorNo_734.SelectedValue
