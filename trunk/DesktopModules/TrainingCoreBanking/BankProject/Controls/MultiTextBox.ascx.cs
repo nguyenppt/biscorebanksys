@@ -12,11 +12,12 @@ namespace BankProject.Controls
         protected int MultiTextBoxRow = 1;
         private string _Label = "";
         private int _LabelWidth = 0;
+        private bool isSetText = false;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack) return;
+            if (IsPostBack || isSetText) return;
             litMultiTextBox.Text = createTextBox();
-            //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), divMultiTextBox.ClientID + "Submit", divMultiTextBox.ClientID + "_submit();");
+            //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), getJSFunction(), getJSFunction() + "();");
         }
         //
         public string Label
@@ -36,6 +37,7 @@ namespace BankProject.Controls
         }
         public void setText(string text, bool readOnly)
         {
+            isSetText = true;
             litMultiTextBox.Text = "";
             txtMultiTextBoxString.Value = text.ToString();
             string[] Narratives = new string[] { "" };
@@ -55,7 +57,7 @@ namespace BankProject.Controls
         private string createTextBox(string text, bool readOnly, int order)
         {
             return "<tr>"
-                + "<td class=\"MyLable\"" + (_LabelWidth > 0 ? " style=\"Width:" + _LabelWidth + "px\"" : "") + ">" + _Label + "</td>" //+ "." + order 
+                + "<td class=\"MyLable\"" + (_LabelWidth > 0 ? " style=\"Width:" + _LabelWidth + "px\"" : "") + ">" + (order <= 1 ? _Label : "") + "</td>" //+ "." + order 
                         + "<td class=\"MyContent\" style=\"width:350px;\">" + (readOnly ? "<span class=\"riSingle RadInput RadInput_Default\">" : "") + "<input style=\"width:350px;\" type=\"text\" value=\"" + text.Replace("\"", "\"\"") + "\" " + (readOnly ? "readonly" : "") + (readOnly ? " class=\"riTextBox riDisabled\"" : "") + " />" + (readOnly ? "</span>" : "") + "</td>"
                         + "<td>" + (String.IsNullOrEmpty(text) ? "<a class=\"MultiTextBoxAddRow\"><img src=\"Icons/Sigma/Add_16X16_Standard.png\"></a>" : "") + "</td>"
                     + "</tr>";
@@ -64,6 +66,11 @@ namespace BankProject.Controls
         public string getText()
         {
             return txtMultiTextBoxString.Value;
+        }
+        //
+        public string getJSFunction()
+        {
+            return divMultiTextBox.ClientID + "_submit";
         }
     }
 }
