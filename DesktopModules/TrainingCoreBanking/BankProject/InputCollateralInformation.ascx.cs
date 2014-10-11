@@ -53,15 +53,20 @@ namespace BankProject
                     var ProvisionValue = decimal.Parse(tbProvisionValue.Text == "" ? "0" : tbProvisionValue.Text);
                     var Rate = (tbRate.Text == "" ? 0 : tbRate.Value.Value);
                     var AllocatedAmt = decimal.Parse(lblAllocatedAmt.Text == "" ? "0" : lblAllocatedAmt.Text);
+                    if (rcbGlobalLimitID.SelectedValue == rcbGlobalLimitID2.SelectedValue)
+                    {
+                        ShowMsgBox("Global Limit ID value can not be duplicated. Please check again !"); return;
+                    }
                     TriTT.B_COLLATERAL_INFO_Insert_Update(RightID, CollInfoID, rcbCollateralType.SelectedValue, rcbCollateralType.Text.Replace(rcbCollateralType.SelectedValue + " - ", "")
                         , rcbCollateralCode.SelectedValue, rcbCollateralCode.Text.Replace(rcbCollateralCode.SelectedValue+" - ", ""),rcbContingentAcct.SelectedValue
                         ,rcbContingentAcct.SelectedItem.Text.Replace(rcbContingentAcct.SelectedValue+" - ",""),tbDescription.Text
                         , tbAddress.Text, rcbCollateralStatus.SelectedValue, rcbCollateralStatus.Text.Replace(rcbCollateralStatus.SelectedValue+" - ", ""),
                         tbCustomerIDName.Text.Trim().Substring(0, 7), tbCustomerIDName.Text, tbNotes.Text, rcbCompanyStorage.SelectedValue, rcbCompanyStorage.SelectedItem.Text.Replace(rcbCompanyStorage.SelectedValue+" - ", "")
-                        ,rcbProductLimit.SelectedValue , rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.SelectedItem.Text.Replace(rcbCountry.SelectedValue+" - ",""),
+                        ,rcbGlobalLimitID.SelectedValue , rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.SelectedItem.Text.Replace(rcbCountry.SelectedValue+" - ",""),
                         Convert.ToDecimal(tbNominalValue.Value.HasValue? tbNominalValue.Value : 0),Convert.ToDecimal( tbMaxValue.Value.HasValue? tbMaxValue.Value : 0),ProvisionValue ,
                         Convert.ToDecimal( tbExeValue.Value.HasValue? tbExeValue.Value:0),
-                        AllocatedAmt, rdpValueDate.SelectedDate, rdpExpiryDate.SelectedDate, rdpReviewDate.SelectedDate, UserInfo.Username.ToString(), Rate);
+                        AllocatedAmt, rdpValueDate.SelectedDate, rdpExpiryDate.SelectedDate, rdpReviewDate.SelectedDate, UserInfo.Username.ToString(), Rate,
+                        rcbGlobalLimitID2.SelectedValue);
                     TriTT.B_CONTINGENT_ENTRY_Insert_Update(CollInfoID, tbContingentEntryID.Text, tbCustomerIDName_Cont.Text.Substring(0, 7), tbAddress_cont.Text, tbIDTaxCode.Text
                         , tbDateOfIssue.Text == "" ? "" : tbDateOfIssue.Text, rcbTransactionCode.SelectedValue, rcbTransactionCode.Text.Replace(rcbTransactionCode.SelectedValue + " - ", "")
                         , rcbDebitOrCredit.SelectedValue, rcbDebitOrCredit.Text.Replace(rcbDebitOrCredit.SelectedValue + " - ", ""), rcbCurrency.SelectedValue,
@@ -99,7 +104,7 @@ namespace BankProject
             BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);// f5 form de search tiep data
             FirstLoad();
             LoadCurrencies(CollIndoID.Substring(0, 7));
-            LoadProductLimit(CollIndoID.Substring(0, 7)); //Load dua vao CUstomerID , trong table [BCUSTOMER_LIMIT_SUB]
+            LoadGlobalLimitID(CollIndoID.Substring(0, 7)); //Load dua vao CUstomerID , trong table [BCUSTOMER_LIMIT_SUB]
             if (CollIndoID.Length == 10 && CollIndoID.Substring(7,1)==".")// check lenght, hop le thi di tiep
             {
                 if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(CollIndoID.Substring(0, 7)) == null)
@@ -126,7 +131,9 @@ namespace BankProject
                     tbCustomerIDName.Text = dr["CustomreIDName"].ToString();
                     tbNotes.Text = dr["Note"].ToString();
                     rcbCompanyStorage.SelectedValue = dr["CompanyStorageID"].ToString();
-                    rcbProductLimit.SelectedValue = dr["ProductLimitID"].ToString();
+                    rcbGlobalLimitID.SelectedValue = dr["ProductLimitID"].ToString();
+                    rcbGlobalLimitID2.SelectedValue = dr["GlobalLimitID2"].ToString();
+
                     rcbCurrency.SelectedValue = dr["Currency"].ToString();
                     rcbCountry.SelectedValue = dr["CountryCode"].ToString();
                     rcbCountry.SelectedValue = dr["CountryCode"].ToString();
@@ -326,15 +333,22 @@ namespace BankProject
             rcbFreignCcy.DataTextField = "CurrencyCode";
             rcbFreignCcy.DataBind();
         }
-        protected void LoadProductLimit(string CustomerID)
+        protected void LoadGlobalLimitID(string CustomerID)
         {
-            rcbProductLimit.Items.Clear();
-            rcbProductLimit.Items.Add(new RadComboBoxItem("",""));
-            var ProductLimit = TriTT.B_COLLATERAL_INFO_Load_ProductLimit(CustomerID);
-            rcbProductLimit.DataValueField = "SubLimitID";
-            rcbProductLimit.DataTextField = "SubLimitID";
-            rcbProductLimit.DataSource = ProductLimit;
-            rcbProductLimit.DataBind();
+            rcbGlobalLimitID.Items.Clear();
+            rcbGlobalLimitID.Items.Add(new RadComboBoxItem("",""));
+            var GlobalLimit = TriTT.B_COLLATERAL_INFO_Load_GlobalLimitID(CustomerID);
+            rcbGlobalLimitID.DataValueField = "MainLimitID";
+            rcbGlobalLimitID.DataTextField = "MainLimitID";
+            rcbGlobalLimitID.DataSource = GlobalLimit;
+            rcbGlobalLimitID.DataBind();
+
+            rcbGlobalLimitID2.Items.Clear();
+            rcbGlobalLimitID2.Items.Add(new RadComboBoxItem("", ""));
+            rcbGlobalLimitID2.DataValueField = "MainLimitID";
+            rcbGlobalLimitID2.DataTextField = "MainLimitID";
+            rcbGlobalLimitID2.DataSource = GlobalLimit;
+            rcbGlobalLimitID2.DataBind();
         }
         protected void rcbCurrency_OnClientSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
