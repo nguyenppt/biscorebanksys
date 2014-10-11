@@ -2435,7 +2435,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 {
                     var drow = dsDoc.Tables[0].Rows[0];
 
-                    txtReceivingBankId_707.Text = drow["ReimbBankNo"].ToString();
+                    
                     lblSenderReference_707.Text = drow["NormalLCCode"].ToString();
                     numPercentageCreditAmountTolerance_707_1.Text = drow["CrTolerance"].ToString();
                     numPercentageCreditAmountTolerance_707_2.Text = drow["DrTolerance"].ToString();
@@ -2453,6 +2453,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 if (dsDoc.Tables[1].Rows.Count > 0)
                 {
                     var drow700 = dsDoc.Tables[1].Rows[0];
+
+                    txtReceivingBankId_707.Text = drow700["ReceivingBank"].ToString();
 
                     txtIssuingBankReferenceNo_707.Text = drow700["DraweeNo"].ToString();
                     txtIssuingBankReferenceName_707.Text = drow700["DraweeName"].ToString();
