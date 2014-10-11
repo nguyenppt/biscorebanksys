@@ -2336,7 +2336,12 @@ namespace BankProject.DataProvider
                                                             , string SenderToReceiverInformation2
                                                             , string SenderToReceiverInformation3
                                                             , string SenderToReceiverInformation4
-            , string Narrative)
+            , string Narrative1
+            , string Narrative2
+            , string Narrative3
+            , string Narrative4
+            , string Narrative5
+            , string Narrative6)
         {
             sqldata.ndkExecuteNonQuery("B_BIMPORT_NORMAILLC_MT747_Insert",  NormalLCCode 
                                                                         ,  GenerateMT747  
@@ -2363,7 +2368,12 @@ namespace BankProject.DataProvider
                                                                         ,  SenderToReceiverInformation2   
                                                                         ,  SenderToReceiverInformation3   
                                                                         ,  SenderToReceiverInformation4
-                                                                        , Narrative);
+                                                                        , Narrative1
+                                                                        , Narrative2
+                                                                        , Narrative3
+                                                                        , Narrative4
+                                                                        , Narrative5
+                                                                        , Narrative6);
         }
 
         public static DataSet B_BIMPORT_NORMAILLC_MT707_Insert(string NormalLCCode
