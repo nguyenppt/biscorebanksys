@@ -2163,7 +2163,8 @@ namespace BankProject.DataProvider
                                                                , string DisposalOfDocs
                                                                , string WaiveCharges
                                                                , string ChargeRemarks
-                                                               , string VATNo)
+                                                               , string VATNo
+                                                                , double? FullDocsAmount)
         {
             sqldata.ndkExecuteNonQuery("B_BIMPORT_DOCUMENTPROCESSING_Insert", DocumentType
                                        , LCCode
@@ -2199,7 +2200,8 @@ namespace BankProject.DataProvider
                                        , DisposalOfDocs
                                        ,  WaiveCharges
                                                                ,  ChargeRemarks
-                                                               ,  VATNo);
+                                                               ,  VATNo
+                                                               , FullDocsAmount);
         }
 
         public static DataSet B_BIMPORT_DOCUMENTPROCESSING_GetByCode(string Code, int ViewType, int CurrentUserId)
