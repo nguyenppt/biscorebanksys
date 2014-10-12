@@ -41,9 +41,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             bc.Commont.initRadComboBox(ref comboCurrency_MT400, "Code", "Code", tblList);
             //Party Charged
             tblList = createTableList();
-            //addData2TableList(ref tblList, "A");
-            //addData2TableList(ref tblList, "AC");
-            //addData2TableList(ref tblList, "B");
+            addData2TableList(ref tblList, "A");
+            addData2TableList(ref tblList, "AC");
+            addData2TableList(ref tblList, "B");
             addData2TableList(ref tblList, "BC");
             bc.Commont.initRadComboBox(ref tabCableCharge_cboPartyCharged, "Text", "Value", tblList);
             tabCableCharge_cboPartyCharged.SelectedValue = "BC";
@@ -408,9 +408,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             txtTaxCode.Text = "";
             if (txtChargeAmt.Value.HasValue)
             {
+                //Khong tinh VAT theo y/c nghiep vu !
                 //[9/10/2014 10:01:06 PM] Nguyen - Viet Victory: Neu Party Charge la: A hoac B thi Xuat phieu VAT (Charge Phi + 10%VAT)
                 //[9/10/2014 10:01:27 PM] Nguyen - Viet Victory: Neu Party Charge la: AC hoac BC thi KHONG Xuat phieu VAT (Charge Phi)
-                switch (cboPartyCharged.SelectedValue)
+                /*switch (cboPartyCharged.SelectedValue)
                 {
                     case "A":
                     case "B":
@@ -420,8 +421,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     default:
                         //txtTaxAmt.Text = String.Format("{0:C}", txtChargeAmt.Value.Value).Replace("$", "");
                         break;
-                }
-                
+                }*/                
             }
             //Tính toán lại Amount Credited
             if (txtDrawingAmount.Value.HasValue)
@@ -601,7 +601,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtFullyUtilised.Text = bd.YesNo.NO;
                 //MT202
                 lblTransactionReferenceNumber.Text = txtCode.Text;
-                txtRelatedReference.Text = dr["PresentorRefNo"].ToString();
+                txtRelatedReferenceMT400.Text = dr["PresentorRefNo"].ToString();
                 dteValueDate_MT202.SelectedDate = DateTime.Now;
                 setCurrency(ref comboCurrency, lblCurrency.Text);
                 numAmount.Value = txtDrawingAmount.Value;                

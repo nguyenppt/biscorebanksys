@@ -23,7 +23,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             //
             fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
             InitDataSource();
-            if (string.IsNullOrEmpty(Request.QueryString["tid"])) return;
+            if (string.IsNullOrEmpty(Request.QueryString["tid"]))
+            {
+                divMT734.Attributes.CssStyle.Remove("display");
+                if (this.TabId != TabDocsWithDiscrepancies)
+                    divMT734.Attributes.CssStyle.Add("display", "none");
+                return;
+            }
             //Lấy chi tiết
             DataSet dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, Request.QueryString["tid"]);
             if (dsDetail == null || dsDetail.Tables.Count <= 0)
@@ -143,7 +149,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             fieldsetDiscrepancies.Visible = isDocsDiscrepancies;
             if (isDocsDiscrepancies)
             {                
-                ((bc.MultiTextBox)txtDiscrepancies).setText(drDetail["Discrepancies"].ToString());
+                ((bc.MultiTextBox)txtDiscrepancies).setText(drDetail["Discrepancies"].ToString(), (this.TabId != TabDocsAmend));
                 txtDisposalOfDocs.Text = drDetail["DisposalOfDocs"].ToString();
             }
             comboWaiveCharges.SelectedValue = drDetail["WaiveCharges"].ToString();
@@ -760,7 +766,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             }
                             break;
                         case TabDocsAmend:
-                            if (!Status.Equals(bd.TransactionStatus.UNA))
+                            if (!Status.Equals(bd.TransactionStatus.AUT))
                             {
                                 lblError.Text = "This Docs is not allow amend !";
                                 return;
@@ -779,6 +785,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         case TabDocsAccept:
                             comboDrawType.SelectedValue = "AC";
                             txtAcceptDate.SelectedDate = DateTime.Now;
+                            txtAcceptDate.Enabled = true;
+                            txtAcceptRemarks.Enabled = true;
                             break;
                     }                    
 

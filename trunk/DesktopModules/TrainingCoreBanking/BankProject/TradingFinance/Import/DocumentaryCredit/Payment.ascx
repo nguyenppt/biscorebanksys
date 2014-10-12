@@ -806,8 +806,8 @@
                         markfirstmatch="True" OnClientSelectedIndexChanged="cboWaiveCharges_OnClientSelectedIndexChanged"
                         allowcustomtext="false">
                         <Items>
-                            <telerik:RadComboBoxItem Value="YES" Text="YES" />
-                            <telerik:RadComboBoxItem Value="NO" Text="NO" />                            
+                            <telerik:RadComboBoxItem Value="YES" Text="NO" />
+                            <telerik:RadComboBoxItem Value="NO" Text="YES" />                            
                         </Items>
                     </telerik:radcombobox>
                 </td>
