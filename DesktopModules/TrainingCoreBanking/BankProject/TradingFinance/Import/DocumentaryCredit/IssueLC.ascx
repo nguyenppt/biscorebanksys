@@ -35,7 +35,7 @@
                         } else if (generateMT740 === 'YES') {
                             radconfirm("Do you want to download MT740 file?", confirmCallbackFunction_IssueLC_MT740, 370, 150, null, 'Download');
                         } else {
-                            radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_IssueLC_NhapNgoaiBang, 420, 150, null, 'Download');
+                            radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_IssueLC_NhapNgoaiBang, 430, 150, null, 'Download');
                         }
                         break;
                         
@@ -55,7 +55,7 @@
             //amount < amount_Old -> tu chinh giam tien,xuat phieu [xuat phieu ngoai bang]
             // amount = amoun_old -> ko xuat phieu xuat nhap ngoai bang
             if (amount_Old > 0 && amount > amount_Old) {//b4_AUT_Amount
-                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
+                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 430, 150, null, 'Download');
             } else if (amount_Old > 0 && amount < amount_Old) {
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
             } 
@@ -63,10 +63,10 @@
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
             }
             else if (amount_Old > 0 && amount < b4_AUT_Amount) {                
-                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
+                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 430, 150, null, 'Download');
             }
             else if (amount_Old === 0 && amount < b4_AUT_Amount) {
-                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
+                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 430, 150, null, 'Download');
             } else if (amount_Old === 0 && amount > b4_AUT_Amount) {
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
             } else if (waiveCharges === 'NO' && chargeAmount > 0) {
@@ -83,7 +83,7 @@
             if (generateMT740 === 'YES') {
                 radconfirm("Do you want to download MT740 file?", confirmCallbackFunction_IssueLC_MT740, 370, 150, null, 'Download');
             } else {
-                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_IssueLC_NhapNgoaiBang, 420, 150, null, 'Download');
+                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_IssueLC_NhapNgoaiBang, 430, 150, null, 'Download');
             }
         }
         
