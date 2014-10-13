@@ -2717,6 +2717,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_VAT.doc"),
                     bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
+        protected void btnAmentLCReport_MT707_Click(object sender, EventArgs e)
+        {
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT707.doc"),
+                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(txtCode.Text), "AmendLC_MT707_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+        }
+        protected void btnAmentLCReport_MT747_Click(object sender, EventArgs e)
+        {
+            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT747.doc"),
+                bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT747_REPORT(txtCode.Text), "AmendLC_MT747_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
+        }
 
         protected void btnCancelLC_XUATNGOAIBANG_Click(object sender, EventArgs e)
         {
@@ -2728,6 +2738,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/CancelLC_VAT.doc"),
                     bd.SQLData.B_BIMPORT_NORMAILLC_CANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "CancelLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
+
+
         #endregion
 
         protected void btSearch_Click(object sender, EventArgs e)
@@ -2930,20 +2942,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtNarrative_747_6.Enabled = false;
             } 
         }
-
-        protected void btnAmentLCReport_MT707_Click(object sender, EventArgs e)
-        {
-            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT707.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT707_REPORT(txtCode.Text), "AmendLC_MT707_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
-        }
-
-        protected void btnAmentLCReport_MT747_Click(object sender, EventArgs e)
-        {
-            showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_MT747.doc"),
-                bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_MT747_REPORT(txtCode.Text), "AmendLC_MT747_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf");
-        }
-
-
 
      
     }
