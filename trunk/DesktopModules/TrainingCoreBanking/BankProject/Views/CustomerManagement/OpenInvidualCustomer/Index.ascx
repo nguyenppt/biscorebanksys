@@ -638,7 +638,7 @@
                 <td class="MyLable">Fax Number</td>
                 <td class="MyContent">
                     <telerik:RadMaskedTextBox ID="txtFaxNumber" runat="server" Mask="###########"
-                        EmptyMessage="-- Enter Phone Number --" HideOnBlur="true" ZeroPadNumericRanges="true" DisplayMask="###########">
+                        EmptyMessage="-- Enter Fax Number --" HideOnBlur="true" ZeroPadNumericRanges="true" DisplayMask="###########">
                     </telerik:RadMaskedTextBox>
                 </td>
              </tr>
