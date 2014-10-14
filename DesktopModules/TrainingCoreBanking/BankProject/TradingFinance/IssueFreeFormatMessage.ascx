@@ -141,7 +141,7 @@
                 <tr>
                     <td class="MyLable" style="vertical-align: top">79. Narrative</td>
                     <td class="MyContent">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_Narrative" Height="400" Width="700"
+                        <telerik:RadEditor runat="server" ID="txtEdittor_Narrative" Height="400" Width="700" BorderWidth="0"
 ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
                     </td>
                 </tr>
