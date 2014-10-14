@@ -1502,7 +1502,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">43P. Patial Shipment</td>
+                    <td style="width: 250px" class="MyLable">43P. Partial Shipment</td>
                     <td class="MyContent">
                         <telerik:RadComboBox Width="200"
                             ID="rcbPatialShipment" runat="server"
@@ -1627,7 +1627,8 @@
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">45A. Description of Goods/Services</td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_DescrpofGoods" Height="200" ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
+                        <telerik:RadEditor runat="server" ID="txtEdittor_DescrpofGoods" Height="200" BorderWidth="0"
+                            ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
                     </td>
                 </tr>
             </table>
@@ -1662,7 +1663,7 @@
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">46A. Docs required</td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_OrderDocs700" Height="150"
+                        <telerik:RadEditor runat="server" ID="txtEdittor_OrderDocs700" Height="150" BorderWidth="0"
                             ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
 
                         <%--<telerik:RadTextBox width="700" TextMode="MultiLine" Height="150"
@@ -1678,7 +1679,7 @@
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">47A. Additional Conditions</td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_AdditionalConditions700" Height="230"
+                        <telerik:RadEditor runat="server" ID="txtEdittor_AdditionalConditions700" Height="230" BorderWidth="0"
                             ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
 
                         <%--<telerik:RadTextBox width="700" TextMode="MultiLine" Height="230" 
@@ -1698,7 +1699,7 @@
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">71B. Charges </td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_Charges700" Height="200"  
+                        <telerik:RadEditor runat="server" ID="txtEdittor_Charges700" Height="200"   BorderWidth="0"
                             ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
                         <%--<telerik:RadTextBox Width="700" TextMode="MultiLine" Height="75"
                             ID="tbCharges" runat="server" Text="ALL BANKING CHARGES OUTSIDE VIETNAM 
@@ -1712,7 +1713,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />--%>
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">48. Period for Presentation</td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_PeriodforPresentation700" Height="75"  
+                        <telerik:RadEditor runat="server" ID="txtEdittor_PeriodforPresentation700" Height="170" BorderWidth="0"                             
                             ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
 
                         <%--<telerik:RadTextBox Width="700" TextMode="MultiLine" Height="75"
@@ -1812,7 +1813,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />--%>
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">78. Instr to//Payg/Accptg/Negotg Bank</td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_NegotgBank700" Height="150"  
+                        <telerik:RadEditor runat="server" ID="txtEdittor_NegotgBank700" Height="150" BorderWidth="0" 
 ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
 
                        <%-- <telerik:RadTextBox Width="700" TextMode="MultiLine" Height="150"
@@ -1898,7 +1899,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">72. Sender to Receiver Information</td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_SendertoReceiverInfomation700" Height="75"  
+                        <telerik:RadEditor runat="server" ID="txtEdittor_SendertoReceiverInfomation700" Height="75"  BorderWidth="0"
 ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
 
                        <%-- <asp:TextBox Width="700" TextMode="MultiLine" Height="75"
@@ -2512,7 +2513,8 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td class="MyLable" style="vertical-align: top">79. Narrative, if amended</td>
                     <td class="MyContent">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_Narrative_707" Height="200"   MaxLength="1750" Width="355"
+                        <telerik:RadEditor runat="server" ID="txtEdittor_Narrative_707" Height="200"   BorderWidth="0"
+                            MaxLength="1750" Width="355"
 ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
 
                         <%--<telerik:RadTextBox ID="txtNarrative_707" runat="server" Width="355" TextMode="MultiLine" Height="200" MaxLength="1750" />--%>
