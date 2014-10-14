@@ -183,7 +183,7 @@
             <tr class="labelDisabled">
                 <td class="MyLable">Debit Amt LCY <span class="Required">(*)</span></td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtDebitAmtLCY" runat="server" ReadOnly="true" />
+                    <telerik:RadNumericTextBox ID="txtDebitAmtLCY" runat="server" ReadOnly="true" ToolTip="Enter recalculate data !" />
                 </td>
                 <td><asp:RequiredFieldValidator
                         runat="server" Display="None"
@@ -400,26 +400,42 @@
             objParent.addClass(cssLabelDisabled);
     }
 
-    $(document).on("keypress", "#<%=txtDebitAmtLCY.ClientID%>", function (event) {
-        if (event.keyCode == 13) {
+    $("#<%=txtDebitAmtLCY.ClientID%>")
+        .keypress(function(event){
+            if (event.keyCode == 13) {
+                calculateAmountPaid();
+            }
+        })
+        .focusout(function() {
             calculateAmountPaid();
-        }
-    });
-    $(document).on("keypress", "#<%=txtDebitAmtFCY.ClientID%>", function (event) {
-        if (event.keyCode == 13) {
+        });
+    $("#<%=txtDebitAmtFCY.ClientID%>")
+        .keypress(function (event) {
+            if (event.keyCode == 13) {
+                calculateAmountPaid();
+            }
+        })
+        .focusout(function () {
             calculateAmountPaid();
-        }
-    });
-    $(document).on("keypress", "#<%=txtDebitDealRate.ClientID%>", function (event) {
-        if (event.keyCode == 13) {
+        });
+    $("#<%=txtDebitDealRate.ClientID%>")
+        .keypress(function (event) {
+            if (event.keyCode == 13) {
+                calculateAmountPaid();
+            }
+        })
+        .focusout(function () {
             calculateAmountPaid();
-        }
-    });
-    $(document).on("keypress", "#<%=txtCreditDealRate.ClientID%>", function (event) {
-        if (event.keyCode == 13) {
+        });
+    $("#<%=txtCreditDealRate.ClientID%>")
+        .keypress(function (event) {
+            if (event.keyCode == 13) {
+                calculateAmountPaid();
+            }
+        })
+        .focusout(function () {
             calculateAmountPaid();
-        }
-    });
+        });
 
     function cboCurrencyPaid_OnClientSelectedIndexChanged(sender, eventArgs) {
         //calculateAmountPaid();
