@@ -69,11 +69,16 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                 txtCrTellerId.Text = dr["CrTellerId"].ToString();
                 cboCreditAccount.SelectedValue = dr["CreditAccount"].ToString();
                 if (dr["DealRate"] != DBNull.Value)
-                    txtDealRate.Value = Convert.ToDouble(dr["DealRate"]);                
+                {
+                    if (cboDebitCurrency.SelectedValue.Equals("VND"))
+                        txtDebitDealRate.Value = Convert.ToDouble(dr["DealRate"]);
+                    else
+                        txtCreditDealRate.Value = Convert.ToDouble(dr["DealRate"]);
+                }
                 if (dr["AmountPaid"] != DBNull.Value)
                     txtAmountPaid.Value = Convert.ToDouble(dr["AmountPaid"]);
                 //
-                txtNarrative.Text = dr["Narrative"].ToString();
+                ((bc.MultiTextBox)txtNarrative).setText(dr["Narrative"].ToString(), true);
                 //
                 bc.Commont.SetTatusFormControls(this.Controls, false);
                 //
@@ -117,10 +122,12 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
                         string DateOfIsssue = "";
                         if (txtDateOfIsssue.SelectedDate != null)
                             DateOfIsssue = txtDateOfIsssue.SelectedDate.Value.ToString("yyyyMMdd");
-                        //                        
+                        //
+                        double? DealRate = txtCreditDealRate.Value;
+                        if (cboDebitCurrency.SelectedValue.Equals("VND")) DealRate = txtDebitDealRate.Value;
                         bd.Teller.ForeignExchangeUpdate("new", txtId.Text, txtCustomerName.Text, txtAddress.Text, txtPassportNo.Text, DateOfIsssue, txtPlaceOfIss.Text, txtPhoneNo.Text,
-                            txtTellerId.Text, cboDebitCurrency.SelectedValue, cboDebitAccount.SelectedValue, txtDebitAmtLCY.Value, txtDebitAmtFCY.Value, cboCurrencyPaid.SelectedValue, 
-                            txtCrTellerId.Text, cboCreditAccount.SelectedValue, txtDealRate.Value, txtAmountPaid.Value, txtNarrative.Text, this.UserInfo.Username);
+                            txtTellerId.Text, cboDebitCurrency.SelectedValue, cboDebitAccount.SelectedValue, txtDebitAmtLCY.Value, txtDebitAmtFCY.Value, cboCurrencyPaid.SelectedValue,
+                            txtCrTellerId.Text, cboCreditAccount.SelectedValue, DealRate, txtAmountPaid.Value, ((bc.MultiTextBox)txtNarrative).getText(), this.UserInfo.Username);
                         bc.Commont.SetTatusFormControls(this.Controls, false);
                         bc.Commont.ShowClientMessageBox(Page, this.GetType(), "Save data success !", "Default.aspx?TabId=" + TabId);
                     }
