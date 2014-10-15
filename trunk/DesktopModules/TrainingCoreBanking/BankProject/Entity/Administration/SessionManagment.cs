@@ -12,8 +12,8 @@
 
     public class SessionManagment : IDisposable
     {
-        private static readonly Lazy<SessionManagment> LazySessionManagement = 
-            new Lazy<SessionManagment>(() => new SessionManagment(new AccountPeriodRepository())); 
+        private static readonly Lazy<SessionManagment> LazySessionManagement =
+            new Lazy<SessionManagment>(() => new SessionManagment(new AccountPeriodRepository()));
 
         private readonly IAccountPeriodRepository accountPeriodRepository;
 
@@ -63,9 +63,20 @@
 
         public bool RegisterSession(int userId, string sessionId, string ipAddress)
         {
-            var accountPeriods = this.accountPeriodRepository.GetByUserId(userId);
+            var accountPeriods = this.accountPeriodRepository
+                .GetByUserId(userId).Where(x => x.IsEnabled).ToArray();
+            if (!accountPeriods.Any())
+            {
+                return true;
+            }
+
             foreach (var accountPeriod in accountPeriods)
             {
+                if (accountPeriod.IsBlocked)
+                {
+                    continue;
+                }
+
                 Shift approveShift;
                 AccountSession accountSession;
                 bool isTotalUserChanged;
@@ -95,7 +106,7 @@
                         sessionHistoryRepository.SaveHistory(sessionHistory);
                     }
 
-                    return true;   
+                    return true;
                 }
             }
 
@@ -105,9 +116,19 @@
         public bool AllowToLogin(int userId)
         {
             var dateTimeNow = DateTime.Now;
-            var accountPeriods = this.accountPeriodRepository.GetByUserId(userId);
+            var accountPeriods = this.accountPeriodRepository.GetByUserId(userId).Where(x => x.IsEnabled).ToArray();
+            if (!accountPeriods.Any())
+            {
+                return true;
+            }
+
             foreach (var accountPeriod in accountPeriods)
             {
+                if (accountPeriod.IsBlocked)
+                {
+                    continue;
+                }
+
                 Shift approveShift;
                 if (this.AllowToLogin(dateTimeNow, accountPeriod, out approveShift))
                 {
@@ -204,7 +225,7 @@
             {
                 return false;
             }
-            
+
             accountSession = this.TryGetAccountSession(userId);
             var originalUsing = accountSession.TotalUsing;
             var result = accountSession.RegisterSession(sessionId, ipAddress);
@@ -216,7 +237,7 @@
                     isTotalUsingChanged = true;
                 }
             }
-            
+
             return result;
         }
 
@@ -251,7 +272,7 @@
             {
                 accountSession.Value.AutoReleaseSession(utcNow);
             }
-            
+
             this.ScheduleAutoReleaseSession();
         }
 
