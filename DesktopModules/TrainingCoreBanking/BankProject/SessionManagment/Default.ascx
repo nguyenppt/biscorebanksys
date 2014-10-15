@@ -51,6 +51,9 @@
                         <a href='<%# GetEditAccountPeriodUrl(Eval("Id").ToString()) %>'>
                             <img src="Icons/bank/text_preview.png" alt="" title="" style="" width="20" />
                         </a>
+                        <a href='<%# GetDeleteAccountPeriodUrl(Eval("Id").ToString()) %>'>
+                            <img src="Icons/Sigma/Delete_16X16_Standard.png" alt="" title="" style="" width="20" />
+                        </a>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
             </Columns>

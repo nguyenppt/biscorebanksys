@@ -238,6 +238,7 @@ namespace BankProject.SessionManagment
             if (accountPeriod.Id == 0)
             {
                 accountPeriodRepository.AddAccountPeriod(accountPeriod);
+                Response.Redirect(Request.RawUrl);
             }
             else
             {
