@@ -1,10 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bisolutions_vvcb" Class="BankProjectModelsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=112.78.2.80,1433;Initial Catalog=bisolutions_vvcb;Persist Security Info=True;User ID=bisolutions_vvcb" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="VietVictoryCoreBanking" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=bisolutions_vvcb;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bisolutions_vvcbConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BCOUNTRY" Member="BCOUNTRies">
     <Type Name="BCOUNTRY">
       <Column Name="MaQuocGia" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="TenTA" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="TenTV" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AccountShifts" Member="AccountShifts">
+    <Type Name="AccountShift">
+      <Column Name="AccountPeriodId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ShiftId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Shift_AccountShift" Member="Shift" ThisKey="ShiftId" OtherKey="Id" Type="Shift" IsForeignKey="true" />
+      <Association Name="AccountPeriod_AccountShift" Member="AccountPeriod" ThisKey="AccountPeriodId" OtherKey="Id" Type="AccountPeriod" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Shifts" Member="Shifts">
+    <Type Name="Shift">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="BeginShift" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndShift" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Shift_AccountShift" Member="AccountShifts" ThisKey="Id" OtherKey="ShiftId" Type="AccountShift" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AccountPeriods" Member="AccountPeriods">
+    <Type Name="AccountPeriod">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BeginPeriod" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndPeriod" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="WorkingDay" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AvailableSlot" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsBlocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="AccountPeriod_AccountShift" Member="AccountShifts" ThisKey="Id" OtherKey="AccountPeriodId" Type="AccountShift" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SessionHistories" Member="SessionHistories">
+    <Type Name="SessionHistory">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountPeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TotalUser" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BeginShift" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndShift" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="MaxSession" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ModifiedTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>
