@@ -10,6 +10,7 @@ namespace BankProject.SessionManagment
     using BankProject.Entity.Administration;
     using BankProject.Repository;
 
+    using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Users;
 
@@ -19,6 +20,17 @@ namespace BankProject.SessionManagment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Request.QueryString["command"] == "delete")
+            {
+                var accountPeriodRepository = new AccountPeriodRepository();
+                var accountPeriodIdString = this.Request.QueryString["accountPeriodId"];
+                int accountPeriodId;
+                if (int.TryParse(accountPeriodIdString, out accountPeriodId))
+                {
+                    accountPeriodRepository.RemoveAccountPeriod(accountPeriodId); 
+                    Response.Redirect(Globals.NavigateURL(this.TabId));
+                }
+            }
         }
 
         protected void radGridAccountPeriod_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -96,6 +108,11 @@ namespace BankProject.SessionManagment
         protected string GetEditAccountPeriodUrl(string accountPeriodId)
         {
             return this.EditUrl("SM-EditAccountPeriod") + "&accountPeriodId=" + accountPeriodId;
+        }
+
+        protected string GetDeleteAccountPeriodUrl(string accountPeriodId)
+        {
+            return Globals.NavigateURL(this.TabId) + "&command=delete&accountPeriodId=" + accountPeriodId;
         }
 
         protected string GetSessionHistoryUrl(string username)
