@@ -8,5 +8,43 @@
         <elementListCompartment Id="042be5e7-32c9-46a5-94af-effab171a773" absoluteBounds="3.7649999999999997, 2.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="91ec4843-a248-4930-a2bc-c2af2ebee157" absoluteBounds="3.5, 5.125, 2, 1.1939925130208327">
+      <DataClassMoniker Name="/BankProjectModelsDataContext/AccountShift" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9ea78805-cd4b-4c87-a1b2-2b18f152ddd3" absoluteBounds="3.515, 5.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="19c5f817-d5cb-4a17-8c9b-97c7acea88a6" absoluteBounds="0.75, 4.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/BankProjectModelsDataContext/Shift" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fb13dcad-61e7-4178-9056-33d169aed322" absoluteBounds="0.765, 5.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 5.77329752604167); (3.5 : 5.77329752604167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BankProjectModelsDataContext/Shift/Shift_AccountShift" />
+      <nodes>
+        <classShapeMoniker Id="19c5f817-d5cb-4a17-8c9b-97c7acea88a6" />
+        <classShapeMoniker Id="91ec4843-a248-4930-a2bc-c2af2ebee157" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="f7670546-2d11-49e7-83a6-c435101700ab" absoluteBounds="0.75, 1.75, 2, 2.5401025390625">
+      <DataClassMoniker Name="/BankProjectModelsDataContext/AccountPeriod" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e7d0e97a-d131-49f2-afe2-279dfbd5484c" absoluteBounds="0.76500000000000012, 2.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 3.9319482421875); (3.59375 : 3.9319482421875); (3.59375 : 5.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BankProjectModelsDataContext/AccountPeriod/AccountPeriod_AccountShift" />
+      <nodes>
+        <classShapeMoniker Id="f7670546-2d11-49e7-83a6-c435101700ab" />
+        <classShapeMoniker Id="91ec4843-a248-4930-a2bc-c2af2ebee157" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c5fce019-2775-4f01-94b7-538106cc0034" absoluteBounds="7.125, 3.75, 2, 3.1170068359375">
+      <DataClassMoniker Name="/BankProjectModelsDataContext/SessionHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9c01f57f-e591-4422-bda9-dc0fab3d819e" absoluteBounds="7.1400000000000006, 4.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
