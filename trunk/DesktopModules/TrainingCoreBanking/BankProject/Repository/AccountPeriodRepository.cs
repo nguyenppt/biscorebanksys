@@ -39,7 +39,7 @@
             {
                 throw new ArgumentNullException("accountPeriod");
             }
-            
+
             using (var dbContext = this.CreateDbContext())
             {
                 var entityAccountPeriod = this.ToEntity(accountPeriod);
@@ -55,12 +55,12 @@
 
                     dbContext.AccountShifts
                         .InsertOnSubmit(new AccountShift
-                                            {
-                                                AccountPeriod = entityAccountPeriod,
-                                                AccountPeriodId = accountPeriod.Id,
-                                                Shift = entityShift,
-                                                ShiftId = shift.Id
-                                            });
+                        {
+                            AccountPeriod = entityAccountPeriod,
+                            AccountPeriodId = accountPeriod.Id,
+                            Shift = entityShift,
+                            ShiftId = shift.Id
+                        });
                 }
 
                 dbContext.SubmitChanges();
@@ -73,7 +73,7 @@
             {
                 throw new ArgumentNullException("accountPeriod");
             }
-            
+
             using (var dbContext = this.CreateDbContext())
             {
                 var existEntity = dbContext.AccountPeriods.FirstOrDefault(x => x.Id == accountPeriod.Id);
@@ -178,7 +178,7 @@
                     existEntity.AccountShifts.Add(newAccountShift);
                     dbContext.AccountShifts.InsertOnSubmit(newAccountShift);
                 }
-            } 
+            }
         }
 
         private EntityAccountPeriod ToEntity(AccountPeriod accountPeriod)
@@ -202,19 +202,19 @@
             var userInfo = UserController.GetUserById(this.PortalId, entity.UserId);
 
             return new AccountPeriod
-                {
-                    Id = entity.Id,
-                    Title = entity.Title,
-                    AvailableSlot = entity.AvailableSlot,
-                    BeginPeriod = entity.BeginPeriod,
-                    EndPeriod = entity.EndPeriod,
-                    UserId = entity.UserId,
-                    Username = userInfo.Username,
-                    IsEnabled = entity.IsEnabled,
-                    IsBlocked = entity.IsBlocked,
-                    WorkingDay = (WorkingDay)entity.WorkingDay,
-                    Shifts = this.ConvertShift(entity.AccountShifts)
-                };
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                AvailableSlot = entity.AvailableSlot,
+                BeginPeriod = entity.BeginPeriod,
+                EndPeriod = entity.EndPeriod,
+                UserId = entity.UserId,
+                Username = userInfo.Username,
+                IsEnabled = entity.IsEnabled,
+                IsBlocked = entity.IsBlocked,
+                WorkingDay = (WorkingDay)entity.WorkingDay,
+                Shifts = this.ConvertShift(entity.AccountShifts)
+            };
         }
 
         private IList<Shift> ConvertShift(IEnumerable<AccountShift> accountShifts)
@@ -224,15 +224,30 @@
             {
                 shifts.Add(
                     new Shift
-                        {
-                            Id = accountShift.ShiftId,
-                            BeginShift = accountShift.Shift.BeginShift.TimeOfDay,
-                            EndShift = accountShift.Shift.EndShift.TimeOfDay,
-                            Title = accountShift.Shift.Title
-                        });
+                    {
+                        Id = accountShift.ShiftId,
+                        BeginShift = accountShift.Shift.BeginShift.TimeOfDay,
+                        EndShift = accountShift.Shift.EndShift.TimeOfDay,
+                        Title = accountShift.Shift.Title
+                    });
             }
 
             return shifts;
+        }
+
+        public void RemoveAccountPeriod(int accountPeriodId)
+        {
+            using (var context = this.CreateDbContext())
+            {
+                var accountPeriod = context.AccountPeriods.FirstOrDefault(x => x.Id == accountPeriodId);
+                if (accountPeriod != null)
+                {
+                    context.AccountShifts.DeleteAllOnSubmit(accountPeriod.AccountShifts);
+                    context.AccountPeriods.DeleteOnSubmit(accountPeriod);
+
+                    context.SubmitChanges();
+                }
+            }
         }
     }
 }
