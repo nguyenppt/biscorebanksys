@@ -1291,6 +1291,11 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report", code,
                                              currentuserlogin);
         }
+        public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report(string code, string currentuserlogin)
+        {
+            return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report", code,
+                                             currentuserlogin);
+        }
 
         // IncomingCollectionAmendment
         public static DataSet B_INCOMINGCOLLECTIONAMENDMENT_PHIEUXUATNGOAIBANG_REPORT(string code,
