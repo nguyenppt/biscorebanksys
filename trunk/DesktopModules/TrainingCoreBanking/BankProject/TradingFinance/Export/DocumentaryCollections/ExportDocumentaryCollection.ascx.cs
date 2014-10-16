@@ -2,7 +2,8 @@
 using System.Data;
 using System.Linq;
 using System.Web.UI;
-using BankProject.DataProvider;
+using bd = BankProject.DataProvider;
+using bc = BankProject.Controls;
 using BankProject.DBContext;
 using DotNetNuke.Common;
 using Telerik.Web.UI;
@@ -66,7 +67,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         private void LoadExportDoc()
         {
-            var dsDoc = SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode(CodeId);
+            var dsDoc = bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode(CodeId);
             if (dsDoc == null || dsDoc.Tables.Count <= 0 || dsDoc.Tables[0].Rows.Count <= 0)
             {
                 return;
@@ -293,8 +294,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 comboCollectionType.Items.Clear();
                 comboCollectionType.DataValueField = "ID";
                 comboCollectionType.DataTextField = "ID";
-                comboCollectionType.DataSource =
-                    SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
+                comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
                 comboCollectionType.DataBind();
                 divCollectionType.Visible = false;
                 divDocsCode.Visible = false;
@@ -306,15 +306,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 comboCollectionType.Items.Clear();
                 comboCollectionType.DataValueField = "ID";
                 comboCollectionType.DataTextField = "ID";
-                comboCollectionType.DataSource =
-                    SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_CollectionType");
+                comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_CollectionType");
                 comboCollectionType.DataBind();
                 
             }
             lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
 
             // bind drawer
-            DataView dv = new DataView(DataTam.B_BCUSTOMERS_GetAll().Tables[0]);
+            DataView dv = new DataView(bd.DataTam.B_BCUSTOMERS_GetAll().Tables[0]);
 
             dv.RowFilter = "CustomerID like '2%'"; 
             comboDrawerCusNo.Items.Clear();
@@ -325,7 +324,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboDrawerCusNo.DataBind();
 
             // bind collecting bank no
-            var dsSwiftCode = SQLData.B_BSWIFTCODE_GetAll();
+            var dsSwiftCode = bd.SQLData.B_BSWIFTCODE_GetAll();
             comboCollectingBankNo.Items.Clear();
             comboCollectingBankNo.Items.Add(new RadComboBoxItem(""));
             comboCollectingBankNo.DataValueField = "Code";
@@ -345,28 +344,28 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboDocsCode1.Items.Add(new RadComboBoxItem(""));
             comboDocsCode1.DataValueField = "Id";
             comboDocsCode1.DataTextField = "Description";
-            comboDocsCode1.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            comboDocsCode1.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             comboDocsCode1.DataBind();
 
             comboDocsCode2.Items.Clear();
             comboDocsCode2.Items.Add(new RadComboBoxItem(""));
             comboDocsCode2.DataValueField = "Id";
             comboDocsCode2.DataTextField = "Description";
-            comboDocsCode2.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            comboDocsCode2.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             comboDocsCode2.DataBind();
 
             comboDocsCode3.Items.Clear();
             comboDocsCode3.Items.Add(new RadComboBoxItem(""));
             comboDocsCode3.DataValueField = "Id";
             comboDocsCode3.DataTextField = "Description";
-            comboDocsCode3.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            comboDocsCode3.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             comboDocsCode3.DataBind();
 
             comboCommodity.Items.Clear();
             comboCommodity.Items.Add(new RadComboBoxItem(""));
             comboCommodity.DataValueField = "ID";
             comboCommodity.DataTextField = "Name2";
-            comboCommodity.DataSource = DataTam.B_BCOMMODITY_GetAll();
+            comboCommodity.DataSource = bd.DataTam.B_BCOMMODITY_GetAll();
             comboCommodity.DataBind();
 
 
@@ -447,7 +446,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void LoadChargeCode()
         {
-            var datasource = SQLData.B_BCHARGECODE_GetByViewType(226);
+            var datasource = bd.SQLData.B_BCHARGECODE_GetByViewType(226);
 
             tbChargeCode.Items.Clear();
             tbChargeCode.Items.Add(new RadComboBoxItem(""));
@@ -642,7 +641,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             else // Creating
             {
                 RadToolBar1.FindItemByValue("btSave").Enabled = true;
-                txtCode.Text = SQLData.B_BMACODE_GetNewID("EXPORT_DOCUMETARYCOLLECTION", Refix_BMACODE());
+                txtCode.Text = bd.SQLData.B_BMACODE_GetNewID("EXPORT_DOCUMETARYCOLLECTION", Refix_BMACODE());
             }
         }
         protected void InitToolBarForAccept()
@@ -786,7 +785,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void SaveData()
         {
-            SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_Insert(txtCode.Text.Trim()
                                                           , comboDrawerCusNo.SelectedValue
                                                           , txtDrawerCusName.Text.Trim()
                                                           , txtDrawerAddr1.Text.Trim()
@@ -837,7 +836,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             if (!string.IsNullOrWhiteSpace(tbChargeAmt.Text))
             {
-                SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
+                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
                     comboWaiveCharges.SelectedValue, tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue, ""
                     /*tbChargePeriod.Text*/,
                     rcbChargeCcy.SelectedValue, "0" /*tbExcheRate.Text*/, tbChargeAmt.Text,
@@ -847,7 +846,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             }
             if (!string.IsNullOrWhiteSpace(tbChargeAmt2.Text))
             {
-                SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
+                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
                     comboWaiveCharges.SelectedValue, tbChargeCode2.SelectedValue, rcbChargeAcct2.SelectedValue, ""
                     /*tbChargePeriod2.Text*/,
                     rcbChargeCcy2.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt2.Text,
@@ -857,7 +856,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             }
             if (!string.IsNullOrWhiteSpace(tbChargeAmt3.Text))
             {
-                SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
+                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
                     comboWaiveCharges.SelectedValue, tbChargeCode3.SelectedValue, rcbChargeAcct3.SelectedValue, ""
                     /*tbChargePeriod3.Text*/,
                     rcbChargeCcy3.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt3.Text,
@@ -869,25 +868,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void LoadData(DataSet dsDoc)
         {
-          
             if (dsDoc.Tables[0].Rows.Count > 0)
             {
-
-                
-
                 RadToolBar1.FindItemByValue("btReview").Enabled = false;
-
                 var drow = dsDoc.Tables[0].Rows[0];
-
                 if (drow["Amend_Status"].ToString() == "AUT")
                 {
-                    Amount = double.Parse(drow["Amount"].ToString());
-                    AmountOld = double.Parse(drow["AmountOld"].ToString());
+                    double.TryParse(drow["Amount"].ToString(), out Amount);
+                    double.TryParse(drow["AmountOld"].ToString(), out AmountOld);
                 }
                 else
                 {
-                    Amount = double.Parse(drow["AmountNew"].ToString());
-                    AmountOld = double.Parse(drow["Amount"].ToString());
+                    double.TryParse(drow["AmountNew"].ToString(), out Amount);
+                    double.TryParse(drow["Amount"].ToString(), out AmountOld);
                 }
 
                 // DocumentaryCollectionCancel
@@ -931,8 +924,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     comboCollectionType.Items.Clear();
                     comboCollectionType.DataValueField = "ID";
                     comboCollectionType.DataTextField = "ID";
-                    comboCollectionType.DataSource =
-                        SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
+                    comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
                     comboCollectionType.DataBind();
                     divCollectionType.Visible = false;
                     divDocsCode.Visible = false;
@@ -1222,14 +1214,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void Authorize()
         {
-            SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString(),ScreenType.ToString("G"));
+            bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString(), ScreenType.ToString("G"));
             
             Response.Redirect(Globals.NavigateURL(TabId));
         }
 
         protected void Revert()
         {
-            SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString(),ScreenType.ToString("G"));
+            bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString(), ScreenType.ToString("G"));
 
             //// Active control
             //SetDisableByReview(true);
@@ -1281,7 +1273,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void comboDrawerCusNo_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            var drow = DataTam.B_BCUSTOMERS_GetbyID(comboDrawerCusNo.SelectedItem.Text).Tables[0].Rows[0];
+            var drow = bd.DataTam.B_BCUSTOMERS_GetbyID(comboDrawerCusNo.SelectedItem.Text).Tables[0].Rows[0];
 
             txtDrawerCusName.Text = drow["CustomerName"].ToString();
             txtDrawerAddr1.Text = drow["Address"].ToString();
@@ -1441,7 +1433,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void GenerateVATNo()
         {
-            var vatno = Database.B_BMACODE_GetNewSoTT("VATNO");
+            var vatno = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
             tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
         }
 
@@ -1449,7 +1441,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             if (TabId == 226)
             {
-                txtCode.Text = SQLData.B_BMACODE_GetNewID("EXPORT_DOCUMETARYCOLLECTION", Refix_BMACODE());
+                txtCode.Text = bd.SQLData.B_BMACODE_GetNewID("EXPORT_DOCUMETARYCOLLECTION", Refix_BMACODE());
             }
             else
             {
@@ -1504,7 +1496,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct.DataValueField = "Id";
             rcbChargeAcct.DataTextField = "Id";
-            rcbChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy.SelectedValue);
+            rcbChargeAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy.SelectedValue);
             rcbChargeAcct.DataBind();
         }
 
@@ -1514,7 +1506,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct2.DataValueField = "Id";
             rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy2.SelectedValue);
+            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy2.SelectedValue);
             rcbChargeAcct2.DataBind();
         }
 
@@ -1524,7 +1516,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct3.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct3.DataValueField = "Id";
             rcbChargeAcct3.DataTextField = "Id";
-            rcbChargeAcct3.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy3.SelectedValue);
+            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy3.SelectedValue);
             rcbChargeAcct3.DataBind();
         }
 
@@ -1581,7 +1573,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void LoadDataSourceComboPartyCharged()
         {
-            var dtSource = SQLData.CreateGenerateDatas("PartyCharged");
+            var dtSource = bd.SQLData.CreateGenerateDatas("PartyCharged");
 
             rcbPartyCharged.Items.Clear();
             rcbPartyCharged.DataValueField = "Id";
@@ -1607,7 +1599,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void LoadDataSourceComboChargeCcy()
         {
-            var dtSource = SQLData.B_BCURRENCY_GetAll();
+            var dtSource = bd.SQLData.B_BCURRENCY_GetAll();
 
             rcbChargeCcy.Items.Clear();
             rcbChargeCcy.DataValueField = "Code";
@@ -1645,7 +1637,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             txtDraweeCusName.Text = "";
             if (!string.IsNullOrEmpty(txtDraweeCusNo.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtDraweeCusNo.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtDraweeCusNo.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     txtDraweeCusName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -1659,150 +1651,115 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             }
 
         }
+
+        private void showReport(int reportType)
+        {
+            string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/";
+            string saveName = "";
+            DataSet reportData = null;
+            Aspose.Words.SaveFormat saveFormat = Aspose.Words.SaveFormat.Doc;
+            Aspose.Words.SaveType saveType = Aspose.Words.SaveType.OpenInApplication;
+            try
+            {
+                switch (reportType)
+                {
+                    case 1://NhapNgoaiBang1
+                        reportTemplate = Context.Server.MapPath(reportTemplate + (comboCollectionType.SelectedValue.Equals("CC") ? "RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1.doc" : "RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1.doc"));
+                        saveName = (comboCollectionType.SelectedValue.Equals("CC") ? "RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1_" : "RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1_") + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report(txtCode.Text, UserInfo.Username);
+                        //reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 2://NhapNgoaiBang2
+                        reportTemplate = Context.Server.MapPath(reportTemplate + (comboCollectionType.SelectedValue.Equals("CC") ? "RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2.doc" : "RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2.doc"));
+                        saveName = (comboCollectionType.SelectedValue.Equals("CC") ? "RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2_" : "RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2_") + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report(txtCode.Text, UserInfo.Username);
+                        //reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 3://XuatNgoaiBang1
+                        reportTemplate = Context.Server.MapPath(reportTemplate + (comboCollectionType.SelectedValue.Equals("CC") ? "RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1.doc" : "RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1.doc"));
+                        saveName = (comboCollectionType.SelectedValue.Equals("CC") ? "RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1_" : "RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1_") + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report(txtCode.Text, UserInfo.Username);
+                        //reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 4://XuatNgoaiBang
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG.doc");
+                        saveName = "RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
+                        reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 5://NhapNgoaiBang
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG.doc");
+                        saveName = "RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
+                        //reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 6://CancelPHIEUXUATNGOAIBANG
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc");
+                        saveName = "DocumentaryCollectionCancelPHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
+                        //reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 7://VAT
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
+                        saveName = "RegisterDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username);
+                        //reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 8://COVER
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "COVER NHO THU XK.doc");
+                        saveName = "COVER NHO THU XK_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report(txtCode.Text, UserInfo.Username);
+                        reportData.Tables[0].TableName = "Table1";
+                        break;
+                }
+                if (reportData != null)
+                {
+                    try
+                    {
+                        bc.Reports.createFileDownload(reportTemplate, reportData, saveName, saveFormat, saveType, Response);
+                    }
+                    catch (Exception err)
+                    {
+                        lblError.Text = reportData.Tables[0].TableName + "#" + err.Message;
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                lblError.Text = err.Message;
+            }
+        }
         protected void btnRegisterNhapNgoaiBang1_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1.doc");
-            if (comboCollectionType.SelectedValue == "CC")
-            {
-                path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1.doc");
-            }
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG1_Report(txtCode.Text, UserInfo.Username);
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            var filename = (comboCollectionType.SelectedValue == "CC"
-                ? "RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1_"
-                : "RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1_") + DateTime.Now.ToString("yyyyMMddHHmmss") +
-                           ".doc";
-            doc.Save(filename, Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showReport(1);
         }
         protected void btnRegisterNhapNgoaiBang2_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2.doc");
-            if (comboCollectionType.SelectedValue == "CC")
-            {
-                path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2.doc");
-            }
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG2_Report(txtCode.Text, UserInfo.Username);
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            var filename = (comboCollectionType.SelectedValue == "CC"
-                ? "RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2_"
-                : "RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2_") + DateTime.Now.ToString("yyyyMMddHHmmss") +
-                           ".doc";
-            doc.Save(filename, Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showReport(2);
         }
         protected void btnRegisterXuatNgoaiBang1_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1.doc");
-            if (comboCollectionType.SelectedValue == "CC")
-            {
-                path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1.doc");
-            }
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_PHIEUXUATNGOAIBANG1_Report(txtCode.Text, UserInfo.Username);
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            var filename = (comboCollectionType.SelectedValue == "CC"
-                ? "RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1_"
-                : "RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1_") + DateTime.Now.ToString("yyyyMMddHHmmss") +
-                           ".doc";
-            doc.Save(filename, Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showReport(3);
         }
-
         protected void btnAmendXuatNgoaiBang_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showReport(4);
         }
         protected void btnAmendNhapNgoaiBang_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("AmendDocumentaryCollectionPHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showReport(5);
         }
         protected void btnCancelPHIEUXUATNGOAIBANG_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.P_BEXPORTDOCUMETARYCOLLECTION_CANCEL_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("ExportDocumentaryCollectionCancelPHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showReport(6);
         }
         protected void btnVATReport_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionVAT.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username);
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("RegisterDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            showReport(7);
         }
-
+        protected void btnCOVERReport_Click(object sender, EventArgs e)
+        {
+            showReport(8);
+        }
     }
 }
