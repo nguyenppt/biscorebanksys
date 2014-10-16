@@ -1352,7 +1352,7 @@
             if (tabId == 226 || tabId == 227) { // Register Documetary Collection
                 if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                     args.set_cancel(true);
-                    radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Customer?", confirmCallbackRegisterNNB1, 340, 150, null, 'Download');
+                    radconfirm("Do you want to download COVER file from Customer?", confirmCallbackRegisterCOVER, 340, 150, null, 'Download');
                 }
             }
             if (tabId == 229) { // Incoming Collection Amendments
@@ -1402,6 +1402,13 @@
 
         }
 
+        function confirmCallbackRegisterCOVER(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnCOVERReport.ClientID %>").click();
+            }
+            radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Customer?", confirmCallbackRegisterNNB1, 340, 150, null, 'Download');
+        }
         function confirmCallbackRegisterNNB1(result) {
             clickCalledAfterRadconfirm = false;
             if (result) {
@@ -1441,3 +1448,4 @@
 <div style="visibility:hidden;"><asp:Button ID="btnAmendNhapNgoaiBang" runat="server" OnClick="btnAmendNhapNgoaiBang_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnCancelPHIEUXUATNGOAIBANG" runat="server" OnClick="btnCancelPHIEUXUATNGOAIBANG_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnVATReport" runat="server" OnClick="btnVATReport_Click" Text="Search" /></div>
+<div style="visibility:hidden;"><asp:Button ID="btnCOVERReport" runat="server" OnClick="btnCOVERReport_Click" Text="Search" /></div>
