@@ -592,15 +592,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 //CommitData();
                                 if (this.TabId == TabDocsAmend)
                                 //bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId);
-                                { 
-                                    
+                                {
+                                    UpdateStatus("UNA");
                                 }
                                 Response.Redirect("Default.aspx?tabid=" + TabId);
                             }
                             break;
                         case TabDocsReject:
                         case TabDocsAccept:
-                            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId, txtAcceptRemarks.Text);
+                            //bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId, txtAcceptRemarks.Text);
                             Response.Redirect("Default.aspx?tabid=" + TabId);
                             break;
                     }
@@ -966,6 +966,35 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     //fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
                     var dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text && dr.Status == "UNA").FirstOrDefault();                    
                     var dsCharge = new List<BEXPORT_DOCUMENTPROCESSINGCHARGE>();
+                    if (!String.IsNullOrEmpty(txtCode.Text) && txtCode.Text.LastIndexOf(".") > 0)
+                    {
+                        var drDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).FirstOrDefault();
+                        if (drDetail == null)
+                        {
+                            lblError.Text = "This Docs not found !";
+                            return;
+                        }
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        //Hiển thị thông tin docs
+                        
+                        switch (drDetail.Status)
+                        {
+                            case bd.TransactionStatus.UNA:
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                                bc.Commont.SetTatusFormControls(this.Controls, true);
+                                break;
+                            case bd.TransactionStatus.AUT:
+                                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                                RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                                bc.Commont.SetTatusFormControls(this.Controls, true);
+                                break;
+                        }
+                        loadDocsDetail(dsDetail,dsCharge);
+                        return;
+                    }
                     if (dsDetail != null)
                     {
                         
