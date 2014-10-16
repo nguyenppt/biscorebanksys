@@ -406,7 +406,7 @@
                 calculateAmountPaid();
             }
         })
-        .focusout(function() {
+        .focusout(function () {
             calculateAmountPaid();
         });
     $("#<%=txtDebitAmtFCY.ClientID%>")
@@ -448,10 +448,12 @@
         var objDebtRate = $find("<%=txtDebitDealRate.ClientID%>");
         var objCreditRate = $find("<%=txtCreditDealRate.ClientID%>");
         var objAmtPaid = $find("<%= txtAmountPaid.ClientID%>");
-        if (objdebtCur.get_text() == "VND") {
-            if (objAmtLCY.get_value() != '') {
-                if (objDebtRate.get_value() != '') {
-                    objAmtFCY.set_value(objAmtLCY.get_value() / objDebtRate.get_value());
+        if ($.trim(objdebtCur.get_text()) == "VND") {
+            var AmtLCY = objAmtLCY.get_textBoxValue().replace(/,/g,'');
+            if (AmtLCY != '') {
+                DebtRate = objDebtRate.get_textBoxValue().replace(/,/g, '');
+                if (DebtRate != '') {
+                    objAmtFCY.set_value(Number(AmtLCY) / Number(DebtRate));
                     objAmtPaid.set_value(objAmtFCY.get_value());
                     return;
                 }
@@ -460,9 +462,11 @@
             objAmtPaid.set_value();
         }
         else {
-            if (objAmtFCY.get_value() != '') {
-                if (objCreditRate.get_value() != '') {
-                    objAmtLCY.set_value(objAmtFCY.get_value() * objCreditRate.get_value());
+            var AmtFCY = objAmtFCY.get_textBoxValue().replace(/,/g, '');
+            if (AmtFCY != '') {
+                CreditRate = objCreditRate.get_textBoxValue().replace(/,/g, '');
+                if (CreditRate != '') {
+                    objAmtLCY.set_value(Number(AmtFCY) * Number(CreditRate));
                     objAmtPaid.set_value(objAmtLCY.get_value());
                     return;
                 }
