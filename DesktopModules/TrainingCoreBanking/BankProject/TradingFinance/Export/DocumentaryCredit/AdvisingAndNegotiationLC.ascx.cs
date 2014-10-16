@@ -20,6 +20,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private readonly VietVictoryCoreBankingEntities entContext = new VietVictoryCoreBankingEntities();
         private BAdvisingAndNegotiationLC _exportDoc;
         protected const int TabIssueLCAmend = 235;
+        protected const int TabIssueLCConfirm = 236;
         protected const int TabIssueLCCancel = 237;
         protected const int TabIssueLCClose = 265;
         public enum AdvisingAndNegotiationScreenType
@@ -46,12 +47,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 switch (TabId)
                 {
-                    case 235:
+                    case TabIssueLCAmend:
                         return AdvisingAndNegotiationScreenType.Amend;
-                    case 237:
+                    case TabIssueLCCancel:
                         return AdvisingAndNegotiationScreenType.Cancel;
                     case TabIssueLCClose:
                         return AdvisingAndNegotiationScreenType.Close;
+                    case TabIssueLCConfirm:
+                        return AdvisingAndNegotiationScreenType.Acception;
                     //case 227:
                     //    return ExportDocumentaryScreenType.RegisterCc;
                     //case 377:
@@ -104,6 +107,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     InitToolBarForClose();
                     tbEssurLCCode.Enabled = true;
                     break;
+                case AdvisingAndNegotiationScreenType.Acception:
+                    InitToolBarForAccept();
+                    RadComboBoxGD.Enabled = true;
+                    txtExternalReference.Enabled = true;
+                    ComboConfirmInstr.Enabled = true;
+                    txtLimitRef.Enabled = true;
+                    tbEssurLCCode.Enabled = true;
+                    break;
                 //case ExportDocumentaryScreenType.Cancel:
                 //    InitToolBarForCancel();
 
@@ -130,6 +141,108 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //}
             //LoadToolBar(false);
             //InitDataSource();
+        }
+        protected void InitToolBarForAccept()
+        {
+            
+            divCancelLC.Visible = false;
+            divAcceptLC.Visible = true;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            
+            
+            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            if (_exportDoc != null)
+            {
+                if (Disable)//Authorizing
+                {
+                    if (_exportDoc.Status != "AUT")
+                    {
+                        lblError.Text = "This LC has not authorized yet.";
+                    }
+                    else if (_exportDoc.CancelStatus != null && _exportDoc.CancelStatus!="REV")
+                    {
+                        if (_exportDoc.CancelStatus == "UNA")
+                        {
+                            lblError.Text = "This LC is processing at Cancel step";
+                        }
+                        else if(_exportDoc.CancelStatus == "AUT")
+                        {
+                            lblError.Text = "This LC was cancelled";
+                        }
+                    }
+                    else if (_exportDoc.CloseStatus != null &&_exportDoc.CloseStatus!="REV")
+                    {
+                        if (_exportDoc.CloseStatus == "UNA")
+                        {
+                            lblError.Text = "This LC is processing at Close step";
+                        }
+                        else if (_exportDoc.CloseStatus == "AUT")
+                        {
+                            lblError.Text = "This LC was closed";
+                        }
+                    }
+                    else if (_exportDoc.AmendStatus == "UNA")
+                    {
+                        lblError.Text = "This LC is processing at Amend step";
+                    }
+                    else if (_exportDoc.AcceptStatus != null)
+                    {
+                        if (_exportDoc.AcceptStatus == "UNA")
+                        {
+                            lblError.Text = "This LC is processing at Accept step";
+                        }
+                        else if (_exportDoc.AcceptStatus == "AUT")
+                        {
+                            lblError.Text = "This LC was accepted.";
+                        }
+                    }
+                }
+                else {
+                    if (_exportDoc.Status != "AUT")
+                    {
+                        lblError.Text = "This LC has not authorized yet.";
+                    }
+                    else if (_exportDoc.CancelStatus != null && _exportDoc.CancelStatus!="REV" )
+                    {
+                        if (_exportDoc.CancelStatus == "UNA")
+                        {
+                            lblError.Text = "This LC is processing at Cancel step";
+                        }
+                        else if(_exportDoc.CancelStatus=="AUT")
+                        {
+                            lblError.Text = "This LC was cancelled";
+                        }
+                    }
+                    else if (_exportDoc.CloseStatus != null && _exportDoc.CloseStatus!="REV")
+                    {
+                        if (_exportDoc.CloseStatus == "UNA")
+                        {
+                            lblError.Text = "This LC is processing at Close step";
+                        }
+                        else if(_exportDoc.CloseStatus=="AUT")
+                        {
+                            lblError.Text = "This LC was closed";
+                        }
+                    }
+                    else if (_exportDoc.AmendStatus == "UNA")
+                    {
+                        lblError.Text = "This LC is processing at Amend step";
+                    }
+                    else if (_exportDoc.AcceptStatus != null)
+                    {
+                        if(_exportDoc.AcceptStatus=="AUT")
+                        {
+                            lblError.Text = "This LC was accepted.";
+                        }
+                    }
+                    else // Not yet authorize
+                    {
+                        RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                    }
+                    SetDisableByReview(false);
+                }
+            }
+            LoadToolBar(true);
         }
         protected void InitToolBarForClose()
         {
@@ -538,6 +651,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         dteContingentExpiryDate.SelectedDate = DateTime.Parse(dt.ContingentExpiryDate.ToString());
                     }
                     txtCancelRemark.Text = dt.CancelRemark;
+                    //
+                    if (TabId == TabIssueLCConfirm)
+                    {
+                        
+
+                        RadComboBoxGD.SelectedValue = dt.GenerateDelivery;
+                        //RadComboBoxItem item = RadComboBoxGD.FindItemByValue(dt.GenerateDelivery);
+                        //item.Selected = true;
+                        if (!String.IsNullOrEmpty(dt.Date.ToString()) && dt.Date.ToString().IndexOf("1/1/1900") == -1)
+                        {
+                            DateConfirm.SelectedDate = DateTime.Parse(dt.Date.ToString());
+                        }
+                        txtExternalReference.Text = dt.ExternalReference;
+                        ComboConfirmInstr.SelectedValue = dt.ConfirmationInstr;
+                        txtLimitRef.Text = dt.LimitRef;
+                    }
+                    
+                    //
                 }
                 else
                 {
@@ -653,9 +784,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                     return false;
 
                                 }
-                                else if (BM.Amend_Status != null && BM.Amend_Status != "AUT")
+                                else if (BM.Amend_Status != null && BM.Amend_Status != "AUT" && BM.Amend_Status != "REV")
                                 {
-                                    lblError.Text = "This LC was not Amend";
+                                    lblError.Text = "This LC is processing at Amend step";
                                     SetDisableByReview(true);
                                     return false;
                                 }
@@ -918,6 +1049,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             //disable Cancel
             divCancelLC.Visible = false;
+            divAcceptLC.Visible = false;
             dteCancelDate.SelectedDate = DateTime.Now;
             dteContingentExpiryDate.SelectedDate = DateTime.Now;
             //
@@ -1041,6 +1173,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 rcbChargeCcy3.SelectedIndex = 0;
                 //LOAD PARTYCHARGED
                 LoadDataSourceComboPartyCharged();
+                //load ComboBox Confirm
+                var lstconfirm = entContext.B_AddConfirmInfos.ToList();
+                if (lstconfirm != null)
+                {
+                    foreach (var item in lstconfirm)
+                    {
+                        RadComboBoxItem raditem = new RadComboBoxItem();
+                        raditem.Text = item.ConfirmName;
+                        raditem.Value = item.ConfirmID;
+                        ComboConfirmInstr.Items.Add(raditem);
+                    }
+                }
+                
             }
         }
         
@@ -1472,6 +1617,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         {
                             ori.CloseStatus = "UNA";
                         }
+                        else if (TabId == TabIssueLCConfirm)
+                        {
+                            ori.GenerateDelivery = RadComboBoxGD.SelectedValue;
+                            ori.Date = DateConfirm.SelectedDate;
+                            ori.ExternalReference = txtExternalReference.Text;
+                            ori.ConfirmationInstr = ComboConfirmInstr.SelectedValue;
+                            ori.LimitRef = txtLimitRef.Text;
+                            ori.AcceptStatus = "UNA";
+                        }
                         else
                         {
                             ori.Status = "UNA";
@@ -1645,6 +1799,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         {
                             obj.CloseStatus = status;
                             obj.CloseBy = UserId.ToString();
+                        }
+                        break;
+                    case AdvisingAndNegotiationScreenType.Acception:
+                        if (status == "REV")
+                        {
+                            obj.AcceptStatus = status;
+                        }
+                        else
+                        {
+                            obj.AcceptStatus = status;
+                            obj.AcceptBy = UserId.ToString();
                         }
                         break;
          

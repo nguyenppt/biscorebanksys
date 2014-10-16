@@ -6,6 +6,13 @@
     var tabId = '<%= TabId %>';
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = (month) + "/" + (day)+ "/" + now.getFullYear();
+        $("#<%=DateConfirm.ClientID %>").val(today)
+        
+        
     });
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
@@ -56,9 +63,59 @@
             <li><a href="#FullView">Full View</a></li>
             -->
         </ul>
-       
-
         <div id="Main" class="dnnClear">
+            <div runat="server" id="divAcceptLC">
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width:200px" class="MyLable">Generate Delivery?</td>
+                    <td class="MyContent">  
+                        <telerik:RadComboBox Width="200"
+                            ID="RadComboBoxGD" runat="server"
+                            MarkFirstMatch="True"
+                            AllowCustomText="false">
+                            <Items>
+                                <telerik:RadComboBoxItem Value="Yes" Text="YES" />
+                                <telerik:RadComboBoxItem Value="No" Text="NO" />
+                            </Items>
+                        </telerik:RadComboBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">Date</td>
+                    <td class="MyContent">  
+                        <telerik:RadDateInput ID="DateConfirm" Width="200px" runat="server" readonly="true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">External Reference</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtExternalReference" runat="server" width="200px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">Confirmation Instr.</td>
+                    <td class="MyContent">
+                        <telerik:RadComboBox ID="ComboConfirmInstr" runat="server"
+                            MarkFirstMatch="True" 
+                            AllowCustomText="false" width="200px">
+                            <ExpandAnimation Type="None" />
+                            <CollapseAnimation Type="None" />
+                        </telerik:RadComboBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">Limit Ref.</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtLimitRef" runat="server" width="200px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <hr />
+                    </td>
+                </tr>
+            </table>
+            </div>
             <div runat="server" id="divCancelLC">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
