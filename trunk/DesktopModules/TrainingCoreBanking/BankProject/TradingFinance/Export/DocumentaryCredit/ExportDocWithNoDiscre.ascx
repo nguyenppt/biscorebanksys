@@ -7,7 +7,16 @@
         jQuery(function ($) {
             $('#tabs-demo').dnnTabs();
         });
-
+        function OnclientSelectedIndexChanged(sender, eventArgs)
+        {
+            var item = eventArgs.get_item();
+            if (item.get_text() == "YES") {
+                $("#TCharge").show();
+            }
+            else {
+                $("#TCharge").hide();
+            }
+        }
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
             //
@@ -57,11 +66,15 @@
 <div class="dnnForm" id="tabs-demo">
         <ul class="dnnAdminTabNav">
             <li><a href="#Main">Main</a></li>
-           <!-- <li><a href="#MT710">MT700</a></li>
-            <li><a href="#MT730">MT740</a></li>-->
-            <!--<li><a href="#DeliveryAudit">Delivery Audit</a></li>
-            <li><a href="#FullView">Full View</a></li>
-            -->
+           <% if (TabId == TabDocsWithDiscrepancies || DocsType == TabDocsWithDiscrepancies) %>
+                <%{ %>
+                
+                <li><a href="#tabCharge">Charge</a></li>
+            <% }
+               else if (TabId == TabDocsReject) %>
+                    <%{%>
+                        <li><a href="#tabCharge">Charge</a></li>
+            <% } %>
         </ul>
         <div id="Main" class="dnnClear">
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -76,6 +89,11 @@
                     <td class="MyLable">Accept Remarks</td>
                     <td class="MyContent">
                         <telerik:Radtextbox runat="server" ID="txtAcceptRemarks" Width="355" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <hr />
                     </td>
                 </tr>
             <%} %>
@@ -168,7 +186,7 @@
                 </td>
             </tr>
             </table>
-        </div>
+        
         <div runat="server" ID="divDocCode">
         <div runat="server" ID="divDocsCode1">
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -208,7 +226,7 @@
             </table>
         </div>
             <table width="100%" cellpadding="0" cellspacing="0">
-            <tr>
+            <tr style="display:none">
                 <td class="MyLable" style="width: 180px">69.3.1 Other Docs</td>
                 <td class="MyContent">
                     <telerik:Radtextbox runat="server" ID="txtOtherDocs1" Width="355" />
@@ -230,7 +248,7 @@
             </tr>
         </table>
             <table width="100%" cellpadding="0" cellspacing="0">
-            <tr>
+            <tr style="display:none">
                 <td class="MyLable" style="width: 180px">69.3.1 Other Docs</td>
                 <td class="MyContent">
                     <telerik:Radtextbox runat="server" ID="Radtextbox1" Width="355" />
@@ -391,6 +409,7 @@
             </table>
         </fieldset>
         </div>
+        </div>
         <div id="tabCharge" class="dnnClear" style="display:none;">
             <div runat="server" ID="divCharge">
                 <asp:HiddenField ID="hiddenCustomerName" runat="server" />
@@ -398,8 +417,9 @@
                     <tr>
                         <td class="MyLable">Waive Charges</td>
                         <td class="MyContent">
-                            <telerik:RadComboBox AutoPostBack="True"
-                                OnSelectedIndexChanged="comboWaiveCharges_OnSelectedIndexChanged"
+                            <telerik:RadComboBox AutoPostBack="false"
+                                
+                                Onclientselectedindexchanged="OnclientSelectedIndexChanged"
                                 ID="comboWaiveCharges" runat="server"
                                 MarkFirstMatch="True"
                                 AllowCustomText="false">
@@ -425,6 +445,7 @@
                     </td>
                 </tr>
                 </table>
+                <div id="TCharge" style="display:none">
                 <telerik:RadTabStrip runat="server" ID="RadTabStrip3" SelectedIndex="0" MultiPageID="RadMultiPage1" Orientation="HorizontalTop">
                 <Tabs>
                     <telerik:RadTab Text="Cable Charge">
@@ -976,6 +997,7 @@
                 </telerik:RadPageView>           
                 </telerik:RadMultiPage>
             </div>
+            </div>
         </div>
 </div>
 
@@ -994,16 +1016,120 @@
                 <telerik:AjaxUpdatedControl ControlID="comboDocsCode" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+
         <telerik:AjaxSetting AjaxControlID="comboDocsCode2">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="comboDocsCode2" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+        
         <telerik:AjaxSetting AjaxControlID="comboDocsCode3">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="comboDocsCode3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="comboDocsCode3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="comboDocsCode3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeAcct">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeAcct2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeAcct3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbPartyCharged">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbPartyCharged" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbPartyCharged2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbPartyCharged2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbPartyCharged3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbPartyCharged3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbOmortCharge">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbOmortCharge" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbOmortCharges2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbOmortCharges2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbOmortCharges3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbOmortCharges3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="tbChargeCode">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbChargeCode" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbChargeCode2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbChargeCode2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbChargeCode3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbChargeCode3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <%--<telerik:AjaxSetting AjaxControlID="comboWaiveCharges">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="comboWaiveCharges" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>--%>
+        
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
