@@ -30,12 +30,12 @@
     <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px">
         <tr>
             <td style="width: 60px">REF No.</td>
-            <td ><asp:TextBox ID="txtCode" runat="server" Width="200"/></td>
+            <td ><asp:TextBox ID="txtCode" runat="server" Width="200" style="margin-bottom: 5px"/></td>
         </tr>
         <tr>
             <td style="width: 60px">Drawee</td>
             <td width="355">
-                <telerik:RadComboBox width="355" DropDownCssClass="KDDL"
+                <telerik:RadComboBox width="355" DropDownCssClass="KDDL" style="margin-bottom: 5px"
                     AppendDataBoundItems="True"
                     ID="comboDraweeCusNo" Runat="server"
                     OnItemDataBound="comboDraweeCusNo_ItemDataBound" 
@@ -71,7 +71,7 @@
             </td>
             <td style="width: 90px">&nbsp; Drawee Addr.</td>
             <td>
-                <asp:TextBox ID="txtDraweeAddr" runat="server" Width="355"/>
+                <asp:TextBox ID="txtDraweeAddr" runat="server" Width="355" style="margin-bottom: 5px"/>
             </td>
         </tr>
         <tr>
