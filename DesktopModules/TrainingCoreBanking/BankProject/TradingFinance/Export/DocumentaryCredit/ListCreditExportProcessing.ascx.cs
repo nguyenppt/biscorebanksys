@@ -8,6 +8,7 @@ using bd = BankProject.DataProvider;
 using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using BankProject.DBContext;
+using System.Data;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
@@ -29,27 +30,64 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             return "Default.aspx?tabid=" + TabId.ToString() + "&tid=" + id + "&lst=" + lstType;
         }
-
+        private DataSet CreateDataset(List<BEXPORT_DOCUMENTPROCESSING> ds)
+        {
+            DataSet datasource = new DataSet();//Tab1
+            DataTable tbl1 = new DataTable();
+            tbl1.Columns.Add("PaymentId");
+            tbl1.Columns.Add("Amount");
+            tbl1.Columns.Add("Currency");
+            tbl1.Columns.Add("Status");
+            foreach (var item in ds)
+            {
+                if (this.TabId == TabDocsWithDiscrepancies || this.TabId == TabDocsWithNoDiscrepancies)
+                {
+                    tbl1.Rows.Add(item.PaymentId, item.Amount, item.Currency, item.Status);
+                }
+                else if (this.TabId == TabDocsAmend)
+                {
+                    tbl1.Rows.Add(item.PaymentId, item.Amount, item.Currency, item.AmendStatus);
+                }
+                else if (this.TabId == TabDocsAccept)
+                {
+                    tbl1.Rows.Add(item.PaymentId, item.Amount, item.Currency, item.AcceptStatus);
+                }
+                else if (this.TabId == TabDocsReject)
+                {
+                    tbl1.Rows.Add(item.PaymentId, item.Amount, item.Currency, item.RejectStatus);
+                }
+                
+                datasource.Tables.Add(tbl1);
+            }
+            return datasource;
+        }
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             string Status = null;
+            var ds = new List<BEXPORT_DOCUMENTPROCESSING>();
             if (!string.IsNullOrEmpty(lstType)) Status = bd.TransactionStatus.UNA;
             if (this.TabId ==TabDocsWithDiscrepancies||this.TabId==TabDocsWithNoDiscrepancies)
             {
-                radGridReview.DataSource = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.Status == Status).ToList();
+                ds= entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.Status == Status).ToList();
             }
             else if (this.TabId == TabDocsAmend)
             {
-                radGridReview.DataSource = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendStatus == Status).ToList();
+                ds = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendStatus == Status).ToList();
             }
             else if (this.TabId == TabDocsAccept)
             {
-                radGridReview.DataSource = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AcceptStatus == Status).ToList();
+                ds = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AcceptStatus == Status).ToList();
             }
             else if (this.TabId == TabDocsReject)
             {
-                radGridReview.DataSource = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.RejectStatus == Status).ToList();
+                 ds= entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.RejectStatus == Status).ToList();
             }   
+            if(ds!=null&&ds.Count>0)
+            {
+                var lst=CreateDataset(ds);
+                radGridReview.DataSource = lst;
+            }
+            
         }
     }
 }

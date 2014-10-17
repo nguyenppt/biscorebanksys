@@ -30,14 +30,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (IsPostBack) return;
             //fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
             InitDataSource();
-            if (string.IsNullOrEmpty(Request.QueryString["tid"])) return;
-            var dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.Id == long.Parse(Request.QueryString["tid"])).FirstOrDefault();
-
-            if (dsDetail == null)
-            {
-                lblError.Text = "This Docs not found !";
+            if (string.IsNullOrEmpty(Request.QueryString["tid"])) 
                 return;
-            }
+            
+                var tid = Request.QueryString["tid"].ToString();
+                var dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == tid).FirstOrDefault();
+                if (dsDetail == null)
+                {
+                    lblError.Text = "This Docs not found !";
+                    return;
+                }
+            
             var dsCharge = new List<BEXPORT_DOCUMENTPROCESSINGCHARGE>();
             dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == dsDetail.PaymentId).ToList();
             //Hiển thị thông tin docs
@@ -145,6 +148,77 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             dteBookingDate.SelectedDate = DateTime.Now;
             dteBookingDate.Enabled = false;
+            divCharge.Visible = false;
+
+            divPresentorNo.Visible = true;
+            divDocCode.Visible = true;
+            divLast.Visible = true;
+
+            switch (TabId)
+            {
+                case TabDocsWithNoDiscrepancies: // Docs With No Discrepancies
+                    comboDrawType.SelectedValue = "CO";
+                    break;
+                case TabDocsWithDiscrepancies: // Docs With Discrepancies
+                    comboDrawType.SelectedValue = "CO";
+                    fieldsetDiscrepancies.Visible = true;
+                    divCharge.Visible = true;
+                    break;
+                case TabDocsReject: // Reject Docs Sent For Collection
+                    bc.Commont.SetTatusFormControls(this.Controls, false);
+                    divCharge.Visible = true;
+
+                    divPresentorNo.Visible = false;
+                    divDocCode.Visible = false;
+                    divLast.Visible = false;
+                    fieldsetDiscrepancies.Visible = true;
+                    txtCode.Enabled = true;
+                    break;
+            }
+
+            divDocsCode2.Visible = false;
+            divDocsCode3.Visible = false;
+
+            comboDocsCode1.Enabled = false;
+            comboDocsCode2.Enabled = false;
+            comboDocsCode3.Enabled = false;
+
+            comboDocsCode1.SelectedValue = "INV";
+            comboDocsCode2.SelectedValue = "BL";
+            comboDocsCode2.SelectedValue = "PL";
+
+            numNoOfOriginals1.Value = 0;
+            numNoOfCopies1.Value = 0;
+
+            numNoOfOriginals2.Value = 0;
+            numNoOfCopies2.Value = 0;
+
+            numNoOfOriginals3.Value = 0;
+            numNoOfCopies3.Value = 0;
+
+            dteBookingDate.SelectedDate = DateTime.Now;
+            dteBookingDate.Enabled = false;
+
+            numAmount.Value = 0;
+
+            tbChargeCode.SelectedValue = "ILC.CABLE";
+            tbChargeCode2.SelectedValue = "ILC.OPEN";
+            tbChargeCode3.SelectedValue = "ILC.OPENAMORT";
+
+            tbVatNo.Enabled = false;
+            tbChargeCode.Enabled = false;
+            tbChargeCode2.Enabled = false;
+            tbChargeCode3.Enabled = false;
+
+            rcbPartyCharged.SelectedValue = "A";
+            rcbPartyCharged2.SelectedValue = "A";
+            rcbPartyCharged3.SelectedValue = "A";
+
+            rcbOmortCharge.SelectedValue = "NO";
+            rcbOmortCharges2.SelectedValue = "NO";
+            rcbOmortCharges3.SelectedValue = "NO";
+
+            //numAmountUtilization.Value = 0;
         }
         protected void InitDataSource()
         {
@@ -168,7 +242,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref tbChargeCode3, "Code", "Code", tblList);
             tbChargeCode3.SelectedValue = "ILC.OPENAMORT";
             tbChargeCode3.Enabled = false;
-            comboWaiveCharges_OnSelectedIndexChanged(null, null);
+            //comboWaiveCharges_OnSelectedIndexChanged(null, null);
             //Party Charged
             tblList = createTableList();
             addData2TableList(ref tblList, "A");
@@ -235,6 +309,79 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
             return flag;
         }
+        private void SetNullValue()
+        { 
+                    comboDrawType.SelectedValue=null;
+                    comboPresentorNo.SelectedValue=null;
+                    txtPresentorName.Text="";
+                    txtPresentorRefNo.Text="";
+                    lblCurrency.Text="";
+                    dteBookingDate.SelectedDate=null;
+                    dteDocsReceivedDate.SelectedDate=null;
+                    comboDocsCode1.SelectedValue=null;
+                    comboDocsCode2.SelectedValue=null;
+                    comboDocsCode3.SelectedValue=null;
+                    txtOtherDocs1.Text="";
+                    txtOtherDocs2.Text="";
+                    txtOtherDocs3.Text="";
+                    txtDiscrepancies.Text="";
+                    txtDisposalOfDocs.Text="";
+                    dteTraceDate.SelectedDate=DateTime.Now;
+                    dteDocsReceivedDate_Supplemental.SelectedDate=DateTime.Now;
+                    txtPresentorRefNo_Supplemental.Text="";
+                    txtDocs_Supplemental1.Text = "";
+                    numAmount.Text = "";
+                    numNoOfOriginals1.Text = "";
+                    numNoOfOriginals2.Text="";
+                    numNoOfOriginals3.Text="";
+                    numNoOfOriginals1.Text = "";
+                    numNoOfOriginals2.Text = "";
+                    numNoOfOriginals3.Text = "";
+
+                    //
+                    comboWaiveCharges.SelectedValue=null;
+                    tbChargeCode.SelectedValue=null;
+                    rcbChargeAcct.SelectedValue=null;
+                    tbChargePeriod.Text="";
+                    rcbChargeCcy.SelectedValue=null;
+                    rcbPartyCharged.SelectedValue=null;
+                    rcbOmortCharge.SelectedValue=null;
+                    rcbChargeStatus.SelectedValue=null;
+                    tbChargeRemarks.Text="";
+                    tbVatNo.Text="";
+                    lblTaxCode.Text="";
+                    lblTaxAmt.Text="";
+                    tbExcheRate.Text="";
+                    tbChargeAmt.Text="";
+                    //
+                    tbChargeCode2.SelectedValue = null;
+                    rcbChargeAcct2.SelectedValue = null;
+                    tbChargePeriod2.Text = "";
+                    rcbChargeCcy2.SelectedValue = null;
+                    rcbPartyCharged2.SelectedValue = null;
+                    rcbOmortCharges2.SelectedValue = null;
+                    rcbChargeStatus2.SelectedValue = null;
+                    tbChargeRemarks.Text = "";
+                    tbVatNo.Text = "";
+                    lblTaxCode2.Text = "";
+                    lblTaxAmt2.Text = "";
+                    tbExcheRate2.Text = "";
+                    tbChargeAmt2.Text = "";
+                    //
+                    tbChargeCode3.SelectedValue = null;
+                    rcbChargeAcct3.SelectedValue = null;
+                    tbChargePeriod3.Text = "";
+                    rcbChargeCcy3.SelectedValue = null;
+                    rcbPartyCharged3.SelectedValue = null;
+                    rcbOmortCharges3.SelectedValue = null;
+                    rcbChargeStatus3.SelectedValue = null;
+                    tbChargeRemarks.Text = "";
+                    tbVatNo.Text = "";
+                    lblTaxCode3.Text = "";
+                    lblTaxAmt3.Text = "";
+                    tbExcheRate3.Text = "";
+                    tbChargeAmt3.Text = "";
+        }
         private void CommitData()
         {
             var ds = new BEXPORT_DOCUMENTPROCESSING();
@@ -247,10 +394,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             var dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(x => x.LCCode == txtCode.Text).ToList();
             if (dsCharge != null && dsCharge.Count > 0)
             {
-                
+                foreach (BEXPORT_DOCUMENTPROCESSINGCHARGE item in dsCharge)
+                {
+                    entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Remove(item);
+                }
+                entContext.SaveChanges();
             }
             if (ds == null && dr == null)
             {
+                var CCode = "";
+                var CId = "";
+                if (txtCode.Text.IndexOf('.') != -1)
+                {
+                    var code = txtCode.Text.Split('.');
+                    CCode = code[0];
+                    CId = code[1];
+                }
                 BEXPORT_DOCUMENTPROCESSING obj = new BEXPORT_DOCUMENTPROCESSING
                 {
                     DrawType = comboDrawType.SelectedValue,
@@ -272,7 +431,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     DocsReceivedDate_Supplemental = dteDocsReceivedDate_Supplemental.SelectedDate,
                     PresentorRefNo_Supplemental = txtPresentorRefNo_Supplemental.Text,
                     Docs_Supplemental1 = txtDocs_Supplemental1.Text,
-                    DocumentType=TabId.ToString()
+                    LCCode=CCode,
+                    PaymentNo = long.Parse(CId),
+                    PaymentId=txtCode.Text,
+                    Id=long.Parse(CId),
+                    DocumentType = TabId.ToString()
                 };
                 if (!String.IsNullOrEmpty(numAmount.Text))
                 {
@@ -293,115 +456,121 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
                 if (!String.IsNullOrEmpty(numNoOfCopies1.Text))
                 {
-                    obj.NoOfCopies1 = long.Parse(numNoOfOriginals1.Text);
+                    obj.NoOfCopies1 = long.Parse(numNoOfCopies1.Text);
                 }
                 if (!String.IsNullOrEmpty(numNoOfCopies2.Text))
                 {
-                    obj.NoOfCopies2 = long.Parse(numNoOfOriginals2.Text);
+                    obj.NoOfCopies2 = long.Parse(numNoOfCopies2.Text);
                 }
                 if (!String.IsNullOrEmpty(numNoOfCopies3.Text))
                 {
-                    obj.NoOfCopies3 = long.Parse(numNoOfOriginals3.Text);
+                    obj.NoOfCopies3 = long.Parse(numNoOfCopies3.Text);
                 }
                 if (TabId == TabDocsWithNoDiscrepancies || TabId == TabDocsWithDiscrepancies)
                 {
                     obj.Status = "UNA";
                 }
                 entContext.BEXPORT_DOCUMENTPROCESSINGs.Add(obj);
-                //save tab charge
-                BEXPORT_DOCUMENTPROCESSINGCHARGE charge = new BEXPORT_DOCUMENTPROCESSINGCHARGE { 
-                    LCCode=txtCode.Text,
-                    WaiveCharges = comboWaiveCharges.SelectedValue,
-                    Chargecode = tbChargeCode.SelectedValue,
-                    ChargeAcct = rcbChargeAcct.SelectedValue,
-                    ChargePeriod = tbChargePeriod.Text,
-                    ChargeCcy = rcbChargeCcy.SelectedValue,
-                    PartyCharged = rcbPartyCharged.SelectedValue,
-                    OmortCharges = rcbOmortCharge.SelectedValue,
-                    ChargeStatus = rcbChargeStatus.SelectedValue,
-                    ChargeRemarks = tbChargeRemarks.Text,
-                    VATNo = tbVatNo.Text,
-                    TaxCode = lblTaxCode.Text,
-                    Rowchages="1",
-                    ViewType=TabId
-                };
-                if (lblTaxAmt.Text != null)
+                entContext.SaveChanges();
+                if (divCharge.Visible && comboWaiveCharges.SelectedValue.Equals("YES"))
                 {
-                    charge.TaxAmt = double.Parse(lblTaxAmt.Text);
+                    //save tab charge
+                    BEXPORT_DOCUMENTPROCESSINGCHARGE charge = new BEXPORT_DOCUMENTPROCESSINGCHARGE
+                    {
+                        LCCode = txtCode.Text,
+                        WaiveCharges = comboWaiveCharges.SelectedValue,
+                        Chargecode = tbChargeCode.SelectedValue,
+                        ChargeAcct = rcbChargeAcct.SelectedValue,
+                        ChargePeriod = tbChargePeriod.Text,
+                        ChargeCcy = rcbChargeCcy.SelectedValue,
+                        PartyCharged = rcbPartyCharged.SelectedValue,
+                        OmortCharges = rcbOmortCharge.SelectedValue,
+                        ChargeStatus = rcbChargeStatus.SelectedValue,
+                        ChargeRemarks = tbChargeRemarks.Text,
+                        VATNo = tbVatNo.Text,
+                        TaxCode = lblTaxCode.Text,
+                        Rowchages = "1",
+                        ViewType = TabId
+                    };
+                    if (lblTaxAmt.Text != null)
+                    {
+                        charge.TaxAmt = double.Parse(lblTaxAmt.Text);
+                    }
+                    if (tbExcheRate.Text != null)
+                    {
+                        charge.ExchRate = double.Parse(tbExcheRate.Text);
+                    }
+                    if (tbChargeAmt.Text != null)
+                    {
+                        charge.ChargeAmt = double.Parse(tbChargeAmt.Text);
+                    }
+                    entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge);
+                    //
+                    BEXPORT_DOCUMENTPROCESSINGCHARGE charge2 = new BEXPORT_DOCUMENTPROCESSINGCHARGE
+                    {
+                        LCCode = txtCode.Text,
+                        WaiveCharges = comboWaiveCharges.SelectedValue,
+                        Chargecode = tbChargeCode2.SelectedValue,
+                        ChargeAcct = rcbChargeAcct2.SelectedValue,
+                        ChargePeriod = tbChargePeriod2.Text,
+                        ChargeCcy = rcbChargeCcy2.SelectedValue,
+                        PartyCharged = rcbPartyCharged2.SelectedValue,
+                        OmortCharges = rcbOmortCharges2.SelectedValue,
+                        ChargeStatus = rcbChargeStatus2.SelectedValue,
+                        ChargeRemarks = tbChargeRemarks.Text,
+                        VATNo = tbVatNo.Text,
+                        TaxCode = lblTaxCode.Text,
+                        Rowchages = "2",
+                        ViewType = TabId
+                    };
+                    if (lblTaxAmt2.Text != null)
+                    {
+                        charge2.TaxAmt = double.Parse(lblTaxAmt2.Text);
+                    }
+                    if (tbExcheRate2.Text != null)
+                    {
+                        charge2.ExchRate = double.Parse(tbExcheRate2.Text);
+                    }
+                    if (tbChargeAmt2.Text != null)
+                    {
+                        charge2.ChargeAmt = double.Parse(tbChargeAmt2.Text);
+                    }
+                    entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge2);
+                    //
+                    //kiem tra tab 
+                    BEXPORT_DOCUMENTPROCESSINGCHARGE charge3 = new BEXPORT_DOCUMENTPROCESSINGCHARGE
+                    {
+                        LCCode = txtCode.Text,
+                        WaiveCharges = comboWaiveCharges.SelectedValue,
+                        Chargecode = tbChargeCode3.SelectedValue,
+                        ChargeAcct = rcbChargeAcct3.SelectedValue,
+                        ChargePeriod = tbChargePeriod3.Text,
+                        ChargeCcy = rcbChargeCcy3.SelectedValue,
+                        PartyCharged = rcbPartyCharged3.SelectedValue,
+                        OmortCharges = rcbOmortCharges3.SelectedValue,
+                        ChargeStatus = rcbChargeStatus3.SelectedValue,
+                        ChargeRemarks = tbChargeRemarks.Text,
+                        VATNo = tbVatNo.Text,
+                        TaxCode = lblTaxCode.Text,
+                        Rowchages = "3",
+                        ViewType = TabId
+                    };
+                    if (lblTaxAmt3.Text != null)
+                    {
+                        charge3.TaxAmt = double.Parse(lblTaxAmt3.Text);
+                    }
+                    if (tbExcheRate3.Text != null)
+                    {
+                        charge3.ExchRate = double.Parse(tbExcheRate3.Text);
+                    }
+                    if (tbChargeAmt3.Text != null)
+                    {
+                        charge3.ChargeAmt = double.Parse(tbChargeAmt3.Text);
+                    }
+                    entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge3);
+                    //
+                    entContext.SaveChanges();
                 }
-                if (tbExcheRate.Text != null)
-                {
-                    charge.ExchRate = double.Parse(tbExcheRate.Text);
-                }
-                if (tbChargeAmt.Text != null)
-                {
-                    charge.ChargeAmt = double.Parse(tbChargeAmt.Text);
-                }
-                entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge);
-                //
-                BEXPORT_DOCUMENTPROCESSINGCHARGE charge2 = new BEXPORT_DOCUMENTPROCESSINGCHARGE
-                {
-                    LCCode = txtCode.Text,
-                    WaiveCharges = comboWaiveCharges.SelectedValue,
-                    Chargecode = tbChargeCode2.SelectedValue,
-                    ChargeAcct = rcbChargeAcct2.SelectedValue,
-                    ChargePeriod = tbChargePeriod2.Text,
-                    ChargeCcy = rcbChargeCcy2.SelectedValue,
-                    PartyCharged = rcbPartyCharged2.SelectedValue,
-                    OmortCharges = rcbOmortCharges2.SelectedValue,
-                    ChargeStatus = rcbChargeStatus2.SelectedValue,
-                    ChargeRemarks = tbChargeRemarks.Text,
-                    VATNo = tbVatNo.Text,
-                    TaxCode = lblTaxCode.Text,
-                    Rowchages = "2",
-                    ViewType = TabId
-                };
-                if (lblTaxAmt2.Text != null)
-                {
-                    charge2.TaxAmt = double.Parse(lblTaxAmt2.Text);
-                }
-                if (tbExcheRate2.Text != null)
-                {
-                    charge2.ExchRate = double.Parse(tbExcheRate2.Text);
-                }
-                if (tbChargeAmt2.Text != null)
-                {
-                    charge2.ChargeAmt = double.Parse(tbChargeAmt2.Text);
-                }
-                entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge2);
-                //
-                //kiem tra tab 
-                BEXPORT_DOCUMENTPROCESSINGCHARGE charge3 = new BEXPORT_DOCUMENTPROCESSINGCHARGE
-                {
-                    LCCode = txtCode.Text,
-                    WaiveCharges = comboWaiveCharges.SelectedValue,
-                    Chargecode = tbChargeCode3.SelectedValue,
-                    ChargeAcct = rcbChargeAcct3.SelectedValue,
-                    ChargePeriod = tbChargePeriod3.Text,
-                    ChargeCcy = rcbChargeCcy3.SelectedValue,
-                    PartyCharged = rcbPartyCharged3.SelectedValue,
-                    OmortCharges = rcbOmortCharges3.SelectedValue,
-                    ChargeStatus = rcbChargeStatus3.SelectedValue,
-                    ChargeRemarks = tbChargeRemarks.Text,
-                    VATNo = tbVatNo.Text,
-                    TaxCode = lblTaxCode.Text,
-                    Rowchages = "3",
-                    ViewType = TabId
-                };
-                if (lblTaxAmt3.Text != null)
-                {
-                    charge3.TaxAmt = double.Parse(lblTaxAmt3.Text);
-                }
-                if (tbExcheRate3.Text != null)
-                {
-                    charge3.ExchRate = double.Parse(tbExcheRate3.Text);
-                }
-                if (tbChargeAmt3.Text != null)
-                {
-                    charge3.ChargeAmt = double.Parse(tbChargeAmt3.Text);
-                }
-                entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge3);
-                //
             }
             else
             {
@@ -410,9 +579,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     if (TabId == TabDocsReject || TabId == TabDocsAccept)
                     {
                         if (TabId == TabDocsReject)
-                        { 
-                            ds.RejectDrawType=comboDrawType.SelectedValue;
-                            ds.RejectBy=UserId.ToString();
+                        {
+                            ds.RejectDrawType = comboDrawType.SelectedValue;
+                            ds.RejectBy = UserId.ToString();
                             ds.RejectStatus = TransactionStatus.UNA;
                             ds.RejectDate = DateTime.Now;
                         }
@@ -589,11 +758,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         case TabDocsAmend:
                             if (CheckAmountAvailable())
                             {
-                                //CommitData();
+                                CommitData();
                                 if (this.TabId == TabDocsAmend)
                                 //bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId);
                                 {
-                                    UpdateStatus("UNA");
+                                    //UpdateStatus("UNA");
                                 }
                                 Response.Redirect("Default.aspx?tabid=" + TabId);
                             }
@@ -601,6 +770,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         case TabDocsReject:
                         case TabDocsAccept:
                             //bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId, txtAcceptRemarks.Text);
+                            CommitData();
                             Response.Redirect("Default.aspx?tabid=" + TabId);
                             break;
                     }
@@ -852,13 +1022,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy3.SelectedValue, ref rcbChargeAcct3);
         }
-        protected void comboWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            bool WaiveCharges = (comboWaiveCharges.SelectedValue == "YES");
-            divACCPTCHG.Visible = WaiveCharges;
-            divCABLECHG.Visible = WaiveCharges;
-            divPAYMENTCHG.Visible = WaiveCharges;
-        }
+        //protected void comboWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        //{
+        //    bool WaiveCharges = (comboWaiveCharges.SelectedValue == "YES");
+        //    //divCharge.Visible = WaiveCharges;
+        //    divACCPTCHG.Visible = WaiveCharges;
+        //    divCABLECHG.Visible = WaiveCharges;
+        //    divPAYMENTCHG.Visible = WaiveCharges;
+        //}
 
         private void loadDocsDetail(BEXPORT_DOCUMENTPROCESSING dsDetail, List<BEXPORT_DOCUMENTPROCESSINGCHARGE> dsCharge)
         {
@@ -935,7 +1106,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
             }
             else comboWaiveCharges.SelectedValue = "NO";
-            comboWaiveCharges_OnSelectedIndexChanged(null, null);
+            //comboWaiveCharges_OnSelectedIndexChanged(null, null);
         }
         private void parseTabCharge(BEXPORT_DOCUMENTPROCESSINGCHARGE drDetail, ref RadComboBox cbChargeCode, ref RadComboBox cbChargeCcy, ref RadComboBox cbChargeAcct
                 , ref RadNumericTextBox tbChargeAmt, ref RadComboBox cbPartyCharged, ref RadComboBox cbOmortCharges
@@ -972,9 +1143,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         if (drDetail == null)
                         {
                             lblError.Text = "This Docs not found !";
+                            SetNullValue();
+                            bc.Commont.SetTatusFormControls(this.Controls, true);
                             return;
                         }
                         bc.Commont.SetTatusFormControls(this.Controls, false);
+                        txtCode.Enabled = true;
                         //Hiển thị thông tin docs
                         
                         switch (drDetail.Status)
@@ -989,10 +1163,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 RadToolBar1.FindItemByValue("btReverse").Enabled = true;
                                 RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                                bc.Commont.SetTatusFormControls(this.Controls, true);
+                                bc.Commont.SetTatusFormControls(this.Controls, false);
+                                txtCode.Enabled = true;
                                 break;
                         }
-                        loadDocsDetail(dsDetail,dsCharge);
+                        loadDocsDetail(drDetail,dsCharge);
                         return;
                     }
                     if (dsDetail != null)
@@ -1003,7 +1178,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             {
                                 dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == dsDetail.PaymentId).ToList();
                             }
-                            bc.Commont.SetTatusFormControls(this.Controls, false);
+                            //bc.Commont.SetTatusFormControls(this.Controls, false);
                             //hien thi thong tin docs dang cho duyet
                         loadDocsDetail(dsDetail, dsCharge);
                         return;
@@ -1036,6 +1211,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             lblError.Text = "This LC is rejected !";
                             return;
                      }
+                     SetNullValue();
+                     bc.Commont.SetTatusFormControls(this.Controls, true);
                     //sinh ra PaymentID
                     var dsPayDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text).ToList();
                     var maxId = dsPayDetail.Max(x => x.PaymentNo);
@@ -1109,7 +1286,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 }
                                 break;
                             case TabDocsAmend:
-                                if (!Status.Equals(bd.TransactionStatus.UNA))
+                                if (!Status.Equals(bd.TransactionStatus.AUT))
                                 {
                                     lblError.Text = "This Docs is not allow amend !";
                                     return;
