@@ -15,9 +15,9 @@ namespace BankProject.Controls
         private bool isSetText = false;
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), getJSFunction(), getJSFunction() + "();");
             if (IsPostBack || isSetText) return;
-            litMultiTextBox.Text = createTextBox();
-            //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), getJSFunction(), getJSFunction() + "();");
+            litMultiTextBox.Text = createTextBox();            
         }
         //
         public string Label
@@ -42,6 +42,7 @@ namespace BankProject.Controls
             txtMultiTextBoxString.Value = text.ToString();
             string[] Narratives = new string[] { "" };
             if (!string.IsNullOrEmpty(txtMultiTextBoxString.Value)) Narratives = txtMultiTextBoxString.Value.Split(new string[] { "\n" }, StringSplitOptions.None);
+            MultiTextBoxRow = 1;
             foreach (string n in Narratives)
             {
                 litMultiTextBox.Text += createTextBox(n, readOnly, MultiTextBoxRow);
@@ -59,7 +60,7 @@ namespace BankProject.Controls
             return "<tr>"
                 + "<td class=\"MyLable\"" + (_LabelWidth > 0 ? " style=\"Width:" + _LabelWidth + "px\"" : "") + ">" + (order <= 1 ? _Label : "") + "</td>" //+ "." + order 
                         + "<td class=\"MyContent\" style=\"width:350px;\">" + (readOnly ? "<span class=\"riSingle RadInput RadInput_Default\">" : "") + "<input style=\"width:350px;\" type=\"text\" value=\"" + text.Replace("\"", "\"\"") + "\" " + (readOnly ? "readonly" : "") + (readOnly ? " class=\"riTextBox riDisabled\"" : "") + " />" + (readOnly ? "</span>" : "") + "</td>"
-                        + "<td>" + (String.IsNullOrEmpty(text) ? "<a class=\"MultiTextBoxAddRow\"><img src=\"Icons/Sigma/Add_16X16_Standard.png\"></a>" : "") + "</td>"
+                        + "<td>" + (readOnly ? "" : "<a class=\"" + (order <= 1 ? "MultiTextBoxAddRow" : "MultiTextBoxRemoveRow") + "\"><img src=\"Icons/Sigma/" + (order <= 1 ? "Add_16X16_Standard.png" : "Delete_16X16_Standard.png") + "\"></a>") + "</td>"
                     + "</tr>";
         }
         //
