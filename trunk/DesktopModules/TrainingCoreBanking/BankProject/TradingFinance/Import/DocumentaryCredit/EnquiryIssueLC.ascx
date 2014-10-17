@@ -16,7 +16,7 @@
                 ToolTip="Revert" Value="btRevert" CommandName="revert">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-                ToolTip="Revert" Value="btSearch" CommandName="search">
+                ToolTip="Search" Value="btSearch" CommandName="search">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
             ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
@@ -28,8 +28,9 @@
     <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px">
         <tr>
             <td style="width: 60px">REF No.</td>
-            <td ><asp:TextBox ID="txtCode" runat="server" Width="200"/></td>
+            <td ><asp:TextBox ID="txtCode" runat="server" Width="200" style="margin-bottom: 5px"/></td>
         </tr>
+
         <tr>
             <td style="width: 120px">Applicant ID</td>
             <td width="355">

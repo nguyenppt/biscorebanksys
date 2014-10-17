@@ -246,7 +246,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     comboCreateMT756.SelectedValue = bd.YesNo.YES;
                     divMT756.Attributes.CssStyle.Add("display", "");
                     txtSendingBankTRN.Text = dr["SendingBankTRN"].ToString();
-                    txtRelatedReference.Text = dr["RelatedReference"].ToString();
+                    txtRelatedReferenceMT400.Text = dr["RelatedReference"].ToString();
                     if (dr["AmountCollected"] != DBNull.Value)
                         numAmountCollected.Value = Convert.ToDouble(dr["AmountCollected"]);
                     if (dr["ValueDate"] != DBNull.Value)
@@ -357,7 +357,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
             if (comboCreateMT756.SelectedValue.Equals(bd.YesNo.YES))
             {
-                bd.IssueLC.ImportLCPaymentMT756Update(paymentId, txtCode.Text, "", txtSendingBankTRN.Text, txtRelatedReference.Text, numAmountCollected.Value, dteValueDate_MT400.SelectedDate, comboCurrency_MT400.SelectedValue, numAmount_MT400.Value, "", "", "", "",
+                bd.IssueLC.ImportLCPaymentMT756Update(paymentId, txtCode.Text, "", txtSendingBankTRN.Text, txtRelatedReferenceMT400.Text, numAmountCollected.Value, dteValueDate_MT400.SelectedDate, comboCurrency_MT400.SelectedValue, numAmount_MT400.Value, "", "", "", "",
                 txtDetailOfCharges1.Text, txtDetailOfCharges2.Text, comboReceiverCorrespondentType.SelectedValue, txtReceiverCorrespondentNo.Text, txtReceiverCorrespondentName.Text,
                 txtReceiverCorrespondentAddr1.Text, txtReceiverCorrespondentAddr2.Text, txtReceiverCorrespondentAddr3.Text, comboSenderCorrespondentType.SelectedValue,
                 txtSenderCorrespondentNo.Text, txtSenderCorrespondentName.Text, txtSenderCorrespondentAddress1.Text, txtSenderCorrespondentAddress2.Text, txtSenderCorrespondentAddress3.Text,
@@ -601,12 +601,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtFullyUtilised.Text = bd.YesNo.NO;
                 //MT202
                 lblTransactionReferenceNumber.Text = txtCode.Text;
-                txtRelatedReferenceMT400.Text = dr["PresentorRefNo"].ToString();
+                txtRelatedReference.Text = dr["PresentorRefNo"].ToString();
                 dteValueDate_MT202.SelectedDate = DateTime.Now;
                 setCurrency(ref comboCurrency, lblCurrency.Text);
                 numAmount.Value = txtDrawingAmount.Value;                
                 //MT756
                 txtSendingBankTRN.Text = txtCode.Text;
+                txtRelatedReferenceMT400.Text = dr["PresentorRefNo"].ToString();
                 numAmountCollected.Value = txtDrawingAmount.Value;
                 dteValueDate_MT400.SelectedDate = DateTime.Now;
                 setCurrency(ref comboCurrency_MT400, lblCurrency.Text);

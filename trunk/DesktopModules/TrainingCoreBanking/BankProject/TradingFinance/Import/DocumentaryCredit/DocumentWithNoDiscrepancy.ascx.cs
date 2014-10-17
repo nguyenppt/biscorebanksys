@@ -18,7 +18,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected int DocsType = 0;
         //
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {            
+            //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), ((bc.MultiTextBox)txtDiscrepancies).getJSFunction(), ((bc.MultiTextBox)txtDiscrepancies).getJSFunction() + "();");
+            //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), ((bc.MultiTextBox)txtDiscrepancies_734).getJSFunction(), ((bc.MultiTextBox)txtDiscrepancies_734).getJSFunction() + "();");
             if (IsPostBack) return;
             //
             fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
@@ -184,7 +186,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblTotalAmountClaimed.Text = drDetail["TotalAmountClaimed"].ToString();
                 txtAccountWithBank.Text = drDetail["AccountWithBankNo"].ToString();
                 tbSendertoReceiverInfomation.Text = drDetail["SendertoReceiverInfomation"].ToString();
-                ((bc.MultiTextBox)txtDiscrepancies_734).setText(drDetail["Discrepancies"].ToString());
+                ((bc.MultiTextBox)txtDiscrepancies_734).setText(drDetail["Discrepancies"].ToString(), (this.TabId != TabDocsAmend));
                 txtDisposalOfDocs_734.Text = drDetail["DisposalOfDocs"].ToString();
             }
             //Tab Charge
@@ -210,7 +212,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 }
             }
             else comboWaiveCharges.SelectedValue = "NO";
-            comboWaiveCharges_OnSelectedIndexChanged(null, null);
+            cboWaiveChargesChanged();
         }
         private void parseDocsCode(int Order, DataRow drDetail, ref System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode, ref RadComboBox cbDocsCode
             , ref RadNumericTextBox tbNoOfOriginals, ref RadNumericTextBox tbNoOfCopies)
@@ -683,6 +685,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         return;
                     }
                     drDetail = tbDetail.Rows[0];
+                    double Amount = Convert.ToDouble(drDetail["Amount"]) - Convert.ToDouble(drDetail["TotalDocsAmount"]);
+                    if (Amount <= 0)
+                    {
+                        lblError.Text = "This LC Amount is empty !";
+                        return;
+                    }
                     if (!drDetail["Status"].ToString().Equals(bd.TransactionStatus.AUT))
                     {
                         lblError.Text = "This LC not authorize !";
@@ -707,9 +715,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     hiddenCustomerName.Value = drDetail["ApplicantName"].ToString();
                     lblCurrency.Text = drDetail["Currency"].ToString();
                     lblUtilizationCurrency.Text = lblCurrency.Text;
-                    numAmount.Value = Convert.ToDouble(drDetail["Amount"]) - Convert.ToDouble(drDetail["TotalDocsAmount"]);
+                    numAmount.Value = Amount;
                     numAmountUtilization.Value = numAmount.Value;
-                    txtOtherDocs1.Text = drDetail["Amount"].ToString();
+                    txtFullDocsAmount.Value = Convert.ToDouble(drDetail["Amount"]);
                     dteBookingDate.SelectedDate = DateTime.Now;
                     comboDrawType.SelectedValue = "CO";
                     comboDrawType.Enabled = false;
@@ -1196,6 +1204,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }
 
         protected void comboWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            cboWaiveChargesChanged();
+            //
+            ((bc.MultiTextBox)txtDiscrepancies).setText(((bc.MultiTextBox)txtDiscrepancies).getText());
+            ((bc.MultiTextBox)txtDiscrepancies_734).setText(((bc.MultiTextBox)txtDiscrepancies_734).getText());
+        }
+        private void cboWaiveChargesChanged()
         {
             bool WaiveCharges = (comboWaiveCharges.SelectedValue == "YES");
             divACCPTCHG.Visible = WaiveCharges;
