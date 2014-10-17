@@ -555,13 +555,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
 
                     //
-                    comboBeneficiaryType700.SelectedValue = dt.BeneficiaryType??"";
-                    txtBeneficiaryNo700.Text = dt.BeneficiaryNo;
-                    txtBeneficiaryName700.Text = dt.BeneficiaryName;
-                    txtBeneficiaryAddr700_1.Text = dt.BeneficiaryAddr1;
-                    txtBeneficiaryAddr700_2.Text = dt.BeneficiaryAddr2;
-                    txtBeneficiaryAddr700_3.Text = dt.BeneficiaryAddr3;
+                    
 
+                    //
+                    if (!String.IsNullOrEmpty(tbEssurLCCode.Text))
+                    {
+                        var dsbeneficiary = entContext.BIMPORT_NORMAILLC.Where(x => x.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
+                        if (dsbeneficiary != null)
+                        {
+                            txtBeneficiaryNo700.Text = dsbeneficiary.ApplicantId;
+                            txtBeneficiaryName700.Text = dsbeneficiary.ApplicantName;
+                            txtBeneficiaryAddr700_1.Text = dsbeneficiary.ApplicantAddr1;
+                            txtBeneficiaryAddr700_2.Text = dsbeneficiary.ApplicantAddr2;
+                            txtBeneficiaryAddr700_3.Text = dsbeneficiary.ApplicantAddr3;
+                            
+                        }
+                    }
+                    comboBeneficiaryType700.SelectedValue = dt.BeneficiaryType ?? "";
+                    //
                     comboCurrency700.SelectedValue = dt.Currency??"";
                     numAmount700.Value = (double?)dt.Amount;
                     numPercentCreditAmount1.Value = (double?)dt.PercentageCredit;
@@ -820,14 +831,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 tbApplicantAddr700_2.Text = BMT700.BeneficiaryAddr2;
                                 tbApplicantAddr700_3.Text = BMT700.BeneficiaryAddr3;
 
-                                comboBeneficiaryType700.SelectedValue = BMT700.ApplicantType ?? "";
-                                txtBeneficiaryNo700.Text = BMT700.ApplicantNo;
-                                txtBeneficiaryName700.Text = BMT700.ApplicantName;
-                                txtBeneficiaryAddr700_1.Text = BMT700.ApplicantAddr1;
-                                txtBeneficiaryAddr700_2.Text = BMT700.ApplicantAddr2;
-                                txtBeneficiaryAddr700_3.Text = BMT700.ApplicantAddr3;
-
+                                //comboBeneficiaryType700.SelectedValue = BMT700.ApplicantType ?? "";
+                                //txtBeneficiaryNo700.Text = BMT700.ApplicantNo;
+                                //txtBeneficiaryName700.Text = BMT700.ApplicantName;
+                                //txtBeneficiaryAddr700_1.Text = BMT700.ApplicantAddr1;
+                                //txtBeneficiaryAddr700_2.Text = BMT700.ApplicantAddr2;
+                                //txtBeneficiaryAddr700_3.Text = BMT700.ApplicantAddr3;
+                                //
+                                if (BM != null)
+                                {
+                                    txtBeneficiaryNo700.Text = BM.ApplicantId;
+                                    txtBeneficiaryName700.Text = BM.ApplicantName;
+                                    txtBeneficiaryAddr700_1.Text = BM.ApplicantAddr1;
+                                    txtBeneficiaryAddr700_2.Text = BM.ApplicantAddr2;
+                                    txtBeneficiaryAddr700_3.Text = BM.ApplicantAddr3;
                                     
+                                }
+                                //
+                                comboBeneficiaryType700.SelectedValue = BMT700.BeneficiaryType ?? "";    
                                 
                                 //drawee type load nguoc
                                 comboDraweeCusType.SelectedValue = BMT700.DraweeType ?? "";
