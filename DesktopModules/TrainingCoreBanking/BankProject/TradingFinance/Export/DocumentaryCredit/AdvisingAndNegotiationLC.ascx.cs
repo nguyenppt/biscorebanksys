@@ -85,7 +85,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 tbEssurLCCode.Enabled = true;
                 LoadData();
             }
-
+            else if (Request.QueryString["CodeID"] != null)
+            {
+                tbEssurLCCode.Text = Request.QueryString["CodeID"];
+                LoadData();
+                //SetVisibilityByStatus(ref dataRow);
+                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            }
             switch (ScreenType)
             {
                 case AdvisingAndNegotiationScreenType.Register:
