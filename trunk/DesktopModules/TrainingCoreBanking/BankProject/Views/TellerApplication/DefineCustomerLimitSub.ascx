@@ -260,12 +260,12 @@
                 </td>
                 <td class="MyLable">Amt Secured:</td>
                 <td class="MyContent">
-                    <asp:Label ID="lblAmtSecured" runat="server" />
+                    <asp:Label ID="lblAmtSecured" runat="server" ForeColor="Black" />
                 </td>
             </tr> <tr>
                 <td class="MyLable">Total Limit:</td>
                 <td class="MyContent">
-                    <asp:Label ID="lblOnlineLimit" runat="server" />
+                    <asp:Label ID="lblOnlineLimit" runat="server" ForeColor="Black" />
                 </td>
                 <td class="MyLable"></td>
                 <td class="MyContent"></td>
@@ -273,11 +273,11 @@
             <tr>
                 <td class="MyLable">Available Amount:</td>
                 <td class="MyContent">
-                    <asp:Label ID="lblAvailableAmt" runat="server" />
+                    <asp:Label ID="lblAvailableAmt" runat="server" ForeColor="Black" />
                 </td>
                 <td class="MyLable">Total Outstand:</td>
                 <td class="MyContent">
-                    <asp:Label ID="lblTotalOutstand" runat="server" />
+                    <asp:Label ID="lblTotalOutstand" runat="server" ForeColor="Black" />
                 </td>
             </tr>
             <tr style="visibility:hidden;">

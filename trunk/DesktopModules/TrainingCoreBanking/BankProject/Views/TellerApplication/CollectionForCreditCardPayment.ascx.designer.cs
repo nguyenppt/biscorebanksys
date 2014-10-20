@@ -235,7 +235,7 @@ namespace BankProject.Views.TellerApplication {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtCreditCardNumber;
+        protected global::Telerik.Web.UI.RadTextBox txtCreditCardNumber;
         
         /// <summary>
         /// cmbWaiveCharges control.
