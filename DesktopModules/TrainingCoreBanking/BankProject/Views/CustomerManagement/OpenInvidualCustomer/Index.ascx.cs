@@ -198,7 +198,11 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                 case "commit":
                     if (CommitSaveAcctoDB())
                     { Response.Redirect(string.Format("Default.aspx?tabid={0}&mid={1}", TabId, ModuleId)); }
-                    //BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                    if (TriTT.OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists("", "P", txtDocID.Text).Tables[0].Rows[0]["Exists"].ToString() == "YES")
+                    {
+                        ShowMsgBox("This Doc ID is existed. Please check again !");
+                        return;
+                    }
                 break;
                 case "preview":
                     string[] param = new string[1];
@@ -206,11 +210,6 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                     Response.Redirect(EditUrl("", "", "Index_ListReview", param));
                 break;
                 case "authorize":
-                if (TriTT.OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists("", "P",txtDocID.Text).Tables[0].Rows[0]["Exists"].ToString() == "YES")
-                    {
-                        ShowMsgBox("This Doc ID is existed. Please check again !");
-                        return;
-                    }
                     SavingAccount_SQL.AuthorizeIndividualCustomerAccount(CustomerIDToReview);
                     Response.Redirect(string.Format("Default.aspx?tabid={0}&mid={1}", TabId, ModuleId));
                 break;
