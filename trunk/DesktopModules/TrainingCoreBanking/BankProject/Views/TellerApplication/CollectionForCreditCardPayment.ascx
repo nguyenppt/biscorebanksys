@@ -57,7 +57,7 @@
 
         CreditAccountElement.enabled = true;
         CreditAccountElement.enable();
-        
+
         var debititem = CreditAccountElement.findItemByValue(DebitcurrencyDepositedElement.get_value());
         if (debititem != null) {
             CreditAccountElement.trackChanges();
@@ -67,8 +67,7 @@
             CreditAccountElement.enabled = false;
             CreditAccountElement.commitChanges();
         }
-        if (DebitAccountValue == "" || CreditcurrencyDepositedValue == "")
-        {
+        if (DebitAccountValue == "" || CreditcurrencyDepositedValue == "") {
             $find("<%=tbCreditAmt.ClientID%>").set_value("");
         }
         //if (DebitcurrencyDepositedValue && DebitAccountValue ) {
@@ -133,7 +132,7 @@
         var IsssuedDateElement = $find("<%= tbIssueDate.ClientID %>");
         if (customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate") != "01/01/1900") {
             //var datesplit = customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate").split('/');
-            
+
             IsssuedDateElement.set_value(customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate"));
             //IsssuedDateElement.set_selectedDate(new Date(datesplit[2].substring(0, 4), datesplit[1], datesplit[0]));
         } else IsssuedDateElement.set_value("");
@@ -402,9 +401,9 @@
                         ErrorMessage="Credit Card Number is Required" ForeColor="Red">
                     </asp:RequiredFieldValidator></td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtCreditCardNumber" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator=""
+                    <telerik:RadTextBox ID="txtCreditCardNumber" MaxLength="20" width="250"
                         runat="server" ValidationGroup="Group1">
-                    </telerik:RadNumericTextBox>
+                    </telerik:RadTextBox>
                 </td>
             </tr>
             <tr>

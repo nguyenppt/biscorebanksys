@@ -199,7 +199,7 @@
                             ForeColor="Red" ErrorMessage="Credit Card Number is Required !"/>
                     </td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox ID="tbCreditCardNum" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator=""
+                        <telerik:RadTextBox ID="tbCreditCardNum" MaxLength="20" width="250"
                              runat="server" ValidationGroup="Group1" />
                     </td>
                     <td class="MyLable"></td>
