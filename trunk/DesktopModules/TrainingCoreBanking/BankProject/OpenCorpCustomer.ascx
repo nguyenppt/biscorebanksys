@@ -599,8 +599,8 @@
                 </td>
                 <td class="MyContent">
                     <telerik:radtextbox id="txtCustomerLiability" width="200" runat="server"></telerik:radtextbox>
-                </td>
-
+                </td> </tr>
+                <tr style="visibility:hidden;">
                 <td class="MyLable">
                     Legacy Ref
                 </td>
