@@ -35,7 +35,6 @@ namespace BankProject.Views.TellerApplication
                         rdpIssuedDate.SelectedDate, tbChequeNo.Text.Length == 0 ? 0 : tbChequeNo.Value.Value);
                     RadGridView.DataBind();
                 }
-                
             }
         }
         public string geturlReview(string ChequeID)

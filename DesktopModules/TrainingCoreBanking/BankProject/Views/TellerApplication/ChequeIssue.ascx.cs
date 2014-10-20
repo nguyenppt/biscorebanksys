@@ -37,10 +37,10 @@ namespace BankProject.Views.TellerApplication
             if (commandName == "commit")
             {
                 string ChequeID = tbChequeID.Text.Trim();
-                if (ChequeID.Length == 24 && ChequeID.Substring(2, 1) == "." && ChequeID.Substring(17, 1) == ".")
+                if (ChequeID.Length == 22 && ChequeID.Substring(2, 1) == "." && ChequeID.Substring(15, 1) == ".")
                 {
                     string ChequeType = ChequeID.Substring(0, 2);
-                    string WorkingAcct = ChequeID.Substring(3, 14);
+                    string WorkingAcct = ChequeID.Substring(3, 12);
                     string[] ChequeStatus = rcbChequeStatus.Text.Split('-');
                     TriTT.B_CHEQUEISSUE_Insert_Update(ChequeID, WorkingAcct, ChequeType, ChequeStatus[0].Trim(), ChequeStatus[1].Trim()
                         , rcbCurrency.SelectedValue, rdpIssueDate.SelectedDate, tbQuantityOfIssued.Value.Value, tbChequeNoStart.Value.Value, tbChequeNoStart.Value.Value + tbQuantityOfIssued.Value.Value - 1,
@@ -85,12 +85,12 @@ namespace BankProject.Views.TellerApplication
         #region Help Method
         protected void LoadCheque(string ChequeID)
         {
-            if (ChequeID.Length == 24 && ChequeID.Substring(2, 1) == "." && ChequeID.Substring(17, 1) == ".")
+            if (ChequeID.Length == 22 && ChequeID.Substring(2, 1) == "." && ChequeID.Substring(15, 1) == ".")
             {
                 BankProject.Controls.Commont.SetEmptyFormControls(this.Controls); //f5 form de load tiep du lieu
                 FirstLoad();
                 tbChequeID.Text = ChequeID;
-                var WorkingAcctID = ChequeID.Substring(3, 14);
+                var WorkingAcctID = ChequeID.Substring(3, 12);
                 DataSet ds =TriTT.B_CHEQUEISSUE_Check_WorkingAcct(WorkingAcctID,"VND");
                 if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
                 {
@@ -129,7 +129,7 @@ namespace BankProject.Views.TellerApplication
             }
             else
             {
-                ShowMsgBox("Cheque ID is incorrect, please check again, Cheque ID length is 24 characters"); return;
+                ShowMsgBox("Cheque ID is incorrect, please check again, Cheque ID length is 22 characters"); return;
             }
         }
         #endregion
