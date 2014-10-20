@@ -89,12 +89,12 @@
     <telerik:RadGrid id="RadGrid" runat="server" AllowPaging="true" AutoGenerateColumns="false" OnNeedDataSource="RadGrid_OnNeedDataSource">
         <MasterTableView>
             <columns>
-                <telerik:GridBoundColumn HeaderText="MainLimit ID" DataField="MainLimitID" />
-                <telerik:GridBoundColumn HeaderText="SubLimit ID" DataField="SubLimitID" />
+                <telerik:GridBoundColumn HeaderText="Global Limit" DataField="MainLimitID" />
+                <telerik:GridBoundColumn HeaderText="Product Limit" DataField="SubLimitID" />
                 <telerik:GridBoundColumn HeaderText="Product" DataField="Product" />
                 <telerik:GridBoundColumn HeaderText="Customer Name" DataField="CustomerName" />
                 <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" ItemStyle-horizontalAlign="center"  HeaderStyle-horizontalAlign="center" />
-                <telerik:GridBoundColumn HeaderText="InternalLimitAmt" DataField="InternalLimitAmt"  headerStyle-HorizontalAlign="right"
+                <telerik:GridBoundColumn HeaderText="Internal Limit Amt" DataField="InternalLimitAmt"  headerStyle-HorizontalAlign="right"
                     ItemStyle-HorizontalAlign="right" />
                  <telerik:GridBoundColumn HeaderText="Max Total" DataField="MaxTotal"  headerStyle-HorizontalAlign="right"
                     ItemStyle-HorizontalAlign="right" />
