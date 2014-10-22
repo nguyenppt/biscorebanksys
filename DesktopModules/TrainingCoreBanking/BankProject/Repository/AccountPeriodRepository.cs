@@ -209,7 +209,7 @@
                 BeginPeriod = entity.BeginPeriod,
                 EndPeriod = entity.EndPeriod,
                 UserId = entity.UserId,
-                Username = userInfo.Username,
+                Username = userInfo == null ? "(Deleted)" : userInfo.Username,
                 IsEnabled = entity.IsEnabled,
                 IsBlocked = entity.IsBlocked,
                 WorkingDay = (WorkingDay)entity.WorkingDay,
