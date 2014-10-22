@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.ObjectModel;
+    using System.Configuration;
     using System.Linq;
     using System.Threading;
 
@@ -13,7 +14,27 @@
     public class SessionManagment : IDisposable
     {
         private static readonly Lazy<SessionManagment> LazySessionManagement =
-            new Lazy<SessionManagment>(() => new SessionManagment(new AccountPeriodRepository()));
+            new Lazy<SessionManagment>(
+                () =>
+                {
+                    var timeToLiveString = ConfigurationManager.AppSettings["SessionManagement_TimeToLive"];
+                    var autoReleaseIntervalString = ConfigurationManager.AppSettings["SessionManagement_AutoReleaseInterval"];
+
+                    TimeSpan timeToLive, autoReleaseInterval;
+                    if (!TimeSpan.TryParse(timeToLiveString, out timeToLive))
+                    {
+                        timeToLive = TimeSpan.FromMinutes(5);
+                    }
+
+                    if (!TimeSpan.TryParse(autoReleaseIntervalString, out autoReleaseInterval))
+                    {
+                        autoReleaseInterval = TimeSpan.FromMinutes(5);
+                    }
+
+                    var sessionManagement = new SessionManagment(timeToLive, autoReleaseInterval, new AccountPeriodRepository());
+                    sessionManagement.Start();
+                    return sessionManagement;
+                });
 
         private readonly IAccountPeriodRepository accountPeriodRepository;
 
