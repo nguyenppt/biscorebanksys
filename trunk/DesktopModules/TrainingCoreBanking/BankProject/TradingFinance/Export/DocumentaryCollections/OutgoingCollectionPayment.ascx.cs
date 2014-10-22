@@ -6,11 +6,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BankProject.DataProvider;
+using bd = BankProject.DataProvider;
 using DotNetNuke.Common;
 using DotNetNuke.Common.Utilities;
 using Telerik.Web.UI;
 using BankProject.DBContext;
+using bc = BankProject.Controls;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCollections
 {
@@ -262,16 +263,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtIntermediaryAddress2.Text = mt910.IntermediaryAddress2;
                 txtIntermediaryAddress3.Text = mt910.IntermediaryAddress3;
                 txtSendMessage.Text = mt910.SendMessage;
+                cboNostroAcct.SelectedValue = mt910.NostroAccount;
             }
         }
         private void SaveMT910()
         {
-            var mt910 = _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.FirstOrDefault(q => q.PaymentId == CodeId);
+            var mt910 = _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.FirstOrDefault(q => q.PaymentId == txtCode.Text);
             if (mt910 == null)
             {
                 mt910 = new BOUTGOINGCOLLECTIONPAYMENTMT910();
                 mt910.Id = Guid.NewGuid();
-                mt910.PaymentId = CodeId;
+                mt910.PaymentId = txtCode.Text;
                 mt910.TransactionReferenceNumber = txtTransactionRefNumber.Text;
                 mt910.RelatedReference = txtRelatedRef.Text;
                 mt910.AccountIndentification = txtAccountIndentification.Text;
@@ -287,6 +289,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 mt910.IntermediaryAddress2 = txtIntermediaryAddress2.Text;
                 mt910.IntermediaryAddress3 = txtIntermediaryAddress3.Text;
                 mt910.SendMessage = txtSendMessage.Text;
+                mt910.NostroAccount = cboNostroAcct.SelectedValue;
                 _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.Add(mt910);
             }
             else
@@ -406,6 +409,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             txtPaymentRemarks1.Text = outColPayment.PaymentRemarks1;
             txtPaymentRemarks2.Text = outColPayment.PaymentRemarks2;
             LoadCharges();
+            bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(outColPayment.Currency)).ToList());
         }
         private void LoadPayment()
         {
@@ -722,6 +726,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDraweeAddr3.Text = expDoc.DraweeAddr3;
                 comboNostroCusNo.SelectedValue = expDoc.NostroCusNo;
                 lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
+                comboCreditCurrency.SelectedValue = expDoc.Currency;
                 comboCurrency.SelectedValue = expDoc.Currency;
                 numAmount.Value = expDoc.Amount;
                 txtTenor.Text = expDoc.Tenor;
@@ -761,6 +766,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 {
                     dteTracerDate.SelectedDate = expDoc.TracerDate.Value;
                 }
+                bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(expDoc.Currency)).ToList());//
+                //cboNostroAcct
                 #endregion
             }
             else
@@ -815,7 +822,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void LoadDataSourceComboPartyCharged()
         {
-            var dtSource = SQLData.CreateGenerateDatas("PartyCharged");
+            var dtSource = bd.SQLData.CreateGenerateDatas("PartyCharged");
 
             rcbPartyCharged.Items.Clear();
             rcbPartyCharged.DataValueField = "Id";
@@ -906,8 +913,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboDrawType.Items.Clear();
             comboDrawType.DataValueField = "ID";
             comboDrawType.DataTextField = "ID";
-            comboDrawType.DataSource =
-                SQLData.CreateGenerateDatas("OutgoingPayment_TabMain_DrawType");
+            comboDrawType.DataSource = bd.SQLData.CreateGenerateDatas("OutgoingPayment_TabMain_DrawType");
             comboDrawType.DataBind();
             lblDrawType.Text = comboDrawType.SelectedItem.Attributes["Description"];
 
@@ -917,8 +923,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboCollectionType.Items.Clear();
             comboCollectionType.DataValueField = "ID";
             comboCollectionType.DataTextField = "ID";
-            comboCollectionType.DataSource =
-                SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_CollectionType");
+            comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_CollectionType");
             comboCollectionType.DataBind();
             lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
 
@@ -950,28 +955,28 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboDocsCode1.Items.Add(new RadComboBoxItem(""));
             comboDocsCode1.DataValueField = "Id";
             comboDocsCode1.DataTextField = "Description";
-            comboDocsCode1.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            comboDocsCode1.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             comboDocsCode1.DataBind();
 
             comboDocsCode2.Items.Clear();
             comboDocsCode2.Items.Add(new RadComboBoxItem(""));
             comboDocsCode2.DataValueField = "Id";
             comboDocsCode2.DataTextField = "Description";
-            comboDocsCode2.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            comboDocsCode2.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             comboDocsCode2.DataBind();
 
             comboDocsCode3.Items.Clear();
             comboDocsCode3.Items.Add(new RadComboBoxItem(""));
             comboDocsCode3.DataValueField = "Id";
             comboDocsCode3.DataTextField = "Description";
-            comboDocsCode3.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            comboDocsCode3.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             comboDocsCode3.DataBind();
 
             comboCommodity.Items.Clear();
             comboCommodity.Items.Add(new RadComboBoxItem(""));
             comboCommodity.DataValueField = "ID";
             comboCommodity.DataTextField = "ID";
-            comboCommodity.DataSource = DataTam.B_BCOMMODITY_GetAll();
+            comboCommodity.DataSource = bd.DataTam.B_BCOMMODITY_GetAll();
             comboCommodity.DataBind();
 
             tbChargeCode.SelectedValue = "EC.RECEIVE";
@@ -983,9 +988,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             tbChargeCode4.SelectedValue = "EC.PAYMENT";
             tbChargeCode4.Enabled = false;
 
+            var curList = _entities.BCURRENCies.ToList();
+            bc.Commont.initRadComboBox(ref comboCreditCurrency, "Code", "Code", curList);
+            bc.Commont.initRadComboBox(ref comboCurrency, "Code", "Code", curList);
+            bc.Commont.initRadComboBox(ref comboCurrencyMt910, "Code", "Code", curList);
+
             #region MT910
 
-            dtValueDateMt910.SelectedDate = DateTime.Now.Date;
+            dtValueDateMt910.SelectedDate = DateTime.Now.Date;            
 
             #endregion
         }
@@ -996,7 +1006,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboCreditAcct.Items.Add(new RadComboBoxItem(""));
             comboCreditAcct.DataValueField = "Id";
             comboCreditAcct.DataTextField = "Id";
-            comboCreditAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, comboCreditCurrency.SelectedValue);
+            comboCreditAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, comboCreditCurrency.SelectedValue);
             comboCreditAcct.DataBind();
         }
         protected void commom_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -1256,7 +1266,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct.DataValueField = "Id";
             rcbChargeAcct.DataTextField = "Id";
-            rcbChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy.SelectedValue);
+            rcbChargeAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy.SelectedValue);
             rcbChargeAcct.DataBind();
         }
 
@@ -1266,7 +1276,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct2.DataValueField = "Id";
             rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy2.SelectedValue);
+            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy2.SelectedValue);
             rcbChargeAcct2.DataBind();
         }
 
@@ -1276,7 +1286,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct3.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct3.DataValueField = "Id";
             rcbChargeAcct3.DataTextField = "Id";
-            rcbChargeAcct3.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy3.SelectedValue);
+            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy3.SelectedValue);
             rcbChargeAcct3.DataBind();
         }
         protected void LoadChargeAcct4()
@@ -1285,12 +1295,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct4.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct4.DataValueField = "Id";
             rcbChargeAcct4.DataTextField = "Id";
-            rcbChargeAcct4.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy4.SelectedValue);
+            rcbChargeAcct4.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy4.SelectedValue);
             rcbChargeAcct4.DataBind();
         }
         protected void GenerateVatNo()
         {
-            var vatno = Database.B_BMACODE_GetNewSoTT("VATNO");
+            var vatno = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
             tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
         }
         protected void comboDrawerCusNo_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -1298,6 +1308,63 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             var row = e.Item.DataItem as BCUSTOMER;
             e.Item.Attributes["CustomerID"] = row.CustomerID;
             e.Item.Attributes["CustomerName2"] = row.CustomerName;
+        }
+
+        private void showReport(int reportType)
+        {
+            string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/";
+            string reportSaveName = "";
+            DataSet reportData = null;
+            Aspose.Words.SaveFormat saveFormat = Aspose.Words.SaveFormat.Doc;
+            Aspose.Words.SaveType saveType = Aspose.Words.SaveType.OpenInApplication;
+            try
+            {
+                reportData = bd.IssueLC.ExportLCPaymentReport(reportType, txtCode.Text, this.UserInfo.Username);
+                switch (reportType)
+                {
+                    case 1://PhieuChuyenKhoan
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "PaymentPhieuChuyenKhoan.doc");
+                        reportSaveName = "PhieuChuyenKhoan" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        break;
+                    case 2://VAT B
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "PaymentVAT.doc");
+                        reportSaveName = "VAT" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        break;
+                }
+                if (reportData != null)
+                {
+                    try
+                    {
+                        reportData.Tables[0].TableName = "Table1";
+                        bc.Reports.createFileDownload(reportTemplate, reportData, reportSaveName, saveFormat, saveType, Response);
+                    }
+                    catch (Exception err)
+                    {
+                        lblError.Text = reportData.Tables[0].TableName + "#" + err.Message;
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                lblError.Text = err.Message;
+            }
+        }
+        protected void btnReportPhieuChuyenKhoan_Click(object sender, EventArgs e)
+        {
+            showReport(1);
+        }
+        protected void btnReportVATb_Click(object sender, EventArgs e)
+        {
+            showReport(2);
+        }
+
+        protected void cboNostroAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        {
+            var row = e.Item.DataItem as DataRowView;
+            if (row == null) return;
+            e.Item.Attributes["Code"] = row["Code"].ToString();
+            e.Item.Attributes["Description"] = row["Description"].ToString();
+            e.Item.Attributes["Account"] = row["AccountNo"].ToString();
         }
     }
 }

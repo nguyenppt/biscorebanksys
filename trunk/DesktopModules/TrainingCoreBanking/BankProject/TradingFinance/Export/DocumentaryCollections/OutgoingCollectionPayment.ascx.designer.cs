@@ -688,6 +688,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         protected global::System.Web.UI.WebControls.TextBox txtAccountIndentification;
         
         /// <summary>
+        /// cboNostroAcct control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cboNostroAcct;
+        
+        /// <summary>
+        /// lblNostroAcctName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNostroAcctName;
+        
+        /// <summary>
         /// dtValueDateMt910 control.
         /// </summary>
         /// <remarks>
@@ -1307,5 +1325,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadCodeBlock RadCodeBlock1;
+        
+        /// <summary>
+        /// btnReportPhieuChuyenKhoan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnReportPhieuChuyenKhoan;
+        
+        /// <summary>
+        /// btnReportVATb control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnReportVATb;
     }
 }
