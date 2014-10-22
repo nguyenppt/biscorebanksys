@@ -12,7 +12,6 @@ namespace BankProject.SessionManagment
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Users;
-
     using Telerik.Web.UI;
 
     public partial class EditAccountPeriod : PortalModuleBase

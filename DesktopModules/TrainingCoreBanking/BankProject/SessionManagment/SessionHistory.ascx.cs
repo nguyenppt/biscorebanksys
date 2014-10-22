@@ -9,6 +9,7 @@ namespace BankProject.SessionManagment
 
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Users;
+    using DotNetNuke.UI.UserControls;
 
     using Telerik.Web.UI;
 
@@ -20,14 +21,16 @@ namespace BankProject.SessionManagment
         {
             if (!this.Page.IsPostBack)
             {
-                this.cboUsername.DataSource = UserController.GetUsers(0);
+                var users = UserController.GetUsers(0);
+                users.Insert(0, new UserInfo() { Username = string.Empty });
+                this.cboUsername.DataSource = users;
                 this.cboUsername.DataBind();
             }
         }
 
         protected void radGrid_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            radGrid.DataSource = this.GetDataSource();
+            this.Search(false);
         }
 
         private IEnumerable<Entity.Administration.SessionHistory> GetDataSource()
@@ -75,12 +78,22 @@ namespace BankProject.SessionManagment
             this.Search();
         }
 
-        private void Search()
+        private void Search(bool dataBind = true)
         {
             var username = this.cboUsername.Text;
             int? userId = null;
             var fromDate = this.rdpkFromDate.SelectedDate;
             var toDate = this.rdpkToDate.SelectedDate;
+
+            if (fromDate == null && toDate == null)
+            {
+                fromDate = DateTime.Today;
+                toDate = DateTime.Today;
+
+                this.rdpkFromDate.SelectedDate = fromDate;
+                this.rdpkToDate.SelectedDate = toDate;
+            }
+
             var sessionHistoryRepository = new SessionHistoryRepository();
 
             if (!string.IsNullOrEmpty(username))
@@ -97,7 +110,10 @@ namespace BankProject.SessionManagment
             }
 
             radGrid.DataSource = sessionHistoryRepository.GetSessionHistories(userId, fromDate, toDate);
-            radGrid.DataBind();
+            if (dataBind)
+            {
+                radGrid.DataBind();  
+            }
         }
     }
 }
