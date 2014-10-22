@@ -79,10 +79,10 @@
                     <ItemStyle Width="100" />
                 </telerik:GridBoundColumn>
                 <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" >
-                    <ItemStyle Width="100" HorizontalAlign="Right" />
+                    <ItemStyle Width="100"  />
                 </telerik:GridBoundColumn>
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" >
-                    <ItemStyle Width="100" HorizontalAlign="Center" />
+                    <ItemStyle Width="100"  />
                 </telerik:GridBoundColumn>
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="25" />
