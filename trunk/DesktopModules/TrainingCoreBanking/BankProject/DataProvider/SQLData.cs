@@ -1431,7 +1431,8 @@ namespace BankProject.DataProvider
                                                      , string CustomerReceiving
                                                      , string CustomerPaying
                                                      , string AccountOfficer
-                                                     , int CurrentUserId)
+                                                     , int CurrentUserId
+            , string comment1, string comment2, string comment3)
         {
             sqldata.ndkExecuteNonQuery("B_BFOREIGNEXCHANGE_Insert", Code
                                        , TransactionType
@@ -1449,7 +1450,10 @@ namespace BankProject.DataProvider
                                        , CustomerReceiving
                                        , CustomerPaying
                                        , AccountOfficer
-                                       , CurrentUserId);
+                                       , CurrentUserId
+                                       , comment1
+                                       , comment2
+                                       , comment3);
         }
 
         public static void B_BFOREIGNEXCHANGE_UpdateStatus(string CommandName, string Code, int CurrentUserId)
@@ -2472,6 +2476,11 @@ namespace BankProject.DataProvider
                                                                                 , ShipmentPeriod6
                                                                                 , SenderReceiverInfomation5
                                                                                 , SenderReceiverInfomation6);
+        }
+
+        public static DataSet B_BFOREIGNEXCHANGE_Report(string code, string username)
+        {
+            return sqldata.ndkExecuteDataset("B_BFOREIGNEXCHANGE_Report", code, username);
         }
     }
 }

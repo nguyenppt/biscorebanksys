@@ -130,5 +130,10 @@ namespace BankProject.DataProvider
                 AccountWithInstitutionAddr1, AccountWithInstitutionAddr2, AccountWithInstitutionAddr3, BeneficiaryBankType, BeneficiaryBankName,
                 BeneficiaryBankAddr1, BeneficiaryBankAddr2, BeneficiaryBankAddr3, SenderToReceiverInformation2, SenderToReceiverInformation3);
         }
+
+        public static DataSet ExportLCPaymentReport(int ReportType, string PaymentId, string UserId)
+        {
+            return sqldata.ndkExecuteDataset("P_ExportLCPaymentReport", ReportType, PaymentId, UserId);
+        }
     }
 }
