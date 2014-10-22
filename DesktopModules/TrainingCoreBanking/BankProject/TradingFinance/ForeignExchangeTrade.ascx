@@ -1,19 +1,36 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ForeignExchangeTrade.ascx.cs" Inherits="BankProject.Views.TellerApplication.ForeignExchangeTrade" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"  />
 
+<telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
 <script type="text/javascript">
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
     });
 
+    function RadToolBar1_OnClientButtonClicking(sender, args) {
+        var button = args.get_item();
+
+        if (button.get_commandName() == "print") {
+            args.set_cancel(true);
+            radconfirm("Do you want to download file?", confirmCallbackFunctionVAT, 340, 150, null, 'Download');
+        }
+    }
+
+    function confirmCallbackFunctionVAT(result) {
+        if (result) {
+            $("#<%=btnReport.ClientID %>").click();
+            }
+        }
+
 </script>
+</telerik:RadCodeBlock>
+
 <div>
     <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
-       OnClientButtonClicking="OnClientButtonClicking"   OnButtonClick="RadToolBar1_ButtonClick">
+       OnClientButtonClicking="RadToolBar1_OnClientButtonClicking"   OnButtonClick="RadToolBar1_ButtonClick">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
@@ -279,17 +296,28 @@
                 </td>
             </tr>
         </table> 
+
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Comment</td>
-                <td class="MyContent" style="width:350px; ">
-                    <telerik:RadTextBox ID="txtComment" Width="350"
-                        runat="server"  />
+                <td class="MyContent" >
+                    <telerik:RadTextBox ID="txtComment1" Width="350" runat="server" MaxLength="35" />
                 </td>
-                <td><a class="add">
-                    <img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
+            </tr>
+            <tr>
+                <td class="MyLable"></td>
+                <td class="MyContent" >
+                    <telerik:RadTextBox ID="txtComment2" Width="350" runat="server"  MaxLength="35"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable"></td>
+                <td class="MyContent">
+                    <telerik:RadTextBox ID="txtComment3" Width="350" runat="server"  MaxLength="35"/>
+                </td>
             </tr>
         </table>
+
          <table width="100%" cellpadding="0" cellspacing="0" style="display: none;">
             <tr>
                 <td class="MyLable">Desk</td>
@@ -593,3 +621,4 @@ function () {
 </telerik:RadCodeBlock>
 <div style="visibility: hidden;">
     <asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" /></div>
+<div style="visibility:hidden;"><asp:Button ID="btnReport" runat="server" OnClick="btnReport_Click" Text="Search" /></div>
