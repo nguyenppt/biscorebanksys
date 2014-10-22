@@ -10,7 +10,22 @@
         });
         function MainToolbar_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
-            if (button.get_commandName() == "save") {
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
+                args.set_cancel(true);
+                radconfirm("Do you want to download PHIEU CHUYEN KHOAN file ?", confirmCallbackFunction_PhieuChuyenKhoan, 420, 150, null, 'Download');
+            }
+        }
+        function confirmCallbackFunction_PhieuChuyenKhoan(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnReportPhieuChuyenKhoan.ClientID %>").click();
+            }
+            radconfirm("Do you want to download PHIEU VAT ?", confirmCallbackFunction_PhieuVAT, 365, 150, null, 'Download');
+        }
+        function confirmCallbackFunction_PhieuVAT(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnReportVATb.ClientID %>").click();
             }
         }
     </script>
@@ -34,7 +49,7 @@
             ToolTip="Search" Value="btSearch" CommandName="search">
         </telerik:RadToolBarButton>
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
+            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" postback="false">
         </telerik:RadToolBarButton>
     </items>
 </telerik:RadToolBar>
@@ -866,6 +881,18 @@
                     <td class="MyContent">
                         <asp:TextBox ID="txtAccountIndentification" runat="server" Width="300" />
                     </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">Nostro Acct</td>
+                    <td class="MyContent">
+                        <telerik:radcombobox AutoPostBack="false"
+                            OnItemDataBound="cboNostroAcct_ItemDataBound"
+                            id="cboNostroAcct" runat="server"
+                            markfirstmatch="True" width="300"
+                            allowcustomtext="false">
+                            <ExpandAnimation Type="None" />
+                            <CollapseAnimation Type="None" />                            
+                        </telerik:radcombobox> <asp:Label ID="lblNostroAcctName" runat="server" /></td>
                 </tr>
                 <tr>
                     <td class="MyLable">Value Date</td>
@@ -1778,3 +1805,7 @@
         });
     </script>
 </telerik:RadCodeBlock>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnReportPhieuChuyenKhoan" runat="server" OnClick="btnReportPhieuChuyenKhoan_Click" Text="PhieuChuyenKhoan" /></div>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnReportVATb" runat="server" OnClick="btnReportVATb_Click" Text="VATb" /></div>
