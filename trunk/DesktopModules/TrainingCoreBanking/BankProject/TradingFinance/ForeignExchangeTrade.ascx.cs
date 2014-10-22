@@ -50,6 +50,8 @@ namespace BankProject.Views.TellerApplication
 
                 //dvAudit.Visible = true;
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
+
+                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
             }
             else 
             {
@@ -126,7 +128,10 @@ namespace BankProject.Views.TellerApplication
                     , txtCustomerReceivingAC.Text.Trim()
                     , txtCustomerPayingAC.Text.Trim()
                     , rcbAccountOfficer.SelectedValue
-                    , UserId);
+                    , UserId
+                    , txtComment1.Text
+                    , txtComment2.Text
+                    , txtComment3.Text);
 
                 BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                 SetDefault(false);
@@ -192,6 +197,10 @@ namespace BankProject.Views.TellerApplication
                         txtCustomerReceivingAC.Text = drow["CustomerReceiving"].ToString();
                         txtCustomerPayingAC.Text = drow["CustomerPaying"].ToString();
                         rcbAccountOfficer.SelectedValue = drow["AccountOfficer"].ToString();
+
+                        txtComment1.Text = drow["Comment1"].ToString();
+                        txtComment2.Text = drow["Comment2"].ToString();
+                        txtComment3.Text = drow["Comment3"].ToString();
                     }
                     else
                     {
@@ -408,6 +417,25 @@ namespace BankProject.Views.TellerApplication
             dtSource.Rows.Add(drow);
 
             return dtSource;
+        }
+
+        protected void btnReport_Click(object sender, EventArgs e)
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+
+            //Open template
+            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/FX_VAT.doc");
+            //Open the template document
+            Aspose.Words.Document doc = new Aspose.Words.Document(path);
+            //Execute the mail merge.
+            DataSet ds = new DataSet();
+            ds = SQLData.B_BFOREIGNEXCHANGE_Report(txtId.Text, UserInfo.Username);
+
+            // Fill the fields in the document with user data.
+            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
+            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
+            doc.Save("FX_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
     }
 }
