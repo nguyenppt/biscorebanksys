@@ -10,6 +10,7 @@ using System.Data;
 using BankProject.Entity;
 using BankProject.Entity.SavingAcc;
 using System.Globalization;
+using BankProject.DBRespository;
 
 namespace BankProject.TellerApplication.AccountManagement.CurrentNonTermSavingAC.SalaryPayment
 {
@@ -69,7 +70,8 @@ namespace BankProject.TellerApplication.AccountManagement.CurrentNonTermSavingAC
         #region private methode
         private void GenerateDepositeCode()
         {
-            tbDepositCode.Text = SavingAccountDAO.B_BMACODE_SalaryPayment(); 
+            //tbDepositCode.Text = SavingAccountDAO.B_BMACODE_SalaryPayment();
+            tbDepositCode.Text = tbReferID.Text = generateCode();
         }
         private void LoadToolBar()
         {
@@ -540,7 +542,16 @@ namespace BankProject.TellerApplication.AccountManagement.CurrentNonTermSavingAC
                 TermCheck.Visible = false;
             }
             if (IsPostBack) return;
-            GenerateDepositeCode();
+
+            if (Request.Params["RefId"] != null)
+            {
+                tbReferID.Text = Request.Params["RefId"];
+            }
+            else
+            {
+                GenerateDepositeCode();
+            }
+           
             LoadToolBar();
             LoadDataForDropdowns();
             rdpFrequency.SelectedDate = DateTime.Now;
@@ -551,8 +562,12 @@ namespace BankProject.TellerApplication.AccountManagement.CurrentNonTermSavingAC
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
             }
         }
-        
-       
+
+        private string generateCode()
+        {
+            StoreProRepository storePro = new StoreProRepository();
+            return storePro.StoreProcessor().B_BMACODE_GetNewID("SALARY_PAYMENT", "TT", ".").First<string>();
+        }
        
 
         

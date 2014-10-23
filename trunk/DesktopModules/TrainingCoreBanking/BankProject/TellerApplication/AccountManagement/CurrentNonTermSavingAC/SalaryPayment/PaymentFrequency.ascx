@@ -46,8 +46,15 @@ div.Upload .ruFakeInput
 </telerik:RadToolBar>
 
 <div>
-    <table width="100%" cellpadding="0" cellspacing="0" style="padding-left:10px;padding-bottom:20px">
+    <table style="width: 100%; padding: 0px" >
+         <tr>
+             <td class="MyLable" style="padding:10px 0 5px 17px; ">Reference ID:</b></td>
+            <td style="padding-top:10px;padding-left:10px">
+                <asp:TextBox Width="150" ID="tbReferID" runat="server" ValidationGroup="Group1" AutoPostBack="true" Enabled="false"/>
+            </td>
+        </tr>
         <tr>
+            <td class="MyLable" style="padding:5px 0 5px 17px; ">Company:</b></td>
             <td style="padding-top:10px;padding-left:10px" >  <asp:RequiredFieldValidator
                     runat="server" Display="None"
                     ID="RequiredFieldValidator1"
@@ -65,6 +72,7 @@ div.Upload .ruFakeInput
                     </telerik:RadComboBox></td>
             
         </tr>
+       
     </table>
 </div>
 
@@ -197,7 +205,7 @@ div.Upload .ruFakeInput
                         </td>
                         <td style="width:90px" >
                             <asp:ImageButton  ImageUrl="~/Icons/Sigma/Save_16X16_Standard.png"  OnClick="UpdateRow_Click" ID="UpdateRowData" runat="server" Text="Insert" />&nbsp;&nbsp;&nbsp
-                            <%--<asp:ImageButton ImageUrl="~/Icons/Sigma/Refresh_16x16_Standard.png" ID="CancelButton" runat="server" CommandName="Cancel" Text="Clear" />--%>
+                            <asp:ImageButton ImageUrl="~/Icons/Sigma/Refresh_16x16_Standard.png" ID="CancelButton" runat="server" CommandName="Cancel" Text="Clear" />
                         </td>
                     </tr>
                 <tr>
@@ -223,7 +231,7 @@ div.Upload .ruFakeInput
                                         <ItemStyle Width="100" />
                                         <ItemTemplate>
                                               <asp:ImageButton ID="ImageButton1" ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" runat="server" CommandName="DeleteRow" CommandArgument='<%# Eval("CreditAccount") %>' Text="Delete" />&nbsp;&nbsp;&nbsp
-                                              <%--<asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="EditButton" runat="server" CommandName="EditRow" CommandArgument='<%# Eval("CreditAccount") %>'  Text="Edit" />--%>
+                                              <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="EditButton" runat="server" CommandName="EditRow" CommandArgument='<%# Eval("CreditAccount") %>'  Text="Edit" />
                                         </itemtemplate>
                                     </telerik:GridTemplateColumn>
                                 </Columns>
@@ -249,7 +257,7 @@ div.Upload .ruFakeInput
             ControlToValidate="CheckExist"
             ValidationGroup="Commit"
             InitialValue=""
-            ErrorMessage="Some credit accounts are invalid. Please check again" ForeColor="Red">
+            ErrorMessage="have account not exist" ForeColor="Red">
         </asp:RequiredFieldValidator>
      <telerik:radtextbox ID="CheckExist" runat="server"  ></telerik:radtextbox>
    
@@ -259,7 +267,7 @@ div.Upload .ruFakeInput
             ControlToValidate="NotTotalDebitAmt"
             ValidationGroup="Commit"
             InitialValue=""
-            ErrorMessage="The selected {so} account is not enough money for processing this salary payment transaction. Please ask the company doing the deposit." ForeColor="Red">
+            ErrorMessage="Total debit amt invalid value" ForeColor="Red">
         </asp:RequiredFieldValidator>
      <telerik:radtextbox ID="NotTotalDebitAmt" runat="server" Text="ok"  ></telerik:radtextbox>
       <asp:TextBox ID="tbDepositCode" runat="server" Width="200px" />
@@ -300,7 +308,6 @@ div.Upload .ruFakeInput
     });
     function alert(m) {
         m = m.replace(/-/g, '<br>-') + "<br> &nbsp;<br> &nbsp;";
-        m = m.replace("{so}", $("#<%=rcbAccountPayment.ClientID %>").val())
         radalert(m, "Alert");
     }
 </script>
