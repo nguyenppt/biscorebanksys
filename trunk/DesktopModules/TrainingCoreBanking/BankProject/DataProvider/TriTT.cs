@@ -327,9 +327,13 @@ namespace BankProject.DataProvider
             }
             else return "";
         }
-        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType)
+        //public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType)
+        //{
+        //    return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType);
+        //}
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType, string GlobalLimitID, string ProductLimitID)
         {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType);
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType, GlobalLimitID, ProductLimitID);
         }
         #endregion
         #region INPUT CUSTOMER_RIGHT_Load_SubLimitID
@@ -371,16 +375,27 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_CheckRightID", RightID);
         }
+        //public static void B_COLLATERAL_INFO_Insert_Update(string RightID, string CollateralInfoID, string CollateralTypeCode, string CollateralTypeName,
+        //    string CollateralCode, string CollateralName, string ContingentAcctID, string ContingentAcctName, string Description, string Address, string CollateralStatusID,
+        //    string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID,string Currency
+        //, string CountryCode, string CountryName, decimal? NominalValue, decimal? MaxValue, decimal? ProvisionValue, decimal? ExecutionValue, decimal? AllocatedAmt, DateTime? ValueDate,
+        //    DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser, double Rate)
+        //{
+        //    sqldata.ndkExecuteNonQuery("B_COLLATERAL_INFO_Insert_Update", RightID, CollateralInfoID, CollateralTypeCode, CollateralTypeName, CollateralCode, CollateralName,
+        //        ContingentAcctID, ContingentAcctName, Description, Address, CollateralStatusID, CollateralStatusDesc, CustomerID, CustomreIDName, Note,
+        //        CompanyStorageID, CompanyStorageDesc, ProductLimitID, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
+        //        AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate);
+        //}
         public static void B_COLLATERAL_INFO_Insert_Update(string RightID, string CollateralInfoID, string CollateralTypeCode, string CollateralTypeName,
             string CollateralCode, string CollateralName, string ContingentAcctID, string ContingentAcctName, string Description, string Address, string CollateralStatusID,
-            string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID,string Currency
+            string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID, string Currency
         , string CountryCode, string CountryName, decimal? NominalValue, decimal? MaxValue, decimal? ProvisionValue, decimal? ExecutionValue, decimal? AllocatedAmt, DateTime? ValueDate,
-            DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser, double Rate)
+            DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser, double Rate, string GlobalLimitID2)
         {
             sqldata.ndkExecuteNonQuery("B_COLLATERAL_INFO_Insert_Update", RightID, CollateralInfoID, CollateralTypeCode, CollateralTypeName, CollateralCode, CollateralName,
                 ContingentAcctID, ContingentAcctName, Description, Address, CollateralStatusID, CollateralStatusDesc, CustomerID, CustomreIDName, Note,
                 CompanyStorageID, CompanyStorageDesc, ProductLimitID, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
-                AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate);
+                AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate, GlobalLimitID2);
         }
         public static DataSet B_COLLATERAL_INFO_LoadExistColl_InfoExists(string CollateralInfoID)
         {
@@ -418,6 +433,14 @@ namespace BankProject.DataProvider
         public static DataSet B_COLLATERAL_INFO_LoadRate(string CollateralCode)
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadRate", CollateralCode);
+        }
+        public static DataSet B_COLLATERAL_INFO_Load_GlobalLimitID(string CustomerID)
+        {
+            return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_Load_ProductLimit", CustomerID);
+        }
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt(string GlobalLimitID)
+        {
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt", GlobalLimitID);
         }
         #endregion
         #region B_CHEQUE ISSUE
