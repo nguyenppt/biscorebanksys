@@ -83,6 +83,21 @@ namespace BankProject.Views.TellerApplication
         }
 
         #region Events
+
+        private bool IsUnderlimitAmount()
+        {
+
+            StoreProRepository facade = new StoreProRepository();
+            var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount(normalLoanEntryM.LimitReference).First<decimal?>();
+            if (limit < normalLoanEntryM.LoanAmount)
+            {
+                RadWindowManager1.RadAlert("Loan amount cannot exceed " + limit, 340, 150, "Alert", null);
+                return false;
+            }
+
+            return true;
+        }
+
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
             string normalLoan = tbNewNormalLoan.Text;
@@ -92,10 +107,13 @@ namespace BankProject.Views.TellerApplication
             {
                 case "commit":
                     BindField2Data(ref normalLoanEntryM);
-                    loanBusiness.Entity = normalLoanEntryM;
-                    loanBusiness.commitProcess(this.UserId);
+                    if (IsUnderlimitAmount())
+                    {
+                        loanBusiness.Entity = normalLoanEntryM;
+                        loanBusiness.commitProcess(this.UserId);
 
-                    this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                        this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    }
                     break;
 
                 case "commit2":
