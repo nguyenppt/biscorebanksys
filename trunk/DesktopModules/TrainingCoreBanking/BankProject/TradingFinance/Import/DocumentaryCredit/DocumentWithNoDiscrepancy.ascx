@@ -517,7 +517,7 @@
         </div>
     </div>
        
-    <div id="tabCharge" class="dnnClear" style="display:none;">
+    <div id="tabCharge" class="dnnClear">
         <div runat="server" ID="divCharge">
             <asp:HiddenField ID="hiddenCustomerName" runat="server" />
             <table width="100%" cellpadding="0" cellspacing="0">
