@@ -31,6 +31,15 @@ namespace BankProject.Views.TellerApplication
             switch (commandName)
             { 
                 case "commit":
+                    if (tbFromSerial.Value.Value < tbFromSeri_H.Value.Value || tbFromSerial.Value.Value > tbToSeri_H.Value.Value ||
+                        tbToSerial.Value.Value < tbFromSeri_H.Value.Value || tbToSerial.Value.Value > tbToSeri_H.Value.Value ) 
+                    {
+                        ShowMsgBox("Cheque No does not exists, please check again, ChequeNo must be within scale " + tbFromSeri_H.Text + " - " + tbToSeri_H.Text); return;
+                    }
+                    if (tbToSerial.Value.Value < tbFromSerial.Value.Value)
+                    {
+                        ShowMsgBox("From Serial must be less than To Serial , please check again"); return;
+                    }
                     TriTT.CHEQUE_STOP_Insert_Update(tbID.Text, "UNA", tbCustomerID.Text, tbCustomerName.Text, tbCurrency.Text, rcbReasonForStopping.SelectedValue
                         , rcbReasonForStopping.Text.Replace(rcbReasonForStopping.SelectedValue+" - ",""), tbFromSerial.Value.Value, tbToSerial.Value.Value,
                         tbNoOfLeave.Value.Value, rcbChequeType.SelectedValue, rcbChequeType.Text.Replace(rcbChequeType.SelectedValue + " - ", ""),
@@ -72,7 +81,7 @@ namespace BankProject.Views.TellerApplication
         }
         private void LoadCustomer_Info(string AccountID)
         {
-            if (AccountID.Length == 14 && (AccountID.Substring(2, 1) == "." || AccountID.Substring(12, 1) == "."))
+            if (AccountID.Length == 12)
             {
                 //BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                 FirstLoad();

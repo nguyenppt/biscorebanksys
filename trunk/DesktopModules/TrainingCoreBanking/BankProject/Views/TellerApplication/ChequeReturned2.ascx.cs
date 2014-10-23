@@ -44,7 +44,7 @@ namespace BankProject.Views.TellerApplication
                     {
                         if (dss.Tables[0].Rows[0]["InUsed"].ToString() == "NO")
                         {
-                            string WorkingAcct2 = tbID.Text.Trim().Substring(3, 14);
+                            string WorkingAcct2 = tbID.Text.Trim().Substring(3, 12);
                             string[] ChequeNoNum = tbChequeNos.Text.Split('-');
                             if (tbReturnedCheque.Value.Value >= Convert.ToDouble(ChequeNoNum[0].Trim()) && tbReturnedCheque.Value.Value < Convert.ToDouble(ChequeNoNum[1].Trim()))
                             {
@@ -77,9 +77,9 @@ namespace BankProject.Views.TellerApplication
 
         protected void LoadChequeData(string chequeID)
         {
-            var WorkingAcct = chequeID.Substring(3, 14);
+            var WorkingAcct = chequeID.Substring(3, 12);
             DataSet ds = TriTT.B_CHEQUE_RETURN_LoadCheque_Data(chequeID, WorkingAcct);
-            tbID.Text = chequeID.Substring(0, 17);
+            tbID.Text = chequeID.Substring(0, 15);
             tbTotalIssued.Text = ds.Tables[0].Rows[0]["Quantity"].ToString();
             tbChequeNos.Text = ds.Tables[0].Rows[0]["ChequeNos"].ToString();
             DataSet dsUsed = TriTT.B_CHEQUE_RETURN_LoadCheque_Totalused(chequeID, WorkingAcct);

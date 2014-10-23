@@ -103,13 +103,22 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
-        /// rcbAccCustomer control.
+        /// tbAccountCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbAccCustomer;
+        protected global::Telerik.Web.UI.RadTextBox tbAccountCustomer;
+        
+        /// <summary>
+        /// lblNote control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNote;
         
         /// <summary>
         /// tbAmountLocal control.
@@ -319,6 +328,24 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadTextBox tbPlaceOfIssue;
         
         /// <summary>
+        /// tbChequeEnd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox tbChequeEnd;
+        
+        /// <summary>
+        /// tbChequeStart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox tbChequeStart;
+        
+        /// <summary>
         /// RadAjaxManager1 control.
         /// </summary>
         /// <remarks>
@@ -326,5 +353,14 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
+        
+        /// <summary>
+        /// btSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btSearch;
     }
 }
