@@ -19,8 +19,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         //
         protected void Page_Load(object sender, EventArgs e)
         {            
-            //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), ((bc.MultiTextBox)txtDiscrepancies).getJSFunction(), ((bc.MultiTextBox)txtDiscrepancies).getJSFunction() + "();");
-            //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), ((bc.MultiTextBox)txtDiscrepancies_734).getJSFunction(), ((bc.MultiTextBox)txtDiscrepancies_734).getJSFunction() + "();");
             if (IsPostBack) return;
             //
             fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);

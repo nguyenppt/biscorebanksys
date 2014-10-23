@@ -32,7 +32,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (IsPostBack || !String.IsNullOrEmpty(lstType))
+            if (!IsPostBack)
             {
                 if (lstType != null && lstType.ToLower().Equals("4appr"))
                     radGridReview.DataSource = bd.IssueLC.ImportLCPaymentList(bd.TransactionStatus.UNA);
