@@ -39,8 +39,8 @@
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td style="width:260px; padding:5px 0 5px 20px">
-                <telerik:RadTextBox ID="tbCollInfoID" runat="server" ValidationGroup="Group1"  />
-                <i><asp:Label ID="lblCheckCustomer" runat="server" Text="" /></i>
+                <telerik:RadTextBox ID="tbCollInfoID" runat="server" ForeColor="Black"  ValidationGroup="Group1"  />
+                <i><asp:Label ID="lblCheckCustomer" runat="server" Text="" ForeColor="Black" /></i>
             </td>
         </tr>
     </table>
@@ -61,7 +61,7 @@
                     <td class="MyLable">Collateral Type:</td>
                     <td class="MyContent" width="350">
                         <telerik:RadComboBox ID="rcbCollateralType" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems ="true"
-                            autoPostBack="true" width="350" OnselectedIndexchanged="rcbCollateralType_OnselectedIndexchanged">
+                            autoPostBack="true" width="350" OnselectedIndexchanged="rcbCollateralType_OnselectedIndexchanged" ForeColor="Black" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -77,7 +77,7 @@
                     <td class="MyContent">
                         <telerik:RadComboBox ID="rcbCollateralCode" runat="server" MarkFirstMatch="true" AllowCustomText="false" 
                             width="350" AutoPostBack="true" OnSelectedIndexChanged="rcbCollateralCode_OnSelectedIndexChanged" 
-                            >
+                            ForeColor="Black" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -89,7 +89,7 @@
                  <tr>
                     <td class="MyLable" >Currency:</td>
                     <td class="MyContent" width="200">
-                        <telerik:RadComboBox ID="rcbCurrency" runat="server" MarkFirstMatch="true" AllowCustomText="false"
+                        <telerik:RadComboBox ID="rcbCurrency" runat="server" MarkFirstMatch="true" AllowCustomText="false" ForeColor="Black" 
                            width="150" AutoPostback="true" OnselectedIndexchanged="rcbCurrency_OnClientSelectedIndexChanged">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
@@ -108,7 +108,7 @@
                     </td>
                     <td class="MyContent" width=350>
                         <telerik:RadComboBox ID="rcbContingentAcct" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="350">
+                            width="350" ForeColor="Black" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -121,7 +121,7 @@
                 <tr>
                     <td class="MyLable">Description:</td>
                     <td class="MyContent" width="350">
-                        <telerik:RadTextBox ID="tbDescription" runat="server" ValidationGroup="Group1" Width="350" textmode="MultiLine"/>
+                        <telerik:RadTextBox ID="tbDescription" runat="server" ValidationGroup="Group1" Width="350" textmode="MultiLine" ForeColor="Black" />
                     </td>
                     <td><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%></td>
                    
@@ -134,7 +134,7 @@
                             ValidationGroup="Commit" InitialValue="" ErrorMessage="Address is Required !" ForeColor="red" />
                     </td>
                     <td class="MyContent" width="350">
-                        <telerik:RadTextBox ID="tbAddress" runat="server" ValidationGroup="Group1" Width="350" />
+                        <telerik:RadTextBox ID="tbAddress" runat="server" ValidationGroup="Group1" Width="350" ForeColor="Black"  />
                     </td>
                     <td  Class="MyLable"><%--<a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%></td>
                     <td Class="MyContent"></td>
@@ -149,7 +149,7 @@
                     </td>
                     <td class="MyContent">
                         <telerik:RadComboBox ID="rcbCollateralStatus" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="150">
+                            width="150" ForeColor="Black" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -163,14 +163,14 @@
                 <tr>
                     <td class="MyLable">Customer ID/ Name:</td>
                     <td class="MyContent" width="350">
-                        <telerik:RadTextBox ID="tbCustomerIDName" runat="server" Width="350" ValidationGroup="Group1" />
+                        <telerik:RadTextBox ID="tbCustomerIDName" runat="server" Width="350" ValidationGroup="Group1" ForeColor="Black" />
                     </td>
                    
                 </tr>
                 <tr>
                     <td class="MyLable">Collateral Owner:</td>
                     <td class="MyContent">
-                         <telerik:RadTextBox ID="tbNotes" runat="server" Width="350" ValidationGroup="Group1" textMode="MultiLine" />
+                         <telerik:RadTextBox ID="tbNotes" runat="server" Width="350" ValidationGroup="Group1" textMode="MultiLine" ForeColor="Black" />
                     </td>
                     <td ><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png">--%></td>                    
                 </tr>
@@ -183,7 +183,7 @@
                     </td>
                     <td class="MyContent" width="250">
                          <telerik:RadComboBox ID="rcbCompanyStorage" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="350">
+                            width="350" ForeColor="Black" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -197,7 +197,8 @@
                 <tr>
                     <td class="MyLable">Global Limit ID:</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox id="rcbGlobalLimitID" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true">
+                        <telerik:RadComboBox id="rcbGlobalLimitID" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true"
+                            ForeColor="Black" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -209,7 +210,8 @@
                 <tr>
                     <td class="MyLable">Global Limit ID:</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox id="rcbGlobalLimitID2" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true">
+                        <telerik:RadComboBox id="rcbGlobalLimitID2" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true"
+                            ForeColor="Black" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -228,7 +230,7 @@
                     <td class="MyLable">Country:</td>
                     <td class="MyContent">
                         <telerik:RadComboBox ID="rcbCountry" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="200">
+                            width="200" ForeColor="Black" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>                  
@@ -242,18 +244,19 @@
                     <tr>
                     <td class="MyLable">Nominal Value:</td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox ID="tbNominalValue" runat="server" ValidationGroup="Group1" Width="150"
-                            NumberFormat-DecimalDigits="2" >
-                             <ClientEvents OnBlur="clientEvent_NominalValue" />
-                        </telerik:RadNumericTextBox>
+                        <telerik:radtextbox ID="tbNominalValue" runat="server" ValidationGroup="Group1" Width="150"
+                            ForeColor="Black" >
+                             <ClientEvents  OnBlur="SetNumber" OnFocus="ClearCommas"/> 
+                        </telerik:radtextbox>
                        
                     </td>
                 </tr>
+    <asp:HiddenField ID="hfInternalLimit" runat="server" />
                 
                 <tr>
                     <td class="MyLable">Provision Value:</td>
                     <td class="MyContent">
-                        <telerik:radnumerictextbox runat="server" id="tbProvisionValue" borderwidth="0" readonly="true"></telerik:radnumerictextbox>
+                        <telerik:radnumerictextbox runat="server" id="tbProvisionValue" borderwidth="0" readonly="true" ForeColor="Black" ></telerik:radnumerictextbox>
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
@@ -261,14 +264,14 @@
                     <td class="MyLable">Maximum Loan Value:</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="tbExeValue" runat="server" ValidationGroup="Group1" Width="150"
-                            NumberFormat-DecimalDigits="2" >
+                            NumberFormat-DecimalDigits="2" ForeColor="Black" >
                         </telerik:RadNumericTextBox>
                     </td>                   
                 </tr>
                 <tr>
                     <td class="MyLable">Allocated Amt:</td>
                     <td class="MyContent">
-                         <asp:Label ID="lblAllocatedAmt" runat="server" />
+                         <asp:Label ID="lblAllocatedAmt" runat="server" ForeColor="Black"  />
                     </td>
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
@@ -276,21 +279,21 @@
                 <tr>
                     <td class="MyLable">Value Date:</td>
                     <td class="MyContent" >
-                        <telerik:RadDatePicker ID="rdpValueDate" width="150" runat="server"></telerik:RadDatePicker>
+                        <telerik:RadDatePicker ID="rdpValueDate" width="150" runat="server"  ForeColor="Black" ></telerik:RadDatePicker>
                     </td>
                     <td class="MyLable">Expiry Date:</td>
                     <td class="MyContent">
-                        <telerik:RadDatePicker ID="rdpExpiryDate" width="150"  runat="server"></telerik:RadDatePicker>
+                        <telerik:RadDatePicker ID="rdpExpiryDate" width="150"  runat="server" ForeColor="Black" ></telerik:RadDatePicker>
                     </td>
                 </tr>
                 <tr>
                     <td class="MyLable">Review Date Freq:</td>
                     <td class="MyContent">
-                        <telerik:raddatepicker runat="server" ID="rdpReviewDate"  Width="150"></telerik:raddatepicker>
+                        <telerik:raddatepicker runat="server" ID="rdpReviewDate"  Width="150" ForeColor="Black" ></telerik:raddatepicker>
                     </td>  
                     <td style="visibility:hidden;">
                          <telerik:radnumerictextbox runat="server" ID="tbRate" NumberFormat-DecimalDigits="5"
-                              ClientEvents-OnBlur="clientEvent_NominalValue" >
+                              ClientEvents-OnBlur="clientEvent_NominalValue" ForeColor="Black"  >
                          </telerik:radnumerictextbox>
                      </td>                 
                 </tr>
@@ -545,52 +548,95 @@
             $("#<%=btSearch.ClientID%>").click();
         }
       });
-    function clientEvent_NominalValue(sender, args)
+    function clientEvent_NominalValue()//(sender, args)
     {
         var NominalValue = $find("<%= tbNominalValue.ClientID%>");
         var ExecutionValue = $find("<%= tbExeValue.ClientID%>");
-        ExecutionValue.set_value(NominalValue.get_value()*0.7) ;
-        $find("<%=tbAmount.ClientID%>").set_value(NominalValue.get_value());
+        var Nominal_Temp = NominalValue.get_value();
+        ExecutionValue.set_value(parseInt(NominalValue.get_value().replace(',', '').replace(',', '').replace(',', '').replace(',', '').replace(',', ''), 10) * 0.7);
+        $find("<%=tbAmount.ClientID%>").set_value(parseInt(NominalValue.get_value().replace(',', ''), 10));
         var Rate = $find("<%=tbRate.ClientID%>").get_value();
         if (Rate != "0.00000") {
-            $find("<%= tbProvisionValue.ClientID%>").set_value(Rate * NominalValue.get_value());
-        } else { $find("<%= tbProvisionValue.ClientID%>").set_value("");}
+            $find("<%= tbProvisionValue.ClientID%>").set_value(Rate * parseInt(NominalValue.get_value().replace(',', '').replace(',', '').replace(',', '').replace(',', '').replace(',', ''), 10));
+        } else { $find("<%= tbProvisionValue.ClientID%>").set_value(""); }
     }
 
-    $(document).ready(
-  function () {
-      $('a.add').live('click',
-          function () {
-              $(this)
-                  .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                  .removeClass('add')
-                  .addClass('remove');
-              $(this)
-                  .closest('tr')
-                  .clone()
-                  .appendTo($(this).closest('table'));
-              $(this)
-                  .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                  .removeClass('remove')
-                  .addClass('add');
-          });
-      $('a.remove').live('click',
-          function () {
-              $(this)
-                  .closest('tr')
-                  .remove();
-          });
-      $('input:text').each(
-          function () {
-              var thisName = $(this).attr('name'),
-                  thisRrow = $(this)
-                              .closest('tr')
-                              .index();
-              $(this).attr('name', 'row' + thisRow + thisName);
-              $(this).attr('id', 'row' + thisRow + thisName);
-          });
+    function GenerateZero(k) {
+        n = 1;
+        for (var i = 0; i < k.length; i++) {
+            n *= 10;
+        }
+        return n;
+    }
+    function addCommas(str) {
+        var parts = (str + "").split("."),
+            main = parts[0],
+            len = main.length,
+            output = "",
+            i = len - 1;
 
-  });
+        while (i >= 0) {
+            output = main.charAt(i) + output;
+            if ((len - i) % 3 === 0 && i > 0) {
+                output = "," + output;
+            }
+            --i;
+        }
+        return output + ".00";
+    }
+    function ClearCommas(sender, args) {
+        var m = sender.get_value().replace(".00", "").replace(/,/g, '');
+        console.log(m);
+        sender.set_value(m);
+    }
+    function SetNumber(sender, args) {
+        //sender.set_value(sender.get_value().toUpperCase());
+        var number;
+        var m = sender.get_value().substring(sender.get_value().length - 1);
+        if (isNaN(m)) {
+            var val = sender.get_value().substring(0, sender.get_value().length - 1).split(".");
+            switch (m.toUpperCase()) {
+
+                case "T":
+                    var n1 = val[0] * 1000;
+                    var n2 = 0;
+                    if (val[1] != null)
+                        n2 = (val[1] / GenerateZero(val[1])) * 1000;
+                    number = n1 + n2;
+                    sender.set_value(addCommas(number));
+                    break;
+                case "M":
+                    var n1 = val[0] * 1000000;
+                    var n2 = 0;
+                    if (val[1] != null)
+                        n2 = (val[1] / GenerateZero(val[1])) * 1000000;
+                    number = n1 + n2;
+                    sender.set_value(addCommas(number));
+                    break;
+                case "B":
+                    var n1 = val[0] * 1000000000;
+                    var n2 = 0;
+                    if (val[1] != null)
+                        n2 = (val[1] / GenerateZero(val[1])) * 1000000000;
+                    number = n1 + n2;
+                    sender.set_value(addCommas(number));
+                    break;
+                default:
+                    alert("Character is not valid. Please use T, M and B character");
+                    $find('<%=tbNominalValue.ClientID %>').focus();
+                    return false;
+                    break;
+            }
+        } else {
+            console.log("is number" + m);
+            number = sender.get_value();
+            sender.set_value(addCommas(number));
+
+        }
+        //var num = sender.get_value();
+        document.getElementById("<%= hfInternalLimit.ClientID%>").value = number;
+        clientEvent_NominalValue();
+    }
   </script>
     </telerik:RadCodeBlock> 
 <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" >

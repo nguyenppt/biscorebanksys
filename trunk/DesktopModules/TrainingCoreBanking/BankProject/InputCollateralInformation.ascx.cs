@@ -17,7 +17,7 @@ namespace BankProject
             if (IsPostBack) return;
             FirstLoad();
             rcbCollateralType.Focus();
-            tbExeValue.Value = tbNominalValue.Value * 0.7;
+            //tbExeValue.Value = tbNominalValue.Value * 0.7;
             if (Request.QueryString["CollInfoID"] != null)
             {
                 LoadData_forCollINFO(Request.QueryString["CollInfoID"].ToString());
@@ -63,7 +63,7 @@ namespace BankProject
                         , tbAddress.Text, rcbCollateralStatus.SelectedValue, rcbCollateralStatus.Text.Replace(rcbCollateralStatus.SelectedValue+" - ", ""),
                         tbCustomerIDName.Text.Trim().Substring(0, 7), tbCustomerIDName.Text, tbNotes.Text, rcbCompanyStorage.SelectedValue, rcbCompanyStorage.SelectedItem.Text.Replace(rcbCompanyStorage.SelectedValue+" - ", "")
                         ,rcbGlobalLimitID.SelectedValue , rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.SelectedItem.Text.Replace(rcbCountry.SelectedValue+" - ",""),
-                        Convert.ToDecimal(tbNominalValue.Value.HasValue? tbNominalValue.Value : 0),Convert.ToDecimal( tbMaxValue.Value.HasValue? tbMaxValue.Value : 0),ProvisionValue ,
+                        Convert.ToDecimal(tbNominalValue.Text !=""? tbNominalValue.Text.Replace(",","") : "0"),Convert.ToDecimal( tbMaxValue.Value.HasValue? tbMaxValue.Value : 0),ProvisionValue ,
                         Convert.ToDecimal( tbExeValue.Value.HasValue? tbExeValue.Value:0),
                         AllocatedAmt, rdpValueDate.SelectedDate, rdpExpiryDate.SelectedDate, rdpReviewDate.SelectedDate, UserInfo.Username.ToString(), Rate,
                         rcbGlobalLimitID2.SelectedValue);
@@ -137,7 +137,7 @@ namespace BankProject
                     rcbCurrency.SelectedValue = dr["Currency"].ToString();
                     rcbCountry.SelectedValue = dr["CountryCode"].ToString();
                     rcbCountry.SelectedValue = dr["CountryCode"].ToString();
-                    tbNominalValue.Text = (dr["NominalValue"].ToString());
+                    tbNominalValue.Text = string.Format("{0:C}",Convert.ToDouble(dr["NominalValue"].ToString())).Replace("$","");
                     tbMaxValue.Text = (dr["MaxValue"].ToString());
                     if (dr["ProvisionValue"].ToString() == "0.00")
                     { tbProvisionValue.Text = ""; }
@@ -301,8 +301,8 @@ namespace BankProject
         {
             DataSet ds = TriTT.B_COLLATERAL_INFO_LoadRate(CollateralCode);
             tbRate.Text = ds.Tables[0].Rows[0]["Rate"].ToString();
-            if (tbNominalValue.Value.HasValue) // change collateralcode lan 2,3...thi tinh toan lai
-            {   var provisionValue = tbRate.Value.Value * tbNominalValue.Value.Value;
+            if (tbNominalValue.Text !="") // change collateralcode lan 2,3...thi tinh toan lai
+            {   var provisionValue = tbRate.Value.Value * Convert.ToDouble( tbNominalValue.Text.Replace(",",""));
                 if(provisionValue != 0)
                 {
                 tbProvisionValue.Text = provisionValue.ToString();
