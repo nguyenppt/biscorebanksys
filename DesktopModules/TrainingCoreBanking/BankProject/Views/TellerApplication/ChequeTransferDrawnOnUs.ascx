@@ -70,9 +70,6 @@
                     <telerik:RadComboBox ID="rcbDebitCurrency" 
                         AppendDataBoundItems="true" 
                         Width="150"
-                        AutoPostBack="true"
-                        OnSelectedIndexChanged="rcbDebitCurrency_SelectedIndexChanged"
-                         OnClientSelectedIndexChanged="OnIndexChanged_rcbDebitAccount_DebitCurrency"
                         MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1">
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
@@ -90,19 +87,14 @@
             <tr>
                 <td class="MyLable">Debit Account:<span class="Required"> (*)</span>
                     <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator1"
-                     ControlToValidate="rcbDebitAccount" ValidationGroup="Commit" InitialValue="" ErrorMessage="Debit Account is required"
+                     ControlToValidate="tbDebitAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Debit Account is required"
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                 </td>
                 <td class="MyContent" width="400px">
-                    <telerik:RadComboBox ID="rcbDebitAccount" 
-                        MarkFirstMatch="True"
-                        OnItemDataBound="rcbDebitAccount_ItemDataBound"
-                        OnClientSelectedIndexChanged="OnIndexChanged_rcbDebitAccount_DebitCurrency"
-                        AllowCustomText="false" width="300" 
-                        runat="server" ValidationGroup="Group1">
-                    </telerik:RadComboBox>
+                    <telerik:RadTextBox id="tbDebitAcct" runat="server" width="250"/>
+                    <asp:Label ID="lblNote" runat="server" />
                 </td>
-                <td class="MyLable"><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png"></a>--%></td>
+                <td class="MyLable"></td>
                 <td class="MyContent"></td>
             </tr>
         </table>
@@ -325,6 +317,11 @@
                        <telerik:RadTextBox ID="tbPlaceOfIss" runat="server" ClientEvents-OnValueChanged="FillNarrative" ValidationGroup="Group1" />
                    </td>
                </tr>
+                <tr style="visibility:hidden;">
+                    <td> <telerik:radnumerictextbox id="tbChequeEnd" runat="server" />
+                <telerik:radnumerictextbox id="tbChequeStart" runat="server" /> </td>
+               
+                    </tr>
                 </table>
         </fieldset>
     </div>
@@ -332,39 +329,6 @@
 
 <telerik:RadCodeBlock id="codebloac" runat="server">
 <script type="text/javascript">
-    function OnIndexChanged_rcbDebitAccount_DebitCurrency() {
-        var debitAccountElement = $find("<%= rcbDebitAccount.ClientID %>");
-        var debitAccountValue = debitAccountElement.get_value();
-        var oldCusBalElement = $find("<%=tbOldCustBal.ClientID%>");
-
-        var debitCurrencyElement = $find("<%=rcbDebitCurrency.ClientID%>");
-        var debitCurrencyValue = debitCurrencyElement.get_value();
-        var CustomerIDElement = $find("<%=tbCustomerID.ClientID%>");
-        var CustomerNameElement = $find("<%=tbCustomerName.ClientID%>");
-        var NewCustBalElement = $find("<%= tbNewCustBal.ClientID%>");
-        var AmtforCustElement = $find("<%= tbAmtCreditForCust.ClientID%>");
-        if (debitCurrencyValue.length != 0) {
-            if (debitAccountValue.length == 0 || !debitAccountValue.trim()) {
-                NewCustBalElement.set_value("");
-                AmtforCustElement.set_value("");
-                oldCusBalElement.set_value("");
-                CustomerIDElement.set_value("");
-                CustomerNameElement.set_value("");
-            }
-            else {
-                CustomerIDElement.set_value(debitAccountElement.get_selectedItem().get_attributes().getAttribute("CustomerID"));
-                CustomerNameElement.set_value(debitAccountElement.get_selectedItem().get_attributes().getAttribute("CustomerName"));
-                oldCusBalElement.set_value(debitAccountElement.get_selectedItem().get_attributes().getAttribute("WorkingAmount").toLocaleString("en-US"), { useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2, style: 'currency' });
-            }
-        } else
-        {
-            NewCustBalElement.set_value("");
-            AmtforCustElement.set_value("");
-            oldCusBalElement.set_value("");
-            CustomerIDElement.set_value("");
-            CustomerNameElement.set_value("");
-        }
-    }
     
     /////// ham tinh toan cho gia tri deal rate : ////////////
     function getDealRate()
@@ -389,7 +353,7 @@
         var creditCurrencyElement = $find("<%= rcbCreditCurrency.ClientID%>");
         var creditCurrencyValue = creditCurrencyElement.get_value();
         var debitCurrency = $find("<%=rcbDebitCurrency.ClientID%>").get_value();
-        var debitAccount = $find("<%=rcbDebitAccount.ClientID%>").get_value();
+        var debitAccount = $find("<%=tbDebitAcct.ClientID%>").get_value();
         var OldCusBalElement = $find("<%=tbOldCustBal.ClientID%>");
         var OldCusBal = OldCusBalElement.get_value();
         var NewCustBalElement = $find("<%= tbNewCustBal.ClientID%>");
@@ -480,8 +444,8 @@
         debitAmtLCYElement.set_value("");
     }
     function tbChequeNo_OnValueChanged(sender, args) {
-        var ChequeStart = $find("<%=rcbDebitAccount.ClientID%>").get_selectedItem().get_attributes().getAttribute("ChequeNoStart");
-        var ChequeEnd = $find("<%=rcbDebitAccount.ClientID%>").get_selectedItem().get_attributes().getAttribute("ChequeNoEnd");
+        var ChequeStart = $find("<%=tbChequeStart.ClientID%>").get_value();
+        var ChequeEnd = $find("<%=tbChequeEnd.ClientID%>").get_value();
         var ChequeNo = $find("<%=tbChequeNo.ClientID%>").get_value();
         if (ChequeNo < ChequeStart || ChequeNo > ChequeEnd) {
             radconfirm("Cheque No does not exists, please check again, ChequeNo must be within scale " + ChequeStart + " - " + ChequeEnd + " !", confirmCallbackFunction3);
@@ -497,41 +461,7 @@
         ChequeNo.focus();
         ChequeNo.set_value("");
     }
-    $(document).ready(
-   function () {
-       $('a.add').live('click',
-           function () {
-               $(this)
-                   .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                   .removeClass('add')
-                   .addClass('remove');
-               $(this)
-                   .closest('tr')
-                   .clone()
-                   .appendTo($(this).closest('table'));
-               $(this)
-                   .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                   .removeClass('remove')
-                   .addClass('add');
-           });
-       $('a.remove').live('click',
-           function () {
-               $(this)
-                   .closest('tr')
-                   .remove();
-           });
-       $('input:text').each(
-           function () {
-               var thisName = $(this).attr('name'),
-                   thisRrow = $(this)
-                               .closest('tr')
-                               .index();
-               $(this).attr('name', 'row' + thisRow + thisName);
-               $(this).attr('id', 'row' + thisRow + thisName);
-           });
-
-   });
-
+    
     function FillNarrative() {
         var tbBeneName = $find("<%=tbBeneName.ClientID%>");
          var tbAddress = $find("<%=tbAddress.ClientID%>");
@@ -539,11 +469,11 @@
          var rdpIssDate = $find("<%=rdpIssDate.ClientID%>");
          var tbPlaceOfIss = $find("<%=tbPlaceOfIss.ClientID%>");
 
-        var rcbDebitAccount = $find("<%=rcbDebitAccount.ClientID%>");
+        var tbDebitAcct = $find("<%=tbDebitAcct.ClientID%>");
          var rcbChequeType = $find("<%=rcbChequeType.ClientID%>");
          var tbChequeNo = $find("<%=tbChequeNo.ClientID%>");
 
-        var strNarr = "RUT SEC Chuyen Khoang " + rcbChequeType.get_value() + ": " + tbChequeNo.get_value() + " TK " + rcbDebitAccount.get_text() + " NN: ";
+        var strNarr = "RUT SEC Chuyen Khoang " + rcbChequeType.get_value() + ": " + tbChequeNo.get_value() + " TK " + tbDebitAcct.get_value() + " NN: ";
 
          if (tbBeneName.get_value()) {
              strNarr += " - " + tbBeneName.get_value();
@@ -566,16 +496,14 @@
          }
          $find("<%=tbNarrative.ClientID%>").set_value(strNarr);
     }
+    $('#<%=tbDebitAcct.ClientID%>').keyup(function (event) {
+        if (event.keyCode == 13) { $("#<%=btSearch.ClientID%>").click(); }
+    });
 </script>
 </telerik:RadCodeBlock >
 <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" 
     DefaultLoadingPanelID="AjaxLoadingPanel1" >
     <AjaxSettings>
-        <telerik:AjaxSetting AjaxControlID="rcbDebitCurrency">
-            <UpdatedControls>
-                 <telerik:AjaxUpdatedControl ControlID="rcbDebitAccount" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>   
         <telerik:AjaxSetting AjaxControlID="rcbCreditCurrency">
             <UpdatedControls>
                  <telerik:AjaxUpdatedControl ControlID="rcbCreditAccount" />
@@ -583,3 +511,6 @@
         </telerik:AjaxSetting> 
     </AjaxSettings>
 </telerik:RadAjaxManager>
+<div style="visibility:hidden;">
+    <asp:Button ID="btSearch" runat="server" Text="Search" onclick="btSearch_Click" />
+</div>

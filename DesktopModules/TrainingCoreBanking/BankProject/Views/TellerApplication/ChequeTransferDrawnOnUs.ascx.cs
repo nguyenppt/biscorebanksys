@@ -58,12 +58,12 @@ namespace BankProject.Views.TellerApplication
                 {
                     if (TriTT.B_CHEQUE_RETURN_check_cheque_in_Returned(rcbChequeType.SelectedValue, Convert.ToDouble(tbChequeNo.Value.Value)).Tables[0].Rows.Count == 0)// check xem chequeNo co bi Returned chua ?
                     {
-                        decimal dealrate = Convert.ToDecimal(tbDealRate.Value.Value);
+                        decimal dealrate = Convert.ToDecimal(tbDealRate.Value.HasValue ? tbDealRate.Value.Value : 1);
                         if (rcbDebitCurrency.SelectedValue == rcbCreditCurrency.SelectedValue) { dealrate = 1; }
-                        TriTT.BCHEQUE_TRANSFER_Insert_Update(tbID.Text, "UNA", tbCustomerID.Text, tbCustomerName.Text, rcbDebitCurrency.SelectedValue, rcbDebitAccount.SelectedValue
-                            , rcbDebitAccount.Text, Convert.ToDouble(tbDebitAmountLCY.Text), Convert.ToDouble(tbOldCustBal.Text), Convert.ToDouble(tbNewCustBal.Text),
+                        TriTT.BCHEQUE_TRANSFER_Insert_Update(tbID.Text, "UNA", tbCustomerID.Text, tbCustomerName.Text, rcbDebitCurrency.SelectedValue, tbDebitAcct.Text
+                            , "", Convert.ToDouble(tbDebitAmountLCY.Text !=""? tbDebitAmountLCY.Text : "0"), Convert.ToDouble(tbOldCustBal.Text !=""? tbOldCustBal.Text : "0" ), Convert.ToDouble(tbNewCustBal.Text !=""? tbNewCustBal.Text : "0"),
                             rcbChequeType.SelectedValue, rcbChequeType.Text.Replace(rcbChequeType.SelectedValue + " - ", ""), tbChequeNo.Value.Value, rdpValueDate.SelectedDate,
-                            rcbCreditCurrency.SelectedValue, rcbCreditAccount.SelectedValue, rcbCreditAccount.Text, dealrate, rdpExposureDate.SelectedDate, Convert.ToDouble(tbAmtCreditForCust.Text),
+                            rcbCreditCurrency.SelectedValue, rcbCreditAccount.SelectedValue, rcbCreditAccount.Text, dealrate, rdpExposureDate.SelectedDate, Convert.ToDouble(tbAmtCreditForCust.Text !="" ? tbAmtCreditForCust.Text : "0"),
                             rdpCreditValueDate.SelectedDate, rcbWaiveCharges.SelectedValue, tbNarrative.Text, tbBeneName.Text, tbAddress.Text, tbLegalID.Text, rdpIssDate.SelectedDate,
                             tbPlaceOfIss.Text, UserInfo.Username.ToString());
                         Response.Redirect("Default.aspx?tabid=133");
@@ -79,13 +79,14 @@ namespace BankProject.Views.TellerApplication
             }
             if (CommandName == "authorize")
             {
-                TriTT.BCHEQUE_TRANSFER_Update_Status(tbID.Text, "AUT", rcbDebitAccount.SelectedValue, rcbDebitCurrency.SelectedValue, tbNewCustBal.Value.Value);
+                TriTT.BCHEQUE_TRANSFER_Update_Status(tbID.Text, "AUT", tbDebitAcct.Text, rcbDebitCurrency.SelectedValue, tbNewCustBal.Value.Value);
                 Response.Redirect("Default.aspx?tabid=133");
             }
             if (CommandName == "reverse")
             {
-                TriTT.BCHEQUE_TRANSFER_Update_Status(tbID.Text, "REV", rcbDebitAccount.SelectedValue, rcbDebitCurrency.SelectedValue, tbNewCustBal.Value.Value);
+                TriTT.BCHEQUE_TRANSFER_Update_Status(tbID.Text, "REV", tbDebitAcct.Text, rcbDebitCurrency.SelectedValue, tbNewCustBal.Value.Value);
                 LoadToolBar(true);
+                LoadDebitAccount_Info();
             }
         }
 
@@ -98,8 +99,7 @@ namespace BankProject.Views.TellerApplication
             tbCustomerID.Text = dr["CustomerID"].ToString();
             tbCustomerName.Text = dr["CustomerName"].ToString();
             rcbDebitCurrency.SelectedValue = dr["DebitCurrency"].ToString();
-            rcbDebitCurrency_SelectedIndexChanged(null  ,null);
-            rcbDebitAccount.SelectedValue = dr["DebitAcctCode"].ToString();
+            tbDebitAcct.Text= dr["DebitAcctCode"].ToString();
             tbDebitAmountLCY.Text = dr["DebitAmount"].ToString();
             tbChequeNo.Text = dr["ChequeNo"].ToString();
             rcbChequeType.SelectedValue = dr["ChequeType"].ToString();
@@ -140,16 +140,7 @@ namespace BankProject.Views.TellerApplication
             }
             LoadToolBar(false);
         }
-        protected void rcbDebitCurrency_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            rcbDebitAccount.Items.Clear();
-            rcbDebitAccount.AppendDataBoundItems = true;
-            rcbDebitAccount.Items.Add(new RadComboBoxItem("", ""));
-            rcbDebitAccount.DataSource = TriTT.CHEQUE_WITHDRAWAL_LoadCustomerAcct(rcbDebitCurrency.SelectedValue);
-            rcbDebitAccount.DataValueField = "AccountCode";
-            rcbDebitAccount.DataTextField = "AcctHasName";
-            rcbDebitAccount.DataBind();
-        }
+        
         protected void LoadChequeType()
         {
             rcbChequeType.Items.Clear();
@@ -168,19 +159,7 @@ namespace BankProject.Views.TellerApplication
             rcbCreditAccount.DataValueField = "AccountCode";
             rcbCreditAccount.DataBind();
         }
-        protected void rcbDebitAccount_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
-        {
-            DataRowView Data = e.Item.DataItem as DataRowView;
-            e.Item.Attributes["CustomerID"] = Data["CustomerID"].ToString();
-            e.Item.Attributes["CustomerName"] = Data["CustomerName"].ToString();
-            e.Item.Attributes["Address"] = Data["Address"].ToString();
-            e.Item.Attributes["WorkingAmount"] = Data["WorkingAmount"].ToString();
-            e.Item.Attributes["DocID"] = Data["DocID"].ToString();
-            e.Item.Attributes["DocIssuePlace"] = Data["DocIssuePlace"].ToString();
-            e.Item.Attributes["DocIssueDate"] = Data["DocIssueDate"].ToString();
-            e.Item.Attributes["ChequeNoStart"] = Data["ChequeNoStart"].ToString();
-            e.Item.Attributes["ChequeNoEnd"] = Data["ChequeNoEnd"].ToString();
-        }
+
         protected void LoadToolBar_AllFalse()
         {
             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
@@ -197,7 +176,57 @@ namespace BankProject.Views.TellerApplication
                 "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
             Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
+
+        protected void btSearch_Click(object sender, EventArgs e)
+        {
+            LoadDebitAccount_Info();
+        }
+        protected void LoadDebitAccount_Info()
+        {
+            DataSet ds = TriTT.CHEQUE_WITHDRAWAL_LoadCustomerAcct(rcbDebitCurrency.SelectedValue, tbDebitAcct.Text);
+            if (ds.Tables != null & ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                lblNote.Text = "";
+                DataRow Data = ds.Tables[0].Rows[0];
+                tbCustomerID.Text = Data["CustomerID"].ToString();
+                tbCustomerName.Text = Data["CustomerName"].ToString();
+                tbOldCustBal.Text = Data["WorkingAmount"].ToString();
+                tbChequeEnd.Text = Data["ChequeNoEnd"].ToString();
+                tbChequeStart.Text = Data["ChequeNoStart"].ToString();
+            }
+            else
+            {
+                lblNote.Text = "Account does not exists !";
+                tbCustomerID.Text = "";
+                tbCustomerName.Text = "";
+                tbOldCustBal.Text = "";
+                tbChequeEnd.Text = ""; tbChequeStart.Text = "";
+            }
+        }
         #endregion
+        //protected void rcbDebitAccount_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        //{
+        //    DataRowView Data = e.Item.DataItem as DataRowView;
+        //    e.Item.Attributes["CustomerID"] = Data["CustomerID"].ToString();
+        //    e.Item.Attributes["CustomerName"] = Data["CustomerName"].ToString();
+        //    e.Item.Attributes["Address"] = Data["Address"].ToString();
+        //    e.Item.Attributes["WorkingAmount"] = Data["WorkingAmount"].ToString();
+        //    e.Item.Attributes["DocID"] = Data["DocID"].ToString();
+        //    e.Item.Attributes["DocIssuePlace"] = Data["DocIssuePlace"].ToString();
+        //    e.Item.Attributes["DocIssueDate"] = Data["DocIssueDate"].ToString();
+        //    e.Item.Attributes["ChequeNoStart"] = Data["ChequeNoStart"].ToString();
+        //    e.Item.Attributes["ChequeNoEnd"] = Data["ChequeNoEnd"].ToString();
+        //}
+        //protected void rcbDebitCurrency_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        //{
+        //    rcbDebitAccount.Items.Clear();
+        //    rcbDebitAccount.AppendDataBoundItems = true;
+        //    rcbDebitAccount.Items.Add(new RadComboBoxItem("", ""));
+        //    rcbDebitAccount.DataSource = TriTT.CHEQUE_WITHDRAWAL_LoadCustomerAcct(rcbDebitCurrency.SelectedValue, "");
+        //    rcbDebitAccount.DataValueField = "AccountCode";
+        //    rcbDebitAccount.DataTextField = "AcctHasName";
+        //    rcbDebitAccount.DataBind();
+        //}
         //void LoadCreidtAccount()
         //{
         //    rcbCreditAccount.Items.Clear();

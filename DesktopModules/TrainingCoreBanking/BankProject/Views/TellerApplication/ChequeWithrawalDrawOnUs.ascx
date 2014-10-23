@@ -57,7 +57,7 @@
                 <td class="MyContent" width="90"><telerik:RadTextBox ID="tbCustomerID" readonly="true" BorderWidth="0" runat="server" /></td>
                 <td class="MyContent" ><telerik:RadTextBox ID="tbCustomerName" readonly="true" BorderWidth="0" runat="server" /></td>
             </tr>
-        </table>
+        </table> 
         <fieldset>
             <legend></legend>
            <table width="100%" cellpading="0" cellspacing="0">
@@ -72,9 +72,7 @@
                         MarkFirstMatch="True" AppendDataBoundItems="true"
                         AllowCustomText="false" 
                         runat="server" ValidationGroup="Group1" 
-                            autopostback="true"
-                            OnSelectedIndexChanged ="rcbCurrency_OnSelectedIndexChanged" 
-                            OnClientSelectedIndexChanged="rcbAccCustomer_OnClientSelectedIndexChanged">
+                            >
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
                         </Items>
@@ -86,17 +84,14 @@
                <tr>
                    <td class="MyLable">Account Customer:<span class="Required"> (*)</span>
                     <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator1"
-                     ControlToValidate="rcbAccCustomer" ValidationGroup="Commit" InitialValue="" 
+                     ControlToValidate="tbAccountCustomer" ValidationGroup="Commit" InitialValue="" 
                     ErrorMessage="Account Customer is required"  ForeColor="Red" /></td>
-                   <td class="MyContent"  width="350">
-                       <telerik:RadComboBox ID="rcbAccCustomer" runat="server" AllowCustomText="false"
-                           width="350" MarkFirstMatch="true" onItemDataBOund="rcbAccCustomer_onItemDataBOund"
-                           AppendDataBoundItems="true" OnClientSelectedIndexChanged="rcbAccCustomer_OnClientSelectedIndexChanged">
-                           <CollapseAnimation Type="None" />
-                           <ExpandAnimation Type="None" />
-                       </telerik:RadComboBox></td>
-                   <td>    
-                  <%-- <a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%>
+                   <td class="MyContent"  width="300">
+                       <telerik:radtextbox id="tbAccountCustomer" runat="server" width="300" OnTextChanged="tbAccountCustomer_onvalueChanged"
+                           AutoPostback="true"></telerik:radtextbox> 
+                       
+                       </td>
+                   <td> <asp:Label ID="lblNote" runat="server" forecolor="Black"/>   
                    </td>
                    
                </tr>
@@ -112,7 +107,7 @@
                </tr>
                
                 <tr>
-                   <td class="MyLable">Old Customer Balance:</td>
+                   <td class="MyLable">Old Customer Balance:</td> 
                    <td class="MyContent">
                        <telerik:RadNumericTextBox ID="tbOldCustBal" borderWidth="0" readonly="true" runat="server" ValidationGroup="Group1" />
                    </td>
@@ -277,8 +272,7 @@
                    <td class="MyContent">
                         <telerik:RadTextBox ID="tbAddress" runat="server" ClientEvents-OnValueChanged="FillNarrative" ValidationGroup="Group1" 
                             textMode="Multiline" Width="350" />
-                   </td>
-                   
+                   </td> 
                </tr>
                 <tr>
                    <td class="MyLable">Legal ID:</td>
@@ -301,120 +295,24 @@
                        <telerik:RadTextBox ID="tbPlaceOfIssue" runat="server" ClientEvents-OnValueChanged="FillNarrative" ValidationGroup="Group1" />
                    </td>
                </tr>
+                <tr style="visibility:hidden;">
+                    <td> <telerik:radnumerictextbox id="tbChequeEnd" runat="server" />
+                <telerik:radnumerictextbox id="tbChequeStart" runat="server" /> </td>
+               
+                    </tr>
                 </table>
         </fieldset>
     </div>
 </div>
     <telerik:radcodeblock runat="server">
 <script type="text/javascript">
-    $(document).ready(
- function () {
-     $('a.add').live('click',
-         function () {
-             $(this)
-                 .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                 .removeClass('add')
-                 .addClass('remove');
-             $(this)
-                 .closest('tr')
-                 .clone()
-                 .appendTo($(this).closest('table'));
-             $(this)
-                 .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                 .removeClass('remove')
-                 .addClass('add');
-         });
-     $('a.remove').live('click',
-         function () {
-             $(this)
-                 .closest('tr')
-                 .remove();
-         });
-     $('input:text').each(
-         function () {
-             var thisName = $(this).attr('name'),
-                 thisRrow = $(this)
-                             .closest('tr')
-                             .index();
-             $(this).attr('name', 'row' + thisRow + thisName);
-             $(this).attr('id', 'row' + thisRow + thisName);
-         });
-
- });
-
     ////khai bao bien de lay ten khach hang ////
-
-    function rcbAccCustomer_OnClientSelectedIndexChanged() {
-        var AcctCustomerElement = $find("<%=rcbAccCustomer.ClientID%>");
-        var AcctCustomer = AcctCustomerElement.get_value();
-        var CustomerIDElement = $find("<%=tbCustomerID.ClientID%>");
-        var CustomerNameElement = $find("<%=tbCustomerName.ClientID%>");
-        var CurrencyElement = $find("<%=rcbCurrency.ClientID%>");
-        var CurrencyValue = CurrencyElement.get_value();
-        var OldCustBalElement = $find("<%=tbOldCustBal.ClientID%>");
-        var NewCustBalElement = $find("<%=tbNewCustBal.ClientID%>");
-        var AmtPaidtoCustElement = $find("<%=tbAmtPaidToCust.ClientID%>");
-        var AmtLocalElement = $find("<%=tbAmountLocal.ClientID%>");
-        
-        OldCustBalElement.set_value(""); // change currency thi clear cac gia tri truoc' do'
-        NewCustBalElement.set_value("");
-        AmtPaidtoCustElement.set_value("");
-        AmtLocalElement.set_value(""); // end clear
-        if (AcctCustomer.length == 0 || !AcctCustomer.trim()) {// clear text box
-            CustomerIDElement.set_value("");
-            CustomerNameElement.set_value("");
-            OldCustBalElement.set_value("");
-            NewCustBalElement.set_value("");
-            AmtPaidtoCustElement.set_value("");
-            AmtLocalElement.set_value("");
-            $find("<%=tbNarrative.ClientID%>").set_value("");
-            $find("<%=tbBeneName.ClientID%>").set_value("");
-            $find("<%=tbAddress.ClientID%>").set_value("");
-            $find("<%=tbPlaceOfIssue.ClientID%>").set_value("");
-            $find("<%=tbLegalID.ClientID%>").set_value("");
-            $find("<%=rdpIssDate.ClientID%>").set_selectedDate(null);
-        }
-        else {
-            var OldCustBal = AcctCustomerElement.get_selectedItem().get_attributes().getAttribute("WorkingAmount");
-            OldCustBalElement.set_value(OldCustBal.toLocaleString("en-US"));
-            var CustomerID = AcctCustomerElement.get_selectedItem().get_attributes().getAttribute("CustomerID");
-            CustomerIDElement.set_value(CustomerID);
-            var CustomerName = AcctCustomerElement.get_selectedItem().get_attributes().getAttribute("CustomerName");
-            CustomerNameElement.set_value(CustomerName);
-            $find("<%=tbBeneName.ClientID%>").set_value(CustomerName);
-            $find("<%=tbAddress.ClientID%>").set_value(AcctCustomerElement.get_selectedItem().get_attributes().getAttribute("Address"));
-            $find("<%=tbLegalID.ClientID%>").set_value(AcctCustomerElement.get_selectedItem().get_attributes().getAttribute("DocID"));
-            $find("<%=tbPlaceOfIssue.ClientID%>").set_value(AcctCustomerElement.get_selectedItem().get_attributes().getAttribute("DocIssuePlace"));
-            if (AcctCustomerElement.get_selectedItem().get_attributes().getAttribute("DocIssueDate") != "") {
-                var datesplit = AcctCustomerElement.get_selectedItem().get_attributes().getAttribute("DocIssueDate").split('/');
-                $find("<%=rdpIssDate.ClientID%>").set_selectedDate(new Date(datesplit[2].substring(0, 4), datesplit[0], datesplit[1]));
-            }
-        }
-        if (CurrencyValue.length != 0) {// xoa het khi currency = null
-            
-        } else
-        {
-            CustomerIDElement.set_value("");
-            CustomerNameElement.set_value("");
-            OldCustBalElement.set_value("");
-            NewCustBalElement.set_value("");
-            AmtPaidtoCustElement.set_value("");
-            AmtLocalElement.set_value("");
-            $find("<%=tbNarrative.ClientID%>").set_value("");
-            $find("<%=tbBeneName.ClientID%>").set_value("");
-            $find("<%=tbAddress.ClientID%>").set_value("");
-            $find("<%=tbPlaceOfIssue.ClientID%>").set_value("");
-            $find("<%=tbLegalID.ClientID%>").set_value("");
-            $find("<%=rdpIssDate.ClientID%>").set_selectedDate(null);
-        }
-    }
-    
     function getOldCustBalance() {
         var CurrencyElement = $find("<%=rcbCurrency.ClientID%>");
         var Currency = CurrencyElement.get_value();
         var OldCustBal = 0;
        
-        var AccountCustomerElement= $find("<%=rcbAccCustomer.ClientID%>");
+        var AccountCustomerElement= $find("<%=tbAccountCustomer.ClientID%>");
         var AcountCustomer = AccountCustomerElement.get_value();
     }
    
@@ -432,7 +330,7 @@
         var AccountPaidElement = $find("<%=rcbAccountPaid.ClientID%>");
         var AccountPaid = AccountPaidElement.get_value();
 
-        var AcctCustomerElement = $find("<%=rcbAccCustomer.ClientID%>");// lay gia tri AcctCustomer,CurrencyValue de check, phong truong hop client chua chon 
+        var AcctCustomerElement = $find("<%=tbAccountCustomer.ClientID%>");// lay gia tri AcctCustomer,CurrencyValue de check, phong truong hop client chua chon 
         var AcctCustomer = AcctCustomerElement.get_value();             // ma nhap gia tri cho Amount Local
         var CurrencyElement = $find("<%=rcbCurrency.ClientID%>");
         var CurrencyValue = CurrencyElement.get_value();
@@ -477,8 +375,8 @@
     }
     function tbChequeNo_OnValueChanged(sender, args)
     {
-        var ChequeStart = $find("<%=rcbAccCustomer.ClientID%>").get_selectedItem().get_attributes().getAttribute("ChequeNoStart");
-        var ChequeEnd = $find("<%=rcbAccCustomer.ClientID%>").get_selectedItem().get_attributes().getAttribute("ChequeNoEnd");
+        var ChequeStart = $find("<%=tbChequeStart.ClientID%>").get_value();
+        var ChequeEnd = $find("<%=tbChequeEnd.ClientID%>").get_value();
         var ChequeNo = $find("<%=tbChequeNo.ClientID%>").get_value();
         if (ChequeNo < ChequeStart || ChequeNo > ChequeEnd)
         {
@@ -549,7 +447,7 @@
         var rdpIssDate = $find("<%=rdpIssDate.ClientID%>");
         var tbPlaceOfIss = $find("<%=tbPlaceOfIssue.ClientID%>");
 
-        var rcbAccCustomer = $find("<%=rcbAccCustomer.ClientID%>");
+        var rcbAccCustomer = $find("<%=tbAccountCustomer.ClientID%>");
         var rcbChequeType = $find("<%=rcbChequeType.ClientID%>");
         var tbChequeNo = $find("<%=tbChequeNo.ClientID%>");
 
@@ -576,16 +474,28 @@
         }
         $find("<%=tbNarrative.ClientID%>").set_value(strNarr);
     }
-   
+    $('#<%=tbAccountCustomer.ClientID%>').keyup(function (event) {
+        if (event.keyCode == 13) { $("#<%=btSearch.ClientID%>").click(); }
+    });
 </script>
     </telerik:radcodeblock>
 
 <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" 
     DefaultLoadingPanelID="AjaxLoadingPanel1" >
     <AjaxSettings>
-        <telerik:AjaxSetting AjaxControlID="rcbCurrency">
-            <UpdatedControls>
-                 <telerik:AjaxUpdatedControl ControlID="rcbAccCustomer" />
+        <telerik:AjaxSetting AjaxControlID="tbAccountCustomer">
+            <UpdatedControls>         
+                 <telerik:AjaxUpdatedControl ControlID="tbCustomerID" />
+                 <telerik:AjaxUpdatedControl ControlID="tbCustomerName" />
+                 <telerik:AjaxUpdatedControl ControlID="tbOldCustBal" />
+                 <telerik:AjaxUpdatedControl ControlID="tbAddress" />
+                 <telerik:AjaxUpdatedControl ControlID="tbLegalID" />
+                 <telerik:AjaxUpdatedControl ControlID="rdpIssDate" />
+                 <telerik:AjaxUpdatedControl ControlID="tbPlaceOfIssue" />
+                 <telerik:AjaxUpdatedControl ControlID="lblNote" />
+                 <telerik:AjaxUpdatedControl ControlID="tbBeneName" />
+                 <telerik:AjaxUpdatedControl ControlID="tbChequeEnd" />
+                 <telerik:AjaxUpdatedControl ControlID="tbChequeStart" />
             </UpdatedControls>
         </telerik:AjaxSetting> 
         <telerik:AjaxSetting AjaxControlID="rcbCurrencyPaid">
@@ -595,3 +505,6 @@
         </telerik:AjaxSetting> 
     </AjaxSettings>
 </telerik:RadAjaxManager>
+<div style="visibility:hidden;">
+    <asp:Button ID="btSearch" runat="server" Text="Search" onclick="btSearch_Click" />
+</div>
