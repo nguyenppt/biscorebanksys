@@ -82,7 +82,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             else if (Request.QueryString["IsAmendment"] != null)
             {
                 tbEssurLCCode.Text = Request.QueryString["LCCode"].ToString();
-                tbEssurLCCode.Enabled = true;
+                tbEssurLCCode.Enabled = false;
                 LoadData();
             }
             else if (Request.QueryString["CodeID"] != null)
@@ -97,21 +97,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case AdvisingAndNegotiationScreenType.Register:
 
                     InitToolBarForRegister();
-                    tbEssurLCCode.Enabled = true;
+                    tbEssurLCCode.Enabled = false;
                     break;
                 case AdvisingAndNegotiationScreenType.Amend:
                     InitToolBarForAmend();
                     //tabCharges.Visible = false;
                     //Charges.Visible = false;
-                    tbEssurLCCode.Enabled = true;
+                    tbEssurLCCode.Enabled = false;
                     break;
                 case AdvisingAndNegotiationScreenType.Cancel:
                     InitToolBarForCancel();
-                    tbEssurLCCode.Enabled = true;
+                    tbEssurLCCode.Enabled = false;
                     break;
                 case AdvisingAndNegotiationScreenType.Close:
                     InitToolBarForClose();
-                    tbEssurLCCode.Enabled = true;
+                    tbEssurLCCode.Enabled = false;
                     break;
                 case AdvisingAndNegotiationScreenType.Acception:
                     InitToolBarForAccept();
@@ -119,7 +119,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     txtExternalReference.Enabled = true;
                     ComboConfirmInstr.Enabled = true;
                     txtLimitRef.Enabled = true;
-                    tbEssurLCCode.Enabled = true;
+                    tbEssurLCCode.Enabled = false;
                     break;
                 //case ExportDocumentaryScreenType.Cancel:
                 //    InitToolBarForCancel();
@@ -329,7 +329,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 SetDisableByReview(false);
                 LoadToolBar(true);
 
-                tbEssurLCCode.Enabled = true;
+                tbEssurLCCode.Enabled = false;
                 dteCancelDate.Enabled = true;
                 dteContingentExpiryDate.Enabled = true;
                 txtCancelRemark.Enabled = true;
