@@ -66,19 +66,27 @@ namespace BankProject.Views.TellerApplication
                     break;
 
                 case "Authorize":
-                    double SoDuTrong_TaiKhoan_tuongUng = 0;
-                    DataSet ds = TriTT.B_BCASHWITHDRAWAL_Load_Customer_WorkingAmt(rcbAccountType.SelectedValue ,cmbCustomerAccount.Text, cmbCurrency.Text);
-                    if(ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count> 0 )
+                    string Status = Database.BCASHDEPOSIT_LoadStatus(txtId.Text, "CashWithdrawal");
+                    if (Status != "AUT")
                     {
-                         SoDuTrong_TaiKhoan_tuongUng = Convert.ToDouble(ds.Tables[0].Rows[0]["WorkingAmount"].ToString());
+                        double SoDuTrong_TaiKhoan_tuongUng = 0;
+                        DataSet ds = TriTT.B_BCASHWITHDRAWAL_Load_Customer_WorkingAmt(rcbAccountType.SelectedValue, cmbCustomerAccount.Text, cmbCurrency.Text);
+                        if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                        {
+                            SoDuTrong_TaiKhoan_tuongUng = Convert.ToDouble(ds.Tables[0].Rows[0]["WorkingAmount"].ToString());
+                        }
+                        if (txtAmtLCY_FCY.Value.Value > SoDuTrong_TaiKhoan_tuongUng)
+                        {
+                            var tkTuongUng = "Can not overdraft. Maximum is " + String.Format("{0:C}", SoDuTrong_TaiKhoan_tuongUng).Replace("$", "") + " " + cmbCurrency.Text;
+                            ShowMsgBox(tkTuongUng); return;
+                        }
+                        DataProvider.Database.BCASHWITHRAWAL_UpdateStatus(rcbAccountType.SelectedValue, "AUT", txtId.Text, this.UserId.ToString());
+                        Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
                     }
-                    if (txtAmtLCY_FCY.Value.Value > SoDuTrong_TaiKhoan_tuongUng)
+                    else
                     {
-                        var tkTuongUng = "Can not overdraft. Maximum is " + String.Format("{0:C}", SoDuTrong_TaiKhoan_tuongUng).Replace("$", "") + " " + cmbCurrency.Text;
-                        ShowMsgBox(tkTuongUng); return;
+                        ShowMsgBox("This transaction already authorized . You can not authorize it again !"); return;
                     }
-                    DataProvider.Database.BCASHWITHRAWAL_UpdateStatus(rcbAccountType.SelectedValue, "AUT", txtId.Text, this.UserId.ToString());
-                    Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
                     break;
 
                 case "Reverse":

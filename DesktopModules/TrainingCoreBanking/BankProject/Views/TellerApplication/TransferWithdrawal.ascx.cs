@@ -4,6 +4,7 @@ using System;
 using System.Data;
 using Telerik.Web.UI;
 using BankProject.Common;
+using BankProject.DataProvider;
 
 namespace BankProject.Views.TellerApplication
 {
@@ -66,11 +67,16 @@ namespace BankProject.Views.TellerApplication
                     break;
 
                 case "Authorize":
-                    DataProvider.Database.BTRANSFERWITHDRAWAL_UpdateStatus(rcbAccountType.SelectedValue, "AUT", txtId.Text, this.UserId.ToString());
-                    Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-                    //LoadToolBar(false);
-                    //this.EnableControls(true);
-                    //this.SetDefaultValues();
+                    string Status = Database.BCASHDEPOSIT_LoadStatus(txtId.Text, "TransferWithdrawal");
+                     if (Status != "AUT")
+                     {
+                         DataProvider.Database.BTRANSFERWITHDRAWAL_UpdateStatus(rcbAccountType.SelectedValue, "AUT", txtId.Text, this.UserId.ToString());
+                         Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
+                     }
+                     else
+                     {
+                         ShowMsgBox("This transaction already authorized . You can not authorize it again !"); return;
+                     }
                     break;
 
                 case "Reverse":
@@ -260,6 +266,13 @@ namespace BankProject.Views.TellerApplication
         protected void btSearch_Click(object sender, EventArgs e)
         {
             SetPreviewValues(txtId.Text);//
+        }
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
     }
 }

@@ -5,6 +5,7 @@ using BankProject.Repository;
 using System.Data;
 using System.Configuration;
 using BankProject.Common;
+using BankProject.DataProvider;
 
 namespace BankProject.Views.TellerApplication
 {
@@ -33,8 +34,6 @@ namespace BankProject.Views.TellerApplication
                 {
                     this.ShowPreviewView();
                 }
-
-                //Session["DataKey"] = txtId.Text;
             }
         }
 
@@ -57,10 +56,6 @@ namespace BankProject.Views.TellerApplication
                     if (cmbWaiveCharges.SelectedValue == "NO") Response.Redirect(EditUrl("waivecharges"));
 
                     Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-
-                    //this.EnableControls(true);
-                    //this.SetDefaultValues();
-                    //LoadToolBar(false);
                     break;
 
                 case "Preview":
@@ -69,27 +64,23 @@ namespace BankProject.Views.TellerApplication
                     break;
 
                 case "Authorize":
-                    DataProvider.Database.BCASHDEPOSIT_UpdateStatus(rcbAccountType.SelectedValue, "AUT", txtId.Text, this.UserId.ToString());
-                    Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-                    //LoadToolBar(false);
-                    //this.EnableControls(true);
-                    //this.SetDefaultValues();
-                    //lblAmtPaidToCust.Text = "";
-                    //lblCustBal.Text = "";
-                    //lblNewCustBal.Text = "";
+                    string Status = Database.BCASHDEPOSIT_LoadStatus(txtId.Text, "CashDeposit");
+                    if (Status != "AUT")
+                    {
+                        Database.BCASHDEPOSIT_UpdateStatus(rcbAccountType.SelectedValue, "AUT", txtId.Text, this.UserId.ToString());
+                        Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
+                    }
+                    else
+                    {
+                        ShowMsgBox("This transaction already authorized . You can not authorize it again !"); return;
+                    }
                     break;
-
                 case "Reverse":
                     DataProvider.Database.BCASHDEPOSIT_UpdateStatus(rcbAccountType.SelectedValue, "REV", txtId.Text, this.UserId.ToString());
                     Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-                    //LoadToolBar(false);
-                    //this.SetDefaultValues();
-                    //this.EnableControls(true);
                     break;
-
             }
         }
-
         private void PrintDocument()
         {
             Aspose.Words.License license = new Aspose.Words.License();
@@ -294,6 +285,13 @@ namespace BankProject.Views.TellerApplication
             cmbCashAccount.DataTextField = "Display";
             cmbCashAccount.DataValueField = "ID";
             cmbCashAccount.DataBind();
+        }
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
     }
 }

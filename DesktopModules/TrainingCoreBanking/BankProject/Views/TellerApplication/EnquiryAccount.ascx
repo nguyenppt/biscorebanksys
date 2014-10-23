@@ -113,15 +113,21 @@
     <MasterTableView>
         <Columns>
             <telerik:GridBoundColumn HeaderText="Account Code" HeaderStyle-Width = "5%" DataField="AccountCode" />
+            <telerik:GridBoundColumn HeaderText="Customer ID" HeaderStyle-Width = "9%" DataField="CustomerID" />
             <telerik:GridBoundColumn HeaderText="Customer Name" HeaderStyle-Width = "20%" DataField="CustomerName" />
-            <telerik:GridBoundColumn HeaderText="Doc Id" HeaderStyle-Width = "5%" DataField="DocID" />
-            <telerik:GridBoundColumn HeaderText="Category" HeaderStyle-Width = "10%" DataField="CategoryName" />
+            <telerik:GridBoundColumn HeaderText="Doc Id" HeaderStyle-Width = "7%" DataField="DocID" />
+            <telerik:GridBoundColumn HeaderText="Category" HeaderStyle-Width = "12%" DataField="CategoryName" />
             <telerik:GridBoundColumn HeaderText="Product Line" HeaderStyle-Width = "15%" DataField="ProductLineName" />
             <telerik:GridBoundColumn HeaderText="Currency" HeaderStyle-Width = "2%" DataField="Currency" />
             <telerik:GridBoundColumn HeaderText="Actual Ballance" DataField="ActualBallance" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "10%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal"  DataFormatString="{0:N}" />
-            <telerik:GridBoundColumn HeaderText="Cleared Ballance" DataField="ClearedBallance" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "11%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal" DataFormatString="{0:N}" />
             <telerik:GridBoundColumn HeaderText="Working Amount" DataField="WorkingAmount" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "11%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal" DataFormatString="{0:N}" />
             <telerik:GridBoundColumn HeaderText="Locked Amount" DataField="LockedAmount" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "11%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal" DataFormatString="{0:N}" />
+         <telerik:GridTemplateColumn ItemStyle-HorizontalAlign="Right" >
+                    <ItemStyle Width="25" />
+                    <Itemtemplate>
+                        <a href='<%# geturlReview(Eval("ID").ToString()) %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" width="20" /> </a> 
+                    </Itemtemplate>
+                </telerik:GridTemplateColumn>
         </Columns>
     </MasterTableView>
 </telerik:RadGrid>
