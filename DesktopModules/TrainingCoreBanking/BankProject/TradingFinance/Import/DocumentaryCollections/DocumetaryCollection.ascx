@@ -867,7 +867,7 @@
                 <tr>
                     <td class="MyLable" style="vertical-align: top;">Other Docs</td>
                     <td class="MyContent">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_OtherDocs" Height="100" Width="355"
+                        <telerik:RadEditor runat="server" ID="txtEdittor_OtherDocs" Height="200" Width="355" BorderWidth="0"
                             ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
                         <%--<telerik:RadTextBox Width="355" Height="100" ID="txtOtherDocs" runat="server" TextMode="MultiLine" />--%>
                     </td>
@@ -876,7 +876,7 @@
                 <tr>
                     <td class="MyLable" style="vertical-align: top;">Instruction to Cus</td>
                     <td class="MyContent">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_InstructionToCus" Height="100" Width="355"
+                        <telerik:RadEditor runat="server" ID="txtEdittor_InstructionToCus" Height="200" Width="355" BorderWidth="0"
                             ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
                         <%--<telerik:RadTextBox Width="355" Height="100" ID="txtInstructionToCus" runat="server" TextMode="MultiLine" />--%>
                     </td>
