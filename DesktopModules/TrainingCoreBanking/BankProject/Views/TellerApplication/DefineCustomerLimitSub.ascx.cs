@@ -197,9 +197,7 @@ namespace BankProject.Views.TellerApplication
                                 ShowMsgBox("The Product Limit that You have entered does not have Global Limit " + LimitID.Substring(8, 4) + ". Please Create Global Limit before do this action !");
                                 break;
                             }
-                            //DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon, CustomerID+"."+HanMucCha,LimitID );
-                            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon, CustomerID + "." + HanMucCha, LimitID);
-
+                            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon, CustomerID+"."+HanMucCha,LimitID );
                             DataSet ds1 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt(CustomerID + "." + HanMucCha);
                             double InternalLimitAmt_Global = Convert.ToDouble(ds1.Tables[0].Rows[0]["InternalLimitAmt"].ToString());
                             double Sum_Product_InternalAmt = Convert.ToDouble((ds.Tables[0].Rows.Count == 0 ? "0" : ds.Tables[0].Rows[0]["Sum_Product_InternalAmt"].ToString()));
@@ -213,7 +211,7 @@ namespace BankProject.Views.TellerApplication
                             "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
                             , lblPeriodAmt.Text, lblPeriodPct.Text, tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0,
                             tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
-                            , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha,
+                            , lblCollateralAmt.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha,
                             tbIntLimitAmt.Text != "" ? Convert.ToDouble(tbIntLimitAmt.Text.Replace(",", "")) : 0, tbAdvisedAmt.Text != "" ? Convert.ToDouble(tbAdvisedAmt.Text.Replace(",", "")) : 0
                             ,rcbProduct.SelectedValue,rcbProduct.SelectedValue!=""? rcbProduct.Text.Replace(rcbProduct.SelectedValue+" - ",""):"");
                             Response.Redirect("Default.aspx?tabid=361");
@@ -353,7 +351,7 @@ namespace BankProject.Views.TellerApplication
                 rcbCollateralType.Text = rcbCollateralType.SelectedValue + " - " + ds1.Tables[0].Rows[0]["CollateralTypeName"].ToString();
                 LoadCollateralCode(rcbCollateralType.SelectedValue);
                 //string AmtSecured = (ds1.Tables[0].Rows[0]["AmtSecured"].ToString() != "" ? ds1.Tables[0].Rows[0]["AmtSecured"].ToString() : "0");
-                //lblAmtSecured.Text = string.Format("{0:C}",Convert.ToDouble ( AmtSecured) ).Replace("$", "");
+                //lblCollateralAmt.Text = string.Format("{0:C}",Convert.ToDouble ( AmtSecured) ).Replace("$", "");
                 rcbCollateral.SelectedValue = ds1.Tables[0].Rows[0]["CollateralCode"].ToString();
                 rcbCollateral.Text = rcbCollateral.SelectedValue + " - " + ds1.Tables[0].Rows[0]["CollateralName"].ToString();
                 lblCollReqdAmt.Text = ds1.Tables[0].Rows[0]["CollReqdAmt"].ToString();
@@ -379,7 +377,7 @@ namespace BankProject.Views.TellerApplication
                 DataSet ds2 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_SecuredAmt(SubLimitID);
                 if (ds2.Tables != null && ds2.Tables.Count > 0 && ds2.Tables[0].Rows.Count > 0)
                 {
-                    lblAmtSecured.Text = ds2.Tables[0].Rows[0]["SecuredAmount"].ToString();
+                    lblCollateralAmt.Text = ds2.Tables[0].Rows[0]["SecuredAmount"].ToString();
                 }
                 DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0,7), "VND","AvailableAmt");
                 if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)

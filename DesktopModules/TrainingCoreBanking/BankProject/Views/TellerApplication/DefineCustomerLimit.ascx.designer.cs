@@ -229,15 +229,6 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadTextBox tbMaxTotal;
         
         /// <summary>
-        /// lblOtherSecured control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOtherSecured;
-        
-        /// <summary>
         /// lblCollateralRight control.
         /// </summary>
         /// <remarks>
@@ -247,13 +238,13 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.Label lblCollateralRight;
         
         /// <summary>
-        /// lblAmtSecured control.
+        /// lblCollateralAmt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAmtSecured;
+        protected global::System.Web.UI.WebControls.Label lblCollateralAmt;
         
         /// <summary>
         /// lblOnlineLimit control.
@@ -353,6 +344,15 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbFandA;
+        
+        /// <summary>
+        /// lblOtherSecured control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOtherSecured;
         
         /// <summary>
         /// hfInternalLimit control.

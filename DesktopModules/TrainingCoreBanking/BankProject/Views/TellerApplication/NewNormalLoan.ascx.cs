@@ -592,7 +592,7 @@ namespace BankProject.Views.TellerApplication
 
 
             normalLoanEntry.LoanAmount = tbLoanAmount.Text != "" ? decimal.Parse(tbLoanAmount.Text) : 0;
-            normalLoanEntry.ApproveAmount = tbApprovedAmt.Value.HasValue ? (decimal)tbApprovedAmt.Value.Value : 0;
+            normalLoanEntry.ApproveAmount = normalLoanEntry.LoanAmount;
             normalLoanEntry.OpenDate = rdpOpenDate.SelectedDate;
             normalLoanEntry.ValueDate = rdpValueDate.SelectedDate;
 
@@ -822,7 +822,7 @@ namespace BankProject.Views.TellerApplication
                 princleSchedue.InterestKey = dtInfor.Rows[0]["InterestKey"].ToString();
                 princleSchedue.Freq = dtInfor.Rows[0]["Freq"].ToString();
 
-                princleSchedue.Interest = (Int32)dtInfor.Rows[0]["interest"];
+                princleSchedue.Interest = (Decimal)dtInfor.Rows[0]["interest"];
 
 
                 princleSchedue.Period = (Int16)it["Perios"];
@@ -1254,7 +1254,7 @@ namespace BankProject.Views.TellerApplication
             get { return cl_freq; }
             set { cl_freq = value; }
         }
-        DataColumn cl_interest = new DataColumn("interest", Type.GetType("System.Int32"));
+        DataColumn cl_interest = new DataColumn("interest", Type.GetType("System.Decimal"));
 
         public DataColumn Cl_interest
         {
