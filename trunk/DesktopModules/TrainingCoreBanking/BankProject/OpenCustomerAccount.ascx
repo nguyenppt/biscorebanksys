@@ -191,7 +191,7 @@
                             <telerik:RadComboBoxItem Value="1004" Text="1003 - PHI CAP SO PHU QUA EMAIL" />
                             <telerik:RadComboBoxItem Value="1005" Text="1004 - PHI QLTK + SMS" />
                             <telerik:RadComboBoxItem Value="1006" Text="1005 - PHI QLTK + SMA" />
-                            <telerik:RadComboBoxItem Value="1007" Text="1006 - PHI QLTK + SMS + MSO" />
+                            <telerik:RadComboBoxItem Value="1007" Text="1006 - PHI QLTK + SMS + MB" />
                             <telerik:RadComboBoxItem Value="1008" Text="1007 - PHI SMS + SMA" />
                         </Items>
                     </telerik:RadComboBox>
