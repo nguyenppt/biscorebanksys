@@ -10,6 +10,7 @@
     })
 </script>
     </telerik:radcodeblock>
+
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" onbuttonclick="RadToolBar1_ButtonClick" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking">
     <Items>
@@ -1112,6 +1113,23 @@
         $("#<%=btnPrintVon.ClientID %>").click();
     }
 
+    function GetRadWindow() {
+        var oWindow = null;
+        if (window.radWindow) oWindow = window.radWindow;
+        else if (window.frameElement && window.frameElement.radWindow) oWindow = window.frameElement.radWindow;
+        return oWindow;
+    }
+    function callRadAlertOnParent() {
+        var oWnd = GetRadWindow();
+        if (oWnd != null) {
+            setTimeout(function () {
+                GetRadWindow().BrowserWindow.radalert("my error message");
+            }, 0);
+        }
+        else {
+            radalert("my error message");
+        }
+    }
     function RadToolBar1_OnClientButtonClicking(sender, args) {
 
         //var button = args.get_item();
