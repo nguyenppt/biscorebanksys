@@ -340,7 +340,10 @@ namespace BankProject.DataProvider
         {
             sqldata.ndkExecuteNonQuery("BCASHDEPOSIT_UpdateStatus", AccountType, Status, NormalLCCode, userid);
         }
-
+        public static string BCASHDEPOSIT_LoadStatus(string RefID, string Type)
+        {
+            return sqldata.ndkExecuteDataset("BCASHDEPOSIT_LoadStatus", RefID, Type).Tables[0].Rows[0]["Status"].ToString();
+        }
         public static DataSet BCASHDEPOSIT_GetByID(int id)
         {
             return sqldata.ndkExecuteDataset("BCASHDEPOSIT_GetByID", id);
