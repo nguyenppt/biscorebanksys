@@ -63,7 +63,10 @@ namespace BankProject.Views.TellerApplication
             }
             
         }
-
+        protected string geturlReview(string ID)
+        {
+            return "Default.aspx?tabid=119&codeid=" + ID;
+        }
         protected void cmbCategory_onitemdatabound(object sender, RadComboBoxItemEventArgs e)
         {
             DataRowView row = e.Item.DataItem as DataRowView;
