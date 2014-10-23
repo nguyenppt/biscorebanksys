@@ -327,13 +327,9 @@ namespace BankProject.DataProvider
             }
             else return "";
         }
-        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType, string GlobalLimitID, string ProductLimitID)
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType)
         {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType, GlobalLimitID, ProductLimitID);
-        }
-        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt(string GlobalLimitID)
-        {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt",  GlobalLimitID);
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType);
         }
         #endregion
         #region INPUT CUSTOMER_RIGHT_Load_SubLimitID
@@ -379,12 +375,12 @@ namespace BankProject.DataProvider
             string CollateralCode, string CollateralName, string ContingentAcctID, string ContingentAcctName, string Description, string Address, string CollateralStatusID,
             string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID,string Currency
         , string CountryCode, string CountryName, decimal? NominalValue, decimal? MaxValue, decimal? ProvisionValue, decimal? ExecutionValue, decimal? AllocatedAmt, DateTime? ValueDate,
-            DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser, double Rate, string GlobalLimitID2)
+            DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser, double Rate)
         {
             sqldata.ndkExecuteNonQuery("B_COLLATERAL_INFO_Insert_Update", RightID, CollateralInfoID, CollateralTypeCode, CollateralTypeName, CollateralCode, CollateralName,
                 ContingentAcctID, ContingentAcctName, Description, Address, CollateralStatusID, CollateralStatusDesc, CustomerID, CustomreIDName, Note,
                 CompanyStorageID, CompanyStorageDesc, ProductLimitID, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
-                AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate, GlobalLimitID2);
+                AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate);
         }
         public static DataSet B_COLLATERAL_INFO_LoadExistColl_InfoExists(string CollateralInfoID)
         {
@@ -415,7 +411,7 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadCurrency_forEach_Customer", CustomerID);
         }
-        public static DataSet B_COLLATERAL_INFO_Load_GlobalLimitID(string CustomerID)
+        public static DataSet B_COLLATERAL_INFO_Load_ProductLimit(string CustomerID)
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_Load_ProductLimit", CustomerID);
         }
@@ -461,9 +457,9 @@ namespace BankProject.DataProvider
         }
         #endregion
         #region CHEQUE _ WITHDRAWAL
-        public static DataSet CHEQUE_WITHDRAWAL_LoadCustomerAcct(string Currency)
+        public static DataSet CHEQUE_WITHDRAWAL_LoadCustomerAcct(string Currency, string AccountCustomer)
         {
-            return sqldata.ndkExecuteDataset("CHEQUE_WITHDRAWAL_LoadCustomerAcct", Currency);
+            return sqldata.ndkExecuteDataset("CHEQUE_WITHDRAWAL_LoadCustomerAcct", Currency,AccountCustomer);
         }
         public static DataSet CHEQUE_WITHDRAWAL_LoadChequeType()
         {
@@ -735,5 +731,46 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("BTRANSFER_4_CRE_CARD_PAYMENT_UpdateStatus", ID, Status,DebitAcountID, DebitAmt,Currency);
         }
         #endregion
+        #region OUT WARD TRANSFER BY CASH
+        public static void OUT_TRANS_BY_CASH_Insert_Update(string ID, string Status, string ProductID, string ProductName, string Currency, string BenComID, string BenComName
+            , string CreditAcctID, string CreditAcctName, string CashAccountID, double Amount, string SendingName, string SendingAddress1, string SendingAddress2
+            , string SendingPhone, string ReceivingName, string BenAccountID, string ProvinceID, string ProvinceName, string BankCodeID, string BankCodeName,
+            string IdentityCard, DateTime? Issuedate, string IssuePlace, string Teller, string Narrative1, string Narrative2, string Narrative3, string WaiveCharge
+            , string VATSerial, double ChargeAMount, double VATChargeAmount)
+        {
+             sqldata.ndkExecuteNonQuery("OUT_TRANS_BY_CASH_Insert_Update", ID, Status, ProductID, ProductName, Currency, BenComID, BenComName, CreditAcctID, CreditAcctName
+                , CashAccountID, Amount, SendingName, SendingAddress1, SendingAddress2, SendingPhone, ReceivingName, BenAccountID, ProvinceID, ProvinceName, BankCodeID
+                , BankCodeName, IdentityCard, Issuedate, IssuePlace, Teller, Narrative1, Narrative2, Narrative3, WaiveCharge, VATSerial, ChargeAMount, VATChargeAmount);
+        }
+        public static DataSet OUT_TRANS_BY_CASH_Preview_List()
+        {
+            return sqldata.ndkExecuteDataset("OUT_TRANS_BY_CASH_Preview_List");
+        }
+        public static DataSet OUT_TRANS_BY_CASH_Load_Preview(string ID)
+        {
+            return sqldata.ndkExecuteDataset("OUT_TRANS_BY_CASH_Load_Preview", ID);
+        }
+        public static void OUT_TRANS_BY_CASH_Update_Status(string Status, string ID)
+        {
+            sqldata.ndkExecuteNonQuery("OUT_TRANS_BY_CASH_Update_Status", Status, ID);
+        }
+        public static DataSet OUT_TRANS_BY_CASH_Enquiry(string ProductID, string SendingName, string LegalID, string ReceivingName, string BenAccount, string RefID
+            , string BenCom, string Currency, double FromAmt, double ToAmt)
+        {
+            return sqldata.ndkExecuteDataset("OUT_TRANS_BY_CASH_Enquiry", ProductID, SendingName, LegalID, ReceivingName, BenAccount, RefID, BenCom, Currency
+                , FromAmt, ToAmt);
+        }
+        #endregion
+        #region INWARD CASH WITHDRAW
+        public static DataSet Load_ClearingID()
+        {
+            return sqldata.ndkExecuteDataset("Load_ClearingID");
+        }
+        public static DataSet B_BINWARD_CASH_WITHDRAW_Load_ID_Info(string ID)
+        {
+            return sqldata.ndkExecuteDataset("B_BINWARD_CASH_WITHDRAW_Load_ID_Info", ID);
+        }
+        #endregion
+
     }
 }
