@@ -57,9 +57,9 @@
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td style="width:150px ;padding:5px 0 5px 20px;">
-                <asp:TextBox Width="150" ID="tbID" runat="server" text="06.000265047.1"/>
+                <asp:TextBox Width="150" ID="tbID" runat="server" ForeColor="Black" text="06.000265047.1"/>
                 <i>
-                    <asp:Label ID="lblID" runat="server"></asp:Label>
+                    <asp:Label ID="lblID" ForeColor="Black" runat="server"></asp:Label>
                 </i>
 
             </td>
@@ -85,7 +85,7 @@
                                 <td width="350">
                                     <telerik:RadComboBox AppendDataBoundItems="True" OnClientSelectedIndexChanged="OnValueChanged_GetAccountName"                                
                                         ID="rcbCustomerID" runat="server" OnItemDataBound="rcbCustomerID_OnItemDataBound"
-                                        MarkFirstMatch="True" Width="350" Height="150px"
+                                        MarkFirstMatch="True" Width="350" Height="150px" ForeColor="Black" 
                                         AllowCustomText="false" >
                                         <ExpandAnimation Type="None" />
                                         <CollapseAnimation Type="None" /> 
@@ -106,7 +106,7 @@
                 </td>
                 <td class="MyContent">
                     <telerik:RadComboBox ID="rcbCategory" runat="server" MarkFirstMatch="true" Width="350" AllowCustomtext="false" Height="150px"
-                        appendDataboundItems ="true"   >
+                        appendDataboundItems ="true" ForeColor="Black"   >
                         <ExpandAnimation Type="None" />
                         <CollapseAnimation Type="None" />                
                     <Items>
@@ -127,7 +127,7 @@
                 <td class="MyContent">
                     <telerik:RadComboBox id="rcbCurrency" width="150" runat="server"  appenddatabounditems="true" Height="150px"
                     MarkFirstMatch="true" AllowCustomText="false" OnClientSelectedIndexChanged="OnValueChanged_GetAccountName"
-                      >
+                    ForeColor="Black"   >
                 <ExpandAnimation type="None" />
                 <CollapseAnimation type="None" />
                 <Items>
@@ -139,15 +139,15 @@
             <tr>
                 <td class="MyLable">Account Name:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox id="txtAccountName" width="350" runat="server" ValidationGroup="Group1" />
+                    <telerik:RadTextBox id="txtAccountName" width="350" runat="server" ForeColor="Black"  ValidationGroup="Group1" />
                 </td>
-                <td class="MyContent"><i><asp:Label ID="lblNote" runat="server" /> </i></td>
+                <td class="MyContent"><i><asp:Label ID="lblNote" runat="server" ForeColor="Black"  /> </i></td>
             
             </tr>
             <tr>
                 <td class="MyLable">Short Title:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox id="tbShortTitle" width="350" runat="server" ValidationGroup="Group1" />
+                    <telerik:RadTextBox id="tbShortTitle" width="350" runat="server" ValidationGroup="Group1" ForeColor="Black"  />
                 </td>
                 <td class="MyLable"></td>
                 <td class="MyContent"></td>

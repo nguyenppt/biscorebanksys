@@ -38,8 +38,8 @@
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width: 200px; padding: 5px 0 5px 20px;">
-            <asp:TextBox ID="tbID" runat="server" Width="200"/> </td>
-        <td> <i> <asp:Label ID="lblCashDeposit" runat="server" /></i></td>
+            <asp:TextBox ID="tbID" runat="server" Width="200" ForeColor="Black" /> </td>
+        <td> <i> <asp:Label ID="lblCashDeposit" runat="server"  ForeColor="Black" /></i></td>
     </tr>
 </table>
 </div>
@@ -55,10 +55,10 @@
                 <tr>
                     <td class="MyLable">Customer:</td>
                     <td class="MyContent" width="100">
-                        <asp:Label ID="lblCustomerID" runat="server" width="100"></asp:Label>
+                        <asp:Label ID="lblCustomerID" runat="server" width="100" ForeColor="Black" ></asp:Label>
                     </td>
                     <td class="MyContent"> 
-                        <asp:Label ID="lblCustomerName" runat="server"/>
+                        <asp:Label ID="lblCustomerName" runat="server" ForeColor="Black" />
                     </td>
                 </tr>
                 </table>
@@ -75,7 +75,7 @@
                              MarkFirstMatch="true" ValidationGroup="Group1"
                              AppendDataBoundItems="true" 
                              OnClientSelectedIndexChanged="rcbCustAccount_rcbCurrency_OnClientSelectedIndexChanged"
-                                >
+                               ForeColor="Black"   >
                         </telerik:RadComboBox>
                     </td>
                    
@@ -86,20 +86,20 @@
                             ControlToValidate="tbCusomerAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Customer Account is required"
                             ForeColor="Red" /></span></td>
                     <td class="MyContent" >
-                        <asp:TextBox runat="server" ID="tbCusomerAcct" ValidationGroup="Group1"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="tbCusomerAcct" ValidationGroup="Group1" ForeColor="Black" ></asp:TextBox>
                        
                     </td>
                 </tr>
                  <tr>
                      <td class="MyLable">Balance Amount:</td>
                     <td class="MyContent">
-                        <telerik:radnumerictextbox runat="server" id="tbBalanceAmt" readonly="true" Borderwidth="0" ></telerik:radnumerictextbox>
+                        <telerik:radnumerictextbox runat="server" id="tbBalanceAmt" readonly="true" Borderwidth="0"  ForeColor="Black" ></telerik:radnumerictextbox>
                     </td>
                 </tr>
                  <tr>
                      <td class="MyLable">New Balance Amount:</td>
                     <td class="MyContent">
-                         <telerik:radnumerictextbox runat="server" id="tbNewBalanceAmt" readonly="true" Borderwidth="0" ></telerik:radnumerictextbox>
+                         <telerik:radnumerictextbox runat="server" id="tbNewBalanceAmt" readonly="true" Borderwidth="0"  ForeColor="Black" ></telerik:radnumerictextbox>
                     </td>
                 </tr>
                  <tr>
@@ -109,7 +109,7 @@
                     ForeColor="Red" />
                      </td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbTellerID" runat="server" ValidationGroup="Group1"></telerik:RadTextBox>
+                        <telerik:RadTextBox ID="tbTellerID" runat="server" ValidationGroup="Group1" ForeColor="Black" ></telerik:RadTextBox>
                     </td>
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
@@ -131,7 +131,7 @@
                     <td class="MyContent">
                         <telerik:RadComboBox 
                             ID="rcbCurrencyDeposited" 
-                            runat="server" 
+                            runat="server"  ForeColor="Black" 
                             AllowCustomText="false" 
                             AppendDataBoundItems="true" 
                             MarkFirstMatch="true"
@@ -158,7 +158,7 @@
                     <td class="MyContent" width="390">
                         <telerik:RadComboBox ID="rcbCashAccount" runat="server" 
                             MarkFirstMatch="true" AllowCustomText="false" 
-                            ValidationGroup="Group1"  
+                            ValidationGroup="Group1"   ForeColor="Black" 
                              AppendDataBoundItems="true"  
                             AutoPostBack="false" ></telerik:RadComboBox> 
                     </td>
@@ -177,7 +177,7 @@
 
                      </td>
                     <td class="MyContent" width="350">
-                        <telerik:RadNumericTextBox ID="tbAmtLCYDeposited" runat="server" ValidationGroup="Group1" 
+                        <telerik:RadNumericTextBox ID="tbAmtLCYDeposited" runat="server" ValidationGroup="Group1"  ForeColor="Black" 
                             ClientEvents-OnValueChanged="tbAmtLCYDeposited_thanhtien" ></telerik:RadNumericTextBox>
                     </td>
                 </tr>
@@ -187,7 +187,7 @@
                 <tr>
                      <td class="MyLable">Deal Rate:</td>
                     <td class="MyContent">
-                          <telerik:RadNumericTextBox ID="tbDealRate" runat="server" ValidationGroup="Group1" NumberFormat-DecimalDigits="5"
+                          <telerik:RadNumericTextBox ID="tbDealRate" runat="server" ValidationGroup="Group1" NumberFormat-DecimalDigits="5" ForeColor="Black" 
                               ClientEvents-OnValueChanged="tbAmtLCYDeposited_thanhtien"></telerik:RadNumericTextBox>
                     </td>
                     <td class="MyLable"></td>
@@ -197,7 +197,7 @@
                      <td class="MyLable">Waive Charges:</td>
                     <td class="MyContent">
                          <telerik:RadComboBox ID="rcbWaiveCharge" 
-                        AppendDataBoundItems="true" 
+                        AppendDataBoundItems="true"  ForeColor="Black" 
                         MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1">
                         <Items>
                             <telerik:RadComboBoxItem Value="YES" Text="YES" />
@@ -211,7 +211,7 @@
                 <tr>
                      <td class="MyLable">Narrative:</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbNarrative" runat="server" width="390"/>
+                        <telerik:RadTextBox ID="tbNarrative" runat="server" width="390" ForeColor="Black" />
                     </td>
                     <td class="MyLable"></td>
                     <td class="MyContent">
@@ -220,7 +220,7 @@
                 <tr>
                      <td class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbNarrative2" runat="server" width="390"/>
+                        <telerik:RadTextBox ID="tbNarrative2" runat="server" width="390" ForeColor="Black" />
                     </td>
                     <td class="MyLable"></td>
                     <td class="MyContent">
@@ -231,7 +231,7 @@
                 <tr>
                      <td class="MyLable">Print Ln No of PS:</td>
                     <td class="MyContent">
-                         <telerik:RadNumericTextBox ID="tbPrint" runat="server" NumberFormat-DecimalDigits="0" />
+                         <telerik:RadNumericTextBox ID="tbPrint" runat="server" NumberFormat-DecimalDigits="0" ForeColor="Black"  />
                     </td>
                     <td class="MyLable" width="150">
                         

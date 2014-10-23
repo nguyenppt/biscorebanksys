@@ -46,7 +46,7 @@
         <tr>
             <td class="MyLable" style="padding:5px 0px 5px 17px;">Customer ID:</td>
             <td class="MyContent" style="padding:5px 0px 5px 5px;">
-                <telerik:RadCombobox id="rcbCustomerID" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true"
+                <telerik:RadCombobox id="rcbCustomerID" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" ForeColor="Black" 
                     width="40%" height="150" OnClientSelectedIndexChanged="setID" AutoPostBack="true" OnSelectedIndexChanged="rcbGlobalLimit_OnSelectedIndexChanged">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
@@ -60,7 +60,7 @@
         <tr>
             <td class="MyLable" style="padding:5px 0 5px 17px;">Global Limit:</td>
             <td class="MyContent" style="padding:5px 0px 5px 5px;">
-                <telerik:RadCombobox id="rcbGlobalLimit" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" 
+                <telerik:RadCombobox id="rcbGlobalLimit" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" ForeColor="Black" 
                   width="40%"  OnClientSelectedIndexChanged="setID" AutoPostBack="true" OnSelectedIndexChanged="rcbGlobalLimit_OnSelectedIndexChanged" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
@@ -74,12 +74,12 @@
         <tr>
             <td class="MyLable" style="padding:5px 0 5px 17px;">ID:</td>
             <td class="MyContent" style="padding:5px 0px 5px 5px;">
-                <asp:TextBox Width="40%" ID="tbLimitID" runat="server" /><span class="Required">(*)</span>
+                <asp:TextBox Width="40%" ID="tbLimitID" runat="server" ForeColor="Black"  /><span class="Required">(*)</span>
                 <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator2"
                      ControlToValidate="tbLimitID" ValidationGroup="Commit" InitialValue="" ErrorMessage="Customer Limit ID is required"
                     ForeColor="Red"></asp:RequiredFieldValidator>
                 <i>
-                    <asp:Label ID="lblCustomerName"  runat="server"></asp:Label> <b><asp:Label ID="lblCheckCustomerName" runat="server" /></b>
+                    <asp:Label ID="lblCustomerName" ForeColor="Black"  runat="server"></asp:Label> <b><asp:Label ID="lblCheckCustomerName" runat="server" /></b>
                 </i>
             </td>
         </tr>
@@ -106,7 +106,7 @@
             </td>
             <td class="MyContent">
                 <telerik:RadComboBox ID="rcbCurrency" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true"
-                          OnClientSelectedIndexChanged="CurrencyChanged_forNote" >
+                          OnClientSelectedIndexChanged="CurrencyChanged_forNote" ForeColor="Black"  >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>                     
@@ -117,7 +117,7 @@
             </td>
             <td class="MyLable">Country:</td>
             <td class="MyContent">
-                        <telerik:RadComboBox ID="rcbCountry" runat="server"  appendDataboundItems="true"
+                        <telerik:RadComboBox ID="rcbCountry" runat="server"  appendDataboundItems="true" ForeColor="Black" 
                              AllowCustomText="false" MarkFirstMatch="true"  height="190" > 
                             <ExpandAnimation Type="none" />
                             <CollapseAnimation Type="None" />
@@ -132,27 +132,27 @@
             <tr>
                 <td class="MyLable">Approved Date:</td>
                 <td class="MyContent" >
-                    <telerik:RadDatePicker ID="RdpApprovedDate"  runat="server" validationGroup="Group1"></telerik:RadDatePicker>
+                    <telerik:RadDatePicker ID="RdpApprovedDate"  runat="server" validationGroup="Group1" ForeColor="Black" ></telerik:RadDatePicker>
                 </td>
                 <td class="MyLable">Offered Until:</td>
                 <td class="MyContent">
-                    <telerik:RadDatePicker ID="RdpOfferedUnit" runat="server" validationGroup="Group1"></telerik:RadDatePicker>
+                    <telerik:RadDatePicker ID="RdpOfferedUnit" runat="server" validationGroup="Group1" ForeColor="Black" ></telerik:RadDatePicker>
                 </td>
             </tr>
               <tr>
                   <td class="MyLable">Expiry Date:</td>
                   <td class="MyContent">
-                      <telerik:RadDatePicker ID="rdpExpiryDate" runat="server" validationGroup="Group1"></telerik:RadDatePicker>
+                      <telerik:RadDatePicker ID="rdpExpiryDate" runat="server" validationGroup="Group1" ForeColor="Black" ></telerik:RadDatePicker>
                   </td>
               </tr>
             <tr>
                 <td class="MyLable">Proposal Date:</td>
                 <td class="MyContent">
-                    <telerik:RadDatePicker ID="RdpProposalDate" runat="server" ValidationGroup="Group1"></telerik:RadDatePicker>
+                    <telerik:RadDatePicker ID="RdpProposalDate" runat="server" ValidationGroup="Group1" ForeColor="Black" ></telerik:RadDatePicker>
                 </td>
                 <td class="MyLable">Available Date:</td>
                 <td class="MyContent">                    
-                    <telerik:RadDatePicker ID="RdpAvailableDate" runat="server" ValidationGroup="Group1"></telerik:RadDatePicker>
+                    <telerik:RadDatePicker ID="RdpAvailableDate" runat="server" ValidationGroup="Group1" ForeColor="Black" ></telerik:RadDatePicker>
                 </td>
             </tr> 
             </table>
@@ -162,14 +162,14 @@
             <tr>
                 <td class="MyLable">Internal Limit Amt:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1" ClientEvents-OnvalueChanged="tbIntLimitAmt_OnvalueChanged" >
+                    <telerik:RadTextBox ID="tbIntLimitAmt"  runat="server" ValidationGroup="Group1" ClientEvents-OnvalueChanged="tbIntLimitAmt_OnvalueChanged" ForeColor="Black" >
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:RadTextBox>
                    
                 </td>
                 <td class="MyLable">Advised Amount:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbAdvisedAmt" runat="server"  ValidationGroup="Group1" >
+                    <telerik:RadTextBox ID="tbAdvisedAmt" runat="server"  ValidationGroup="Group1" ForeColor="Black" >
                          <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:RadTextBox>
                      
@@ -182,7 +182,7 @@
               <tr>
                 <td class="MyLable">Notes:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbNote" runat="server" ValidationGroup="Group1" Width="400" 
+                    <telerik:RadTextBox ID="tbNote" runat="server" ValidationGroup="Group1" Width="400" ForeColor="Black" 
                         text="Mo Han Muc Global Cho Khach Hang"/><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png"></a>--%>
                 </td>
                 <td > </td>
@@ -207,7 +207,7 @@
             <tr>
                 <td class="MyLable">Maximum Secured:</td>
                 <td class="MyContent" width="150">
-                    <telerik:RadTextBox ID="tbMaxSecured" runat="server" ValidationGroup="Group1" Width="150" >
+                    <telerik:RadTextBox ID="tbMaxSecured" runat="server" ValidationGroup="Group1" Width="150" ForeColor="Black"  >
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:RadTextBox>
                   
@@ -216,7 +216,7 @@
             </tr> <tr>
                 <td class="MyLable">Maximum Unsecured:</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbMaxUnsecured" runat="server" ValidationGroup="Group1" Width="150">
+                    <telerik:RadTextBox ID="tbMaxUnsecured" runat="server" ValidationGroup="Group1" Width="150" ForeColor="Black" >
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:RadTextBox>
                    
@@ -225,28 +225,21 @@
             <tr>
                 <td class="MyLable">Maximum Total:</td>
                 <td class="MyContent">
-                    <telerik:radtextbox ID="tbMaxTotal" runat="server"  Width="150" >
+                    <telerik:radtextbox ID="tbMaxTotal" runat="server"  Width="150" ForeColor="Black" >
                           <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                     </telerik:radtextbox>
                 </td>
                
             </tr> 
-            <tr>
-                <td class="MyLable">Other Secured:</td>
-                <td class="MyContent">
-                    <asp:Label ID="lblOtherSecured" runat="server" />
-                </td>
-                <td class="MyLable"></td>
-                <td class="MyContent"></td>
-            </tr>
+           
             <tr>
                 <td class="MyLable">Collateral ID:</td>
                 <td class="MyContent">
                     <asp:Label ID="lblCollateralRight" runat="server" />
                 </td>
-                <td class="MyLable">Amt Secured:</td>
+                <td class="MyLable">Collateral Amount:</td>
                 <td class="MyContent">
-                    <asp:Label ID="lblAmtSecured" runat="server" />
+                    <asp:Label ID="lblCollateralAmt" runat="server" />
                 </td>
             </tr> <tr>
                 <td class="MyLable">Online Limit:</td>
@@ -338,6 +331,14 @@
                 </td>
                 <td class="MyLable"></td>               
                 <td class="MyContent"></td>               
+            </tr>
+             <tr style="visibility:hidden;">
+                <td class="MyLable">Other Secured:</td>
+                <td class="MyContent">
+                    <asp:Label ID="lblOtherSecured" runat="server" />
+                </td>
+                <td class="MyLable"></td>
+                <td class="MyContent"></td>
             </tr>
                </table>
     </fieldset>

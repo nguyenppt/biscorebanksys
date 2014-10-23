@@ -96,7 +96,7 @@ namespace BankProject.Views.TellerApplication
                     //            "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
                     //            , lblPeriodAmt.Text, lblPeriodPct.Text,tbMaxSecured.Text !=""? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")):0, tbMaxUnsecured.Text!=""? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")):0,
                     //            tbMaxTotal.Text!=""? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
-                    //            , lblAmtSecured.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
+                    //            , lblCollateralAmt.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
                     //        Response.Redirect("Default.aspx?tabid=192");
                     //    }
                     //    //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
@@ -224,7 +224,7 @@ namespace BankProject.Views.TellerApplication
                 tbMaxTotal.Text = ds1.Tables[0].Rows[0]["MaxTotal"].ToString();
                 lblOtherSecured.Text = ds1.Tables[0].Rows[0]["OtherSecured"].ToString();
                 lblCollateralRight.Text = ds1.Tables[0].Rows[0]["CollateralRight"].ToString();
-                lblAmtSecured.Text = ds1.Tables[0].Rows[0]["AmtSecured"].ToString();
+                lblCollateralAmt.Text = ds1.Tables[0].Rows[0]["AmtSecured"].ToString();
                 lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
                 lblAvailableAmt.Text = ds1.Tables[0].Rows[0]["AvailableAmt"].ToString();
                 lblTotalOutstand.Text = ds1.Tables[0].Rows[0]["TotalOutstand"].ToString();

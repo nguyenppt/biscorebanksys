@@ -565,14 +565,14 @@
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr id="amountAllocID">
-                    <td class="MyLable">Amount Alloc</td>
+                    <td class="MyLable">Collateral Amount</td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="rtbAmountAlloc" runat="server" validationgroup="Group1">
                             <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
                         </telerik:radnumerictextbox>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">Country Risk</td>
                     <td class="MyContent">
                         <telerik:radcombobox id="rcbCountryRisk" runat="server" allowcustomtext="false" markfirstmatch="true" validationgroup="Group1">
@@ -585,7 +585,7 @@
                         </telerik:radcombobox>
                     </td>
                 </tr>
-                <tr>
+                <tr  style="display:none">
                     <td class="MyLable">Legacy.Ref</td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="rtbLegacy" runat="server" validationgroup="Group1"></telerik:radnumerictextbox>
@@ -603,7 +603,7 @@
         <asp:ValidationSummary ID="ValidationSummary2" runat="server" ShowMessageBox="True"
             ShowSummary="False" ValidationGroup="CommitFull" />
         <p>&nbsp;</p>
-        <table width="100%" cellpadding="0" cellspacing="0">
+        <table width="100%" cellpadding="0" cellspacing="0" style="display:none">
             <tr>
                 <td class="MyLable">Forward/Backward Key <span class="Required">(*)</span>
                     <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator15"
@@ -625,8 +625,8 @@
                 <td class="MyLable"><i>Base Date</i> </td>
             </tr>
         </table>
-        <hr />
-        <%--<UC:VVNewLoanControl runat="server" id="vvnbRate" VVTLabel="" Icon="false" />--%>
+        <hr style="display:none" />
+        
         <asp:UpdatePanel ID="UpdatePanel5" runat="server">
             <ContentTemplate>
                 <asp:ListView ID="lvLoanControl" runat="server" DataKeyNames="ID" InsertItemPosition="LastItem"
@@ -648,10 +648,10 @@
                                 <EnabledStyle HorizontalAlign="Right" />
                                 </telerik:radnumerictextbox>
                             </td>
-                            <td>
+                            <td style="display:none" >
                                 <asp:Label ID="RateLabel" runat="server" Text='<%# Eval("Rate") %>' />
                             </td>
-                            <td>
+                            <td style="display:none" >
                                 <asp:Label ID="ChrgLabel" runat="server" Text='<%# Eval("Chrg") %>' />
                             </td>
                             <td>
@@ -695,12 +695,12 @@
                                 <telerik:radnumerictextbox id="AmountActionTextBox" runat="server" value='<%# Bind("AmountAction") %>'>
                                 </telerik:radnumerictextbox>
                             </td>
-                            <td>
+                            <td style="display:none" >
                                 <telerik:radnumerictextbox id="RateTextBox" runat="server" value='<%# Bind("Rate") %>'>
                                 </telerik:radnumerictextbox>
 
                             </td>
-                            <td>
+                            <td style="display:none" >
                                 <asp:DropDownList ID="ChrgTextBox" runat="server" SelectedValue='<%# Bind("Chrg") %>'>
                                     <asp:ListItem Selected="True"></asp:ListItem>
                                 </asp:DropDownList>
@@ -773,12 +773,12 @@
                                 <telerik:radnumerictextbox id="AmountActionTextBox" runat="server" value='<%# Bind("AmountAction") %>'>
                                 </telerik:radnumerictextbox>
                             </td>
-                            <td>
+                            <td style="display:none" >
                                 <telerik:radnumerictextbox id="RateTextBox" runat="server" value='<%# Bind("Rate") %>'>
                                 </telerik:radnumerictextbox>
 
                             </td>
-                            <td>
+                            <td style="display:none" >
                                 <asp:DropDownList ID="ChrgTextBox" runat="server" SelectedValue='<%# Bind("Chrg") %>'>
                                     <asp:ListItem Selected="True"></asp:ListItem>
                                 </asp:DropDownList>
@@ -829,10 +829,10 @@
                                 <EnabledStyle HorizontalAlign="Right" />
                                 </telerik:radnumerictextbox>
                             </td>
-                            <td>
+                            <td style="display:none" >
                                 <asp:Label ID="RateLabel" runat="server" Text='<%# Eval("Rate") %>' />
                             </td>
-                            <td>
+                            <td style="display:none" >
                                 <asp:Label ID="ChrgLabel" runat="server" Text='<%# Eval("Chrg") %>' />
                             </td>
                             <td>
@@ -857,8 +857,8 @@
                                             <th runat="server">Type <span class="Required">(*)</span></th>
                                             <th runat="server">Date</th>
                                             <th runat="server">Amount - Diary Action</th>
-                                            <th runat="server">Rate</th>
-                                            <th runat="server">Chrg</th>
+                                            <th runat="server" style="display:none" >Rate</th>
+                                            <th runat="server" style="display:none" >Chrg</th>
                                             <th runat="server">No</th>
                                             <th runat="server">Frequency</th>
                                             <th runat="server"></th>
