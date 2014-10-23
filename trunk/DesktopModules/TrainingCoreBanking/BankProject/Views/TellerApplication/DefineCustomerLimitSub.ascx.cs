@@ -197,7 +197,9 @@ namespace BankProject.Views.TellerApplication
                                 ShowMsgBox("The Product Limit that You have entered does not have Global Limit " + LimitID.Substring(8, 4) + ". Please Create Global Limit before do this action !");
                                 break;
                             }
-                            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon, CustomerID+"."+HanMucCha,LimitID );
+                            //DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon, CustomerID+"."+HanMucCha,LimitID );
+                            DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon, CustomerID + "." + HanMucCha, LimitID);
+
                             DataSet ds1 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt(CustomerID + "." + HanMucCha);
                             double InternalLimitAmt_Global = Convert.ToDouble(ds1.Tables[0].Rows[0]["InternalLimitAmt"].ToString());
                             double Sum_Product_InternalAmt = Convert.ToDouble((ds.Tables[0].Rows.Count == 0 ? "0" : ds.Tables[0].Rows[0]["Sum_Product_InternalAmt"].ToString()));
