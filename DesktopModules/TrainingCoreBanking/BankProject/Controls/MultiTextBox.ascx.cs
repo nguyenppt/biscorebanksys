@@ -15,7 +15,8 @@ namespace BankProject.Controls
         private bool isSetText = false;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), getJSFunction(), getJSFunction() + "();");
+            if (this.Visible)
+                Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), getJSFunction(), getJSFunction() + "();");
             if (IsPostBack || isSetText) return;
             litMultiTextBox.Text = createTextBox();            
         }
