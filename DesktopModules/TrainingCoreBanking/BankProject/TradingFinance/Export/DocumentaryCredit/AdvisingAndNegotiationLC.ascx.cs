@@ -91,6 +91,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 tbEssurLCCode.Text = Request.QueryString["CodeID"];
                 LoadData();
                 //SetVisibilityByStatus(ref dataRow);
+                tbEssurLCCode.Enabled = false;
                 RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             }
             switch (ScreenType)
@@ -104,15 +105,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     InitToolBarForAmend();
                     //tabCharges.Visible = false;
                     //Charges.Visible = false;
-                    tbEssurLCCode.Enabled = false;
+                    //tbEssurLCCode.Enabled = false;
                     break;
                 case AdvisingAndNegotiationScreenType.Cancel:
                     InitToolBarForCancel();
-                    tbEssurLCCode.Enabled = false;
+                    tbEssurLCCode.Enabled = true;
                     break;
                 case AdvisingAndNegotiationScreenType.Close:
                     InitToolBarForClose();
-                    tbEssurLCCode.Enabled = false;
+                    //tbEssurLCCode.Enabled = false;
                     break;
                 case AdvisingAndNegotiationScreenType.Acception:
                     InitToolBarForAccept();
@@ -120,7 +121,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     txtExternalReference.Enabled = true;
                     ComboConfirmInstr.Enabled = true;
                     txtLimitRef.Enabled = true;
-                    tbEssurLCCode.Enabled = false;
+                    //tbEssurLCCode.Enabled = false;
                     break;
                 //case ExportDocumentaryScreenType.Cancel:
                 //    InitToolBarForCancel();
@@ -330,7 +331,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 SetDisableByReview(false);
                 LoadToolBar(true);
 
-                tbEssurLCCode.Enabled = false;
+                //tbEssurLCCode.Enabled = false;
                 dteCancelDate.Enabled = true;
                 dteContingentExpiryDate.Enabled = true;
                 txtCancelRemark.Enabled = true;
