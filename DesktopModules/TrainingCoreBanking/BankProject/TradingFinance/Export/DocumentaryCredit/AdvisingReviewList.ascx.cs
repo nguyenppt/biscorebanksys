@@ -6,12 +6,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BankProject.DBContext;
 using Telerik.Web.UI;
+using BankProject.Model;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class AdvisingReviewList : DotNetNuke.Entities.Modules.PortalModuleBase
     {
-        private readonly VietVictoryCoreBankingEntities entContext = new VietVictoryCoreBankingEntities();
+        private readonly ExportLC entContext = new ExportLC();
         protected const int TabIssueLCAmend = 235;
         protected const int TabIssueLCConfirm = 236;
         protected const int TabIssueLCCancel = 237;

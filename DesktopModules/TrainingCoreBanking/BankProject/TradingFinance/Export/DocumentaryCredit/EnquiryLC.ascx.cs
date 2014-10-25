@@ -11,12 +11,13 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Data.Objects;
 using BankProject.Helper;
+using BankProject.Model;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class EnquiryLC : DotNetNuke.Entities.Modules.PortalModuleBase
     {
-        private readonly VietVictoryCoreBankingEntities entContext = new VietVictoryCoreBankingEntities();
+        private readonly ExportLC entContext = new ExportLC();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;

@@ -11,10 +11,10 @@
         {
             var item = eventArgs.get_item();
             if (item.get_text() == "YES") {
-                $("#TCharge").show();
+                $("#<%=TCharge.ClientID %>").show();
             }
             else {
-                $("#TCharge").hide();
+                $("#<%=TCharge.ClientID %>").hide();
             }
         }
         function RadToolBar1_OnClientButtonClicking(sender, args) {
@@ -66,7 +66,7 @@
 <div class="dnnForm" id="tabs-demo">
         <ul class="dnnAdminTabNav">
             <li><a href="#Main">Main</a></li>
-           <% if (TabId == TabDocsWithDiscrepancies || DocsType == TabDocsWithDiscrepancies) %>
+           <% if (TabId == TabDocsWithDiscrepancies) %>
                 <%{ %>
                 
                 <li><a href="#tabCharge">Charge</a></li>
@@ -223,6 +223,7 @@
                         </telerik:RadNumericTextBox>
                     </td>
                 </tr>
+                
             </table>
         </div>
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -341,7 +342,16 @@
                     </td>
                 </tr>
             </table>
+            
         </div>
+        <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="MyLable" style="width: 180px">69.3.1 Full docs amount</td>
+                    <td class="MyContent">
+                        <telerik:RadNumericTextBox runat="server" ID="txtFullDocsAmount" Width="355" />
+                    </td>
+                </tr>
+        </table>
         <fieldset runat="server" ID="fieldsetDiscrepancies" visible="false">
             <legend>
                 <div style="font-weight: bold; text-transform: uppercase;">Discrepancies and Disposal of Docs</div>
@@ -351,7 +361,7 @@
                 <tr>
                     <td class="MyLable" style="width: 170px">33.1 Discrepancies</td>
                     <td class="MyContent">
-                        <telerik:Radtextbox runat="server" ID="txtDiscrepancies" Width="355" ClientEvents-OnValueChanged ="txtDiscrepancies_OnValueChanged" />
+                        <telerik:Radtextbox runat="server" ID="txtDiscrepancies" Width="355"/>
                     </td>
                 </tr>
                 
@@ -410,7 +420,7 @@
         </fieldset>
         </div>
         </div>
-        <div id="tabCharge" class="dnnClear" style="display:none;">
+        <div id="tabCharge" class="dnnClear">
             <div runat="server" ID="divCharge">
                 <asp:HiddenField ID="hiddenCustomerName" runat="server" />
                 <table width="100%" cellpadding="0" cellspacing="0">
@@ -418,7 +428,7 @@
                         <td class="MyLable">Waive Charges</td>
                         <td class="MyContent">
                             <telerik:RadComboBox AutoPostBack="false"
-                                
+                               
                                 Onclientselectedindexchanged="OnclientSelectedIndexChanged"
                                 ID="comboWaiveCharges" runat="server"
                                 MarkFirstMatch="True"
@@ -445,7 +455,7 @@
                     </td>
                 </tr>
                 </table>
-                <div id="TCharge" style="display:none">
+                <div id="TCharge"  runat="server">
                 <telerik:RadTabStrip runat="server" ID="RadTabStrip3" SelectedIndex="0" MultiPageID="RadMultiPage1" Orientation="HorizontalTop">
                 <Tabs>
                     <telerik:RadTab Text="Cable Charge">
@@ -1124,12 +1134,38 @@
                 <telerik:AjaxUpdatedControl ControlID="tbChargeCode3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-        <%--<telerik:AjaxSetting AjaxControlID="comboWaiveCharges">
+
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="comboWaiveCharges" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode" />
             </UpdatedControls>
-        </telerik:AjaxSetting>--%>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
         
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
