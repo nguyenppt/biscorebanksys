@@ -679,7 +679,7 @@
                                     <asp:ListItem>P</asp:ListItem>
                                     <asp:ListItem>I+P</asp:ListItem>
                                     <asp:ListItem>AC</asp:ListItem>
-                                    <asp:ListItem>B</asp:ListItem>
+                                    <asp:ListItem>EI</asp:ListItem>
                                     <asp:ListItem>EP</asp:ListItem>
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"
@@ -757,7 +757,7 @@
                                     <asp:ListItem>P</asp:ListItem>
                                     <asp:ListItem>I+P</asp:ListItem>
                                     <asp:ListItem>AC</asp:ListItem>
-                                    <asp:ListItem>B</asp:ListItem>
+                                    <asp:ListItem>EI</asp:ListItem>
                                     <asp:ListItem>EP</asp:ListItem><%--cho phép user định nghĩa số tiền cần phải trả trong Kỳ Cuối--%>
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"

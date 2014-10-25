@@ -86,6 +86,8 @@ namespace BankProject.Views.TellerApplication
 
         private bool IsUnderlimitAmount()
         {
+            if (isAmendPage)
+                return true;
 
             StoreProRepository facade = new StoreProRepository();
             var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount(normalLoanEntryM.LimitReference).First<decimal?>();
@@ -93,6 +95,15 @@ namespace BankProject.Views.TellerApplication
             {
                 RadWindowManager1.RadAlert("Loan amount cannot exceed " + limit, 340, 150, "Alert", null);
                 return false;
+            }
+            else
+            {
+                var utildate = facade.StoreProcessor().B_Normal_Loan_Get_OfferedUntilDate(normalLoanEntryM.LimitReference).First<DateTime?>();
+                if (utildate != null && normalLoanEntryM.Drawdown != null && normalLoanEntryM.Drawdown > utildate)
+                {
+                    RadWindowManager1.RadAlert("Drawdown date cannot be greater than product limit Offered Until date [" + ((DateTime)utildate).ToString("MM/dd/yyyy") + "]", 340, 150, "Alert", null);
+                    return false;
+                }
             }
 
             return true;
@@ -900,14 +911,20 @@ namespace BankProject.Views.TellerApplication
                 Union(facade.FindLoanControl(normalLoanEntryM.Code, "I")).FirstOrDefault();//All get Priciple date
 
             if (it == null || String.IsNullOrEmpty(it.Freq))
+            {
+                it = facade.FindLoanControl(normalLoanEntryM.Code, "EP").FirstOrDefault();//All get Priciple date
+            }
+            if (it == null || String.IsNullOrEmpty(it.Freq))
+            {
                 return;
+            }
 
             int freq = 0;
             String rateType = "1";
             DateTime drawdownDate = normalLoanEntryM.Drawdown == null ? (DateTime)normalLoanEntryM.ValueDate : (DateTime)normalLoanEntryM.Drawdown;
             DateTime startDate = (DateTime)normalLoanEntryM.ValueDate;
             DateTime endDate = (DateTime)normalLoanEntryM.MaturityDate;
-            DateTime startInterestDate;
+            DateTime startInterestDate = drawdownDate; 
             DateTime prevInterestDate = drawdownDate;
             int durationDate = endDate.Subtract(startDate).Days;
             int perios = 0;
@@ -936,7 +953,7 @@ namespace BankProject.Views.TellerApplication
             else
             {
                 freq = int.Parse(it.Freq);
-                startInterestDate = it.Date == null ? ((DateTime)drawdownDate).AddMonths(freq) : (DateTime)it.Date;
+                startInterestDate = it.Date == null ? ((DateTime)drawdownDate) : (DateTime)it.Date;
             }
 
 
@@ -951,6 +968,28 @@ namespace BankProject.Views.TellerApplication
 
             for (int i = 0; i < perios; i++)
             {
+                if (i == perios - 1)
+                {
+                    it = facade.FindLoanControl(normalLoanEntryM.Code, "EI").FirstOrDefault();
+                    if (it != null)
+                    {
+                        startInterestDate = it.Date == null ? startInterestDate : (DateTime)it.Date;
+                    }
+                    else
+                    {
+                        it = facade.FindLoanControl(normalLoanEntryM.Code, "EP").FirstOrDefault();
+                        if (it != null)
+                        {
+                            startInterestDate = it.Date == null ? startInterestDate : (DateTime)it.Date;
+                        }
+                        else
+                        {
+                            startInterestDate = (DateTime)normalLoanEntryM.MaturityDate;
+                        }
+                        
+                    }
+                }
+
                 DataRow dr = findInstallmantRow(startInterestDate, ds);
                 if (dr != null)
                 {
@@ -977,6 +1016,7 @@ namespace BankProject.Views.TellerApplication
                     startInterestDate = endDate;
 
             }
+
 
             ds.DtItems.DefaultView.Sort = "DueDate asc";
             ds.DtItems = ds.DtItems.DefaultView.ToTable();
