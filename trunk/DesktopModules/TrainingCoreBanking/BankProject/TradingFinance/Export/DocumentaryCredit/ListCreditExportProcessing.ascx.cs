@@ -9,12 +9,13 @@ using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using BankProject.DBContext;
 using System.Data;
+using BankProject.Model;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class ListCreditExportProcessing : PortalModuleBase
     {
-        private readonly VietVictoryCoreBankingEntities entContext = new VietVictoryCoreBankingEntities();
+        private readonly ExportLC entContext = new ExportLC();
         protected const int TabDocsWithNoDiscrepancies = 239;
         protected const int TabDocsWithDiscrepancies = 240;
         protected const int TabDocsReject = 241;
@@ -57,8 +58,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     tbl1.Rows.Add(item.PaymentId, item.Amount, item.Currency, item.RejectStatus);
                 }
                 
-                datasource.Tables.Add(tbl1);
+                
             }
+            datasource.Tables.Add(tbl1);
             return datasource;
         }
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)

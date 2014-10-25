@@ -11,12 +11,13 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Data.Objects;
 using BankProject.Helper;
+using BankProject.Model;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class ExportDocWithNoDiscre : DotNetNuke.Entities.Modules.PortalModuleBase
     {
-        private readonly VietVictoryCoreBankingEntities entContext = new VietVictoryCoreBankingEntities();
+        private readonly ExportLC entContext = new ExportLC();
         private BEXPORT_DOCUMENTPROCESSING _exportDoc;
         protected const int TabDocsWithNoDiscrepancies = 239;
         protected const int TabDocsWithDiscrepancies = 240;
@@ -50,6 +51,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             string DocsStatus = dsDetail.Status;
             //mặc định là preview
             bc.Commont.SetTatusFormControls(this.Controls, false);
+            tbChargeCode.Enabled = false;
+            tbChargeCode2.Enabled = false;
+            tbChargeCode3.Enabled = false;
             switch (this.TabId)
             {
                 case TabDocsWithDiscrepancies:
@@ -217,7 +221,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             rcbOmortCharge.SelectedValue = "NO";
             rcbOmortCharges2.SelectedValue = "NO";
             rcbOmortCharges3.SelectedValue = "NO";
-
+            
             //numAmountUtilization.Value = 0;
         }
         protected void InitDataSource()
@@ -340,7 +344,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
                     //
                     comboWaiveCharges.SelectedValue=null;
-                    tbChargeCode.SelectedValue=null;
+                    
                     rcbChargeAcct.SelectedValue=null;
                     tbChargePeriod.Text="";
                     rcbChargeCcy.SelectedValue=null;
@@ -354,7 +358,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     tbExcheRate.Text="";
                     tbChargeAmt.Text="";
                     //
-                    tbChargeCode2.SelectedValue = null;
+                    
                     rcbChargeAcct2.SelectedValue = null;
                     tbChargePeriod2.Text = "";
                     rcbChargeCcy2.SelectedValue = null;
@@ -368,7 +372,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     tbExcheRate2.Text = "";
                     tbChargeAmt2.Text = "";
                     //
-                    tbChargeCode3.SelectedValue = null;
+                    
                     rcbChargeAcct3.SelectedValue = null;
                     tbChargePeriod3.Text = "";
                     rcbChargeCcy3.SelectedValue = null;
@@ -435,7 +439,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     PaymentNo = long.Parse(CId),
                     PaymentId=txtCode.Text,
                     Id=long.Parse(CId),
-                    DocumentType = TabId.ToString()
+                    DocumentType = TabId.ToString(),
+                    FullDocsAmount=txtFullDocsAmount.Value,
+                    WaiveCharges=comboWaiveCharges.SelectedValue,
+                    ChargeRemarks = tbChargeRemarks.Text,
+                    VATNo=tbVatNo.Text
+
                 };
                 if (!String.IsNullOrEmpty(numAmount.Text))
                 {
@@ -492,19 +501,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         Rowchages = "1",
                         ViewType = TabId
                     };
-                    if (lblTaxAmt.Text != null)
+                    if (!String.IsNullOrEmpty(lblTaxAmt.Text))
                     {
                         charge.TaxAmt = double.Parse(lblTaxAmt.Text);
                     }
-                    if (tbExcheRate.Text != null)
+                    if (!String.IsNullOrEmpty(tbExcheRate.Text))
                     {
                         charge.ExchRate = double.Parse(tbExcheRate.Text);
                     }
-                    if (tbChargeAmt.Text != null)
+                    if (!String.IsNullOrEmpty(tbChargeAmt.Text))
                     {
                         charge.ChargeAmt = double.Parse(tbChargeAmt.Text);
                     }
                     entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge);
+                    entContext.SaveChanges();
                     //
                     BEXPORT_DOCUMENTPROCESSINGCHARGE charge2 = new BEXPORT_DOCUMENTPROCESSINGCHARGE
                     {
@@ -523,19 +533,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         Rowchages = "2",
                         ViewType = TabId
                     };
-                    if (lblTaxAmt2.Text != null)
+                    if (!String.IsNullOrEmpty(lblTaxAmt2.Text))
                     {
                         charge2.TaxAmt = double.Parse(lblTaxAmt2.Text);
                     }
-                    if (tbExcheRate2.Text != null)
+                    if (!String.IsNullOrEmpty(tbExcheRate2.Text))
                     {
                         charge2.ExchRate = double.Parse(tbExcheRate2.Text);
                     }
-                    if (tbChargeAmt2.Text != null)
+                    if (!String.IsNullOrEmpty(tbChargeAmt2.Text))
                     {
                         charge2.ChargeAmt = double.Parse(tbChargeAmt2.Text);
                     }
                     entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge2);
+                    entContext.SaveChanges();
                     //
                     //kiem tra tab 
                     BEXPORT_DOCUMENTPROCESSINGCHARGE charge3 = new BEXPORT_DOCUMENTPROCESSINGCHARGE
@@ -555,15 +566,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         Rowchages = "3",
                         ViewType = TabId
                     };
-                    if (lblTaxAmt3.Text != null)
+                    if (!String.IsNullOrEmpty(lblTaxAmt3.Text))
                     {
                         charge3.TaxAmt = double.Parse(lblTaxAmt3.Text);
                     }
-                    if (tbExcheRate3.Text != null)
+                    if (!String.IsNullOrEmpty(tbExcheRate3.Text))
                     {
                         charge3.ExchRate = double.Parse(tbExcheRate3.Text);
                     }
-                    if (tbChargeAmt3.Text != null)
+                    if (!String.IsNullOrEmpty(tbChargeAmt3.Text))
                     {
                         charge3.ChargeAmt = double.Parse(tbChargeAmt3.Text);
                     }
@@ -617,6 +628,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         ds.PresentorRefNo_Supplemental = txtPresentorRefNo_Supplemental.Text;
                         ds.Docs_Supplemental1 = txtDocs_Supplemental1.Text;
                         ds.DocumentType = TabId.ToString();
+                        ds.FullDocsAmount = txtFullDocsAmount.Value;
+                        ds.WaiveCharges = comboWaiveCharges.SelectedValue;
+                        ds.ChargeRemarks = tbChargeRemarks.Text;
+                        ds.VATNo = tbVatNo.Text;
                         if (!String.IsNullOrEmpty(numAmount.Text))
                         {
                             ds.Amount = double.Parse(numAmount.Text);
@@ -1039,6 +1054,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
             txtAcceptRemarks.Text = dsDetail.AcceptRemarts;
             //
+            txtFullDocsAmount.Value = dsDetail.FullDocsAmount;
+
             txtCode.Text = dsDetail.PaymentId;
             comboDrawType.SelectedValue = dsDetail.DrawType;
             comboPresentorNo.SelectedValue = dsDetail.PresentorNo;
@@ -1070,7 +1087,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtPresentorRefNo_Supplemental.Text = dsDetail.PresentorRefNo_Supplemental;
             txtDocs_Supplemental1.Text = dsDetail.Docs_Supplemental1;
             DocsType = Convert.ToInt32(dsDetail.DocumentType);
-            bool isDocsDiscrepancies = (DocsType == TabDocsWithDiscrepancies);
+            bool isDocsDiscrepancies = (TabId == TabDocsWithDiscrepancies);
             fieldsetDiscrepancies.Visible = isDocsDiscrepancies;
             if (isDocsDiscrepancies)
             {
@@ -1086,26 +1103,48 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             parseDocsCode(3, dsDetail, ref divDocsCode3, ref comboDocsCode3, ref numNoOfOriginals3, ref numNoOfCopies3);
 
             //TAB CHARGE
-            divCharge.Visible = isDocsDiscrepancies;
-            if (dsCharge != null && dsCharge.Count > 0)
+            
+
+            if (isDocsDiscrepancies)
             {
-                foreach (var item in dsCharge)
+                divCharge.Visible = isDocsDiscrepancies;
+                divCharge.Style.Add("display", "block");
+                if (dsCharge != null && dsCharge.Count > 0)
                 {
-                    if (item.Chargecode == "ILC.CABLE")
+
+                    TCharge.Style.Add("display", "block");
+                    TCharge.Visible = true;
+
+                    foreach (var item in dsCharge)
                     {
-                        parseTabCharge(item, ref tbChargeCode, ref rcbChargeCcy, ref rcbChargeAcct, ref tbChargeAmt, ref rcbPartyCharged, ref rcbOmortCharge, ref lblTaxCode, ref lblTaxAmt);
-                    }
-                    else if (item.Chargecode == "ILC.OPEN")
-                    {
-                        parseTabCharge(item, ref tbChargeCode2, ref rcbChargeCcy2, ref rcbChargeAcct2, ref tbChargeAmt2, ref rcbPartyCharged2, ref rcbOmortCharges2, ref lblTaxCode2, ref lblTaxAmt2);
-                    }
-                    else if (item.Chargecode == "ILC.OPENAMORT")
-                    {
-                        parseTabCharge(item, ref tbChargeCode3, ref rcbChargeCcy3, ref rcbChargeAcct3, ref tbChargeAmt3, ref rcbPartyCharged3, ref rcbOmortCharges3, ref lblTaxCode3, ref lblTaxAmt3);
+                        if (item.Chargecode == "ILC.CABLE")
+                        {
+                            parseTabCharge(item, ref tbChargeCode, ref rcbChargeCcy, ref rcbChargeAcct, ref tbChargeAmt, ref rcbPartyCharged, ref rcbOmortCharge, ref lblTaxCode, ref lblTaxAmt);
+                        }
+                        else if (item.Chargecode == "ILC.OPEN")
+                        {
+                            parseTabCharge(item, ref tbChargeCode2, ref rcbChargeCcy2, ref rcbChargeAcct2, ref tbChargeAmt2, ref rcbPartyCharged2, ref rcbOmortCharges2, ref lblTaxCode2, ref lblTaxAmt2);
+                        }
+                        else if (item.Chargecode == "ILC.OPENAMORT")
+                        {
+                            parseTabCharge(item, ref tbChargeCode3, ref rcbChargeCcy3, ref rcbChargeAcct3, ref tbChargeAmt3, ref rcbPartyCharged3, ref rcbOmortCharges3, ref lblTaxCode3, ref lblTaxAmt3);
+                        }
                     }
                 }
+                else
+                {
+                    comboWaiveCharges.SelectedValue = "NO";
+
+                    TCharge.Visible = false;
+                    TCharge.Style.Add("display", "none");
+
+                }
             }
-            else comboWaiveCharges.SelectedValue = "NO";
+            else
+            {
+                divCharge.Style.Add("display", "none");
+                divCharge.Visible = isDocsDiscrepancies;
+            }
             //comboWaiveCharges_OnSelectedIndexChanged(null, null);
         }
         private void parseTabCharge(BEXPORT_DOCUMENTPROCESSINGCHARGE drDetail, ref RadComboBox cbChargeCode, ref RadComboBox cbChargeCcy, ref RadComboBox cbChargeAcct
@@ -1145,6 +1184,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             lblError.Text = "This Docs not found !";
                             SetNullValue();
                             bc.Commont.SetTatusFormControls(this.Controls, true);
+                            tbChargeCode.Enabled = false;
+                            tbChargeCode2.Enabled = false;
+                            tbChargeCode3.Enabled = false;
                             return;
                         }
                         bc.Commont.SetTatusFormControls(this.Controls, false);
@@ -1166,6 +1208,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 bc.Commont.SetTatusFormControls(this.Controls, false);
                                 txtCode.Enabled = true;
                                 break;
+                        }
+                        if (drDetail.WaiveCharges == "YES")
+                        {
+                            dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == drDetail.PaymentId).ToList();
                         }
                         loadDocsDetail(drDetail,dsCharge);
                         return;
@@ -1212,7 +1258,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             return;
                      }
                      SetNullValue();
+
+                     txtFullDocsAmount.Value = lstOriginal.Amount;
+                     
                      bc.Commont.SetTatusFormControls(this.Controls, true);
+                     tbChargeCode.Enabled = false;
+                     tbChargeCode2.Enabled = false;
+                     tbChargeCode3.Enabled = false;
                     //sinh ra PaymentID
                     var dsPayDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text).ToList();
                     var maxId = dsPayDetail.Max(x => x.PaymentNo);

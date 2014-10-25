@@ -11,13 +11,14 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Data.Objects;
 using BankProject.Helper;
+using BankProject.Model;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class AdvisingAndNegotiationLC : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         //Gen tam cac tab chi de lai Main can thi bat len va file note pad +: Advising
-        private readonly VietVictoryCoreBankingEntities entContext = new VietVictoryCoreBankingEntities();
+        private readonly ExportLC entContext = new ExportLC();
         private BAdvisingAndNegotiationLC _exportDoc;
         protected const int TabIssueLCAmend = 235;
         protected const int TabIssueLCConfirm = 236;
