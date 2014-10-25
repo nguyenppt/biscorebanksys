@@ -98,7 +98,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case AdvisingAndNegotiationScreenType.Register:
 
                     InitToolBarForRegister();
-                    tbEssurLCCode.Enabled = false;
+                    //tbEssurLCCode.Enabled = false;
                     break;
                 case AdvisingAndNegotiationScreenType.Amend:
                     InitToolBarForAmend();
