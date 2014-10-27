@@ -196,6 +196,10 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             switch(commandName) 
             {
                 case "commit":
+                    if (txtId.Text.Length != 7)
+                    {
+                        ShowMsgBox("CIF must be 7 characters !"); return;
+                    }
                     if (CommitSaveAcctoDB())
                     { Response.Redirect(string.Format("Default.aspx?tabid={0}&mid={1}", TabId, ModuleId)); }
                     if (TriTT.OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists("", "P", txtDocID.Text).Tables[0].Rows[0]["Exists"].ToString() == "YES")
