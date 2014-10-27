@@ -12,12 +12,17 @@ namespace BankProject.Controls
         protected int MultiTextBoxRow = 1;
         private string _Label = "";
         private int _LabelWidth = 0;
-        private bool isSetText = false;
+        private bool isSetText = false, _readOnly = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (this.Visible)
                 Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), getJSFunction(), getJSFunction() + "();");
-            if (IsPostBack || isSetText) return;
+            if (IsPostBack || isSetText)
+            {
+                if (IsPostBack)
+                    setText(getText(), _readOnly);
+                return;
+            }
             litMultiTextBox.Text = createTextBox();            
         }
         //
@@ -39,6 +44,7 @@ namespace BankProject.Controls
         public void setText(string text, bool readOnly)
         {
             isSetText = true;
+            _readOnly = readOnly;
             litMultiTextBox.Text = "";
             txtMultiTextBoxString.Value = text.ToString();
             string[] Narratives = new string[] { "" };
