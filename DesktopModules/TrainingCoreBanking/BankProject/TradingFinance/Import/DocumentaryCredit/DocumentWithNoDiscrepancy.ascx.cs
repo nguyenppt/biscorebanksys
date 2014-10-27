@@ -22,15 +22,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             if (IsPostBack) return;
             //
             fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
-            InitDataSource();
-            if (string.IsNullOrEmpty(Request.QueryString["tid"]))
+            divMT734.Attributes.CssStyle.Remove("display");
+            divCharge.Attributes.CssStyle.Remove("display");
+            if (this.TabId == TabDocsWithNoDiscrepancies)
             {
-                divMT734.Attributes.CssStyle.Remove("display");
-                if (this.TabId != TabDocsWithDiscrepancies)
-                    divMT734.Attributes.CssStyle.Add("display", "none");
-                return;
+                divMT734.Attributes.CssStyle.Add("display", "none");
+                divCharge.Attributes.CssStyle.Add("display", "none");
             }
+            InitDataSource();            
             //Lấy chi tiết
+            if (string.IsNullOrEmpty(Request.QueryString["tid"])) return;
             DataSet dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, Request.QueryString["tid"]);
             if (dsDetail == null || dsDetail.Tables.Count <= 0)
             {
@@ -113,6 +114,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             DataTable tbDetail;
             DataRow drDetail = dsDetail.Tables[0].Rows[0];
             //Tab Main
+            string Status = drDetail["Status"].ToString(), AmendStatus = drDetail["AmendStatus"].ToString();
+            bool isReadOnly = true;
+            if ((this.TabId == TabDocsWithDiscrepancies && Status.Equals(bd.TransactionStatus.UNA)) ||
+                    (this.TabId == TabDocsAmend && (string.IsNullOrEmpty(AmendStatus) || AmendStatus.Equals(bd.TransactionStatus.UNA))))
+                isReadOnly = false;
+            if (!string.IsNullOrEmpty(Request.QueryString["lst"])) isReadOnly = true;
+            //
+            hiddenCustomerName.Value = drDetail["CustomerName"].ToString();
             if (drDetail["AcceptDate"] != DBNull.Value)
                 txtAcceptDate.SelectedDate = Convert.ToDateTime(drDetail["AcceptDate"]);
             txtAcceptRemarks.Text = drDetail["AcceptRemarts"].ToString();
@@ -136,7 +145,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             setDocsCodeData(drDetail, 2, ref comboDocsCode2, ref numNoOfOriginals2, ref numNoOfCopies2, ref txtOtherDocs2);
             setDocsCodeData(drDetail, 3, ref comboDocsCode3, ref numNoOfOriginals3, ref numNoOfCopies3, ref txtOtherDocs3);
             if (drDetail["FullDocsAmount"] != DBNull.Value)
-                txtOtherDocs1.Value = Convert.ToDouble(drDetail["FullDocsAmount"]);
+                txtFullDocsAmount.Value = Convert.ToDouble(drDetail["FullDocsAmount"]);
             //
             if (drDetail["TraceDate"] != DBNull.Value)
                 dteTraceDate.SelectedDate = Convert.ToDateTime(drDetail["TraceDate"]);
@@ -148,13 +157,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             bool isDocsDiscrepancies =  (DocsType== TabDocsWithDiscrepancies);
             fieldsetDiscrepancies.Visible = isDocsDiscrepancies;
             if (isDocsDiscrepancies)
-            {                
-                ((bc.MultiTextBox)txtDiscrepancies).setText(drDetail["Discrepancies"].ToString(), (this.TabId != TabDocsAmend));
+            {
+                ((bc.MultiTextBox)txtDiscrepancies).setText(drDetail["Discrepancies"].ToString(), isReadOnly);
                 txtDisposalOfDocs.Text = drDetail["DisposalOfDocs"].ToString();
             }
             comboWaiveCharges.SelectedValue = drDetail["WaiveCharges"].ToString();
             tbChargeRemarks.Text = drDetail["ChargeRemarks"].ToString();
-            tbVatNo.Text = drDetail["VatNo"].ToString();
+            tbVatNo.Text = drDetail["VatNo"].ToString();            
             //
             parseDocsCode(1, drDetail, ref divDocsCode1, ref comboDocsCode1, ref numNoOfOriginals1, ref numNoOfCopies1);
             parseDocsCode(2, drDetail, ref divDocsCode2, ref comboDocsCode2, ref numNoOfOriginals2, ref numNoOfCopies2);
@@ -184,11 +193,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblTotalAmountClaimed.Text = drDetail["TotalAmountClaimed"].ToString();
                 txtAccountWithBank.Text = drDetail["AccountWithBankNo"].ToString();
                 tbSendertoReceiverInfomation.Text = drDetail["SendertoReceiverInfomation"].ToString();
-                ((bc.MultiTextBox)txtDiscrepancies_734).setText(drDetail["Discrepancies"].ToString(), (this.TabId != TabDocsAmend));
+                ((bc.MultiTextBox)txtDiscrepancies_734).setText(drDetail["Discrepancies"].ToString(), isReadOnly);
                 txtDisposalOfDocs_734.Text = drDetail["DisposalOfDocs"].ToString();
             }
             //Tab Charge
-            divCharge.Visible = isDocsDiscrepancies;
+            divCharge.Attributes.CssStyle.Remove("display");
+            if (!isDocsDiscrepancies)
+                divCharge.Attributes.CssStyle.Add("display", "none");
             tbDetail = dsDetail.Tables[2];
             if (tbDetail != null && tbDetail.Rows.Count > 0 && comboWaiveCharges.SelectedValue.Equals("YES"))
             {
@@ -232,6 +243,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             cbChargeCode.SelectedValue = drDetail["Chargecode"].ToString();
             cbChargeCcy.SelectedValue = drDetail["ChargeCcy"].ToString();
+            LoadChargeAcct(hiddenCustomerName.Value, cbChargeCcy.SelectedValue, ref cbChargeAcct);
             cbChargeAcct.SelectedValue = drDetail["ChargeAcct"].ToString();
             if (drDetail["ChargeAmt"] != DBNull.Value)
                 tbChargeAmt.Value = Convert.ToInt32(drDetail["ChargeAmt"]);
@@ -719,6 +731,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     dteBookingDate.SelectedDate = DateTime.Now;
                     comboDrawType.SelectedValue = "CO";
                     comboDrawType.Enabled = false;
+                    tbVatNo.Text = bd.IssueLC.GetVatNo();
                     RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
 
                     break;
@@ -1205,8 +1218,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             cboWaiveChargesChanged();
             //
-            ((bc.MultiTextBox)txtDiscrepancies).setText(((bc.MultiTextBox)txtDiscrepancies).getText());
-            ((bc.MultiTextBox)txtDiscrepancies_734).setText(((bc.MultiTextBox)txtDiscrepancies_734).getText());
+            //((bc.MultiTextBox)txtDiscrepancies).setText(((bc.MultiTextBox)txtDiscrepancies).getText());
+           // ((bc.MultiTextBox)txtDiscrepancies_734).setText(((bc.MultiTextBox)txtDiscrepancies_734).getText());
         }
         private void cboWaiveChargesChanged()
         {
@@ -1233,7 +1246,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         private void LoadChargeAcct(string CustomerName, string Currency, ref RadComboBox cboChargeAcct)
         {
-            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(CustomerName, Currency));
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(CustomerName, Currency));
         }
 
         protected void rcbChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -1245,11 +1258,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void rcbChargeStatus_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblChargeStatus.Text = rcbChargeStatus.SelectedValue.ToString();
+            //lblChargeStatus.Text = rcbChargeStatus.SelectedValue.ToString();
         }
         protected void rcbChargeStatus2_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblChargeStatus2.Text = rcbChargeStatus2.SelectedValue.ToString();
+            //lblChargeStatus2.Text = rcbChargeStatus2.SelectedValue.ToString();
         }
         protected void tbChargeAmt_TextChanged(object sender, EventArgs e)
         {
@@ -1285,15 +1298,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }
         protected void rcbPartyCharged_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
+            //lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
         }
         protected void rcbPartyCharged2_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
+            //lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
         }
         protected void rcbPartyCharged3_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
+            //lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
         }
 
         protected void GenerateVAT()

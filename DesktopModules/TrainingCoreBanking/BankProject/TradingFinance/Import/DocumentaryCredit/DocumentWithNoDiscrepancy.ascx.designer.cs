@@ -697,15 +697,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadComboBox rcbChargeCcy;
         
         /// <summary>
-        /// table1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable table1;
-        
-        /// <summary>
         /// rcbChargeAcct control.
         /// </summary>
         /// <remarks>
@@ -751,15 +742,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadComboBox rcbPartyCharged;
         
         /// <summary>
-        /// lblPartyCharged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPartyCharged;
-        
-        /// <summary>
         /// rcbOmortCharge control.
         /// </summary>
         /// <remarks>
@@ -776,15 +758,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbChargeStatus;
-        
-        /// <summary>
-        /// lblChargeStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChargeStatus;
         
         /// <summary>
         /// lblTaxCode control.
@@ -850,15 +823,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadComboBox rcbChargeCcy2;
         
         /// <summary>
-        /// table3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable table3;
-        
-        /// <summary>
         /// rcbChargeAcct2 control.
         /// </summary>
         /// <remarks>
@@ -904,15 +868,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadComboBox rcbPartyCharged2;
         
         /// <summary>
-        /// lblPartyCharged2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPartyCharged2;
-        
-        /// <summary>
         /// rcbOmortCharges2 control.
         /// </summary>
         /// <remarks>
@@ -929,15 +884,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbChargeStatus2;
-        
-        /// <summary>
-        /// lblChargeStatus2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChargeStatus2;
         
         /// <summary>
         /// lblTaxCode2 control.
@@ -1066,15 +1012,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadComboBox rcbPartyCharged3;
         
         /// <summary>
-        /// lblPartyCharged3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPartyCharged3;
-        
-        /// <summary>
         /// rcbOmortCharges3 control.
         /// </summary>
         /// <remarks>
@@ -1091,15 +1028,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbChargeStatus3;
-        
-        /// <summary>
-        /// lblChargeStatus3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChargeStatus3;
         
         /// <summary>
         /// lblTaxCode3 control.
@@ -1127,6 +1055,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTaxAmt3;
+        
+        /// <summary>
+        /// RadAjaxLoadingPanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxLoadingPanel RadAjaxLoadingPanel1;
         
         /// <summary>
         /// RadAjaxManager1 control.

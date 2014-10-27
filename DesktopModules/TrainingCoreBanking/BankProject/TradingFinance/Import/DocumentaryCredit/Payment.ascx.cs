@@ -109,6 +109,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             //MAIN
             DataTable tDetail = dsDetail.Tables[0];
             DataRow dr = tDetail.Rows[0];
+            txtCustomerID.Value = dr["CustomerID"].ToString();
+            txtCustomerName.Value = dr["CustomerName"].ToString();
             txtCode.Text = dr["LCCode"].ToString();
             txtPaymentId.Value = dr["PaymentId"].ToString();
             txtDrawingAmount.Value = Convert.ToDouble(dr["DrawingAmount"]);
@@ -140,71 +142,31 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 if (drList.Length > 0)
                 {
                     drCharge = drList[0];
-                    tabCableCharge_cboChargeCode.SelectedValue = drCharge["ChargeCode"].ToString();
-                    setCurrency(ref tabCableCharge_cboChargeCcy, drCharge["ChargeCcy"].ToString());
-                    if (drCharge["ChargeAmt"] != DBNull.Value)
-                        tabCableCharge_txtChargeAmt.Value = Convert.ToDouble(drCharge["ChargeAmt"]);
-                    tabCableCharge_cboPartyCharged.SelectedValue = drCharge["PartyCharged"].ToString();
-                    tabCableCharge_cboAmortCharge.SelectedValue = drCharge["AmortCharge"].ToString();
-                    tabCableCharge_txtTaxCode.Text = drCharge["TaxCode"].ToString();
-                    if (drCharge["TaxAmt"] != DBNull.Value)
-                        tabCableCharge_txtTaxAmt.Value = Convert.ToDouble(drCharge["TaxAmt"]);
+                    loadCharge(drCharge, ref tabCableCharge_cboChargeCode, ref tabCableCharge_cboChargeCcy, ref tabCableCharge_cboChargeAcc, ref tabCableCharge_txtChargeAmt, ref tabCableCharge_cboPartyCharged, ref tabCableCharge_cboAmortCharge, ref tabCableCharge_txtTaxCode, ref tabCableCharge_txtTaxAmt);
                 }
                 drList = tDetail.Select("ChargeTab = 'tabPaymentCharge'");
                 if (drList.Length > 0)
                 {
                     drCharge = drList[0];
-                    tabPaymentCharge_cboChargeCode.SelectedValue = drCharge["ChargeCode"].ToString();
-                    setCurrency(ref tabPaymentCharge_cboChargeCcy, drCharge["ChargeCcy"].ToString());
-                    if (drCharge["ChargeAmt"] != DBNull.Value)
-                        tabPaymentCharge_txtChargeAmt.Value = Convert.ToDouble(drCharge["ChargeAmt"]);
-                    tabPaymentCharge_cboPartyCharged.SelectedValue = drCharge["PartyCharged"].ToString();
-                    tabPaymentCharge_cboAmortCharge.SelectedValue = drCharge["AmortCharge"].ToString();
-                    tabPaymentCharge_txtTaxCode.Text = drCharge["TaxCode"].ToString();
-                    if (drCharge["TaxAmt"] != DBNull.Value)
-                        tabPaymentCharge_txtTaxAmt.Value = Convert.ToDouble(drCharge["TaxAmt"]);
+                    loadCharge(drCharge, ref tabPaymentCharge_cboChargeCode, ref tabPaymentCharge_cboChargeCcy, ref tabPaymentCharge_cboChargeAcc, ref tabPaymentCharge_txtChargeAmt, ref tabPaymentCharge_cboPartyCharged, ref tabPaymentCharge_cboAmortCharge, ref tabPaymentCharge_txtTaxCode, ref tabPaymentCharge_txtTaxAmt);
                 }
                 drList = tDetail.Select("ChargeTab = 'tabHandlingCharge'");
                 if (drList.Length > 0)
                 {
                     drCharge = drList[0];
-                    tabHandlingCharge_cboChargeCode.SelectedValue = drCharge["ChargeCode"].ToString();
-                    setCurrency(ref tabHandlingCharge_cboChargeCcy, drCharge["ChargeCcy"].ToString());
-                    if (drCharge["ChargeAmt"] != DBNull.Value)
-                        tabHandlingCharge_txtChargeAmt.Value = Convert.ToDouble(drCharge["ChargeAmt"]);
-                    tabHandlingCharge_cboPartyCharged.SelectedValue = drCharge["PartyCharged"].ToString();
-                    tabHandlingCharge_cboAmortCharge.SelectedValue = drCharge["AmortCharge"].ToString();
-                    tabHandlingCharge_txtTaxCode.Text = drCharge["TaxCode"].ToString();
-                    if (drCharge["TaxAmt"] != DBNull.Value)
-                        tabHandlingCharge_txtTaxAmt.Value = Convert.ToDouble(drCharge["TaxAmt"]);
+                    loadCharge(drCharge, ref tabHandlingCharge_cboChargeCode, ref tabHandlingCharge_cboChargeCcy, ref tabHandlingCharge_cboChargeAcc, ref tabHandlingCharge_txtChargeAmt, ref tabHandlingCharge_cboPartyCharged, ref tabHandlingCharge_cboAmortCharge, ref tabHandlingCharge_txtTaxCode, ref tabHandlingCharge_txtTaxAmt);
                 }
                 drList = tDetail.Select("ChargeTab = 'tabDiscrepenciesCharge'");
                 if (drList.Length > 0)
                 {
                     drCharge = drList[0];
-                    tabDiscrepenciesCharge_cboChargeCode.SelectedValue = drCharge["ChargeCode"].ToString();
-                    setCurrency(ref tabDiscrepenciesCharge_cboChargeCcy, drCharge["ChargeCcy"].ToString());
-                    if (drCharge["ChargeAmt"] != DBNull.Value)
-                        tabDiscrepenciesCharge_txtChargeAmt.Value = Convert.ToDouble(drCharge["ChargeAmt"]);
-                    tabDiscrepenciesCharge_cboPartyCharged.SelectedValue = drCharge["PartyCharged"].ToString();
-                    tabDiscrepenciesCharge_cboAmortCharge.SelectedValue = drCharge["AmortCharge"].ToString();
-                    tabDiscrepenciesCharge_txtTaxCode.Text = drCharge["TaxCode"].ToString();
-                    if (drCharge["TaxAmt"] != DBNull.Value)
-                        tabDiscrepenciesCharge_txtTaxAmt.Value = Convert.ToDouble(drCharge["TaxAmt"]);
+                    loadCharge(drCharge, ref tabDiscrepenciesCharge_cboChargeCode, ref tabDiscrepenciesCharge_cboChargeCcy, ref tabDiscrepenciesCharge_cboChargeAcc, ref tabDiscrepenciesCharge_txtChargeAmt, ref tabDiscrepenciesCharge_cboPartyCharged, ref tabDiscrepenciesCharge_cboAmortCharge, ref tabDiscrepenciesCharge_txtTaxCode, ref tabDiscrepenciesCharge_txtTaxAmt);
                 }
                 drList = tDetail.Select("ChargeTab = 'tabOtherCharge'");
                 if (drList.Length > 0)
                 {
                     drCharge = drList[0];
-                    tabOtherCharge_cboChargeCode.SelectedValue = drCharge["ChargeCode"].ToString();
-                    setCurrency(ref tabOtherCharge_cboChargeCcy, drCharge["ChargeCcy"].ToString());
-                    if (drCharge["ChargeAmt"] != DBNull.Value)
-                        tabOtherCharge_txtChargeAmt.Value = Convert.ToDouble(drCharge["ChargeAmt"]);
-                    tabOtherCharge_cboPartyCharged.SelectedValue = drCharge["PartyCharged"].ToString();
-                    tabOtherCharge_cboAmortCharge.SelectedValue = drCharge["AmortCharge"].ToString();
-                    tabOtherCharge_txtTaxCode.Text = drCharge["TaxCode"].ToString();
-                    if (drCharge["TaxAmt"] != DBNull.Value)
-                        tabOtherCharge_txtTaxAmt.Value = Convert.ToDouble(drCharge["TaxAmt"]);
+                    loadCharge(drCharge, ref tabOtherCharge_cboChargeCode, ref tabOtherCharge_cboChargeCcy, ref tabOtherCharge_cboChargeAcc, ref tabOtherCharge_txtChargeAmt, ref tabOtherCharge_cboPartyCharged, ref tabOtherCharge_cboAmortCharge, ref tabOtherCharge_txtTaxCode, ref tabOtherCharge_txtTaxAmt);
                 }
             }
             else divWaiveCharges.Attributes.CssStyle.Add("display", "none");
@@ -217,7 +179,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtRelatedReference.Text = dr["RelatedReference"].ToString();
                 if (dr["ValueDate"] != DBNull.Value)
                     dteValueDate_MT202.SelectedDate = Convert.ToDateTime(dr["ValueDate"]);
-                setCurrency(ref comboCurrency, dr["Currency"].ToString());
+                comboCurrency.SelectedValue = dr["Currency"].ToString();
                 if (dr["Amount"] != DBNull.Value)
                     numAmount.Value = Convert.ToDouble(dr["Amount"]);
                 lblOrderingInstitution.Text = dr["OrderingInstitution"].ToString();
@@ -260,7 +222,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     numAmountCollected.Value = Convert.ToDouble(dr["AmountCollected"]);
                 if (dr["ValueDate"] != DBNull.Value)
                     dteValueDate_MT400.SelectedDate = Convert.ToDateTime(dr["ValueDate"]);
-                setCurrency(ref comboCurrency_MT400, dr["Currency"].ToString());
+                comboCurrency_MT400.SelectedValue = dr["Currency"].ToString();
                 if (dr["Amount"] != DBNull.Value)
                     numAmount_MT400.Value = Convert.ToDouble(dr["Amount"]);
                 txtDetailOfCharges1.Text = dr["DetailOfCharges1"].ToString();
@@ -283,6 +245,21 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 txtDetailOfCharges3.Text = dr["DetailOfCharges3"].ToString();
             }
             else divMT756.Attributes.CssStyle.Add("display", "none");
+        }
+        private void loadCharge(DataRow drCharge, ref RadComboBox cboChargeCode, ref RadComboBox cboChargeCcy, ref RadComboBox cboChargeAcc, ref RadNumericTextBox txtChargeAmt
+            , ref RadComboBox cboPartyCharged, ref RadComboBox cboAmortCharge, ref RadTextBox txtTaxCode, ref RadNumericTextBox txtTaxAmt)
+        {
+            cboChargeCode.SelectedValue = drCharge["ChargeCode"].ToString();
+            cboChargeCcy.SelectedValue = drCharge["ChargeCcy"].ToString();
+            bc.Commont.initRadComboBox(ref cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, cboChargeCcy.SelectedValue));
+            cboChargeAcc.SelectedValue = drCharge["ChargeAcct"].ToString();
+            if (drCharge["ChargeAmt"] != DBNull.Value)
+                txtChargeAmt.Value = Convert.ToDouble(drCharge["ChargeAmt"]);
+            cboPartyCharged.SelectedValue = drCharge["PartyCharged"].ToString();
+            cboAmortCharge.SelectedValue = drCharge["AmortCharge"].ToString();
+            txtTaxCode.Text = drCharge["TaxCode"].ToString();
+            if (drCharge["TaxAmt"] != DBNull.Value)
+                txtTaxAmt.Value = Convert.ToDouble(drCharge["TaxAmt"]);
         }
 
         private void setToolbar(int commandType)
@@ -371,15 +348,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             //
             if (cboWaiveCharges.SelectedValue.Equals(bd.YesNo.YES))
             {
-                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabCableCharge", tabCableCharge_cboChargeCode.SelectedValue, tabCableCharge_txtChargeAcct.Text, tabCableCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabCableCharge_txtExchangeRate.Value,
+                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabCableCharge", tabCableCharge_cboChargeCode.SelectedValue, tabCableCharge_cboChargeAcc.SelectedValue, tabCableCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabCableCharge_txtExchangeRate.Value,
                     tabCableCharge_txtChargeAmt.Value, tabCableCharge_cboPartyCharged.SelectedValue, tabCableCharge_cboAmortCharge.SelectedValue, tabCableCharge_cboChargeStatus.SelectedValue, tabCableCharge_txtTaxCode.Text, tabCableCharge_txtTaxAmt.Value);
-                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabPaymentCharge", tabPaymentCharge_cboChargeCode.SelectedValue, tabPaymentCharge_txtChargeAcct.Text, tabPaymentCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabPaymentCharge_txtExchangeRate.Value,
+                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabPaymentCharge", tabPaymentCharge_cboChargeCode.SelectedValue, tabPaymentCharge_cboChargeAcc.SelectedValue, tabPaymentCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabPaymentCharge_txtExchangeRate.Value,
                     tabPaymentCharge_txtChargeAmt.Value, tabPaymentCharge_cboPartyCharged.SelectedValue, tabPaymentCharge_cboAmortCharge.SelectedValue, tabPaymentCharge_cboChargeStatus.SelectedValue, tabPaymentCharge_txtTaxCode.Text, tabPaymentCharge_txtTaxAmt.Value);
-                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabHandlingCharge", tabHandlingCharge_cboChargeCode.SelectedValue, tabHandlingCharge_txtChargeAcct.Text, tabHandlingCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabHandlingCharge_txtExchangeRate.Value,
+                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabHandlingCharge", tabHandlingCharge_cboChargeCode.SelectedValue, tabHandlingCharge_cboChargeAcc.SelectedValue, tabHandlingCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabHandlingCharge_txtExchangeRate.Value,
                     tabHandlingCharge_txtChargeAmt.Value, tabHandlingCharge_cboPartyCharged.SelectedValue, tabHandlingCharge_cboAmortCharge.SelectedValue, tabHandlingCharge_cboChargeStatus.SelectedValue, tabHandlingCharge_txtTaxCode.Text, tabHandlingCharge_txtTaxAmt.Value);
-                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabDiscrepenciesCharge", tabDiscrepenciesCharge_cboChargeCode.SelectedValue, tabDiscrepenciesCharge_txtChargeAcct.Text, tabDiscrepenciesCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabDiscrepenciesCharge_txtExchangeRate.Value,
+                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabDiscrepenciesCharge", tabDiscrepenciesCharge_cboChargeCode.SelectedValue, tabDiscrepenciesCharge_cboChargeAcc.SelectedValue, tabDiscrepenciesCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabDiscrepenciesCharge_txtExchangeRate.Value,
                     tabDiscrepenciesCharge_txtChargeAmt.Value, tabDiscrepenciesCharge_cboPartyCharged.SelectedValue, tabDiscrepenciesCharge_cboAmortCharge.SelectedValue, tabDiscrepenciesCharge_cboChargeStatus.SelectedValue, tabDiscrepenciesCharge_txtTaxCode.Text, tabDiscrepenciesCharge_txtTaxAmt.Value);
-                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabOtherCharge", tabOtherCharge_cboChargeCode.SelectedValue, tabOtherCharge_txtChargeAcct.Text, tabOtherCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabOtherCharge_txtExchangeRate.Value,
+                bd.IssueLC.ImportLCPaymentChargeUpdate(paymentId, "tabOtherCharge", tabOtherCharge_cboChargeCode.SelectedValue, tabOtherCharge_cboChargeAcc.SelectedValue, tabOtherCharge_cboChargeCcy.SelectedValue.Split('#')[0], tabOtherCharge_txtExchangeRate.Value,
                     tabOtherCharge_txtChargeAmt.Value, tabOtherCharge_cboPartyCharged.SelectedValue, tabOtherCharge_cboAmortCharge.SelectedValue, tabOtherCharge_cboChargeStatus.SelectedValue, tabOtherCharge_txtTaxCode.Text, tabOtherCharge_txtTaxAmt.Value);
             }
             //
@@ -607,9 +584,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     return;
                 }
                 //Main
+                txtCustomerID.Value = dr["CustomerID"].ToString();
+                txtCustomerName.Value = dr["CustomerName"].ToString();
+                lblCurrency.Text = dr["Currency"].ToString();
                 txtDrawingAmount.Value = Convert.ToDouble(dr["Amount"]);
                 txtAmtDrFromAcct.Value = txtDrawingAmount.Value;
-                lblCurrency.Text = dr["Currency"].ToString();
                 txtValueDate.SelectedDate = Convert.ToDateTime(dr["BookingDate"]);
                 bc.Commont.initRadComboBox(ref cboDepositAccount, "AccountName", "DepositCode", bd.IssueLC.GetDepositAccount(dr["CustomerID"].ToString(), dr["Currency"].ToString()));
                 bc.Commont.initRadComboBox(ref cboNostroAcct, "Description", "AccountNo", bd.SQLData.B_BSWIFTCODE_GetByCurrency(dr["Currency"].ToString()));
@@ -619,14 +598,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblTransactionReferenceNumber.Text = txtCode.Text;
                 txtRelatedReference.Text = dr["PresentorRefNo"].ToString();
                 dteValueDate_MT202.SelectedDate = DateTime.Now;
-                setCurrency(ref comboCurrency, lblCurrency.Text);
+                comboCurrency.SelectedValue = lblCurrency.Text;
                 numAmount.Value = txtDrawingAmount.Value;                
                 //MT756
                 txtSendingBankTRN.Text = txtCode.Text;
                 txtRelatedReferenceMT400.Text = dr["PresentorRefNo"].ToString();
                 numAmountCollected.Value = txtDrawingAmount.Value;
                 dteValueDate_MT400.SelectedDate = DateTime.Now;
-                setCurrency(ref comboCurrency_MT400, lblCurrency.Text);
+                comboCurrency_MT400.SelectedValue = lblCurrency.Text;
                 numAmount_MT400.Value = txtDrawingAmount.Value;
                 //Charge
                 txtVatNo.Text = bd.IssueLC.GetVatNo();
@@ -784,24 +763,33 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
         }
 
-        private void setCurrency(ref RadComboBox cboCurrency, string Currency)
-        {
-            for (int i = 0; i < cboCurrency.Items.Count; i++)
-            {
-                if (cboCurrency.Items[i].Text.Equals(Currency))
-                {
-                    cboCurrency.SelectedIndex = i;
-                    break;
-                }
-            }
-        }
-
         protected void cboNostroAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             var row = e.Item.DataItem as DataRowView;
             e.Item.Attributes["Code"] = row["Code"].ToString();
             e.Item.Attributes["Description"] = row["Description"].ToString();
             e.Item.Attributes["Account"] = row["AccountNo"].ToString();
+        }
+
+        protected void tabCableCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            bc.Commont.initRadComboBox(ref tabCableCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabCableCharge_cboChargeCcy.SelectedValue));
+        }
+        protected void tabPaymentCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            bc.Commont.initRadComboBox(ref tabPaymentCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabPaymentCharge_cboChargeCcy.SelectedValue));
+        }
+        protected void tabHandlingCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            bc.Commont.initRadComboBox(ref tabHandlingCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabHandlingCharge_cboChargeCcy.SelectedValue));
+        }
+        protected void tabDiscrepenciesCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            bc.Commont.initRadComboBox(ref tabDiscrepenciesCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabDiscrepenciesCharge_cboChargeCcy.SelectedValue));
+        }
+        protected void tabOtherCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            bc.Commont.initRadComboBox(ref tabOtherCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabOtherCharge_cboChargeCcy.SelectedValue));
         }
     }
 }
