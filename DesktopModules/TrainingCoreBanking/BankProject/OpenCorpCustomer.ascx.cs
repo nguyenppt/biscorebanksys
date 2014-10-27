@@ -195,7 +195,10 @@ namespace BankProject
             switch (commandName)
             {
                 case "commit":
-                    //if (hdfDisable.Value == "0") return;       xem lai 
+                    if (txtId.Text.Length != 7)
+                    {
+                        ShowMsgBox("CIF must be 7 characters !"); return;
+                    }
                     var Status = "UNA";
                     if (TriTT.OPEN_INDIVIDUAL_CUSTOMER_CheckDocID_Exists("", "C", txtDocID.Text).Tables[0].Rows[0]["Exists"].ToString() == "YES")
                     {
