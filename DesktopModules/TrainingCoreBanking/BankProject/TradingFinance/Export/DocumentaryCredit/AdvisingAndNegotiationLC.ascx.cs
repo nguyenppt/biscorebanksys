@@ -460,6 +460,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     else // Not yet authorize
                     {
                         RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                        tbEssurLCCode.Enabled = false;
                     }
 
                 }
