@@ -407,6 +407,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
           
         protected void rcbAvailableWithType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            switch (rcbAvailableWithType.SelectedValue)
+            {
+                case "A":
+                    break;
+                case "B":
+                case "D":
+                    comboAvailableWithNo.SelectedValue = string.Empty;
+                    break;
+            }
+
             SetRelation_AvailableWithType();
 
             rcbAvailableWithType740.SelectedValue = rcbAvailableWithType.SelectedValue;
@@ -703,6 +713,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbAvailableWithAddr740_3.Enabled = false;
 
             // tab 747
+            comboGenerateMT747.SelectedValue = "NO";
+            GenerateMT747();
+
             comboReimbBankType_747.Enabled = false;
             comboReimbBankNo_747.Enabled = false;
             txtReimbBankName_747.Enabled = false;
