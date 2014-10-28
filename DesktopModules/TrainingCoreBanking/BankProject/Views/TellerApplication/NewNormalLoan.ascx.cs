@@ -86,25 +86,58 @@ namespace BankProject.Views.TellerApplication
 
         private bool IsUnderlimitAmount()
         {
-            if (isAmendPage)
-                return true;
 
             StoreProRepository facade = new StoreProRepository();
-            var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount(normalLoanEntryM.LimitReference).First<decimal?>();
-            if (limit < normalLoanEntryM.LoanAmount)
+            if (!isAmendPage)
             {
-                RadWindowManager1.RadAlert("Loan amount cannot exceed " + limit, 340, 150, "Alert", null);
-                return false;
-            }
-            else
-            {
-                var utildate = facade.StoreProcessor().B_Normal_Loan_Get_OfferedUntilDate(normalLoanEntryM.LimitReference).First<DateTime?>();
-                if (utildate != null && normalLoanEntryM.Drawdown != null && normalLoanEntryM.Drawdown > utildate)
+
+                var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount(normalLoanEntryM.LimitReference).First<decimal?>();
+                if (limit < normalLoanEntryM.LoanAmount)
                 {
-                    RadWindowManager1.RadAlert("Drawdown date cannot be greater than product limit Offered Until date [" + ((DateTime)utildate).ToString("MM/dd/yyyy") + "]", 340, 150, "Alert", null);
+                    RadWindowManager1.RadAlert("Loan amount cannot exceed " + limit, 340, 150, "Alert", null);
+                    return false;
+                }
+                else
+                {
+                    var utildate = facade.StoreProcessor().B_Normal_Loan_Get_OfferedUntilDate(normalLoanEntryM.LimitReference).First<DateTime?>();
+                    if (utildate != null && normalLoanEntryM.Drawdown != null && normalLoanEntryM.Drawdown > utildate)
+                    {
+                        RadWindowManager1.RadAlert("Drawdown date cannot be greater than product limit Offered Until date [" + ((DateTime)utildate).ToString("MM/dd/yyyy") + "]", 340, 150, "Alert", null);
+                        return false;
+                    }
+                }
+
+            }
+            var productLine = facade.StoreProcessor().B_Normal_Loan_Get_Productline_Info(normalLoanEntryM.LimitReference).First();
+
+            if (productLine != null && productLine.MaxSecured != null && productLine.MaxSecured > 0)
+            {
+                if (!normalLoanEntryM.Secured.Equals("Y"))
+                {
+                    RadWindowManager1.RadAlert("Field Secured (Y/N) must be Yes", 340, 150, "Alert", null);
                     return false;
                 }
             }
+
+            if (normalLoanEntryM.Secured.Equals("Y"))
+            {
+                if (String.IsNullOrEmpty(normalLoanEntryM.CollateralID)
+                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_1)
+                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_2)
+                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_3))
+                {
+                    RadWindowManager1.RadAlert("Collateral ID not completed", 340, 150, "Alert", null);
+                    return false;
+                }
+
+                if (normalLoanEntryM.AmountAlloc == null || normalLoanEntryM.AmountAlloc <= 0)
+                {
+                    RadWindowManager1.RadAlert("Collateral Amount must be >0", 340, 150, "Alert", null);
+                    return false;
+                }
+            }
+
+
 
             return true;
         }
@@ -432,7 +465,7 @@ namespace BankProject.Views.TellerApplication
 
             NewLoanInterestedKeyRepository facade = new NewLoanInterestedKeyRepository();
             var src = facade.GetAll().ToList();
-            Util.LoadData2RadCombo(rcbDepositeRate, src, "Id", "LoanInterest_Key", "-Select Interest Key-");
+            Util.LoadData2RadCombo(rcbDepositeRate, src, "Id", "LoanInterest_Key", "-Select Interest Key-", true);
 
             if (!String.IsNullOrEmpty(selectedid))
             {
@@ -444,7 +477,7 @@ namespace BankProject.Views.TellerApplication
 
             CountryRepository facade = new CountryRepository();
             var src = facade.GetAll().ToList();
-            Util.LoadData2RadCombo(rcbBusDay, src, "MaQuocGia", "MaQuocGia", "-Select Business Day-");
+            Util.LoadData2RadCombo(rcbBusDay, src, "MaQuocGia", "MaQuocGia", "-Select Business Day-", true);
 
             if (!String.IsNullOrEmpty(selectedid))
             {
@@ -455,7 +488,7 @@ namespace BankProject.Views.TellerApplication
         {
             AccountOfficerRepository facade = new AccountOfficerRepository();
             var src = facade.GetAll().ToList();
-            Util.LoadData2RadCombo(cmbAccountOfficer, src, "Code", "description", "-Select Account Officer-");
+            Util.LoadData2RadCombo(cmbAccountOfficer, src, "Code", "description", "-Select Account Officer-", false);
 
             if (!String.IsNullOrEmpty(selectedid))
             {
@@ -466,7 +499,7 @@ namespace BankProject.Views.TellerApplication
         {
             LoanGroupRepository facade = new LoanGroupRepository();
             var src = facade.GetAll().ToList();
-            Util.LoadData2RadCombo(rcbLoadGroup, src, "Id", "Name", "-Select Load Group-");
+            Util.LoadData2RadCombo(rcbLoadGroup, src, "Id", "Name", "-Select Load Group-", true);
 
             if (!String.IsNullOrEmpty(selectedvalue))
             {
@@ -477,7 +510,7 @@ namespace BankProject.Views.TellerApplication
         {
             LoanPurposeRepository facade = new LoanPurposeRepository();
             var src = facade.GetAll().ToList();
-            Util.LoadData2RadCombo(rcbPurposeCode, src, "Id", "Name", "-Select Purpose Code-");
+            Util.LoadData2RadCombo(rcbPurposeCode, src, "Id", "Name", "-Select Purpose Code-", false);
 
             if (!String.IsNullOrEmpty(selectedvalue))
             {
@@ -488,7 +521,7 @@ namespace BankProject.Views.TellerApplication
         {
             StoreProRepository storeFacade = new StoreProRepository();
             var db = storeFacade.StoreProcessor().B_BRPODCATEGORY_GetAll_IdOver200().ToList();
-            Util.LoadData2RadCombo(radcbMainCategory, db, "CatId", "Display", "-Select Main Category-");
+            Util.LoadData2RadCombo(radcbMainCategory, db, "CatId", "Display", "-Select Main Category-", false);
             radcbMainCategory.SelectedValue = selectedItem;
 
         }
@@ -497,7 +530,7 @@ namespace BankProject.Views.TellerApplication
             BCustomerRepository facade1 = new BCustomerRepository();
             var db = facade1.getCustomerList("AUT");
             List<BCUSTOMER_INFO> hh = db.ToList<BCUSTOMER_INFO>();
-            Util.LoadData2RadCombo(rcbCustomerID, hh, "CustomerID", "ID_FullName", "-Select Customer Code-");
+            Util.LoadData2RadCombo(rcbCustomerID, hh, "CustomerID", "ID_FullName", "-Select Customer Code-", false);
 
 
             if (!String.IsNullOrEmpty(SelectedCus))
@@ -511,7 +544,7 @@ namespace BankProject.Views.TellerApplication
 
             CustomerLimitSubRepository facade = new CustomerLimitSubRepository();
             var src = facade.FindLimitCusSub(custId).ToList();
-            Util.LoadData2RadCombo(rcbLimitReference, src, "SubLimitID", "SubLimitID", "-Select Limit Refer-");
+            Util.LoadData2RadCombo(rcbLimitReference, src, "SubLimitID", "SubLimitID", "-Select Limit Refer-", false);
 
 
             if (!String.IsNullOrEmpty(selectedvalue))
@@ -526,10 +559,10 @@ namespace BankProject.Views.TellerApplication
             CollateralInformationRepository facade = new CollateralInformationRepository();
             //var src = facade.FindCollorateRightByCust(custId).ToList();
             var src = facade.FindCollorateInformationByCust(custId).ToList();
-            Util.LoadData2RadCombo(rcbCollateralID, src, "RightID", "RightID", "-Select Collateral ID-");
-            Util.LoadData2RadCombo(rcbCollateralID1, src, "RightID", "RightID", "-Select Collateral ID-");
-            Util.LoadData2RadCombo(rcbCollateralID2, src, "RightID", "RightID", "-Select Collateral ID-");
-            Util.LoadData2RadCombo(rcbCollateralID3, src, "RightID", "RightID", "-Select Collateral ID-");
+            Util.LoadData2RadCombo(rcbCollateralID, src, "RightID", "RightID", "-Select Collateral ID-", true);
+            Util.LoadData2RadCombo(rcbCollateralID1, src, "RightID", "RightID", "-Select Collateral ID-", true);
+            Util.LoadData2RadCombo(rcbCollateralID2, src, "RightID", "RightID", "-Select Collateral ID-", true);
+            Util.LoadData2RadCombo(rcbCollateralID3, src, "RightID", "RightID", "-Select Collateral ID-", true);
 
             if (!String.IsNullOrEmpty(selectedValue1))
             {
@@ -556,10 +589,10 @@ namespace BankProject.Views.TellerApplication
 
 
             //Database.BOPENACCOUNT_LOANACCOUNT_GetByCode(name, currency);
-            Util.LoadData2RadCombo(rcbCreditToAccount, ds, "Id", "Display", "-Select a credit Account-");
-            Util.LoadData2RadCombo(rcbPrinRepAccount, ds, "Id", "Display", "-Select a Print Rep Account-");
-            Util.LoadData2RadCombo(rcbIntRepAccount, ds, "Id", "Display", "-Select a Int Rep Account-");
-            Util.LoadData2RadCombo(rcbChargRepAccount, ds, "Id", "Display", "-Select a Charge Rep Account-");
+            Util.LoadData2RadCombo(rcbCreditToAccount, ds, "Id", "Display", "-Select a credit Account-", true);
+            Util.LoadData2RadCombo(rcbPrinRepAccount, ds, "Id", "Display", "-Select a Print Rep Account-", true);
+            Util.LoadData2RadCombo(rcbIntRepAccount, ds, "Id", "Display", "-Select a Int Rep Account-", true);
+            Util.LoadData2RadCombo(rcbChargRepAccount, ds, "Id", "Display", "-Select a Charge Rep Account-", true);
             if (!String.IsNullOrEmpty(credit))
             {
                 rcbCreditToAccount.SelectedValue = credit;
@@ -703,7 +736,7 @@ namespace BankProject.Views.TellerApplication
         {
             ProductCategoryRepository facade = new ProductCategoryRepository();
             var model = facade.getProductCategory(categoryid).ToList();
-            Util.LoadData2RadCombo(rcbSubCategory, model, "SubCatId", "SubCatName", "-Select a Sub Category-");
+            Util.LoadData2RadCombo(rcbSubCategory, model, "SubCatId", "SubCatName", "-Select a Sub Category-", false);
 
 
             if (!String.IsNullOrEmpty(selectedValue))

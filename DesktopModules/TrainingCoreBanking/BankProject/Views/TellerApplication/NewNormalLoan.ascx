@@ -75,7 +75,7 @@
                     <td class="MyContent">
 
                         <telerik:radcombobox id="radcbMainCategory" runat="server" width="330px"
-                            autopostback="true" emptymessage="- Select a category -" onselectedindexchanged="Radcbmaincategory_Selectedindexchanged">
+                            autopostback="true" appenddatabounditems="True"   emptymessage="- Select a category -" onselectedindexchanged="Radcbmaincategory_Selectedindexchanged">
             </telerik:radcombobox>
                     </td>
                     <td class="MyLable"></td>
@@ -88,7 +88,8 @@
                             ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                     <td class="MyContent">
-                        <telerik:radcombobox id="rcbSubCategory" runat="server" allowcustomtext="false" markfirstmatch="true" width="330" emptymessage="- Select a sub category -">
+                        <telerik:radcombobox id="rcbSubCategory" runat="server" allowcustomtext="false" 
+                            appenddatabounditems="True" markfirstmatch="true" width="330" emptymessage="- Select a sub category -">
                      <ExpandAnimation Type="None" />
                      <CollapseAnimation Type="None" />
                                        
@@ -104,7 +105,8 @@
                             ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                     <td class="MyContent">
-                        <telerik:radcombobox id="rcbPurposeCode" runat="server" allowcustomtext="false" markfirstmatch="true" width="330">
+                        <telerik:radcombobox id="rcbPurposeCode" runat="server" allowcustomtext="false"
+                            appenddatabounditems="True" markfirstmatch="true" width="330">
                      <ExpandAnimation Type="None" />
                      <CollapseAnimation Type="None" />
                         
@@ -119,7 +121,8 @@
                             ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                     <td class="MyContent">
-                        <telerik:radcombobox id="rcbCustomerID" autopostback="true" onselectedindexchanged="rcbCustomerID_SelectedIndexChanged" runat="server" width="330" allowcustomtext="false" markfirstmatch="true">
+                        <telerik:radcombobox id="rcbCustomerID" autopostback="true" onselectedindexchanged="rcbCustomerID_SelectedIndexChanged"
+                            appenddatabounditems="True" runat="server" width="330" allowcustomtext="false" markfirstmatch="true">
                                      <ExpandAnimation Type="None" />
                                      <CollapseAnimation Type="None" />
                                        <ItemTemplate>
@@ -132,7 +135,8 @@
                 <tr>
                     <td class="MyLable">Loan Group:</td>
                     <td class="MyContent">
-                        <telerik:radcombobox id="rcbLoadGroup" runat="server" width="330" allowcustomtext="false" markfirstmatch="true">
+                        <telerik:radcombobox id="rcbLoadGroup" runat="server" width="330"
+                            appenddatabounditems="True" allowcustomtext="false" markfirstmatch="true">
                      <ExpandAnimation Type="None" />
                      <CollapseAnimation Type="None" />
                          <Items>
@@ -164,7 +168,8 @@
 
                     <td class="MyLable">Business Day:</td>
                     <td class="MyContent">
-                        <telerik:radcombobox id="rcbBusDay" autopostback="True" width="159px"  runat="server" allowcustomtext="false" markfirstmatch="true">
+                        <telerik:radcombobox id="rcbBusDay" autopostback="True" width="159px"
+                            appenddatabounditems="True"  runat="server" allowcustomtext="false" markfirstmatch="true">
                                  <ExpandAnimation Type="None" />
                                  <CollapseAnimation Type="None" />
                                  <ItemTemplate>
@@ -211,7 +216,11 @@
                     <td class="MyContent">
                         <telerik:raddatepicker id="rdpValueDate" runat="server" />
                     </td>
-                    <td class="MyLable">Maturity Date:<span class="Required">(*)</span></td>
+                    <td class="MyLable">Maturity Date:<span class="Required">(*)</span>
+                         <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator9"
+                            ControlToValidate="rdpMaturityDate" ValidationGroup="Commit" InitialValue="" ErrorMessage="Maturity Date is required"
+                            ForeColor="Red"></asp:RequiredFieldValidator>
+                    </td>
                     <td class="MyContent">
                         <telerik:raddatepicker id="rdpMaturityDate" runat="server" />
                     </td>
@@ -477,7 +486,7 @@
                     <td class="MyContent">
                         <telerik:radcombobox id="cmbAccountOfficer"
                             markfirstmatch="True"
-                            allowcustomtext="false"
+                            allowcustomtext="false" appenddatabounditems="True" 
                             width="250" runat="server" validationgroup="Group1">
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
@@ -502,7 +511,7 @@
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
+                                <telerik:RadComboBoxItem Value="" Text=""/>
                                 <telerik:RadComboBoxItem Value="Y" Text="Yes" />
                                 <telerik:RadComboBoxItem Value="N" Text="No" />
                             </Items>
