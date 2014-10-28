@@ -327,13 +327,9 @@ namespace BankProject.DataProvider
             }
             else return "";
         }
-        //public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType)
-        //{
-        //    return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType);
-        //}
-        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType, string GlobalLimitID, string ProductLimitID)
+        public static DataSet B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(string CUstomerID, string ProductLimitType)
         {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType, GlobalLimitID, ProductLimitID);
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Check_Available_Amt", CUstomerID, ProductLimitType);
         }
         #endregion
         #region INPUT CUSTOMER_RIGHT_Load_SubLimitID
@@ -375,27 +371,16 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_CheckRightID", RightID);
         }
-        //public static void B_COLLATERAL_INFO_Insert_Update(string RightID, string CollateralInfoID, string CollateralTypeCode, string CollateralTypeName,
-        //    string CollateralCode, string CollateralName, string ContingentAcctID, string ContingentAcctName, string Description, string Address, string CollateralStatusID,
-        //    string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID,string Currency
-        //, string CountryCode, string CountryName, decimal? NominalValue, decimal? MaxValue, decimal? ProvisionValue, decimal? ExecutionValue, decimal? AllocatedAmt, DateTime? ValueDate,
-        //    DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser, double Rate)
-        //{
-        //    sqldata.ndkExecuteNonQuery("B_COLLATERAL_INFO_Insert_Update", RightID, CollateralInfoID, CollateralTypeCode, CollateralTypeName, CollateralCode, CollateralName,
-        //        ContingentAcctID, ContingentAcctName, Description, Address, CollateralStatusID, CollateralStatusDesc, CustomerID, CustomreIDName, Note,
-        //        CompanyStorageID, CompanyStorageDesc, ProductLimitID, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
-        //        AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate);
-        //}
         public static void B_COLLATERAL_INFO_Insert_Update(string RightID, string CollateralInfoID, string CollateralTypeCode, string CollateralTypeName,
             string CollateralCode, string CollateralName, string ContingentAcctID, string ContingentAcctName, string Description, string Address, string CollateralStatusID,
-            string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID, string Currency
+            string CollateralStatusDesc, string CustomerID, string CustomreIDName, string Note, string CompanyStorageID, string CompanyStorageDesc, string ProductLimitID,string Currency
         , string CountryCode, string CountryName, decimal? NominalValue, decimal? MaxValue, decimal? ProvisionValue, decimal? ExecutionValue, decimal? AllocatedAmt, DateTime? ValueDate,
-            DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser, double Rate, string GlobalLimitID2)
+            DateTime? ExpiryDate, DateTime? ReviewDateFreq, string ApprovedUser, double Rate)
         {
             sqldata.ndkExecuteNonQuery("B_COLLATERAL_INFO_Insert_Update", RightID, CollateralInfoID, CollateralTypeCode, CollateralTypeName, CollateralCode, CollateralName,
                 ContingentAcctID, ContingentAcctName, Description, Address, CollateralStatusID, CollateralStatusDesc, CustomerID, CustomreIDName, Note,
                 CompanyStorageID, CompanyStorageDesc, ProductLimitID, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
-                AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate, GlobalLimitID2);
+                AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate);
         }
         public static DataSet B_COLLATERAL_INFO_LoadExistColl_InfoExists(string CollateralInfoID)
         {
@@ -433,14 +418,6 @@ namespace BankProject.DataProvider
         public static DataSet B_COLLATERAL_INFO_LoadRate(string CollateralCode)
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadRate", CollateralCode);
-        }
-        public static DataSet B_COLLATERAL_INFO_Load_GlobalLimitID(string CustomerID)
-        {
-            return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_Load_ProductLimit", CustomerID);
-        }
-        public static DataSet B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt(string GlobalLimitID)
-        {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt", GlobalLimitID);
         }
         #endregion
         #region B_CHEQUE ISSUE
@@ -792,6 +769,34 @@ namespace BankProject.DataProvider
         public static DataSet B_BINWARD_CASH_WITHDRAW_Load_ID_Info(string ID)
         {
             return sqldata.ndkExecuteDataset("B_BINWARD_CASH_WITHDRAW_Load_ID_Info", ID);
+        }
+        public static void BINWARD_CASH_WITHDRAW_Insert(string ID, string status, string ClearingID, string DebitCurrency, string DebitAcct, double DebitLCY
+            , double DebitFCY, double DealRate, string CreditAcctID, string CreditAcctName, string CreditCurrency, double CreditLCY, double CreditFCY,
+            string BOName, string FOName, string IdentityCard, DateTime? IssueDate, string IssuePlace, string Tellephone, string Narrative1, string Narrative2, string CreatedUser)
+        {
+            sqldata.ndkExecuteNonQuery("BINWARD_CASH_WITHDRAW_Insert", ID, status, ClearingID, DebitCurrency, DebitAcct, DebitLCY, DebitFCY, DealRate, CreditAcctID, CreditAcctName, CreditCurrency
+                , CreditLCY, CreditFCY, BOName, FOName, IdentityCard, IssueDate, IssuePlace, Tellephone, Narrative1, Narrative2, CreatedUser);
+        }
+        public static DataSet BINWARD_CASH_WITHDRAW_PreviewList()
+        {
+            return sqldata.ndkExecuteDataset("BINWARD_CASH_WITHDRAW_PreviewList");
+        }
+        public static DataSet BINWARD_CASH_WITHDRAW_Load_Preview_Data(string RefID, string GetFor)
+        {
+            return sqldata.ndkExecuteDataset("BINWARD_CASH_WITHDRAW_Load_Preview_Data", RefID, GetFor);
+        }
+        public static void BINWARD_CASH_WITHDRAW_Update_Status(string RefID, string Status, string UpdateFor)
+        {
+            sqldata.ndkExecuteNonQuery("BINWARD_CASH_WITHDRAW_Update_Status",RefID, Status, UpdateFor);
+        }
+        public static DataSet BINWARD_CASH_WITHDRAW_Enquiry(string TransactionType, string BOName, string FOName, string FOLegalID, string RefID,string Currency
+            , double FromAmt, double toAmt)
+        {
+            return sqldata.ndkExecuteDataset("BINWARD_CASH_WITHDRAW_Enquiry", TransactionType, BOName, FOName, FOLegalID, RefID, Currency, FromAmt, toAmt);
+        }
+        public static string BINWARD_CASH_WITHDRAW_Load_Status(string ID, string GetFor)
+        {
+            return sqldata.ndkExecuteDataset("BINWARD_CASH_WITHDRAW_Load_Status", ID, GetFor).Tables[0].Rows[0]["Status"].ToString();
         }
         #endregion
 
