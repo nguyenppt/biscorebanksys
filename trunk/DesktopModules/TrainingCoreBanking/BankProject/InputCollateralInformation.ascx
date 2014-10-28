@@ -242,7 +242,10 @@
                     <td class="MyContent"></td>
                 </tr>
                     <tr>
-                    <td class="MyLable">Nominal Value:</td>
+                    <td class="MyLable">Nominal Value:<span class="Required">(*)</span>
+                         <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" Display="None" ControlToValidate="tbNominalValue"
+                            ValidationGroup="Commit" InitialValue="" ErrorMessage="Nominal Value is Required !" />
+                    </td>
                     <td class="MyContent">
                         <telerik:radtextbox ID="tbNominalValue" runat="server" ValidationGroup="Group1" Width="150"
                             ForeColor="Black" >

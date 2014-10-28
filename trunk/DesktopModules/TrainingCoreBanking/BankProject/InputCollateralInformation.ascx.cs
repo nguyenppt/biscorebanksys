@@ -57,6 +57,10 @@ namespace BankProject
                     {
                         ShowMsgBox("Global Limit ID value can not be duplicated. Please check again !"); return;
                     }
+                    if (Convert.ToDecimal(tbNominalValue.Text.Replace(",", "")) <= 0)
+                    {
+                        ShowMsgBox("Nominal Value must be greater than 0 . Please check again !"); return;
+                    }
                     TriTT.B_COLLATERAL_INFO_Insert_Update(RightID, CollInfoID, rcbCollateralType.SelectedValue, rcbCollateralType.Text.Replace(rcbCollateralType.SelectedValue + " - ", "")
                         , rcbCollateralCode.SelectedValue, rcbCollateralCode.Text.Replace(rcbCollateralCode.SelectedValue+" - ", ""),rcbContingentAcct.SelectedValue
                         ,rcbContingentAcct.SelectedItem.Text.Replace(rcbContingentAcct.SelectedValue+" - ",""),tbDescription.Text
