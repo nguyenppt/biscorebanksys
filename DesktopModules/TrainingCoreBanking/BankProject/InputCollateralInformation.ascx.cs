@@ -226,6 +226,7 @@ namespace BankProject
         protected void LoadCountries()
         {
             rcbCountry.Items.Clear();
+            rcbCountry.Items.Add(new RadComboBoxItem("", ""));
             rcbCountry.DataSource = DataProvider.TriTT.B_BCOUNTRY_GetAll();
             rcbCountry.DataTextField = "TenTA";
             rcbCountry.DataValueField = "MaQuocGia";
@@ -337,7 +338,7 @@ namespace BankProject
         {
             rcbGlobalLimitID.Items.Clear();
             rcbGlobalLimitID.Items.Add(new RadComboBoxItem("",""));
-            var GlobalLimit = TriTT.B_COLLATERAL_INFO_Load_GlobalLimitID(CustomerID);
+            var GlobalLimit = TriTT_Credit.B_COLLATERAL_INFO_Load_GlobalLimitID(CustomerID);
             rcbGlobalLimitID.DataValueField = "MainLimitID";
             rcbGlobalLimitID.DataTextField = "MainLimitID";
             rcbGlobalLimitID.DataSource = GlobalLimit;

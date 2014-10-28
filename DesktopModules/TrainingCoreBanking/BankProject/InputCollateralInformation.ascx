@@ -230,7 +230,7 @@
                     <td class="MyLable">Country:</td>
                     <td class="MyContent">
                         <telerik:RadComboBox ID="rcbCountry" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="200" ForeColor="Black" >
+                            width="200" ForeColor="Black" appendDataBoundItems="true">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>                  
