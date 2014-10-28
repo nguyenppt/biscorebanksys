@@ -33,8 +33,8 @@
                              MarkFirstMatch="true" ValidationGroup="Group1"
                              AppendDataBoundItems="true" width="270" >
                     <Items>
-                       <telerik:RadComboBoxItem Value="CashWithdraw" Text="Cash Withdraw" />
-                       <telerik:RadComboBoxItem Value="CreditAccount" Text="Credit Account" />
+                       <telerik:RadComboBoxItem Value="CashWithdraw" Text="Process Cash Withdraw" />
+                       <telerik:RadComboBoxItem Value="CreditAccount" Text="Process Credit Account" />
                     </Items>
                         </telerik:RadComboBox>
             </td>
