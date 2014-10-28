@@ -2,207 +2,191 @@
 using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using BankProject.DataProvider;
-
+using System.Data;
 namespace BankProject.FTTeller
 {
     public partial class InwardCashWithdraw : PortalModuleBase
     {
-        private static int Id = 480;
-        
         #region events
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-
-            //var dsWiftCode = SQLData.B_BSWIFTCODE_GetAll();
-
-            //rcbCreditAccount.DataValueField = "AccountNo";
-            //rcbCreditAccount.DataTextField = "AccountNoDescription";
-            //rcbCreditAccount.DataSource = dsWiftCode;
-            //rcbCreditAccount.DataBind();
-
-            if (Request.QueryString["IsAuthorize"] != null)
+            FirstLoad();
+            if (Request.QueryString["RefID"] != null)
             {
-                LoadToolBar(true);
-                loaddataPreview();
-                //dvAudit.Visible = true;
+                LoadToolBar(false);
+                loaddataPreview(Request.QueryString["RefID"].ToString());
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
             }
             else 
             {
-                LoadToolBar(false);
-                FirstLoad();
-                //dvAudit.Visible = false;
+                LoadToolBar(true);
             }
 
         }
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
-            //if (hdfDisable.Value == "0") return;
-            
             var toolBarButton = e.Item as RadToolBarButton;
             string commandName = toolBarButton.CommandName;
             if (commandName == "commit")
             {
-                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
-                FirstLoad();
+                string CreditAcct_Curency = rcbCreditAccount.Text.Substring(0, 3);
+                if (CreditAcct_Curency != rcbCreditCurrency.SelectedValue)
+                { ShowMsgBox("Credit Account and Credit Currency are not matched, Please check again !"); return; }
+                else
+                    if (lbDebitCurrency.Text != rcbCreditCurrency.SelectedValue && txtDealRate.Text =="")
+                    { ShowMsgBox("Deal Rate value is not inputted. Please check again !"); return; }
+                double dealrate = (txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0);
+                if (lbDebitCurrency.Text == rcbCreditCurrency.SelectedValue) dealrate = 1;
+                TriTT.BINWARD_CASH_WITHDRAW_Insert(txtId.Text, "UNA", rcbClearingID.SelectedValue, lbDebitCurrency.Text, lbDebitAccount.Text, tbDebitAmtLCY.Value.HasValue ? tbDebitAmtLCY.Value.Value : 0,
+                    tbDebitAmtFCY.Value.HasValue ? tbDebitAmtFCY.Value.Value : 0, dealrate, rcbCreditAccount.SelectedValue,
+                    rcbCreditAccount.Text, rcbCreditCurrency.SelectedValue, tbCreditAmtLCY.Value.HasValue ? tbCreditAmtLCY.Value.Value : 0,
+                    tbCreditAmtFCY.Value.HasValue ? tbCreditAmtFCY.Value.Value : 0, txtBOName.Text, txtFOName.Text, txtIdentityCard.Text,txtIsssueDate.SelectedDate.HasValue? txtIsssueDate.SelectedDate : null
+                    , txtIsssuePlace.Text, tbPhone.Text, txtNarrative.Text, txtNarrative2.Text, UserInfo.Username);
+                Response.Redirect( "Default.aspx?tabid=171");
             }
-
             if(commandName=="Preview")
             {
                 Response.Redirect(EditUrl("chitiet"));
             }
 
-            if (commandName == "authorize" || commandName == "reverse")
+            if (commandName == "authorize") 
             {
-                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                if (TriTT.BINWARD_CASH_WITHDRAW_Load_Status(txtId.Text, "CashWithdraw") == "AUT")
+                {
+                    ShowMsgBox("This transation was authorized , You can not authorized it again!"); return;
+                }
+                TriTT.BINWARD_CASH_WITHDRAW_Update_Status(txtId.Text, "AUT", "CashWithdraw");
+                Response.Redirect("Default.aspx?tabid=171");
+            }
+            if (commandName == "reverse")
+            {
+                TriTT.BINWARD_CASH_WITHDRAW_Update_Status(txtId.Text, "REV", "CashWithdraw");
+                LoadToolBar(true);
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                FirstLoad();
-                LoadToolBar(false);
+                LoadInfo_forREV();
             }
         }
         protected void rcbClearingID_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            switch (rcbClearingID.SelectedValue)
+            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(rcbClearingID.SelectedValue);
+            DataRow dr = ds.Tables[0].Rows[0];
+            lbDebitCurrency.Text = dr["Currency"].ToString();
+            lbDebitAccount.Text = dr["CreditAcctID"].ToString();
+            tbAmount.Text = dr["Amount"].ToString();
+            txtBOName.Text = dr["SendingName"].ToString();
+            txtFOName.Text = dr["ReceivingName"].ToString();
+            txtIdentityCard.Text = dr["IdentityCard"].ToString();
+            txtIsssuePlace.Text = dr["IssuePlace"].ToString();
+            if (dr["IssueDate"].ToString() != "")
             {
-                case "1":
-                    lbDebitCurrency.Text = "VND";
-                    lbDebitAccount.Text = "03.000168655.7";
-                    lbDebitAmtLCY.Text = "9,000,000";
-
-                    rcbCreditCurrency.SelectedValue = "VND";
-                    lbCrAmtLCY.Text = "9,000,000";
-
-                    txtBOName.Text = "Đỗ Bảo Lộc";
-                    txtFOName.SetTextDefault("Nguyễn Văn Trung");
-                    txtNarrative.Text = "TRA VON LAI VANG HANG THANG";
-
-                    txtIdentityCard.Text = "192522003";
-                    txtIsssueDate.SelectedDate = new DateTime(2000, 5, 10);
-                    txtIsssuePlace.Text = "TP.HCM";
-                    txtTel.Text = "09033220011";
-                    break;
-
-                case "2":
-                    lbDebitCurrency.Text = "VND";
-                    lbDebitAccount.Text = "03.000259755.9";
-                    lbDebitAmtLCY.Text = "10,000,000";
-
-                    rcbCreditCurrency.SelectedValue = "VND";
-                    lbCrAmtLCY.Text = "10,000,000";
-
-                    txtBOName.Text = "Trẩn Bửu Thạch";
-                    txtFOName.SetTextDefault("Tô Văn Hoa");
-                    txtNarrative.Text = "TRA VON LAI VANG HANG THANG";
-
-                    txtIdentityCard.Text = "045231544";
-                    txtIsssueDate.SelectedDate = new DateTime(2005, 6, 19);
-                    txtIsssuePlace.Text = "TP.HCM";
-                    txtTel.Text = "09333778789";
-                    break;
-
-                case "3":
-                    lbDebitCurrency.Text = "VND";
-                    lbDebitAccount.Text = "03.000699787.4";
-                    lbDebitAmtLCY.Text = "15,000,000";
-
-                    rcbCreditCurrency.SelectedValue = "VND";
-                    lbCrAmtLCY.Text = "15,000,000";
-
-                    txtBOName.Text = "Quang Nhật Tường Quyên";
-                    txtFOName.SetTextDefault("Lưu Văn Trí");
-                    txtNarrative.Text = "TRA VON LAI VANG HANG THANG";
-
-                    txtIdentityCard.Text = "029002154";
-                    txtIsssueDate.SelectedDate = new DateTime(2000, 5, 10);
-                    txtIsssuePlace.Text = "TP.HCM";
-                    txtTel.Text = "09815457157";
-                    break;
+                txtIsssueDate.SelectedDate = Convert.ToDateTime(dr["IssueDate"].ToString());
             }
         }
+        protected void LoadInfo_forREV()
+        {
+            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(rcbClearingID.SelectedValue);
+            DataRow dr = ds.Tables[0].Rows[0];
+            tbAmount.Text = dr["Amount"].ToString();
+        }
+    
         #endregion
 
         #region method
-        void loaddataPreview()
+        void loaddataPreview(string ID)
         {
-            if (Request.QueryString["LCCode"] != null)
+            DataSet ds = TriTT.BINWARD_CASH_WITHDRAW_Load_Preview_Data(ID, "CashWithdraw");
+            if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
-                string LCCode = Request.QueryString["LCCode"].ToString();
-                switch (LCCode)
+                DataRow dr = ds.Tables[0].Rows[0];
+                txtId.Text = dr["ID"].ToString();
+                lbDebitCurrency.Text = dr["DebitCurrency"].ToString();
+                rcbClearingID.SelectedValue = dr["ClearingID"].ToString();
+                lbDebitAccount.Text = dr["DebitAccount"].ToString();
+                if (dr["DebitAmtLCY"].ToString() != "0.00") tbDebitAmtLCY.Text = dr["DebitAmtLCY"].ToString();
+                if (dr["DebitAmtFCY"].ToString() != "0.00") tbDebitAmtFCY.Text = dr["DebitAmtFCY"].ToString();
+                txtDealRate.Text = dr["DealRate"].ToString();
+                rcbCreditAccount.SelectedValue = dr["CreditAcctID"].ToString();
+                rcbCreditCurrency.SelectedValue = dr["CreditCurrency"].ToString();
+                if (dr["CreditAmtLCY"].ToString() != "0.00") tbCreditAmtLCY.Text = dr["CreditAmtLCY"].ToString();
+                if (dr["CreditAmtFCY"].ToString() != "0.00") tbCreditAmtFCY.Text = dr["CreditAmtFCY"].ToString();
+                txtBOName.Text = dr["BOName"].ToString();
+                txtFOName.Text = dr["FOName"].ToString();
+                txtIdentityCard.Text = dr["IdentityCard"].ToString();
+                if (dr["IssueDate"].ToString() != "") txtIsssueDate.SelectedDate = Convert.ToDateTime(dr["IssueDate"].ToString());
+                tbPhone.Text = dr["Telephone"].ToString();
+                txtIsssuePlace.Text = dr["IssuePlace"].ToString();
+                txtNarrative.Text = dr["Narrative1"].ToString();
+                txtNarrative2.Text = dr["Narrative2"].ToString();
+                if (dr["Status"].ToString() == "AUT")
                 {
-                    case "1":
-                        this.txtId.Text = "TT/09164/00481";
-                        //txtBOName.Text = "Đỗ Bảo Lộc";
-                        //txtFOName.SetTextDefault("Nguyễn Văn Trung");
-
-                        //txtNarrative.Text = "TRA VON LAI VANG HANG THANG";
-                        rcbCreditAccount.SelectedValue = "VND";
-
-                        rcbClearingID.SelectedValue = "1";
-                        rcbClearingID_OnSelectedIndexChanged(null,null);
-
-                        //lbDebitAmtLCY.Text = "40,000,000";
-                        //lbCrAmtLCY.Text = "40,000,000";
-
-                        txtIdentityCard.Text = "025984158";
-                        txtIsssueDate.SelectedDate = new DateTime(2001, 1, 2);
-                        txtIsssuePlace.Text = "TP.HCM";
-                        txtTel.Text = "0909256879";
-                        break;
-
-                    case "2":
-                        this.txtId.Text = "TT/09164/00482";
-                        //txtBOName.Text = "Trẩn Bửu Thạch";
-                        //txtFOName.SetTextDefault("Tô Văn Hoa");
-
-                        rcbCreditAccount.SelectedValue = "VND";
-                        //txtNarrative.Text = "TRA VON LAI VANG HANG THANG";
-
-                        rcbClearingID.SelectedValue = "2";
-                        rcbClearingID_OnSelectedIndexChanged(null,null);
-
-                        //lbDebitAmtLCY.Text = "5,000,000";
-                        //lbDebitAmtLCY.Text = "5,000,000";
-                       
-                        txtIdentityCard.Text = "362584157";
-                        txtIsssueDate.SelectedDate = new DateTime(1999, 5, 6);
-                        txtIsssuePlace.Text = "TP.HCM";
-                        txtTel.Text = "01222586488";
-                        break;
-
-                    case "3":
-                        this.txtId.Text = "TT/09164/00483";
-                        //txtReceivingName.SetTextDefault("Lý Thánh Tông");
-                        //txtSendingName.Text = "Trần Minh Tâm";
-                        //txtSendingAddress.SetTextDefault("632 Trần Hưng Đạo");
-
-                        rcbCreditAccount.SelectedValue = "VND";
-                        rcbClearingID.SelectedValue = "3";
-                        rcbClearingID_OnSelectedIndexChanged(null,null);
-                        //txtNarrative.Text = "TRA VON LAI VANG HANG THANG";
-
-                        txtIdentityCard.Text = "025639587";
-                        txtIsssueDate.SelectedDate = new DateTime(1990, 7, 21);
-                        txtIsssuePlace.Text = "TP.HCM";
-                        txtTel.Text = "0988365487";
-                        break;
+                    LoadToolBar_AllFalse();
+                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                 }
             }
         }
         private void FirstLoad()
         {
-            Id++;
-            txtFOName.SetTextDefault("");
-            this.txtId.Text = "TT/09164/00" + Id.ToString();
+            this.txtId.Text = TriTT.B_BMACODE_GetNewID_3part_new("B_BMACODE_GetNewID_3part_new", "INWARD_CASH_ID", "TT", ".");
+            LoadClearingID();
+            LoadCurrency();
+            LoadCreditAccount();
+        }
+        protected void LoadClearingID()
+        {
+            rcbClearingID.Items.Clear();
+            rcbClearingID.Items.Add(new RadComboBoxItem(""));
+            rcbClearingID.AppendDataBoundItems = true;
+            rcbClearingID.DataTextField = "ID";
+            rcbClearingID.DataValueField = "ID";
+            rcbClearingID.DataSource = BankProject.DataProvider.TriTT.Load_ClearingID();
+            rcbClearingID.DataBind();
+        }
+        protected void LoadCreditAccount()
+        {
+            var InternalBankAccount = Teller.InternalBankAccount();
+            rcbCreditAccount.Items.Clear();
+            rcbCreditAccount.Items.Add(new RadComboBoxItem(""));
+            rcbCreditAccount.DataValueField = "ACCOUNT";
+            rcbCreditAccount.DataTextField = "Display";
+            rcbCreditAccount.DataSource = InternalBankAccount;
+            rcbCreditAccount.DataBind();
+        }
+        protected void LoadCurrency()
+        {
+            var Currency = TriTT.B_LoadCurrency("", "");
+            rcbCreditCurrency.Items.Clear();
+            rcbCreditCurrency.Items.Add(new RadComboBoxItem(""));
+            rcbCreditCurrency.AppendDataBoundItems = true;
+            rcbCreditCurrency.DataValueField = "Code";
+            rcbCreditCurrency.DataTextField = "Code";
+            rcbCreditCurrency.DataSource = Currency;
+            rcbCreditCurrency.DataBind();
         }
         private void LoadToolBar(bool isauthorise)
         {
-            RadToolBar1.FindItemByValue("btCommitData").Enabled = !isauthorise;
-            RadToolBar1.FindItemByValue("btPreview").Enabled = !isauthorise;
-            RadToolBar1.FindItemByValue("btAuthorize").Enabled = isauthorise;
-            RadToolBar1.FindItemByValue("btReverse").Enabled = isauthorise;
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = isauthorise;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = isauthorise;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = !isauthorise;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+        }
+        protected void LoadToolBar_AllFalse()
+        {
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled =false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+        }
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
         #endregion
     }
