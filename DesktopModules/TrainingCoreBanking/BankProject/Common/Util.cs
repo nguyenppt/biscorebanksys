@@ -15,10 +15,14 @@ namespace BankProject.Common
 
         }
 
-        public static void LoadData2RadCombo<T>(RadComboBox ctl, List<T> db, string valueField, string textField, string emptyMessage)
+        public static void LoadData2RadCombo<T>(RadComboBox ctl, List<T> db, string valueField, string textField, string emptyMessage, bool addEmptyRow)
         {
             if (ctl != null)
             {
+                RadComboBoxItem emptyItem = new RadComboBoxItem();
+                emptyItem.Value = null;
+                emptyItem.Text = null;
+
                 ctl.Text = "";
                 ctl.Items.Clear();
                 ctl.DataSource = db;
@@ -28,12 +32,23 @@ namespace BankProject.Common
                 {
                     ctl.EmptyMessage = emptyMessage;
                 }
+
+                if (addEmptyRow)
+                {
+                    ctl.AppendDataBoundItems = addEmptyRow;
+                    ctl.Items.Add(emptyItem);
+                }
+                else
+                {
+                    ctl.AppendDataBoundItems = !addEmptyRow;
+                }
+                //ctl.Items.a
                 ctl.DataBind();
             }
         }
-        public static void LoadData2RadCombo<T>(RadComboBox ctl, List<T> db, string valueField, string textField)
+        public static void LoadData2RadCombo<T>(RadComboBox ctl, List<T> db, string valueField, string textField, bool addEmptyRow)
         {
-            LoadData2RadCombo(ctl, db, valueField, textField, null);
+            LoadData2RadCombo(ctl, db, valueField, textField, null, addEmptyRow);
         }
         public static void LoadData2RadCombo(RadComboBox ctl, string emptyMessage)
         {
