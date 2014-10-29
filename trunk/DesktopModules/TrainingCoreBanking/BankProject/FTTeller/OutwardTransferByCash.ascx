@@ -2,10 +2,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/Controls/VVComboBox.ascx" TagPrefix="uc1" TagName="VVComboBox" %>
 <%@ Register Src="../Controls/VVTextBox.ascx" TagPrefix="uc1" TagName="VVTextBox" %>
-
-
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
-
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"  />
 <script type="text/javascript">
     jQuery(function ($) {
@@ -15,7 +12,7 @@
 </script>
 <div>
     <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
-      OnClientButtonClicking="OnClientButtonClicking"   OnButtonClick="RadToolBar1_ButtonClick">
+      OnButtonClick="RadToolBar1_ButtonClick">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
@@ -48,16 +45,14 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#ChristopherColumbus">Cash Deposits Outside System</a></li>
-        <li><a href="#blank">Audit</a></li>
-        <li><a href="#blank">Full View</a></li>
     </ul>
     <div id="ChristopherColumbus" class="dnnClear">
+         <fieldset>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Product ID <span class="Required">(*)</span>
+                <td class="MyLable">Product ID<span class="Required">(*)</span>
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldValidator8"
@@ -81,10 +76,8 @@
                         </Items>
                     </telerik:RadComboBox>
                 </td>
-               
             </tr>
         </table>
-
         <table width="100%" cellpadding="0" cellspacing="0">
              <tr>
                 <td class="MyLable">Currency <span class="Required">(*)</span>
@@ -100,11 +93,9 @@
                     <telerik:RadComboBox ID="rcbCurrency"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
-                        OnClientSelectedIndexChanged="OnCurrencyMatch"
                         OnSelectedIndexChanged="rcbCurrency_OnSelectedIndexChanged"
                         AutoPostBack="True"
                         runat="server" >
-                       
                     </telerik:RadComboBox>
                 </td>
             </tr>
@@ -116,12 +107,10 @@
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldValidator2"
-                        ControlToValidate="rcbBenCom"
-                        
+                        ControlToValidate="rcbBenCom"                
                         ValidationGroup="Commit"
                         InitialValue=""
-                        ErrorMessage="Ben Com is Required" ForeColor="Red"></asp:RequiredFieldValidator>
-                      
+                        ErrorMessage="Ben Com is Required" ForeColor="Red"></asp:RequiredFieldValidator>                      
                 </td>
                 <td class="MyContent" style="width:220px;" >
                     <telerik:RadComboBox ID="rcbBenCom"
@@ -136,50 +125,34 @@
             <td><asp:Label ID="lbBenCom" runat="server"></asp:Label></td>
             </tr>
         </table>
-
-
         <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
-                <td class="MyLable">Credit Account <span class="Required">(*)</span>
-                    <asp:RequiredFieldValidator
-                        runat="server" Display="None"
-                        ID="RequiredFieldValidator4"
-                        ControlToValidate="rcbCreditAccount"
-                        ValidationGroup="Commit"
-                        InitialValue=""
-                        ErrorMessage="Credit Account is Required" ForeColor="Red"></asp:RequiredFieldValidator>
-
-                </td>
-                <td class="MyContent"  >
+                <td class="MyLable">Credit Account</td>
+                <td class="MyContent">
                     <telerik:RadComboBox ID="rcbCreditAccount"
-                        MarkFirstMatch="True"
+                        MarkFirstMatch="True" appendDataBoundItems="true"
                         AllowCustomText="false"
                         Enabled = "false"
-                        runat="server" Width="160" >
-                        
+                        runat="server" Width="160" >                        
                     </telerik:RadComboBox>
                 </td>
             </tr>
         </table>
-
         <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
                 <td class="MyLable">Cash Account</td>
                 <td class="MyContent" style="width:160px;" >
                     <telerik:RadComboBox ID="rcbCashAccount"
                         MarkFirstMatch="True"
-                        AllowCustomText="false"
-                        
-                        runat="server" Width="160" >
-                      
+                        AllowCustomText="false"                        
+                        runat="server" Width="160" >                      
                     </telerik:RadComboBox>
                 </td>
-            <td><a class="add">
-                    <img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
+            <td></td>
             <td><asp:Label ID="Label1" runat="server"></asp:Label></td>
             </tr>
         </table>
-                         </ContentTemplate>
+        </ContentTemplate>
         </asp:UpdatePanel>
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -189,14 +162,14 @@
                 </td>
             </tr>
         </table>
-        
+       </fieldset>        
         <fieldset id="Fieldset1" runat="server">
          <legend>
               <div style="font-weight:bold; text-transform:uppercase;"><asp:Label ID="Label2" runat="server" Text="Sending Information"></asp:Label></div>
                                 </legend>    
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                 <td class="MyLable">Sending Name <span class="Required">(*)</span>
+                 <td class="MyLable">Name<span class="Required">(*)</span>
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldValidator3"
@@ -204,15 +177,30 @@
                         ValidationGroup="Commit"
                         InitialValue=""
                         ErrorMessage="Sending Name is Required" ForeColor="Red"></asp:RequiredFieldValidator>
-
                 </td>
-                <td class="MyContent"><telerik:RadTextBox ID="txtSendingName" runat="server" Width="200" ></telerik:RadTextBox></td>
+                <td class="MyContent"><telerik:RadTextBox ID="txtSendingName" runat="server" Width="400" ></telerik:RadTextBox></td>
+            </tr>
+            <tr>
+                <td class="MyLable">Address</td>
+                <td class="MyContent">
+                    <telerik:RadTextBox id="tbAddress" runat="server" width="400"></telerik:RadTextBox>
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable"></td>
+                <td class="MyContent">
+                    <telerik:RadTextBox id="tbAddress2" runat="server" width="400"></telerik:RadTextBox>
+                </td>
             </tr>
         </table>
-                    <uc1:VVTextBox runat="server" id="txtSendingAddress" VVTLabel="Sending Address" VVTDataKey='txtId'  />
         <table width="100%" cellpadding="0" cellspacing="0">
-                 <td class="MyLable">Sending Phone</td>
-                <td class="MyContent"><telerik:RadTextBox ID="txtSendingPhone" runat="server" Width="200" ></telerik:RadTextBox></td>
+            <tr>
+                <td class="MyLable">Phone</td>
+                <td class="MyContent"><telerik:RadMaskedTextBox ID="tbPhone" runat="server" Mask="###########"
+                        EmptyMessage="-- Enter Phone Number --" HideOnBlur="true" ZeroPadNumericRanges="true" DisplayMask="###########">
+                    </telerik:RadMaskedTextBox>
+                   </td>
+            </tr>
         </table>
             </fieldset>
  
@@ -223,9 +211,12 @@
 
        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
+                <td class="MyLable">Name</td>
                 <td class="MyContent">
-                <uc1:VVTextBox runat="server" id="txtReceivingName" VVTLabel="Receiving Name" VVTDataKey='txtId'  />
+                    <telerik:RadTextBox id="tbReceivingName" runat="server" width="400"></telerik:RadTextBox>
                 </td>
+                <td class="MyLable"></td>
+                <td class="MyContent"></td>
             </tr>
         </table>
       <asp:UpdatePanel ID="UpdatePanel2" runat="server">
@@ -235,7 +226,7 @@
             <tr>
                 <td class="MyLable">Ben Account</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtBenAccount" runat="server" ></telerik:RadTextBox>
+                    <telerik:RadTextBox ID="txtBenAccount" runat="server" onTextChanged="txtBenAccount_TextChanged"  autoPostBack="true"></telerik:RadTextBox>
                 </td>
             </tr>
         </table>
@@ -261,7 +252,7 @@
             <tr>
                 <td class="MyLable">Bank Code</td>
                 <td class="MyContent">
-                    <telerik:RadComboBox ID="rcbBenCode"
+                    <telerik:RadComboBox ID="rcbBankCode"
                         MarkFirstMatch="True"
                         AllowCustomText="false"
                         runat="server" Width="400" >
@@ -287,15 +278,14 @@
                 </td>
                 <td class="MyContent"><telerik:RadDatePicker ID="txtIsssueDate" runat="server" Width="160"></telerik:RadDatePicker></td>
                 <td class="MyLable">Isssue Place
-                    </asp:RequiredFieldValidator>
-                </td>
+                   </td>
                 <td class="MyContent"><telerik:RadTextBox ID="txtIsssuePlace" runat="server" Width="160"></telerik:RadTextBox></td>
             </tr>
         </table>
 
      
       </fieldset>
-
+        <fieldset>
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Teller</td>
@@ -308,15 +298,29 @@
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Narrative</td>
-                <td class="MyContent" style="width:200px; ">
-                    <telerik:RadTextBox ID="txtNarrative" Width="200"
+                <td class="MyContent" style="width:400px; ">
+                    <telerik:RadTextBox ID="txtNarrative" Width="400"
                         runat="server"  />
                 </td>
-                <td><a class="add">
-                    <img src="Icons/Sigma/Add_16X16_Standard.png"></a></td>
+                <td class="MyLable"></td>
+                <td class="MyContent"></td>
             </tr>
-        </table>
-<hr />
+            <tr>
+                <td class="MyLable"></td>
+                <td class="MyContent" style="width:400px; ">
+                    <telerik:RadTextBox ID="txtNarrative2" Width="400"
+                        runat="server"  />
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable"></td>
+                <td class="MyContent" style="width:400px; ">
+                    <telerik:RadTextBox ID="txtNarrative3" Width="400"
+                        runat="server"  />
+                </td>
+            </tr>
+        </table> </fieldset>
+        <fieldset>
         <asp:UpdatePanel ID="UpdatePanel3" runat="server">
           <ContentTemplate>
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -368,107 +372,25 @@
 
               </ContentTemplate>
             </asp:UpdatePanel>
-
+            </fieldset>
 </div>
 </div>
 <asp:HiddenField ID="hdfDisable" runat="server" Value="1" />
-
+<div style="visibility:hidden;">
+    <asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" />
+</div>
+<telerik:RadCodeBlock id="codeBlock" runat="server">
 <script type="text/javascript">
-    $(document).ready(
-        function () {
-            $('a.add').live('click',
-                function () {
-                    $(this)
-                        .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                        .removeClass('add')
-                        .addClass('remove')
-                    ;
-                    $(this)
-                        .closest('tr')
-                        .clone()
-                        .appendTo($(this).closest('table'));
-                    $(this)
-                        .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                        .removeClass('remove')
-                        .addClass('add');
-                });
-            $('a.remove').live('click',
-                function () {
-                    $(this)
-                        .closest('tr')
-                        .remove();
-                });
-            $('input:text').each(
-                function () {
-                    var thisName = $(this).attr('name'),
-                        thisRrow = $(this)
-                                    .closest('tr')
-                                    .index();
-                    $(this).attr('name', 'row' + thisRow + thisName);
-                    $(this).attr('id', 'row' + thisRow + thisName);
-                });
+    $('#<%=txtId.ClientID%>').keyup(function (event) {
+        if (event.keyCode == 13) $("#<%=btSearch.ClientID%>").click();
+    })
+    //var lastClickedItem = null;
+    //var clickCalledAfterRadprompt = false;
+    //var clickCalledAfterRadconfirm = false;
 
-        });
-
-    function BenCom_OnClientSelectedIndexChanged() {
-        var CreditAccountElement = $find("<%= rcbBenCom.ClientID %>");
-        var lbCrAccountElement = $('#<%= lbBenCom.ClientID%>');
-        lbCrAccountElement.html("");
-        if (CreditAccountElement.get_value() != "") {
-            lbCrAccountElement.html("CHI NHANH DONG NAI");
-        }
-    }
-
-    function ValidatorUpdateIsValid() {
-        //var i;
-        //for (i = 0; i < Page_Validators.length; i++) {
-        //    if (!Page_Validators[i].isvalid) {
-        //        Page_IsValid = false;
-        //        return;
-        //    }
-        //}
-        var ProductID = $('#<%= rcbProductID.ClientID%>').val();
-        var Currency = $('#<%= rcbCurrency.ClientID%>').val();
-        var BenCom = $('#<%= rcbBenCom.ClientID%>').val();
-        var CreditAccount = $('#<%= rcbCreditAccount.ClientID%>').val();
-        var SendingName = $('#<%= txtSendingName.ClientID%>').val();
-        
-        Page_IsValid = ProductID != "" && Currency != "" && BenCom != "" && CreditAccount != "" && SendingName != "";
-    }
-
-    function OnClientButtonClicking(sender, args) {
-        var button = args.get_item();
-        if (button.get_commandName() == "Preview") {
-            window.location = "Default.aspx?tabid=158&ctl=chitiet&mid=842";
-            return;
-        }
-
-        return; //an khong cho hien cau thong bao
-        ValidatorUpdateIsValid();
-        if (Page_IsValid) {
-            $('#<%= hdfDisable.ClientID%>').val(1);
-
-            if (button.get_commandName() == "commit" && !clickCalledAfterRadconfirm) {
-                args.set_cancel(true);
-                lastClickedItem = args.get_item();
-                var isbool = radconfirm("Ch/exess Tt Amount Vnd 10000000", confirmCallbackFunction2);
-                if (isbool == false) { confirmcallfail(); }
-                return;
-            }
-
-            if (button.get_commandName() == "authorize" && !clickCalledAfterRadconfirm) {
-                radconfirm("Authorised Completed", confirmCallbackFunction2);
-            }
-        }
-    }
-
-    var lastClickedItem = null;
-    var clickCalledAfterRadprompt = false;
-    var clickCalledAfterRadconfirm = false;
-
-    function confirmCallbackFunction1(args) {
-        radconfirm("Unauthorised overdraft of USD on account 050001688331", confirmCallbackFunction2); //" + amtFCYDeposited + "
-    }
+    //function confirmCallbackFunction1(args) {
+    //    radconfirm("Unauthorised overdraft of USD on account 050001688331", confirmCallbackFunction2); //" + amtFCYDeposited + "
+    //}
    
     function confirmCallbackFunction2(args) {
         if (args) {
@@ -494,31 +416,21 @@
             var lcy = Amount * percent;
             AmountPaidElement.set_value(lcy);
         }
-    }
-
-    function ShowMessageCurrencyNotMath() {
-        radconfirm("Currency and Ben Com is not matched", confirmCallbackFunction2);
-    }
-
-    function OnCurrencyMatch(e) {
-        var currencyDepositedElement = $find("<%= rcbCurrency.ClientID %>");
-        var currencyDepositedValue = currencyDepositedElement.get_value();
-        var cashAccountElement = $find("<%= rcbBenCom.ClientID %>");
-        var cashAccountValue = cashAccountElement.get_value();
-        //if (currencyDepositedValue && cashAccountValue && (currencyDepositedValue != cashAccountValue)) {
-        //    ShowMessageCurrencyNotMath();
-        //    currencyDepositedElement.trackChanges();
-        //    currencyDepositedElement.get_items().getItem(0).select();
-        //    currencyDepositedElement.updateClientState();
-        //    currencyDepositedElement.commitChanges();
-
-        //    cashAccountElement.trackChanges();
-        //    cashAccountElement.get_items().getItem(0).select();
-        //    cashAccountElement.updateClientState();
-        //    cashAccountElement.commitChanges();
-        //    return false;
-        //}
-
-        return true;
+    
     }
   </script>
+    </telerik:RadCodeBlock>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" 
+    DefaultLoadingPanelID="AjaxLoadingPanel1" >
+    <AjaxSettings>
+
+        <telerik:AjaxSetting AjaxControlID="txtBenAccount">
+            <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="tbReceivingName" />
+                <telerik:AjaxUpdatedControl ControlID="txtIdentityCard" />
+                <telerik:AjaxUpdatedControl ControlID="txtIsssuePlace" /> 
+                <telerik:AjaxUpdatedControl ControlID="txtIsssueDate" />
+            </UpdatedControls>
+        </telerik:AjaxSetting> 
+</AjaxSettings>
+</telerik:RadAjaxManager>
