@@ -4,17 +4,22 @@
 <telerik:RadGrid runat="server" AutoGenerateColumns="False" ID="radGridReview" AllowPaging="True" OnNeedDataSource="radGridReview_OnNeedDataSource">
     <MasterTableView>
         <Columns>
-            <telerik:GridBoundColumn HeaderText="Reference No" DataField="ReferenceNo" HeaderStyle-Width="20%" />
-            <telerik:GridBoundColumn HeaderText="Sending Name" DataField="SendingName" HeaderStyle-Width="20%" />
-            <telerik:GridBoundColumn HeaderText="Receiving  Name" DataField="ReceivingName" HeaderStyle-Width="15%" />
-            <telerik:GridBoundColumn HeaderText="Amount" DataField="Amt" ItemStyle-HorizontalAlign="Right"  HeaderStyle-HorizontalAlign="right"  HeaderStyle-Width="200"/>
-            <telerik:GridBoundColumn HeaderText="Charge Amount" DataField="ChargeAmt" ItemStyle-HorizontalAlign="Right" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width=""/>
-           <%-- <telerik:GridBoundColumn HeaderText="Charge Vat Amt" DataField="ChargeVatAmt" ItemStyle-HorizontalAlign="Right"  HeaderStyle-Width="10%"/>--%>
-            <telerik:GridBoundColumn HeaderText="Status" DataField="Status"/>
+            <telerik:GridBoundColumn HeaderText="Reference No" DataField="ID" HeaderStyle-Width="100" />
+            <telerik:GridBoundColumn HeaderText="Product Name" DataField="ProductName" HeaderStyle-Width="150" />
+            <telerik:GridBoundColumn HeaderText="Sending Name" DataField="SendingName" HeaderStyle-Width="150" />
+            <telerik:GridBoundColumn HeaderText="Receiving  Name" DataField="ReceivingName" HeaderStyle-Width="150" />
+            <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" HeaderStyle-Width="90" ItemStyle-HorizontalAlign="center" HeaderStyle-HorizontalAlign="center" />
+            <telerik:GridBoundColumn HeaderText="Amount" DataField="DebitAmount" ItemStyle-HorizontalAlign="Right"  HeaderStyle-HorizontalAlign="right"  HeaderStyle-Width="120"
+                            dataType="System.Decimal" DataFormatString="{0:N}" />
+            <telerik:GridBoundColumn HeaderText="Charge Amount" DataField="ChargeAmtLCY" ItemStyle-HorizontalAlign="Right" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width="100"
+                           dataType="System.Decimal" DataFormatstring="{0:N}" />
+            <telerik:GridBoundColumn HeaderText="Charge Vat Amt" DataField="ChargeVATAmt" ItemStyle-HorizontalAlign="Right" 
+                 HeaderStyle-Width="100" DataType="System.Decimal"  DataFormatString="{0:N}" />
+            <telerik:GridBoundColumn HeaderText="Status" DataField="Status"  ItemStyle-HorizontalAlign="center" HeaderStyle-HorizontalAlign="center"/>
             <telerik:GridTemplateColumn>
                 <ItemStyle Width="25" />
                 <ItemTemplate>
-                    <a href='<%# geturlReview(Eval("LCCode").ToString()) %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" width="20" /> </a> 
+                    <a href='<%# geturlReview(Eval("ID").ToString()) %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" width="20" /> </a> 
                 </itemtemplate>
             </telerik:GridTemplateColumn>
         </Columns>
