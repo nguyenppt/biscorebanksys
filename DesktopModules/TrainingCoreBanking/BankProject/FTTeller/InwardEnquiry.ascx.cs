@@ -25,7 +25,7 @@ namespace BankProject.FTTeller
             {
                 if (IsPostBack)
                 {
-                    radGridReview.DataSource = TriTT.BINWARD_CASH_WITHDRAW_Enquiry("CashWithdraw",tbBOName.Text,tbFOName.Text,tbLegalID.Text,
+                    radGridReview.DataSource = TriTT.BINWARD_CASH_WITHDRAW_Enquiry(rcbTransactionType.SelectedValue, tbBOName.Text, tbFOName.Text, tbLegalID.Text,
                         tbID.Text, rcbCurrency.SelectedValue,tbFromAmt.Value.HasValue ? tbFromAmt.Value.Value : 0,
                         tbToAmt.Value.HasValue ? tbToAmt.Value.Value : 0);
                     radGridReview.DataBind();
@@ -48,8 +48,11 @@ namespace BankProject.FTTeller
                 case "CashWithdraw":
                     return "Default.aspx?tabid=171&RefID=" + ID + "&Status=" + Status;
                     break;
+                case "CreditAccount":
+                    return "Default.aspx?tabid=172&ID=" + ID + "&Status=" + Status;
+                    break;
                 default:
-                    return "Default.aspx?tabid=172&RefID=" + ID + "&Status=" + Status;
+                    return "";
                     break;
             }
             
