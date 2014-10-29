@@ -274,6 +274,348 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtPaymentRemarks2;
         
         /// <summary>
+        /// lblSenderReference_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSenderReference_MT103;
+        
+        /// <summary>
+        /// lblBankOperationCode_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBankOperationCode_MT103;
+        
+        /// <summary>
+        /// dteValueDate_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dteValueDate_MT103;
+        
+        /// <summary>
+        /// comboCurrency_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox comboCurrency_MT103;
+        
+        /// <summary>
+        /// lblInterBankSettleAmount_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInterBankSettleAmount_MT103;
+        
+        /// <summary>
+        /// lblInstancedAmount_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInstancedAmount_MT103;
+        
+        /// <summary>
+        /// comboOrderingCustAcc_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox comboOrderingCustAcc_MT103;
+        
+        /// <summary>
+        /// txtOrderingCustomer1_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtOrderingCustomer1_MT103;
+        
+        /// <summary>
+        /// txtOrderingCustomer2_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtOrderingCustomer2_MT103;
+        
+        /// <summary>
+        /// txtOrderingCustomer3_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtOrderingCustomer3_MT103;
+        
+        /// <summary>
+        /// txtOrderingCustomer4_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtOrderingCustomer4_MT103;
+        
+        /// <summary>
+        /// txtOrderingInstitution_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtOrderingInstitution_MT103;
+        
+        /// <summary>
+        /// lblSenderCorrespondent_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSenderCorrespondent_MT103;
+        
+        /// <summary>
+        /// txtReceiverCorrespondent_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtReceiverCorrespondent_MT103;
+        
+        /// <summary>
+        /// txtReceiverCorrBankAct_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtReceiverCorrBankAct_MT103;
+        
+        /// <summary>
+        /// comboIntermediaryType_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox comboIntermediaryType_MT103;
+        
+        /// <summary>
+        /// txtIntermediaryInstitutionNo_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtIntermediaryInstitutionNo_MT103;
+        
+        /// <summary>
+        /// lblIntermediaryInstitutionName_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIntermediaryInstitutionName_MT103;
+        
+        /// <summary>
+        /// lblIntermediaryInstitutionNoError_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIntermediaryInstitutionNoError_MT103;
+        
+        /// <summary>
+        /// txtIntermediaryInstruction1_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtIntermediaryInstruction1_MT103;
+        
+        /// <summary>
+        /// txtIntermediaryInstruction2_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtIntermediaryInstruction2_MT103;
+        
+        /// <summary>
+        /// txtIntermediaryBankAcct_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtIntermediaryBankAcct_MT103;
+        
+        /// <summary>
+        /// comboAccountType_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox comboAccountType_MT103;
+        
+        /// <summary>
+        /// txtAccountWithInstitutionNo_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtAccountWithInstitutionNo_MT103;
+        
+        /// <summary>
+        /// lblAccountWithInstitutionName_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAccountWithInstitutionName_MT103;
+        
+        /// <summary>
+        /// lblAccountWithInstitutionNoError_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAccountWithInstitutionNoError_MT103;
+        
+        /// <summary>
+        /// txtAccountWithBankAcct_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtAccountWithBankAcct_MT103;
+        
+        /// <summary>
+        /// txtAccountWithBankAcct2_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtAccountWithBankAcct2_MT103;
+        
+        /// <summary>
+        /// txtBeneficiaryCustomer1_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryCustomer1_MT103;
+        
+        /// <summary>
+        /// txtBeneficiaryCustomer2_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryCustomer2_MT103;
+        
+        /// <summary>
+        /// txtBeneficiaryCustomer3_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryCustomer3_MT103;
+        
+        /// <summary>
+        /// txtBeneficiaryCustomer4_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryCustomer4_MT103;
+        
+        /// <summary>
+        /// txtBeneficiaryCustomer5_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryCustomer5_MT103;
+        
+        /// <summary>
+        /// txtRemittanceInformation_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtRemittanceInformation_MT103;
+        
+        /// <summary>
+        /// comboDetailOfCharges_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox comboDetailOfCharges_MT103;
+        
+        /// <summary>
+        /// numSenderCharges_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox numSenderCharges_MT103;
+        
+        /// <summary>
+        /// lblReceiverCharges_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReceiverCharges_MT103;
+        
+        /// <summary>
+        /// txtSenderToReceiverInfo_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtSenderToReceiverInfo_MT103;
+        
+        /// <summary>
         /// lblTransactionReferenceNumber control.
         /// </summary>
         /// <remarks>
@@ -1577,6 +1919,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
+        
+        /// <summary>
+        /// btnMT103Report control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMT103Report;
         
         /// <summary>
         /// btnMT202Report control.
