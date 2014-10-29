@@ -73,20 +73,7 @@
                 <td class="MyLable"></td>
                 <td class="MyContent"></td>
             </tr>
-                <tr>
-                <td class="MyLable">Connected Bank:</td>
-                <td class="MyContent">
-                    <telerik:RadComboBox ID="rcbConnectedBank" 
-                        AppendDataBoundItems="true" 
-                        MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1">
-                        <Items>
-                            <telerik:RadComboBoxItem Value="" Text="" />
-                        </Items>
-                    </telerik:RadComboBox>
-                </td>
-                <td class="MyLable"></td>
-                <td class="MyContent"></td>
-            </tr>
+                
                 <tr>
                 <td class="MyLable">Ben Com:<span class="Required">(*)</span>
                      <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"  Display="None" ValidationGroup="Commit" 
@@ -99,9 +86,6 @@
                         MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1" >
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
-                            <telerik:RadComboBoxItem Value="VN0011231" Text="VN0011231 - CN Tân Bình" />
-                            <telerik:RadComboBoxItem Value="VN0021342" Text="VN0021342 - CN Đồng Nai" />
-                            <telerik:RadComboBoxItem Value="VN0043123" Text="VN0043123 - CN Tiền Giang" />
                         </Items>
                     </telerik:RadComboBox>
                 </td>
@@ -118,11 +102,6 @@
                         MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1">
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
-                            <%--<telerik:RadComboBoxItem Value="EUR" Text="EUR" />
-                            <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
-                            <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
-                            <telerik:RadComboBoxItem Value="USD" Text="USD" />
-                            <telerik:RadComboBoxItem Value="VND" Text="VND" />--%>
                         </Items>
                     </telerik:RadComboBox>
                 </td>
@@ -134,7 +113,7 @@
                          <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"  Display="None" ValidationGroup="Commit" 
                          ControlToValidate="rcbDebitAccount"
                          InitialValue="" ForeColor="Red" ErrorMessage="Debit Account is required" /></td>
-                    <td class="MyContent" width="350" >
+                    <td class="MyContent" width="400" >
                          <telerik:RadComboBox ID="rcbDebitAccount"
                             MarkFirstMatch="True" width="350"
                             AllowCustomText="false"
@@ -144,7 +123,7 @@
                               </Items>
                               </telerik:RadComboBox>
                     </td>
-                    <td class="MyLable"><a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png"/></a>  </td>
+                    <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
             </table>
@@ -167,15 +146,16 @@
                 <td class="MyContent">
                     <telerik:RadTextBox id="tbSendingName" runat="server" ValidationGroup="Group1"  width="400"/>
                 </td>
-                <td class="MyLable"> <a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png"/></a></td>
+                <td class="MyLable"> </td>
                 <td class="MyContent"></td>
             </tr>
+                <tr>
+                    <td class="MyLable">Sending Address</td>
+                    <td class="MyContent">
+                        <telerik:radTextBox id="tbSendingAddress" runat="server" width="400" />
+                    </td>
+                </tr>
                 </table>
-          <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-             <ContentTemplate>
-                       <uc1:VVTextBox runat="server" id="tbSendingAddress" VVTLabel="Sending Address:" VVTDataKey='tbID'  />
-                 </ContentTemplate>
-              </asp:UpdatePanel>
             <table width="100%" cellpadding="0" cellspacing="0">
              <tr>
                 <td class="MyLable">ID/Tax Code:</td>
@@ -186,29 +166,49 @@
                 <td class="MyLable"></td>
                 <td class="MyContent"></td>
             </tr>
+                <tr style="visibility:hidden;">
+                <td class="MyLable">Connected Bank:</td>
+                <td class="MyContent">
+                    <telerik:RadComboBox ID="rcbConnectedBank" 
+                        AppendDataBoundItems="true" 
+                        MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1">
+                        <Items>
+                            <telerik:RadComboBoxItem Value="" Text="" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </td>
+                <td class="MyLable"></td>
+                <td class="MyContent"></td>
+            </tr>
            </table>
         </fieldset>
         <fieldset>
-            <legend style="text-transform:uppercase; font-weight:bold;">BENIFICIARY Information</legend>
+            <legend style="text-transform:uppercase; font-weight:bold;">BENEFICIARY Information</legend>
              <table width="100%" cellpadding="0" cellspacing="0">
              <tr>
-                <%-- <td class="MyContent" width="150">
-                 <uc1:VVTextBox runat="server" id="tbReceivingName" VVTLabel="Receiving Name" VVTDataKey='tbID' />
-               </td>--%>
                 <td class="MyLable">Receiving Name:<span class="Required">(*)</span>
                    <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server"  Display="None" ValidationGroup="Commit" 
                      ControlToValidate="tbReceivingName"
                      InitialValue="" ForeColor="Red" ErrorMessage="Receiving Name is required" />
                 </td>
-                <td class="MyContent" width="350">
+                <td class="MyContent" width="400">
                     <telerik:RadTextBox                                     
                                     ID="tbReceivingName" runat="server"
-                                     width="350">
+                                     width="400">
                                 </telerik:RadTextBox>
                 </td>
-                <td class="MyLable"> <a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png"/></a></td>
+                <td class="MyLable"></td>
                 <td class="MyContent"></td>
-                    
+            </tr>
+                 <tr>
+                <td class="MyLable">
+                </td>
+                <td class="MyContent" width="400">
+                    <telerik:RadTextBox                                     
+                                    ID="tbReceivingName2" runat="server"
+                                     width="400">
+                                </telerik:RadTextBox>
+                </td>
             </tr>
                  </table>
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -216,7 +216,7 @@
                 <td class="MyLable">Ben Account:
                     </td>
                 <td class="MyContent" width="400">
-                    <telerik:RadTextBox id="tbBenAccount" runat="Server"  />
+                    <telerik:radtextbox runat="server" id="tbBenAccount" OnTextChanged="Load_BenAccount" AutoPostBack="true"></telerik:radtextbox>
                 </td>
                 <td class="MyLable"></td>
                 <td class="MyContent"></td>
@@ -225,8 +225,7 @@
                 <td class="MyLable">ID Card:
                 </td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox id="tbIDCard" runat="server" NumberFormat-DecimalDigits="0"
-                    NumberFormat-GroupSeparator="" />
+                    <telerik:radtextbox runat="server" id="tbIDCard"></telerik:radtextbox>
                 </td>
                 <td class="MyLable"></td>
                 <td class="MyContent"></td>
@@ -255,6 +254,12 @@
                      
                     </telerik:RadComboBox>
                 </td>
+                    <td class="MyLable">Phone</td>
+                    <td class="MyContent">
+                        <telerik:RadMaskedTextBox ID="tbPhone" runat="server" Mask="###########"
+                        EmptyMessage="-- Enter Phone Number --" HideOnBlur="true" ZeroPadNumericRanges="true" DisplayMask="###########">
+                    </telerik:RadMaskedTextBox>
+                    </td>
             </tr>
                 <tr>
                 <td class="MyLable">Bank Code:</td>
@@ -267,7 +272,7 @@
                                     <CollapseAnimation Type="None" /> 
                                 </telerik:RadComboBox>
                 </td>
-                <td class="MyLable"> <a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png"/></a></td>
+                <td class="MyLable"> </td>
                 <td class="MyContent"></td>
             </tr>
                 </table>
@@ -277,7 +282,7 @@
                 <td class="MyContent" width="400" >
                     <telerik:RadTextBox id="tbBankName" runat="server" ValidationGroup="Group1" width="400" />
                 </td>
-                <td class="MyLable"> <a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png"/></a></td>
+                <td class="MyLable"> </td>
                 <td class="MyContent"></td>
             </tr>
                  </table>
@@ -315,10 +320,13 @@
                 <td class="MyContent">
                     <telerik:RadTextBox id="tbNarrative" runat="server" validationGroup="Group1" width="400"/>
                 </td>
-                <td class="MyLable"> <a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png"/></a></td>
-                <td class="MyContent"></td>
             </tr>
-               
+             <tr>
+                <td class="MyLable">     </td>
+                <td class="MyContent">
+                    <telerik:RadTextBox id="tbNarrative2" runat="server" validationGroup="Group1" width="400"/>
+                </td>
+            </tr>  
                 </table>
           
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -485,41 +493,6 @@
         return true;
     }
 
-
-    $(document).ready(
-  function () {
-      $('a.add').live('click',
-          function () {
-              $(this)
-                  .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                  .removeClass('add')
-                  .addClass('remove');
-              $(this)
-                  .closest('tr')
-                  .clone()
-                  .appendTo($(this).closest('table'));
-              $(this)
-                  .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                  .removeClass('remove')
-                  .addClass('add');
-          });
-      $('a.remove').live('click',
-          function () {
-              $(this)
-                  .closest('tr')
-                  .remove();
-          });
-      $('input:text').each(
-          function () {
-              var thisName = $(this).attr('name'),
-                  thisRrow = $(this)
-                              .closest('tr')
-                              .index();
-              $(this).attr('name', 'row' + thisRow + thisName);
-              $(this).attr('id', 'row' + thisRow + thisName);
-          });
-
-  });
     </script>
 </telerik:radcodeblock>
 
@@ -559,6 +532,15 @@
         <telerik:AjaxSetting AjaxControlID="rcbProvince">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="rcbBankCode" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbBenAccount">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbReceivingName" />
+                <telerik:AjaxUpdatedControl ControlID="tbIDCard" />
+                <telerik:AjaxUpdatedControl ControlID="tbIssuePlace" />
+                <telerik:AjaxUpdatedControl ControlID="rdpIssueDate" />
+                <telerik:AjaxUpdatedControl ControlID="tbPhone" />
             </UpdatedControls>
         </telerik:AjaxSetting> 
     </AjaxSettings>
