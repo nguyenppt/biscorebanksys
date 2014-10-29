@@ -16,5 +16,9 @@ namespace BankProject.Model
         public DbSet<BEXPORT_DOCUMENTPROCESSING> BEXPORT_DOCUMENTPROCESSINGs { get; set; }
         public DbSet<BEXPORT_DOCUMENTPROCESSINGCHARGE> BEXPORT_DOCUMENTPROCESSINGCHARGEs { get; set; }
         public DbSet<B_AddConfirmInfo> B_AddConfirmInfos { get; set; }
+        public DbSet<B_ExportLCPayment> B_ExportLCPayments { get; set; }
+        public DbSet<B_ExportLCPaymentCharge> B_ExportLCPaymentCharges { get; set; }
+        public DbSet<B_ExportLCPaymentMT202> B_ExportLCPaymentMT202s { get; set; }
+        public DbSet<B_ExportLCPaymentMT756> B_ExportLCPaymentMT756s { get; set; }
     }
 }
