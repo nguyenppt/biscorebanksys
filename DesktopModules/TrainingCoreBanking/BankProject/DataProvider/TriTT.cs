@@ -750,15 +750,15 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("OUT_TRANS_BY_CASH_Load_Preview", ID);
         }
-        public static void OUT_TRANS_BY_CASH_Update_Status(string Status, string ID)
+        public static DataSet OUT_TRANS_BY_CASH_Update_Status(string Status, string ID, string AccountCode, double Amount, string Currency)
         {
-            sqldata.ndkExecuteNonQuery("OUT_TRANS_BY_CASH_Update_Status", Status, ID);
+            return sqldata.ndkExecuteDataset("OUT_TRANS_BY_CASH_Update_Status", Status, ID, AccountCode, Amount, Currency);
         }
         public static DataSet OUT_TRANS_BY_CASH_Enquiry(string ProductID, string SendingName, string LegalID, string ReceivingName, string BenAccount, string RefID
-            , string BenCom, string Currency, double FromAmt, double ToAmt)
+            , string BenCom, string Currency, double FromAmt, double ToAmt, string transactionType)
         {
             return sqldata.ndkExecuteDataset("OUT_TRANS_BY_CASH_Enquiry", ProductID, SendingName, LegalID, ReceivingName, BenAccount, RefID, BenCom, Currency
-                , FromAmt, ToAmt);
+                , FromAmt, ToAmt,transactionType);
         }
         #endregion
         #region INWARD CASH WITHDRAW
@@ -848,6 +848,35 @@ namespace BankProject.DataProvider
         public static DataSet BOUTWARD_TRANS_BY_ACCT_Load_Detail_Data(string ID)
         {
             return sqldata.ndkExecuteDataset("BOUTWARD_TRANS_BY_ACCT_Load_Detail_Data", ID);
+        }
+        public static DataSet BOUTWARD_TRANS_BY_ACCT_Update_Status(string ID, string Status, string DebitAcctID, double Amount, double ChargeAmt, double ChargeVATAmt)
+        {
+            return sqldata.ndkExecuteDataset("BOUTWARD_TRANS_BY_ACCT_Update_Status", ID, Status, DebitAcctID, Amount, ChargeAmt, ChargeVATAmt);
+        }
+        public static string BOUTWARD_TRANS_BY_ACCT_Load_Status(string ID)
+        {
+            return sqldata.ndkExecuteDataset("BOUTWARD_TRANS_BY_ACCT_Load_Status", ID).Tables[0].Rows[0]["Status"].ToString();
+        }
+        #endregion
+        #region INWARD  PROCESS CREDIT ACCOUNT
+        public static DataSet BINWARD_PROC_CRE_ACCT_Load_ClearingID()
+        {
+            return sqldata.ndkExecuteDataset("BINWARD_PROC_CRE_ACCT_Load_ClearingID");
+        }
+        public static DataSet BINWARD_PROC_CRE_ACCT_Load_Detail_ID(string ID)
+        {
+            return sqldata.ndkExecuteDataset("BINWARD_PROC_CRE_ACCT_Load_Detail_ID", ID);
+        }
+        public static void BINWARD_PROC_CRE_ACCT_Insert(string ID, string Status, string ClearingID, string DebitCurrency, string DebitAccount, double DebitAmtLCY
+      , double DebitAmtFCY, double DealRate, double TempAmt, string BOName, string CreditCurrency, string CreditAcctID, string CreditAcctName, double CreditAmtLCY
+      , double CreditAmtFCY, string FOName, string FOName2, string LegalID, DateTime? IssueDate, string Telephone, string IssuePlace, string Narrative, string Narrative2)
+        {
+            sqldata.ndkExecuteNonQuery("BINWARD_PROC_CRE_ACCT_Insert", ID, Status, ClearingID, DebitCurrency, DebitAccount, DebitAmtLCY, DebitAmtFCY, DealRate, TempAmt
+      , BOName, CreditCurrency, CreditAcctID, CreditAcctName, CreditAmtLCY, CreditAmtFCY, FOName, FOName2, LegalID, IssueDate, Telephone, IssuePlace, Narrative, Narrative2);
+        }
+        public static DataSet BINWARD_PROC_CRE_ACCT_Preview_List()
+        {
+            return sqldata.ndkExecuteDataset("BINWARD_PROC_CRE_ACCT_Preview_List");
         }
         #endregion
 
