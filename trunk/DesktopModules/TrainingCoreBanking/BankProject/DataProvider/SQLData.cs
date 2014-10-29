@@ -2482,5 +2482,88 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_BFOREIGNEXCHANGE_Report", code, username);
         }
+
+        public static DataSet B_BINCOMINGCOLLECTIONPAYMENTMT103_Report(string code)
+        {
+            return sqldata.ndkExecuteDataset("B_BINCOMINGCOLLECTIONPAYMENTMT103_Report", code);
+        }
+
+        public static void B_BINCOMINGCOLLECTIONPAYMENTMT103_Insert(string CollectionPaymentCode
+                                                           , string PendingMT
+                                                           , string SenderReference
+                                                           , string TimeIndication
+                                                           , string BankOperationCode
+                                                           , string InstructionCode
+                                                           , string ValueDate
+                                                           , string Currency
+                                                           , double? InterBankSettleAmount
+                                                           , double? InstancedAmount
+                                                           , string OrderingCustAcc
+                                                           , string OrderingInstitution
+                                                           , string SenderCorrespondent
+                                                           , string ReceiverCorrespondent
+                                                           , string ReceiverCorrBankAct
+                                                           , string IntermediaryInstruction
+                                                           , string IntermediaryBankAcct
+                                                           , string AccountWithInstitution
+                                                           , string AccountWithBankAcct
+                                                           , string RemittanceInformation
+                                                           , string DetailOfCharges
+                                                           , double? SenderCharges
+                                                           , double? ReceiverCharges
+                                                           , string SenderToReceiveInfo
+                                                           , string curentUserId
+                                                           , string BeneficiaryCustomer1
+                                                           , string BeneficiaryCustomer2
+                                                           , string BeneficiaryCustomer3
+                                                           , string AccountType
+                                                           , string AccountWithBankAcct2
+                                                           , string BeneficiaryCustomer4
+                                                           , string BeneficiaryCustomer5
+                                                           , string IntermediaryType
+                                                           , string IntermediaryInstruction1
+                                                           , string IntermediaryInstruction2
+            , string OrderingCustAccName, string OrderingCustAccAddr1, string OrderingCustAccAddr2, string OrderingCustAccAddr3)
+        {
+            sqldata.ndkExecuteNonQuery("B_BINCOMINGCOLLECTIONPAYMENTMT103_Insert", CollectionPaymentCode
+                                       , PendingMT
+                                       , SenderReference
+                                       , TimeIndication
+                                       , BankOperationCode
+                                       , InstructionCode
+                                       , ValueDate
+                                       , Currency
+                                       , InterBankSettleAmount
+                                       , InstancedAmount
+                                       , OrderingCustAcc
+                                       , OrderingInstitution
+                                       , SenderCorrespondent
+                                       , ReceiverCorrespondent
+                                       , ReceiverCorrBankAct
+                                       , IntermediaryInstruction
+                                       , IntermediaryBankAcct
+                                       , AccountWithInstitution
+                                       , AccountWithBankAcct
+                                       , RemittanceInformation
+                                       , DetailOfCharges
+                                       , SenderCharges
+                                       , ReceiverCharges
+                                       , SenderToReceiveInfo
+                                       , curentUserId
+                                       , BeneficiaryCustomer1
+                                       , BeneficiaryCustomer2
+                                       , BeneficiaryCustomer3
+                                       , AccountType
+                                       , AccountWithBankAcct2
+                                       , BeneficiaryCustomer4
+                                       , BeneficiaryCustomer5
+                                       , IntermediaryType
+                                       , IntermediaryInstruction1
+                                       , IntermediaryInstruction2
+                                       , OrderingCustAccName
+                                       , OrderingCustAccAddr1
+                                       , OrderingCustAccAddr2
+                                       , OrderingCustAccAddr3);
+        }
     }
 }
