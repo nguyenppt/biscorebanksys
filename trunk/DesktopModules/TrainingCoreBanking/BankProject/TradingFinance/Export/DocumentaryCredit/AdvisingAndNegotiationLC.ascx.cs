@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Data.Objects;
 using BankProject.Helper;
 using BankProject.Model;
+using System.Globalization;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
@@ -493,6 +494,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void InitToolBarForRegister()
         {
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btCommitData").Enabled =false;
             if (_exportDoc != null)
             {
                 if (Disable) // Authorizing
@@ -542,10 +545,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void SetDisableByReview(bool flag)
         {
             BankProject.Controls.Commont.SetTatusFormControls(this.Controls, flag);
-            if (Request.QueryString["IsDisable"] != null)
-                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-            else
-                RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            //if (Request.QueryString["IsDisable"] != null)
+            //    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+            //else
+            //    RadToolBar1.FindItemByValue("btPrint").Enabled = false;
         }
 
         protected bool LoadData()
@@ -557,6 +560,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 var dt = entContext.BAdvisingAndNegotiationLCs.Where(dr => dr.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
                 if (dt != null)
                 {
+                    //
+                    txtCustomerName.Value = dt.BeneficiaryName;
                     //
                     _exportDoc = dt;
                     txtRevivingBank700.Text = dt.ReceivingBank;
@@ -843,6 +848,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                     return false;
                                 }
                                 //
+                                txtCustomerName.Value = BM.BeneficiaryName;
                                 txtRevivingBank700.Text = BMT700.ReceivingBank;
                                 tbBaquenceOfTotal.Text = BMT700.SequenceOfTotal;
                                 comboFormOfDocumentaryCredit.SelectedValue = BMT700.FormDocumentaryCredit ?? "";
@@ -974,52 +980,75 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     }
                     else {
                         lblError.Text = "This LC can not find.";
+                        txtCustomerName.Value = "";
                     }
                 }
             }
             //load tab charge
-            var dsCharge = entContext.BAdvisingAndNegotiationLCCharges.Where(dr => dr.DocCollectCode == tbEssurLCCode.Text).FirstOrDefault();
-            if (dsCharge != null)
+            var dsCharge = entContext.BAdvisingAndNegotiationLCCharges.Where(dr => dr.DocCollectCode == tbEssurLCCode.Text).ToList();
+            if (dsCharge.Count > 0)
             {
-                tbChargeRemarks.Text = dsCharge.ChargeRemarks;
-                tbVatNo.Text = dsCharge.VATNo;
-                //tbChargeCode.SelectedValue = dsCharge.Chargecode??"";
-                rcbChargeCcy.SelectedValue = dsCharge.ChargeCcy??"";
-                if (dsCharge.ChargeCcy != null && dsCharge.ChargeCcy.Count() > 0)
+                foreach (var item in dsCharge)
                 {
-                    LoadChargeAcct(ref rcbChargeAcct);
-                    LoadChargeAcct(ref rcbChargeAcct2);
-                    LoadChargeAcct(ref rcbChargeAcct3);
+                    tbChargeRemarks.Text = item.ChargeRemarks;
+                    tbVatNo.Text = item.VATNo;
+                    //tbChargeCode.SelectedValue = dsCharge.Chargecode??"";
+                    if (item.Chargecode == "ELC.ADVISE")
+                    {
+                        rcbChargeCcy.SelectedValue = item.ChargeCcy ?? "";
+                        if (item.ChargeCcy != null && item.ChargeCcy.Count() > 0)
+                        {
+                            bc.Commont.initRadComboBox(ref rcbChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, item.ChargeCcy));
+                            //LoadChargeAcct(ref rcbChargeAcct2);
+                            //LoadChargeAcct(ref rcbChargeAcct3);
+                        }
+                        comboWaiveCharges.SelectedValue = item.WaiveCharges ?? "";
+                        rcbChargeAcct.SelectedValue = item.ChargeAcct ?? "";
+                        tbChargeAmt.Text = item.ChargeAmt.ToString();
+                        rcbPartyCharged.SelectedValue = item.PartyCharged ?? "";
+                        rcbOmortCharge.SelectedValue = item.OmortCharges ?? "";
+                        rcbChargeStatus.SelectedValue = item.ChargeStatus ?? "";
+                        lblChargeStatus.Text = item.ChargeStatus;
+                        lblTaxCode.Text = item.TaxCode;
+                        lblTaxAmt.Text = item.TaxAmt;
+                    }
+                    //
+                    if (item.Chargecode == "ELC.CONFIRM")
+                    {
+                        //tbChargeCode2.SelectedValue = dsCharge.Chargecode??"";
+                        rcbChargeCcy2.SelectedValue = item.ChargeCcy ?? "";
+                        if (item.ChargeCcy != null && item.ChargeCcy.Count() > 0)
+                        {
+                            //LoadChargeAcct(ref rcbChargeAcct);
+                            bc.Commont.initRadComboBox(ref rcbChargeAcct2, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, item.ChargeCcy));
+                        }
+                        rcbChargeAcct2.SelectedValue = item.ChargeAcct;
+                        tbChargeAmt2.Text = item.ChargeAmt.ToString();
+                        rcbPartyCharged2.SelectedValue = item.PartyCharged ?? "";
+                        rcbOmortCharge2.SelectedValue = item.OmortCharges ?? "";
+                        rcbChargeStatus2.SelectedValue = item.ChargeStatus ?? "";
+                        lblTaxCode2.Text = item.TaxCode;
+                        lblTaxAmt2.Text = item.TaxAmt;
+                    }
+                    //
+                    if (item.Chargecode == "ELC.OTHER")
+                    {
+                        //tbChargeCode3.SelectedValue = dsCharge.Chargecode??"";
+                        rcbChargeCcy3.SelectedValue = item.ChargeCcy ?? "";
+                        if (item.ChargeCcy != null && item.ChargeCcy.Count() > 0)
+                        {
+                            //LoadChargeAcct(ref rcbChargeAcct);
+                            bc.Commont.initRadComboBox(ref rcbChargeAcct3, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, item.ChargeCcy));
+                        }
+                        rcbChargeAcct3.SelectedValue = item.ChargeAcct ?? "";
+                        tbChargeAmt3.Text = item.ChargeAmt.ToString();
+                        rcbPartyCharged3.SelectedValue = item.PartyCharged ?? "";
+                        rcbOmortCharge3.SelectedValue = item.OmortCharges ?? "";
+                        rcbChargeStatus3.SelectedValue = item.ChargeStatus ?? "";
+                        lblTaxCode3.Text = item.TaxCode;
+                        lblTaxAmt3.Text = item.TaxAmt;
+                    }
                 }
-                comboWaiveCharges.SelectedValue = dsCharge.WaiveCharges??"";
-                rcbChargeAcct.SelectedValue = dsCharge.ChargeAcct??"";
-                tbChargeAmt.Text = dsCharge.ChargeAmt.ToString();
-                rcbPartyCharged.SelectedValue = dsCharge.PartyCharged??"";
-                rcbOmortCharge.SelectedValue = dsCharge.OmortCharges??"";
-                rcbChargeStatus.SelectedValue = dsCharge.ChargeStatus??"";
-                lblChargeStatus.Text = dsCharge.ChargeStatus;
-                lblTaxCode.Text = dsCharge.TaxCode;
-                lblTaxAmt.Text = dsCharge.TaxAmt;
-                //
-                //tbChargeCode2.SelectedValue = dsCharge.Chargecode??"";
-                rcbChargeCcy2.SelectedValue = dsCharge.ChargeCcy??"";
-                rcbChargeAcct2.SelectedValue = dsCharge.ChargeAcct;
-                tbChargeAmt2.Text = dsCharge.ChargeAmt.ToString();
-                rcbPartyCharged2.SelectedValue = dsCharge.PartyCharged??"";
-                rcbOmortCharge2.SelectedValue = dsCharge.OmortCharges??"";
-                rcbChargeStatus2.SelectedValue = dsCharge.ChargeStatus??"";
-                lblTaxCode2.Text = dsCharge.TaxCode;
-                lblTaxAmt2.Text = dsCharge.TaxAmt;
-                //
-                //tbChargeCode3.SelectedValue = dsCharge.Chargecode??"";
-                rcbChargeCcy3.SelectedValue = dsCharge.ChargeCcy??"";
-                rcbChargeAcct3.SelectedValue = dsCharge.ChargeAcct??"";
-                tbChargeAmt3.Text = dsCharge.ChargeAmt.ToString();
-                rcbPartyCharged3.SelectedValue = dsCharge.PartyCharged??"";
-                rcbOmortCharge3.SelectedValue = dsCharge.OmortCharges??"";
-                rcbChargeStatus3.SelectedValue = dsCharge.ChargeStatus??"";
-                lblTaxCode3.Text = dsCharge.TaxCode;
-                lblTaxAmt3.Text = dsCharge.TaxAmt;
             }
             else
             {
@@ -1388,19 +1417,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void LoadChargeAcct(ref RadComboBox cboChargeAcct)
         {
-            var obj = entContext.BDRFROMACCOUNTs.Where(x => x.CustomerID == txtBeneficiaryNo700.Text && x.Currency == "USD").FirstOrDefault();
-            DataTable tbl1 = new DataTable();
-            tbl1.Columns.Add("Id");
-            tbl1.Columns.Add("Name");
-            tbl1.Rows.Add(obj.Id, obj.Name);
-
-            cboChargeAcct.Items.Clear();
-
-            DataSet datasource = new DataSet();//Tab1
-            datasource.Tables.Add(tbl1);
-            bc.Commont.initRadComboBox(ref cboChargeAcct, "Id", "Id",datasource);
-            
-
+            bc.Commont.initRadComboBox(ref rcbChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, rcbChargeCcy.SelectedValue));
+            bc.Commont.initRadComboBox(ref rcbChargeAcct2, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, rcbChargeCcy2.SelectedValue));
+            bc.Commont.initRadComboBox(ref rcbChargeAcct3, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, rcbChargeCcy3.SelectedValue));
         }
         protected void SetRelation_AvailableWithType()
         {
@@ -1686,14 +1705,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
                 entContext.SaveChanges();
                 //save Charge
-                if (entContext.BAdvisingAndNegotiationLCCharges.Where(dr => dr.DocCollectCode == tbEssurLCCode.Text).FirstOrDefault() == null)
+                var lstcharge = entContext.BAdvisingAndNegotiationLCCharges.Where(dr => dr.DocCollectCode == tbEssurLCCode.Text).ToList();
+                if (lstcharge.Count==0)
                 {
+                    //tab charge 1
                     var txtChargeAmt = 0;
                     if (tbChargeAmt.Text != "")
                     {
                         txtChargeAmt = Int32.Parse(tbChargeAmt.Text);
                     }
-                    var objCharge = new BAdvisingAndNegotiationLCCharge
+                    var receivecharge = new BAdvisingAndNegotiationLCCharge
                     {
                         DocCollectCode = tbEssurLCCode.Text,
                         WaiveCharges = comboWaiveCharges.SelectedValue,
@@ -1709,7 +1730,56 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         TaxCode = lblTaxCode.Text,
                         TaxAmt = lblTaxAmt.Text
                     };
-                    entContext.BAdvisingAndNegotiationLCCharges.Add(objCharge);
+                    entContext.BAdvisingAndNegotiationLCCharges.Add(receivecharge);
+                    entContext.SaveChanges();
+                    //tab charge 2
+                    var txtChargeAmt2 = 0;
+                    if (tbChargeAmt2.Text != "")
+                    {
+                        txtChargeAmt2 = Int32.Parse(tbChargeAmt2.Text);
+                    }
+                    var courier = new BAdvisingAndNegotiationLCCharge
+                    {
+                        DocCollectCode = tbEssurLCCode.Text,
+                        WaiveCharges = comboWaiveCharges.SelectedValue,
+                        Chargecode = tbChargeCode2.SelectedValue,
+                        ChargeAcct = rcbChargeAcct2.SelectedValue,
+                        ChargeCcy = rcbChargeCcy2.SelectedValue,
+                        ChargeAmt = txtChargeAmt2,
+                        PartyCharged = rcbPartyCharged2.SelectedValue,
+                        OmortCharges = rcbOmortCharge2.SelectedValue,
+                        ChargeStatus = rcbChargeStatus2.SelectedValue,
+                        ChargeRemarks = tbChargeRemarks.Text,
+                        VATNo = tbVatNo.Text,
+                        TaxCode = lblTaxCode2.Text,
+                        TaxAmt = lblTaxAmt2.Text
+                    };
+                    entContext.BAdvisingAndNegotiationLCCharges.Add(courier);
+                    entContext.SaveChanges();
+                    //tab charge 2
+                    var txtChargeAmt3 = 0;
+                    if (tbChargeAmt3.Text != "")
+                    {
+                        txtChargeAmt3 = Int32.Parse(tbChargeAmt3.Text);
+                    }
+                    var other = new BAdvisingAndNegotiationLCCharge
+                    {
+                        DocCollectCode = tbEssurLCCode.Text,
+                        WaiveCharges = comboWaiveCharges.SelectedValue,
+                        Chargecode = tbChargeCode3.SelectedValue,
+                        ChargeAcct = rcbChargeAcct3.SelectedValue,
+                        ChargeCcy = rcbChargeCcy3.SelectedValue,
+                        ChargeAmt = txtChargeAmt3,
+                        PartyCharged = rcbPartyCharged3.SelectedValue,
+                        OmortCharges = rcbOmortCharge3.SelectedValue,
+                        ChargeStatus = rcbChargeStatus3.SelectedValue,
+                        ChargeRemarks = tbChargeRemarks.Text,
+                        VATNo = tbVatNo.Text,
+                        TaxCode = lblTaxCode3.Text,
+                        TaxAmt = lblTaxAmt3.Text
+                    };
+                    entContext.BAdvisingAndNegotiationLCCharges.Add(other);
+                    entContext.SaveChanges();
                 }
                 else
                 {
@@ -1718,20 +1788,65 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         txtChargeAmt = Int32.Parse(tbChargeAmt.Text);
                     }
-                    var itCharge = entContext.BAdvisingAndNegotiationLCCharges.Where(dr => dr.DocCollectCode == tbEssurLCCode.Text).FirstOrDefault();
-                    itCharge.DocCollectCode = tbEssurLCCode.Text;
-                    itCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
-                    itCharge.Chargecode = tbChargeCode.SelectedValue;
-                    itCharge.ChargeAcct = rcbChargeAcct.SelectedValue;
-                    itCharge.ChargeCcy = rcbChargeCcy.SelectedValue;
-                    itCharge.ChargeAmt = txtChargeAmt;
-                    itCharge.PartyCharged = rcbPartyCharged.SelectedValue;
-                    itCharge.OmortCharges = rcbOmortCharge.SelectedValue;
-                    itCharge.ChargeStatus = rcbChargeStatus.SelectedValue;
-                    itCharge.ChargeRemarks = tbChargeRemarks.Text;
-                    itCharge.VATNo = tbVatNo.Text;
-                    itCharge.TaxCode = lblTaxCode.Text;
-                    itCharge.TaxAmt = lblTaxAmt.Text;
+                    var txtChargeAmt2 = 0;
+                    if (tbChargeAmt2.Text != "")
+                    {
+                        txtChargeAmt2 = Int32.Parse(tbChargeAmt2.Text);
+                    }
+                    var txtChargeAmt3 = 0;
+                    if (tbChargeAmt3.Text != "")
+                    {
+                        txtChargeAmt3 = Int32.Parse(tbChargeAmt3.Text);
+                    }
+                    foreach (var item in lstcharge)
+                    {
+                        if (item.Chargecode == "ELC.ADVISE")
+                        {
+                           item.WaiveCharges = comboWaiveCharges.SelectedValue;
+                           item.ChargeAcct = rcbChargeAcct.SelectedValue;
+                           item.ChargeCcy = rcbChargeCcy.SelectedValue;
+                           item.ChargeAmt = txtChargeAmt;
+                           item.PartyCharged = rcbPartyCharged.SelectedValue;
+                           item.OmortCharges = rcbOmortCharge.SelectedValue;
+                           item.ChargeStatus = rcbChargeStatus.SelectedValue;
+                           item.ChargeRemarks = tbChargeRemarks.Text;
+                           item.VATNo = tbVatNo.Text;
+                           item.TaxCode = lblTaxCode.Text;
+                           item.TaxAmt = lblTaxAmt.Text;
+                           entContext.SaveChanges();
+                        }
+                        else if (item.Chargecode == "ELC.CONFIRM")
+                        {
+                            item.WaiveCharges = comboWaiveCharges.SelectedValue;
+                            item.ChargeAcct = rcbChargeAcct2.SelectedValue;
+                            item.ChargeCcy = rcbChargeCcy2.SelectedValue;
+                            item.ChargeAmt = txtChargeAmt2;
+                            item.PartyCharged = rcbPartyCharged2.SelectedValue;
+                            item.OmortCharges = rcbOmortCharge2.SelectedValue;
+                            item.ChargeStatus = rcbChargeStatus2.SelectedValue;
+                            item.ChargeRemarks = tbChargeRemarks.Text;
+                            item.VATNo = tbVatNo.Text;
+                            item.TaxCode = lblTaxCode2.Text;
+                            item.TaxAmt = lblTaxAmt2.Text;
+                            entContext.SaveChanges();
+                        }
+                        else if (item.Chargecode == "ELC.OTHER")
+                        {
+                            item.WaiveCharges = comboWaiveCharges.SelectedValue;
+                            item.ChargeAcct = rcbChargeAcct3.SelectedValue;
+                            item.ChargeCcy = rcbChargeCcy3.SelectedValue;
+                            item.ChargeAmt = txtChargeAmt3;
+                            item.PartyCharged = rcbPartyCharged3.SelectedValue;
+                            item.OmortCharges = rcbOmortCharge3.SelectedValue;
+                            item.ChargeStatus = rcbChargeStatus3.SelectedValue;
+                            item.ChargeRemarks = tbChargeRemarks.Text;
+                            item.VATNo = tbVatNo.Text;
+                            item.TaxCode = lblTaxCode3.Text;
+                            item.TaxAmt = lblTaxAmt3.Text;
+                            entContext.SaveChanges();
+                        }
+                    }
+                    
 
                 }
                 entContext.SaveChanges();
@@ -1918,5 +2033,102 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
             }
         }
+        protected void btnReportThuThongBao_Click(object sender, EventArgs e)
+        {
+            showReport(1);
+        }
+        protected void btnReportPhieuXuatNgoaiBang_Click(object sender, EventArgs e)
+        {
+            showReport(2);
+        }
+        protected void btnReportPhieuThu_Click(object sender, EventArgs e)
+        {
+            showReport(3);
+        }
+        private void showReport(int reportType)
+        {
+            string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/Export/";
+            string reportSaveName = "";
+            DataSet reportData = new DataSet();
+            DataTable tbl1 = new DataTable();
+            Aspose.Words.SaveFormat saveFormat = Aspose.Words.SaveFormat.Doc;
+            Aspose.Words.SaveType saveType = Aspose.Words.SaveType.OpenInApplication;
+            try
+            {
+                var obj = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
+                //bd.IssueLC.ImportLCPaymentReport(reportType, Convert.ToInt64(txtPaymentId.Value), this.UserInfo.Username);
+                switch (reportType)
+                {
+                    case 1://Thu Thong Bao
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "BM_TTQT_LCXK_01A.doc");
+                        reportSaveName = "BM_TTQT_LCXK_01A" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        //
+                        
+                        tbl1.Columns.Add("Ref");
+                        tbl1.Columns.Add("DateIssue");
+                        tbl1.Columns.Add("BeneficiaryName");
+                        tbl1.Columns.Add("NormalLCCode");
+                        tbl1.Columns.Add("ReceivingBank");
+                        //tbl1.Columns.Add("DateIssue");
+                        tbl1.Columns.Add("DateExpiry");
+                        tbl1.Columns.Add("Amount");
+                        tbl1.Columns.Add("ApplicantName");
+                        var strDateIssue = "";
+                        var strDateEpri = "";
+                        if (obj.DateOfIssue != null)
+                        {
+                            strDateIssue = obj.DateOfIssue.Value.Date.Day + "/" + obj.DateOfIssue.Value.Date.Month + "/" + obj.DateOfIssue.Value.Date.Year;
+                        }
+                        if (obj.DateExpiry != null)
+                        {
+                            strDateEpri = obj.DateExpiry.Value.Date.Day + "/" + obj.DateExpiry.Value.Date.Month + "/" + obj.DateExpiry.Value.Date.Year;
+                        }
+                        tbl1.Rows.Add(obj.LimitRef, strDateIssue, obj.BeneficiaryName, obj.NormalLCCode, obj.ReceivingBank, obj.DateExpiry, obj.Amount, obj.ApplicantName);
+                        //
+                        reportData.Tables.Add(tbl1);
+                        break;
+                    case 2:
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "Export_PhieuXuatNgoaiBang.doc");
+                        reportSaveName = "Export_PhieuXuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        tbl1.Columns.Add("Day");
+                        tbl1.Columns.Add("Month");
+                        tbl1.Columns.Add("Year");
+                        tbl1.Columns.Add("NormalLCCode");
+                        tbl1.Columns.Add("CurrentUserLogin");
+                        tbl1.Columns.Add("ApplicantName");
+                        tbl1.Columns.Add("IdentityNo");
+                        tbl1.Columns.Add("ApplicantAddr1");
+                        tbl1.Columns.Add("ApplicantAddr2");
+                        tbl1.Columns.Add("ApplicantAddr3");
+                        tbl1.Columns.Add("Amount");
+                        tbl1.Columns.Add("Currency");
+                        tbl1.Columns.Add("SoTienVietBangChu");
+                        //tbl1.Columns.Add("NormalLCCode");
+                        var dtnow = DateTime.Now;
+                        var sotienbangchu = Utils.ReadNumber(obj.Currency,double.Parse(obj.Amount.ToString()));
+                        tbl1.Rows.Add(dtnow.Day, dtnow.Month, dtnow.Year, obj.NormalLCCode, UserInfo.DisplayName, obj.BeneficiaryName, obj.BeneficiaryNo, obj.ApplicantAddr1, obj.ApplicantAddr2, obj.ApplicantAddr3, obj.Amount, obj.Currency,sotienbangchu);
+                        reportData.Tables.Add(tbl1);
+                        break;
+                    case 3:
+
+                        break;
+                }
+                if (reportData != null)
+                {
+                    try
+                    {
+                        reportData.Tables[0].TableName = "Table1";
+                        bc.Reports.createFileDownload(reportTemplate, reportData, reportSaveName, saveFormat, saveType, Response);
+                    }
+                    catch (Exception err)
+                    {
+                        lblError.Text = reportData.Tables[0].TableName + "#" + err.Message;
+                    }
+                }
+            }
+            catch (Exception ex)
+            { }
+        }
+        
     }
 }
