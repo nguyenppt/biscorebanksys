@@ -670,15 +670,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox tbPlaceoftakingincharge;
         
         /// <summary>
-        /// tbPortofloading control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbPortofloading;
-        
-        /// <summary>
         /// tbPortofDischarge control.
         /// </summary>
         /// <remarks>
@@ -686,6 +677,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox tbPortofDischarge;
+        
+        /// <summary>
+        /// tbPortofloading control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox tbPortofloading;
         
         /// <summary>
         /// tbPlaceoffinalindistination control.
