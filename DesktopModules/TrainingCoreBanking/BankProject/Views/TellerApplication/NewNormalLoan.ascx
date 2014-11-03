@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewNormalLoan.ascx.cs" Inherits="BankProject.Views.TellerApplication.NewNormalLoan" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="DotNetNuke.web" Namespace="DotNetNuke.Web.UI.WebControls" TagPrefix="dnn" %>
-<%@ Register Src="~/controls/LabelControl.ascx" TagPrefix="dnn" TagName="Label" %>
-<!--%@ Register src="../../Controls/NewLoanControls.ascx"  TagPrefix="UC" TagName="VVNewLoanControl"  %-->
 <telerik:radcodeblock runat="server">
 <script type="text/javascript">
     jQuery(function ($) {
@@ -10,9 +8,8 @@
     })
 </script>
     </telerik:radcodeblock>
-
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
-<telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" onbuttonclick="RadToolBar1_ButtonClick" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking">
+<telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" onbuttonclick="RadToolBar1_ButtonClick" onclientbuttonclicking="RadToolBar1_OnClientButtonClicking">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit" 
             ToolTip="Commit Data" Value="btnCommit" CommandName="commit">
@@ -58,6 +55,7 @@
         <li><a href="#Main">Main Info</a></li>
         <li><a href="#Other">Other Info</a></li>
         <li><a id="A2" href="#Full">Full View</a></li>
+        <li><a id="disA" href="#Disbursal">Disbursal Schedule</a></li>
     </ul>
 
     <div id="Main" class="dnnClear">
@@ -208,7 +206,9 @@
                     </td>
                     <td class="MyLable">Drawdown Date:</td>
                     <td class="MyContent">
-                        <telerik:raddatepicker id="rdpDrawdown" runat="server" />
+                        <telerik:raddatepicker id="rdpDrawdown" runat="server" >
+                            <ClientEvents OnDateSelected="DateSelected" />
+                            </telerik:raddatepicker>
                     </td>
                 </tr>
                 <tr>
@@ -273,7 +273,6 @@
                          <CollapseAnimation Type="None" />
                          <CollapseAnimation Type="None" />
                          <Items>
-<%--                             <telerik:RadComboBoxItem Value="" Text="" />--%>
                              <telerik:RadComboBoxItem Value="1" Text="1 - Fixed for Balance" /> <%--Du no giam dan--%>
                              <telerik:RadComboBoxItem Value="2" Text="2 - Fixed for Initial" /> <%--Du no ban dau--%>
                              <telerik:RadComboBoxItem Value="3" Text="3 - Periodic Automatic" /> <%--Du no giam dan, truot lai xuat + Ins speed--%>
@@ -287,8 +286,7 @@
                     <td class="MyLable">Interest Basis:</td>
                     <td class="MyContent"><i>366/360</i></td>
                     <td class="MyLable"></td>
-                    <td class="MyContent">
-                    </td>
+                    <td class="MyContent"></td>
                 </tr>
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
@@ -341,16 +339,12 @@
                     </tr>
                     <tr>
                         <td class="MyLable">Total Interest Amt:</td>
-                        <td class="MyContent"><asp:Label ID="lbTotalInterestAmt" runat="server" Text=""></asp:Label></td>
+                        <td class="MyContent">
+                            <asp:Label ID="lbTotalInterestAmt" runat="server" Text=""></asp:Label></td>
                         <td class="MyLable">Past Due Amount:<asp:Label ID="lbPDStatus" runat="server" Text=""></asp:Label></td>
                         <td class="MyContent"></td>
                     </tr>
-                    <%--<tr>
-                        <td class="MyLable"></td>
-                        <td class="MyContent"></td>
-                        <td class="MyLable">Past Due Amount:<asp:Label ID="lbPDStatus" runat="server" Text=""></asp:Label></td>
-                        <td class="MyContent"></td>
-                    </tr>--%>
+
                 </table>
         </fieldset>
 
@@ -445,8 +439,8 @@
                 <tr>
                     <td class="MyLable">Credit scoring</td>
                     <td class="MyContent">
-                        <telerik:radnumerictextbox id="tbExpectedLoss" NumberFormat-DecimalDigits="0" runat="server" validationgroup="Group1" width="150"
-                            OnTextChanged="tbExpectedLoss_TextChanged" AutoPostBack="True"></telerik:radnumerictextbox>
+                        <telerik:radnumerictextbox id="tbExpectedLoss" numberformat-decimaldigits="0" runat="server" validationgroup="Group1" width="150"
+                            ontextchanged="tbExpectedLoss_TextChanged" autopostback="True"></telerik:radnumerictextbox>
                     </td>
                 </tr>
                 <tr>
@@ -605,10 +599,6 @@
         </fieldset>
 
     </div>
-    <%-- <div id="Audit" class="dnnClear">
-         audit tab
-     </div>--%>
-
     <div id="Full" class="dnnClear">
         <asp:ValidationSummary ID="ValidationSummary2" runat="server" ShowMessageBox="True"
             ShowSummary="False" ValidationGroup="CommitFull" />
@@ -767,7 +757,8 @@
                                     <asp:ListItem>I+P</asp:ListItem>
                                     <asp:ListItem>AC</asp:ListItem>
                                     <asp:ListItem>EI</asp:ListItem>
-                                    <asp:ListItem>EP</asp:ListItem><%--cho phép user định nghĩa số tiền cần phải trả trong Kỳ Cuối--%>
+                                    <asp:ListItem>EP</asp:ListItem>
+                                    <%--cho phép user định nghĩa số tiền cần phải trả trong Kỳ Cuối--%>
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server"
                                     ErrorMessage="Please choose Type"
@@ -812,8 +803,10 @@
                                     <asp:ListItem Value="9">9M</asp:ListItem>
                                     <asp:ListItem Value="10">10M</asp:ListItem>
                                     <asp:ListItem Value="11">11M</asp:ListItem>
-                                    <asp:ListItem Value="12">12M</asp:ListItem><%--12M: Định kỳ trả 12 tháng--%>
-                                    <asp:ListItem Value="E">E</asp:ListItem> <%--E:   Thanh toán Cuối kỳ--%>
+                                    <asp:ListItem Value="12">12M</asp:ListItem>
+                                    <%--12M: Định kỳ trả 12 tháng--%>
+                                    <asp:ListItem Value="E">E</asp:ListItem>
+                                    <%--E:   Thanh toán Cuối kỳ--%>
                                 </asp:DropDownList>
                             </td>
                             <td>
@@ -923,14 +916,174 @@
         </asp:UpdatePanel>
     </div>
 
-    <asp:HiddenField ID="hfLoanAmount" runat="server" />
-    <asp:HiddenField ID="hfCommitNumber" Value="0" runat="server" />
-    <asp:HiddenField ID="hfCommit2" Value="0" runat="server" />
+    <div id="Disbursal" class="dnnClear">      
+        <p>&nbsp;</p>
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+            <ContentTemplate>
+                <asp:ListView ID="lvLoanDisbursalSchedule" runat="server" DataKeyNames="ID" InsertItemPosition="LastItem"
+                    OnItemInserting="lvLoanDisbursalSchedule_ItemInserting" OnItemCanceling="lvLoanDisbursalSchedule_ItemCanceling"
+                    OnItemEditing="lvLoanDisbursalSchedule_ItemEditing" OnItemUpdating="lvLoanDisbursalSchedule_ItemUpdating"
+                    OnItemDeleting="lvLoanDisbursalSchedule_ItemDeleting" >
+                    <AlternatingItemTemplate>
+                        <tr style="text-align: center">
+                            <td style="visibility: hidden">
+                                <asp:Label ID="lbID" runat="server" Text='<%# Eval("ID") %>' />
+                            </td>
+                            <td>
+                                <asp:Label ID="TypeLabel" runat="server" Text='<%# Eval("DisbursalDate") %>' />
+                            </td>
+                            <td>
+                                <telerik:radnumerictextbox id="AmountActionLabel" runat="server" readonly="true" borderwidth="0" value='<%# Bind("DisbursalAmount") %>'>
+                                <EnabledStyle HorizontalAlign="Right" />
+                                </telerik:radnumerictextbox>
+                            </td>
+                            <td>
+                                <asp:Label ID="Label1" runat="server" Text='<%# Eval("DrawdownDate") %>' />
+                            </td>
+                            <td>
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="Button3" runat="server" CommandName="Delete" Text="Delete" />&nbsp;&nbsp;&nbsp
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="Button4" runat="server" CommandName="Edit" Text="Edit" />
+                            </td>
+                        </tr>
+                    </AlternatingItemTemplate>
+                    <EditItemTemplate>
+                        <tr style="text-align: center">
+                            <td style="visibility: hidden">
+                                <asp:Label ID="lbID" runat="server" Text='<%# Eval("ID") %>' />
+                            </td>
+
+                            <td>
+
+                                <telerik:raddatepicker id="DateTextBox" runat="server" selecteddate='<%# Bind("DisbursalDate") %>'>
+                                </telerik:raddatepicker>
+                            </td>
+                            <td>
+                                <telerik:radnumerictextbox id="AmountActionTextBox" runat="server" value='<%# Bind("DisbursalAmount") %>'>
+                                </telerik:radnumerictextbox>
+                            </td>
+                            <td>
+
+                                <telerik:raddatepicker id="DrawdownDateTextBox" runat="server" selecteddate='<%# Bind("DrawdownDate") %>'>
+                                </telerik:raddatepicker>
+                            </td>
+
+                            <td>
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Save_16X16_Standard.png" ID="Button1" runat="server" CommandName="Update" Text="Update" />
+                                &nbsp;&nbsp;&nbsp;
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Cancel_16X16_Standard.png" ID="Button2" runat="server" CommandName="Cancel" Text="Clear" />
+                            </td>
+                        </tr>
+                    </EditItemTemplate>
+                    <EmptyDataTemplate>
+                        <table id="Table1" runat="server" style="">
+                            <tr>
+                                <td>No data was returned.</td>
+                            </tr>
+                        </table>
+                    </EmptyDataTemplate>
+                    <InsertItemTemplate>
+                        <tr style="text-align: center">
+                            
+                            <td style="visibility: hidden">
+                                <asp:Label ID="lbID" runat="server" Text='<%# Eval("ID") %>' />
+                            </td>
+
+                            <td>
+
+                                <telerik:raddatepicker id="DateTextBox" runat="server" selecteddate='<%# Bind("DisbursalDate") %>'>
+                                </telerik:raddatepicker>
+                            </td>
+                            <td>
+                                <telerik:radnumerictextbox id="AmountActionTextBox" runat="server" value='<%# remainLoanAmountDis %>'>
+                                </telerik:radnumerictextbox>
+                            </td>
+                            <td>
+                                <telerik:raddatepicker id="DrawdownDateTextBox" runat="server" selecteddate='<%# Bind("DrawdownDate") %>'>
+                                </telerik:raddatepicker>
+                            </td>
+
+                            <td>
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Save_16X16_Standard.png" ID="InsertButton"  runat="server" CommandName="Insert" Text="Insert" />&nbsp;&nbsp;&nbsp
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Refresh_16x16_Standard.png" ID="CancelButton" runat="server" CommandName="Cancel" Text="Clear" />
+                            </td>
+                        </tr>
+                    </InsertItemTemplate>
+                    <ItemTemplate>
+                        <tr style="text-align: center">
+                            <td style="visibility: hidden">
+                                <asp:Label ID="lbID" runat="server" Text='<%# Eval("ID") %>' />
+                            </td>
+
+                            <td>
+                                <asp:Label ID="DateLabel" runat="server" Text='<%# Eval("DisbursalDate") %>' />
+                            </td>
+                            <td>
+
+                                <telerik:radnumerictextbox id="AmountActionLabel" runat="server" readonly="true" borderwidth="0" value='<%# Bind("DisbursalAmount") %>'>
+                                <EnabledStyle HorizontalAlign="Right" />
+                                </telerik:radnumerictextbox>
+                            </td>
+                            <td>
+                                <asp:Label ID="Label2" runat="server" Text='<%# Eval("DrawdownDate") %>' />
+                            </td>
+                            <td>
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="Button5" runat="server" CommandName="Delete" Text="Delete" />&nbsp;&nbsp;&nbsp
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="Button6" runat="server" CommandName="Edit" Text="Edit" />
+                            </td>
+                        </tr>
+                    </ItemTemplate>
+                    <LayoutTemplate>
+                        <table id="Table2" runat="server">
+                            <tr id="Tr1" runat="server">
+                                <td id="Td1" runat="server">
+                                    <table id="itemPlaceholderContainer" runat="server" border="0" style="">
+                                        <tr id="Tr2" runat="server" style="">
+                                            <th id="Th1" runat="server"></th>
+                                            <th id="Th3" runat="server">Disbursal Date</th>
+                                            <th id="Th4" runat="server">Disbursal Amount</th>
+                                            <th id="Th5" runat="server">Drawdown Date</th>
+                                            <th id="Th9" runat="server"></th>
+                                        </tr>
+                                        <tr id="itemPlaceholder" runat="server">
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr id="Tr3" runat="server">
+                                <td id="Td2" runat="server" style=""></td>
+                            </tr>
+                        </table>
+                    </LayoutTemplate>
+                    <SelectedItemTemplate>
+                        <tr style="text-align: center">
+                            <td style="visibility: hidden">
+                                <asp:Label ID="lbID" runat="server" Text='<%# Eval("ID") %>' />
+                            </td>
+                            <td>
+                                <asp:Label ID="DateLabel" runat="server" Text='<%# Eval("DisbursalDate") %>' />
+                            </td>
+                            <td>
+                                <telerik:radnumerictextbox id="AmountActionLabel" runat="server" readonly="true" borderwidth="0" value='<%# Bind("DisbursalAmount") %>'>
+                                    <EnabledStyle HorizontalAlign="Right" />
+                                </telerik:radnumerictextbox>
+                            </td>
+                           <td>
+                                <asp:Label ID="Label3" runat="server" Text='<%# Eval("DrawdownDate") %>' />
+                            </td>
+                            
+                            <td>
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="DeleteButton" runat="server" CommandName="Delete" Text="Delete" />
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="EditButton" runat="server" CommandName="Edit" Text="Edit" />
+                            </td>
+                        </tr>
+                    </SelectedItemTemplate>
+                </asp:ListView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
+    </div>
+
 </div>
-<div style="visibility: hidden;">
-    <asp:Button ID="btnPrintLai" runat="server" OnClick="btnPrintLai_Click" Text="In Lai" /></div>
-<div style="visibility: hidden;">
-    <asp:Button ID="btnPrintVon" runat="server" OnClick="btnPrintVon_Click" Text="In Von" /></div>
 
 <telerik:radajaxmanager id="RadAjaxManager1" runat="server"
     defaultloadingpanelid="AjaxLoadingPanel1">
@@ -960,7 +1113,7 @@
     </AjaxSettings>
 </telerik:radajaxmanager>
 <telerik:radcodeblock runat="server">
-<script type="text/javascript">
+<script type="text/javascript" >
 
     $(document).ready(
   function () {
@@ -1075,9 +1228,7 @@
             sender.set_value(addCommas(number));
 
         }
-        //var num = sender.get_value();
-        document.getElementById("<%= hfLoanAmount.ClientID %>").value = number;
-        $find("<%= tbApprovedAmt.ClientID %>").set_value(sender.get_value());
+
     }
     function clickFullTab() {
         document.getElementById("linkFull").style.display = "";
@@ -1098,29 +1249,24 @@
     }
     function OnClientPrint() {
 
-        
+
         //var r1 = confirm("Do you want to print Principle Payment schedule?");
         //if (r1 == true) {
         //    PrintVon();
         //}
-      
+
         var r2 = confirm("Do you want to print Interesting Payment schedule?");
         if (r2 == true) {
             PrintLai();
         }
-       
-       
-        
 
-        
+
+
+
+
     }
 
-    function PrintLai() {
-        $("#<%=btnPrintLai.ClientID %>").click();
-    }
-    function PrintVon() {
-        $("#<%=btnPrintVon.ClientID %>").click();
-    }
+    
 
     function GetRadWindow() {
         var oWindow = null;
@@ -1146,25 +1292,32 @@
         //    clickCalledAfterRadconfirm = true;
         //    args.set_cancel(true);
         //    //radconfirm("Do you want to print Principle Payment schedule?", PrintVon, 340, 150, null, 'Download');
-            
+
 
         //}
     }
 
-    function PrintVon(result) {
-        clickCalledAfterRadconfirm = false;
-        if (result) {
-            $("#<%=btnPrintVon.ClientID %>").click();
+    function DateSelected(sender, eventArgs) {       
+        if (eventArgs.get_newValue() == "") {
+            Disbursal.style.display = 'block';
+            disA.style.display = 'block';
+        } else {
+            Disbursal.style.display = 'none';
+            disA.style.display = 'none';
         }
-        radconfirm("Do you want to print Interesting Payment schedule?", PrintLai, 340, 150, null, 'Download');
     }
-
-    function PrintLai(result) {
-        clickCalledAfterRadconfirm = false;
-        if (result) {
-            $("#<%=btnPrintLai.ClientID %>").click();
+    function pageLoad() {
+        LoadDrawdown();
+    }
+    function LoadDrawdown() {
+        var date = $find("<%= rdpDrawdown.ClientID %>");
+        if (date.get_selectedDate() == null) {
+            Disbursal.style.display = 'block';
+            disA.style.display = 'block';
+        } else {
+            Disbursal.style.display = 'none';
+            disA.style.display = 'none';
         }
-        
     }
 
   </script>
