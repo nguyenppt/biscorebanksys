@@ -186,7 +186,8 @@
                 </tr>
             </table>
         </fieldset>
-        <fieldset>
+
+        <fieldset style="display: none;">
             <legend>
                 <div style="font-weight: bold; text-transform: uppercase;">Audit Trail</div>
             </legend>
