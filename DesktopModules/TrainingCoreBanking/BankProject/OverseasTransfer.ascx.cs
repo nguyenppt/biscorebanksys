@@ -1538,6 +1538,10 @@ namespace BankProject
                 SetChargeAccByDebitAcctNo();
             }
             comboOrderingCustAcc.SelectedValue = comboDebitAcctNo.SelectedValue;
+            comboChargeAcct.SelectedValue = comboDebitAcctNo.SelectedValue;
+
+            // hung
+
             LoadCreditAccountByDebitCurrency();
         }
 
