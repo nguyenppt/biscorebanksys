@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using Telerik.Web.UI;
+using BankProject.DataProvider;
 
 namespace BankProject.Views.TellerApplication
 {
@@ -38,15 +39,37 @@ namespace BankProject.Views.TellerApplication
 
         private void LoadData()
         {
-            radGridReview.DataSource = BankProject.DataProvider.Database.BOPENACCOUNT_EnquiryTransaction(rcbAccountType.SelectedValue, rcbTransactionType.SelectedValue, txtRefID.Text, rcbCurrency.SelectedValue, rcbCustomerType.SelectedValue, tbCustomerID.Text,
-                                                                                              tbGBFullName.Text, tbCustomerAccount.Text, txtFrom.Value, txtTo.Value, txtDate.SelectedDate);
-            radGridReview.DataBind();
+            if (IsPostBack)
+            {
+                radGridReview.DataSource = Database.BOPENACCOUNT_EnquiryTransaction(rcbAccountType.SelectedValue, rcbTransactionType.SelectedValue, txtRefID.Text, rcbCurrency.SelectedValue, rcbCustomerType.SelectedValue, tbCustomerID.Text,
+                                                                                                  tbGBFullName.Text, tbCustomerAccount.Text, txtFrom.Value, txtTo.Value, txtDate.SelectedDate);
+                radGridReview.DataBind();
+            }
         }
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            radGridReview.DataSource = BankProject.DataProvider.Database.BOPENACCOUNT_EnquiryTransaction("1", "0", "NOTdata", "NODATa", "NOTdata", "NOTdata", "NOTdata", "NOTdata", 0, 0, new DateTime(1900, 1, 1));
+            if (IsPostBack)
+            {
+                radGridReview.DataSource = Database.BOPENACCOUNT_EnquiryTransaction(rcbAccountType.SelectedValue, rcbTransactionType.SelectedValue, txtRefID.Text, rcbCurrency.SelectedValue, rcbCustomerType.SelectedValue, tbCustomerID.Text,
+                                                                                                 tbGBFullName.Text, tbCustomerAccount.Text, txtFrom.Value, txtTo.Value, txtDate.SelectedDate);
+            }
         }
-
+        public string getUrlPreview(string Id, string get_for)
+        {
+            switch (get_for)
+            {
+                case "Cash_deposit":
+                    return "Default.aspx?tabid=124&preview=1&codeid="+Id;
+                    break;
+                case "Cash_withraw":
+                    return "Default.aspx?tabid=125&preview=1&codeid="+Id;
+                    break;
+                default:
+                    return "Default.aspx?tabid=126&preview=1&codeid=" + Id;
+                    break;
+                
+            }
+        }
     }
 }

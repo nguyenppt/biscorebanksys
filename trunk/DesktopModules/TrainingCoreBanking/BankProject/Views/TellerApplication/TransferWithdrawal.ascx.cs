@@ -32,10 +32,7 @@ namespace BankProject.Views.TellerApplication
             else
             {
                 this.ShowPreviewView();
-                LoadToolBar(true);
             }
-
-            //Session["DataKey"] = txtId.Text;
         }
 
         protected void OnRadToolBarClick(object sender, RadToolBarEventArgs e)
@@ -56,9 +53,6 @@ namespace BankProject.Views.TellerApplication
                     if (cmbWaiveCharges.SelectedValue == "NO") Response.Redirect(EditUrl("waivecharges"));
 
                     Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-                    //this.EnableControls(true);
-                    //this.SetDefaultValues();
-                    //LoadToolBar(false);
                     break;
 
                 case "Preview":
@@ -82,9 +76,6 @@ namespace BankProject.Views.TellerApplication
                 case "Reverse":
                     DataProvider.Database.BTRANSFERWITHDRAWAL_UpdateStatus(rcbAccountType.SelectedValue, "REV", txtId.Text, this.UserId.ToString());
                     Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-                    //LoadToolBar(false);
-                    //this.SetDefaultValues();
-                    //this.EnableControls(true);
                     break;
             }
         }
