@@ -607,49 +607,22 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.ListView lvLoanControl;
         
         /// <summary>
-        /// hfLoanAmount control.
+        /// UpdatePanel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfLoanAmount;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
         
         /// <summary>
-        /// hfCommitNumber control.
+        /// lvLoanDisbursalSchedule control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfCommitNumber;
-        
-        /// <summary>
-        /// hfCommit2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfCommit2;
-        
-        /// <summary>
-        /// btnPrintLai control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPrintLai;
-        
-        /// <summary>
-        /// btnPrintVon control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPrintVon;
+        protected global::System.Web.UI.WebControls.ListView lvLoanDisbursalSchedule;
         
         /// <summary>
         /// RadAjaxManager1 control.
