@@ -2082,10 +2082,10 @@ namespace BankProject.DataProvider
         }
 
         public static DataTable B_BFOREIGNEXCHANGE_GetByCreditAccount(string Code, string Currency, string CustomerName,
-                                                                      string CallFrom)
+                                                                      string CallFrom, string transsactionType)
         {
             return sqldata.ndkExecuteDataset("B_BFOREIGNEXCHANGE_GetByCreditAccount", Code, Currency, CustomerName,
-                                             CallFrom).Tables[0];
+                                             CallFrom, transsactionType).Tables[0];
         }
 
         public static DataTable B_BFOREIGNEXCHANGE_GetByDebitAccount(string Code, string Currency, string CustomerName,
