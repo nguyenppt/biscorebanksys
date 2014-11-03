@@ -463,7 +463,7 @@
                     <td class="MyLable">Interest Rate</td>
                     <td class="MyContent">
                          <telerik:radnumerictextbox runat="server" id="tbInterestRateAZ" minvalue="0" maxvalue="999999999999">
-                            <NumberFormat GroupSeparator="," DecimalDigits="5" AllowRounding="true"   KeepNotRoundedValue="false"  />
+                            <NumberFormat GroupSeparator="," DecimalDigits="2" AllowRounding="true"   KeepNotRoundedValue="false"  />
                         </telerik:radnumerictextbox>
                        <%-- <asp:TextBox ID="tbInterestRateAZ" runat="server" Text="7.872"/></td>--%>
                 </tr>

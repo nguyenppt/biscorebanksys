@@ -339,7 +339,7 @@
                       <td class="MyLable">Interest Rate </td>
                       <td class="MyContent" >
                            <telerik:radnumerictextbox ClientEvents-OnBlur="CalculatorAmmount" runat="server"  id="rtbInterestRate" minvalue="0" maxvalue="999999999999">
-                                <NumberFormat GroupSeparator="," DecimalDigits="5" AllowRounding="true"   KeepNotRoundedValue="false"  />                                
+                                <NumberFormat GroupSeparator="," DecimalDigits="2" AllowRounding="true"   KeepNotRoundedValue="false"  />                                
                             </telerik:radnumerictextbox>    
                            <%--<telerik:RadTextBox runat="server" ID="rtbInterestRate" ClientEvents-OnBlur="CalculatorAmmount"></telerik:RadTextBox>--%>
                       </td>
