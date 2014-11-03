@@ -16,9 +16,33 @@
     });
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
-
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
             args.set_cancel(true);
+            radconfirm("Do you want to download Thu Thong Bao file ?", confirmCallbackFunction_ThuThongBao, 420, 150, null, 'Download');
+        }
+    }
+    function confirmCallbackFunction_ThuThongBao(result) {
+        clickCalledAfterRadconfirm = false;
+        if (result) {
+            $("#<%=btnReportThuThongBao.ClientID %>").click();
+        }
+        radconfirm("Do you want to download Phieu Thu file?", confirmCallbackFunction_PhieuThu, 420, 150, null, 'Download');
+
+            //radconfirm("Do you want to download Phieu Xuat Ngoai Bang file?", confirmCallbackFunction_PhieuXuatNgoaiBang, 420, 150, null, 'Download');
+    }
+    confirmCallbackFunction_PhieuThu(result)
+    {
+        clickCalledAfterRadconfirm = false;
+        if (result) {
+            $("#<%=btnReportPhieuThu.ClientID %>").click();
+        }
+    }
+    function confirmCallbackFunction_PhieuXuatNgoaiBang(result)
+    {
+        clickCalledAfterRadconfirm = false;
+        if (result)
+        {
+            $("#<%=btnReportPhieuXuatNgoaiBang.ClientID %>").click();
         }
     }
     </script>
@@ -51,6 +75,12 @@
     <tr>
         <td style="width:200px; padding:5px 0 5px 20px;"><asp:TextBox ID="tbEssurLCCode" runat="server" Width="200" />&nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" /></td>
 
+    </tr>
+    <tr>
+        <td style="width: 200px; padding: 5px 0 5px 20px;">
+            <asp:HiddenField ID="HiddenField1" runat="server" Value="0" /><asp:HiddenField ID="txtCustomerID" runat="server" Value="" /><asp:HiddenField ID="txtCustomerName" runat="server" Value="" />
+            <%--<asp:TextBox ID="TextBox1" runat="server" Width="200" /><span class="Required"> (*)</span> &nbsp;<asp:Label ID="Label13" runat="server" ForeColor="red" />--%>
+        </td>
     </tr>
 </table>
     <div class="dnnForm" id="tabs-demo">
@@ -1083,38 +1113,14 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                                 <tr>
                             <td class="MyLable">Charge Acct</td>
                             <td class="MyContent">
-                                <telerik:RadComboBox DropDownCssClass="KDDL"
-                                    AppendDataBoundItems="True"
-                                    OnItemDataBound="rcbChargeAcct_ItemDataBound"
-                                    ID="rcbChargeAcct" runat="server"
-                                    MarkFirstMatch="True" Width="355"
-                                    AllowCustomText="false">
-                                    <ExpandAnimation Type="None" />
-                                    <CollapseAnimation Type="None" />
-                                    <HeaderTemplate>
-                                        <table cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td style="width: 100px;">Id
-                                                </td>
-                                                <td>Name
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate>
-                                        <table cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td style="width: 100px;">
-                                                    <%# DataBinder.Eval(Container.DataItem, "Id")%> 
-                                                </td>
-                                                <td>
-                                                    <%# DataBinder.Eval(Container.DataItem, "Name")%> 
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </ItemTemplate>
+                                <telerik:RadComboBox AppendDataBoundItems="True"
+                                        ID="rcbChargeAcct" runat="server"
+                                        MarkFirstMatch="True" width="300"
+                                        AllowCustomText="false">
+                                        <ExpandAnimation Type="None" />
+                                        <CollapseAnimation Type="None" />
                                 </telerik:RadComboBox>
-                                </td>
+                            </td>
                             </tr>
                             <tr>
                                 <td class="MyLable">Charge Amt</td>
@@ -1235,36 +1241,12 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                                 <tr>
                                     <td class="MyLable">Charge Acct</td>
                                     <td class="MyContent">
-                                        <telerik:RadComboBox DropDownCssClass="KDDL"
-                                            AppendDataBoundItems="True"
-                                            OnItemDataBound="rcbChargeAcct2_ItemDataBound"
+                                        <telerik:RadComboBox AppendDataBoundItems="True"
                                             ID="rcbChargeAcct2" runat="server"
-                                            MarkFirstMatch="True" Width="355"
+                                            MarkFirstMatch="True" width="300"
                                             AllowCustomText="false">
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
-                                            <HeaderTemplate>
-                                                <table cellpadding="0" cellspacing="0">
-                                                    <tr>
-                                                        <td style="width: 100px;">Id
-                                                        </td>
-                                                        <td>Name
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <table cellpadding="0" cellspacing="0">
-                                                    <tr>
-                                                        <td style="width: 100px;">
-                                                            <%# DataBinder.Eval(Container.DataItem, "Id")%> 
-                                                        </td>
-                                                        <td>
-                                                            <%# DataBinder.Eval(Container.DataItem, "Name")%> 
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </ItemTemplate>
                                         </telerik:RadComboBox>
                                     </td>
                                 </tr>
@@ -1387,36 +1369,12 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                                 <tr>
                                     <td class="MyLable">Charge Acct</td>
                                     <td class="MyContent">
-                                        <telerik:RadComboBox DropDownCssClass="KDDL"
-                                            AppendDataBoundItems="True"
-                                            OnItemDataBound="rcbChargeAcct3_ItemDataBound"
+                                        <telerik:RadComboBox AppendDataBoundItems="True"
                                             ID="rcbChargeAcct3" runat="server"
-                                            MarkFirstMatch="True" Width="355"
+                                            MarkFirstMatch="True" width="300"
                                             AllowCustomText="false">
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
-                                            <HeaderTemplate>
-                                                <table cellpadding="0" cellspacing="0">
-                                                    <tr>
-                                                        <td style="width: 100px;">Id
-                                                        </td>
-                                                        <td>Name
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <table cellpadding="0" cellspacing="0">
-                                                    <tr>
-                                                        <td style="width: 100px;">
-                                                            <%# DataBinder.Eval(Container.DataItem, "Id")%> 
-                                                        </td>
-                                                        <td>
-                                                            <%# DataBinder.Eval(Container.DataItem, "Name")%> 
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </ItemTemplate>
                                         </telerik:RadComboBox>
                                     </td>
                                 </tr>
@@ -1543,6 +1501,36 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeAcct">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeAcct2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        
+        <telerik:AjaxSetting AjaxControlID="rcbChargeAcct3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
 
         <telerik:AjaxSetting AjaxControlID="rcbPartyCharged">
             <UpdatedControls>
@@ -1603,3 +1591,8 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
         </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnReportThuThongBao" runat="server" OnClick="btnReportThuThongBao_Click" Text="PhieuXuatNgoaiBang" />
+    <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="PhieuXuatNgoaiBang" /></div>
+    <asp:Button ID="btnReportPhieuThu" runat="server" OnClick="btnReportPhieuThu_Click" Text="PhieuXuatNgoaiBang" />
+    
