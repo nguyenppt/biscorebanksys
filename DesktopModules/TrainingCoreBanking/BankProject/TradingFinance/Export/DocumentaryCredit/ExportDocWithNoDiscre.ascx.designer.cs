@@ -67,6 +67,33 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::System.Web.UI.WebControls.Label lblError;
         
         /// <summary>
+        /// HiddenField1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
+        
+        /// <summary>
+        /// txtCustomerID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField txtCustomerID;
+        
+        /// <summary>
+        /// txtCustomerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField txtCustomerName;
+        
+        /// <summary>
         /// txtAcceptDate control.
         /// </summary>
         /// <remarks>
@@ -109,7 +136,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboPresentorNo;
+        protected global::Telerik.Web.UI.RadTextBox comboPresentorNo;
         
         /// <summary>
         /// txtPresentorName control.

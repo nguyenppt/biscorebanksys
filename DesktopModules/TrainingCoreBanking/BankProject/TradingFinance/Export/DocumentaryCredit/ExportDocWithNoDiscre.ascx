@@ -4,17 +4,30 @@
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <script type="text/javascript">
+        var tabId = <%= TabId %>;
         jQuery(function ($) {
             $('#tabs-demo').dnnTabs();
+            if(tabId=="240")
+            {
+                $("#<%=divCharge.ClientID %>").Style.Add("display", "block");
+            }
+            else
+            {
+                $("#<%=divCharge.ClientID %>").Style.Add("display", "none");
+            }
         });
         function OnclientSelectedIndexChanged(sender, eventArgs)
         {
             var item = eventArgs.get_item();
             if (item.get_text() == "YES") {
                 $("#<%=TCharge.ClientID %>").show();
+                
+                
             }
             else {
                 $("#<%=TCharge.ClientID %>").hide();
+                
+                
             }
         }
         function RadToolBar1_OnClientButtonClicking(sender, args) {
@@ -32,6 +45,10 @@
                 radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT, 340, 150, null, 'Download');
             }
         }
+        function OnDateSelected(sender, e) {
+            alert(e.get_date());
+        }
+        
     </script>
 </telerik:RadCodeBlock>
 <telerik:RadToolBar runat="server" ID="RadToolBar1" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking"
@@ -62,14 +79,19 @@
     <tr>
         <td style="width:200px; padding:5px 0 5px 20px;"><asp:TextBox ID="txtCode" runat="server" Width="200" />&nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" /></td>
     </tr>
+    <tr>
+        <td style="width: 200px; padding: 5px 0 5px 20px;">
+            <asp:HiddenField ID="HiddenField1" runat="server" Value="0" /><asp:HiddenField ID="txtCustomerID" runat="server" Value="" /><asp:HiddenField ID="txtCustomerName" runat="server" Value="" />
+            <%--<asp:TextBox ID="TextBox1" runat="server" Width="200" /><span class="Required"> (*)</span> &nbsp;<asp:Label ID="Label13" runat="server" ForeColor="red" />--%>
+        </td>
+    </tr>
 </table>
 <div class="dnnForm" id="tabs-demo">
         <ul class="dnnAdminTabNav">
             <li><a href="#Main">Main</a></li>
            <% if (TabId == TabDocsWithDiscrepancies) %>
                 <%{ %>
-                
-                <li><a href="#tabCharge">Charge</a></li>
+                    <li><a href="#tabCharge">Charge</a></li>
             <% }
                else if (TabId == TabDocsReject) %>
                     <%{%>
@@ -111,7 +133,13 @@
             </table>
             <div runat="server" ID="divPresentorNo">
                 <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                    <tr>
+                        <td class="MyLable" style="width:180px">29. Presentor Ref No.</td>
+                        <td class="MyContent">
+                            <telerik:Radtextbox runat="server" ID="comboPresentorNo" Width="355" />
+                        </td>
+                    </tr>
+                <%--<tr>
                     <td class="MyLable" style="width: 180px">29. Presentor Ref No.</td>
                     <td class="MyContent">
                         <telerik:RadComboBox 
@@ -129,14 +157,14 @@
                             <CollapseAnimation Type="None" />
                         </telerik:RadComboBox>
                     </td>
-                </tr>
-                <tr>
+                </tr>--%>
+                <tr style="display:none">
                     <td class="MyLable">5 Parent Drawing</td>
                     <td class="MyContent">
                         <telerik:Radtextbox runat="server" ID="txtPresentorName" Width="355" />
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">69.7 Discounted Loan Ref</td>
                     <td class="MyContent">
                         <telerik:Radtextbox runat="server" ID="txtPresentorRefNo" Width="355" />
@@ -165,7 +193,7 @@
                     </asp:RequiredFieldValidator>
                 </td>
             </tr>
-            <tr>
+            <tr style="display:none">
                 <td class="MyLable">11. Booking Date</td>
                 <td class="MyContent">
                     <telerik:RadDatePicker ID="dteBookingDate" runat="server" />
@@ -174,7 +202,9 @@
             <tr>
                 <td class="MyLable">69.4 Docs Received Date<span class="Required"> (*)</span></td>
                 <td class="MyContent">
-                    <telerik:RadDatePicker ID="dteDocsReceivedDate" runat="server" />
+                    <telerik:RadDatePicker ID="dteDocsReceivedDate" AutoPostBack="True" runat="server" OnSelectedDateChanged="RadDatePicker1_SelectedDateChanged" >
+                    </telerik:RadDatePicker>
+                        
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldValidator2"
@@ -345,7 +375,7 @@
             
         </div>
         <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable" style="width: 180px">69.3.1 Full docs amount</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox runat="server" ID="txtFullDocsAmount" Width="355" />
@@ -486,13 +516,9 @@
                             <tr>
                                 <td class="MyLable">Charge Ccy</td>
                                 <td class="MyContent">
-                                    <telerik:RadComboBox 
-                                        AutoPostBack="True"
-                                        OnSelectedIndexChanged="rcbChargeCcy_OnSelectedIndexChanged"
-                                        AppendDataBoundItems="True"
+                                    <telerik:RadComboBox AppendDataBoundItems="True"
                                         ID="rcbChargeCcy" runat="server"
-                                        MarkFirstMatch="True"
-                                        AllowCustomText="false">
+                                        MarkFirstMatch="True" AllowCustomText="false" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy_OnSelectedIndexChanged">
                                         <ExpandAnimation Type="None" />
                                         <CollapseAnimation Type="None" />
                                     </telerik:RadComboBox>
@@ -503,36 +529,12 @@
                             <tr>
                                 <td class="MyLable">Charge Acct</td>
                                 <td class="MyContent">
-                                    <telerik:RadComboBox DropDownCssClass="KDDL"
-                                        AppendDataBoundItems="True"
-                                        OnItemDataBound="rcbChargeAcct_ItemDataBound"
+                                    <telerik:RadComboBox AppendDataBoundItems="True"
                                         ID="rcbChargeAcct" runat="server"
-                                        MarkFirstMatch="True" Width="355"
+                                        MarkFirstMatch="True" width="300"
                                         AllowCustomText="false">
                                         <ExpandAnimation Type="None" />
                                         <CollapseAnimation Type="None" />
-                                        <HeaderTemplate>
-                                            <table cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td style="width: 100px;">Id
-                                                    </td>
-                                                    <td>Name
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td style="width: 100px;">
-                                                        <%# DataBinder.Eval(Container.DataItem, "Id")%> 
-                                                    </td>
-                                                    <td>
-                                                        <%# DataBinder.Eval(Container.DataItem, "Name")%> 
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </ItemTemplate>
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
@@ -660,13 +662,9 @@
                             <tr>
                                 <td class="MyLable">Charge Ccy</td>
                                 <td class="MyContent">
-                                    <telerik:RadComboBox 
-                                        AutoPostBack="True"
-                                        OnSelectedIndexChanged="rcbChargeCcy2_OnSelectedIndexChanged"
-                                        AppendDataBoundItems="True"
+                                    <telerik:RadComboBox AppendDataBoundItems="True"
                                         ID="rcbChargeCcy2" runat="server"
-                                        MarkFirstMatch="True" 
-                                        AllowCustomText="false">
+                                        MarkFirstMatch="True" AllowCustomText="false" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy2_OnSelectedIndexChanged">
                                         <ExpandAnimation Type="None" />
                                         <CollapseAnimation Type="None" />
                                     </telerik:RadComboBox>
@@ -678,36 +676,12 @@
                             <tr>
                                 <td class="MyLable">Charge Acct</td>
                                 <td class="MyContent" >
-                                    <telerik:RadComboBox DropDownCssClass="KDDL"
-                                        AppendDataBoundItems="True"
-                                        OnItemDataBound="rcbChargeAcct_ItemDataBound"
+                                    <telerik:RadComboBox AppendDataBoundItems="True"
                                         ID="rcbChargeAcct2" runat="server"
-                                        MarkFirstMatch="True" Width="355"
+                                        MarkFirstMatch="True" width="300"
                                         AllowCustomText="false">
                                         <ExpandAnimation Type="None" />
                                         <CollapseAnimation Type="None" />
-                                        <HeaderTemplate>
-                                            <table cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td style="width: 100px;">Id
-                                                    </td>
-                                                    <td>Name
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td style="width: 100px;">
-                                                        <%# DataBinder.Eval(Container.DataItem, "Id")%> 
-                                                    </td>
-                                                    <td>
-                                                        <%# DataBinder.Eval(Container.DataItem, "Name")%> 
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </ItemTemplate>
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
@@ -842,16 +816,12 @@
                             <tr>
 			                    <td class="MyLable">Charge Ccy</td>
 			                    <td class="MyContent">
-				                    <telerik:RadComboBox 
-                                        AutoPostBack="True"
-                                        OnSelectedIndexChanged="rcbChargeCcy3_OnSelectedIndexChanged"
-                                        AppendDataBoundItems="True"
-					                    ID="rcbChargeCcy3" runat="server"
-					                    MarkFirstMatch="True"
-					                    AllowCustomText="false">
-					                    <ExpandAnimation Type="None" />
-					                    <CollapseAnimation Type="None" />
-				                    </telerik:RadComboBox>
+				                    <telerik:RadComboBox AppendDataBoundItems="True"
+                                        ID="rcbChargeCcy3" runat="server"
+                                        MarkFirstMatch="True" AllowCustomText="false" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy3_OnSelectedIndexChanged">
+                                        <ExpandAnimation Type="None" />
+                                        <CollapseAnimation Type="None" />
+                                    </telerik:RadComboBox>
 			                    </td>
 		                    </tr>
 	                    </table>
@@ -860,36 +830,12 @@
 		                    <tr>
 			                    <td class="MyLable">Charge Acct</td>
 			                    <td class="MyContent" >
-				                    <telerik:RadComboBox DropDownCssClass="KDDL"
-                                        AppendDataBoundItems="True"
-                                        OnItemDataBound="rcbChargeAcct_ItemDataBound"
+				                    <telerik:RadComboBox AppendDataBoundItems="True"
                                         ID="rcbChargeAcct3" runat="server"
-                                        MarkFirstMatch="True" Width="355"
+                                        MarkFirstMatch="True" width="300"
                                         AllowCustomText="false">
                                         <ExpandAnimation Type="None" />
                                         <CollapseAnimation Type="None" />
-                                        <HeaderTemplate>
-                                            <table cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td style="width: 100px;">Id
-                                                    </td>
-                                                    <td>Name
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td style="width: 100px;">
-                                                        <%# DataBinder.Eval(Container.DataItem, "Id")%> 
-                                                    </td>
-                                                    <td>
-                                                        <%# DataBinder.Eval(Container.DataItem, "Name")%> 
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </ItemTemplate>
                                     </telerik:RadComboBox>
 			                    </td>
 		                    </tr>
@@ -1009,6 +955,7 @@
             </div>
             </div>
         </div>
+        
 </div>
 
 
@@ -1047,19 +994,19 @@
         
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy2" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy3">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy3" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         
@@ -1166,6 +1113,13 @@
                 <telerik:AjaxUpdatedControl ControlID="lblTaxAmt3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="dteDocsReceivedDate">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="dteTraceDate" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">

@@ -86,7 +86,7 @@
                         <telerik:RadDateInput ID="DateConfirm" Width="200px" runat="server" readonly="true" />
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">External Reference</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtExternalReference" runat="server" width="200px" />
@@ -103,7 +103,7 @@
                         </telerik:RadComboBox>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">Limit Ref.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtLimitRef" runat="server" width="200px" />
@@ -146,7 +146,7 @@
             </table>
         </div>
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                <tr style="display:none">
                     <td style="width:250px" class="MyLable">Receiving Bank</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtRevivingBank700" runat="server" Width="355" />
@@ -257,14 +257,14 @@
                 </tr>
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                <tr style="display:none">
                     <td style="width: 250px" class="MyLable">50.2 Applicant Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbApplicantName700" runat="server" Width="355" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">50.3 Applicant Addr.</td>
+                    <td class="MyLable" style="width:250px">50.3 Applicant Addr.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbApplicantAddr700_1" runat="server" Width="355" />
                     </td>
@@ -300,7 +300,7 @@
                 </tr>
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable" style="width: 250px">59.1 Beneficiary No.</td>
                     <td class="MyContent" style="width: 150px">
                         <telerik:RadTextBox ID="txtBeneficiaryNo700" runat="server" Width="355"
@@ -394,13 +394,13 @@
                 </tr>
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                <tr style="display:none">
                     <td style="width: 250px" class="MyLable">39C.1 Additional Amounts Covered</td>
                     <td class="MyContent">
                         <telerik:RadTextBox runat="server" ID="txtAdditionalAmountsCovered700_1" Width="355" />
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td style="width: 250px" class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox runat="server" ID="txtAdditionalAmountsCovered700_2" Width="355" />
@@ -516,7 +516,7 @@
                 </tr>
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
+                <tr style="display:none">
                     <td style="width: 250px" class="MyLable">42A.1 Drawee Type</td>
                     <td class="MyContent">
                         <telerik:RadComboBox
@@ -533,7 +533,7 @@
                         </telerik:RadComboBox>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">42A.2 Drawee No</td>
                     <td class="MyContent">
                         <%--<telerik:RadTextBox ID="txtDraweeCusNo" runat="server" Width="355" Text="VVTBVNVX" />--%>
@@ -557,25 +557,25 @@
                         </telerik:RadComboBox>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td style="width: 250px" class="MyLable">42A.3 Drawee Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeCusName" runat="server" Width="355" />
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable">42A.4 Drawee Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtDraweeAddr1" runat="server" Width="355" />
+                         <telerik:RadTextBox ID="txtDraweeAddr1" runat="server" Width="355" />
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeAddr2" runat="server" Width="355" />
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeAddr3" runat="server" Width="355" />
@@ -679,20 +679,21 @@
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">44E. Port of loading...</td>
-                    <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPortofloading" runat="server" />
-                    </td>
-                </tr>
-            </table>
-            <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
                     <td style="width: 250px" class="MyLable">44F. Port of Discharge...</td>
                     <td class="MyContent">
                         <telerik:RadTextBox Width="355" ID="tbPortofDischarge" runat="server" />
                     </td>
                 </tr>
             </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width: 250px" class="MyLable">44E. Port of loading...</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox Width="355" ID="tbPortofloading" runat="server" />
+                    </td>
+                </tr>
+            </table>
+            
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td style="width: 250px" class="MyLable">44B. Place of final destination</td>

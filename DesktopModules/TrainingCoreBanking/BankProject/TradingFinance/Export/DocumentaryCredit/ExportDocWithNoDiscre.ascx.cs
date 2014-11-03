@@ -29,6 +29,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
+            var TabId = this.TabId;
             //fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
             InitDataSource();
             if (string.IsNullOrEmpty(Request.QueryString["tid"])) 
@@ -152,7 +153,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             dteBookingDate.SelectedDate = DateTime.Now;
             dteBookingDate.Enabled = false;
-            divCharge.Visible = false;
+            divCharge.Style.Add("display", "none");
 
             divPresentorNo.Visible = true;
             divDocCode.Visible = true;
@@ -162,15 +163,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 case TabDocsWithNoDiscrepancies: // Docs With No Discrepancies
                     comboDrawType.SelectedValue = "CO";
+                    divCharge.Style.Add("display", "none");
                     break;
                 case TabDocsWithDiscrepancies: // Docs With Discrepancies
                     comboDrawType.SelectedValue = "CO";
                     fieldsetDiscrepancies.Visible = true;
-                    divCharge.Visible = true;
+                    divCharge.Style.Add("display", "block");
                     break;
                 case TabDocsReject: // Reject Docs Sent For Collection
                     bc.Commont.SetTatusFormControls(this.Controls, false);
-                    divCharge.Visible = true;
+                    divCharge.Style.Add("display", "block");
 
                     divPresentorNo.Visible = false;
                     divDocCode.Visible = false;
@@ -227,7 +229,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void InitDataSource()
         {
             bc.Commont.initRadComboBox(ref comboDrawType, "Display", "Code", bd.SQLData.B_BDRAWTYPE_GetAll());
-            bc.Commont.initRadComboBox(ref comboPresentorNo, "SwiftCode", "SwiftCode", bd.SQLData.B_BBANKSWIFTCODE_GetByType("all"));
+            //bc.Commont.initRadComboBox(ref comboPresentorNo, "SwiftCode", "SwiftCode", bd.SQLData.B_BBANKSWIFTCODE_GetByType("all"));
             var tblList = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             bc.Commont.initRadComboBox(ref comboDocsCode1, "Description", "Id", tblList);
             bc.Commont.initRadComboBox(ref comboDocsCode2, "Description", "Id", tblList);
@@ -256,6 +258,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref rcbPartyCharged, "Text", "Value", tblList);
             bc.Commont.initRadComboBox(ref rcbPartyCharged2, "Text", "Value", tblList);
             bc.Commont.initRadComboBox(ref rcbPartyCharged3, "Text", "Value", tblList);
+            if (TabId == TabDocsWithNoDiscrepancies)
+            {
+                divCharge.Style.Add("display", "none");
+            }
+            else {
+                divCharge.Style.Add("display", "block");
+            }
         }
         private DataTable createTableList()
         {
@@ -286,12 +295,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             e.Item.Attributes["Continent"] = row["Continent"].ToString();
             e.Item.Attributes["SwiftCode"] = row["SwiftCode"].ToString();
         }
-        protected void comboPresentorNo_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            txtPresentorName.Text = comboPresentorNo.SelectedItem != null
-                                        ? comboPresentorNo.SelectedItem.Attributes["BankName"]
-                                        : "";
-        }
+        //protected void comboPresentorNo_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        //{
+        //    txtPresentorName.Text = comboPresentorNo.SelectedItem != null
+        //                                ? comboPresentorNo.SelectedItem.Attributes["BankName"]
+        //                                : "";
+        //}
         protected bool CheckAmountAvailable()
         {
             var orginalCode = "";
@@ -316,7 +325,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private void SetNullValue()
         { 
                     comboDrawType.SelectedValue=null;
-                    comboPresentorNo.SelectedValue=null;
+                    comboPresentorNo.Text=null;
                     txtPresentorName.Text="";
                     txtPresentorRefNo.Text="";
                     lblCurrency.Text="";
@@ -417,7 +426,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 BEXPORT_DOCUMENTPROCESSING obj = new BEXPORT_DOCUMENTPROCESSING
                 {
                     DrawType = comboDrawType.SelectedValue,
-                    PresentorNo = comboPresentorNo.SelectedValue,
+                    PresentorNo = comboPresentorNo.Text,
                     PresentorName = txtPresentorName.Text,
                     PresentorRefNo = txtPresentorRefNo.Text,
                     Currency = lblCurrency.Text,
@@ -609,7 +618,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     else
                     {
                         ds.DrawType = comboDrawType.SelectedValue;
-                        ds.PresentorNo = comboPresentorNo.SelectedValue;
+                        ds.PresentorNo = comboPresentorNo.Text;
                         ds.PresentorName = txtPresentorName.Text;
                         ds.PresentorRefNo = txtPresentorRefNo.Text;
                         ds.Currency = lblCurrency.Text;
@@ -698,7 +707,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     else
                     {
                         dr.DrawType = comboDrawType.SelectedValue;
-                        dr.PresentorNo = comboPresentorNo.SelectedValue;
+                        dr.PresentorNo = comboPresentorNo.Text;
                         dr.PresentorName = txtPresentorName.Text;
                         dr.PresentorRefNo = txtPresentorRefNo.Text;
                         dr.Currency = lblCurrency.Text;
@@ -974,12 +983,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             chargeAmt_Changed(tbChargeAmt3.Value, ref lblTaxAmt3, ref lblTaxCode3);
         }
-        protected void rcbChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
-        {
-            DataRowView row = e.Item.DataItem as DataRowView;
-            e.Item.Attributes["Id"] = row["Id"].ToString();
-            e.Item.Attributes["Name"] = row["Name"].ToString();
-        }
+        //protected void rcbChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        //{
+        //    DataRowView row = e.Item.DataItem as DataRowView;
+        //    e.Item.Attributes["Id"] = row["Id"].ToString();
+        //    e.Item.Attributes["Name"] = row["Name"].ToString();
+        //}
         private void parseDocsCode(int Order, BEXPORT_DOCUMENTPROCESSING dsDetail, ref System.Web.UI.HtmlControls.HtmlGenericControl divDocsCode, ref RadComboBox cbDocsCode, ref RadNumericTextBox tbNoOfOriginals, ref RadNumericTextBox tbNoOfCopies)
         {
             if (Order == 1)
@@ -1025,17 +1034,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void rcbChargeCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy.SelectedValue, ref rcbChargeAcct);
+
+            
+            bc.Commont.initRadComboBox(ref rcbChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, rcbChargeCcy.SelectedValue));
         }
 
         protected void rcbChargeCcy2_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy2.SelectedValue, ref rcbChargeAcct2);
+            
+            bc.Commont.initRadComboBox(ref rcbChargeAcct2, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, rcbChargeCcy2.SelectedValue));
+            
         }
 
         protected void rcbChargeCcy3_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy3.SelectedValue, ref rcbChargeAcct3);
+            
+            bc.Commont.initRadComboBox(ref rcbChargeAcct3, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, rcbChargeCcy3.SelectedValue));
+            
         }
         //protected void comboWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         //{
@@ -1058,7 +1073,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
             txtCode.Text = dsDetail.PaymentId;
             comboDrawType.SelectedValue = dsDetail.DrawType;
-            comboPresentorNo.SelectedValue = dsDetail.PresentorNo;
+            comboPresentorNo.Text = dsDetail.PresentorNo;
             txtPresentorName.Text = dsDetail.PresentorName;
             txtPresentorRefNo.Text = dsDetail.PresentorRefNo;
             lblCurrency.Text = dsDetail.Currency;
@@ -1191,8 +1206,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                         bc.Commont.SetTatusFormControls(this.Controls, false);
                         txtCode.Enabled = true;
+                        //
+                        var name=txtCode.Text.Split('.');
+                        if(name!=null)
+                        {
+                            var lstOriginalBA=entContext.BAdvisingAndNegotiationLCs.Where(x=>x.NormalLCCode==name[0]).FirstOrDefault();
+                            if(lstOriginalBA!=null)
+                            {
+                                txtCustomerName.Value = lstOriginalBA.BeneficiaryName;
+                                bc.Commont.initRadComboBox(ref rcbChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, lstOriginalBA.Currency));
+                                bc.Commont.initRadComboBox(ref rcbChargeAcct2, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, lstOriginalBA.Currency));
+                                bc.Commont.initRadComboBox(ref rcbChargeAcct3, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, lstOriginalBA.Currency));
+                            }
+                        }
+                        //
                         //Hiển thị thông tin docs
-                        
+                        comboPresentorNo.Text = txtCode.Text;
                         switch (drDetail.Status)
                         {
                             case bd.TransactionStatus.UNA:
@@ -1260,7 +1289,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                      SetNullValue();
 
                      txtFullDocsAmount.Value = lstOriginal.Amount;
-                     
+                     //load charge acc
+                     txtCustomerName.Value = lstOriginal.BeneficiaryName;
+                     bc.Commont.initRadComboBox(ref rcbChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, lstOriginal.Currency));
+                     bc.Commont.initRadComboBox(ref rcbChargeAcct2, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, lstOriginal.Currency));
+                     bc.Commont.initRadComboBox(ref rcbChargeAcct3, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, lstOriginal.Currency));
+                     //
                      bc.Commont.SetTatusFormControls(this.Controls, true);
                      tbChargeCode.Enabled = false;
                      tbChargeCode2.Enabled = false;
@@ -1277,6 +1311,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         maxId = maxId + 1;
                     }
                     txtCode.Text = lstOriginal.NormalLCCode + "." + maxId;
+                    comboPresentorNo.Text = txtCode.Text;
                     //
                      //txtCode.Text = lstOriginal.NormalLCCode;
                         //hiddenCustomerName.Value = dsDetail.ApplicantName;
@@ -1295,11 +1330,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     if (chkdsDetail != null)
                     {
                         //
-                        string Status = "", RejectStatus = "";
+                        string Status = "", RejectStatus = "",AmendStatus="";
                         if (chkdsDetail.Status != null) 
                             Status = chkdsDetail.Status;
                         if (chkdsDetail.RejectStatus != null)
                             RejectStatus = chkdsDetail.RejectStatus;
+                        if (chkdsDetail.AmendStatus != null)
+                            AmendStatus = chkdsDetail.AmendStatus;
                         //
                         switch (this.TabId)
                         {
@@ -1343,6 +1380,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                     lblError.Text = "This Docs is not allow amend !";
                                     return;
                                 }
+                                else if (AmendStatus == "AUT")
+                                {
+                                    lblError.Text = "This LC was approve for amend";
+                                }
+                                else if (AmendStatus == "REV")
+                                {
+                                    lblError.Text = "This LC was revert for amend";
+                                }
+                                else if (RejectStatus != null)
+                                {
+                                    lblError.Text = "This LC was rejected or waited for approve reject";
+                                }
+                                
                                 break;
 
                         }
@@ -1371,8 +1421,18 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         lblError.Text = "This Docs not found !";
                         return;
                     }
-                    
             }
         }
+
+        protected void RadDatePicker1_SelectedDateChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs args)
+        {
+            if (dteDocsReceivedDate.SelectedDate != null)
+            {
+                var dt = DateTime.Parse(dteDocsReceivedDate.SelectedDate.ToString());
+                DateTime time = dt.AddDays(12);
+                dteTraceDate.SelectedDate = time.Date;
+            }
+        }
+
     }
 }

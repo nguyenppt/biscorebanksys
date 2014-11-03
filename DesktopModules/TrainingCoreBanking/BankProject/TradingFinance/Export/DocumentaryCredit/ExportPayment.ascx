@@ -1,4 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ExportPayment.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.ExportPayment" %>
+﻿
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ExportPayment.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.ExportPayment" %>
 <telerik:radwindowmanager id="RadWindowManager1" runat="server" enableshadow="true" />
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"/>
 <style>
