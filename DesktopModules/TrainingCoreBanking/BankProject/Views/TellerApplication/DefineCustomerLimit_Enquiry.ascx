@@ -30,7 +30,7 @@
             <td class="MyContent" width="300">
                 <telerik:radtextbox  id="tbMaHanMucCha" runat="server" validationGroup="Group1" width="300"></telerik:radtextbox>
             </td>
-            <td class="MyLable" >Limit ID:</td>
+            <td class="MyLable" >Product Limit ID:</td>
             <td class="MyContent" width="300">
                 <telerik:radtextbox runat="server" id="tbMaHanMucCon" validationGroup="Group1" width="300"  ></telerik:radtextbox>
             </td>
@@ -58,7 +58,7 @@
                     </Items>
                     </telerik:RadComboBox>
             </td>
-            <td class="MyLable">Internal Limit Amount:</td>
+            <td class="MyLable">Global Limit Amount:</td>
             <td class="MyContent" >From <telerik:radnumerictextbox id="tbFromIntLimitAmt" runat="server" ValidationGroup="Group1" width="120"  />
                  To <telerik:radnumerictextbox id="tbToIntLimitAmt" runat="server" ValidationGroup="Group1" width="129" />
             </td>
@@ -94,9 +94,9 @@
                 <telerik:GridBoundColumn HeaderText="Product" DataField="Product" />
                 <telerik:GridBoundColumn HeaderText="Customer Name" DataField="CustomerName" />
                 <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" ItemStyle-horizontalAlign="center"  HeaderStyle-horizontalAlign="center" />
-                <telerik:GridBoundColumn HeaderText="Internal Limit Amt" DataField="InternalLimitAmt"  headerStyle-HorizontalAlign="right"
+                <telerik:GridBoundColumn HeaderText="Global Limit Amt" DataField="InternalLimitAmt"  headerStyle-HorizontalAlign="right"
                     ItemStyle-HorizontalAlign="right" />
-                 <telerik:GridBoundColumn HeaderText="Max Total" DataField="MaxTotal"  headerStyle-HorizontalAlign="right"
+                 <telerik:GridBoundColumn HeaderText="Product Limit Amt" DataField="MaxTotal"  headerStyle-HorizontalAlign="right"
                     ItemStyle-HorizontalAlign="right" />
                 <telerik:GridTemplateColumn ItemStyle-HorizontalAlign="Right" >
                     <ItemStyle Width="25" />

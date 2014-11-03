@@ -132,6 +132,14 @@
             <telerik:GridBoundColumn HeaderText="Customer Name" HeaderStyle-Width = "30%" DataField="CustomerName" />
             <telerik:GridBoundColumn HeaderText="Currency" HeaderStyle-Width = "5%" DataField="Currency" />
             <telerik:GridBoundColumn HeaderText="Transaction Amount" DataField="TransactionAmount" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "15%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal"  DataFormatString="{0:N}" />
+            <telerik:GridBoundColumn HeaderText="Status" HeaderStyle-Width = "5%" DataField="Status" />
+
+            <telerik:GridTemplateColumn>
+                   <ItemStyle width="25" />
+                   <ItemTemplate>
+                       <a href='<%# getUrlPreview(Eval("Id").ToString(), Eval("get_for").ToString()) %>'><img src="Icons/bank/text_preview.png" width="20" /></a>
+                   </ItemTemplate>
+               </telerik:GridTemplateColumn>
         </Columns>
     </MasterTableView>
 </telerik:RadGrid>

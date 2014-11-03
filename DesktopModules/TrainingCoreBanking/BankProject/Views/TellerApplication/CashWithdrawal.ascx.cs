@@ -32,9 +32,8 @@ namespace BankProject.Views.TellerApplication
             else
             {
                 this.ShowPreviewView();
-                LoadToolBar(true);
+               // LoadToolBar(true);
             }
-            //Session["DataKey"] = txtId.Text;
         }
 
         protected void OnRadToolBarClick(object sender, RadToolBarEventArgs e)
