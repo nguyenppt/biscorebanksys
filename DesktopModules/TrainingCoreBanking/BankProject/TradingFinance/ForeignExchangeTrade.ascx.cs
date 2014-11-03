@@ -229,10 +229,11 @@ namespace BankProject.Views.TellerApplication
             code = CallFrom == "sellcurrency_change" ? rcbCounterparty.SelectedValue : txtCustomerReceivingAC.Text;
 
             lblCustomerReceivingACError.Text = "";
-            var dtCusRe = SQLData.B_BFOREIGNEXCHANGE_GetByCreditAccount(code, rcbSellCurrency.SelectedValue, customerName, CallFrom);
+            var dtCusRe = SQLData.B_BFOREIGNEXCHANGE_GetByCreditAccount(code, rcbSellCurrency.SelectedValue, customerName, CallFrom, rcbTransactionType.SelectedValue);
             if (dtCusRe.Rows.Count <= 0)
             {
                 lblCustomerReceivingACError.Text = "Not found!";
+                txtCustomerReceivingAC.Text = "";
             }
             else
             {
@@ -246,8 +247,7 @@ namespace BankProject.Views.TellerApplication
             {
                 return true;
             }
-            //var dtCusRec = SQLData.B_BFOREIGNEXCHANGE_CheckCustomerReceivingAC(txtCustomerReceivingAC.Text.Trim(),rcbBuyCurrency.SelectedValue,rcbCounterparty.SelectedValue);
-            var dtCusRec = SQLData.B_BFOREIGNEXCHANGE_GetByCreditAccount(txtCustomerReceivingAC.Text, rcbSellCurrency.SelectedValue, "", "text_chage");
+            var dtCusRec = SQLData.B_BFOREIGNEXCHANGE_GetByCreditAccount(txtCustomerReceivingAC.Text, rcbSellCurrency.SelectedValue, "", "text_chage", rcbTransactionType.SelectedValue);
             return dtCusRec.Rows.Count > 0;
         }
 
@@ -290,6 +290,7 @@ namespace BankProject.Views.TellerApplication
             if (dtCusRe.Rows.Count <= 0)
             {
                 lblCustomerPayingACError.Text = "Not found!";
+                txtCustomerPayingAC.Text = "";
             }
             else
             {
