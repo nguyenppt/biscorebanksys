@@ -388,14 +388,14 @@
             </tr>
 
             <tr>
-                <td class="MyLable">2.4 Applicant Addr.</td>
+                <td class="MyLable"></td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="tbApplicantAddr2" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr2_OnValueChanged" MaxLength="35"/>
                 </td>
             </tr>
 
             <tr>
-                <td class="MyLable">2.5 Applicant Addr.</td>
+                <td class="MyLable"></td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="tbApplicantAddr3" runat="server" Width="355" ClientEvents-OnValueChanged="tbApplicantAddr3_OnValueChanged" MaxLength="35"/>
                 </td>
@@ -598,7 +598,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">11.4 Beneficiary Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtBeneficiaryBankAddr2" runat="server" Width="355" MaxLength="35"
                             ClientEvents-OnValueChanged="txtBeneficiaryBankAddr2_OnValueChanged" />
@@ -606,7 +606,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">11.5 Beneficiary Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtBeneficiaryBankAddr3" runat="server" Width="355" MaxLength="35"
                             ClientEvents-OnValueChanged="txtBeneficiaryBankAddr3_OnValueChanged" />
@@ -658,14 +658,14 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">12.4 Advise Bank Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbAdviseBankAddr2" runat="server" Width="355" MaxLength="35"/>
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">12.5 Advise Bank Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbAdviseBankAddr3" runat="server" Width="355" MaxLength="35"/>
                     </td>
@@ -736,7 +736,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">13.5 Reimb. Bank Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbReimbBankAddr2" runat="server" Width="355"
                             AutoPostBack="False" OnTextChanged="tbReimbBankAddr2_OnTextChanged"
@@ -745,7 +745,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">13.6 Reimb. Bank Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbReimbBankAddr3" runat="server" Width="355"
                             AutoPostBack="False" OnTextChanged="tbReimbBankAddr3_OnTextChanged"
@@ -812,7 +812,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">14.5 Advise Thru Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbAdviseThruAddr2" runat="server" Width="355" MaxLength="35" 
                             ClientEvents-OnValueChanged="tbAdviseThruAddr2_OnClientSelectedIndexChanged"/>
@@ -820,7 +820,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">14.6 Advise Thru Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbAdviseThruAddr3" runat="server" Width="355" MaxLength="35" 
                             ClientEvents-OnValueChanged="tbAdviseThruAddr3_OnClientSelectedIndexChanged"/>
@@ -905,7 +905,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">16. Lc Amount Secured<span class="Required">(*)</span>
+                    <td class="MyLable">16. Lc Amount Secured <span class="Required">(*)</span>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator7"
@@ -924,7 +924,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">17. Lc Amount UnSecured<span class="Required">(*)</span>
+                    <td class="MyLable">17. Lc Amt UnSecured <span class="Required">(*)</span>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator8"
@@ -1813,7 +1813,7 @@ ARE FOR ACCOUNT OF BENEFICIARY " />--%>
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">78. Instr to//Payg/Accptg/Negotg Bank</td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_NegotgBank700" Height="150" BorderWidth="0" 
+                        <telerik:RadEditor runat="server" ID="txtEdittor_NegotgBank700" Height="200" BorderWidth="0" 
 ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
 
                        <%-- <telerik:RadTextBox Width="700" TextMode="MultiLine" Height="150"
