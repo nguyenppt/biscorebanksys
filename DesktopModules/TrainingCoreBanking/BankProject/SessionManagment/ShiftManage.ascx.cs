@@ -72,6 +72,7 @@ namespace BankProject.SessionManagment
                     break;
                 case "commit":
                     this.CommitShift();
+                    GoToShiftMainPage();
                     break;
             }
         }
@@ -149,7 +150,7 @@ namespace BankProject.SessionManagment
                 this.UpdateShift(shift);
             }
 
-            this.RefreshGrid();
+            //this.RefreshGrid();
         }
 
         private void UpdateShift(Shift shift)
