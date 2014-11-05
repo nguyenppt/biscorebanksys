@@ -11,7 +11,9 @@
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
         var today = (month) + "/" + (day)+ "/" + now.getFullYear();
         $("#<%=DateConfirm.ClientID %>").val(today)
-        
+        $(".reEditorModesCell").hide();
+        $(".reBottomZone").hide();
+        $(".reResizeCell").hide();
         
     });
     function OnClientButtonClicking(sender, args) {
@@ -26,11 +28,13 @@
         if (result) {
             $("#<%=btnReportThuThongBao.ClientID %>").click();
         }
-        radconfirm("Do you want to download Phieu Thu file?", confirmCallbackFunction_PhieuThu, 420, 150, null, 'Download');
+        setTimeout(function () {
+            radconfirm("Do you want to download Phieu Thu file?", confirmCallbackFunction_PhieuThu, 420, 150, null, 'Download');
+        }, 5000);
 
             //radconfirm("Do you want to download Phieu Xuat Ngoai Bang file?", confirmCallbackFunction_PhieuXuatNgoaiBang, 420, 150, null, 'Download');
     }
-    confirmCallbackFunction_PhieuThu(result)
+    function confirmCallbackFunction_PhieuThu(result)
     {
         clickCalledAfterRadconfirm = false;
         if (result) {
@@ -66,7 +70,7 @@
                 ToolTip="Search" Value="btSearch" CommandName="search">
             </telerik:RadToolBarButton>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-                ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
+                ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" postback="false">
             </telerik:RadToolBarButton>
         </Items>
     </telerik:RadToolBar>
@@ -821,7 +825,7 @@
                     <td style="width: 250px; vertical-align: top;" class="MyLable">46A. Docs required</td>
                     <td class="MyContent" style="vertical-align: top;">
                         <telerik:RadEditor runat="server" ID="txtEdittor_OrderDocs700" Height="150"
-                            ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
+                            ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml"/>
                     </td>
                 </tr>
             </table>
@@ -1593,6 +1597,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 </telerik:RadAjaxManager>
 <div style="visibility: hidden;">
     <asp:Button ID="btnReportThuThongBao" runat="server" OnClick="btnReportThuThongBao_Click" Text="PhieuXuatNgoaiBang" />
-    <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="PhieuXuatNgoaiBang" /></div>
+    <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="PhieuXuatNgoaiBang" />
     <asp:Button ID="btnReportPhieuThu" runat="server" OnClick="btnReportPhieuThu_Click" Text="PhieuXuatNgoaiBang" />
+</div>
     

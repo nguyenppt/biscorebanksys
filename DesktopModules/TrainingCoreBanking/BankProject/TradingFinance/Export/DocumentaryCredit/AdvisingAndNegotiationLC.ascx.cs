@@ -25,6 +25,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected const int TabIssueLCConfirm = 236;
         protected const int TabIssueLCCancel = 237;
         protected const int TabIssueLCClose = 265;
+        protected const string ELCAdvice = "ELC.ADVISE";
+        protected const string ELCConfirm = "ELC.CONFIRM";
+        protected const string ELCOther = "ELC.OTHER";
         public enum AdvisingAndNegotiationScreenType
         {
             Register,
@@ -152,11 +155,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //InitDataSource();
         }
         protected void InitToolBarForAccept()
-        {
-            
+        {   
             divCancelLC.Visible = false;
             divAcceptLC.Visible = true;
+            LoadToolBar(true);
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             if (_exportDoc != null)
             {
                 if (Disable)//Authorizing
@@ -193,15 +199,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     }
                     else if (_exportDoc.AcceptStatus != null)
                     {
-                        if (_exportDoc.AcceptStatus == "UNA")
+                        if (_exportDoc.AcceptStatus == "REV")
                         {
-                            lblError.Text = "This LC is processing at Accept step";
+                            lblError.Text = "This LC is processing at REV step";
                         }
                         else if (_exportDoc.AcceptStatus == "AUT")
                         {
                             lblError.Text = "This LC was accepted.";
                         }
                     }
+                    else
+                    {
+                        
+                        RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                    }
+                    SetDisableByReview(false);
                 }
                 else {
                     if (_exportDoc.Status != "AUT")
@@ -234,12 +249,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         lblError.Text = "This LC is processing at Amend step";
                     }
-                    else if (_exportDoc.AcceptStatus != null)
+                    else if(_exportDoc.AcceptStatus=="AUT")
                     {
-                        if(_exportDoc.AcceptStatus=="AUT")
-                        {
-                            lblError.Text = "This LC was accepted.";
-                        }
+                        lblError.Text = "This LC was accepted.";
+                    }
+                    else if (_exportDoc.AcceptStatus=="REV")
+                    {
+                        lblError.Text = "This LC was reverted.";
                     }
                     else // Not yet authorize
                     {
@@ -248,11 +264,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     SetDisableByReview(false);
                 }
             }
-            LoadToolBar(true);
+            
         }
         protected void InitToolBarForClose()
         {
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
             if (_exportDoc != null)
             {
                 if (Disable)//Authorizing
@@ -267,7 +284,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     }
                     else if (_exportDoc.CancelStatus !=null && _exportDoc.CancelStatus!="REV")
                     {
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was cancelled or waiting for cancelling";
                     }
                     //else if (!string.IsNullOrEmpty(_exportDoc.CloseStatus) && _exportDoc.CloseStatus == "UNA")
@@ -286,7 +303,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                         RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                     }
                     SetDisableByReview(false);
                 }
@@ -302,7 +319,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     }
                     else if (_exportDoc.CancelStatus != null && _exportDoc.CancelStatus!="REV")
                     {
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was cancelled or waiting for cancelling";
                     }
                     else if (_exportDoc.CloseStatus == "UNA")
@@ -338,6 +355,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 //RadToolBar1.FindItemByValue("btPreview").Enabled = false;
                 RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
                 RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+                RadToolBar1.FindItemByValue("btPrint").Enabled = false;
                 if (_exportDoc != null)
                 {
                     if (Disable) // Authorizing
@@ -354,13 +372,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                         else if (_exportDoc.CancelStatus == "AUT")
                         {
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                             lblError.Text = "This Cancel Documentary was authorized";
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false ;
                         }
                         else if (_exportDoc.CancelStatus == "REV")
                         {
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                             lblError.Text = "This Cancel Documentary was revert";
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
@@ -374,7 +392,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                             RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                             RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                             dteCancelDate.Enabled = true;
                             dteContingentExpiryDate.Enabled = true;
                             txtCancelRemark.Enabled = true;
@@ -395,13 +413,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                         else if (_exportDoc.CancelStatus == "REV")
                         {
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                             lblError.Text = "This Cancel Documentary was revert";
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
                         else if (_exportDoc.CancelStatus == "AUT")
                         {
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                             lblError.Text = "This Cancel Documentary was authorized";
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
@@ -2047,7 +2065,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         private void showReport(int reportType)
         {
-            string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/Export/";
+            string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/Export/";
             string reportSaveName = "";
             DataSet reportData = new DataSet();
             DataTable tbl1 = new DataTable();
@@ -2056,13 +2074,29 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             try
             {
                 var obj = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
+                var objCharge = new List<BAdvisingAndNegotiationLCCharge>();
+                if (obj == null)
+                {
+                    obj = new BAdvisingAndNegotiationLC();
+                }
+                else
+                {
+                    objCharge = entContext.BAdvisingAndNegotiationLCCharges.Where(x => x.DocCollectCode == tbEssurLCCode.Text).ToList();
+                }
                 //bd.IssueLC.ImportLCPaymentReport(reportType, Convert.ToInt64(txtPaymentId.Value), this.UserInfo.Username);
                 switch (reportType)
                 {
                     case 1://Thu Thong Bao
                         reportTemplate = Context.Server.MapPath(reportTemplate + "BM_TTQT_LCXK_01A.doc");
-                        reportSaveName = "BM_TTQT_LCXK_01A" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        //
+                        
+                        reportSaveName = "ThuThongBao" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        if (TabId == TabIssueLCAmend)
+                        {
+                            reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/Export/";
+                            reportTemplate = Context.Server.MapPath(reportTemplate + "BM_TTQT_LCXK_02A.doc");
+                            reportSaveName = "ThuThongBao2A" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        }    
+                    //
                         
                         tbl1.Columns.Add("Ref");
                         tbl1.Columns.Add("DateIssue");
@@ -2073,8 +2107,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         tbl1.Columns.Add("DateExpiry");
                         tbl1.Columns.Add("Amount");
                         tbl1.Columns.Add("ApplicantName");
+                        tbl1.Columns.Add("BeneficiaryNo");
+                        tbl1.Columns.Add("BeneficiaryAddress");
+                        tbl1.Columns.Add("Date");
                         var strDateIssue = "";
                         var strDateEpri = "";
+                        var strnow = "";
                         if (obj.DateOfIssue != null)
                         {
                             strDateIssue = obj.DateOfIssue.Value.Date.Day + "/" + obj.DateOfIssue.Value.Date.Month + "/" + obj.DateOfIssue.Value.Date.Year;
@@ -2083,13 +2121,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         {
                             strDateEpri = obj.DateExpiry.Value.Date.Day + "/" + obj.DateExpiry.Value.Date.Month + "/" + obj.DateExpiry.Value.Date.Year;
                         }
-                        tbl1.Rows.Add(obj.LimitRef, strDateIssue, obj.BeneficiaryName, obj.NormalLCCode, obj.ReceivingBank, obj.DateExpiry, obj.Amount, obj.ApplicantName);
+                        strnow = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+                        tbl1.Rows.Add(obj.NormalLCCode, strDateIssue, obj.BeneficiaryName, obj.NormalLCCode, obj.ReceivingBank, strDateEpri, obj.Amount, obj.ApplicantName, obj.BeneficiaryNo, obj.BeneficiaryAddr1, strnow);
                         //
                         reportData.Tables.Add(tbl1);
                         break;
                     case 2:
                         reportTemplate = Context.Server.MapPath(reportTemplate + "Export_PhieuXuatNgoaiBang.doc");
-                        reportSaveName = "Export_PhieuXuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportSaveName = "PhieuXuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         tbl1.Columns.Add("Day");
                         tbl1.Columns.Add("Month");
                         tbl1.Columns.Add("Year");
@@ -2110,7 +2149,84 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         reportData.Tables.Add(tbl1);
                         break;
                     case 3:
-
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
+                        reportSaveName = "PhieuThu" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        tbl1.Columns.Add("VATNo");
+                        tbl1.Columns.Add("CustomerName");
+                        tbl1.Columns.Add("DocCollectCode");
+                        tbl1.Columns.Add("CustomerAddress");
+                        tbl1.Columns.Add("UserNameLogin");
+                        tbl1.Columns.Add("CustomerID");
+                        //tbl1.Columns.Add("UserNameLogin");
+                        tbl1.Columns.Add("IdentityNo");
+                        tbl1.Columns.Add("ChargeAcct");
+                        tbl1.Columns.Add("Remarks");
+                        tbl1.Columns.Add("Cot9_1Name");
+                        tbl1.Columns.Add("Cot9_2Name");
+                        tbl1.Columns.Add("Cot9_3Name");
+                        tbl1.Columns.Add("Cot9_1");
+                        tbl1.Columns.Add("Cot9_2");
+                        tbl1.Columns.Add("Cot9_3");
+                        tbl1.Columns.Add("VAT");
+                        tbl1.Columns.Add("TongSoTienThanhToan");
+                        tbl1.Columns.Add("Currency");
+                        tbl1.Columns.Add("SoTienVietBangChu");
+                        var VATNo = "";
+                        var DocCollectCode = "";
+                        var ChargeAcct = "";
+                        var Remarks = "";
+                        var Cot9_1Name = "";
+                        var Cot9_2Name = "";
+                        var Cot9_3Name = "";
+                        var Cot9_1 = "";
+                        var Cot9_2 = "";
+                        var Cot9_3 = "";
+                        var IdentityNo = "";
+                        foreach (var item in objCharge)
+                        {
+                            VATNo = item.VATNo;
+                            DocCollectCode = item.DocCollectCode;
+                            ChargeAcct = item.ChargeAcct;
+                            Remarks = item.ChargeRemarks;
+                            if (item.Chargecode == ELCAdvice)
+                            {
+                                Cot9_1Name = item.Chargecode;
+                                var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
+                                if (lst != null)
+                                {
+                                    Cot9_1 = lst.Name_VN;
+                                }
+                            }
+                            if (item.Chargecode == ELCConfirm)
+                            {
+                                Cot9_2Name = item.Chargecode;
+                                var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
+                                if (lst != null)
+                                {
+                                    Cot9_2 = lst.Name_VN;
+                                }
+                            }
+                            if (item.Chargecode == ELCOther)
+                            {
+                                Cot9_3Name = item.Chargecode;
+                                var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
+                                if (lst != null)
+                                {
+                                    Cot9_3 = lst.Name_VN;
+                                }
+                            }
+                        }
+                        if (!String.IsNullOrEmpty(obj.BeneficiaryNo))
+                        {
+                            var cu = entContext.BCUSTOMERS.Where(x => x.CustomerID == obj.BeneficiaryNo).FirstOrDefault();
+                            if (cu != null)
+                            {
+                                IdentityNo = cu.IdentityNo;
+                            }
+                        }
+                        var docsotien = Utils.ReadNumber(obj.Currency, double.Parse(obj.Amount.ToString()));
+                        tbl1.Rows.Add(VATNo, obj.BeneficiaryName, DocCollectCode, obj.BeneficiaryAddr1, UserInfo.DisplayName,obj.BeneficiaryNo ,IdentityNo, ChargeAcct, Remarks, Cot9_1Name, Cot9_2Name, Cot9_3Name, Cot9_1, Cot9_2, Cot9_3, VATNo, obj.Amount, obj.Currency, docsotien);
+                        reportData.Tables.Add(tbl1);
                         break;
                 }
                 if (reportData != null)
