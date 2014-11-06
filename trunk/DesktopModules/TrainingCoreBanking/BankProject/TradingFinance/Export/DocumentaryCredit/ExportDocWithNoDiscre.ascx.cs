@@ -180,6 +180,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     fieldsetDiscrepancies.Visible = true;
                     txtCode.Enabled = true;
                     break;
+                default:
+                    divCharge.Style.Add("display", "none");
+                    break;
             }
 
             divDocsCode2.Visible = false;
@@ -258,7 +261,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref rcbPartyCharged, "Text", "Value", tblList);
             bc.Commont.initRadComboBox(ref rcbPartyCharged2, "Text", "Value", tblList);
             bc.Commont.initRadComboBox(ref rcbPartyCharged3, "Text", "Value", tblList);
-            if (TabId == TabDocsWithNoDiscrepancies)
+            if (TabId != TabDocsWithDiscrepancies && TabId!=TabDocsReject)
             {
                 divCharge.Style.Add("display", "none");
             }
@@ -1433,6 +1436,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 dteTraceDate.SelectedDate = time.Date;
             }
         }
-
+        protected void btnReportThuGoiChungTu_Click(object sender, EventArgs e)
+        {
+            showReport(1);
+        }
+        private void showReport(int reportType)
+        {
+        }
     }
 }
