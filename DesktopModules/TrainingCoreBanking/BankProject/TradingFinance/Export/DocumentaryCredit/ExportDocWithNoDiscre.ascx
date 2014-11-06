@@ -4,16 +4,17 @@
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <script type="text/javascript">
-        var tabId = <%= TabId %>;
-        jQuery(function ($) {
+        var tabId = <%=TabId%>;
+        
+        jQuery(function($) {
             $('#tabs-demo').dnnTabs();
-            if(tabId=="240")
+            if(tabId==240)
             {
-                $("#<%=divCharge.ClientID %>").Style.Add("display", "block");
+                $("#<%=divCharge.ClientID%>").Style.Add("display", "block");   
             }
             else
             {
-                $("#<%=divCharge.ClientID %>").Style.Add("display", "none");
+                $("#<%=divCharge.ClientID%>").Style.Add("display", "none");
             }
         });
         function OnclientSelectedIndexChanged(sender, eventArgs)
@@ -42,7 +43,14 @@
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
                 //MT734 chua co mau : Nguyen dang xin
                 //radconfirm("Do you want to download MT734 file?", confirmCallbackFunction_MT734, 340, 150, null, 'Download');
-                radconfirm("Do you want to download VAT file?", confirmCallbackFunction_VAT, 340, 150, null, 'Download');
+                radconfirm("Do you want to download THU GOI CHUNG TU file?", confirmCallbackFunction_ThuGoiChungTu, 340, 150, null, 'Download');
+            }
+        }
+        function confirmCallbackFunction_ThuGoiChungTu(result)
+        {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnReportThuGoiChungTu.ClientID %>").click();
             }
         }
         function OnDateSelected(sender, e) {
@@ -89,11 +97,11 @@
 <div class="dnnForm" id="tabs-demo">
         <ul class="dnnAdminTabNav">
             <li><a href="#Main">Main</a></li>
-           <% if (TabId == TabDocsWithDiscrepancies) %>
+            <% if (TabId == 240) %>
                 <%{ %>
                     <li><a href="#tabCharge">Charge</a></li>
             <% }
-               else if (TabId == TabDocsReject) %>
+            else if (TabId == 241) %>
                     <%{%>
                         <li><a href="#tabCharge">Charge</a></li>
             <% } %>
@@ -1131,4 +1139,7 @@
         });
         </script>
 </telerik:RadCodeBlock>
-<div style="visibility: hidden;"><asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" /></div>
+<div style="visibility: hidden;">
+    <asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" />
+    <asp:Button ID="btnReportThuGoiChungTu" runat="server" OnClick="btnReportThuGoiChungTu_Click" Text="ThuGoiChungTu" />
+</div>

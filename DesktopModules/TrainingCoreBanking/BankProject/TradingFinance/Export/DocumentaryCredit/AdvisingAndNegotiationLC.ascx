@@ -11,9 +11,9 @@
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
         var today = (month) + "/" + (day)+ "/" + now.getFullYear();
         $("#<%=DateConfirm.ClientID %>").val(today)
-        $(".reEditorModesCell").hide();
-        $(".reBottomZone").hide();
-        $(".reResizeCell").hide();
+        //$(".reEditorModesCell").hide();
+        //$(".reBottomZone").hide();
+        //$(".reResizeCell").hide();
         
     });
     function OnClientButtonClicking(sender, args) {
@@ -151,7 +151,7 @@
             </table>
             </div>
             <div runat="server" id="divCancelLC">
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <table style="width:100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">Cancel Date</td>
                     <td class="MyContent">
@@ -789,7 +789,8 @@
                 <tr>
                     <td style="width: 250px; vertical-align: top;" class="MyLable">45A. Description of Goods/Services</td>
                     <td class="MyContent" style="vertical-align: top;">
-                        <telerik:RadEditor runat="server" ID="txtEdittor_DescrpofGoods" Height="200" ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
+                        <telerik:RadEditor runat="server" ID="txtEdittor_DescrpofGoods" Height="200" 
+                            ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
                     </td>
                 </tr>
             </table>

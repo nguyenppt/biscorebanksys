@@ -70,8 +70,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
         }
         protected void Page_Load(object sender, EventArgs e)
-        {
-
+        {            
             //BankProject.Controls.Commont.SetTatusFormControls(this.divCharge2.Controls, false);
             if (IsPostBack)
                 return;
@@ -341,16 +340,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void InitToolBarForCancel()
         {
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-            if (TabId == TabIssueLCCancel)// Cancel LC
-            {
-                divCancelLC.Visible = true;
-                SetDisableByReview(false);
-                LoadToolBar(true);
+            divCancelLC.Visible = true;
+            divAcceptLC.Visible = false;
+            LoadToolBar(true);
+            //if (TabId == TabIssueLCCancel)// Cancel LC
+            //{
 
+                //SetDisableByReview(false);
                 //tbEssurLCCode.Enabled = false;
-                dteCancelDate.Enabled = true;
-                dteContingentExpiryDate.Enabled = true;
-                txtCancelRemark.Enabled = true;
+                //dteCancelDate.Enabled = true;
+                //dteContingentExpiryDate.Enabled = true;
+                //txtCancelRemark.Enabled = true;
                 //RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                 //RadToolBar1.FindItemByValue("btPreview").Enabled = false;
                 RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
@@ -392,7 +392,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                             RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                             RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                            //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                             dteCancelDate.Enabled = true;
                             dteContingentExpiryDate.Enabled = true;
                             txtCancelRemark.Enabled = true;
@@ -428,19 +428,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             lblError.Text = "This Documentary was closed or waiting for approving closing";
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
+
                         else // Not yet authorize
                         {
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                         }
                         SetDisableByReview(false);
-                        if (_exportDoc.CancelStatus != "AUT")
+                        if (_exportDoc.CancelStatus != "AUT"&&_exportDoc.CancelStatus!="REV")
                         {
                             dteCancelDate.Enabled = true;
                             dteContingentExpiryDate.Enabled = true;
                             txtCancelRemark.Enabled = true;
                         }
                     }
-                }
+                //}
             }
         }
         protected void InitToolBarForAmend()
@@ -1144,6 +1145,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void InitDataSource()
         {
+            //rad editor
+            IntialEdittor(txtEdittor_DescrpofGoods);
+            IntialEdittor(txtEdittor_OrderDocs700);
+            IntialEdittor(txtEdittor_AdditionalConditions700);
+            IntialEdittor(txtEdittor_Charges700);
+            IntialEdittor(txtEdittor_PeriodforPresentation700);
+            IntialEdittor(txtEdittor_NegotgBank700);
+            IntialEdittor(txtEdittor_SendertoReceiverInfomation700);
             //disable Cancel
             divCancelLC.Visible = false;
             divAcceptLC.Visible = false;
@@ -2182,6 +2191,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         var Cot9_2 = "";
                         var Cot9_3 = "";
                         var IdentityNo = "";
+                        var tongtien = 0.00;
                         foreach (var item in objCharge)
                         {
                             VATNo = item.VATNo;
@@ -2190,29 +2200,44 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             Remarks = item.ChargeRemarks;
                             if (item.Chargecode == ELCAdvice)
                             {
-                                Cot9_1Name = item.Chargecode;
+                                
                                 var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
                                 if (lst != null)
                                 {
-                                    Cot9_1 = lst.Name_VN;
+                                    Cot9_1Name = lst.Name_VN;
+                                    Cot9_1 = Utils.CurrencyFormat(item.ChargeAmt, item.ChargeCcy) +" "+ item.ChargeCcy + " "+lst.PLAccount;
+                                    if (!String.IsNullOrEmpty(item.ChargeAmt.ToString()))
+                                    {
+                                        tongtien += double.Parse(item.ChargeAmt.ToString());
+                                    }
+                                    
                                 }
                             }
                             if (item.Chargecode == ELCConfirm)
                             {
-                                Cot9_2Name = item.Chargecode;
+                                
                                 var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
                                 if (lst != null)
                                 {
-                                    Cot9_2 = lst.Name_VN;
+                                    Cot9_2Name = lst.Name_VN;
+                                    Cot9_2 = Utils.CurrencyFormat(item.ChargeAmt, item.ChargeCcy) +" " +item.ChargeCcy + " "+lst.PLAccount;
+                                    if (!String.IsNullOrEmpty(item.ChargeAmt.ToString()))
+                                    {
+                                        tongtien += double.Parse(item.ChargeAmt.ToString());
+                                    }
                                 }
                             }
                             if (item.Chargecode == ELCOther)
                             {
-                                Cot9_3Name = item.Chargecode;
                                 var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
                                 if (lst != null)
                                 {
-                                    Cot9_3 = lst.Name_VN;
+                                    Cot9_3Name = lst.Name_VN;
+                                    Cot9_3 = Utils.CurrencyFormat(item.ChargeAmt, item.ChargeCcy) + " "+item.ChargeCcy +" " +lst.PLAccount;
+                                    if (!String.IsNullOrEmpty(item.ChargeAmt.ToString()))
+                                    {
+                                        tongtien += double.Parse(item.ChargeAmt.ToString());
+                                    }
                                 }
                             }
                         }
@@ -2224,8 +2249,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 IdentityNo = cu.IdentityNo;
                             }
                         }
-                        var docsotien = Utils.ReadNumber(obj.Currency, double.Parse(obj.Amount.ToString()));
-                        tbl1.Rows.Add(VATNo, obj.BeneficiaryName, DocCollectCode, obj.BeneficiaryAddr1, UserInfo.DisplayName,obj.BeneficiaryNo ,IdentityNo, ChargeAcct, Remarks, Cot9_1Name, Cot9_2Name, Cot9_3Name, Cot9_1, Cot9_2, Cot9_3, VATNo, obj.Amount, obj.Currency, docsotien);
+                        var docsotien = Utils.ReadNumber(obj.Currency, tongtien);
+                        tbl1.Rows.Add(VATNo, obj.BeneficiaryName, DocCollectCode, obj.BeneficiaryAddr1, UserInfo.DisplayName,obj.BeneficiaryNo ,IdentityNo, ChargeAcct, Remarks, Cot9_1Name, Cot9_2Name, Cot9_3Name, Cot9_1, Cot9_2, Cot9_3, VATNo, Utils.CurrencyFormat(tongtien,obj.Currency), obj.Currency, docsotien);
                         reportData.Tables.Add(tbl1);
                         break;
                 }
@@ -2245,6 +2270,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             catch (Exception ex)
             { }
         }
-        
+        protected void IntialEdittor(RadEditor txtEdittor)
+        {
+            txtEdittor.EditModes = EditModes.Design;
+            txtEdittor.Modules.Clear();
+        }
     }
 }
