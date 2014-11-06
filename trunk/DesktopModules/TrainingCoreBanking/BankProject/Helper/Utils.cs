@@ -235,5 +235,54 @@ namespace BankProject.Helper
             }
             return strR;
         }
+        public static string CurrencyFormat(object ob, string currency, string format = null)
+        {
+            try
+            {
+                if (ob == null) return "0";
+                if (String.IsNullOrWhiteSpace(format))
+                {
+                    format = _GetCurrencyFormat(currency);
+                }
+                if (ob.GetType() == typeof(string))
+                {
+                    decimal d = decimal.Parse(ob.ToString());
+                    return String.Format(format, ob.ToString());
+                }
+                return String.Format(format, ob);
+            }
+            catch (Exception)
+            {
+                return ob.ToString();
+            }
+        }
+        private static string _GetCurrencyFormat(string currency)
+        {
+            int dec = 2; //default
+            foreach (var it in NumberDecimal)
+            {
+                if (it.Key.Equals(currency))
+                {
+                    dec = it.Value;
+                    break;
+                }
+            }
+
+            string format = "{0:#,##0";
+            if (dec > 0)
+            {
+                format += "." + new string('#', dec);
+            }
+            return format + "}";
+        }
+        public static readonly Dictionary<string, int> NumberDecimal = new Dictionary<string, int>();
+        static Utils()
+        {
+            NumberDecimal.Add("VND", 0);
+            NumberDecimal.Add("JPY", 0);
+            NumberDecimal.Add("XAU", 4);
+            NumberDecimal.Add("VNL", 4);
+            NumberDecimal.Add("VTK", 4);
+        }
     }
 }
