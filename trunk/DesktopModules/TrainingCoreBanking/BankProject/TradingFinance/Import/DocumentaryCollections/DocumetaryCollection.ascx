@@ -315,7 +315,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Collection Type<span class="Required"> (*)</span></td>
+                    <td class="MyLable">1. Collection Type<span class="Required"> (*)</span></td>
                     <td style="width: 150px" class="MyContent">
                         <telerik:RadComboBox Width="355" DropDownCssClass="KDDL" AppendDataBoundItems="True"
                             ID="comboCollectionType" runat="server" AutoPostBack="True" 
@@ -361,7 +361,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Remitting Type</td>
+                    <td class="MyLable">2.1 Remitting Type</td>
                     <td class="MyContent">
                         <telerik:RadComboBox AutoPostBack="True" OnSelectedIndexChanged="comboRemittingType_OnSelectedIndexChanged"
                             ID="comboRemittingType" runat="server"
@@ -379,7 +379,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Remitting Bank No</td>
+                    <td class="MyLable">2.2 Remitting Bank No</td>
                     <td style="width: 150px" class="MyContent">
                         <telerik:RadTextBox ID="txtRemittingBankNo" runat="server"
                             AutoPostBack="True" OnTextChanged="txtRemittingBankNo_OnTextChanged"/>
@@ -393,21 +393,21 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Remitting Bank Addr.</td>
+                    <td class="MyLable">2.3 Remitting Bank Addr.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtRemittingBankAddr1" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Remitting Bank Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtRemittingBankAddr2" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Remitting Bank Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtRemittingBankAddr3" runat="server" Width="355" />
                     </td>
@@ -425,7 +425,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Remitting Bank Ref<span class="Required"> (*)</span></td>
+                    <td class="MyLable">2.4 Remitting Bank Ref<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtRemittingBankRef" runat="server" Width="355"
                             AutoPostBack="True" OnTextChanged="txtRemittingBankRef_OnTextChanged" />
@@ -450,7 +450,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0" style="display: none;">
                 <tr>
-                    <td class="MyLable">Drawee Type</td>
+                    <td class="MyLable"> Drawee Type</td>
                     <td class="MyContent">
                         <telerik:RadComboBox AutoPostBack="True" OnSelectedIndexChanged="comboDraweeType_OnSelectedIndexChanged"
                             ID="comboDraweeType" runat="server"
@@ -468,7 +468,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Drawee Cus No</td>
+                    <td class="MyLable">3.1 Drawee Cus No</td>
                     <td class="MyContent">
                         <telerik:RadComboBox Width="355" DropDownCssClass="KDDL"
                             AppendDataBoundItems="True" AutoPostBack="true"
@@ -507,28 +507,28 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Drawee Cus Name</td>
+                    <td class="MyLable">3.2 Drawee Cus Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeCusName" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Drawee Addr.</td>
+                    <td class="MyLable">3.3 Drawee Addr.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeAddr1" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Drawee Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeAddr2" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Drawee Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeAddr3" runat="server" Width="355" />
                     </td>
@@ -573,7 +573,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Drawer Cus No.</td>
+                    <td class="MyLable">4.1 Drawer Cus No.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDrawerCusNo" runat="server" Width="355" ReadOnly="True" />
                     </td>
@@ -582,28 +582,28 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Drawer Cus Name</td>
+                    <td class="MyLable">4.2 Drawer Cus Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDrawerCusName" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Drawer Addr.</td>
+                    <td class="MyLable">4.3 Drawer Addr.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDrawerAddr" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Drawer Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDrawerAddr1" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Drawer Addr.</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDrawerAddr2" runat="server" Width="355" />
                     </td>
@@ -617,7 +617,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Currency<span class="Required"> (*)</span></td>
+                    <td class="MyLable">5. Currency<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:RadComboBox
                             AutoPostBack="True"
@@ -646,7 +646,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Amount<span class="Required"> (*)</span></td>
+                    <td class="MyLable">6. Amount<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="numAmount" runat="server" AutoPostBack="True" OnTextChanged="numAmount_OnTextChanged" />
                         <asp:RequiredFieldValidator
@@ -662,7 +662,7 @@
 
                 <div runat="server" id="divAmount">
                     <tr>
-                        <td class="MyLable">Amount Old</td>
+                        <td class="MyLable">6.1 Amount Old</td>
                         <td class="MyContent">
                             <asp:Label ID="lblAmount_New" runat="server" ForeColor="#0091E1" />
                         </td>
@@ -670,7 +670,7 @@
                 </div>
 
                 <tr>
-                    <td class="MyLable">Docs Received Date</td>
+                    <td class="MyLable">7. Docs Received Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteDocsReceivedDate" runat="server" AutoPostBack="True"
                             OnSelectedDateChanged="dteDocsReceivedDate_OnSelectedDateChanged" />
@@ -678,14 +678,14 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Maturity Date</td>
+                    <td class="MyLable">8. Maturity Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteMaturityDate" runat="server" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Tenor</td>
+                    <td class="MyLable">9. Tenor</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtTenor" runat="server" Text="AT SIGHT" />
                     </td>
@@ -711,7 +711,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Tracer Date</td>
+                    <td class="MyLable">10. Tracer Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteTracerDate" runat="server" />
                     </td>
@@ -735,7 +735,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Account Officer</td>
+                    <td class="MyLable">11. Account Officer</td>
                     <td class="MyContent">
                         <telerik:RadComboBox ID="comboAccountOfficer" HighlightTemplatedItems="true" AppendDataBoundItems="True"
                             MarkFirstMatch="True"
@@ -747,7 +747,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Commodity<span class="Required"> (*)</span></td>
+                    <td class="MyLable">12. Commodity<span class="Required"> (*)</span></td>
                     <td style="width: 150px" class="MyContent">
                         <telerik:RadComboBox Width="355"
                             AppendDataBoundItems="True" AutoPostBack="true"
@@ -772,7 +772,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Docs Code</td>
+                    <td class="MyLable">13.1 Docs Code</td>
                     <td style="width: 150px" class="MyContent">
                         <telerik:RadComboBox Width="355"
                             AppendDataBoundItems="True"
@@ -787,7 +787,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">No. of Originals</td>
+                    <td class="MyLable">14.1 No. of Originals</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="numNoOfOriginals1" runat="server" MaxValue="999" MaxLength="3">
                             <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -796,7 +796,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">No. of Copies</td>
+                    <td class="MyLable">15.1 No. of Copies</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="numNoOfCopies1" runat="server" MaxValue="999" MaxLength="3">
                             <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -808,7 +808,7 @@
             <div runat="server" id="divDocsCode">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable">Docs Code</td>
+                        <td class="MyLable">13.2 Docs Code</td>
                         <td class="MyContent">
                             <telerik:RadComboBox Width="355"
                                 AppendDataBoundItems="True"
@@ -844,7 +844,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">No. of Originals</td>
+                        <td class="MyLable">14.2 No. of Originals</td>
                         <td class="MyContent">
                             <telerik:RadNumericTextBox ID="numNoOfOriginals2" runat="server" MaxValue="999" MaxLength="3">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -853,7 +853,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">No. of Copies</td>
+                        <td class="MyLable">15.2 No. of Copies</td>
                         <td class="MyContent">
                             <telerik:RadNumericTextBox ID="numNoOfCopies2" runat="server" MaxValue="999" MaxLength="3">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -865,7 +865,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable" style="vertical-align: top;">Other Docs</td>
+                    <td class="MyLable" style="vertical-align: top;">16. Other Docs</td>
                     <td class="MyContent">
                         <telerik:RadEditor runat="server" ID="txtEdittor_OtherDocs" Height="200" Width="355" BorderWidth="0"
                             ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
@@ -874,7 +874,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable" style="vertical-align: top;">Instruction to Cus</td>
+                    <td class="MyLable" style="vertical-align: top;">17. Instruction to Cus</td>
                     <td class="MyContent">
                         <telerik:RadEditor runat="server" ID="txtEdittor_InstructionToCus" Height="200" Width="355" BorderWidth="0"
                             ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTools.xml" />
@@ -897,21 +897,21 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Express No</td>
+                    <td class="MyLable">18. Express No</td>
                     <td class="MyContent">
                         <telerik:RadTextBox Width="355" ID="txtExpressNo" runat="server" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Invoice No</td>
+                    <td class="MyLable">19. Invoice No</td>
                     <td class="MyContent">
                         <telerik:RadTextBox Width="355" ID="txtInvoiceNo" runat="server" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Draft No.</td>
+                    <td class="MyLable">20. Draft No.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox Width="355" ID="txtDraftNo" runat="server" />
                     </td>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BankProject.Controls;
 using BankProject.DataProvider;
 using Telerik.Web.UI;
 using Telerik.Web.UI.Calendar;
@@ -372,11 +373,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             switch (commandName)
             {
                 case "save":
+                    if (!CheckFtVaild())
+                    {
+                        return;
+                    }
+
                     SaveData();
 
                     // reset form
                     GeneralCode();
-                    
+
                     SetDisableByReview(true);
 
                     LoadData(ref dataRow);
@@ -387,7 +393,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     divCharge2.Visible = false;
                     divChargeInfo2.Visible = false;
                     //tab charge
-                    
+
                     // DocumentaryCollectionCancel
                     divDocumentaryCollectionCancel.Visible = false;
                     // DocumentaryCollectionCancel
@@ -411,8 +417,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     Cal_TracerDate(false);
                     Session["DataKey"] = txtCode.Text;
 
-
-                    Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
+                    Response.Redirect("Default.aspx?tabid=" + TabId);
                     break;
 
                 case "review":
@@ -438,10 +443,19 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     break;
 
                 case "authorize":
+                    if (!CheckFtVaild())
+                    {
+                        return;
+                    }
+
                     Authorize();
                     break;
 
                 case "revert":
+                    if (!CheckFtVaild())
+                    {
+                        return;
+                    }
                     Revert();
                     break;
             }
@@ -544,6 +558,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void LoadData(ref DataRow drowDocColl)
         {
+            // neu FT = null thì ko get data
+            if (string.IsNullOrEmpty(txtCode.Text))
+            {
+                return;
+            }
+
+
             var dsDoc = SQLData.B_BDOCUMETARYCOLLECTION_GetByDocCollectCode(txtCode.Text.Trim(), TabId);
             if (dsDoc == null || dsDoc.Tables.Count <= 0)
             {
@@ -995,31 +1016,37 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 , txtExpressNo.Text.Trim()
                 , txtInvoiceNo.Text.Trim()
                 , txtCancelRemark.Text.Trim()
-                ,txtRemittingBankAddr2.Text.Trim()
-                ,txtRemittingBankAddr3.Text.Trim()
+                , txtRemittingBankAddr2.Text.Trim()
+                , txtRemittingBankAddr3.Text.Trim()
                 , comeFromUrl
                 , dteAcceptedDate.SelectedDate.ToString()
                 , txtAcceptedRemarks.Text.Trim()
                 , txtDraftNo.Text
                 );
 
-            SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue, tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue, tbChargePeriod.Text,
-                     rcbChargeCcy.SelectedValue, tbExcheRate.Text, tbChargeAmt.Text, rcbPartyCharged.SelectedValue, rcbOmortCharge.SelectedValue, "", "",
-                     rcbChargeStatus.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode.Text, lblTaxCcy.Text, lblTaxAmt.Text, "", "", "1", TabId);
+            SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
+                tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue, tbChargePeriod.Text,
+                rcbChargeCcy.SelectedValue, tbExcheRate.Text, tbChargeAmt.Text, rcbPartyCharged.SelectedValue,
+                rcbOmortCharge.SelectedValue, "", "",
+                rcbChargeStatus.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode.Text, lblTaxCcy.Text,
+                lblTaxAmt.Text, "", "", "1", TabId);
 
             //Ban đầu tạo 2 code phí, sau đó xóa đi 1 code phí, thì hệ thống không ghi nhận (không xóa được code phí)
             //-> Xư lý dấu '-' remove all value control 2
-            SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue, tbChargecode2.SelectedValue, rcbChargeAcct2.SelectedValue, tbChargePeriod2.Text,
-                    rcbChargeCcy2.SelectedValue, tbExcheRate2.Text, tbChargeAmt2.Text, rcbPartyCharged2.SelectedValue, rcbOmortCharges2.SelectedValue, "", "",
-                    rcbChargeStatus2.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode2.Text, lblTaxCcy2.Text, lblTaxAmt2.Text, "", "", "2", TabId);
+            SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
+                tbChargecode2.SelectedValue, rcbChargeAcct2.SelectedValue, tbChargePeriod2.Text,
+                rcbChargeCcy2.SelectedValue, tbExcheRate2.Text, tbChargeAmt2.Text, rcbPartyCharged2.SelectedValue,
+                rcbOmortCharges2.SelectedValue, "", "",
+                rcbChargeStatus2.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode2.Text,
+                lblTaxCcy2.Text, lblTaxAmt2.Text, "", "", "2", TabId);
 
             SQLData.B_BDOCUMETARYCOLLECTIONMT410_Insert(txtCode.Text.Trim(),
-                comboCreateMT410.SelectedValue.Trim(), 
+                comboCreateMT410.SelectedValue.Trim(),
                 txtGeneralMT410_2.Text.Trim(),
                 txtSendingBankTRN.Text.Trim(),
                 txtRelatedReference.Text.Trim(),
-                comboCurrency_TabMT410.SelectedValue, 
-                numAmount_TabMT410.Text, 
+                comboCurrency_TabMT410.SelectedValue,
+                numAmount_TabMT410.Text,
                 txtSenderToReceiverInfo_410_1.Text,
                 txtSenderToReceiverInfo_410_2.Text,
                 txtSenderToReceiverInfo_410_3.Text
@@ -1935,6 +1962,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             lblTaxCode2.Text = string.Empty;
             lblTaxCcy2.Text = string.Empty;
             lblTaxAmt2.Text = "0";
+        }
+
+        protected bool CheckFtVaild()
+        {
+            if (txtCode.Text.Length > 14 || txtCode.Text.Length < 14)
+            {
+                Commont.ShowClientMessageBox(Page, GetType(), "FT No. is invalid", 150);
+                return false;
+            }
+            return true;
         }
     }
 }
