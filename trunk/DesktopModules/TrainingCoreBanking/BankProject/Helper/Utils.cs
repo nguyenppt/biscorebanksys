@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Xml.Serialization;
 
@@ -283,6 +285,27 @@ namespace BankProject.Helper
             NumberDecimal.Add("XAU", 4);
             NumberDecimal.Add("VNL", 4);
             NumberDecimal.Add("VTK", 4);
+        }
+        public static DataTable CreateDataTable<T>(IEnumerable<T> list)
+        {
+            Type type = typeof(T);
+            var properties = type.GetProperties();
+
+            DataTable datatable = new DataTable();
+            foreach (PropertyInfo info in properties)
+            {
+                datatable.Columns.Add(new DataColumn(info.Name, info.PropertyType));
+            }
+            foreach (T entity in list)
+            {
+                object[] values = new object[properties.Length];
+                for (int i = 0; i < properties.Length; i++)
+                {
+                    values[i] = properties[i].GetValue(entity, null);
+                }
+                datatable.Rows.Add(values);
+            }
+            return datatable;
         }
     }
 }
