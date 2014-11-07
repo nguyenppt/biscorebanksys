@@ -196,9 +196,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         lblError.Text = "This LC is processing at Amend step";
                     }
-                    else if (_exportDoc.AcceptStatus != null)
-                    {
-                        if (_exportDoc.AcceptStatus == "REV")
+                    
+                    else    if (_exportDoc.AcceptStatus == "REV")
                         {
                             lblError.Text = "This LC is processing at REV step";
                         }
@@ -206,7 +205,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         {
                             lblError.Text = "This LC was accepted.";
                         }
-                    }
+                    
                     else
                     {
                         
@@ -2104,153 +2103,111 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/Export/";
                             reportTemplate = Context.Server.MapPath(reportTemplate + "BM_TTQT_LCXK_02A.doc");
                             reportSaveName = "ThuThongBao2A" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        }    
-                    //
-                        
-                        tbl1.Columns.Add("Ref");
-                        tbl1.Columns.Add("DateIssue");
-                        tbl1.Columns.Add("BeneficiaryName");
-                        tbl1.Columns.Add("NormalLCCode");
-                        tbl1.Columns.Add("ReceivingBank");
-                        //tbl1.Columns.Add("DateIssue");
-                        tbl1.Columns.Add("DateExpiry");
-                        tbl1.Columns.Add("Amount");
-                        tbl1.Columns.Add("ApplicantName");
-                        tbl1.Columns.Add("BeneficiaryNo");
-                        tbl1.Columns.Add("BeneficiaryAddress");
-                        tbl1.Columns.Add("Date");
-                        var strDateIssue = "";
-                        var strDateEpri = "";
-                        var strnow = "";
-                        if (obj.DateOfIssue != null)
-                        {
-                            strDateIssue = obj.DateOfIssue.Value.Date.Day + "/" + obj.DateOfIssue.Value.Date.Month + "/" + obj.DateOfIssue.Value.Date.Year;
                         }
-                        if (obj.DateExpiry != null)
+                        var query = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
+                        var TBThuTinDung = new List<ThuThongBao>();
+                        if (query != null)
                         {
-                            strDateEpri = obj.DateExpiry.Value.Date.Day + "/" + obj.DateExpiry.Value.Date.Month + "/" + obj.DateExpiry.Value.Date.Year;
+                            var DataThuThongBao = new ThuThongBao() { 
+                                BeneficiaryNo=query.BeneficiaryNo,
+                                BeneficiaryName=query.BeneficiaryName,
+                                BeneficiaryAddress=query.BeneficiaryAddr1,
+                                NormalLCCode=query.NormalLCCode,
+                                ReceivingBank=query.ReceivingBank,
+                                ApplicantNo=query.ApplicantNo,
+                                Currency=query.Currency,
+                                ApplicantName=query.ApplicantName,
+                                ApplicantAddress=query.ApplicantAddr1
+                            };
+                            if (query.Amount != null)
+                            {
+                                DataThuThongBao.Amount = double.Parse(query.Amount.ToString());
+                            }
+                            if (query.DateOfIssue != null)
+                            {
+                                DataThuThongBao.DateIssue = obj.DateOfIssue.Value.Date.Day + "/" + obj.DateOfIssue.Value.Date.Month + "/" + obj.DateOfIssue.Value.Date.Year;
+                            }
+                            if (query.DateExpiry != null)
+                            {
+                                DataThuThongBao.DateExpiry = obj.DateExpiry.Value.Date.Day + "/" + obj.DateExpiry.Value.Date.Month + "/" + obj.DateExpiry.Value.Date.Year;
+                            }
+                            DataThuThongBao.Date=DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+                            TBThuTinDung.Add(DataThuThongBao);
                         }
-                        strnow = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
-                        tbl1.Rows.Add(obj.NormalLCCode, strDateIssue, obj.BeneficiaryName, obj.NormalLCCode, obj.ReceivingBank, strDateEpri, obj.Amount, obj.ApplicantName, obj.BeneficiaryNo, obj.BeneficiaryAddr1, strnow);
-                        //
-                        reportData.Tables.Add(tbl1);
-                        break;
-                    case 2:
-                        reportTemplate = Context.Server.MapPath(reportTemplate + "Export_PhieuXuatNgoaiBang.doc");
-                        reportSaveName = "PhieuXuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        tbl1.Columns.Add("Day");
-                        tbl1.Columns.Add("Month");
-                        tbl1.Columns.Add("Year");
-                        tbl1.Columns.Add("NormalLCCode");
-                        tbl1.Columns.Add("CurrentUserLogin");
-                        tbl1.Columns.Add("ApplicantName");
-                        tbl1.Columns.Add("IdentityNo");
-                        tbl1.Columns.Add("ApplicantAddr1");
-                        tbl1.Columns.Add("ApplicantAddr2");
-                        tbl1.Columns.Add("ApplicantAddr3");
-                        tbl1.Columns.Add("Amount");
-                        tbl1.Columns.Add("Currency");
-                        tbl1.Columns.Add("SoTienVietBangChu");
-                        //tbl1.Columns.Add("NormalLCCode");
-                        var dtnow = DateTime.Now;
-                        var sotienbangchu = Utils.ReadNumber(obj.Currency,double.Parse(obj.Amount.ToString()));
-                        tbl1.Rows.Add(dtnow.Day, dtnow.Month, dtnow.Year, obj.NormalLCCode, UserInfo.DisplayName, obj.BeneficiaryName, obj.BeneficiaryNo, obj.ApplicantAddr1, obj.ApplicantAddr2, obj.ApplicantAddr3, obj.Amount, obj.Currency,sotienbangchu);
+                        tbl1 = Utils.CreateDataTable<ThuThongBao>(TBThuTinDung);
                         reportData.Tables.Add(tbl1);
                         break;
                     case 3:
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
                         reportSaveName = "PhieuThu" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        tbl1.Columns.Add("VATNo");
-                        tbl1.Columns.Add("CustomerName");
-                        tbl1.Columns.Add("DocCollectCode");
-                        tbl1.Columns.Add("CustomerAddress");
-                        tbl1.Columns.Add("UserNameLogin");
-                        tbl1.Columns.Add("CustomerID");
-                        //tbl1.Columns.Add("UserNameLogin");
-                        tbl1.Columns.Add("IdentityNo");
-                        tbl1.Columns.Add("ChargeAcct");
-                        tbl1.Columns.Add("Remarks");
-                        tbl1.Columns.Add("Cot9_1Name");
-                        tbl1.Columns.Add("Cot9_2Name");
-                        tbl1.Columns.Add("Cot9_3Name");
-                        tbl1.Columns.Add("Cot9_1");
-                        tbl1.Columns.Add("Cot9_2");
-                        tbl1.Columns.Add("Cot9_3");
-                        tbl1.Columns.Add("VAT");
-                        tbl1.Columns.Add("TongSoTienThanhToan");
-                        tbl1.Columns.Add("Currency");
-                        tbl1.Columns.Add("SoTienVietBangChu");
-                        var VATNo = "";
-                        var DocCollectCode = "";
-                        var ChargeAcct = "";
-                        var Remarks = "";
-                        var Cot9_1Name = "";
-                        var Cot9_2Name = "";
-                        var Cot9_3Name = "";
-                        var Cot9_1 = "";
-                        var Cot9_2 = "";
-                        var Cot9_3 = "";
-                        var IdentityNo = "";
-                        var tongtien = 0.00;
-                        foreach (var item in objCharge)
+                        var queryPhieuThu = (from CHA in entContext.BAdvisingAndNegotiationLCCharges
+                                             join AD in entContext.BAdvisingAndNegotiationLCs on CHA.DocCollectCode equals AD.NormalLCCode
+                                             join CU in entContext.BCUSTOMERS on AD.BeneficiaryNo equals CU.CustomerID
+                                             join BC in entContext.BCHARGECODEs on CHA.Chargecode equals BC.Code
+                                             where AD.NormalLCCode == tbEssurLCCode.Text
+                                             select new {CHA,AD,CU,BC });
+                        var tbPhieuThu = new List<PhieuThu>();
+                        var DataPhieuThu = new PhieuThu();
+                        foreach (var item in queryPhieuThu)
                         {
-                            VATNo = item.VATNo;
-                            DocCollectCode = item.DocCollectCode;
-                            ChargeAcct = item.ChargeAcct;
-                            Remarks = item.ChargeRemarks;
-                            if (item.Chargecode == ELCAdvice)
+                            DataPhieuThu.VATNo = item.CHA.VATNo;
+                            DataPhieuThu.CustomerName = item.AD.BeneficiaryName;
+                            DataPhieuThu.DocCollectCode = item.CHA.DocCollectCode;
+                            DataPhieuThu.CustomerAddress = item.AD.BeneficiaryAddr1;
+                            DataPhieuThu.UserNameLogin = UserInfo.DisplayName;
+                            DataPhieuThu.IdentityNo = item.CU.IdentityNo;
+                            DataPhieuThu.ChargeAcct = item.CHA.ChargeAcct;
+                            DataPhieuThu.Remarks = item.CHA.ChargeRemarks;
+                            DataPhieuThu.MCurrency = item.AD.Currency;
+                            DataPhieuThu.CustomerID = item.AD.BeneficiaryNo;    
+                                      
+                            if (item.CHA.Chargecode == "ELC.ADVISE")
                             {
+                                if (item.BC.Code == "ELC.ADVISE")
+                                {
+                                    DataPhieuThu.Cot9_1Name = item.BC.Name_VN;
+                                    DataPhieuThu.PL1 = item.BC.PLAccount;
+                                }
+                                if (item.CHA.ChargeAmt != null)
+                                {
+                                    DataPhieuThu.Amount1 = double.Parse(item.CHA.ChargeAmt.ToString());
+                                }
+                                DataPhieuThu.Currency1 = item.CHA.ChargeCcy;
                                 
-                                var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
-                                if (lst != null)
-                                {
-                                    Cot9_1Name = lst.Name_VN;
-                                    Cot9_1 = Utils.CurrencyFormat(item.ChargeAmt, item.ChargeCcy) +" "+ item.ChargeCcy + " "+lst.PLAccount;
-                                    if (!String.IsNullOrEmpty(item.ChargeAmt.ToString()))
-                                    {
-                                        tongtien += double.Parse(item.ChargeAmt.ToString());
-                                    }
-                                    
-                                }
                             }
-                            if (item.Chargecode == ELCConfirm)
+                            //tab2
+                            if (item.CHA.Chargecode == "ELC.CONFIRM")
                             {
-                                
-                                var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
-                                if (lst != null)
+                                if (item.BC.Code == "ELC.CONFIRM")
                                 {
-                                    Cot9_2Name = lst.Name_VN;
-                                    Cot9_2 = Utils.CurrencyFormat(item.ChargeAmt, item.ChargeCcy) +" " +item.ChargeCcy + " "+lst.PLAccount;
-                                    if (!String.IsNullOrEmpty(item.ChargeAmt.ToString()))
-                                    {
-                                        tongtien += double.Parse(item.ChargeAmt.ToString());
-                                    }
+                                    DataPhieuThu.Cot9_2Name = item.BC.Name_VN;
+                                    DataPhieuThu.PL2 = item.BC.PLAccount;
                                 }
+                                if (item.CHA.ChargeAmt != null)
+                                {
+                                    DataPhieuThu.Amount2 = double.Parse(item.CHA.ChargeAmt.ToString());
+                                }
+                                DataPhieuThu.Currency2 = item.CHA.ChargeCcy;
                             }
-                            if (item.Chargecode == ELCOther)
+
+                            //tab3
+                            if (item.CHA.Chargecode == "ELC.OTHER")
                             {
-                                var lst = entContext.BCHARGECODEs.Where(x => x.Code == item.Chargecode).FirstOrDefault();
-                                if (lst != null)
+                                if (item.BC.Code == "ELC.OTHER")
                                 {
-                                    Cot9_3Name = lst.Name_VN;
-                                    Cot9_3 = Utils.CurrencyFormat(item.ChargeAmt, item.ChargeCcy) + " "+item.ChargeCcy +" " +lst.PLAccount;
-                                    if (!String.IsNullOrEmpty(item.ChargeAmt.ToString()))
-                                    {
-                                        tongtien += double.Parse(item.ChargeAmt.ToString());
-                                    }
+                                    DataPhieuThu.Cot9_3Name = item.BC.Name_VN;
+                                    DataPhieuThu.PL3 = item.BC.PLAccount;
                                 }
+                                if (item.CHA.ChargeAmt != null)
+                                {
+                                    DataPhieuThu.Amount3 = double.Parse(item.CHA.ChargeAmt.ToString());
+                                }
+                                DataPhieuThu.Currency3 = item.CHA.ChargeCcy;
                             }
+                            
                         }
-                        if (!String.IsNullOrEmpty(obj.BeneficiaryNo))
-                        {
-                            var cu = entContext.BCUSTOMERS.Where(x => x.CustomerID == obj.BeneficiaryNo).FirstOrDefault();
-                            if (cu != null)
-                            {
-                                IdentityNo = cu.IdentityNo;
-                            }
-                        }
-                        var docsotien = Utils.ReadNumber(obj.Currency, tongtien);
-                        tbl1.Rows.Add(VATNo, obj.BeneficiaryName, DocCollectCode, obj.BeneficiaryAddr1, UserInfo.DisplayName,obj.BeneficiaryNo ,IdentityNo, ChargeAcct, Remarks, Cot9_1Name, Cot9_2Name, Cot9_3Name, Cot9_1, Cot9_2, Cot9_3, VATNo, Utils.CurrencyFormat(tongtien,obj.Currency), obj.Currency, docsotien);
+                        tbPhieuThu.Add(DataPhieuThu);
+                        tbl1= Utils.CreateDataTable<PhieuThu>(tbPhieuThu);
                         reportData.Tables.Add(tbl1);
                         break;
                 }

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Data.Objects;
 using BankProject.Helper;
 using BankProject.Model;
+using System.Reflection;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
@@ -1211,9 +1212,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         txtCode.Enabled = true;
                         //
                         var name=txtCode.Text.Split('.');
+                        var namese = name[0];
                         if(name!=null)
                         {
-                            var lstOriginalBA=entContext.BAdvisingAndNegotiationLCs.Where(x=>x.NormalLCCode==name[0]).FirstOrDefault();
+                            var lstOriginalBA = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == namese).FirstOrDefault();
                             if(lstOriginalBA!=null)
                             {
                                 txtCustomerName.Value = lstOriginalBA.BeneficiaryName;
@@ -1440,8 +1442,204 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             showReport(1);
         }
+        protected void btnReportPhieuXuatNgoaiBang_Click(object sender, EventArgs e)
+        {
+            showReport(2);
+        }
+        protected void btnReportPhieuThu_Click(object sender, EventArgs e)
+        {
+            showReport(3);
+        }
         private void showReport(int reportType)
         {
+            string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/Export/";
+            string reportSaveName = "";
+            DataSet reportData = new DataSet();
+            DataTable tbl1 = new DataTable();
+            Aspose.Words.SaveFormat saveFormat = Aspose.Words.SaveFormat.Doc;
+            Aspose.Words.SaveType saveType = Aspose.Words.SaveType.OpenInApplication;
+            try
+            {
+                var name = txtCode.Text.Split('.');
+                var strname = "";
+                if (name.Length > 0)
+                {
+                    strname = name[0];
+                }
+                switch (reportType)
+                {
+                    case 1:
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "ThuThongBaoBoChungTu.doc");
+                        reportSaveName = "ThuThongBaoBoChungTu" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        //bind Data
+                        var strnow = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+                        var query = (from DC in entContext.BEXPORT_DOCUMENTPROCESSINGs
+                             join AD in entContext.BAdvisingAndNegotiationLCs on DC.LCCode equals AD.NormalLCCode
+                             where DC.PaymentId==txtCode.Text
+                             select new {DC,AD });
+                        var lst = new List<CoverNhoThu>();
+                        var strDateEpri = "";
+                        foreach (var item in query)
+                        {
+                            CoverNhoThu itemdata = new CoverNhoThu { 
+                                 AdCurrency = item.AD.Currency,
+                                ApplicantAddress = item.AD.ApplicantAddr1,
+                                ApplicantName = item.AD.ApplicantName,
+                                ApplicantNo = item.AD.ApplicantNo,
+                                BeneficiaryAddress = item.AD.BeneficiaryAddr1,
+                                BeneficiaryName = item.AD.BeneficiaryName,
+                                BeneficiaryNo = item.AD.BeneficiaryNo,
+                                CollectionNo = item.DC.PaymentId,
+                                CurrentDate = strnow,
+                                DateExpirity = strDateEpri,
+                                DocCurrency1 = item.DC.Currency,
+                                DraweeName = item.AD.DraweeName,
+                                DraweeNo = item.AD.DraweeNo,
+                                LCCode = item.AD.NormalLCCode,
+                                DocsCode1 = item.DC.DocsCode1 + " " + item.DC.NoOfCopies1 + " " + item.DC.NoOfOriginals1 + " C",
+                                DocsCode2 = item.DC.DocsCode2 + " " + item.DC.NoOfCopies2 + " " + item.DC.NoOfOriginals2 + " C",
+                                DocsCode3 = item.DC.DocsCode3 + " " + item.DC.NoOfCopies3 + " " + item.DC.NoOfOriginals3 + " C",
+                            };
+                            if (item.AD.DateExpiry != null)
+                            {
+                                itemdata.DateExpirity= item.AD.DateExpiry.Value.Date.Day + "/" + item.AD.DateExpiry.Value.Date.Month + "/" + item.AD.DateExpiry.Value.Date.Year;
+                            }
+                            if (item.DC.Amount != null)
+                            {
+                                itemdata.DocAmount1 = double.Parse(item.DC.Amount.ToString());
+                            }
+                            if (item.DC.FullDocsAmount != null)
+                            {
+                                itemdata.TotalAmount = double.Parse(item.DC.FullDocsAmount.ToString());
+                            }
+                            lst.Add(itemdata);
+                        }
+                        tbl1 = Utils.CreateDataTable<CoverNhoThu>(lst);
+                        reportData.Tables.Add(tbl1);
+                        break;
+                    case 2:
+
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "Export_PhieuXuatNgoaiBang.doc");
+                        reportSaveName = "PhieuXuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        var PNgoaiBang = (from BE in entContext.BEXPORT_DOCUMENTPROCESSINGs
+                                          join AD in entContext.BAdvisingAndNegotiationLCs on BE.LCCode equals AD.NormalLCCode
+                                          join CU in entContext.BCUSTOMERS on AD.BeneficiaryNo equals CU.CustomerID
+                                          where BE.PaymentId==txtCode.Text
+                                          select new { BE,AD,CU});
+                        var BNgoaiBang = new List<PhieuXuatNgoaiBang>();
+                        foreach (var item in PNgoaiBang)
+                        {
+                            var dataPhieuNgoaiBang = new PhieuXuatNgoaiBang {
+                                ApplicantAddr1 = item.AD.ApplicantAddr1,
+                                ApplicantAddr2 = item.AD.ApplicantAddr2,
+                                ApplicantAddr3 = item.AD.ApplicantAddr3,
+                                ApplicantName = item.AD.ApplicantName,
+                                Currency = item.BE.Currency,
+                                CurrentUserLogin = UserInfo.DisplayName,
+                                IdentityNo = item.CU.IdentityNo,
+                                NormalLCCode = item.BE.LCCode         
+                            };
+                            if (item.BE.Amount != null)
+                            {
+                                dataPhieuNgoaiBang.Amount = double.Parse(item.BE.Amount.ToString());
+                            }
+                            BNgoaiBang.Add(dataPhieuNgoaiBang);
+                        }
+                        //
+                        tbl1 = Utils.CreateDataTable<PhieuXuatNgoaiBang>(BNgoaiBang);
+                        reportData.Tables.Add(tbl1);
+                        break;
+                    case 3:
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
+                        reportSaveName = "PhieuThu" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        var queryPhieuThu = (from CHA in entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs
+                                             join BE in entContext.BEXPORT_DOCUMENTPROCESSINGs on CHA.LCCode equals BE.PaymentId
+                                             join AD in entContext.BAdvisingAndNegotiationLCs on BE.LCCode equals AD.NormalLCCode
+                                             join CU in entContext.BCUSTOMERS on AD.BeneficiaryNo equals CU.CustomerID
+                                             join BC in entContext.BCHARGECODEs on CHA.Chargecode equals BC.Code
+                                             where CHA.LCCode == txtCode.Text
+                                             select new { CHA, BE, AD, CU, BC });
+                        var tbPhieuThu = new List<PhieuThu>();
+                        var DataPhieuThu = new PhieuThu();
+                        foreach (var item in queryPhieuThu)
+                        {
+                            DataPhieuThu.VATNo = item.CHA.VATNo;
+                            DataPhieuThu.CustomerName = item.AD.BeneficiaryName;
+                            DataPhieuThu.DocCollectCode = item.CHA.LCCode;
+                            DataPhieuThu.CustomerAddress = item.AD.BeneficiaryAddr1;
+                            DataPhieuThu.UserNameLogin = UserInfo.DisplayName;
+                            DataPhieuThu.IdentityNo = item.CU.IdentityNo;
+                            DataPhieuThu.ChargeAcct = item.CHA.ChargeAcct;
+                            DataPhieuThu.Remarks = item.CHA.ChargeRemarks;
+                            DataPhieuThu.MCurrency = item.AD.Currency;
+                            DataPhieuThu.CustomerID = item.AD.BeneficiaryNo;
+                            if (item.CHA.Chargecode == "ELC.ADVISE")
+                            {
+                                if (item.BC.Code == "ELC.ADVISE")
+                                {
+                                    DataPhieuThu.Cot9_1Name = item.BC.Name_VN;
+                                    DataPhieuThu.PL1 = item.BC.PLAccount;
+                                }
+                                if (item.CHA.ChargeAmt != null)
+                                {
+                                    DataPhieuThu.Amount1 = double.Parse(item.CHA.ChargeAmt.ToString());
+                                }
+                                DataPhieuThu.Currency1 = item.CHA.ChargeCcy;
+                                
+                            }
+                            //tab2
+                            if (item.CHA.Chargecode == "ELC.CONFIRM")
+                            {
+                                if (item.BC.Code == "ELC.CONFIRM")
+                                {
+                                    DataPhieuThu.Cot9_2Name = item.BC.Name_VN;
+                                    DataPhieuThu.PL2 = item.BC.PLAccount;
+                                }
+                                if (item.CHA.ChargeAmt != null)
+                                {
+                                    DataPhieuThu.Amount2 = double.Parse(item.CHA.ChargeAmt.ToString());
+                                }
+                                DataPhieuThu.Currency2 = item.CHA.ChargeCcy;
+                            }
+
+                            //tab3
+                            if (item.CHA.Chargecode == "ELC.OTHER")
+                            {
+                                if (item.BC.Code == "ELC.OTHER")
+                                {
+                                    DataPhieuThu.Cot9_3Name = item.BC.Name_VN;
+                                    DataPhieuThu.PL3 = item.BC.PLAccount;
+                                }
+                                if (item.CHA.ChargeAmt != null)
+                                {
+                                    DataPhieuThu.Amount3 = double.Parse(item.CHA.ChargeAmt.ToString());
+                                }
+                                DataPhieuThu.Currency3 = item.CHA.ChargeCcy;
+                            }
+                            
+                        }
+                        tbPhieuThu.Add(DataPhieuThu);
+                        tbl1= Utils.CreateDataTable<PhieuThu>(tbPhieuThu);
+                        reportData.Tables.Add(tbl1);
+                        break;
+                }
+                if (reportData != null)
+                {
+                    try
+                    {
+                        reportData.Tables[0].TableName = "Table1";
+                        bc.Reports.createFileDownload(reportTemplate, reportData, reportSaveName, saveFormat, saveType, Response);
+                    }
+                    catch (Exception err)
+                    {
+                        lblError.Text = reportData.Tables[0].TableName + "#" + err.Message;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+            
+            }
         }
     }
 }

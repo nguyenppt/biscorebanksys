@@ -52,6 +52,29 @@
             if (result) {
                 $("#<%=btnReportThuGoiChungTu.ClientID %>").click();
             }
+            setTimeout(function(){
+                radconfirm("Do you want to download PhieuXuatNgoaiBang file?", confirmCallbackFunction_PhieuXuatNgoaiBang, 340, 150, null, 'Download');
+            },4000);
+        }
+        function confirmCallbackFunction_PhieuXuatNgoaiBang(result)
+        {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnReportPhieuXuatNgoaiBang.ClientID %>").click();
+            }
+            if(tabId==240)
+            {
+                setTimeout(function(){
+                    radconfirm("Do you want to download PhieuThu file?", confirmCallbackFunction_PhieuThu, 340, 150, null, 'Download');
+                },4000);
+            }
+        }
+        function confirmCallbackFunction_PhieuThu(result)
+        {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnReportPhieuThu.ClientID %>").click();
+            }
         }
         function OnDateSelected(sender, e) {
             alert(e.get_date());
@@ -1142,4 +1165,6 @@
 <div style="visibility: hidden;">
     <asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" />
     <asp:Button ID="btnReportThuGoiChungTu" runat="server" OnClick="btnReportThuGoiChungTu_Click" Text="ThuGoiChungTu" />
+    <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="ThuGoiChungTu" />
+    <asp:Button ID="btnReportPhieuThu" runat="server" OnClick="btnReportPhieuThu_Click" Text="ThuGoiChungTu" />
 </div>
