@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BankProject.DataProvider;
 using Telerik.Web.UI;
+using BankProject.Controls;
 
 namespace BankProject.TradingFinance.Import.DocumentaryCollections
 {
@@ -119,6 +120,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             switch (commandName)
             {
                 case "save":
+                    if (CheckFtVaild() == false)
+                    {
+                        return;
+                    }
                     if (B_INCOMINGCOLLECTIONPAYMENT_CheckAvailableAmt())
                     {
                         SaveData();
@@ -132,12 +137,21 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     break;
 
                 case "authorize":
+                    if (CheckFtVaild() == false)
+                    {
+                        return;
+                    }
+
                     SQLData.B_INCOMINGCOLLECTIONPAYMENT_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString());
                     
                     Response.Redirect("Default.aspx?tabid=221");
                     break;
 
                 case "revert":
+                    if (CheckFtVaild() == false)
+                    {
+                        return;
+                    }
                     Revert();
                     break;
             }
@@ -260,6 +274,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void LoadData()
         {
+            // neu FT = null thì ko get data
+            if (string.IsNullOrEmpty(txtCode.Text))
+            {
+                return;
+            }
+
             var dsPayment = SQLData.B_INCOMINGCOLLECTIONPAYMENT_GetByPaymentCode(txtCode.Text.Trim());
             var status = string.Empty;
 
@@ -2640,5 +2660,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             e.Item.Attributes["CustomerName2"] = row["CustomerName2"].ToString();
         }
         #endregion
+
+        protected bool CheckFtVaild()
+        {
+            if (txtCode.Text.Length < 14)
+            {
+                Commont.ShowClientMessageBox(Page, GetType(), "FT No. is invalid", 150);
+                return false;
+            }
+            return true;
+        }
     }
 }
