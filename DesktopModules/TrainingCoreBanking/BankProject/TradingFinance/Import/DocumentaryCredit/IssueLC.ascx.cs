@@ -1023,14 +1023,23 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             switch (commandName)
             {
                 case bc.Commands.Commit:
+                    if (CheckFtVaild() == false)
+                    {
+                        return;
+                    }
+
                     if (TabId == TabIssueLCClose)
                     {
                         string ExternalReference = "";
-                        if (txtExternalReference.SelectedDate.HasValue) ExternalReference = txtExternalReference.SelectedDate.Value.ToString("MM/dd/yyyy");
-                        bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.UNA, cboGenerateDelivery.SelectedValue, ExternalReference, txtClosingRemark.Text);
+                        if (txtExternalReference.SelectedDate.HasValue)
+                            ExternalReference = txtExternalReference.SelectedDate.Value.ToString("MM/dd/yyyy");
+                        bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.UNA,
+                            cboGenerateDelivery.SelectedValue, ExternalReference, txtClosingRemark.Text);
                     }
                     else
+                    {
                         SaveData();
+                    }
                     Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
                     break;
 
@@ -1053,6 +1062,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
 
                 case bc.Commands.Authorize:
+                    if (CheckFtVaild() == false)
+                    {
+                        return;
+                    }
+
                     if (TabId == TabIssueLCClose)
                         bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.AUT);
                     else
@@ -1062,6 +1076,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
 
                 case bc.Commands.Reverse:
+                    if (CheckFtVaild() == false)
+                    {
+                        return;
+                    }
+
                     if (TabId == TabIssueLCClose)
                         bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.REV);
                     else
@@ -1620,6 +1639,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void LoadData(ref DataRow drowLC)
         {
+            // neu FT = null thì ko get data
+            if (string.IsNullOrEmpty(txtCode.Text))
+            {
+                return;
+            }
+
             var dsDoc = bd.SQLData.B_BIMPORT_NORMAILLC_GetByNormalLCCode(txtCode.Text.Trim(), TabId);
             if (dsDoc == null || dsDoc.Tables.Count <= 0)
             {
@@ -2956,6 +2981,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             } 
         }
 
-     
+        protected bool CheckFtVaild()
+        {
+            if (txtCode.Text.Length > 14 || txtCode.Text.Length < 14)
+            {
+                Commont.ShowClientMessageBox(Page, GetType(), "FT No. is invalid", 150);
+                return false;
+            }
+            return true;
+        }
     }
 }
