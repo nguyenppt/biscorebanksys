@@ -201,6 +201,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_OPEN_LOANWORK_ACCT_Check_Acct_Exist", CustomerID, Currency);
         }
+        public static DataSet Load_Customer_Info_From_BCUSTOMER_INFO(string CustomerID)
+        {
+            return sqldata.ndkExecuteDataset("Load_Customer_Info_From_BCUSTOMER_INFO", CustomerID);
+        }
         #endregion
         #region B_OPEN_COMMITMENT_CONTRACT
         public static DataSet B_OPEN_COMMITMENT_CONT_Load_ALLRepayAcct(string CustomerID, string Currency, string CategoryType)
@@ -294,10 +298,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_SUB_Load_for_tab_ORTHER_DETAILS", SubLimitID);
         }
-        public static DataSet B_CUSTOMER_LIMIT_ENQUIRY(string MaHanMucCha, string MaHanMucCon, string CustomerName, string CustomerID, string CollateralType,
+        public static DataSet B_CUSTOMER_LIMIT_ENQUIRY(string LimitType,string MaHanMucCha, string MaHanMucCon, string CustomerName, string CustomerID, string CollateralType,
             string CollateralCode, string Currency, double FromIntLimitAmt, double ToItnLimitAmt)
         {
-            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_ENQUIRY", MaHanMucCha, MaHanMucCon, CustomerName, CustomerID, CollateralType, CollateralCode,
+            return sqldata.ndkExecuteDataset("B_CUSTOMER_LIMIT_ENQUIRY",LimitType, MaHanMucCha, MaHanMucCon, CustomerName, CustomerID, CollateralType, CollateralCode,
                 Currency, FromIntLimitAmt, ToItnLimitAmt);
         }
         public static string B_CUSTOMER_LIMIT_LoadCustomerName(string CustomerID)
