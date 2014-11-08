@@ -878,6 +878,14 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("BINWARD_PROC_CRE_ACCT_Preview_List");
         }
+        public static DataSet Load_Acct_Info_From_BOPENACCOUNT(string Currency, string AccountID)
+        {
+            return sqldata.ndkExecuteDataset("Load_Acct_Info_From_BOPENACCOUNT", Currency, AccountID);
+        }
+        public static DataSet Load_Customer_Info_From_BCUSTOMER_INFO(string CustomerID)
+        {
+            return sqldata.ndkExecuteDataset("Load_Customer_Info_From_BCUSTOMER_INFO", CustomerID);
+        }
         #endregion
 
     }
