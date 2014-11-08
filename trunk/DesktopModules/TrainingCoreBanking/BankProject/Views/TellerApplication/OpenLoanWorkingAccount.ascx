@@ -13,13 +13,13 @@
     });
    
     function OnValueChanged_GetAccountName(sender, args) {
-        var CustomerName = $find("<%=rcbCustomerID.ClientID%>").get_selectedItem().get_text();
+        var CustomerName = $find("<%=tbCustomerName.ClientID%>").get_value();
         var Currency = $find("<%=rcbCurrency.ClientID%>").get_selectedItem().get_value();
         var AccountName = $find("<%=txtAccountName.ClientID%>");
         var ShortTittle = $find("<%=tbShortTitle.ClientID%>");
         if (CustomerName && Currency) {
-            AccountName.set_value("TKTV-" + CustomerName.substr(10, CustomerName.length - 1) + "-" + Currency);
-            ShortTittle.set_value("TKTV-" + CustomerName.substr(10, CustomerName.length - 1) + "-" + Currency);
+            AccountName.set_value("TKTV-" + CustomerName + "-" + Currency);
+            ShortTittle.set_value("TKTV-" + CustomerName + "-" + Currency);
         }
     }
 </script>
@@ -76,24 +76,27 @@
             <tr>
                 <td class="MyLable">CustomerID:<span class="Required">(*)</span>
                     <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator1"
-                        ControlToValidate="rcbCustomerID" ValidationGroup="Commit" InitialValue="" ErrorMessage="CustomerID is required"
+                        ControlToValidate="tbCustomerID" ValidationGroup="Commit" InitialValue="" ErrorMessage="CustomerID is required"
                         ForeColor="Red"  ></asp:RequiredFieldValidator>
                 </td>
                 <td class="MyContent">
                     <table width="100%" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td width="350">
-                                    <telerik:RadComboBox AppendDataBoundItems="True" OnClientSelectedIndexChanged="OnValueChanged_GetAccountName"                                
-                                        ID="rcbCustomerID" runat="server" OnItemDataBound="rcbCustomerID_OnItemDataBound"
-                                        MarkFirstMatch="True" Width="350" Height="150px" ForeColor="Black" 
-                                        AllowCustomText="false" >
-                                        <ExpandAnimation Type="None" />
-                                        <CollapseAnimation Type="None" /> 
-                                        <Items>
-                                            <telerik:RadComboBoxItem Value="" Text="" />
-                                        </Items>
-                                    </telerik:RadComboBox>
-                                    </td>                          
+                                    <telerik:RadTextBox id="tbCustomerID" runat="server" autoPostBack="true" ontextChanged="tbCustomerID_ontextChanged" >
+                                        <ClientEvents OnBlur="OnValueChanged_GetAccountName" />
+                                        </telerik:RadTextBox>
+                                    </td>
+                                <td class="Content">
+                                    <telerik:RadTextBox id="tbCustomerName" runat="server" borderwidth="0" readOnly="true"
+                                       />
+                                </td>                          
+                                <td class="Content" style="visibility:hidden;">
+                                    <telerik:RadTextBox id="wef" runat="server" ></telerik:RadTextBox>
+                                </td>  
+                                 <td class="Content" style="visibility:hidden;">
+                                    <telerik:RadTextBox id="RadTextBox1" runat="server" ></telerik:RadTextBox>
+                                </td>                           
                             </tr>
                         </table>
                 </td>            
@@ -105,7 +108,7 @@
                         ForeColor="Red"></asp:RequiredFieldValidator>                 
                 </td>
                 <td class="MyContent">
-                    <telerik:RadComboBox ID="rcbCategory" runat="server" MarkFirstMatch="true" Width="350" AllowCustomtext="false" Height="150px"
+                    <telerik:RadComboBox ID="rcbCategory" runat="server" MarkFirstMatch="true"  AllowCustomtext="false" Height="150px"
                         appendDataboundItems ="true" ForeColor="Black"   >
                         <ExpandAnimation Type="None" />
                         <CollapseAnimation Type="None" />                
@@ -125,8 +128,8 @@
                         ForeColor="Red"></asp:RequiredFieldValidator>
                 </td>
                 <td class="MyContent">
-                    <telerik:RadComboBox id="rcbCurrency" width="150" runat="server"  appenddatabounditems="true" Height="150px"
-                    MarkFirstMatch="true" AllowCustomText="false" OnClientSelectedIndexChanged="OnValueChanged_GetAccountName"
+                    <telerik:RadComboBox id="rcbCurrency" width="150" runat="server"  appenddatabounditems="true" Height="150px" 
+                    MarkFirstMatch="true" AllowCustomText="false" OnSelectedIndexChanged="rcbCurrency_OnValueChanged" autoPostBack="true"
                     ForeColor="Black"   >
                 <ExpandAnimation type="None" />
                 <CollapseAnimation type="None" />
@@ -155,6 +158,25 @@
             </table>
          <hr />
         <table style="visibility:hidden;">
+            <tr>
+                <td class="MyContent">
+                    <telerik:RadTextBox id="tbDocType" runat="server" ValidationGroup="Group1" ForeColor="Black"  />
+                </td>
+                <td class="MyContent">
+                    <telerik:RadTextBox id="tbDocID" runat="server" ValidationGroup="Group1" ForeColor="Black"  />
+                </td>
+                <td class="MyContent">
+                    <telerik:RadTextBox id="tbDocIssuePlace" runat="server" ValidationGroup="Group1" ForeColor="Black"  />
+                </td>
+            </tr>
+            <tr>
+                <td class="MyContent">
+                    <telerik:RadDatePicker id="rdpIssueDate" runat="server" />
+                </td>
+                <td class="MyContent">
+                    <telerik:RadDatePicker id="rdpExpiryDate" runat="server" />
+                </td>
+            </tr>
             <tr>
                 <td class="MyLable">Product Line:<span class="Required">(*)  </span>
                 </td>
@@ -252,9 +274,28 @@
 <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server"
     DefaultLoadingPanelID="AjaxLoadingPanel1">
     <AjaxSettings>
-        <telerik:AjaxSetting AjaxControlID="rcbCustomerID">
+        <telerik:AjaxSetting AjaxControlID="tbCustomerID">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblCustomer" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbCustomerID">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="tbCustomerName" />
+                <telerik:AjaxUpdatedControl ControlID="tbDocType" />
+                <telerik:AjaxUpdatedControl ControlID="tbDocID" />
+                <telerik:AjaxUpdatedControl ControlID="tbDocIssuePlace" />
+                <telerik:AjaxUpdatedControl ControlID="rdpIssueDate" />
+                <telerik:AjaxUpdatedControl ControlID="txtAccountName" />
+                <telerik:AjaxUpdatedControl ControlID="tbShortTitle" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="rcbCurrency">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="txtAccountName" />
+                <telerik:AjaxUpdatedControl ControlID="tbShortTitle" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>

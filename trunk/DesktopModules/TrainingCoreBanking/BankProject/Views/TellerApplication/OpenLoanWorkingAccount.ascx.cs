@@ -37,7 +37,7 @@ namespace BankProject.Views.TellerApplication
             {
                 LoadToolBar(true);
                 this.tbID.Text = "07." + TriTT.B_BCUSTOMER_GetID_Corporate("B_OPEN_LOANWORK_ACCT_Get_RefID", "LOAN_WORKING_ACCT").PadLeft(9, '0') + ".6";
-                rcbCustomerID.Focus();
+                tbCustomerID.Focus();
             }
             
         }
@@ -48,16 +48,20 @@ namespace BankProject.Views.TellerApplication
             string commandName = toolBarButton.CommandName;
             if (commandName == "commit")
             {
-                DataSet ds = TriTT.B_OPEN_LOANWORK_ACCT_Check_Acct_Exist(rcbCustomerID.SelectedValue, rcbCurrency.SelectedValue);
+                DataSet ds = TriTT.B_OPEN_LOANWORK_ACCT_Check_Acct_Exist(tbCustomerID.Text, rcbCurrency.SelectedValue);
                 if (ds.Tables != null && ds.Tables[0].Rows.Count == 0) // tai khoan chua ton tai o DB , co the tao new dc
                 {
-                    TriTT.B_OPEN_LOANWORK_ACCT_Insert_Update_Acct(tbID.Text, rcbCustomerID.SelectedValue, "UNA", rcbCustomerID.SelectedItem.Attributes["GBFullName"], rcbCustomerID.SelectedItem.Attributes["DocType"],
-                         rcbCustomerID.SelectedItem.Attributes["DocID"], rcbCustomerID.SelectedItem.Attributes["DocIssuePlace"], rcbCustomerID.SelectedItem.Attributes["DocIssueDate"].ToString(),
-                         rcbCustomerID.SelectedItem.Attributes["DocExpiryDate"].ToString() , rcbCategory.SelectedValue, rcbCategory.Text.Replace(rcbCategory.SelectedValue + " - ", ""), txtAccountName.Text, tbShortTitle.Text, tbMnemonic.Text,
+                    if (tbCustomerName.Text == "Customer ID does not exist.")
+                    {
+                        ShowMsgBox("Customer ID does not exist, Please check again !"); return;
+                    }
+                    TriTT_Credit.B_OPEN_LOANWORK_ACCT_Insert_Update_Acct(tbID.Text, tbCustomerID.Text, "UNA", tbCustomerName.Text, tbDocType.Text,
+                        tbDocID.Text, tbDocIssuePlace.Text, rdpIssueDate.SelectedDate.HasValue ? Convert.ToString(rdpIssueDate.SelectedDate): "",
+                         "" , rcbCategory.SelectedValue, rcbCategory.Text.Replace(rcbCategory.SelectedValue + " - ", ""), txtAccountName.Text, tbShortTitle.Text, tbMnemonic.Text,
                          rcbCurrency.SelectedValue, rcbCurrency.SelectedValue, rcbProductLine.SelectedValue, rcbProductLine.Text.Replace(rcbProductLine.SelectedValue + " - ", ""),
                          tbAlternateAcct.Text, UserInfo.Username.ToString());
                     Response.Redirect("Default.aspx?tabid=184");
-                    rcbCustomerID.Focus();
+                    tbCustomerID.Focus();
                 }
                 else
                 {
@@ -71,16 +75,16 @@ namespace BankProject.Views.TellerApplication
             }
             if (commandName == "authozize") 
             {
-                TriTT.B_OPEN_LOANWORK_ACCT_Update_Status(tbID.Text , rcbCustomerID.SelectedValue,"AUT");
+                TriTT.B_OPEN_LOANWORK_ACCT_Update_Status(tbID.Text , tbCustomerID.Text,"AUT");
                 Response.Redirect("Default.aspx?tabid=184");
-                rcbCustomerID.Focus();
+                tbCustomerID.Focus();
             }
             if (commandName == "reverse")
             {
-                TriTT.B_OPEN_LOANWORK_ACCT_Update_Status(tbID.Text, rcbCustomerID.SelectedValue, "REV");
+                TriTT.B_OPEN_LOANWORK_ACCT_Update_Status(tbID.Text, tbCustomerID.Text, "REV");
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
                 LoadToolBar(true);
-                tbID.Enabled= rcbCustomerID.Enabled = false; //khong cho hieu chinh thong tin ID 
+                tbID.Enabled= tbCustomerID.Enabled = false; //khong cho hieu chinh thong tin ID 
             }
             if (commandName == "search")
             {
@@ -99,7 +103,6 @@ namespace BankProject.Views.TellerApplication
         private void LoadDataForCommboBox()
         {
             LoadCurrency();
-            LoadCustomerID();
             LoadCategory();
             LoadProductLine();
         }
@@ -109,8 +112,9 @@ namespace BankProject.Views.TellerApplication
             if(ds.Tables != null && ds.Tables.Count >0 && ds.Tables[0].Rows.Count >0)
             {
                 tbID.Text = ds.Tables[0].Rows[0]["ID"].ToString();
-                rcbCustomerID.SelectedValue = ds.Tables[0].Rows[0]["CustomerID"].ToString();
-                rcbCustomerID.Text = ds.Tables[0].Rows[0]["CustomerID"].ToString() + " - " + ds.Tables[0].Rows[0]["GBFullName"].ToString();
+                tbCustomerID.Text = ds.Tables[0].Rows[0]["CustomerID"].ToString();
+                //tbCustomerName.Text = ds.Tables[0].Rows[0]["CustomerID"].ToString() + " - " + ds.Tables[0].Rows[0]["GBFullName"].ToString();
+                LoadCustomerName(tbCustomerID.Text);
                 rcbCategory.SelectedValue = ds.Tables[0].Rows[0]["CategoryCode"].ToString();
                 rcbCategory.Text = ds.Tables[0].Rows[0]["CategoryCode"].ToString() + " - " + ds.Tables[0].Rows[0]["Categoryname"].ToString();
                 rcbCurrency.SelectedValue = ds.Tables[0].Rows[0]["CurrencyCode"].ToString();
@@ -161,22 +165,44 @@ namespace BankProject.Views.TellerApplication
             rcbCurrency.DataTextField = "Code";
             rcbCurrency.DataBind();
         }
-        private void LoadCustomerID()
+        protected void LoadCustomerName(string CustomerID)
         {
-            rcbCustomerID.DataSource = DataProvider.TriTT.B_OPEN_LOANWORK_ACCT_Get_ALLCustomerID();
-            rcbCustomerID.DataTextField = "CustomerHasName";
-            rcbCustomerID.DataValueField = "CustomerID";
-            rcbCustomerID.DataBind();
+            DataSet ds = TriTT_Credit.Load_Customer_Info_From_BCUSTOMER_INFO(CustomerID);
+            tbCustomerName.Text = "";
+            if (ds.Tables != null && ds.Tables[0].Rows.Count > 0 && ds.Tables.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].Rows[0];
+                tbCustomerName.Text = dr["GBFullName"].ToString();
+                tbDocType.Text = dr["DocType"].ToString();
+                tbDocID.Text = dr["DocID"].ToString();
+                tbDocIssuePlace.Text = dr["DocIssuePlace"].ToString();
+                if (dr["DocIssueDate"].ToString() !="") rdpIssueDate.SelectedDate = Convert.ToDateTime(dr["DocIssueDate"].ToString());
+            }
+            else
+            {
+                tbCustomerName.Text = "Customer ID does not exist.";
+                tbDocType.Text = "";
+                tbDocID.Text = "";
+                tbDocIssuePlace.Text = "";
+                rdpIssueDate.SelectedDate = null;
+            }
+            Set_Account_name();
         }
-        protected void rcbCustomerID_OnItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        protected void tbCustomerID_ontextChanged(object sender, EventArgs e)
         {
-            DataRowView Data = e.Item.DataItem as DataRowView;
-            e.Item.Attributes["DocType"] = Data["DocType"].ToString();
-            e.Item.Attributes["DocID"] = Data["DocID"].ToString();
-            e.Item.Attributes["DocIssuePlace"] = Data["DocIssuePlace"].ToString();
-            e.Item.Attributes["DocIssueDate"] = Data["DocIssueDate"].ToString();
-            e.Item.Attributes["DocExpiryDate"] = Data["DocExpiryDate"].ToString();
-            e.Item.Attributes["GBFullName"] = Data["GBFullName"].ToString();
+            LoadCustomerName(tbCustomerID.Text);
+        }
+        protected void rcbCurrency_OnValueChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            Set_Account_name();
+        }
+        protected void Set_Account_name()
+        {
+            if (tbCustomerID.Text != "" && tbCustomerName.Text != "Customer ID does not exist." && rcbCurrency.SelectedValue != "")
+            {
+                txtAccountName.Text = "TKTV-" + tbCustomerName.Text + "-" + rcbCurrency.SelectedValue;
+                tbShortTitle.Text = "TKTV-" + tbCustomerName.Text + "-" + rcbCurrency.SelectedValue;
+            }
         }
         private void LoadCategory()
         {

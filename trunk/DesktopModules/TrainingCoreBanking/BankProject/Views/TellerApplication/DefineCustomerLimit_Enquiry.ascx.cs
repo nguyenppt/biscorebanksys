@@ -27,14 +27,14 @@ namespace BankProject.Views.TellerApplication
             {
                 if (IsPostBack)
                 {
-                    RadGrid.DataSource = TriTT.B_CUSTOMER_LIMIT_ENQUIRY(tbMaHanMucCha.Text, tbMaHanMucCon.Text, tbFullName.Text, tbCustomerID.Text, rcbCollateralType.SelectedValue
+                    RadGrid.DataSource = TriTT_Credit.B_CUSTOMER_LIMIT_ENQUIRY(rcbLimitTYpe.SelectedValue,rcbGlobalLimit.SelectedValue, rcbProductLimitID.SelectedValue, tbFullName.Text, tbCustomerID.Text, rcbCollateralType.SelectedValue
                         , rcbCollateral.SelectedValue, rcbCurrency.SelectedValue, tbFromIntLimitAmt.Value.HasValue ? tbFromIntLimitAmt.Value.Value : 0
                         , tbToIntLimitAmt.Value.HasValue ? tbToIntLimitAmt.Value.Value : 0);
                     RadGrid.DataBind();
                 }
                 else 
                 {
-                    RadGrid.DataSource = TriTT.B_CUSTOMER_LIMIT_ENQUIRY("!", tbMaHanMucCon.Text, "<>", tbCustomerID.Text, rcbCollateralType.SelectedValue
+                    RadGrid.DataSource = TriTT.B_CUSTOMER_LIMIT_ENQUIRY("!", "!", "<>", tbCustomerID.Text, rcbCollateralType.SelectedValue
                         , rcbCollateral.SelectedValue, rcbCurrency.SelectedValue, tbFromIntLimitAmt.Value.HasValue ? tbFromIntLimitAmt.Value.Value : 0
                         , tbToIntLimitAmt.Value.HasValue ? tbToIntLimitAmt.Value.Value : 0);
                 }
@@ -44,15 +44,18 @@ namespace BankProject.Views.TellerApplication
         {
             if (IsPostBack)
             {
-                RadGrid.DataSource = TriTT.B_CUSTOMER_LIMIT_ENQUIRY(tbMaHanMucCha.Text, tbMaHanMucCon.Text, tbFullName.Text, tbCustomerID.Text, rcbCollateralType.SelectedValue
-                       , rcbCollateral.SelectedValue, rcbCurrency.SelectedValue, tbFromIntLimitAmt.Value.HasValue ? tbFromIntLimitAmt.Value.Value : 0
-                       , tbToIntLimitAmt.Value.HasValue ? tbToIntLimitAmt.Value.Value : 0);
-            } else
-            RadGrid.DataSource = TriTT.B_CUSTOMER_LIMIT_ENQUIRY("!","!","","","","","",-1,-1);
+                RadGrid.DataSource = TriTT_Credit.B_CUSTOMER_LIMIT_ENQUIRY(rcbLimitTYpe.SelectedValue,rcbGlobalLimit.SelectedValue, rcbProductLimitID.SelectedValue, tbFullName.Text, tbCustomerID.Text, rcbCollateralType.SelectedValue
+                        , rcbCollateral.SelectedValue, rcbCurrency.SelectedValue, tbFromIntLimitAmt.Value.HasValue ? tbFromIntLimitAmt.Value.Value : 0
+                        , tbToIntLimitAmt.Value.HasValue ? tbToIntLimitAmt.Value.Value : 0);
+            } 
         }
         protected string geturlReview(string MainLimitID, string SubLimitID)
         {
-            return string.Format("Default.aspx?tabid=361&MainLimitID={0}&SubLimitID={1}",MainLimitID, SubLimitID);
+            if (MainLimitID != "" && SubLimitID != "")
+                return string.Format("Default.aspx?tabid=361&MainLimitID={0}&SubLimitID={1}", MainLimitID, SubLimitID);
+            else if (MainLimitID != "" && SubLimitID == "")
+                return string.Format("Default.aspx?tabid=192&MainLimitID={0}&SubLimitID={1}", MainLimitID, SubLimitID);
+            else return "";
         }
         protected void rcbCollateralType_ONSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {

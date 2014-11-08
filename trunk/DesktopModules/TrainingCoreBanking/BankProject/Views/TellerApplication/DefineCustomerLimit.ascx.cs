@@ -18,13 +18,12 @@ namespace BankProject.Views.TellerApplication
         {
             if (IsPostBack) return;
             FirstLoad();
-            if (Request.QueryString["SubLimitID"] != null && Request.QueryString["MainLimitID"] != null)
+            if ( Request.QueryString["MainLimitID"] != null)
             {
                 LoadToolBar_AllFalse();
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
-                var SubLimitID = Request.QueryString["SubLimitID"].ToString();
-                Load_SubLimit_DataToReview(SubLimitID);
-                //Enable_toAudit = true;
+                var GlobalLimitID = Request.QueryString["MainLimitID"].ToString();
+                Load_MainLimit_DataToReview(GlobalLimitID);
             }
             else
             {
@@ -78,36 +77,6 @@ namespace BankProject.Views.TellerApplication
                         else { ShowMsgBox("Customer ID is not exists, Please check again !"); return; }
                     }
                     else { ShowMsgBox("Revoling Limit ID or Non-Revoling Limit ID is Incorrect, '7000' for Revoling and '8000' for Non-Revolving, Please check again !"); return; }
-                }
-                
-                if (LimitID.Length == 15) // kiem tra khi nhap han muc con
-                {
-                    string CustomerID = LimitID.Substring(0, 7);
-                    string HanMucCon = LimitID.Substring(8, 4);
-                    string HanMucCha="";
-                    if (HanMucCon == "7700") { HanMucCha = "7000"; } else if (HanMucCon == "8700") { HanMucCha = "8000"; }
-                    string STTSub = LimitID.Substring(13, 2);
-                    //if (HanMucCon == "7700" || HanMucCon == "8700")
-                    //{
-                    //    //if (TriTT.B_CUSTOMER_LIMIT_SUB_check_SubLimitID(LimitID).Tables[0].Rows.Count == 0)
-                    //    {
-                    //        TriTT.B_CUSTOMER_LIMIT_SUB_Insert_Update(CustomerID + "." + HanMucCha, LimitID, CustomerID, HanMucCon, STTSub, rcbFandA.SelectedValue, ""
-                    //            , "", "",
-                    //            "", lblCollReqdAmt.Text, lblColReqdPct.Text, lblUpToPeriod.Text
-                    //            , lblPeriodAmt.Text, lblPeriodPct.Text,tbMaxSecured.Text !=""? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")):0, tbMaxUnsecured.Text!=""? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")):0,
-                    //            tbMaxTotal.Text!=""? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
-                    //            , lblCollateralAmt.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha);
-                    //        Response.Redirect("Default.aspx?tabid=192");
-                    //    }
-                    //    //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
-                    //}
-                    //else
-                    //{ ShowMsgBox("SubRevoling Limit ID or SubNon-Revoling Limit ID is Incorrect, '7700' for SubRevoling and '8700' for SubNon-Revolving, Please check again !"); return; }
-                }
-                else
-                {
-                    ShowMsgBox("Format of Customer Limit ID is Wrong, Length of thisCustomer Limit ID is 12 or 15 characters,  Please check again !");
-                    return;
                 }
                 break;
                 case "search" :
@@ -255,12 +224,12 @@ namespace BankProject.Views.TellerApplication
         }
         protected void Load_MainLimit_ForLimitDetail(String LimitID)
         {
-            if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(LimitID.Substring(0, 7)) != null)
-            {
-                lblCheckCustomerName.Text = ""; 
-                lblCustomerName.Text = TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(LimitID.Substring(0, 7)).ToString();
-            }
-            else { lblCheckCustomerName.Text = "Customer does not exist !"; }
+            //if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(LimitID.Substring(0, 7)) != null)
+            //{
+            //    lblCheckCustomerName.Text = ""; 
+            //    lblCustomerName.Text = TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(LimitID.Substring(0, 7)).ToString();
+            //}
+            //else { lblCheckCustomerName.Text = "Customer does not exist !"; }
             DataSet ds = TriTT.B_CUSTOMER_LIMIT_Load_Customer_Limit(LimitID);
             if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0) // truong hop hanmuc cha da co o DB
             {
@@ -300,17 +269,62 @@ namespace BankProject.Views.TellerApplication
             }
             else // han muc cha chua co o DB, tao moi, khong disable form
             {
-                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                //BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                rcbCurrency.SelectedValue = ""; rcbCountry.SelectedValue = "";
+                RdpApprovedDate.SelectedDate = DateTime.Now;
+                RdpOfferedUnit.SelectedDate = DateTime.Now;
+                RdpAvailableDate.SelectedDate = DateTime.Now;
+                RdpProposalDate.SelectedDate = DateTime.Now; rdpExpiryDate.SelectedDate = null; tbIntLimitAmt.Text = ""; tbAdvisedAmt.Text = "";
+                tbNote.Text = ""; tbMaxSecured.Text = ""; tbMaxUnsecured.Text = ""; tbMaxTotal.Text = "";
+                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
                 FirstLoad();// refesh lai page, tranh luu lai du lieu cu cua lan`search truoc' do
                 rcbFandA.SelectedIndex = 0;
-                tbLimitID.Text = LimitID;
-                if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(LimitID.Substring(0, 7)) != null)
-                {
-                    lblCheckCustomerName.Text = ""; 
-                    lblCustomerName.Text = TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(LimitID.Substring(0, 7)).ToString();
-                }
-                else { lblCheckCustomerName.Text = "Customer does not exist !"; }
+                //tbLimitID.Text = LimitID;
+                //LoadCustomerName(tbCustomerID.Text);
+                //if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(LimitID.Substring(0, 7)) != null)
+                //{
+                //    lblCheckCustomerName.Text = ""; 
+                //    lblCustomerName.Text = TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(LimitID.Substring(0, 7)).ToString();
+                //}
+                //else { lblCheckCustomerName.Text = "Customer does not exist !"; }
                 rcbCollateral.Enabled= rcbCollateralType.Enabled= rcbFandA.Enabled = false;
+
+            }
+        }
+        protected void rcbCollateralType_ONSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            LoadCollateralCode(rcbCollateralType.SelectedValue);
+        }
+        protected void rcbGlobalLimit_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            if (tbCustomerID.Text != "" && rcbGlobalLimit.SelectedValue != "" && tbCustomerName.Text != "Customer ID does not exist.")
+            {
+                tbLimitID.Text = tbCustomerID.Text + "." + rcbGlobalLimit.SelectedValue;
+                if (rcbGlobalLimit.SelectedValue != "" && tbCustomerID.Text != "")
+                    Load_MainLimit_ForLimitDetail(tbLimitID.Text.Trim());
+            }
+        }
+        protected void tbCustomerID_TextChanged(object sender, EventArgs e)
+        {
+            LoadCustomerName(tbCustomerID.Text);
+            if (tbCustomerID.Text != "" && rcbGlobalLimit.SelectedValue != "" && tbCustomerName.Text != "Customer ID does not exist.")
+            {
+                tbLimitID.Text = tbCustomerID.Text + "." + rcbGlobalLimit.SelectedValue;
+                Load_MainLimit_ForLimitDetail(tbLimitID.Text.Trim());
+            }
+        }
+        protected void LoadCustomerName(string CustomerID)
+        {
+            DataSet ds = TriTT_Credit.Load_Customer_Info_From_BCUSTOMER_INFO(CustomerID);
+            tbCustomerName.Text = "";
+            if (ds.Tables != null && ds.Tables[0].Rows.Count > 0 && ds.Tables.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].Rows[0];
+                tbCustomerName.Text = dr["GBFullName"].ToString();
+            }
+            else
+            {
+                tbCustomerName.Text = "Customer ID does not exist.";
             }
         }
         #region Properties
@@ -325,7 +339,6 @@ namespace BankProject.Views.TellerApplication
             RdpOfferedUnit.SelectedDate = DateTime.Now;
             RdpAvailableDate.SelectedDate = DateTime.Now;
             RdpProposalDate.SelectedDate = DateTime.Now;
-            LoadCustomerID();
         }
         protected void LoadCountries()
         {
@@ -350,13 +363,13 @@ namespace BankProject.Views.TellerApplication
             rcbCurrency.DataTextField = "Code";
             rcbCurrency.DataBind();
         }
-        private void LoadCustomerID()
-        {
-            rcbCustomerID.DataSource = DataProvider.TriTT.B_OPEN_LOANWORK_ACCT_Get_ALLCustomerID();
-            rcbCustomerID.DataTextField = "CustomerHasName";
-            rcbCustomerID.DataValueField = "CustomerID";
-            rcbCustomerID.DataBind();
-        }
+        //private void LoadCustomerID()
+        //{
+        //    rcbCustomerID.DataSource = DataProvider.TriTT.B_OPEN_LOANWORK_ACCT_Get_ALLCustomerID();
+        //    rcbCustomerID.DataTextField = "CustomerHasName";
+        //    rcbCustomerID.DataValueField = "CustomerID";
+        //    rcbCustomerID.DataBind();
+        //}
         private void LoadToolBar(bool isauthorize)
         {
             RadToolBar1.FindItemByValue("btCommitData").Enabled = isauthorize;
@@ -365,7 +378,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             RadToolBar1.FindItemByValue("btSearch").Enabled = true;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-            RadToolBar1.FindItemByValue("btEdit").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = true;
         }
         protected void LoadToolBar_AllFalse()
         {
@@ -401,15 +414,7 @@ namespace BankProject.Views.TellerApplication
             rcbCollateral.DataTextField = "CollateralHasName";
             rcbCollateral.DataBind();
         }
-        protected void rcbCollateralType_ONSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            LoadCollateralCode(rcbCollateralType.SelectedValue);
-        }
-        protected void rcbGlobalLimit_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            if (rcbGlobalLimit.SelectedValue != "" && rcbCustomerID.SelectedValue != "")
-                Load_MainLimit_ForLimitDetail(tbLimitID.Text.Trim());
-        }
+        
         #endregion
        
     }

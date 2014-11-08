@@ -25,7 +25,6 @@ namespace BankProject.Views.TellerApplication
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                 var SubLimitID = Request.QueryString["SubLimitID"].ToString();
                 Load_SubLimit_DataToReview(SubLimitID);
-                //Enable_toAudit = true;
             }
             else
             {
@@ -44,7 +43,6 @@ namespace BankProject.Views.TellerApplication
             RdpOfferedUnit.SelectedDate = DateTime.Now;
             RdpAvailableDate.SelectedDate = DateTime.Now;
             RdpProposalDate.SelectedDate = DateTime.Now;
-            LoadCustomerID();
             rcbFandA.SelectedValue = "Variable";
             LoadProduct();
         }
@@ -87,13 +85,7 @@ namespace BankProject.Views.TellerApplication
             rcbProduct.DataTextField = "Display";
             rcbProduct.DataBind();
         }
-        private void LoadCustomerID()
-        {
-            rcbCustomerID.DataSource = DataProvider.TriTT.B_OPEN_LOANWORK_ACCT_Get_ALLCustomerID();
-            rcbCustomerID.DataTextField = "CustomerHasName";
-            rcbCustomerID.DataValueField = "CustomerID";
-            rcbCustomerID.DataBind();
-        }
+        
         private void LoadToolBar(bool isauthorize)
         {
             RadToolBar1.FindItemByValue("btCommitData").Enabled = isauthorize;
@@ -393,7 +385,36 @@ namespace BankProject.Views.TellerApplication
             }
 
         }
-        
+        protected void tbCustomerID_TextChanged(object sender, EventArgs e)
+        {
+            LoadCustomerName(tbCustomerID.Text);
+            if (tbCustomerID.Text != "" && rcbGlobalLimit.SelectedValue != "" && tbCustomerName.Text != "Customer ID does not exist.")
+            {
+                tbLimitID.Text = tbCustomerID.Text + "." + rcbGlobalLimit.SelectedValue +".";
+                //Load_MainLimit_ForLimitDetail(tbLimitID.Text.Trim());
+            }
+        }
+        protected void LoadCustomerName(string CustomerID)
+        {
+            DataSet ds = TriTT_Credit.Load_Customer_Info_From_BCUSTOMER_INFO(CustomerID);
+            tbCustomerName.Text = "";
+            if (ds.Tables != null && ds.Tables[0].Rows.Count > 0 && ds.Tables.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].Rows[0];
+                tbCustomerName.Text = dr["GBFullName"].ToString();
+            }
+            else
+            {
+                tbCustomerName.Text = "Customer ID does not exist.";
+            }
+        }
+        //protected void rcbProductLimit_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        //{
+        //    if (tbCustomerID.Text != "" && rcbGlobalLimit.SelectedValue != "" && tbCustomerName.Text != "Customer ID does not exist.")
+        //    {
+        //        tbLimitID.Text = tbCustomerID.Text + "." + rcbGlobalLimit.SelectedValue+".";
+        //    }
+        //}
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
         {
             string radalertscript =

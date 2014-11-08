@@ -14,25 +14,24 @@ using BankProject.DBContext;
 using BankProject.Common;
 using BankProject.Business;
 using System.Globalization;
+using DotNetNuke.Entities.Tabs;
 
 
 
 namespace BankProject.Views.TellerApplication
 {
-    public partial class NewNormalLoan : DotNetNuke.Entities.Modules.PortalModuleBase
+    public partial class NewNormalLoan_Repayment : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         INewNormalLoanBusiness<BNEWNORMALLOAN> loanBusiness;
         BNEWNORMALLOAN normalLoanEntryM;
         bool isApprovalRole = false;
         public double remainLoanAmountDis = 0;
-        private DateTime? disbursalDate = null;
-
         private string REFIX_MACODE = "LD";
-        bool isEdit = false;
         bool isAmendPage = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //var test = TabController.CurrentPage.ContentKey;
             if (Request.Params["role"] != null)
             {
                 if (Request.Params["role"].Equals("authorize"))
@@ -41,108 +40,27 @@ namespace BankProject.Views.TellerApplication
                 }
             }
 
-            if (Request.Params["tabid"] != null)
+            loanBusiness = new NewNormalLoanRepaymentBusiness();
+            if (Request.Params["codeid"] != null)
             {
-                if (Request.Params["tabid"] == "202")
-                {
-                    isAmendPage = true;
-                    isEdit = true;
-                    loanBusiness = new NewNormalLoanAmendBusiness();
-                    if (!IsPostBack)
-                    {
-                        if (Request.Params["codeid"] != null)
-                        {
-                            tbNewNormalLoan.Text = Request.Params["codeid"];
-                        }
-                        normalLoanEntryM = new BNEWNORMALLOAN();
-                        normalLoanEntryM.Code = tbNewNormalLoan.Text;
-                        init();
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "clickMainTab();", true);
-                    }
+                tbNewNormalLoan.Text = Request.Params["codeid"];
+            }
 
-                }
-                else
-                {
-                    loanBusiness = new NewNormalLoanBusiness();
-                    if (!IsPostBack)
-                    {
-                        if (Request.Params["codeid"] == null)
-                        {
-                            tbNewNormalLoan.Text = generateCode();
-                        }
-                        else
-                        {
-                            tbNewNormalLoan.Text = Request.Params["codeid"];
-                        }
-                        normalLoanEntryM = new BNEWNORMALLOAN();
-                        normalLoanEntryM.Code = tbNewNormalLoan.Text;
-                        init();
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "clickMainTab();", true);
-                    }
-                }
+            if (!IsPostBack)
+            {
+
+                normalLoanEntryM = new BNEWNORMALLOAN();
+                normalLoanEntryM.Code = tbNewNormalLoan.Text;
+                loanBusiness.loadEntity(ref normalLoanEntryM);
+                init();
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "clickMainTab();", true);
             }
 
         }
 
         #region Events
 
-        private bool IsUnderlimitAmount()
-        {
 
-            StoreProRepository facade = new StoreProRepository();
-            if (!isAmendPage)
-            {
-
-                var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount(normalLoanEntryM.LimitReference).First<decimal?>();
-                if (limit < normalLoanEntryM.LoanAmount)
-                {
-                    RadWindowManager1.RadAlert("Loan amount cannot exceed " + limit, 340, 150, "Alert", null);
-                    return false;
-                }
-                else
-                {
-                    var utildate = facade.StoreProcessor().B_Normal_Loan_Get_OfferedUntilDate(normalLoanEntryM.LimitReference).First<DateTime?>();
-                    if (utildate != null && normalLoanEntryM.Drawdown != null && normalLoanEntryM.Drawdown > utildate)
-                    {
-                        RadWindowManager1.RadAlert("Drawdown date cannot be greater than product limit Offered Until date [" + ((DateTime)utildate).ToString("MM/dd/yyyy") + "]", 340, 150, "Alert", null);
-                        return false;
-                    }
-                }
-
-            }
-            var productLine = facade.StoreProcessor().B_Normal_Loan_Get_Productline_Info(normalLoanEntryM.LimitReference).First();
-
-            if (productLine != null && productLine.MaxSecured != null && productLine.MaxSecured > 0)
-            {
-                if (!normalLoanEntryM.Secured.Equals("Y"))
-                {
-                    RadWindowManager1.RadAlert("Field Secured (Y/N) must be Yes", 340, 150, "Alert", null);
-                    return false;
-                }
-            }
-
-            if (normalLoanEntryM.Secured.Equals("Y"))
-            {
-                if (String.IsNullOrEmpty(normalLoanEntryM.CollateralID)
-                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_1)
-                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_2)
-                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_3))
-                {
-                    RadWindowManager1.RadAlert("Collateral ID not completed", 340, 150, "Alert", null);
-                    return false;
-                }
-
-                if (normalLoanEntryM.AmountAlloc == null || normalLoanEntryM.AmountAlloc <= 0)
-                {
-                    RadWindowManager1.RadAlert("Collateral Amount must be >0", 340, 150, "Alert", null);
-                    return false;
-                }
-            }
-
-
-
-            return true;
-        }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
@@ -153,18 +71,17 @@ namespace BankProject.Views.TellerApplication
             {
                 case "commit":
                     BindField2Data(ref normalLoanEntryM);
-                    if (IsUnderlimitAmount())
-                    {
-                        loanBusiness.Entity = normalLoanEntryM;
-                        loanBusiness.commitProcess(this.UserId);
 
-                        this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
-                    }
+                    loanBusiness.Entity = normalLoanEntryM;
+                    loanBusiness.commitProcess(this.UserId);
+
+                    this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+
                     break;
 
 
                 case "Preview":
-                    this.Response.Redirect(EditUrl("preview"));
+                    this.Response.Redirect(EditUrl("process", "repayment", "preview"));
                     break;
 
                 case "authorize":
@@ -203,16 +120,16 @@ namespace BankProject.Views.TellerApplication
 
         protected void rcbCustomerID_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            //LoadCollareralID(rcbCustomerID.SelectedValue, null, null, null, null);
-            //LoadLimitReferenceInfor(rcbCustomerID.SelectedValue, null);
-            //LoadAllAccount(rcbCustomerID.SelectedValue, rcbCurrency.SelectedValue, null, null, null, null);
-            //Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "clickMainTab();", true);
+
+            LoadLimitReferenceInfor(rcbCustomerID.SelectedValue, null);
+            LoadAllAccount(rcbCustomerID.SelectedValue, rcbCurrency.SelectedValue, null, null, null, null);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Alert", "clickMainTab();", true);
         }
 
 
         protected void rcbCurrency_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadAllAccount(tbHDCustID.Text, rcbCurrency.SelectedValue, null, null, null, null);
+            LoadAllAccount(rcbCustomerID.SelectedValue, rcbCurrency.SelectedValue, null, null, null, null);
         }
         protected void Radcbmaincategory_Selectedindexchanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
@@ -315,85 +232,11 @@ namespace BankProject.Views.TellerApplication
             loanBusiness.loadEntity(ref normalLoanEntryM);
             BindData2Field(normalLoanEntryM);
             LoadDataTolvLoanControl();
-            LoadDataTolvLoanDisbursalSchedule();
+            //LoadDataTolvLoanDisbursalSchedule();
             processApproriateAction();
         }
 
 
-        protected void lvLoanDisbursalSchedule_ItemCanceling(object sender, ListViewCancelEventArgs e)
-        {
-            lvLoanDisbursalSchedule.EditIndex = -1;
-            LoadDataTolvLoanDisbursalSchedule();
-        }
-
-        protected void lvLoanDisbursalSchedule_ItemEditing(object sender, ListViewEditEventArgs e)
-        {
-            lvLoanDisbursalSchedule.EditIndex = e.NewEditIndex;
-            LoadDataTolvLoanDisbursalSchedule();
-        }
-
-        protected void lvLoanDisbursalSchedule_ItemUpdating(object sender, ListViewUpdateEventArgs e)
-        {
-            RadDatePicker date = (lvLoanDisbursalSchedule.EditItem.FindControl("DateTextBox")) as RadDatePicker;
-            RadNumericTextBox amountAction = (lvLoanDisbursalSchedule.EditItem.FindControl("AmountActionTextBox")) as RadNumericTextBox;
-            RadDatePicker DrawdownDate = (lvLoanDisbursalSchedule.EditItem.FindControl("DrawdownDateTextBox")) as RadDatePicker;
-            Label lbID = (lvLoanDisbursalSchedule.EditItem.FindControl("lbID")) as Label;
-
-            B_LOAN_DISBURSAL_SCHEDULE item = new B_LOAN_DISBURSAL_SCHEDULE();
-            item.DisbursalDate = date.SelectedDate;
-            item.DisbursalAmount = String.IsNullOrEmpty(amountAction.Text) ? 0 : Double.Parse(amountAction.Text);
-            item.DrawdownDate = DrawdownDate.SelectedDate;
-            item.Code = tbNewNormalLoan.Text;
-            LoanDisbursalScheduleRespository facade = new LoanDisbursalScheduleRespository();
-            item.ID = Int32.Parse(lbID.Text);
-            B_LOAN_DISBURSAL_SCHEDULE exits = facade.GetById(item.ID);
-            if (exits != null)
-            {
-                facade.Update(facade.GetById(item.ID), item);
-                facade.Commit();
-            }
-            lvLoanDisbursalSchedule.EditIndex = -1;
-            LoadDataTolvLoanDisbursalSchedule();
-        }
-
-        protected void lvLoanDisbursalSchedule_ItemDeleting(object sender, ListViewDeleteEventArgs e)
-        {
-            String ids = "";
-            Label lbl = (lvLoanDisbursalSchedule.Items[e.ItemIndex].FindControl("lbID")) as Label;
-            if (lbl != null)
-                ids = lbl.Text;
-
-            if (!String.IsNullOrEmpty(ids))
-            {
-                LoanDisbursalScheduleRespository facade = new LoanDisbursalScheduleRespository();
-                var itm = facade.GetById(Int16.Parse(ids));
-                if (itm != null)
-                {
-                    facade.Delete(itm);
-                    facade.Commit();
-                    LoadDataTolvLoanDisbursalSchedule();
-                }
-
-            }
-        }
-
-        protected void lvLoanDisbursalSchedule_ItemInserting(object sender, ListViewInsertEventArgs e)
-        {
-            RadDatePicker date = (lvLoanDisbursalSchedule.InsertItem.FindControl("DateTextBox")) as RadDatePicker;
-            RadNumericTextBox amountAction = (lvLoanDisbursalSchedule.InsertItem.FindControl("AmountActionTextBox")) as RadNumericTextBox;
-            RadDatePicker DrawdownDate = (lvLoanDisbursalSchedule.InsertItem.FindControl("DrawdownDateTextBox")) as RadDatePicker;
-
-
-            B_LOAN_DISBURSAL_SCHEDULE item = new B_LOAN_DISBURSAL_SCHEDULE();
-            item.DisbursalDate = date.SelectedDate;
-            item.DisbursalAmount = String.IsNullOrEmpty(amountAction.Text) ? 0 : Double.Parse(amountAction.Text);
-            item.DrawdownDate = DrawdownDate.SelectedDate;
-            item.Code = tbNewNormalLoan.Text;
-            LoanDisbursalScheduleRespository facade = new LoanDisbursalScheduleRespository();
-            facade.Add(item);
-            facade.Commit();
-            LoadDataTolvLoanDisbursalSchedule();
-        }
 
 
         protected void btnPrintLai_Click(object sender, EventArgs e)
@@ -406,13 +249,7 @@ namespace BankProject.Views.TellerApplication
 
         }
 
-        protected void tbExpectedLoss_TextChanged(object sender, EventArgs e)
-        {
-            LoanCreditScoringRepository facade = new LoanCreditScoringRepository();
-            var score = facade.GetRatingScoring((int)tbExpectedLoss.Value).FirstOrDefault();
-            tbLossGiven.Text = score.Rating;
 
-        }
         #endregion
 
         #region Common Function
@@ -503,10 +340,9 @@ namespace BankProject.Views.TellerApplication
         private void init()
         {
             LoadMainCategoryCombobox(null);
-            //LoadCustomerCombobox(null);
+            LoadCustomerCombobox(null);
             LoadPurposeCode(null);
             LoadGroup(null);
-            LoadAccountOfficer(null);
             LoadInterestKey(null);
             LoadBusinessDay(null);
             //InitDefaultData();
@@ -515,9 +351,9 @@ namespace BankProject.Views.TellerApplication
             loanBusiness.loadEntity(ref normalLoanEntryM);
             BindData2Field(normalLoanEntryM);
             LoadDataTolvLoanControl();
-            LoadDataTolvLoanDisbursalSchedule();
+            //LoadDataTolvLoanDisbursalSchedule();
             //deside which action should be taken care
-            InitDefaultData();
+            //InitDefaultData();
             processApproriateAction();
 
             if (normalLoanEntryM != null && normalLoanEntryM.Drawdown == null)
@@ -555,17 +391,7 @@ namespace BankProject.Views.TellerApplication
                 rcbBusDay.SelectedValue = selectedid;
             }
         }
-        private void LoadAccountOfficer(string selectedid)
-        {
-            AccountOfficerRepository facade = new AccountOfficerRepository();
-            var src = facade.GetAll().ToList();
-            Util.LoadData2RadCombo(cmbAccountOfficer, src, "Code", "description", "-Select Account Officer-", false);
 
-            if (!String.IsNullOrEmpty(selectedid))
-            {
-                cmbAccountOfficer.SelectedValue = selectedid;
-            }
-        }
         private void LoadGroup(string selectedvalue)
         {
             LoanGroupRepository facade = new LoanGroupRepository();
@@ -596,24 +422,18 @@ namespace BankProject.Views.TellerApplication
             radcbMainCategory.SelectedValue = selectedItem;
 
         }
-        
-
-        private void LoadCustomerInformation(string SelectedCus)
+        private void LoadCustomerCombobox(string SelectedCus)
         {
             BCustomerRepository facade1 = new BCustomerRepository();
-            var db = facade1.getCustomerInfo(SelectedCus,"AUT");
+            var db = facade1.getCustomerList("AUT");
+            List<BCUSTOMER_INFO> hh = db.ToList<BCUSTOMER_INFO>();
+            Util.LoadData2RadCombo(rcbCustomerID, hh, "CustomerID", "ID_FullName", "-Select Customer Code-", false);
 
-            if (db != null)
-            {
-                tbHDCustID.Text = db.CustomerID;
-                lbCust.Text = db.GBFullName;
-            }
-            else
-            {
-                tbHDCustID.Text = String.Empty;
-                lbCust.Text = "Not Found!";
-            }
 
+            if (!String.IsNullOrEmpty(SelectedCus))
+            {
+                rcbCustomerID.SelectedValue = SelectedCus;
+            }
 
         }
         private void LoadLimitReferenceInfor(string custId, string selectedvalue)
@@ -629,35 +449,7 @@ namespace BankProject.Views.TellerApplication
                 rcbLimitReference.SelectedValue = selectedvalue;
             }
         }
-        private void LoadCollareralID(string custId, string selectedValue1
-            , string selectedValue2, string selectedValue3, string selectedValue4)
-        {
 
-            CollateralInformationRepository facade = new CollateralInformationRepository();
-            //var src = facade.FindCollorateRightByCust(custId).ToList();
-            var src = facade.FindCollorateInformationByCust(custId).ToList();
-            Util.LoadData2RadCombo(rcbCollateralID, src, "RightID", "RightID", "-Select Collateral ID-", true);
-            Util.LoadData2RadCombo(rcbCollateralID1, src, "RightID", "RightID", "-Select Collateral ID-", true);
-            Util.LoadData2RadCombo(rcbCollateralID2, src, "RightID", "RightID", "-Select Collateral ID-", true);
-            Util.LoadData2RadCombo(rcbCollateralID3, src, "RightID", "RightID", "-Select Collateral ID-", true);
-
-            if (!String.IsNullOrEmpty(selectedValue1))
-            {
-                rcbCollateralID.SelectedValue = selectedValue1;
-            }
-            if (!String.IsNullOrEmpty(selectedValue2))
-            {
-                rcbCollateralID1.SelectedValue = selectedValue2;
-            }
-            if (!String.IsNullOrEmpty(selectedValue3))
-            {
-                rcbCollateralID2.SelectedValue = selectedValue3;
-            }
-            if (!String.IsNullOrEmpty(selectedValue4))
-            {
-                rcbCollateralID3.SelectedValue = selectedValue4;
-            }
-        }
         void LoadAllAccount(string custID, string currency, string credit, string printRep, string inRep, string chagreRep)
         {
 
@@ -667,36 +459,31 @@ namespace BankProject.Views.TellerApplication
 
             //Database.BOPENACCOUNT_LOANACCOUNT_GetByCode(name, currency);
             Util.LoadData2RadCombo(rcbCreditToAccount, ds, "Id", "Display", "-Select a credit Account-", true);
-            Util.LoadData2RadCombo(rcbPrinRepAccount, ds, "Id", "Display", "-Select a Print Rep Account-", true);
-            Util.LoadData2RadCombo(rcbIntRepAccount, ds, "Id", "Display", "-Select a Int Rep Account-", true);
-            Util.LoadData2RadCombo(rcbChargRepAccount, ds, "Id", "Display", "-Select a Charge Rep Account-", true);
+
             if (!String.IsNullOrEmpty(credit))
             {
                 rcbCreditToAccount.SelectedValue = credit;
             }
 
-            if (!String.IsNullOrEmpty(printRep))
-            {
-                rcbPrinRepAccount.SelectedValue = printRep;
-            }
 
-            if (!String.IsNullOrEmpty(inRep))
-            {
-                rcbIntRepAccount.SelectedValue = inRep;
-            }
-
-            if (!String.IsNullOrEmpty(chagreRep))
-            {
-                rcbChargRepAccount.SelectedValue = chagreRep;
-            }
 
         }
         private void LoadDataTolvLoanControl()
         {
-            NewLoanControlRepository facade = new NewLoanControlRepository();
-            var db = facade.FindLoanControlByCode(tbNewNormalLoan.Text);
-            lvLoanControl.DataSource = db.ToList();
-            lvLoanControl.DataBind();
+            if (normalLoanEntryM != null && !String.IsNullOrEmpty(normalLoanEntryM.Code)
+                && !String.IsNullOrEmpty(normalLoanEntryM.Repaid_Status) && !normalLoanEntryM.Repaid_Status.Equals("AUT")
+                && !String.IsNullOrEmpty(normalLoanEntryM.Status) && normalLoanEntryM.Status.Equals("AUT"))
+            {
+                NewLoanControlRepository facade = new NewLoanControlRepository();
+                var db = facade.FindLoanControlByCode(tbNewNormalLoan.Text, normalLoanEntryM.RepaymentTimes);
+                lvLoanControl.DataSource = db.ToList();
+                lvLoanControl.DataBind();
+            }
+            else
+            {
+                lvLoanControl.DataSource = null;
+                lvLoanControl.DataBind();
+            }
         }
 
         private void LoadDataTolvLoanDisbursalSchedule()
@@ -704,8 +491,6 @@ namespace BankProject.Views.TellerApplication
             CalcRemainDisbursalLoanAmount();
             LoanDisbursalScheduleRespository facade = new LoanDisbursalScheduleRespository();
             var db = facade.FindLoanDisbursalByCode(tbNewNormalLoan.Text);
-            lvLoanDisbursalSchedule.DataSource = db.ToList();
-            lvLoanDisbursalSchedule.DataBind();
 
 
 
@@ -724,73 +509,11 @@ namespace BankProject.Views.TellerApplication
         private void BindField2Data(ref BNEWNORMALLOAN normalLoanEntry)
         {
 
-            if (normalLoanEntry == null)
-            {
-                normalLoanEntry = new BNEWNORMALLOAN();
-            }
-
             NormalLoanRepository facase = new NormalLoanRepository();
-            if (isEdit || isAmendPage)
+            if (!String.IsNullOrWhiteSpace(tbNewNormalLoan.Text))
             {
                 normalLoanEntry = facase.GetById(tbNewNormalLoan.Text);
             }
-
-
-            normalLoanEntry.Code = tbNewNormalLoan.Text;
-            normalLoanEntry.MainCategory = radcbMainCategory.SelectedValue;
-            normalLoanEntry.MainCategoryName = radcbMainCategory.Text;
-            normalLoanEntry.SubCategory = rcbSubCategory.SelectedValue;
-            normalLoanEntry.SubCategoryName = rcbSubCategory.Text;
-            normalLoanEntry.PurpostCode = rcbPurposeCode.SelectedValue;
-            normalLoanEntry.PurpostName = rcbPurposeCode.Text;
-            normalLoanEntry.CustomerID = tbHDCustID.Text;
-            normalLoanEntry.CustomerName = lbCust.Text;
-            normalLoanEntry.LoanGroup = rcbLoadGroup.SelectedValue;
-            normalLoanEntry.LoanGroupName = rcbLoadGroup.Text;
-            normalLoanEntry.Currency = rcbCurrency.SelectedValue;
-            normalLoanEntry.BusDayDef = rcbBusDay.SelectedValue;
-
-
-            normalLoanEntry.LoanAmount = tbLoanAmount.Text != "" ? decimal.Parse(tbLoanAmount.Text) : 0;
-            normalLoanEntry.ApproveAmount = normalLoanEntry.LoanAmount;
-            normalLoanEntry.OpenDate = rdpOpenDate.SelectedDate;
-            normalLoanEntry.ValueDate = rdpValueDate.SelectedDate;
-
-            normalLoanEntry.MaturityDate = rdpMaturityDate.SelectedDate;
-            normalLoanEntry.CreditAccount = rcbCreditToAccount.SelectedValue;
-            normalLoanEntry.LimitReference = rcbLimitReference.SelectedValue;
-            normalLoanEntry.RateType = rcbRateType.SelectedValue;
-            normalLoanEntry.InterestBasic = "366/360";
-
-
-            normalLoanEntry.InterestKey = rcbDepositeRate.SelectedValue;
-            normalLoanEntry.IntSpread = tbInSpread.Text;
-
-            normalLoanEntry.Drawdown = rdpDrawdown.SelectedDate;
-
-            normalLoanEntry.ChrgRepAccount = rcbChargRepAccount.SelectedValue;
-            normalLoanEntry.ExpectedLoss = (decimal?)tbExpectedLoss.Value;
-            normalLoanEntry.LossGivenDef = tbLossGiven.Text;
-            normalLoanEntry.CustomerRemarks = tbCustomerRemarks.Text;
-            normalLoanEntry.AccountOfficer = cmbAccountOfficer.SelectedValue;
-            normalLoanEntry.AccountOfficerName = cmbAccountOfficer.Text;
-            normalLoanEntry.Secured = rcbSecured.SelectedValue;
-            normalLoanEntry.CollateralID = rcbCollateralID.SelectedValue;
-            normalLoanEntry.CollateralID_1 = rcbCollateralID1.SelectedValue;
-            normalLoanEntry.CollateralID_2 = rcbCollateralID2.SelectedValue;
-            normalLoanEntry.CollateralID_3 = rcbCollateralID3.SelectedValue;
-            normalLoanEntry.DefineSch = rcbDefineSch.SelectedValue;
-            normalLoanEntry.AmountAlloc = rtbAmountAlloc.Value.HasValue ? (decimal)rtbAmountAlloc.Value.Value : 0;
-            normalLoanEntry.IntPayMethod = lblIntPayMethod.Text;
-            normalLoanEntry.InterestRate = (decimal?)tbInterestRate.Value;
-            normalLoanEntry.PrinRepAccount = rcbPrinRepAccount.SelectedValue;
-            normalLoanEntry.IntRepAccount = rcbIntRepAccount.SelectedValue;
-            normalLoanEntry.ChrgRepAccount = rcbChargRepAccount.SelectedValue;
-            normalLoanEntry.LoanStatus = lbLoanStatus.Text;
-            normalLoanEntry.TotalInterestAmt = !String.IsNullOrEmpty(lbTotalInterestAmt.Text) ? Decimal.Parse(lbTotalInterestAmt.Text) : 0;
-            normalLoanEntry.PDStatus = lbPDStatus.Text;
-
-
 
 
         }
@@ -801,8 +524,7 @@ namespace BankProject.Views.TellerApplication
                 return;
             }
             tbNewNormalLoan.Text = normalLoanEntry.Code;
-            tbHDCustID.Text = tbCustID.Text = normalLoanEntry.CustomerID;
-            LoadCustomerInformation(normalLoanEntry.CustomerID);
+            rcbCustomerID.SelectedValue = normalLoanEntry.CustomerID;
             rcbCurrency.SelectedValue = normalLoanEntry.Currency;
             radcbMainCategory.SelectedValue = normalLoanEntry.MainCategory;
             LoadSubCategory(normalLoanEntry.MainCategory, normalLoanEntry.SubCategory);
@@ -818,22 +540,17 @@ namespace BankProject.Views.TellerApplication
             LoadAllAccount(normalLoanEntry.CustomerID, normalLoanEntry.Currency,
             normalLoanEntry.CreditAccount, normalLoanEntry.PrinRepAccount,
             normalLoanEntry.IntRepAccount, normalLoanEntry.ChrgRepAccount);
-            LoadCollareralID(normalLoanEntry.CustomerID, normalLoanEntry.CollateralID, normalLoanEntry.CollateralID_1, normalLoanEntry.CollateralID_2, normalLoanEntry.CollateralID_3);
             rcbRateType.SelectedValue = normalLoanEntry.RateType;
             rcbDepositeRate.SelectedValue = normalLoanEntry.InterestKey;
             tbInterestRate.Value = (double?)normalLoanEntry.InterestRate;
             tbInSpread.Value = double.Parse(!String.IsNullOrEmpty(normalLoanEntry.IntSpread) ? normalLoanEntry.IntSpread : "0");
             rcbBusDay.SelectedValue = normalLoanEntry.BusDayDef;
             rcbDefineSch.SelectedValue = normalLoanEntry.DefineSch;
-            tbCustomerRemarks.Text = normalLoanEntry.CustomerRemarks;
-            cmbAccountOfficer.SelectedValue = normalLoanEntry.AccountOfficer;
-            rcbSecured.SelectedValue = normalLoanEntry.Secured;
-            tbExpectedLoss.Value = (double?)normalLoanEntry.ExpectedLoss;
-            tbLossGiven.Text = normalLoanEntry.LossGivenDef;
-            rtbAmountAlloc.Value = (double?)normalLoanEntry.AmountAlloc;
             lbLoanStatus.Text = normalLoanEntry.LoanStatus;
             lbTotalInterestAmt.Text = "" + normalLoanEntry.TotalInterestAmt;
             lbPDStatus.Text = normalLoanEntry.PDStatus;
+
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "Dis", "LoadDrawdown();", true);
         }
         private void LoadSubCategory(string categoryid, string selectedValue)
         {
@@ -855,7 +572,7 @@ namespace BankProject.Views.TellerApplication
             radcbMainCategory.Enabled = p;
             rcbSubCategory.Enabled = p;
             rcbPurposeCode.Enabled = p;
-            tbCustID.Enabled = p;
+            rcbCustomerID.Enabled = p;
             rcbLoadGroup.Enabled = p;
             tbLoanAmount.Enabled = p;
             rdpMaturityDate.Enabled = p;
@@ -870,24 +587,11 @@ namespace BankProject.Views.TellerApplication
             rdpValueDate.Enabled = p;
             rdpDrawdown.Enabled = p;
             tbApprovedAmt.Enabled = p;
-            rcbPrinRepAccount.Enabled = p;
-            rcbIntRepAccount.Enabled = p;
-            tbCustomerRemarks.Enabled = p;
-            cmbAccountOfficer.Enabled = p;
-            rcbChargRepAccount.Enabled = p;
+
             rcbBusDay.Enabled = p;
-            rcbCollateralID.Enabled = p;
-            rcbCollateralID1.Enabled = p;
-            rcbCollateralID2.Enabled = p;
-            rcbCollateralID3.Enabled = p;
-            rtbAmountAlloc.Enabled = p;
-            rcbSecured.Enabled = p;
-            tbForwardBackWard.Enabled = p;
-            tbBaseDate.Enabled = p;
+
             lvLoanControl.Enabled = p;
-            lvLoanDisbursalSchedule.Enabled = p;
-            tbExpectedLoss.Enabled = p;
-            tbLossGiven.Enabled = false;
+
             rcbDefineSch.Enabled = p;
             tbNewNormalLoan.Enabled = !isApprovalRole;
 
@@ -895,7 +599,7 @@ namespace BankProject.Views.TellerApplication
 
         private void disableInCaseOfAmend(bool p)
         {
-            tbCustID.Enabled = p;
+            rcbCustomerID.Enabled = p;
             rcbCurrency.Enabled = p;
             tbLoanAmount.Enabled = p;
             tbApprovedAmt.Enabled = p;
@@ -982,7 +686,9 @@ namespace BankProject.Views.TellerApplication
                 princleSchedue.Code = dtInfor.Rows[0]["Code"].ToString();
                 princleSchedue.CustomerID = dtInfor.Rows[0]["CustomerID"].ToString();
                 princleSchedue.LoanAmount = decimal.Parse((dtInfor.Rows[0]["LoanAmount"].ToString().Replace(",", "")));
-                princleSchedue.Drawdown = String.IsNullOrEmpty(dtInfor.Rows[0]["Drawdown"].ToString()) ? this.disbursalDate : (DateTime)dtInfor.Rows[0]["Drawdown"];
+
+                if (dtInfor.Rows[0]["Drawdown"] != null)
+                    princleSchedue.Drawdown = (DateTime)dtInfor.Rows[0]["Drawdown"];
                 princleSchedue.InterestKey = dtInfor.Rows[0]["InterestKey"].ToString();
                 princleSchedue.Freq = dtInfor.Rows[0]["Freq"].ToString();
 
@@ -1000,7 +706,6 @@ namespace BankProject.Views.TellerApplication
                 princleSchedue.InterestAmount = (Decimal)it["InterestAmount"];
                 princleSchedue.CreateBy = this.UserId;
                 princleSchedue.CreateDate = facde.GetSystemDatetime();
-                princleSchedue.PeriodRepaid = 0;
                 facde.Add(princleSchedue);
 
             }
@@ -1061,13 +766,12 @@ namespace BankProject.Views.TellerApplication
 
             int freq = 0;
             String rateType = "1";
-            DateTime drawdownDate = normalLoanEntryM.Drawdown == null ?  (this.disbursalDate == null? (DateTime)normalLoanEntryM.ValueDate : (DateTime)this.disbursalDate)  : (DateTime)normalLoanEntryM.Drawdown;
+            DateTime drawdownDate = normalLoanEntryM.Drawdown == null ? (DateTime)normalLoanEntryM.ValueDate : (DateTime)normalLoanEntryM.Drawdown;
             DateTime startDate = (DateTime)normalLoanEntryM.ValueDate;
             DateTime endDate = (DateTime)normalLoanEntryM.MaturityDate;
             DateTime startInterestDate = drawdownDate;
             DateTime prevInterestDate = drawdownDate;
             int durationDate = endDate.Subtract(startDate).Days;
-            int interestDay = 0;
             int perios = 0;
             decimal interestedValue = 0;
 
@@ -1096,7 +800,7 @@ namespace BankProject.Views.TellerApplication
                 freq = int.Parse(it.Freq);
                 startInterestDate = it.Date == null ? ((DateTime)drawdownDate) : (DateTime)it.Date;
             }
-            interestDay = startInterestDate.Day;
+
 
             if (freq > 0)
             {
@@ -1111,18 +815,24 @@ namespace BankProject.Views.TellerApplication
             {
                 if (i == perios - 1)
                 {
-
-                    it = facade.FindLoanControl(normalLoanEntryM.Code, "EP").FirstOrDefault();
+                    it = facade.FindLoanControl(normalLoanEntryM.Code, "EI").FirstOrDefault();
                     if (it != null)
                     {
                         startInterestDate = it.Date == null ? startInterestDate : (DateTime)it.Date;
                     }
                     else
                     {
-                        startInterestDate = (DateTime)normalLoanEntryM.MaturityDate;
+                        it = facade.FindLoanControl(normalLoanEntryM.Code, "EP").FirstOrDefault();
+                        if (it != null)
+                        {
+                            startInterestDate = it.Date == null ? startInterestDate : (DateTime)it.Date;
+                        }
+                        else
+                        {
+                            startInterestDate = (DateTime)normalLoanEntryM.MaturityDate;
+                        }
+
                     }
-
-
                 }
 
                 DataRow dr = findInstallmantRow(startInterestDate, ds);
@@ -1145,13 +855,7 @@ namespace BankProject.Views.TellerApplication
                 prevInterestDate = startInterestDate;
                 startInterestDate = startInterestDate.AddMonths(freq);
 
-                try
-                {
-                    startInterestDate = new DateTime(((DateTime)startInterestDate).Year, ((DateTime)startInterestDate).Month, interestDay);
-                }
-                catch
-                {
-                }
+
 
                 if (startInterestDate.Subtract(endDate).Days > 0)
                     startInterestDate = endDate;
@@ -1216,7 +920,6 @@ namespace BankProject.Views.TellerApplication
             decimal remainAmountActual = 0;
             DateTime? periosDate = null;
             DateTime? endDate = null;
-            int instalmentdDay = 0;
 
 
             rateType = String.IsNullOrEmpty(normalLoanEntryM.RateType) ? 1 : int.Parse(normalLoanEntryM.RateType);
@@ -1234,7 +937,7 @@ namespace BankProject.Views.TellerApplication
             {
 
                 getPaymentInputControl(ref periosDate, ref endDate, ref numberOfPerios, ref instalmant, ref instalmantEnd, ref fregV);
-                instalmentdDay = periosDate != null ? ((DateTime)periosDate).Day : 0;
+
                 ds.DtInfor.Rows[0][ds.Cl_freq] = fregV == 0 ? "Cuối kỳ" : fregV + " Tháng";
 
                 DataRow dr;
@@ -1253,13 +956,6 @@ namespace BankProject.Views.TellerApplication
                     dr[ds.Cl_DisbursalAmount] = 0;
                     ds.DtItems.Rows.Add(dr);
                     periosDate = ((DateTime)periosDate).AddMonths(fregV);
-                    try
-                    {
-                        periosDate = new DateTime(((DateTime)periosDate).Year, ((DateTime)periosDate).Month, instalmentdDay);
-                    }
-                    catch
-                    {
-                    }
                 }
 
                 remainAmount = remainAmount - instalmant;
@@ -1346,29 +1042,9 @@ namespace BankProject.Views.TellerApplication
 
             ds.DtItems.DefaultView.Sort = "DueDate asc";
             ds.DtItems = ds.DtItems.DefaultView.ToTable();
-            decimal currentProcessAmount = 0;
-
-            if(ds.DtItems!=null && ds.DtItems.Rows.Count>0)
-            {
-                disbursalDate = (DateTime)ds.DtItems.Rows[0][ds.Cl_dueDate.ColumnName];
-            }
-            
-            foreach (DataRow dr in ds.DtItems.Rows)
-            {
-                if ((decimal)dr[ds.Cl_PrintOs.ColumnName] != 0)
-                {
-                    currentProcessAmount = (decimal)dr[ds.Cl_PrintOs.ColumnName];
-                }
-                else
-                {
-                    dr[ds.Cl_PrintOs.ColumnName] = currentProcessAmount;
-                }
-
-          
-            }
 
             //Process update disbursal amount to prinos
-            currentProcessAmount = 0;
+            decimal currentProcessAmount = 0;
             foreach (DataRow dr in ds.DtItems.Rows)
             {
                 currentProcessAmount = currentProcessAmount + (decimal)dr[ds.Cl_DisbursalAmount.ColumnName];
@@ -1472,17 +1148,9 @@ namespace BankProject.Views.TellerApplication
 
         #endregion
 
-        protected void tbCustID_TextChanged(object sender, EventArgs e)
-        {
-            LoadCustomerInformation(tbCustID.Text);
-            LoadCollareralID(tbCustID.Text, null, null, null, null);
-            LoadLimitReferenceInfor(tbCustID.Text, null);
-            LoadAllAccount(tbCustID.Text, rcbCurrency.SelectedValue, null, null, null, null);
-        }
-
     }
 
-    class LoanContractScheduleDS : DataSet
+    class LoanContractScheduleDS_Repayment : DataSet
     {
         DataTable dateReport = new DataTable("DateInfor");
 
@@ -1644,7 +1312,7 @@ namespace BankProject.Views.TellerApplication
 
 
 
-        public LoanContractScheduleDS()
+        public LoanContractScheduleDS_Repayment()
         {
             dtInfor.Columns.Add(cl_code);
             dtInfor.Columns.Add(cl_cust);

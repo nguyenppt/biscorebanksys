@@ -31,22 +31,31 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadToolBar RadToolBar2;
         
         /// <summary>
-        /// tbMaHanMucCha control.
+        /// rcbLimitTYpe control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbMaHanMucCha;
+        protected global::Telerik.Web.UI.RadComboBox rcbLimitTYpe;
         
         /// <summary>
-        /// tbMaHanMucCon control.
+        /// rcbGlobalLimit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbMaHanMucCon;
+        protected global::Telerik.Web.UI.RadComboBox rcbGlobalLimit;
+        
+        /// <summary>
+        /// rcbProductLimitID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbProductLimitID;
         
         /// <summary>
         /// tbFullName control.
