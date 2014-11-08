@@ -40,7 +40,7 @@ namespace BankProject.Views.TellerApplication
                     { DealRate = Convert.ToDouble(txtDealRate.Value.Value); }
                     else { ShowMsgBox("DealRate value has no value, You must input DealRate value !"); return; }
                 }
-                TriTT.COLLECTION_4_CRE_CARD_PAYMENT_Insert_Update(txtId.Text, "UNA", cmbCustomerId.SelectedValue, txtFullName.Text, txtAddress.Text, txtLegalID.Text
+                TriTT.COLLECTION_4_CRE_CARD_PAYMENT_Insert_Update(txtId.Text, "UNA", tbCustomerId.Text, txtFullName.Text, txtAddress.Text, txtLegalID.Text
                     , tbIssueDate.Text, txtTel.Text, txtPlaceOfIs.Text, txtTellerId1.Text, cmbDebitCurrency.SelectedValue, cmbDebitAccount.SelectedValue, txtDebitAmtLCY.Value.Value,
                      cmbCreditCurrency.SelectedValue, cmbCreditAccount.SelectedValue, DealRate, tbCreditAmt.Value.Value, txtCreditCardNumber.Text, cmbWaiveCharges.SelectedValue,
                     txtNarrative.Text, txtNarrative2.Text);
@@ -67,7 +67,6 @@ namespace BankProject.Views.TellerApplication
 
         protected void FirstLoad()
         {
-            LoadCustomer();
             LoadCurrency();
         }
         #region properties
@@ -78,7 +77,7 @@ namespace BankProject.Views.TellerApplication
             {
                 var dr = ds.Tables[0].Rows[0];
                 txtId.Text = ID;
-                cmbCustomerId.SelectedValue = dr["CustomerID"].ToString();
+                tbCustomerId.Text = dr["CustomerID"].ToString();
                 txtFullName.Text = dr["CustomerName"].ToString();
                 txtAddress.Text = dr["Address"].ToString();
                 txtLegalID.Text = dr["LegalID"].ToString();
@@ -152,30 +151,35 @@ namespace BankProject.Views.TellerApplication
             cmbDebitCurrency.DataSource = Currency;
             cmbDebitCurrency.DataBind();
         }
-        protected void LoadCustomer()
+        protected void LoadCustomer(string CustomerID)
         {
-            DataSet ds = TriTT.B_OPEN_LOANWORK_ACCT_Get_ALLCustomerID();
-            if (ds != null && ds.Tables[0] != null)
+            DataSet ds = TriTT.Load_Customer_Info_From_BCUSTOMER_INFO(CustomerID);
+            lblNote.Text = "";
+            if (ds.Tables != null && ds.Tables[0].Rows.Count > 0 && ds.Tables.Count > 0)
             {
-                DataRow dr = ds.Tables[0].NewRow();
-                dr["CustomerID"] = "";
-                dr["CustomerHasName"] = "";
-                ds.Tables[0].Rows.InsertAt(dr, 0);
+                DataRow dr = ds.Tables[0].Rows[0];
+                txtFullName.Text = dr["GBFullName"].ToString();
+                txtAddress.Text = dr["Address"].ToString();
+                txtLegalID.Text = dr["DocID"].ToString();
+                if (dr["DocIssueDate"].ToString() != "") tbIssueDate.Text = Convert.ToDateTime(dr["DocIssueDate"].ToString()).Date.ToShortDateString();
+                txtTel.Text = dr["Phone"].ToString();
+                txtPlaceOfIs.Text = dr["DocIssuePlace"].ToString();
             }
-            cmbCustomerId.DataTextField = "CustomerHasName";
-            cmbCustomerId.DataValueField = "CustomerID";
-            cmbCustomerId.DataSource = ds;
-            cmbCustomerId.DataBind();
+            else
+            {
+                lblNote.Text = "Customer ID does not exist.";
+                txtFullName.Text = "";
+                txtAddress.Text = "";
+                txtLegalID.Text = "";
+                tbIssueDate.Text = "";
+                txtTel.Text = "";
+                txtPlaceOfIs.Text = "";
+            }
+           
         }
-        protected void cmbCustomerId_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        protected void tbCustomerId_OntextChanged(object sender, EventArgs e)
         {
-            DataRowView row = e.Item.DataItem as DataRowView;
-            e.Item.Attributes["CustomerName"] = row["GBFullName"].ToString();
-            e.Item.Attributes["Address"] = row["Address"].ToString();
-            e.Item.Attributes["IdentityNo"] = row["DocID"].ToString();
-            e.Item.Attributes["IssueDate"] = row["DocIssueDate2"].ToString();
-            e.Item.Attributes["IssuePlace"] = row["DocIssuePlace"].ToString();
-            e.Item.Attributes["Telephone"] = row["Telephone"].ToString();
+            LoadCustomer(tbCustomerId.Text);
         }
         private void LoadToolBar(bool isauthorise)
         {

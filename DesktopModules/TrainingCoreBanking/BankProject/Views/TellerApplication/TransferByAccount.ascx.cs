@@ -56,7 +56,7 @@ namespace BankProject.Views.TellerApplication
             { 
                 case "commit":
                     TriTT.BOUTWARD_TRANS_BY_ACCT_Insert(tbID.Text, "UNA", rcbProductID.SelectedValue, rcbProductID.Text.Replace(rcbProductID.SelectedValue + " - ", ""), rcbBenCom.SelectedValue,
-                        rcbBenCom.Text.Replace(rcbBenCom.SelectedValue + " - ", ""), rcbCurrency.SelectedValue, rcbDebitAccount.SelectedValue, rcbDebitAccount.Text,
+                        rcbBenCom.Text.Replace(rcbBenCom.SelectedValue + " - ", ""), rcbCurrency.SelectedValue, tbDebitAccount.Text, tbDebitAccount.Text,
                         tbAmount.Value.HasValue ? tbAmount.Value.Value : 0, tbSendingName.Text, tbSendingAddress.Text, tbTaxCode.Text, tbReceivingName.Text, tbReceivingName2.Text,
                         tbBenAccount.Text, tbIDCard.Text, rdpIssueDate.SelectedDate.HasValue? rdpIssueDate.SelectedDate: null, tbIssuePlace.Text, rcbProvince.SelectedValue,rcbProvince.Text !=""? rcbProvince.Text.Replace(rcbProvince.SelectedValue + " - ", ""):"",
                         tbPhone.Text, rcbBankCode.SelectedValue,rcbBankCode.Text !=""? rcbBankCode.Text.Replace(rcbBankCode.SelectedValue + " - ", ""):"", tbBankName.Text, tbPayNumber.Text,
@@ -88,7 +88,7 @@ namespace BankProject.Views.TellerApplication
                     double debitAmt = tbAmount.Value.HasValue ? tbAmount.Value.Value : 0;
                     double chargeAmt = txtChargeAmtLCY.Value.HasValue ? txtChargeAmtLCY.Value.Value : 0;
                     double chargeVATAmt = txtChargeVatAmt.Value.HasValue ? txtChargeVatAmt.Value.Value : 0;
-                    if (TriTT.BOUTWARD_TRANS_BY_ACCT_Update_Status(tbID.Text, "AUT", rcbDebitAccount.SelectedValue, debitAmt, chargeAmt, chargeVATAmt).Tables[0].Rows[0]["check_amt"].ToString() == "not_enough")
+                    if (TriTT.BOUTWARD_TRANS_BY_ACCT_Update_Status(tbID.Text, "AUT", tbDebitAccount.Text, debitAmt, chargeAmt, chargeVATAmt).Tables[0].Rows[0]["check_amt"].ToString() == "not_enough")
                     {
                         ShowMsgBox("Your Debit Account does not have enough money to make this transaction !"); return;
                     }
@@ -109,8 +109,8 @@ namespace BankProject.Views.TellerApplication
                 rcbProductID.SelectedValue = dr["ProductID"].ToString();
                 rcbBenCom.SelectedValue = dr["BenComID"].ToString();
                 rcbCurrency.SelectedValue = dr["Currency"].ToString();
-                LoadDebitAcct();
-                rcbDebitAccount.SelectedValue = dr["DebitAcctID"].ToString();
+                //LoadDebitAcct();
+                tbDebitAccount.Text = dr["DebitAcctID"].ToString();
                 tbAmount.Text = dr["DebitAmount"].ToString();
                 tbSendingName.Text = dr["SendingName"].ToString();
                 tbSendingAddress.Text = dr["SendingAddress"].ToString();
@@ -143,25 +143,37 @@ namespace BankProject.Views.TellerApplication
             BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
             tbID.Text = TriTT.B_BMACODE_3part_varMaCode_varSP("B_BMACODE_3part_varMaCode_varSP", "TRS_BY_ACCOUNT_ID", "TT");
             tbTellerID.Text = this.UserInfo.Username;
-            rcbDebitAccount.Items.Clear();
-            rcbDebitAccount.Text = "";
+            tbDebitAccount.Text = "";
         }
-        protected void rcbCurrency_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void tbDebitAccount_onTextChanged(object sender, EventArgs e)
+        {
+            LoadDebitAcct();
+        }
+        protected void rcbCurrency_ONSelectedINdexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadDebitAcct();
         }
         protected void LoadDebitAcct()
         {
             string currency = rcbCurrency.SelectedValue;
-            if (currency != "")
+            if (currency != "" && tbDebitAccount.Text !="")
             {
-                rcbDebitAccount.Items.Clear();
-                rcbDebitAccount.AppendDataBoundItems = true;
-                rcbDebitAccount.Items.Add(new RadComboBoxItem("", ""));
-                rcbDebitAccount.DataSource = TriTT.OUTWARD_TRANFER_BY_ACCT_LoadDebitAcct(currency);
-                rcbDebitAccount.DataTextField = "AccountHasName";
-                rcbDebitAccount.DataValueField = "AccountCode";
-                rcbDebitAccount.DataBind();
+                DataSet ds = TriTT.Load_Acct_Info_From_BOPENACCOUNT(currency, tbDebitAccount.Text);
+                lblNote.Text = "";
+                if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataRow dr = ds.Tables[0].Rows[0];
+                    tbSendingName.Text = dr["CustomerName"].ToString();
+                    tbSendingAddress.Text = dr["Address"].ToString();
+                    tbTaxCode.Text = dr["DocID"].ToString();
+                }
+                else
+                {
+                    lblNote.Text = "Account does not exist.";
+                    tbSendingName.Text = "";
+                    tbSendingAddress.Text = "";
+                    tbTaxCode.Text = "";
+                }
             }
         }
         protected void Load_BenAccount(object sender, EventArgs e)

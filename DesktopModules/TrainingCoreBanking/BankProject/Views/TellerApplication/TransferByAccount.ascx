@@ -81,7 +81,7 @@
                      InitialValue="" ForeColor="Red" ErrorMessage="Ben Com is required" />
                 </td>
                 <td class="MyContent">
-                    <telerik:RadComboBox ID="rcbBenCom" autoPostBack="true"
+                    <telerik:RadComboBox ID="rcbBenCom" 
                         AppendDataBoundItems="true" width="200"
                         MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1" >
                         <Items>
@@ -97,8 +97,8 @@
                      InitialValue="" ForeColor="Red" ErrorMessage="Currency is required" />
                 </td>
                 <td class="MyContent">
-                    <telerik:RadComboBox ID="rcbCurrency"   autoPostBack="true"             
-                        AppendDataBoundItems="true" OnSelectedIndexChanged="rcbCurrency_OnSelectedIndexChanged"
+                    <telerik:RadComboBox ID="rcbCurrency"    AutoPostBack="true"            
+                        AppendDataBoundItems="true" ONSelectedINdexChanged="rcbCurrency_ONSelectedINdexChanged"
                         MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1">
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
@@ -107,24 +107,24 @@
                 </td>
             </tr>
                 </table>
+            
+            <table width="100%" cellpadding="0" cellspacing="0">
+                
+            </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">Debit Account:<span class="Required">(*)</span>
                          <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"  Display="None" ValidationGroup="Commit" 
-                         ControlToValidate="rcbDebitAccount"
+                         ControlToValidate="tbDebitAccount"
                          InitialValue="" ForeColor="Red" ErrorMessage="Debit Account is required" /></td>
-                    <td class="MyContent" width="400" >
-                         <telerik:RadComboBox ID="rcbDebitAccount"
-                            MarkFirstMatch="True" width="350"
-                            AllowCustomText="false"
-                            runat="server">
-                              <Items>
-                                   <telerik:RadComboBoxItem Value="" Text="" />
-                              </Items>
-                              </telerik:RadComboBox>
+                    <td class="MyContent">
+                        <telerik:RadTextBox id="tbDebitAccount" runat="server" onTextChanged="tbDebitAccount_onTextChanged" AutoPostBack="true"
+                            /> 
                     </td>
-                    <td class="MyLable"></td>
-                    <td class="MyContent"></td>
+                    <td class="MyLable"><asp:Label ID="lblNote" runat="server" Width="200"></asp:Label></td>
+                    <td class="MyContent" style="visibility:hidden;">
+                    <telerik:RadTextbox id="sd" runat="server" />
+                </td>
                 </tr>
             </table>
           
@@ -160,8 +160,7 @@
              <tr>
                 <td class="MyLable">ID/Tax Code:</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox id="tbTaxCode" runat="server" NumberFormat-DecimalDigits="0"
-                    NumberFormat-GroupSeparator=""     validationGroup="Group1" />
+                    <telerik:RadTextBox id="tbTaxCode" runat="server"   validationGroup="Group1" />
                 </td>
                 <td class="MyLable"></td>
                 <td class="MyContent"></td>
@@ -393,7 +392,7 @@
         var ProductID = $('#<%= rcbProductID.ClientID%>').val();
         var Currency = $('#<%= rcbCurrency.ClientID%>').val();
         var BenCom = $('#<%= rcbBenCom.ClientID%>').val();
-        var DebitAccount = $('#<%= rcbDebitAccount.ClientID%>').val();
+        var DebitAccount = $find("<%= tbDebitAccount.ClientID%>").get_value();
         var SendingName = $('#<%= tbSendingName.ClientID%>').val();
         var ReceivingName = $('#<%= tbReceivingName.ClientID%>').val();
         Page_IsValid = ProductID != "" && Currency != "" && BenCom != "" && DebitAccount != ""
@@ -518,16 +517,22 @@
             </UpdatedControls>
         </telerik:AjaxSetting> 
 
+         <telerik:AjaxSetting AjaxControlID="tbDebitAccount">
+            <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="tbSendingName" />
+                <telerik:AjaxUpdatedControl ControlID="tbSendingAddress" />
+                <telerik:AjaxUpdatedControl ControlID="tbTaxCode" /> 
+                <telerik:AjaxUpdatedControl ControlID="lblNote" /> 
+            </UpdatedControls>
+        </telerik:AjaxSetting> 
         <telerik:AjaxSetting AjaxControlID="rcbCurrency">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="rcbDebitAccount" />
+                 <telerik:AjaxUpdatedControl ControlID="tbSendingName" />
+                <telerik:AjaxUpdatedControl ControlID="tbSendingAddress" />
+                <telerik:AjaxUpdatedControl ControlID="tbTaxCode" /> 
+                <telerik:AjaxUpdatedControl ControlID="lblNote" /> 
             </UpdatedControls>
-        </telerik:AjaxSetting> 
-        <telerik:AjaxSetting AjaxControlID="rcbBenCom">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="rcbDebitAccount" />
-            </UpdatedControls>
-        </telerik:AjaxSetting> 
+        </telerik:AjaxSetting>
 
         <telerik:AjaxSetting AjaxControlID="rcbProvince">
             <UpdatedControls>

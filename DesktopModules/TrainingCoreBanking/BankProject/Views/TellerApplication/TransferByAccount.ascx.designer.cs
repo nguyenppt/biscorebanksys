@@ -121,13 +121,31 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
         
         /// <summary>
-        /// rcbDebitAccount control.
+        /// tbDebitAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbDebitAccount;
+        protected global::Telerik.Web.UI.RadTextBox tbDebitAccount;
+        
+        /// <summary>
+        /// lblNote control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNote;
+        
+        /// <summary>
+        /// sd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox sd;
         
         /// <summary>
         /// tbAmount control.
@@ -172,7 +190,7 @@ namespace BankProject.Views.TellerApplication {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox tbTaxCode;
+        protected global::Telerik.Web.UI.RadTextBox tbTaxCode;
         
         /// <summary>
         /// rcbConnectedBank control.
