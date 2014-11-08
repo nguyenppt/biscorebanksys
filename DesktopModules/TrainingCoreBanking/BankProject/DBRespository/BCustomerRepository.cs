@@ -33,5 +33,11 @@ namespace BankProject.DBRespository
             Expression<Func<BCUSTOMER_INFO, bool>> query = c => c.Status.Equals(_status);
             return Find(query);
         }
+
+        public BCUSTOMER_INFO getCustomerInfo(String custID, String _status)
+        {
+            Expression<Func<BCUSTOMER_INFO, bool>> query = c => c.Status.Equals(_status) && c.CustomerID.Equals(custID);
+            return Find(query).FirstOrDefault();
+        }
     }
 }
