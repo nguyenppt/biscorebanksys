@@ -24,12 +24,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
             divMT734.Attributes.CssStyle.Remove("display");
             divCharge.Attributes.CssStyle.Remove("display");
-            if (this.TabId == TabDocsWithNoDiscrepancies)
+            if (this.TabId != TabDocsWithDiscrepancies)
             {
                 divMT734.Attributes.CssStyle.Add("display", "none");
-                divCharge.Attributes.CssStyle.Add("display", "none");
+                if (this.TabId != TabDocsReject)
+                    divCharge.Attributes.CssStyle.Add("display", "none");
             }
-            InitDataSource();            
+            InitDataSource();
             //Lấy chi tiết
             if (string.IsNullOrEmpty(Request.QueryString["tid"])) return;
             DataSet dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, Request.QueryString["tid"]);
