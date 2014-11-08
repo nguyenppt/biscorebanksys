@@ -26,13 +26,47 @@
 <div style="padding:10px;">
     <table cellpadding="0" cellspacing="0" width="100%">
         <tr>
+            <td class="MyLable">Limit Type:</td>
+            <td class="MyContent">
+                <telerik:RadCombobox id="rcbLimitTYpe" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" ForeColor="Black" 
+                   >
+                            <CollapseAnimation Type="None" />
+                            <ExpandAnimation Type="None" />
+                                <Items>                     
+                                        <telerik:RadComboBoxItem Value="Global" Text="Global Limit" />
+                                        <telerik:RadComboBoxItem Value="Product" Text="Product Limit" />
+                                </Items>
+                </telerik:RadCombobox>
+            </td>
+            <td class="MyLable"></td>
+            <td class="MyContent"></td>
+        </tr>
+        <tr>
             <td class="MyLable">Global Limit ID:</td>
             <td class="MyContent" width="300">
-                <telerik:radtextbox  id="tbMaHanMucCha" runat="server" validationGroup="Group1" width="300"></telerik:radtextbox>
+                <telerik:RadCombobox id="rcbGlobalLimit" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" ForeColor="Black" 
+                   >
+                            <CollapseAnimation Type="None" />
+                            <ExpandAnimation Type="None" />
+                                <Items>                     
+                                        <telerik:RadComboBoxItem Value="" Text="" />
+                                        <telerik:RadComboBoxItem Value="7000" Text="7000 - Global Revoling Limit" />
+                                        <telerik:RadComboBoxItem Value="8000" Text="8000 - Global Non-Revoling Limit" />
+                                </Items>
+                </telerik:RadCombobox>
             </td>
             <td class="MyLable" >Product Limit ID:</td>
             <td class="MyContent" width="300">
-                <telerik:radtextbox runat="server" id="tbMaHanMucCon" validationGroup="Group1" width="300"  ></telerik:radtextbox>
+                <telerik:RadCombobox id="rcbProductLimitID" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" ForeColor="Black" 
+                   >
+                            <CollapseAnimation Type="None" />
+                            <ExpandAnimation Type="None" />
+                                <Items>                     
+                                        <telerik:RadComboBoxItem Value="" Text="" />
+                                        <telerik:RadComboBoxItem Value="7700" Text="7700 - Revoling Limit" />
+                                        <telerik:RadComboBoxItem Value="8700" Text="8700 - Non-Revoling Limit" />
+                                </Items>
+                </telerik:RadCombobox>
             </td>
         </tr>
         <tr>

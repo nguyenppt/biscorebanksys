@@ -45,19 +45,23 @@
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td class="MyLable" style="padding:5px 0 5px 17px; "><b>Customer ID:</b></td>
-            <td class="MyContent" style="padding:5px 0 5px 5px; ">
-                <telerik:RadCombobox id="rcbCustomerID" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true"
-                    width="40%" height="150" OnClientSelectedIndexChanged="setID">
-                            <CollapseAnimation Type="None" />
-                            <ExpandAnimation Type="None" />
-                                <Items>                     
-                                        <telerik:RadComboBoxItem Value="" Text="" />
-                                </Items>
-                </telerik:RadCombobox>
+            <td class="MyContent"  >
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="MyContent" width="150">
+                        <telerik:RadTextBox id="tbCustomerID" runat="server" ontextChanged="tbCustomerID_TextChanged" autoPostBack="true" />
+                            </td>
+                        <td class="MyContent">
+                            <telerik:RadTextBox id="tbCustomerName" runat="server" readOnly="true" borderwidth="0" />
+                            </td>
+                    </tr>
+                </table>
+                 
+            
             </td> 
-            <td class="MyLable"></td>
-            <td class="MyContent"></td>
         </tr>
+        </table>
+         <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td class="MyLable" style="padding:5px 0 5px 17px;"><b>Product Limit :</b></td>
             <td class="MyContent" style="padding:5px 0 5px 5px;">
@@ -366,6 +370,13 @@
                  <telerik:AjaxUpdatedControl ControlID="rcbCollateral" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbCustomerID">
+            <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="tbCustomerName" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <telerik:RadCodeBlock id="RadCodeBlock" runat="server">
@@ -390,7 +401,7 @@
     }
     function setID(sender, args) {
         var GlobalID = $find("<%=rcbGlobalLimit.ClientID%>").get_selectedItem().get_value();
-        var CustomerID = $find("<%=rcbCustomerID.ClientID%>").get_selectedItem().get_text();
+        var CustomerID = $find("<%=tbCustomerID.ClientID%>").get_value();
         if (CustomerID && GlobalID) {
             $('#<%=tbLimitID.ClientID%>').val(CustomerID.substring(0, 7) + "." + GlobalID + ".");
         } else {
@@ -476,40 +487,6 @@
         //var num = sender.get_value();
         document.getElementById("<%= hfInternalLimit.ClientID%>").value = number;
     }
-    $(document).ready(
-  function () {
-      $('a.add').live('click',
-          function () {
-              $(this)
-                  .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                  .removeClass('add')
-                  .addClass('remove');
-              $(this)
-                  .closest('tr')
-                  .clone()
-                  .appendTo($(this).closest('table'));
-              $(this)
-                  .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                  .removeClass('remove')
-                  .addClass('add');
-          });
-      $('a.remove').live('click',
-          function () {
-              $(this)
-                  .closest('tr')
-                  .remove();
-          });
-      $('input:text').each(
-          function () {
-              var thisName = $(this).attr('name'),
-                  thisRrow = $(this)
-                              .closest('tr')
-                              .index();
-              $(this).attr('name', 'row' + thisRow + thisName);
-              $(this).attr('id', 'row' + thisRow + thisName);
-          });
-
-  });
   </script>
     </telerik:RadCodeBlock>
 <div style="visibility:hidden;">

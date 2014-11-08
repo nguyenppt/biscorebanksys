@@ -31,13 +31,22 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadToolBar RadToolBar1;
         
         /// <summary>
-        /// rcbCustomerID control.
+        /// tbCustomerID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbCustomerID;
+        protected global::Telerik.Web.UI.RadTextBox tbCustomerID;
+        
+        /// <summary>
+        /// tbCustomerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox tbCustomerName;
         
         /// <summary>
         /// rcbGlobalLimit control.

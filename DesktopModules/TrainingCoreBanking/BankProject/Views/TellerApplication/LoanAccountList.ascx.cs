@@ -21,10 +21,15 @@ namespace BankProject.Views.TellerApplication
         {
             if (Request.Params["tabid"] != null)
             {
+                page = Request.Params["tabid"];
                 if (Request.Params["tabid"] == "202")
                 {
-                    page = "202";
+                    
                     loanBusiness = new NewNormalLoanAmendBusiness();
+                }
+                else if (Request.Params["process"] == "repayment")
+                {
+                    loanBusiness = new NewNormalLoanRepaymentBusiness();
                 }
                 else
                 {

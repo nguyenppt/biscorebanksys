@@ -45,23 +45,26 @@
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td class="MyLable" style="padding:5px 0px 5px 17px;">Customer ID:</td>
-            <td class="MyContent" style="padding:5px 0px 5px 5px;">
-                <telerik:RadCombobox id="rcbCustomerID" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" ForeColor="Black" 
-                    width="40%" height="150" OnClientSelectedIndexChanged="setID" AutoPostBack="true" OnSelectedIndexChanged="rcbGlobalLimit_OnSelectedIndexChanged">
-                            <CollapseAnimation Type="None" />
-                            <ExpandAnimation Type="None" />
-                                <Items>                     
-                                        <telerik:RadComboBoxItem Value="" Text="" />
-                                </Items>
-                </telerik:RadCombobox></td>
-            <td class="MyLable"></td>
-            <td class="MyContent"></td>
+            <td class="MyContent">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="MyContent" width="150">
+                        <telerik:RadTextBox id="tbCustomerID" runat="server" ontextChanged="tbCustomerID_TextChanged" autoPostBack="true" />
+                            </td>
+                        <td class="MyContent">
+                            <telerik:RadTextBox id="tbCustomerName" runat="server" readOnly="true" borderwidth="0" />
+                            </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
+        </table>
+    <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td class="MyLable" style="padding:5px 0 5px 17px;">Global Limit:</td>
             <td class="MyContent" style="padding:5px 0px 5px 5px;">
                 <telerik:RadCombobox id="rcbGlobalLimit" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" ForeColor="Black" 
-                  width="40%"  OnClientSelectedIndexChanged="setID" AutoPostBack="true" OnSelectedIndexChanged="rcbGlobalLimit_OnSelectedIndexChanged" >
+                  width="40%" AutoPostBack="true" OnSelectedIndexChanged="rcbGlobalLimit_OnSelectedIndexChanged" >
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                                 <Items>                     
@@ -70,16 +73,20 @@
                                         <telerik:RadComboBoxItem Value="8000" Text="8000 - Global Non-Revoling Limit" />
                                 </Items>
                 </telerik:RadCombobox></td>
-        </tr>
+        </tr> </table>
+    <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td class="MyLable" style="padding:5px 0 5px 17px;">ID:</td>
-            <td class="MyContent" style="padding:5px 0px 5px 5px;">
-                <asp:TextBox Width="40%" ID="tbLimitID" runat="server" ForeColor="Black"  /><span class="Required">(*)</span>
+            <td class="MyLable" style="padding:5px 0 5px 17px;">ID:<span class="Required">(*)</span>
                 <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator2"
                      ControlToValidate="tbLimitID" ValidationGroup="Commit" InitialValue="" ErrorMessage="Customer Limit ID is required"
-                    ForeColor="Red"></asp:RequiredFieldValidator>
+                    ForeColor="Red"></asp:RequiredFieldValidator> </td>
+            <td class="MyContent" >
+                <asp:TextBox Width="40%" ID="tbLimitID" runat="server" ForeColor="Black"  />
+            </td>
+            <td>
                 <i>
-                    <asp:Label ID="lblCustomerName" ForeColor="Black"  runat="server"></asp:Label> <b><asp:Label ID="lblCheckCustomerName" runat="server" /></b>
+                    <asp:Label ID="lblCustomerName" ForeColor="Black"  runat="server"></asp:Label> 
+                    <b><asp:Label ID="lblCheckCustomerName" runat="server" /></b>
                 </i>
             </td>
         </tr>
@@ -352,6 +359,51 @@
                  <telerik:AjaxUpdatedControl ControlID="rcbCollateral" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbCustomerID">
+            <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="tbCustomerName" />
+                 <telerik:AjaxUpdatedControl ControlID="tbLimitID" />
+                <telerik:AjaxUpdatedControl ControlID="rcbCurrency" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbCountry" />
+                 <telerik:AjaxUpdatedControl ControlID="RdpApprovedDate" />
+                 <telerik:AjaxUpdatedControl ControlID="RdpOfferedUnit" />
+                 <telerik:AjaxUpdatedControl ControlID="rdpExpiryDate" />
+                 <telerik:AjaxUpdatedControl ControlID="RdpProposalDate" />
+                 <telerik:AjaxUpdatedControl ControlID="RdpAvailableDate" />
+                 <telerik:AjaxUpdatedControl ControlID="tbIntLimitAmt" />
+                 <telerik:AjaxUpdatedControl ControlID="tbAdvisedAmt" />
+                 <telerik:AjaxUpdatedControl ControlID="tbOriginalLimit" />
+                 <telerik:AjaxUpdatedControl ControlID="tbNote" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbFandA" />
+                 <telerik:AjaxUpdatedControl ControlID="tbMaxTotal" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbCollateral" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbCollateralType" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="rcbGlobalLimit">
+            <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="tbLimitID" />
+                 <telerik:AjaxUpdatedControl ControlID="lblCustomerName" />
+                 <telerik:AjaxUpdatedControl ControlID="lblCheckCustomerName" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbCurrency" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbCountry" />
+                 <telerik:AjaxUpdatedControl ControlID="RdpApprovedDate" />
+                 <telerik:AjaxUpdatedControl ControlID="RdpOfferedUnit" />
+                 <telerik:AjaxUpdatedControl ControlID="rdpExpiryDate" />
+                 <telerik:AjaxUpdatedControl ControlID="RdpProposalDate" />
+                 <telerik:AjaxUpdatedControl ControlID="RdpAvailableDate" />
+                 <telerik:AjaxUpdatedControl ControlID="tbIntLimitAmt" />
+                 <telerik:AjaxUpdatedControl ControlID="tbAdvisedAmt" />
+                 <telerik:AjaxUpdatedControl ControlID="tbOriginalLimit" />
+                 <telerik:AjaxUpdatedControl ControlID="tbNote" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbFandA" />
+                 <telerik:AjaxUpdatedControl ControlID="tbMaxTotal" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbCollateral" />
+                 <telerik:AjaxUpdatedControl ControlID="rcbCollateralType" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <telerik:RadCodeBlock id="RadCodeBlock" runat="server">
@@ -370,7 +422,7 @@
         {
             var Note = $find("<%=tbNote.ClientID%>");
             var Currency = $find("<%=rcbCurrency.ClientID%>").get_selectedItem().get_value(); 
-            var CustomerName = $('#<%=lblCustomerName.ClientID%>').html();
+            var CustomerName = $find("<%=tbCustomerName.ClientID%>").get_value();
             if (CustomerName && Currency) {
                 Note.set_value("Mo Han Muc Global " + Currency + " cho khach hang " + CustomerName);
             } else Note.set_value("");
@@ -378,9 +430,9 @@
         function setID(sender, args)
         {
             var GlobalID = $find("<%=rcbGlobalLimit.ClientID%>").get_selectedItem().get_value();
-            var CustomerID = $find("<%=rcbCustomerID.ClientID%>").get_selectedItem().get_text();
+            var CustomerID = $find("<%=tbCustomerID.ClientID%>").get_value();
             if (CustomerID && GlobalID) {
-                $('#<%=tbLimitID.ClientID%>').val(CustomerID.substring(0, 7) + "." + GlobalID);
+                $('#<%=tbLimitID.ClientID%>').val(CustomerID + "." + GlobalID);
             } else
             {
                 $('#<%=tbLimitID.ClientID%>').val("");
@@ -465,40 +517,7 @@
             //var num = sender.get_value();
             document.getElementById("<%= hfInternalLimit.ClientID%>").value = number;
         }
-        $(document).ready(
-      function () {
-          $('a.add').live('click',
-              function () {
-                  $(this)
-                      .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                      .removeClass('add')
-                      .addClass('remove');
-                  $(this)
-                      .closest('tr')
-                      .clone()
-                      .appendTo($(this).closest('table'));
-                  $(this)
-                      .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                      .removeClass('remove')
-                      .addClass('add');
-              });
-          $('a.remove').live('click',
-              function () {
-                  $(this)
-                      .closest('tr')
-                      .remove();
-              });
-          $('input:text').each(
-              function () {
-                  var thisName = $(this).attr('name'),
-                      thisRrow = $(this)
-                                  .closest('tr')
-                                  .index();
-                  $(this).attr('name', 'row' + thisRow + thisName);
-                  $(this).attr('id', 'row' + thisRow + thisName);
-              });
-
-      });
+ 
   </script>
     </telerik:RadCodeBlock>
 <div style="visibility:hidden;">
