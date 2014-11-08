@@ -23,12 +23,18 @@ namespace BankProject.DBRespository
             return Find(loan);
         }
 
-        public IQueryable<BNEWNORMALLOAN> findAllNormalLoans(string status, string amendStatus)
+        public IQueryable<BNEWNORMALLOAN> findAllNormalLoans(string status, string amendStatus, string repaidStatus)
         {
             Expression<Func<BNEWNORMALLOAN, bool>> loan = t => t.Status == status
-                 && (String.IsNullOrEmpty(amendStatus) || t.Amend_Status == amendStatus);
+                 && (String.IsNullOrEmpty(amendStatus) || t.Amend_Status == amendStatus)
+                 && (String.IsNullOrEmpty(repaidStatus) || t.Repaid_Status == repaidStatus);
 
             return Find(loan);
+        }
+
+        public IQueryable<BNEWNORMALLOAN> findAllNormalLoans(string status, string amendStatus)
+        {
+            return findAllNormalLoans(status, amendStatus, null);
         }
 
         public IQueryable<BNEWNORMALLOAN> findExistingLoan(String code, string status, string amendStatus)
