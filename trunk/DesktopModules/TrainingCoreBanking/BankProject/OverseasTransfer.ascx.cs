@@ -551,7 +551,7 @@ namespace BankProject
                         case "AUT":
                             SetDisableByReview(false);
                             txtCode.Enabled = true;
-                            //RadToolBar1.FindItemByValue("btReview").Enabled = false;
+                            RadToolBar1.FindItemByValue("btprint").Enabled = true;
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
                             break;
                     }
