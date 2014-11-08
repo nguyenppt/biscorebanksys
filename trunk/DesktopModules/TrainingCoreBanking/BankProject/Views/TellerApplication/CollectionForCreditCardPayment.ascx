@@ -70,21 +70,6 @@
         if (DebitAccountValue == "" || CreditcurrencyDepositedValue == "") {
             $find("<%=tbCreditAmt.ClientID%>").set_value("");
         }
-        //if (DebitcurrencyDepositedValue && DebitAccountValue ) {
-        //    showmessageTrungCurrency("Debit");
-        //    //alert("Currency and Cash Account is not matched");
-        //    DebitcurrencyDepositedElement.trackChanges();
-        //    DebitcurrencyDepositedElement.get_items().getItem(0).select();
-        //    DebitcurrencyDepositedElement.updateClientState();
-        //    DebitcurrencyDepositedElement.commitChanges();
-
-        //    DebitAccountElement.trackChanges();
-        //    DebitAccountElement.get_items().getItem(0).select();
-        //    DebitAccountElement.updateClientState();
-        //    DebitAccountElement.commitChanges();
-        //    return false;
-        //}
-
         return true;
     }
 
@@ -110,32 +95,6 @@
                     break;
             }
         }
-    }
-
-    function Customer_OnClientSelectedIndexChanged() {
-        var customerElement = $find("<%= cmbCustomerId.ClientID %>");
-
-        var FullNameElement = $find("<%= txtFullName.ClientID %>");
-        FullNameElement.set_value(customerElement.get_selectedItem().get_attributes().getAttribute("CustomerName"));
-
-        var AddressElement = $find("<%= txtAddress.ClientID %>");
-        AddressElement.set_value(customerElement.get_selectedItem().get_attributes().getAttribute("Address"));
-
-        var legalIdElement = $find("<%= txtLegalID.ClientID %>");
-        legalIdElement.set_value(customerElement.get_selectedItem().get_attributes().getAttribute("IdentityNo"));
-
-        var PlaceOfIssElement = $find("<%= txtPlaceOfIs.ClientID %>");
-        PlaceOfIssElement.set_value(customerElement.get_selectedItem().get_attributes().getAttribute("IssuePlace"));
-
-        var txtTelElement = $find("<%= txtTel.ClientID %>");
-        txtTelElement.set_value(customerElement.get_selectedItem().get_attributes().getAttribute("Telephone"));
-        var IsssuedDateElement = $find("<%= tbIssueDate.ClientID %>");
-        if (customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate") != "01/01/1900") {
-            //var datesplit = customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate").split('/');
-
-            IsssuedDateElement.set_value(customerElement.get_selectedItem().get_attributes().getAttribute("IssueDate"));
-            //IsssuedDateElement.set_selectedDate(new Date(datesplit[2].substring(0, 4), datesplit[1], datesplit[0]));
-        } else IsssuedDateElement.set_value("");
     }
 
 </script>
@@ -185,18 +144,22 @@
     <div id="ChristopherColumbus" class="dnnClear">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Customer ID</td>
+                <td class="MyLable">Customer ID<span class="Required">(*)</span>
+                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"  Display="None" ValidationGroup="Commit" 
+                         ControlToValidate="tbCustomerId"
+                         InitialValue="" ForeColor="Red" ErrorMessage="Debit Account is required" /></td>
                 <td class="MyContent">
-                    <telerik:RadComboBox ID="cmbCustomerId" Width="300"
+                    <telerik:RadTextBox ID="tbCustomerId" Width="150"
                         MarkFirstMatch="True"
-                        AllowCustomText="false" 
-                        OnItemDataBound="cmbCustomerId_ItemDataBound"
-                        OnClientSelectedIndexChanged="Customer_OnClientSelectedIndexChanged"
+                        autoPostBack="true"
+                        OntextChanged="tbCustomerId_OntextChanged"
                         runat="server" ValidationGroup="Group1">
-                        <Items>
-                            <telerik:RadComboBoxItem Value="" Text="" />
-                        </Items>
-                    </telerik:RadComboBox>
+                    </telerik:RadTextBox>
+                    
+                </td>
+                <td class="MyLable"><asp:Label ID="lblNote" runat="server" Width="200"></asp:Label></td>
+                <td class="MyContent" style="visibility:hidden;">
+                    <telerik:RadTextbox id="sd" runat="server" />
                 </td>
             </tr>
         </table>
@@ -487,6 +450,18 @@
             <UpdatedControls>
                  <telerik:AjaxUpdatedControl ControlID="cmbCreditAccount" />
                  <telerik:AjaxUpdatedControl ControlID="cmbDebitAccount" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbCustomerId">
+            <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="lblNote" />
+                 <telerik:AjaxUpdatedControl ControlID="txtFullName" />
+                 <telerik:AjaxUpdatedControl ControlID="txtAddress" />
+                 <telerik:AjaxUpdatedControl ControlID="txtLegalID" />
+                 <telerik:AjaxUpdatedControl ControlID="tbIssueDate" />
+                 <telerik:AjaxUpdatedControl ControlID="txtTel" />
+                 <telerik:AjaxUpdatedControl ControlID="txtPlaceOfIs" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>
