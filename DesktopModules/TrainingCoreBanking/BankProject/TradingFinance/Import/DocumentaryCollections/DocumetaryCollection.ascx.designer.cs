@@ -679,15 +679,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtDraftNo;
         
         /// <summary>
-        /// divTM410 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTM410;
-        
-        /// <summary>
         /// RadCodeBlock4 control.
         /// </summary>
         /// <remarks>

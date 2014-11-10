@@ -41,8 +41,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             lblTaxAmt.Text = "0";
             lblTaxAmt2.Text = "0";
 
-            divTM410.Visible = false;
-
+           
             // default no use
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
@@ -193,8 +192,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             }
             else
             {
+                // trupng hoppage moi
                 GeneralCode();
                 SetDisableByReview(true);
+
+                //divTM410.Visible = false;
+                DisabledTab410(false);
+
             }
 
             if (!string.IsNullOrEmpty(Request.QueryString["disable"]))
@@ -207,7 +211,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             if (!string.IsNullOrEmpty(Request.QueryString["enquiry"]))
             {
                 InitToolBar(false);
-                RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
             }
             Session["DataKey"] = txtCode.Text;
 
@@ -1344,23 +1348,25 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                         {
                             case 217: //Register Documetary Collection
                             case 281: //Incoming Collection Amendments
-                                divTM410.Visible = true;
+                                //divTM410.Visible = true;
+                                DisabledTab410(true);
                                 break;
                         }
                     }
                     else
                     {
-                        divTM410.Visible = false;
+                        //divTM410.Visible = false;
+                        DisabledTab410(false);
                     }
                 }
                 else
                 {
-                    divTM410.Visible = false;
+                    //divTM410.Visible = false;
+                    DisabledTab410(false);
                     lblRemittingBankName.Text = string.Empty;
                     lblRemittingBankNoError.Text = "No found swiftcode";
                 }
             }
-            
         }
 
         protected void comboWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -1809,6 +1815,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
 
                         }
                         else if (drow["PaymentFullFlag"].ToString() == "1")
@@ -1818,6 +1825,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                     }
                     break;
@@ -1842,6 +1850,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                         else if (drow["PaymentFullFlag"].ToString() == "1")
                         {
@@ -1850,6 +1859,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                     }
                     break;
@@ -1874,7 +1884,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             }
 
                             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                             RadToolBar1.FindItemByValue("btRevert").Enabled = false;
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
                         }
@@ -1885,6 +1895,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
 
                         }
                         else if (drow["PaymentFullFlag"].ToString() == "1")
@@ -1894,6 +1905,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                     }
                     break;
@@ -1906,6 +1918,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
 
                         }
                         else if (drow["Cancel_Status"].ToString() == "AUT")
@@ -1914,6 +1927,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                         else if (drow["Status"].ToString() == "AUT")
                         {
@@ -1921,6 +1935,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                     }
                     break;
@@ -1972,6 +1987,19 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 return false;
             }
             return true;
+        }
+
+        protected void DisabledTab410(bool flag)
+        {
+            comboCreateMT410.Enabled = flag;
+            txtGeneralMT410_2.Enabled = flag;
+            txtSendingBankTRN.Enabled = flag;
+            txtRelatedReference.Enabled = flag;
+            comboCurrency_TabMT410.Enabled = flag;
+            numAmount_TabMT410.Enabled = flag;
+            txtSenderToReceiverInfo_410_1.Enabled = flag;
+            txtSenderToReceiverInfo_410_2.Enabled = flag;
+            txtSenderToReceiverInfo_410_3.Enabled = flag;
         }
     }
 }

@@ -919,7 +919,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             InitToolBar(false);
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
                             RadToolBar1.FindItemByValue("btReview").Enabled = false;
-                            RadToolBar1.FindItemByValue("btprint").Enabled = false;
+                            RadToolBar1.FindItemByValue("btprint").Enabled = true;
                         }
                     }
 
@@ -1057,6 +1057,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                         SetDisableByReview(false);
                         RadToolBar1.FindItemByValue("btSave").Enabled = false;
                         RadToolBar1.FindItemByValue("btReview").Enabled = false;
+                        RadToolBar1.FindItemByValue("btprint").Enabled = true;
                     }
                     else
                     {
