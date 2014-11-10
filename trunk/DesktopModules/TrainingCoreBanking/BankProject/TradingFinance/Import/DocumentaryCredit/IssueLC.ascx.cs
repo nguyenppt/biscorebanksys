@@ -2610,6 +2610,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                         else if (drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
@@ -2617,6 +2618,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                         else if (drow["Status"].ToString() == bd.TransactionStatus.AUT)
                         {
@@ -2624,6 +2626,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                     }
                     break;
@@ -2659,6 +2662,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
 
                         }
                         else if (drow["PaymentFullFlag"].ToString() == "1")
@@ -2668,6 +2672,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                     }
                     break;
@@ -2692,6 +2697,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                         else if (drow["PaymentFullFlag"].ToString() == "1")
                         {
@@ -2700,6 +2706,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             LoadToolBar(false);
                             SetDisableByReview(false);
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
                     }
                     break;
