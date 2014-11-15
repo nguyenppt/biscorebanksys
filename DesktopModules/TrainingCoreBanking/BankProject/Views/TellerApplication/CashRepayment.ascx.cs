@@ -34,6 +34,10 @@ namespace BankProject.Views.TellerApplication
             switch (commandName)
             { 
                 case "commit":
+                    if (lblNote.Text == "Account Customer ID is not exist !")
+                    {
+                        ShowMsgBox("Your Customer Account does not exist. Please check again"); return;
+                    }
                     if (tbBalanceAmt.Value.Value < tbAmtLCYDeposited.Value.Value)
                     {
                         ShowMsgBox("Can not OverDraf. Maximum Balance Amount is " + string.Format("{0:C}",tbBalanceAmt.Value.Value).Replace("$","") + " " + rcbCurrency.SelectedValue + " .Please check again");
@@ -70,9 +74,13 @@ namespace BankProject.Views.TellerApplication
                     TriTT.B_CASHREPAYMENT_UpdateStatus(tbID.Text, "REV", tbCusomerAcct.Text, rcbCurrency.SelectedValue, 0);
                     LoadToolBar(true);
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                    DataRow dr1 = TriTT.B_CASHREPAYMENT_LoadCustomerInfo(tbCusomerAcct.Text, rcbCurrency.SelectedValue).Tables[0].Rows[0];
-                    tbBalanceAmt.Text = dr1["WorkingAmount"].ToString(); // cap nhat lai so du cua tai khoan trong truong hop cac giao dich khac da AUT rut tien
-                    break;
+                    DataSet ds = TriTT.B_CASHREPAYMENT_LoadCustomerInfo(tbCusomerAcct.Text, rcbCurrency.SelectedValue);
+                    if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+                        DataRow dr1 = ds.Tables[0].Rows[0];
+                        tbBalanceAmt.Text = dr1["WorkingAmount"].ToString(); // cap nhat lai so du cua tai khoan trong truong hop cac giao dich khac da AUT rut tien
+                    }
+                        break;
             }
         }
         protected void FirstLoad()
@@ -127,32 +135,36 @@ namespace BankProject.Views.TellerApplication
         protected void LoadDetail(string ID)
         {
             tbID.Text = ID;
-            DataRow dr = TriTT.B_CASHREPAYMENT_LoadDetail(ID).Tables[0].Rows[0];
-            lblCustomerID.Text = dr["CustomerID"].ToString();
-            lblCustomerName.Text = dr["CustomerName"].ToString();
-            rcbCurrency.SelectedValue = dr["Currency"].ToString();
-            tbCusomerAcct.Text = dr["CustomerAccountID"].ToString();
-            tbBalanceAmt.Text = dr["BalanceAmount"].ToString();
-            tbNewBalanceAmt.Text = dr["NewBalanceAmount"].ToString();
-            tbTellerID.Text = dr["TellerID"].ToString();
-            rcbCurrencyDeposited.SelectedValue = dr["CurrencyDeposited"].ToString();
-            loadCashAccount( rcbCurrencyDeposited.SelectedValue);
-            rcbCashAccount.SelectedValue = dr["CashAccountID"].ToString();
-            tbAmtLCYDeposited.Text = dr["AmountDeposited"].ToString();
-            if (Convert.ToDecimal(dr["DealRate"].ToString()) != 1)
+            DataSet ds = TriTT.B_CASHREPAYMENT_LoadDetail(ID);
+            if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
-                tbDealRate.Text = dr["DealRate"].ToString();
-            }
-            rcbWaiveCharge.SelectedValue = dr["WaiveCharges"].ToString();
-            tbNarrative.Text = dr["Narrative"].ToString();
-            tbNarrative2.Text = dr["Narrative2"].ToString();
-            if (dr["PrintLnNoOfPS"].ToString() != "0")
-            {
-                tbPrint.Text = dr["PrintLnNoOfPS"].ToString();
-            }
-            if (dr["Status"].ToString() == "AUT")
-            {
-                LoadAll_False();
+                DataRow dr = ds.Tables[0].Rows[0];
+                lblCustomerID.Text = dr["CustomerID"].ToString();
+                lblCustomerName.Text = dr["CustomerName"].ToString();
+                rcbCurrency.SelectedValue = dr["Currency"].ToString();
+                tbCusomerAcct.Text = dr["CustomerAccountID"].ToString();
+                tbBalanceAmt.Text = dr["BalanceAmount"].ToString();
+                tbNewBalanceAmt.Text = dr["NewBalanceAmount"].ToString();
+                tbTellerID.Text = dr["TellerID"].ToString();
+                rcbCurrencyDeposited.SelectedValue = dr["CurrencyDeposited"].ToString();
+                loadCashAccount(rcbCurrencyDeposited.SelectedValue);
+                rcbCashAccount.SelectedValue = dr["CashAccountID"].ToString();
+                tbAmtLCYDeposited.Text = dr["AmountDeposited"].ToString();
+                if (Convert.ToDecimal(dr["DealRate"].ToString()) != 1)
+                {
+                    tbDealRate.Text = dr["DealRate"].ToString();
+                }
+                rcbWaiveCharge.SelectedValue = dr["WaiveCharges"].ToString();
+                tbNarrative.Text = dr["Narrative"].ToString();
+                tbNarrative2.Text = dr["Narrative2"].ToString();
+                if (dr["PrintLnNoOfPS"].ToString() != "0")
+                {
+                    tbPrint.Text = dr["PrintLnNoOfPS"].ToString();
+                }
+                if (dr["Status"].ToString() == "AUT")
+                {
+                    LoadAll_False();
+                }
             }
 
         }
@@ -185,7 +197,7 @@ namespace BankProject.Views.TellerApplication
             Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
 
-        protected void btAccountCust_Click1(object sender, EventArgs e)
+        protected void Load_CustomerAcct()
         {
             string AccountCustomerID = tbCusomerAcct.Text.Trim();
             string Currency = rcbCurrency.SelectedValue;
@@ -195,22 +207,29 @@ namespace BankProject.Views.TellerApplication
                 if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     DataRow dr = ds.Tables[0].Rows[0];
+                    lblNote.Text = "";
                     lblCustomerID.Text = dr["CustomerID"].ToString();
                     lblCustomerName.Text = dr["CustomerName"].ToString();
                     tbBalanceAmt.Text = dr["WorkingAmount"].ToString();
                 }
                 else
                 {
+                    lblNote.Text = "Account Customer ID is not exist !";
                     lblCustomerID.Text = "";
                     lblCustomerName.Text = "";
                     tbBalanceAmt.Text = "";
-                    ShowMsgBox("Your Account Customer ID is not exist. Please check again !"); return;
                 }
             }
-            else
-            {
-                ShowMsgBox("Currency and Account Customer ID must be not null, Please check again "); return;
-            }
+           
+        }
+        protected void tbCusomerAcct_TextChanged(object sender, EventArgs e)
+        {
+            Load_CustomerAcct();
+        }
+        protected void btSearch_Click(object sender, EventArgs e)
+        {
+            LoadToolBar(false);
+            LoadDetail(tbID.Text);
         }
         //void loadLOANACCOUNT(string customername)
         //{

@@ -20,43 +20,16 @@ namespace BankProject.Views.TellerApplication
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-           // gia tri mac dinh khi page loaded lan dau
-            rcbCustomerID.Focus();
-            rdpValueDate.SelectedDate = DateTime.Now;           
-            tbCollateralContengentEntry.Text = TriTT.B_BMACODE_GetNewID_2("COLL_CONTIN_ENTRY",Refix_BMACODE(), "-");
-            rcbCustomerID.DataSource = DataProvider.DataTam.B_BCUSTOMERS_GetAll();
-            rcbCustomerID.DataTextField = "CustomerName";
-            rcbCustomerID.DataValueField = "CustomerID";
-            rcbCustomerID.DataBind();
-            if (Request.QueryString["IsAuthorize"] != null)
+
+            if (Request.QueryString["ID"] != null)
             {
-                LoadToolBar(true);
-                LoadPreview();
-                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
+                Load_Contingent_Account(Request.QueryString["ID"].ToString());
+                LoadToolBar(false);
             }
             else
             {
-                LoadToolBar(false);
+                LoadToolBar(true);
             }
-        }
-
-        protected void rcbCustomerID_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
-        {
-            DataRowView row = e.Item.DataItem as DataRowView;
-            e.Item.Attributes["CustomerName"] = row["CustomerName2"].ToString();
-            e.Item.Attributes["Address"] = row["Address"].ToString();
-            e.Item.Attributes["IdentityNo"] = row["IdentityNo"].ToString();
-            e.Item.Attributes["IssueDate"] = row["IssueDate"].ToString();
-            e.Item.Attributes["IssuePlace"] = row["IssuePlace"].ToString();
-        }
-        private void LoadToolBar(bool isauthorize)
-        {
-            RadToolBar1.FindItemByValue("btCommitData").Enabled= !isauthorize;
-            RadToolBar1.FindItemByValue("btPreview").Enabled = !isauthorize;
-            RadToolBar1.FindItemByValue("btAuthorize").Enabled = isauthorize;
-            RadToolBar1.FindItemByValue("btReverse").Enabled = isauthorize;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
         }
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
@@ -64,212 +37,188 @@ namespace BankProject.Views.TellerApplication
             var commandname = toolbarbutton.CommandName;
             if (commandname == "commit")
             {
-                AutoID++;
-                rcbCustomerID.Focus();
-                tbCollateralContengentEntry.Text = TriTT.B_BMACODE_GetNewID_2("COLL_CONTIN_ENTRY", Refix_BMACODE(), "-");
-                rcbCustomerID.SelectedValue = "";
-                //tbCustomerName.Text = "";
-                tbAddress.Text = "";
-                tbID.Text = "";
-                rdpDateOfIssue.SelectedDate = null;
-                rcbTransactionCode.SelectedValue = "";
-                rcbDebitOrCredit.SelectedValue = "";
-                tbAmountLCY.Text = "";
-               // tbAmountFCY.Text = "";
-                tbDealRate.Text = "";
-                rcbFreignCcy.SelectedValue = "";
-                rdpValueDate.SelectedDate = DateTime.Now;
-                tbReferenceNo.Text = "";
-                tbNarrative.Text = "";
-            }
-
-            if (commandname == "Preview")
-            {
-                Response.Redirect(EditUrl("CollateralContingentEntry_PL"));
-            }
-
-            if (commandname == "authorize" || commandname == "reverse")
-            {
-                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
-                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                LoadToolBar(false);
-                AfterProc();
-            }
-
-        }
-        public void AfterProc()
-        {
-            rcbCustomerID.Focus();
-            rdpValueDate.SelectedDate = DateTime.Now;
-            tbCollateralContengentEntry.Text = TriTT.B_BMACODE_GetNewID_2("COLL_CONTIN_ENTRY", Refix_BMACODE(), "-");
-        }
-         void LoadPreview()
-        {
-            if (Request.QueryString["LCCode"] != null)
-            {
-                Random RandID = new Random();
-                
-                string LCCode = Request.QueryString["LCCode"].ToString();
-                switch (LCCode)
-                { 
-                    case "0":
-                        tbCollateralContengentEntry.Text = "DC-14190-001-963-063";
-                        rcbCustomerID.SelectedValue = "1234";
-                        //tbCustomerName.Text = "Vu Thi My Hanh";
-                        tbAddress.Text = "400 Le Van Tri, P24, Q. Go Vap";
-                        tbID.Text =Convert.ToString(RandID.Next(457676734,546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/10/2009");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "1500000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("7/9/2014");
-                        tbReferenceNo.Text = "1235.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-
-                    case "1":
-                        tbCollateralContengentEntry.Text = "DC-14170-001-963-053";
-                        rcbCustomerID.SelectedValue = "1100001";
-                        //tbCustomerName.Text = "Phan Van Han";
-                        tbAddress.Text = "100 Phan Van Han, Phuong 17, Quan Binh Thanh";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/10/2009");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "500000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("7/6/2014");
-                        tbReferenceNo.Text = "1236.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-                    case "2":
-                        tbCollateralContengentEntry.Text = "DC-14171-001-963-054";
-                        rcbCustomerID.SelectedValue = "1100002";
-                        //tbCustomerName.Text = "Dinh Tien Hoang";
-                        tbAddress.Text = "150 Dinh Tien Hoang, Phuong 1, Quan 1";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/9/2007");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "600000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("7/5/2014");
-                        tbReferenceNo.Text = "1237.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-                    case "3":
-                        tbCollateralContengentEntry.Text = "DC-14172-001-963-056";
-                        rcbCustomerID.SelectedValue = "1100003";
-                       // tbCustomerName.Text = "Pham Ngoc Thach";
-                        tbAddress.Text = "180 Pham Ngoc Thach, Phuong 1, Quan 1";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/9/2007");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "700000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("7/4/2014");
-                        tbReferenceNo.Text = "1238.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-                    case "4":
-                        tbCollateralContengentEntry.Text = "DC-14173-001-963-057";
-                        rcbCustomerID.SelectedValue = "1100004";
-                       // tbCustomerName.Text = "Vo Thi Sau";
-                        tbAddress.Text = "200 Tran Quoc Thao, Phuong 5, Quan 3";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/9/2007");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "770000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("7/3/2014");
-                        tbReferenceNo.Text = "1239.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-                    case "5":
-                        tbCollateralContengentEntry.Text = "DC-14174-001-963-058";
-                        rcbCustomerID.SelectedValue = "1100005";
-                       // tbCustomerName.Text = "Truong Cong Dinh";
-                        tbAddress.Text = "270 Truong Cong Dinh, Phuong 5, Quan 3";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/9/2007");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "990000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("7/2/2014");
-                        tbReferenceNo.Text = "1240.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-
-                    case "6":
-                        tbCollateralContengentEntry.Text = "DC-14190-001-963-059";
-                        rcbCustomerID.SelectedValue = "2102925";
-                       // tbCustomerName.Text = "CTY TNHH SONG HONG";
-                        tbAddress.Text = "90 An Duong, Quan Tay Ho";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/9/2007");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "1000000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("7/1/2014");
-                        tbReferenceNo.Text = "1240.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-
-                    case "7":
-                        tbCollateralContengentEntry.Text = "DC-14175-001-963-060";
-                        rcbCustomerID.SelectedValue = "2102926";
-                       // tbCustomerName.Text = "CTY TNHH PHAT TRIEN PHAN MEM ABC";
-                        tbAddress.Text = "378 Nam Ky Khoi Nghia, Quan Phu Nhuan";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/9/2007");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "1100000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("1/2/2014");
-                        tbReferenceNo.Text = "1241.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-
-                    case "8":
-                        tbCollateralContengentEntry.Text = "DC-14176-001-963-061";
-                        rcbCustomerID.SelectedValue = "2102927";
-                       // tbCustomerName.Text = "Travelocity Corp.";
-                        tbAddress.Text = "178 Washington Boulevard";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/9/2007");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "1200000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("1/3/2014");
-                        tbReferenceNo.Text = "1242.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
-                    case "9":
-                        tbCollateralContengentEntry.Text = "DC-14177-001-963-0562";
-                        rcbCustomerID.SelectedValue = "2102928";
-                       // tbCustomerName.Text = "Wall Street Corp.";
-                        tbAddress.Text = "100 Broadway";
-                        tbID.Text = Convert.ToString(RandID.Next(457676734, 546750964));
-                        rdpDateOfIssue.SelectedDate = Convert.ToDateTime("1/9/2007");
-                        rcbTransactionCode.SelectedValue = "901";
-                        rcbDebitOrCredit.SelectedValue = "D";
-                        rcbAccountNo.SelectedValue = "VND-19411-0001";
-                        tbAmountLCY.Text = "1300000000";
-                        rdpValueDate.SelectedDate = Convert.ToDateTime("1/4/2014");
-                        tbReferenceNo.Text = "1243.1.1";
-                        tbNarrative.Text = "thong tin tai san dam bao";
-                        break;
+                var Rate = (tbDealRate.Text == "" ? 0 : tbDealRate.Value.Value);
+                if (Convert.ToDecimal(tbAmount.Text.Replace(",", "")) <= 0)
+                {
+                    ShowMsgBox("Amount Value must be greater than 0 . Please check again !"); return;
                 }
+                TriTT_Credit.B_CONTINGENT_ENTRY_Insert_Update(tbID.Text, tbContingentEntryID.Text, tbCustomerIDName_Cont.Text.Substring(0, 7), tbAddress_cont.Text, tbIDTaxCode.Text
+                        , tbDateOfIssue.Text == "" ? "" : tbDateOfIssue.Text, rcbTransactionCode.SelectedValue, rcbTransactionCode.Text.Replace(rcbTransactionCode.SelectedValue + " - ", "")
+                        , rcbDebitOrCredit.SelectedValue, rcbDebitOrCredit.Text.Replace(rcbDebitOrCredit.SelectedValue + " - ", ""), rcbCurrency.SelectedValue,
+                        rcbAccountNo.SelectedValue, rcbAccountNo.Text,tbAmount.Text ==""? 0: Convert.ToDecimal(tbAmount.Value),Convert.ToDecimal( Rate), rdpValuedate_cont.SelectedDate, tbNarrative.Text
+                        , UserInfo.Username.ToString(), tbCollateralType.Text);
+                Response.Redirect("Default.aspx?tabid=383");
+            }
+            if (commandname == "search")
+            {
+                Load_Contingent_Account(tbID.Text.Trim());
+            }
+            if (commandname == "edit")
+            {
+                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                rcbCurrency.Enabled = true;
+                rcbDebitOrCredit.Enabled =  false;
+                LoadToolBar(true);
             }
         }
 
+        protected void btSearch_Click(object sender, EventArgs e)
+        {
+            Load_Contingent_Account(tbID.Text.Trim());
+        }
+        protected void Load_Contingent_Account(string ContingentID)
+        {
+            string CustomerID = ContingentID.Substring(0, 7);
+            LoadCurrencies(CustomerID);
+            //LoadGlobalLimitID(CustomerID); //Load dua vao CUstomerID , trong table [BCUSTOMER_LIMIT_SUB]
+            if (ContingentID.Length == 10 && ContingentID.Substring(7, 1) == ".")// check lenght, hop le thi di tiep
+            {
+                if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(ContingentID.Substring(0, 7)) == null)
+                {
+                    //tbCollInfoID.Text = CollIndoID;
+                    lblCheckCustomer.Text = "";
+                    lblCheckCustomer.Text = "Customer ID does not exists !"; return;
+                }
+                DataSet ds = TriTT_Credit.Load_Contingent_Account(ContingentID);
+                if (ds.Tables[0].Rows.Count > 0 && ds.Tables != null && ds.Tables.Count>0)// neu Collateral Info exist thi` load len, neu khong thi chekc de tao moi
+                {
+                    DataRow dr = ds.Tables[0].Rows[0];
+                    tbID.Text = ContingentID;
+                    //Load thong tin cho tab Contingent Entry Info//
+                    tbContingentEntryID.Text = dr["ContingentEntryID"].ToString();
+                    tbCustomerIDName_Cont.Text = dr["CustomerID"].ToString();
+                    tbAddress_cont.Text = dr["Address_cont"].ToString();
+                    tbIDTaxCode.Text = dr["DocID"].ToString();
+                    if (dr["DocIssueDate"].ToString() != "")
+                    {
+                        tbDateOfIssue.Text = (Convert.ToDateTime(dr["DocIssueDate"].ToString())).ToShortDateString();
+                    }
+                    tbReferenceNo.Text = ContingentID;
+                    rcbTransactionCode.SelectedValue = dr["TransactionCode"].ToString();
+                    rcbDebitOrCredit.SelectedValue = dr["DCTypeCode"].ToString();
+                    rcbCurrency.SelectedValue = dr["Currency"].ToString();
+                    tbCollateralType.Text = dr["CollateralType_Code"].ToString();
+                    LoadContingetnAcct(tbCollateralType.Text, rcbCurrency.SelectedValue);
+
+                    tbAmount.Text = dr["Amount"].ToString();
+                    if (dr["DealRate"].ToString() == "0.000000")
+                    {
+                        tbDealRate.Text = "";
+                    }
+                    else tbDealRate.Text = dr["DealRate"].ToString();
+                    if (dr["ValueDateCont"].ToString() != "")
+                    {
+                        rdpValuedate_cont.DbSelectedDate = Convert.ToDateTime(dr["ValueDateCont"].ToString());
+                    }
+                    tbNarrative.Text = dr["Narrative"].ToString();
+                    //////////////////////
+                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
+                    LoadToolBar(false);
+                    return;
+                }
+                // load thong tin can thiet de tao form moi cho contingeent Entry
+                DataSet ds1 = TriTT_Credit.B_COLLATERAL_INFO_LoadExistColl_InfoExists_2(ContingentID);
+                int countRow = ds1.Tables[0].Rows.Count;
+                if (countRow > 0) 
+                {
+                    DataRow dr = ds1.Tables[0].Rows[0];
+                    tbContingentEntryID.Text = TriTT.B_BMACODE_GetNewID_3part_new("B_BMACODE_CONTINGENT_ENTRY_ID", "COLL_CONTIN_ENTRY", "DC", ".");
+
+                    tbCustomerIDName_Cont.Text = dr["CustomerID"].ToString();
+                    lblCheckCustomer.Text = ""; // xoa trang thai not exist neu ton tai
+                    tbCustomerIDName_Cont.Enabled = false;
+                    tbCustomerIDName_Cont.Text = CustomerID;
+                    tbAddress_cont.Text = dr["Address_cont"].ToString();
+                    tbIDTaxCode.Text = dr["DocID"].ToString();
+                    if (dr["DocIssueDate"].ToString() != "")
+                    {
+                        tbDateOfIssue.Text = (Convert.ToDateTime(dr["DocIssueDate"].ToString())).ToShortDateString();
+                    }
+                    LoadCurrencies(ContingentID.Substring(0, 7));
+                    tbCollateralType.Text = dr["CollateralTypeCode"].ToString();
+                    LoadContingetnAcct(tbCollateralType.Text, rcbCurrency.SelectedValue);
+                    tbReferenceNo.Text = ContingentID;
+                }
+                else
+                { ShowMsgBox("Your Collateral Information ID has not been Created, You'd create it first !"); return; }
+            }
+            else { ShowMsgBox("Contingent ID is Incorrect Format. Please check again ! "); return; }
+        }
+        protected void First_Load()
+        {
+            
+        }
+        protected void LoadCurrencies(string CustomerID)
+        {
+            DataSet ds = TriTT.B_COLLATERAL_INFO_LoadCurrency_forEach_Customer(CustomerID);
+            if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].NewRow();
+                dr["CurrencyCode"] = "";
+                ds.Tables[0].Rows.InsertAt(dr, 0);
+            }
+            rcbCurrency.Items.Clear();
+            rcbCurrency.DataSource = ds;
+            rcbCurrency.DataValueField = "CurrencyCode";
+            rcbCurrency.DataTextField = "CurrencyCode";
+            rcbCurrency.DataBind();
+        }
+        protected void rcbCurrency_OnClientSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            LoadContingetnAcct(tbCollateralType.Text, rcbCurrency.SelectedValue);
+        }
+        protected void LoadContingetnAcct(string CollateralTypeCode, string Currency)
+        {
+            DataSet ds = TriTT.LoaContAcctFromDB(CollateralTypeCode, Currency);
+            if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].NewRow();
+                dr["ContingentAcctID"] = "";
+                dr["AccountHasName"] = "";
+                ds.Tables[0].Rows.InsertAt(dr, 0);
+            }
+
+            rcbAccountNo.Items.Clear();
+            rcbAccountNo.DataSource = ds;
+            rcbAccountNo.DataValueField = "ContingentAcctID";
+            rcbAccountNo.DataTextField = "AccountHasName";
+            rcbAccountNo.DataBind();
+            rcbAccountNo.SelectedIndex = 1;
+        }
+        private void LoadToolBar(bool isauthorize)
+        {
+            RadToolBar1.FindItemByValue("btCommitData").Enabled = isauthorize;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = !isauthorize;
+        }
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
+        }
+        protected void rcbTransactionCode_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            switch (rcbTransactionCode.SelectedIndex)
+            {
+                case 2:
+                    rcbDebitOrCredit.SelectedIndex = 2;
+                    break;
+                case 1:
+                    rcbDebitOrCredit.SelectedIndex = 1;
+                    break;
+                default:
+                    rcbDebitOrCredit.SelectedValue = "";
+                    break;
+            }
+
+        }
+        
         
     }
 }

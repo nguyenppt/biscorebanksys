@@ -657,40 +657,7 @@
                 <asp:ListView ID="lvLoanControl" runat="server" DataKeyNames="ID" InsertItemPosition="LastItem"
                     OnItemCanceling="lvLoanControl_ItemCanceling" OnItemDeleting="lvLoanControl_ItemDeleting" OnItemInserting="lvLoanControl_ItemInserting"
                     OnItemEditing="lvLoanControl_ItemEditing" OnItemUpdating="lvLoanControl_ItemUpdating">
-                    <AlternatingItemTemplate>
-                        <tr style="text-align: center">
-                            <td style="visibility: hidden">
-                                <asp:Label ID="lbID" runat="server" Text='<%# Eval("ID") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="TypeLabel" runat="server" Text='<%# Eval("Type") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="DateLabel" runat="server" Text='<%# Eval("Date") %>' />
-                            </td>
-                            <td>
-                                <telerik:radnumerictextbox id="AmountActionLabel" runat="server" readonly="true" borderwidth="0" value='<%# Bind("AmountAction") %>'>
-                                <EnabledStyle HorizontalAlign="Right" />
-                                </telerik:radnumerictextbox>
-                            </td>
-                            <td style="display:none" >
-                                <asp:Label ID="RateLabel" runat="server" Text='<%# Eval("Rate") %>' />
-                            </td>
-                            <td style="display:none" >
-                                <asp:Label ID="ChrgLabel" runat="server" Text='<%# Eval("Chrg") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="NoLabel" runat="server" Text='<%# Eval("No") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq_display") %>' />
-                            </td>
-                            <td>
-                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="Button3" runat="server" CommandName="Delete" Text="Delete" />&nbsp;&nbsp;&nbsp
-                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="Button4" runat="server" CommandName="Edit" Text="Edit" />
-                            </td>
-                        </tr>
-                    </AlternatingItemTemplate>
+                    
                     <EditItemTemplate>
                         <tr style="text-align: center">
                             <td style="visibility: hidden">
@@ -838,8 +805,8 @@
                             </td>
                         </tr>
                     </InsertItemTemplate>
-                    <ItemTemplate>
-                        <tr style="text-align: center">
+                    <AlternatingItemTemplate>
+                        <tr style="text-align: center; <%# Eval("PeriodRepaid").ToString().Equals(hfRepaymentTimes.Value)? "":"color:darkgrey" %>">
                             <td style="visibility: hidden">
                                 <asp:Label ID="lbID" runat="server" Text='<%# Eval("ID") %>' />
                             </td>
@@ -850,7 +817,6 @@
                                 <asp:Label ID="DateLabel" runat="server" Text='<%# Eval("Date") %>' />
                             </td>
                             <td>
-
                                 <telerik:radnumerictextbox id="AmountActionLabel" runat="server" readonly="true" borderwidth="0" value='<%# Bind("AmountAction") %>'>
                                 <EnabledStyle HorizontalAlign="Right" />
                                 </telerik:radnumerictextbox>
@@ -868,8 +834,44 @@
                                 <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq_display") %>' />
                             </td>
                             <td>
-                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="Button5" runat="server" CommandName="Delete" Text="Delete" />&nbsp;&nbsp;&nbsp
-                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="Button6" runat="server" CommandName="Edit" Text="Edit" />
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="Button3" runat="server" CommandName="Delete" Text="Delete" Visible='<%# Eval("PeriodRepaid").ToString().Equals(hfRepaymentTimes.Value) %>'/>&nbsp;&nbsp;&nbsp
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="Button4" runat="server" CommandName="Edit" Text="Edit" Visible='<%# Eval("PeriodRepaid").ToString().Equals(hfRepaymentTimes.Value) %>'/>
+                            </td>
+                        </tr>
+                    </AlternatingItemTemplate>
+                    <ItemTemplate>
+                        <tr style="text-align: center; <%# Eval("PeriodRepaid").ToString().Equals(hfRepaymentTimes.Value)? "":"color:darkgrey" %> ">
+                            
+                            <td style="visibility: hidden">
+                                <asp:Label ID="lbID" runat="server" Text='<%# Eval("ID") %>' />
+                            </td>
+                            <td>
+                                <asp:Label ID="TypeLabel" runat="server" Text='<%# Eval("Type") %>' />
+                            </td>
+                            <td>
+                                <asp:Label ID="DateLabel" runat="server" Text='<%# Eval("Date") %>' />
+                            </td>
+             
+                            <td>
+                                <telerik:radnumerictextbox id="AmountActionLabel" runat="server" readonly="true" borderwidth="0" value='<%# Bind("AmountAction") %>'>
+                                <EnabledStyle HorizontalAlign="Right" />
+                                </telerik:radnumerictextbox>
+                            </td>
+                            <td style="display:none" >
+                                <asp:Label ID="RateLabel" runat="server" Text='<%# Eval("Rate") %>' />
+                            </td>
+                            <td style="display:none" >
+                                <asp:Label ID="ChrgLabel" runat="server" Text='<%# Eval("Chrg") %>' />
+                            </td>
+                            <td>
+                                <asp:Label ID="NoLabel" runat="server" Text='<%# Eval("No") %>' />
+                            </td>
+                            <td>
+                                <asp:Label ID="FreqLabel" runat="server" Text='<%# Eval("Freq_display") %>' />
+                            </td>
+                            <td>
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" ID="Button5" runat="server" CommandName="Delete" Text="Delete" Visible='<%# Eval("PeriodRepaid").ToString().Equals(hfRepaymentTimes.Value) %>' />&nbsp;&nbsp;&nbsp
+                                <asp:ImageButton ImageUrl="~/Icons/Sigma/Edit_16X16_Standard.png" ID="Button6" runat="server" CommandName="Edit" Text="Edit" Visible='<%# Eval("PeriodRepaid").ToString().Equals(hfRepaymentTimes.Value) %>'/>
                             </td>
                         </tr>
                     </ItemTemplate>
@@ -1109,6 +1111,7 @@
     <asp:HiddenField ID="hfLoanAmount" runat="server" />
     <asp:HiddenField ID="hfCommitNumber" Value="0" runat="server" />
     <asp:HiddenField ID="hfCommit2" Value="0" runat="server" />
+    <asp:HiddenField ID="hfRepaymentTimes" Value="0" runat="server" />
 </div>
 
 <telerik:radajaxmanager id="RadAjaxManager1" runat="server"

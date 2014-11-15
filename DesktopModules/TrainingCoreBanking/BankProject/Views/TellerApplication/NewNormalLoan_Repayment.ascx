@@ -112,21 +112,26 @@
                 </tr>
                 <tr>
                     <td class="MyLable">Customer ID:<span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator4"
-                            ControlToValidate="rcbCustomerID" ValidationGroup="Commit" InitialValue="" ErrorMessage="Customer ID is required"
+                        <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator16"
+                            ControlToValidate="tbCustID" ValidationGroup="Commit" InitialValue="" ErrorMessage="Customer ID is required"
                             ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
-                    <td class="MyContent">
-                        <telerik:radcombobox id="rcbCustomerID" autopostback="true" onselectedindexchanged="rcbCustomerID_SelectedIndexChanged"
-                            appenddatabounditems="True" runat="server" width="330" allowcustomtext="false" markfirstmatch="true">
-                                     <ExpandAnimation Type="None" />
-                                     <CollapseAnimation Type="None" />
-                                       <ItemTemplate>
-                                           <%# DataBinder.Eval(Container.DataItem,"CustomerID") %> - 
-                                           <%# DataBinder.Eval(Container.DataItem,"GBFullName") %>
-                                           </ItemTemplate>                                    
-                                 </telerik:radcombobox>
+                    <td class="MyContent" >
+                        <table cellpadding="0" cellspacing="0">
+                            
+                            <tr >
+                                <td>
+                                    <asp:TextBox Width="100" ID="tbCustID" runat="server" OnTextChanged="tbCustID_TextChanged" AutoPostBack="true" /> - 
+                                </td>
+                                <td>
+                                    <asp:Label ID="lbCust" runat="server" Text="Not Found!"></asp:Label>
+                                </td>
+                            </tr>
+                        </table>                        
                     </td>
+                    <td>
+                        
+                        <asp:TextBox Width="50" ID="tbHDCustID" runat="server" Visible="false" /></td>
                 </tr>
                 <tr>
                     <td class="MyLable">Loan Group:</td>
@@ -355,11 +360,12 @@
         <table width="100%" cellpadding="0" cellspacing="0" >
             <tr>   
                 <td style="width: 50px;" class="MyLable">
-                    Outstandting Amount: <telerik:radnumerictextbox value="3" id="Radnumerictextbox1" runat="server"  width="150" />
+                    Outstandting Amount: <telerik:radnumerictextbox value="0" id="tbOutstandingAmount" runat="server"  width="150" />
                 </td>            
                 
                 
             </tr>
+           
         </table>
         <hr />
         
@@ -652,6 +658,7 @@
         </asp:UpdatePanel>
     </div>
 
+    <asp:HiddenField ID="hfRepaymentTimes" Value="0" runat="server" />
 </div>
 
 <telerik:radajaxmanager id="RadAjaxManager1" runat="server"
