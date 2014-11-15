@@ -7,7 +7,7 @@ using BankProject.DBRespository;
 
 namespace BankProject.Business
 {
-    public class NewNormalLoanBusiness : INewNormalLoanBusiness<BNEWNORMALLOAN>
+    public class NewNormalLoanBusiness :NormalLoanBaseBusiness,  INewNormalLoanBusiness<BNEWNORMALLOAN>
     {
         NormalLoanRepository facade = new NormalLoanRepository();
 
@@ -64,10 +64,12 @@ namespace BankProject.Business
                 Entity.RepaymentTimes = 0;
                 facade.Add(Entity);
             }
-            
 
+            updateNormalLoanRepayment(Entity, Entity.RepaymentTimes, ((decimal)Entity.LoanAmount), Entity.Drawdown);
             facade.Commit();
         }
+
+        
 
         public void previewProcess(int userID)
         {
@@ -110,4 +112,6 @@ namespace BankProject.Business
             set;
         }
     }
+
+
 }

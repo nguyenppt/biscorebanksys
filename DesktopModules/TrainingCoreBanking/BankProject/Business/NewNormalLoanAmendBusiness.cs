@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BankProject.Business
 {
-    public class NewNormalLoanAmendBusiness : INewNormalLoanBusiness<BNEWNORMALLOAN>
+    public class NewNormalLoanAmendBusiness : NormalLoanBaseBusiness, INewNormalLoanBusiness<BNEWNORMALLOAN>
     {
         NormalLoanRepository facade = new NormalLoanRepository();   
 
