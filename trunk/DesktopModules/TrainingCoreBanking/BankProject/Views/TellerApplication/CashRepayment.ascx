@@ -78,17 +78,25 @@
                                ForeColor="Black"   >
                         </telerik:RadComboBox>
                     </td>
-                   
+                   <td class="MyContent" ></td>
+                   <td class="MyContent" ></td>
                 </tr>
+                </table>
+             <table width="100%" cellpadding ="0" cellspacing="0">
                 <tr>
                      <td class="MyLable">Customer Account:<span class="Required">(*)
                           <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator1" 
                             ControlToValidate="tbCusomerAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Customer Account is required"
                             ForeColor="Red" /></span></td>
-                    <td class="MyContent" >
-                        <asp:TextBox runat="server" ID="tbCusomerAcct" ValidationGroup="Group1" ForeColor="Black" ></asp:TextBox>
+                    <td class="MyContent">
+                        <asp:TextBox runat="server" ID="tbCusomerAcct" ForeColor="Black" 
+                            onTextChanged="tbCusomerAcct_TextChanged" AutoPostBack="true"></asp:TextBox>
+                        <asp:Label ID="lblNote" runat="server" />
                        
                     </td>
+                   <td class="MyLable" >
+                   </td>
+                   <td class="MyContent" ></td>
                 </tr>
                  <tr>
                      <td class="MyLable">Balance Amount:</td>
@@ -341,46 +349,12 @@
         AmtLCYDeposited.focus();
         AmtLCYDeposited.set_value("");
     }
-    $('#<%=tbCusomerAcct.ClientID%>').keyup(function (event) {
+    $('#<%=tbID.ClientID%>').keyup(function (event) {
 
         if (event.keyCode == 13) {
-            $("#<%=btAccountCust.ClientID%>").click();
+            $("#<%=btSearch.ClientID%>").click();
         }
-     });
-    $(document).ready(
-  function () {
-      $('a.add').live('click',
-          function () {
-              $(this)
-                  .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                  .removeClass('add')
-                  .addClass('remove');
-              $(this)
-                  .closest('tr')
-                  .clone()
-                  .appendTo($(this).closest('table'));
-              $(this)
-                  .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                  .removeClass('remove')
-                  .addClass('add');
-          });
-      $('a.remove').live('click',
-          function () {
-              $(this)
-                  .closest('tr')
-                  .remove();
-          });
-      $('input:text').each(
-          function () {
-              var thisName = $(this).attr('name'),
-                  thisRrow = $(this)
-                              .closest('tr')
-                              .index();
-              $(this).attr('name', 'row' + thisRow + thisName);
-              $(this).attr('id', 'row' + thisRow + thisName);
-          });
-
-  });
+    });
 </script>
 </telerik:RadCodeBlock>
 
@@ -392,8 +366,17 @@
                  <telerik:AjaxUpdatedControl ControlID="rcbCashAccount" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="tbCusomerAcct">
+            <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="lblNote" />
+                 <telerik:AjaxUpdatedControl ControlID="lblCustomerID" />
+                 <telerik:AjaxUpdatedControl ControlID="lblCustomerName" />
+                 <telerik:AjaxUpdatedControl ControlID="tbBalanceAmt" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <div style="visibility:hidden;">
-    <asp:Button ID="btAccountCust" runat="server" Text="AccountCust" OnClick="btAccountCust_Click1" />
+    <asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" />
 </div>

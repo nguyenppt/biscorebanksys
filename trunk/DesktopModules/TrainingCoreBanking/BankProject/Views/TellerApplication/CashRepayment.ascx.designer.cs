@@ -112,6 +112,15 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.TextBox tbCusomerAcct;
         
         /// <summary>
+        /// lblNote control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNote;
+        
+        /// <summary>
         /// tbBalanceAmt control.
         /// </summary>
         /// <remarks>
@@ -256,12 +265,12 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
         
         /// <summary>
-        /// btAccountCust control.
+        /// btSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btAccountCust;
+        protected global::System.Web.UI.WebControls.Button btSearch;
     }
 }
