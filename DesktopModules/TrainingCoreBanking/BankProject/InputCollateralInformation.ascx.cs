@@ -37,7 +37,7 @@ namespace BankProject
             LoadCollateralType();
             rdpValueDate.SelectedDate = DateTime.Now;
             rcbCountry.SelectedValue = "VN";
-            tbContingentEntryID.Text = TriTT.B_BMACODE_GetNewID_3part_new("B_BMACODE_CONTINGENT_ENTRY_ID", "COLL_CONTIN_ENTRY", "DC", ".");
+            //tbContingentEntryID.Text = TriTT.B_BMACODE_GetNewID_3part_new("B_BMACODE_CONTINGENT_ENTRY_ID", "COLL_CONTIN_ENTRY", "DC", ".");
         }
       
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
