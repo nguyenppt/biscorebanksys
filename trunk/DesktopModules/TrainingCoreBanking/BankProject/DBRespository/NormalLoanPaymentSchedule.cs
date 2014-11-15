@@ -48,5 +48,17 @@ namespace BankProject.DBRespository
             }
             Commit();
         }
+
+        public void DeleteAllScheduleOfContract(String code, int replaymentTimes)
+        {
+            Expression<Func<B_NORMALLOAN_PAYMENT_SCHEDULE, bool>> query = t => t.Code.Equals(code) && t.PeriodRepaid == replaymentTimes;
+            var ites = Find(query);
+
+            foreach (var it in ites)
+            {
+                Delete(it);
+            }
+            Commit();
+        }
     }
 }
