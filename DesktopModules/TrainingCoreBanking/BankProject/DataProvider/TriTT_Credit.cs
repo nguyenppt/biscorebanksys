@@ -394,6 +394,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadExistColl_InfoExists", CollateralInfoID);
         }
+        public static DataSet B_COLLATERAL_INFO_LoadExistColl_InfoExists_2(string CollateralInfoID)
+        {
+            return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadExistColl_InfoExists_2", CollateralInfoID);
+        }
         public static DataSet B_COLLATERAL_INFO_Enquiry(string RightID, string CollateralInfoID, string CustomerName, string CustomerID, string CollateralType,
             string CollateralCode, string Currency, decimal FromNominalValue, decimal ToNominalValue, string ContingentAcctID)
         {
@@ -406,10 +410,10 @@ namespace BankProject.DataProvider
         }
         public static void B_CONTINGENT_ENTRY_Insert_Update(string CollateralInfoID, string ContingentEntryID, string CustomerID, string CustomerAddress, string DocIDTaxCode
             , string DateOfIssue, string TransactionCode, string TransactionName, string DCMode, string DCName, string Currency, string AccountNo, string AccountName,
-            decimal? Amount, decimal? DealRate, DateTime? ValueDate, string Narrative, string ApprovedUser)
+            decimal? Amount, decimal? DealRate, DateTime? ValueDate, string Narrative, string ApprovedUser, string CollateralCode)
         {
             sqldata.ndkExecuteNonQuery("B_CONTINGENT_ENTRY_Insert_Update", CollateralInfoID, ContingentEntryID, CustomerID, CustomerAddress, DocIDTaxCode, DateOfIssue, TransactionCode,
-                TransactionName, DCMode, DCName, Currency, AccountNo, AccountName, Amount, DealRate, ValueDate, Narrative, ApprovedUser);
+                TransactionName, DCMode, DCName, Currency, AccountNo, AccountName, Amount, DealRate, ValueDate, Narrative, ApprovedUser, CollateralCode);
         }
         public static DataSet B_COLLATERAL_INFO_LoadCustomer_Info(string CustomerID)
         {
@@ -426,6 +430,15 @@ namespace BankProject.DataProvider
         public static DataSet B_COLLATERAL_INFO_LoadRate(string CollateralCode)
         {
             return sqldata.ndkExecuteDataset("B_COLLATERAL_INFO_LoadRate", CollateralCode);
+        }
+        public static DataSet Load_Contingent_Account(string ContingentID)
+        {
+            return sqldata.ndkExecuteDataset("Load_Contingent_Account", ContingentID);
+        }
+        public static DataSet BCONTINGENT_ENQUIRY(string ContingentID, string RefID, string CustomerName, string CustomerID, string Currency,
+            double FromAmt, double ToAmount, string LegalID)
+        {
+            return sqldata.ndkExecuteDataset("BCONTINGENT_ENQUIRY", ContingentID, RefID, CustomerName, CustomerID, Currency, FromAmt, ToAmount, LegalID);
         }
         #endregion
         #region B_CHEQUE ISSUE
