@@ -36,7 +36,7 @@ namespace BankProject.DBRespository
 
         public static DBContextBase getInstance()
         {
-            if (context == null)
+            
                 context = new DBContextBase();
 
             return context;
