@@ -38,7 +38,15 @@ namespace BankProject.FTTeller
                     , rcbBankCode.SelectedValue,rcbBankCode.Text !=""? rcbBankCode.Text.Replace(rcbBankCode.SelectedValue + " - ", "") : "", txtIdentityCard.Text, txtIsssueDate.SelectedDate,
                     txtIsssuePlace.Text, txtTeller.Text, txtNarrative.Text, txtNarrative2.Text, txtNarrative3.Text, cmbWaiveCharges.SelectedValue, txtVatSerial.Text,
                     txtChargeAmtLCY.Value.HasValue? txtChargeAmtLCY.Value.Value : 0,txtChargeVatAmt.Value.HasValue? txtChargeVatAmt.Value.Value : 0);
-                Response.Redirect("Default.aspx?tabid=158");
+                switch(cmbWaiveCharges.SelectedValue)
+                {
+                    case "NO":
+                        Response.Redirect("Default.aspx?tabid=141");
+                    break;
+                    default:
+                        Response.Redirect("Default.aspx?tabid=158");
+                        break;
+                }
             }
             if (commandName == "Preview")
             {
@@ -64,6 +72,10 @@ namespace BankProject.FTTeller
             {
                 TriTT.OUT_TRANS_BY_CASH_Update_Status("REV", txtId.Text,"",0,"");
                 LoadToolBar(true);
+            }
+            if (commandName == "print")
+            {
+                Print_Deal_Slip();
             }
         }
         #endregion
@@ -268,7 +280,7 @@ namespace BankProject.FTTeller
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btReverse").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true   ;
         }
         protected void LoadToolBar_AllFalse()
         {
@@ -277,7 +289,43 @@ namespace BankProject.FTTeller
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+        }
+        protected void Print_Deal_Slip()
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+            //Open template
+            if (rcbProductID.SelectedValue == "1000")
+            {
+                string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OutWardTransactions/transfer_by_cash_dien_CMND.doc");
+                //Open the template document
+                Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+                //Execute the mail merge.
+
+                var ds = BankProject.DataProvider.TriTT.Print_Deal_slip("Trans_By_Cash", "CMND", txtId.Text.Trim());
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    ds.Tables[0].TableName = "Info";
+                    document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+                    document.Save("TransferByCash_CMND_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+                }
+            }
+            else
+            {
+                string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OutWardTransactions/transfer_by_cash_dien_CITAD.doc");
+                //Open the template document
+                Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+                //Execute the mail merge.
+
+                var ds = BankProject.DataProvider.TriTT.Print_Deal_slip("Trans_By_Cash", "CITAD", txtId.Text.Trim());
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    ds.Tables[0].TableName = "Info";
+                    document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+                    document.Save("TransferByCash_CITAD_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+                }
+            }
         }
         protected void LoadCurrency()
         {
