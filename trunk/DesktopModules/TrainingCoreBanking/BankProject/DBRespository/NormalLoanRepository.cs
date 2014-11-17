@@ -48,7 +48,7 @@ namespace BankProject.DBRespository
         public IQueryable<BNEWNORMALLOAN> findExistingLoanRepayment(String code, string status, string amendStatus)
         {
             Expression<Func<BNEWNORMALLOAN, bool>> loan = t => t.Code.Equals(code) && (String.IsNullOrEmpty(status) || t.Status == status)
-                && (String.IsNullOrEmpty(amendStatus) || t.Amend_Status == amendStatus) && t.Drawdown != null;
+                && (String.IsNullOrEmpty(amendStatus) || t.Amend_Status == amendStatus);
 
             return Find(loan);
         }

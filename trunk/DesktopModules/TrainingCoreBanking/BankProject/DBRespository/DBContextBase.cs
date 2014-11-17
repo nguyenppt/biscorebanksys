@@ -28,7 +28,7 @@ namespace BankProject.DBRespository
      */
     public class DBContextBase : VietVictoryCoreBankingEntities
     {
-        private static DBContextBase context;
+        //private DBContextBase context;
 
         private DBContextBase()
         {
@@ -37,9 +37,9 @@ namespace BankProject.DBRespository
         public static DBContextBase getInstance()
         {
             
-                context = new DBContextBase();
+                //context = new DBContextBase();
 
-            return context;
+                return new DBContextBase(); ;
         }
     }
 }
