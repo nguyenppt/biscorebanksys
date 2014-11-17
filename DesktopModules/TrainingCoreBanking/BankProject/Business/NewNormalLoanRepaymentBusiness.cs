@@ -92,7 +92,7 @@ namespace BankProject.Business
 
                 if (cashRepay != null && cashRepay.AmountDeposited != null)
                 {
-                    Entity.Tot_I_Pay_Amt = (Entity.Tot_I_Pay_Amt == null ? 0 : (decimal)Entity.Tot_I_Pay_Amt) 
+                    Entity.Tot_P_Pay_Amt = (Entity.Tot_P_Pay_Amt == null ? 0 : (decimal)Entity.Tot_P_Pay_Amt) 
                         + (cashRepay.AmountDeposited == null ? 0 : (decimal)cashRepay.AmountDeposited);
                 }
 
