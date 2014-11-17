@@ -16,6 +16,7 @@ namespace BankProject
             RadToolBar1.FindItemByValue("btReverse").Enabled = IsAuthorize;
             RadToolBar1.FindItemByValue("btSearchNew").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = IsAuthorize;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = IsAuthorize;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -149,6 +150,11 @@ namespace BankProject
 
             if (commandName == "print")
                 PrintDocument();
+            if (commandName == "edit")
+            {
+                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                LoadToolBar(false);
+            }
         }
 
         private void LoadDataPreview(string code)
@@ -194,6 +200,7 @@ namespace BankProject
                     RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                     RadToolBar1.FindItemByValue("btSearchNew").Enabled = false;
                     RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                    RadToolBar1.FindItemByValue("btEdit").Enabled = true;
                 }
 
             }

@@ -35,6 +35,7 @@ namespace BankProject
                             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                            RadToolBar1.FindItemByValue("btEdit").Enabled = true;
                             BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                             txtTelephone.Enabled = false;
                             txtOfficeNumber.Enabled = false;
@@ -43,6 +44,7 @@ namespace BankProject
                             LoadToolBar(false); // hien button authorize, reverse 
                             BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                             break;
+                        
                     }
                 }
                 else
@@ -244,6 +246,10 @@ namespace BankProject
                     LoadDataToReview_Search_tai_Form(txtId.Text);
                     //BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                     break;
+                case "edit":
+                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                    LoadToolBar(true);
+                    break;
             }
         }
         private void LoadDataToReview(string CustomerID)
@@ -356,6 +362,7 @@ namespace BankProject
             RadToolBar1.FindItemByValue("btReverse").Enabled = !enable;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = !enable;
         }
         private void LoadDataForCombobox() // when review, co gia tri de set selected VAlues
         {
@@ -410,6 +417,7 @@ namespace BankProject
                     RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                     RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                     RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                    RadToolBar1.FindItemByValue("btEdit").Enabled = true;
                     break;
             }
         }
