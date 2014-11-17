@@ -17,7 +17,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = IsAuthorize;
             RadToolBar1.FindItemByValue("btReverse").Enabled = IsAuthorize;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = IsAuthorize;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -48,7 +48,8 @@ namespace BankProject.Views.TellerApplication
                     BankProject.DataProvider.Database.BTRANSFERWITHDRAWAL_Insert(rcbAccountType.SelectedValue, txtId.Text, lbDebitAccountId.Text, txtDebitAmt.Value.HasValue ? txtDebitAmt.Value.Value : 0, 
                         lblCustBal.Value.HasValue ? lblCustBal.Value.Value : 0, lblNewCustBal.Value.HasValue ? lblNewCustBal.Value.Value : 0,
                         rdpValueDate.SelectedDate, lbCreditAccountId.Text, lblAmtCreditForCust.Value.HasValue ? lblAmtCreditForCust.Value.Value : 0, txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0,
-                        rdpCreditValueDate.SelectedDate, cmbWaiveCharges.SelectedValue, txtNarrative.Text, this.UserId);
+                        rdpCreditValueDate.SelectedDate, cmbWaiveCharges.SelectedValue, txtNarrative.Text, this.UserId, lblCustomerId.Text, lblCustomerName.Text
+                        , lbCustomerID_CR.Text, lbCustomerName_CR.Text, cmbDebitCurrency.Text, cmbCreditCurrency.Text, UserInfo.Username.ToString());
 
                     if (cmbWaiveCharges.SelectedValue == "NO") Response.Redirect(EditUrl("waivecharges"));
 
@@ -76,6 +77,9 @@ namespace BankProject.Views.TellerApplication
                 case "Reverse":
                     DataProvider.Database.BTRANSFERWITHDRAWAL_UpdateStatus(rcbAccountType.SelectedValue, "REV", txtId.Text, this.UserId.ToString());
                     Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
+                    break;
+                case "Print":
+                    Print_Deal_Slip();
                     break;
             }
         }
@@ -208,7 +212,23 @@ namespace BankProject.Views.TellerApplication
                 lblCustBal.Text = "";
             }
         }
-
+        protected void Print_Deal_Slip()
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+            //Open template
+            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OutWardTransactions/transfer_withdrawl.doc");
+            //Open the template document
+            Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+            //Execute the mail merge.
+            var ds = BankProject.DataProvider.TriTT.Print_Deal_slip("Transfer", "Withdrawal", txtId.Text.Trim());
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                ds.Tables[0].TableName = "Info";
+                document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+                document.Save("Trans_Withdrawal_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            }
+        }
         protected void cmbCreditAccount_TextChanged(object sender, EventArgs e)
         {
             if (cmbCreditAccount.Text != "" && rcbAccountType.SelectedValue != "")

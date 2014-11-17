@@ -57,6 +57,7 @@ namespace BankProject.Views.TellerApplication
             string SoTT = BankProject.DataProvider.Database.B_BMACODE_GetNewSoTT("VATSERIALNO").Tables[0].Rows[0]["SoTT"].ToString();
             this.tbVATSerialNo.Text = SoTT.PadLeft(4, '0');
             txtTellerId.Text = this.UserInfo.Username;
+            tbValueDate.SelectedDate = DateTime.Now;
         }
 
         private void LoadToolBar(bool IsAuthorize)

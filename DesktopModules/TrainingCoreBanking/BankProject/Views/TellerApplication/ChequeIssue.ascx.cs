@@ -73,9 +73,10 @@ namespace BankProject.Views.TellerApplication
             {
                 LoadCheque(tbChequeID.Text.Trim());
             }
-            if (commandName == "audit")
-            { 
-                
+            if (commandName == "edit")
+            {
+                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                LoadToolBar(true);
             }
         }
         protected void btSearch_Click1(object sender, EventArgs e)
@@ -180,7 +181,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btReverse").Enabled = !isauthorize;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-            RadToolBar1.FindItemByValue("btEdit").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = !isauthorize;
         }
         protected void LoadToolBar_AllFalse()
         {
@@ -190,7 +191,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-            RadToolBar1.FindItemByValue("btEdit").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = true;
         }
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
         {
