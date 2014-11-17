@@ -835,11 +835,13 @@ namespace BankProject.DataProvider
             , string Currency, string DebitAcctID, string DebitAcctName, double DebitAmount, string SendingName, string SendingAddress
       , string IDTaxCode, string ReceivingName, string ReceivingName2, string BenAcctID, string LegalID, DateTime? IssueDate, string IssuePlace, string ProvinceCode
             , string ProvinceName, string Phone, string BankCode, string BankCodeDesc
-      , string BankName, string PayNumber, string TellerID, string Narrative, string Narrative2, string WaiveCharge, string SaveTemplate, string VATSerial, double ChargeAmtLCY, double ChargeVATAmt)
+      , string BankName, string PayNumber, string TellerID, string Narrative, string Narrative2, string WaiveCharge, string SaveTemplate, string VATSerial, 
+            double ChargeAmtLCY, double ChargeVATAmt, string CreditAcctID)
         {
             sqldata.ndkExecuteNonQuery("BOUTWARD_TRANS_BY_ACCT_Insert", ID, Status, ProductID, ProductName, BenComID, BenComName, Currency, DebitAcctID, DebitAcctName
                 , DebitAmount, SendingName, SendingAddress, IDTaxCode, ReceivingName, ReceivingName2, BenAcctID, LegalID, IssueDate, IssuePlace, ProvinceCode,
-                ProvinceName, Phone, BankCode, BankCodeDesc, BankName, PayNumber, TellerID, Narrative, Narrative2, WaiveCharge, SaveTemplate, VATSerial, ChargeAmtLCY, ChargeVATAmt);
+                ProvinceName, Phone, BankCode, BankCodeDesc, BankName, PayNumber, TellerID, Narrative, Narrative2, WaiveCharge, SaveTemplate, VATSerial,
+                ChargeAmtLCY, ChargeVATAmt, CreditAcctID);
         }
         public static DataSet BOUTWARD_TRANS_BY_ACCT_PreviewList()
         {
@@ -856,6 +858,10 @@ namespace BankProject.DataProvider
         public static string BOUTWARD_TRANS_BY_ACCT_Load_Status(string ID)
         {
             return sqldata.ndkExecuteDataset("BOUTWARD_TRANS_BY_ACCT_Load_Status", ID).Tables[0].Rows[0]["Status"].ToString();
+        }
+        public static DataSet Print_Deal_slip(string type, string typeProduct,string RefID)
+        {
+            return sqldata.ndkExecuteDataset("Print_Deal_slip", type,typeProduct , RefID);
         }
         #endregion
         #region INWARD  PROCESS CREDIT ACCOUNT

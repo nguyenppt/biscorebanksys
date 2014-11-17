@@ -318,10 +318,12 @@ namespace BankProject.DataProvider
         }
 
         public static void BTRANSFERWITHDRAWAL_Insert(string accounttype, string Code, string DebitAccount, double DebitAmount, double CustBallance, double NewCustBallance, DateTime? DebitValueDate,
-                                                    string CreditAccount, double AmountCreditForCustomer, double DealRate, DateTime? CreditValueDate, string WaiveCharges, string Narrative, int UserId)
+                                                    string CreditAccount, double AmountCreditForCustomer, double DealRate, DateTime? CreditValueDate,
+            string WaiveCharges, string Narrative, int UserId, string CustomerIDDebit, string CustomerNameDebit, string CustomerIDCredit, string CustomerNameCredit
+            , string DebitCurrency, string CreditCurrency, string TellerID)
         {
             sqldata.ndkExecuteNonQuery("BTRANSFERWITHDRAWAL_Insert", accounttype, Code, DebitAccount, DebitAmount, CustBallance, NewCustBallance, DebitValueDate, CreditAccount, AmountCreditForCustomer, DealRate, CreditValueDate,
-                         WaiveCharges, Narrative, UserId);
+                         WaiveCharges, Narrative, UserId, CustomerIDDebit, CustomerNameDebit, CustomerIDCredit, CustomerNameCredit, DebitCurrency, CreditCurrency, TellerID);
         }
 
         public static DataSet BCASHWITHRAWAL_Print_GetByCode(string code)
