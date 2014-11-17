@@ -319,8 +319,7 @@
                         runat="server"  />
                 </td>
             </tr>
-        </table> </fieldset>
-        <fieldset>
+        </table> 
         <asp:UpdatePanel ID="UpdatePanel3" runat="server">
           <ContentTemplate>
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -343,7 +342,7 @@
             </tr>
         </table>
 
-        <table width="100%" cellpadding="0" cellspacing="0">
+        <table width="100%" cellpadding="0" cellspacing="0" style="visibility:hidden">
             <tr>
                 <td class="MyLable">Vat Serial</td>
                 <td class="MyContent">
@@ -352,7 +351,7 @@
             </tr>
         </table>
 
-        <table width="100%" cellpadding="0" cellspacing="0">
+        <table width="100%" cellpadding="0" cellspacing="0" style="visibility:hidden">
             <tr>
                 <td class="MyLable">Charge Amt LCY</td>
                 <td class="MyContent">
@@ -361,7 +360,7 @@
             </tr>
         </table>
 
-        <table width="100%" cellpadding="0" cellspacing="0">
+        <table width="100%" cellpadding="0" cellspacing="0" style="visibility:hidden">
             <tr>
                 <td class="MyLable">Charge Vat Amt</td>
                 <td class="MyContent">
