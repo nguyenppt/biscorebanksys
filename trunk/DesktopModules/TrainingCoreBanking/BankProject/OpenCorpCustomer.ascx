@@ -30,6 +30,9 @@
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
             ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
         </telerik:RadToolBarButton>
+            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/edit.png" Enabled ="false"
+            ToolTip="Edit Data" Value="btEdit" CommandName="edit">
+        </telerik:RadToolBarButton>
     </Items>
     </telerik:RadToolBar>    
 </div>
