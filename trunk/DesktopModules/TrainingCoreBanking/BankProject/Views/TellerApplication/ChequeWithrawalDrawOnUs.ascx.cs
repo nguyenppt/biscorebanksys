@@ -65,6 +65,10 @@ namespace BankProject.Views.TellerApplication
                 LoadToolBar(true);
                 LoadCustomerInfo();
             }
+            if (commandName == "print")
+            {
+                Print_Deal_Slip();
+            }
         }
         protected void FirstLoad()
         {
@@ -118,6 +122,23 @@ namespace BankProject.Views.TellerApplication
 
         }
         #region Properties
+        protected void Print_Deal_Slip()
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+            //Open template
+            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OutWardTransactions/cheque_withdrawl.doc");
+            //Open the template document
+            Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+            //Execute the mail merge.
+            var ds = BankProject.DataProvider.TriTT.Print_Deal_slip("Cheque", "withdrwal", tbID.Text.Trim());
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                ds.Tables[0].TableName = "Info";
+                document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+                document.Save("Cheque_Withdrwal_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            }
+        }
         protected void LoadCurrency()
         {
             rcbCurrency.Items.Clear();
@@ -202,7 +223,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
         }
         private void LoadToolBar(bool isauthorize)
         {
@@ -211,7 +232,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = !isauthorize;
             RadToolBar1.FindItemByValue("btReverse").Enabled = !isauthorize;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
         }
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
         {

@@ -134,9 +134,13 @@ namespace BankProject.Views.TellerApplication
             //Execute the mail merge.
 
             var ds = BankProject.DataProvider.Database.BCOLLECTCHARGESFROMACCOUNT_Print_GetByCode(tbDepositCode.Text);
-            document.MailMerge.ExecuteWithRegions(ds.Tables[0]); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            document.Save("BCOLLECTCHARGESFROMACCOUNT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                ds.Tables[0].TableName = "Table";
+                document.MailMerge.ExecuteWithRegions(ds.Tables["Table"]); //moas mat thoi jan voi cuc gach nay woa 
+                // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
+                document.Save("BCOLLECTCHARGESFROMACCOUNT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            }
         }
 
         protected void tbChargeAmountLCY_TextChanged(object sender, EventArgs e)

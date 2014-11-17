@@ -73,7 +73,22 @@
                 <td class="MyLable"></td>
                 <td class="MyContent"></td>
             </tr>
-                
+                <tr>
+                <td class="MyLable">Currency:<span class="Required">(*)</span>
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"  Display="None" ValidationGroup="Commit" 
+                     ControlToValidate="rcbCurrency"
+                     InitialValue="" ForeColor="Red" ErrorMessage="Currency is required" />
+                </td>
+                <td class="MyContent">
+                    <telerik:RadComboBox ID="rcbCurrency" AutoPostback="true" OnSelectedIndexChanged="rcbCurrency_OnSelectedIndexChanged"           
+                        AppendDataBoundItems="true" 
+                        MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1">
+                        <Items>
+                            <telerik:RadComboBoxItem Value="" Text="" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </td>
+            </tr>
                 <tr>
                 <td class="MyLable">Ben Com:<span class="Required">(*)</span>
                      <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"  Display="None" ValidationGroup="Commit" 
@@ -82,7 +97,7 @@
                 </td>
                 <td class="MyContent">
                     <telerik:RadComboBox ID="rcbBenCom" 
-                        AppendDataBoundItems="true" width="200"
+                        AppendDataBoundItems="true" width="200" AutoPostback="true" OnSelectedIndexChanged="rcbCurrency_OnSelectedIndexChanged"
                         MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1" >
                         <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
@@ -91,18 +106,13 @@
                 </td>
             </tr>
                 <tr>
-                <td class="MyLable">Currency:<span class="Required">(*)</span>
-                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"  Display="None" ValidationGroup="Commit" 
-                     ControlToValidate="rcbCurrency"
-                     InitialValue="" ForeColor="Red" ErrorMessage="Currency is required" />
-                </td>
+                <td class="MyLable">Credit Account</td>
                 <td class="MyContent">
-                    <telerik:RadComboBox ID="rcbCurrency"    AutoPostBack="true"            
-                        AppendDataBoundItems="true" ONSelectedINdexChanged="rcbCurrency_ONSelectedINdexChanged"
-                        MarkFirstMatch="True" AllowCustomText="false" runat="server" ValidationGroup="Group1">
-                        <Items>
-                            <telerik:RadComboBoxItem Value="" Text="" />
-                        </Items>
+                    <telerik:RadComboBox ID="rcbCreditAccount"
+                        MarkFirstMatch="True" appendDataBoundItems="true" 
+                        AllowCustomText="false"
+                        Enabled = "false"
+                        runat="server" Width="160" >                        
                     </telerik:RadComboBox>
                 </td>
             </tr>
@@ -361,19 +371,19 @@
                                 </telerik:RadComboBox>
                 </td>
             </tr>
-           <tr>
+           <tr style="visibility:hidden;">
                 <td class="MyLable">Vat Serial</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtVatSerial" runat="server"></telerik:RadTextBox>
                 </td>
             </tr>
-            <tr>
+            <tr style="visibility:hidden;">
                 <td class="MyLable">Charge Amt LCY</td>
                 <td class="MyContent">
                     <telerik:RadNumericTextBox ID="txtChargeAmtLCY" runat="server" ClientEvents-OnValueChanged="OnChargeAmountValueChanged2" NumberFormat-DecimalDigits="0" ></telerik:RadNumericTextBox>
                 </td>
             </tr>
-            <tr>
+            <tr style="visibility:hidden;">
                 <td class="MyLable">Charge Vat Amt</td>
                 <td class="MyContent">
                     <telerik:RadNumericTextBox ID="txtChargeVatAmt" runat="server" NumberFormat-DecimalDigits="0" ></telerik:RadNumericTextBox>
@@ -548,5 +558,17 @@
                 <telerik:AjaxUpdatedControl ControlID="tbPhone" />
             </UpdatedControls>
         </telerik:AjaxSetting> 
+         
+        <telerik:AjaxSetting AjaxControlID="rcbBenCom">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbCreditAccount" /> 
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="rcbCurrency">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbCreditAccount" /> 
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>

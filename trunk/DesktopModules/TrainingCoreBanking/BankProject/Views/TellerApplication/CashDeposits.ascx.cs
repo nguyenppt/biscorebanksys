@@ -18,7 +18,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = IsAuthorize;
             RadToolBar1.FindItemByValue("btReverse").Enabled = IsAuthorize;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = IsAuthorize;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true   ;
         }
 
         protected void Page_Load(object sender, EventArgs e)
