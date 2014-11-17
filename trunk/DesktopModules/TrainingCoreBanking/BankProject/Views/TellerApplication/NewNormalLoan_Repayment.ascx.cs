@@ -539,9 +539,7 @@ namespace BankProject.Views.TellerApplication
             StoreProRepository facade = new StoreProRepository();
             CashRepaymentRepository cashFacade = new CashRepaymentRepository();
             double remainAmount = 0;
-
             var amt = facade.StoreProcessor().B_Normal_Loan_GetRemainLoanAmount(tbNewNormalLoan.Text).FirstOrDefault();
-
             remainAmount = amt == null ? 0 : (double)amt;
 
             if(normalLoanEntryM!=null && !String.IsNullOrEmpty(normalLoanEntryM.CreditAccount)){
