@@ -227,6 +227,12 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
                     cmbSubSector.Enabled = cmbMainSector.Enabled = txtId.Enabled = false;
                 break;
+                case "edit":
+                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                LoadToolBar(true);
+                //RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                //RadToolBar1.FindItemByValue("btEdit").Enabled = false;
+                break;
             }
         }
         protected void LoadToolBar(bool isauthorize)
@@ -237,6 +243,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             RadToolBar1.FindItemByValue("btReverse").Enabled = !isauthorize;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = !isauthorize;
         }
         protected void LoadToolBar_AllFalse()
         {
@@ -246,6 +253,7 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btEdit").Enabled = true;
         }
         //private void LoadToolBar()
         //{
