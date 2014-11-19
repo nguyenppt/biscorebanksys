@@ -822,6 +822,10 @@ namespace BankProject.DataProvider
                 CompanyStorageID, CompanyStorageDesc, ProductLimitID, Currency, CountryCode, CountryName, NominalValue, MaxValue, ProvisionValue, ExecutionValue,
                 AllocatedAmt, ValueDate, ExpiryDate, ReviewDateFreq, ApprovedUser, Rate, GlobalLimitID2);
         }
+        public static DataSet INWARD_TRANS_LIST(string DocID)
+        {
+            return sqldata.ndkExecuteDataset("INWARD_TRANS_LIST", DocID);
+        }
         #region OUTWARD TRANSFER BY ACCOUNT
         public static DataSet OUTWARD_TRANFER_BY_ACCT_LoadDebitAcct(string Currency)
         {

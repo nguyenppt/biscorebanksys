@@ -513,10 +513,11 @@ namespace BankProject.DataProvider
 		
         public static void BCOLLECTCHARGESFROMACCOUNT_Insert(string AccountType, string Code, string CustomerAccount, double ChargAmountLCY, double ChargAmountFCY, DateTime? ValueDate, string CategoryPLCode,
                                             string CategoryPLName, double DealRate, double VatAmountLCY, double VatAmountFCY, double TotalAmountLCY, double TotalAmountFCY, string VatSerialNo, string Narrative, int UserId
-                                                ,string CustomerID, string CustomerName, string Currency)
+                                                ,string CustomerID, string CustomerName, string Currency,double OldBalance, double NewBalance)
         {
             sqldata.ndkExecuteNonQuery("BCOLLECTCHARGESFROMACCOUNT_Insert", AccountType, Code, CustomerAccount, ChargAmountLCY, ChargAmountFCY, ValueDate, CategoryPLCode, CategoryPLName, DealRate,
-                                    VatAmountLCY, VatAmountFCY, TotalAmountLCY, TotalAmountFCY, VatSerialNo, Narrative, UserId, CustomerID,CustomerName,Currency);
+                                    VatAmountLCY, VatAmountFCY, TotalAmountLCY, TotalAmountFCY, VatSerialNo, Narrative, UserId, CustomerID,CustomerName,Currency,
+                                    OldBalance, NewBalance);
         }
         public static DataSet BCOLLECTCHARGESFROMACCOUNT_Enquiry(string CollectionType, string RefID, string AccountType, string AccountID, string CustomerID
             , string CustomerName, string LegalID, double FromChargesAmt, double ToChargesAmt)
