@@ -58,13 +58,13 @@ namespace BankProject.FTTeller {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator8;
         
         /// <summary>
-        /// rcbClearingID control.
+        /// tbClearingID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbClearingID;
+        protected global::Telerik.Web.UI.RadTextBox tbClearingID;
         
         /// <summary>
         /// lblDebitCurrency control.
