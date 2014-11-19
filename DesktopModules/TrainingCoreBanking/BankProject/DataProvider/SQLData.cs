@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Configuration;
 using Microsoft.ApplicationBlocks.Data;
+using System.Web;
 
 namespace BankProject.DataProvider
 {
@@ -531,9 +532,9 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BOVERSEASTRANSFER_GetByStatus", status).Tables[0];
         }
 
-        public static DataTable B_BOVERSEASTRANSFER_GetByReview(string curentUserId)
+        public static DataTable B_BOVERSEASTRANSFER_GetByReview(string UserId)
         {
-            return sqldata.ndkExecuteDataset("B_BOVERSEASTRANSFER_GetByReview", curentUserId).Tables[0];
+            return sqldata.ndkExecuteDataset("B_BOVERSEASTRANSFER_GetByReview", UserId).Tables[0];
         }
 
         public static void B_BOVERSEASTRANSFER_UpdateStatus(string OverseasTransferCode, string status,
@@ -1022,7 +1023,10 @@ namespace BankProject.DataProvider
 
         public static DataSet B_BCURRENCY_GetAll()
         {
-            return sqldata.ndkExecuteDataset("B_BCURRENCY_GetAll");
+            if (HttpContext.Current.Cache["B_BCURRENCY_GetAll"] == null)
+                HttpContext.Current.Cache["B_BCURRENCY_GetAll"] =  sqldata.ndkExecuteDataset("B_BCURRENCY_GetAll");
+
+            return (DataSet)HttpContext.Current.Cache["B_BCURRENCY_GetAll"];
         }
 
         public static DataSet B_BCOUNTRY_GetAll()
