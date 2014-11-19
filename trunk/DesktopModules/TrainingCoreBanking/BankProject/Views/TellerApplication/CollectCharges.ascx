@@ -119,7 +119,7 @@
                          Width="150"  AutoPostBack="true" 
                         OnTextChanged="cmbCustomerAccount_TextChanged"
                         >
-                    </telerik:RadTextBox> 
+                    </telerik:RadTextBox>
                     </td>
                      <td>
                     <asp:Label ID="lbErrorAccount"  ForeColor="Red" Visible="false" runat="server" text="Customer Account does not exist" ></asp:Label>
@@ -130,7 +130,8 @@
                 <td>
                     <asp:Label ID="lbAccountId" runat="server" visible="false" ></asp:Label>
                 </td>
-                </tr>          
+                </tr>
+                
             </table>
     <table>
          <tr>
@@ -218,7 +219,12 @@
                     <td  class="MyContent">
                         <telerik:RadTextBox width="450" ID="tbNarrative" runat="server"/>
                     </td>
-                </tr>
+                </tr> </table>
+                 <table width="100%" cellpadding="0" cellspacing="0">
+                 <tr style="visibility:hidden;">
+             <td class="MyContent">  <telerik:RadNumericTextBox ID="tbOldBalance" runat="server" NumberFormat-DecimalDigits="0" /> </td>
+              <td class="MyContent"> <telerik:RadNumericTextBox ID="tbNewBalance" runat="server"  NumberFormat-DecimalDigits="0" /> </td>
+         </tr>   
             </table>
 
     
@@ -237,6 +243,7 @@
                  <telerik:AjaxUpdatedControl ControlID="lbErrorAccount" />
                  <telerik:AjaxUpdatedControl ControlID="lbAccountTitle" />
                  <telerik:AjaxUpdatedControl ControlID="hdfCheckCustomer" />
+                 <telerik:AjaxUpdatedControl ControlID="tbOldBalance" />
 
                  <telerik:AjaxUpdatedControl ControlID="tbChargeAmountLCY" />
                  <telerik:AjaxUpdatedControl ControlID="tbChargeAmountFCY" />
@@ -274,6 +281,7 @@
                  <telerik:AjaxUpdatedControl ControlID="tbVATAmountLCY" />
                  <telerik:AjaxUpdatedControl ControlID="tbTotalAmount" />
                  <telerik:AjaxUpdatedControl ControlID="tbTotalAmountLCY" />
+                 <telerik:AjaxUpdatedControl ControlID="tbNewBalance" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
@@ -281,8 +289,8 @@
         <telerik:AjaxSetting AjaxControlID="tbChargeAmountFCY">
             <UpdatedControls>
                            
-
-                                 <telerik:AjaxUpdatedControl ControlID="tbChargeAmountLCY" />
+                    <telerik:AjaxUpdatedControl ControlID="tbNewBalance" />
+                  <telerik:AjaxUpdatedControl ControlID="tbChargeAmountLCY" />
                  <telerik:AjaxUpdatedControl ControlID="tbVATAmount" />
                  <telerik:AjaxUpdatedControl ControlID="tbVATAmountLCY" />
                  <telerik:AjaxUpdatedControl ControlID="tbTotalAmount" />
