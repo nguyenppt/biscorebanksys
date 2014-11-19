@@ -62,7 +62,8 @@ namespace BankProject.Views.TellerApplication
                         tbBenAccount.Text, tbIDCard.Text, rdpIssueDate.SelectedDate.HasValue? rdpIssueDate.SelectedDate: null, tbIssuePlace.Text, rcbProvince.SelectedValue,rcbProvince.Text !=""? rcbProvince.Text.Replace(rcbProvince.SelectedValue + " - ", ""):"",
                         tbPhone.Text, rcbBankCode.SelectedValue,rcbBankCode.Text !=""? rcbBankCode.Text.Replace(rcbBankCode.SelectedValue + " - ", ""):"", tbBankName.Text, tbPayNumber.Text,
                         UserInfo.Username.ToString(), tbNarrative.Text, tbNarrative2.Text, rcbWaiveCharge.SelectedValue, rcbSaveTemplate.SelectedValue, txtVatSerial.Text, txtChargeAmtLCY.Value.HasValue ? txtChargeAmtLCY.Value.Value : 0,
-                        txtChargeVatAmt.Value.HasValue ? txtChargeVatAmt.Value.Value : 0, rcbCreditAccount.SelectedValue);
+                        txtChargeVatAmt.Value.HasValue ? txtChargeVatAmt.Value.Value : 0, rcbCreditAccount.SelectedValue, tbOldBalance.Value.HasValue? tbOldBalance.Value.Value : 0
+                        , tbNewBalance.Value.HasValue? tbNewBalance.Value.Value : 0);
                     switch (rcbWaiveCharge.SelectedValue)
                     {
                         case "NO":
@@ -147,6 +148,8 @@ namespace BankProject.Views.TellerApplication
                 txtVatSerial.Text = dr["VATSerial"].ToString();
                 txtChargeAmtLCY.Text = dr["ChargeAmtLCY"].ToString();
                 txtChargeVatAmt.Text = dr["ChargeVATAmt"].ToString();
+                tbOldBalance.Text = dr["OldBalance"].ToString();
+                tbNewBalance.Text = dr["NewBalance"].ToString();
                 if (dr["Status"].ToString() == "AUT") LoadToolBar_AllFalse();
             }
         }
@@ -175,6 +178,7 @@ namespace BankProject.Views.TellerApplication
                     tbSendingName.Text = dr["CustomerName"].ToString();
                     tbSendingAddress.Text = dr["Address"].ToString();
                     tbTaxCode.Text = dr["DocID"].ToString();
+                    tbOldBalance.Text = dr["WorkingAmount"].ToString();
                 }
                 else
                 {

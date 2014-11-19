@@ -142,11 +142,18 @@
              <tr>
                 <td class="MyLable">Amount:</td>
                 <td class="MyContent" width="400">
-                    <telerik:RadNumericTextBox id="tbAmount" runat="server" ValidationGroup="Group1" />
+                    <telerik:RadNumericTextBox id="tbAmount" runat="server" ValidationGroup="Group1" >
+                        <ClientEvents  Onblur="DebitAmount_Onblur" /> </telerik:RadNumericTextBox>
                 </td>
-                <td class="MyLable"></td>
-                <td class="MyContent"></td>
+                <td class="MyLable" style="visibility:hidden">
+                    <telerik:RadNumericTextBox id="tbOldBalance" runat="server" ValidationGroup="Group1" />
+                </td>
+                <td class="MyContent" style="visibility:hidden">
+                    <telerik:RadNumericTextBox id="tbNewBalance" runat="server" ValidationGroup="Group1" />
+                </td>
             </tr>
+                </table>
+                 <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                 <td class="MyLable">Sending Name: <span class="Required">(*)</span>
                      <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"  Display="None" ValidationGroup="Commit" 
@@ -349,14 +356,13 @@
                                     AllowCustomText="false">
                                    
                                     <Items>
-                                        <telerik:RadComboBoxItem Value="" Text="" />
                                         <telerik:RadComboBoxItem Value="YES" Text="YES" />
                                         <telerik:RadComboBoxItem Value="NO" Text="NO" />
                                     </Items>
                                 </telerik:RadComboBox>
                 </td>
             </tr>
-                <tr>
+                <tr style="visibility:hidden;">
                 <td class="MyLable">Save Template:</td>
                 <td class="MyContent">
                      <telerik:RadComboBox AppendDataBoundItems="True"                                     
@@ -501,6 +507,12 @@
 
         return true;
     }
+    function DebitAmount_Onblur(sender, args)
+    {
+        var DebitAmt = $find("<%=tbAmount.ClientID%>").get_value();
+        var OldBalance = $find("<%=tbOldBalance.ClientID%>").get_value();
+        $find("<%=tbNewBalance.ClientID%>").set_value((OldBalance - DebitAmt).toLocaleString("en-US"));
+    }
 
     </script>
 </telerik:radcodeblock>
@@ -529,6 +541,7 @@
 
          <telerik:AjaxSetting AjaxControlID="tbDebitAccount">
             <UpdatedControls>
+                 <telerik:AjaxUpdatedControl ControlID="tbOldBalance" />
                  <telerik:AjaxUpdatedControl ControlID="tbSendingName" />
                 <telerik:AjaxUpdatedControl ControlID="tbSendingAddress" />
                 <telerik:AjaxUpdatedControl ControlID="tbTaxCode" /> 
