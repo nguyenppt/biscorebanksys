@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
@@ -162,6 +163,37 @@ namespace BankProject.Controls
             {
                 cboList.Items.Insert(0, new RadComboBoxItem(""));
             }
+        }
+        //
+        public static DataRow loadBankSwiftCodeInfo(string bankCode, ref Label lblMessage, ref RadTextBox txtBankName)
+        {
+            lblMessage.Text = "";
+            txtBankName.Text = "";
+            bankCode = bankCode.Trim();
+            if (string.IsNullOrEmpty(bankCode)) return null;
+            //
+            DataTable t = DataProvider.SQLData.B_BBANKSWIFTCODE_GetByCode(bankCode);
+            if (t == null || t.Rows.Count <= 0)
+            {
+                lblMessage.Text = "Can not find this Bank.";
+                return null;
+            }
+            DataRow dr = t.Rows[0];
+            txtBankName.Text = dr["BankName"].ToString();
+
+            return dr;
+        }
+        public static DataRow loadBankSwiftCodeInfo(string BankCode, ref Label lblMessage, ref RadTextBox txtBankName, ref RadTextBox txtBankAddr, ref RadTextBox txtBankCity, ref RadTextBox txtBankCountry)
+        {
+            txtBankAddr.Text = "";
+            txtBankCity.Text = "";
+            txtBankCountry.Text = "";
+            DataRow dr = loadBankSwiftCodeInfo(BankCode, ref lblMessage, ref txtBankName);
+            if (dr == null) return null;
+            txtBankCity.Text = dr["City"].ToString();
+            txtBankCountry.Text = dr["Country"].ToString();
+
+            return dr;
         }
     }
 }
