@@ -623,5 +623,9 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("P_ExchangeRate").Tables[0];
         }
+		public static DataTable B_BCHARGECODE_ByTransType(string TransType)
+        {
+            return sqldata.ndkExecuteDataset("P_ChargeCodeByTransType", TransType).Tables[0];
+        }
     }
 }
