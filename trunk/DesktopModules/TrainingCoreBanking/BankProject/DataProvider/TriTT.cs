@@ -840,12 +840,12 @@ namespace BankProject.DataProvider
       , string IDTaxCode, string ReceivingName, string ReceivingName2, string BenAcctID, string LegalID, DateTime? IssueDate, string IssuePlace, string ProvinceCode
             , string ProvinceName, string Phone, string BankCode, string BankCodeDesc
       , string BankName, string PayNumber, string TellerID, string Narrative, string Narrative2, string WaiveCharge, string SaveTemplate, string VATSerial, 
-            double ChargeAmtLCY, double ChargeVATAmt, string CreditAcctID)
+            double ChargeAmtLCY, double ChargeVATAmt, string CreditAcctID, double OldBalance, double NewBalance)
         {
             sqldata.ndkExecuteNonQuery("BOUTWARD_TRANS_BY_ACCT_Insert", ID, Status, ProductID, ProductName, BenComID, BenComName, Currency, DebitAcctID, DebitAcctName
                 , DebitAmount, SendingName, SendingAddress, IDTaxCode, ReceivingName, ReceivingName2, BenAcctID, LegalID, IssueDate, IssuePlace, ProvinceCode,
                 ProvinceName, Phone, BankCode, BankCodeDesc, BankName, PayNumber, TellerID, Narrative, Narrative2, WaiveCharge, SaveTemplate, VATSerial,
-                ChargeAmtLCY, ChargeVATAmt, CreditAcctID);
+                ChargeAmtLCY, ChargeVATAmt, CreditAcctID,OldBalance, NewBalance);
         }
         public static DataSet BOUTWARD_TRANS_BY_ACCT_PreviewList()
         {
