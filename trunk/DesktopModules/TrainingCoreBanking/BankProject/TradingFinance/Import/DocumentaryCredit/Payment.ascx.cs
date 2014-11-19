@@ -87,6 +87,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
             }
             //
+            comboIntermediaryBankType_OnSelectedIndexChanged(sender, null);
+            comboAccountWithInstitutionType_OnSelectedIndexChanged(sender, null);
+            comboBeneficiaryBankType_OnSelectedIndexChanged(sender, null);
+            comboSenderCorrespondentType_OnSelectedIndexChanged(sender, null);
+            comboReceiverCorrespondentType_OnSelectedIndexChanged(sender, null);
+            //
             if (!String.IsNullOrEmpty(Request.QueryString["tid"]))
             {
                 DataSet ds = bd.IssueLC.ImportLCPaymentDetail(null, Convert.ToInt64(Request.QueryString["tid"]));
@@ -616,151 +622,67 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             lblError.Text = "This Docs has wrong Status (" + dr["Status"] + ") !";            
         }
 
+        private void showHideBank(bool isEnable, ref RadTextBox txtBankNo, ref RadTextBox txtBankName, ref RadTextBox txtBankAddr1, ref RadTextBox txtBankAddr2, ref RadTextBox txtBankAddr3)
+        {
+            txtBankNo.Enabled = !isEnable;
+            txtBankName.Enabled = isEnable;
+            txtBankAddr1.Enabled = isEnable;
+            txtBankAddr2.Enabled = isEnable;
+            txtBankAddr3.Enabled = isEnable;
+        }
         protected void comboIntermediaryBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bool isEnable = !comboIntermediaryBankType.SelectedValue.Equals("A");
-            //
-            txtIntermediaryBank.Enabled = !isEnable;
-            txtIntermediaryBankName.Enabled = isEnable;
-            txtIntermediaryBankAddr1.Enabled = isEnable;
-            txtIntermediaryBankAddr2.Enabled = isEnable;
-            txtIntermediaryBankAddr3.Enabled = isEnable;
+            showHideBank(!comboIntermediaryBankType.SelectedValue.Equals("A"), ref txtIntermediaryBank, ref txtIntermediaryBankName, ref txtIntermediaryBankAddr1, ref txtIntermediaryBankAddr2, ref txtIntermediaryBankAddr3);
         }
-
+        
         protected void txtIntermediaryBank_OnTextChanged(object sender, EventArgs e)
         {
-            lblIntermediaryBankNoError.Text = "";
-            txtIntermediaryBankName.Text = "";
-            if (!string.IsNullOrEmpty(txtIntermediaryBank.Text.Trim()))
-            {
-                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtIntermediaryBank.Text.Trim());
-                if (dtBSWIFTCODE.Rows.Count > 0)
-                {
-                    txtIntermediaryBankName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
-                }
-                else
-                {
-                    lblIntermediaryBankNoError.Text = "No found swiftcode";
-                }
-            }
+            bc.Commont.loadBankSwiftCodeInfo(txtIntermediaryBank.Text, ref lblIntermediaryBankNoError, ref txtIntermediaryBankName, ref txtIntermediaryBankAddr1, ref txtIntermediaryBankAddr2, ref txtIntermediaryBankAddr3);
         }
 
         protected void comboAccountWithInstitutionType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bool isEnable = !comboAccountWithInstitutionType.SelectedValue.Equals("A");
-            txtAccountWithInstitution.Enabled = !isEnable;
-            txtAccountWithInstitutionName.Enabled = isEnable;
-            txtAccountWithInstitutionAddr1.Enabled = isEnable;
-            txtAccountWithInstitutionAddr2.Enabled = isEnable;
-            txtAccountWithInstitutionAddr3.Enabled = isEnable;
+            showHideBank(!comboAccountWithInstitutionType.SelectedValue.Equals("A"), ref txtAccountWithInstitution, ref txtAccountWithInstitutionName, ref txtAccountWithInstitutionAddr1, ref txtAccountWithInstitutionAddr2, ref txtAccountWithInstitutionAddr3);
         }
 
         protected void txtAccountWithInstitution_OnTextChanged(object sender, EventArgs e)
         {
-            lblAccountWithInstitutionError.Text = "";
-            txtAccountWithInstitutionName.Text = "";
-            if (!string.IsNullOrEmpty(txtAccountWithInstitution.Text.Trim()))
+            bc.Commont.loadBankSwiftCodeInfo(txtAccountWithInstitution.Text, ref lblAccountWithInstitutionError, ref txtAccountWithInstitutionName, ref txtAccountWithInstitutionAddr1, ref txtAccountWithInstitutionAddr2, ref txtAccountWithInstitutionAddr3);
+            if (comboCreateMT756.SelectedValue == bd.YesNo.YES)
             {
-                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtAccountWithInstitution.Text.Trim());
-                if (dtBSWIFTCODE.Rows.Count > 0)
-                {
-                    txtAccountWithInstitutionName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
-
-                    if (comboCreateMT756.SelectedValue == bd.YesNo.YES)
-                    {
-                        txtReceiverCorrespondentNo.Text = txtAccountWithInstitution.Text;
-                        txtReceiverCorrespondentName.Text = txtAccountWithInstitutionName.Text;
-                    }
-                }
-                else
-                {
-                    lblAccountWithInstitutionError.Text = "No found swiftcode";
-                }
+                txtReceiverCorrespondentNo.Text = txtAccountWithInstitution.Text;
+                //txtReceiverCorrespondentName.Text = txtAccountWithInstitutionName.Text;
             }
         }
 
         protected void comboBeneficiaryBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bool isEnable = !comboBeneficiaryBankType.SelectedValue.Equals("A");
-            txtBeneficiaryBank.Enabled = !isEnable;
-            txtBeneficiaryBankName.Enabled = isEnable;
-            txtBeneficiaryBankAddr1.Enabled = isEnable;
-            txtBeneficiaryBankAddr2.Enabled = isEnable;
-            txtBeneficiaryBankAddr3.Enabled = isEnable;
+            showHideBank(!comboBeneficiaryBankType.SelectedValue.Equals("A"), ref txtBeneficiaryBank, ref txtBeneficiaryBankName, ref txtBeneficiaryBankAddr1, ref txtBeneficiaryBankAddr2, ref txtBeneficiaryBankAddr3);
         }
 
         protected void txtBeneficiaryBank_OnTextChanged(object sender, EventArgs e)
         {
-            lblBeneficiaryBankError.Text = "";
-            txtBeneficiaryBankName.Text = "";
-            if (!string.IsNullOrEmpty(txtBeneficiaryBank.Text.Trim()))
-            {
-                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtBeneficiaryBank.Text.Trim());
-                if (dtBSWIFTCODE.Rows.Count > 0)
-                {
-                    txtBeneficiaryBankName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
-                }
-                else
-                {
-                    lblBeneficiaryBankError.Text = "No found swiftcode";
-                }
-            }
+            bc.Commont.loadBankSwiftCodeInfo(txtBeneficiaryBank.Text, ref lblBeneficiaryBankError, ref txtBeneficiaryBankName, ref txtBeneficiaryBankAddr1, ref txtBeneficiaryBankAddr2, ref txtBeneficiaryBankAddr3);
         }
 
         protected void comboSenderCorrespondentType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bool isEnable = !comboSenderCorrespondentType.SelectedValue.Equals("A");
-            txtSenderCorrespondentNo.Enabled = !isEnable;
-            txtSenderCorrespondentName.Enabled = isEnable;
-            txtSenderCorrespondentAddress1.Enabled = isEnable;
-            txtSenderCorrespondentAddress2.Enabled = isEnable;
-            txtSenderCorrespondentAddress3.Enabled = isEnable;
+            showHideBank(!comboSenderCorrespondentType.SelectedValue.Equals("A"), ref txtSenderCorrespondentNo, ref txtSenderCorrespondentName, ref txtSenderCorrespondentAddress1, ref txtSenderCorrespondentAddress2, ref txtSenderCorrespondentAddress3);
         }
 
         protected void txtSenderCorrespondentNo_OnTextChanged(object sender, EventArgs e)
         {
-            lblSenderCorrespondentNoError.Text = "";
-            txtSenderCorrespondentName.Text = "";
-            if (!string.IsNullOrEmpty(txtSenderCorrespondentNo.Text.Trim()))
-            {
-                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtSenderCorrespondentNo.Text.Trim());
-                if (dtBSWIFTCODE.Rows.Count > 0)
-                {
-                    txtSenderCorrespondentName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
-                }
-                else
-                {
-                    lblSenderCorrespondentNoError.Text = "No found swiftcode";
-                }
-            }
+            bc.Commont.loadBankSwiftCodeInfo(txtSenderCorrespondentNo.Text, ref lblSenderCorrespondentNoError, ref txtSenderCorrespondentName, ref txtSenderCorrespondentAddress1, ref txtSenderCorrespondentAddress2, ref txtSenderCorrespondentAddress3);
         }
 
         protected void comboReceiverCorrespondentType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bool isEnable = !comboReceiverCorrespondentType.SelectedValue.Equals("A");
-            txtReceiverCorrespondentNo.Enabled = !isEnable;
-            txtReceiverCorrespondentName.Enabled = isEnable;
-            txtReceiverCorrespondentAddr1.Enabled = isEnable;
-            txtReceiverCorrespondentAddr2.Enabled = isEnable;
-            txtReceiverCorrespondentAddr3.Enabled = isEnable;
+            showHideBank(!comboReceiverCorrespondentType.SelectedValue.Equals("A"), ref txtReceiverCorrespondentNo, ref txtReceiverCorrespondentName, ref txtReceiverCorrespondentAddr1, ref txtReceiverCorrespondentAddr2, ref txtReceiverCorrespondentAddr3);
         }
 
         protected void txtReceiverCorrespondentNo_OnTextChanged(object sender, EventArgs e)
         {
-            lblReceiverCorrespondentError.Text = "";
-            txtReceiverCorrespondentName.Text = "";
-            if (!string.IsNullOrEmpty(txtReceiverCorrespondentNo.Text.Trim()))
-            {
-                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtReceiverCorrespondentNo.Text.Trim());
-                if (dtBSWIFTCODE.Rows.Count > 0)
-                {
-                    txtReceiverCorrespondentName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
-                }
-                else
-                {
-                    lblReceiverCorrespondentError.Text = "No found swiftcode";
-                }
-            }
+            bc.Commont.loadBankSwiftCodeInfo(txtReceiverCorrespondentNo.Text, ref lblReceiverCorrespondentError, ref txtReceiverCorrespondentName, ref txtReceiverCorrespondentAddr1, ref txtReceiverCorrespondentAddr2, ref txtReceiverCorrespondentAddr3);
         }
 
         protected void cboNostroAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
