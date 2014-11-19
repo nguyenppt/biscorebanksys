@@ -112,13 +112,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPresentorNo;
         
         /// <summary>
-        /// comboPresentorNo control.
+        /// txtPresentorNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboPresentorNo;
+        protected global::Telerik.Web.UI.RadTextBox txtPresentorNo;
+        
+        /// <summary>
+        /// lblPresentorNoMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPresentorNoMsg;
         
         /// <summary>
         /// txtPresentorName control.
@@ -454,13 +463,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMT734;
         
         /// <summary>
-        /// comboPresentorNo_734 control.
+        /// txtPresentorNo_734 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboPresentorNo_734;
+        protected global::Telerik.Web.UI.RadTextBox txtPresentorNo_734;
+        
+        /// <summary>
+        /// lblPresentorNo_734Msg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPresentorNo_734Msg;
         
         /// <summary>
         /// txtPresentorName_734 control.

@@ -124,34 +124,20 @@
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable" style="width: 180px">27. Presentor No.</td>
-                <td class="MyContent">
-                    <telerik:RadComboBox 
-                        ID="comboPresentorNo" 
-                        AutoPostBack="true" 
-                        Runat="server" 
-                        AppendDataBoundItems="true"
-                        OnSelectedIndexChanged="comboPresentorNo_SelectedIndexChanged"
-                        OnItemDataBound="SwiftCode_ItemDataBound"  
-                        MarkFirstMatch="True"
-                        Width="355"
-                        Height="150"
-                        AllowCustomText="false" >
-                        <ExpandAnimation Type="None" />
-                        <CollapseAnimation Type="None" />
-                    </telerik:RadComboBox>
+                <td class="MyContent" style="width:355px;"><telerik:Radtextbox runat="server" ID="txtPresentorNo" Width="355" AutoPostBack="True" OnTextChanged="txtPresentorNo_OnTextChanged" />                    
                 </td>
-            </tr>
-            
+                <td><asp:Label ID="lblPresentorNoMsg" runat="server" Text="" ForeColor="Red"></asp:Label></td>
+            </tr>            
             <tr>
                 <td class="MyLable">28.1 Presentor Name</td>
-                <td class="MyContent">
+                <td class="MyContent" colspan="2">
                     <telerik:Radtextbox runat="server" ID="txtPresentorName" Width="355" />
                 </td>
             </tr>
 
             <tr>
                 <td class="MyLable">29. Presentor Ref. No.</td>
-                <td class="MyContent">
+                <td class="MyContent" colspan="2">
                     <telerik:Radtextbox runat="server" ID="txtPresentorRefNo" Width="355" ClientEvents-OnValueChanged ="txtPresentorRefNo_OnValueChanged" />
                 </td>
             </tr>
@@ -410,26 +396,16 @@
     <div id="tabMT734" class="dnnClear">
         <div runat="server" ID="divMT734">
             <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="MyLable" style="width: 200px">Presentor No</td>
+                    <td class="MyContent" style="width:355px;"><telerik:Radtextbox runat="server" ID="txtPresentorNo_734" Width="355" AutoPostBack="True" OnTextChanged="txtPresentorNo_734_OnTextChanged" />                    
+                    </td>
+                    <td><asp:Label ID="lblPresentorNo_734Msg" runat="server" Text="" ForeColor="Red"></asp:Label></td>
+                </tr> 
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable" style="width: 200px">Presentor No</td>
-                <td class="MyContent">
-                    <telerik:RadComboBox 
-                        AppendDataBoundItems="True"   
-                        AutoPostBack="true" 
-                        OnSelectedIndexChanged="rcbApplicantID_SelectIndexChange"
-                        OnItemDataBound="rcbApplicantID_ItemDataBound"
-                        ID="comboPresentorNo_734" Runat="server"
-                        MarkFirstMatch="True"
-                        Width="355"
-                        Height="150"
-                        AllowCustomText="false" >
-                        <ExpandAnimation Type="None" />
-                        <CollapseAnimation Type="None" />
-                    </telerik:RadComboBox>
-                 </td>
-            </tr>
-            <tr>
-                <td class="MyLable">Presentor Name</td>
+                <td class="MyLable" style="width: 200px">Presentor Name</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtPresentorName_734" runat="server" Width="355" />
                 </td>
@@ -975,10 +951,12 @@
 <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" /></telerik:RadAjaxLoadingPanel>
 <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
     <AjaxSettings>        
-        <telerik:AjaxSetting AjaxControlID="comboPresentorNo">
+        <telerik:AjaxSetting AjaxControlID="txtPresentorNo">
             <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblPresentorNoMsg" />
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorName" />
-                <telerik:AjaxUpdatedControl ControlID="comboPresentorNo_734" />
+                <telerik:AjaxUpdatedControl ControlID="lblPresentorNo_734Msg" />
+                <telerik:AjaxUpdatedControl ControlID="txtPresentorNo_734" />
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorName_734" />
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorAddr_734_1" />
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorAddr_734_2" />
@@ -1002,8 +980,9 @@
             </UpdatedControls>
         </telerik:AjaxSetting>
         
-        <telerik:AjaxSetting AjaxControlID="comboPresentorNo_734">
+        <telerik:AjaxSetting AjaxControlID="txtPresentorNo_734">
             <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblPresentorNo_734Msg" />
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorName_734" />
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorAddr_734_1" />
                 <telerik:AjaxUpdatedControl ControlID="txtPresentorAddr_734_2" />
@@ -1040,7 +1019,6 @@
             var txt = $find("<%=txtDiscrepancies.ClientID%>").get_value();
             $find("<%=txtDiscrepancies_734.ClientID %>").set_value(txt);
         };
-        
     </script>
 </telerik:RadCodeBlock>
 <div style="visibility: hidden;"><asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" /></div>

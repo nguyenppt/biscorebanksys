@@ -130,7 +130,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             txtCode.Text = drDetail["PaymentId"].ToString();
             lblSenderTRN.Text = txtCode.Text;
             comboDrawType.SelectedValue = drDetail["DrawType"].ToString();
-            comboPresentorNo.SelectedValue = drDetail["PresentorNo"].ToString();
+            txtPresentorNo.Text = drDetail["PresentorNo"].ToString();
             txtPresentorName.Text = drDetail["PresentorName"].ToString();
             txtPresentorRefNo.Text = drDetail["PresentorRefNo"].ToString();
             lblCurrency.Text = drDetail["Currency"].ToString();
@@ -177,7 +177,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             if (tbDetail != null && tbDetail.Rows.Count > 0)
             {
                 drDetail = tbDetail.Rows[0];
-                comboPresentorNo_734.SelectedValue = drDetail["PresentorNo"].ToString();
+                txtPresentorNo_734.Text = drDetail["PresentorNo"].ToString();
                 txtPresentorName_734.Text = drDetail["PresentorName"].ToString();
                 txtPresentorAddr_734_1.Text = drDetail["PresentorAddr1"].ToString();
                 txtPresentorAddr_734_2.Text = drDetail["PresentorAddr2"].ToString();
@@ -258,7 +258,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void InitDataSource()
         {
             bc.Commont.initRadComboBox(ref comboDrawType, "Display", "Code", bd.SQLData.B_BDRAWTYPE_GetAll());
-            bc.Commont.initRadComboBox(ref comboPresentorNo, "SwiftCode", "SwiftCode", bd.SQLData.B_BBANKSWIFTCODE_GetByType("all"));
             var tblList = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             bc.Commont.initRadComboBox(ref comboDocsCode1, "Description", "Id", tblList);
             bc.Commont.initRadComboBox(ref comboDocsCode2, "Description", "Id", tblList);
@@ -278,8 +277,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbChargeCode3.SelectedValue = "ILC.OPENAMORT";
             tbChargeCode3.Enabled = false;
             comboWaiveCharges_OnSelectedIndexChanged(null, null);
-            //bc.Commont.initRadComboBox(ref comboPresentorNo_734, "CustomerName", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
-            bc.Commont.initRadComboBox(ref comboPresentorNo_734, "SwiftCode", "SwiftCode", bd.SQLData.B_BBANKSWIFTCODE_GetByType("all"));
             //Party Charged
             tblList = createTableList();
             addData2TableList(ref tblList, "A");
@@ -308,99 +305,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             dr["Value"] = text;
             dr["Text"] = value;
             tblList.Rows.Add(dr);
-        }
-
-        protected void SetDefaultValue()
-        {
-            comboDrawType.Enabled = false;
-
-            fieldsetDiscrepancies.Visible = false;            
-            divMT734.Attributes.CssStyle.Add("display", "none");
-            divCharge.Visible = false;
-
-            divPresentorNo.Visible = true;
-            divDocCode.Visible = true;
-            divLast.Visible = true;
-            switch (TabId)
-            {
-                case TabDocsWithNoDiscrepancies: // Docs With No Discrepancies
-                    comboDrawType.SelectedValue = "CO";
-                    break;
-                case TabDocsWithDiscrepancies: // Docs With Discrepancies
-                    comboDrawType.SelectedValue = "CO";
-                    fieldsetDiscrepancies.Visible = true;
-                    divMT734.Attributes.CssStyle.Remove("display");
-                    divCharge.Visible = true;
-                    break;
-                case TabDocsReject: // Reject Docs Sent For Collection
-                    bc.Commont.SetTatusFormControls(this.Controls, false);
-                    divCharge.Visible = true;
-
-                    divPresentorNo.Visible = false;
-                    divDocCode.Visible = false;
-                    divLast.Visible = false;
-                    fieldsetDiscrepancies.Visible = true;
-                    txtCode.Enabled = true;
-                    break;
-            }
-
-            divDocsCode2.Visible = false;
-            divDocsCode3.Visible = false;
-
-            comboDocsCode1.Enabled = false;
-            comboDocsCode2.Enabled = false;
-            comboDocsCode3.Enabled = false;
-
-            comboDocsCode1.SelectedValue = "INV";
-            comboDocsCode2.SelectedValue = "BL";
-            comboDocsCode2.SelectedValue = "PL";
-
-            numNoOfOriginals1.Value = 0;
-            numNoOfCopies1.Value = 0;
-
-            numNoOfOriginals2.Value = 0;
-            numNoOfCopies2.Value = 0;
-
-            numNoOfOriginals3.Value = 0;
-            numNoOfCopies3.Value = 0;
-
-            dteBookingDate.SelectedDate = DateTime.Now;
-            dteBookingDate.Enabled = false;
-
-            numAmount.Value = 0;
-
-            tbChargeCode.SelectedValue = "ILC.CABLE";
-            tbChargeCode2.SelectedValue = "ILC.OPEN";
-            tbChargeCode3.SelectedValue = "ILC.OPENAMORT";
-
-            tbVatNo.Enabled = false;
-            tbChargeCode.Enabled = false;
-            tbChargeCode2.Enabled = false;
-            tbChargeCode3.Enabled = false;
-
-            rcbPartyCharged.SelectedValue = "A";
-            rcbPartyCharged2.SelectedValue = "A";
-            rcbPartyCharged3.SelectedValue = "A";
-
-            rcbOmortCharge.SelectedValue = "NO";
-            rcbOmortCharges2.SelectedValue = "NO";
-            rcbOmortCharges3.SelectedValue = "NO";
-
-            numAmountUtilization.Value = 0;
-        }
-
-        protected void SetDisableByReview(bool flag)
-        {
-            bc.Commont.SetTatusFormControls(this.Controls, flag);
-            comboDrawType.Enabled = false;
-
-            comboDocsCode1.Enabled = false;
-            comboDocsCode2.Enabled = false;
-            comboDocsCode3.Enabled = false;
-
-            dteBookingDate.Enabled = false;
-
-            tbVatNo.Enabled = false;
         }
 
         private void LoadToolBar(bool flag)
@@ -464,7 +368,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_Insert(TabId.ToString()
                                                         , txtCode.Text
                                                         , comboDrawType.SelectedValue
-                                                        , comboPresentorNo.SelectedValue
+                                                        , txtPresentorNo.Text
                                                         , txtPresentorName.Text
                                                         , txtPresentorRefNo.Text
                                                         , lblCurrency.Text
@@ -569,7 +473,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             if (this.TabId == TabDocsWithDiscrepancies)
             {
                 bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_MT734_Insert(txtCode.Text
-                    , comboPresentorNo_734.SelectedValue
+                    , txtPresentorNo_734.Text
                     , txtPresentorName_734.Text
                     , txtPresentorAddr_734_1.Text
                     , txtPresentorAddr_734_2.Text
@@ -589,16 +493,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
         }
 
-        protected void SwiftCode_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
-        {
-            var row = e.Item.DataItem as DataRowView;
-            e.Item.Attributes["BankName"] = row["BankName"].ToString();
-            e.Item.Attributes["City"] = row["City"].ToString();
-            e.Item.Attributes["Country"] = row["Country"].ToString();
-            e.Item.Attributes["Continent"] = row["Continent"].ToString();
-            e.Item.Attributes["SwiftCode"] = row["SwiftCode"].ToString();
-        }
-        
         protected void btAddDocsCode_Click(object sender, ImageClickEventArgs e)
         {
             //divDocsCode_BL
@@ -663,14 +557,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                 RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                                 bc.Commont.SetTatusFormControls(this.Controls, true);
                                 break;
-                            case bd.TransactionStatus.AUT:
+                            /*case bd.TransactionStatus.AUT:
                                 RadToolBar1.FindItemByValue("btPreview").Enabled = false;
                                 RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                                 RadToolBar1.FindItemByValue("btReverse").Enabled = true;
                                 RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                                 bc.Commont.SetTatusFormControls(this.Controls, true);
-                                break;
+                                break;*/
                         }
                         loadDocsDetail(dsDetail);
                         
@@ -838,361 +732,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
             }
         }
-        protected void LoadData(ref DataRow drowProcessing)
-        {
-            var dsDoc = bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_GetByCode(txtCode.Text.Trim(), TabId, UserId);
-            var status = string.Empty;
-            var rejectStatus = string.Empty;
-
-            if (dsDoc == null || dsDoc.Tables.Count <= 0)
-            {
-                lblError.Text = "LC No. is not found";
-                return;
-            }
-
-            lblSenderTRN.Text = txtCode.Text;
-
-            // truong hop Edit, thi` ko cho click Preview
-            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-
-            #region Tab Main
-            if (dsDoc.Tables[0].Rows.Count > 0)
-            {
-                var drow = dsDoc.Tables[0].Rows[0];
-
-                status = drow["Status"].ToString();
-                rejectStatus = drow["rejectStatus"].ToString();
-
-                comboDrawType.SelectedValue = drow["DrawType"].ToString();
-                comboPresentorNo.SelectedValue = drow["PresentorNo"].ToString();
-                txtPresentorName.Text = drow["PresentorName"].ToString();
-                txtPresentorRefNo.Text = drow["PresentorRefNo"].ToString();
-                lblCurrency.Text = drow["Currency"].ToString();
-                numAmount.Text = drow["Amount"].ToString();
-
-                if (!string.IsNullOrEmpty(drow["BookingDate"].ToString()) &&
-                    drow["BookingDate"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteBookingDate.SelectedDate = DateTime.Parse(drow["BookingDate"].ToString());
-                }
-
-                if (!string.IsNullOrEmpty(drow["DocsReceivedDate"].ToString()) &&
-                    drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteDocsReceivedDate.SelectedDate = DateTime.Parse(drow["DocsReceivedDate"].ToString());
-                }
-
-                comboDocsCode1.SelectedValue = drow["DocsCode1"].ToString();
-                numNoOfOriginals1.Text = drow["NoOfOriginals1"].ToString();
-                numNoOfCopies1.Text = drow["NoOfCopies1"].ToString();
-
-                comboDocsCode2.SelectedValue = drow["DocsCode2"].ToString();
-                numNoOfOriginals2.Text = drow["NoOfOriginals2"].ToString();
-                numNoOfCopies2.Text = drow["NoOfCopies2"].ToString();
-                divDocsCode2.Visible = (numNoOfOriginals2.Value > 0);
-
-                comboDocsCode3.SelectedValue = drow["DocsCode3"].ToString();
-                numNoOfOriginals3.Text = drow["NoOfOriginals3"].ToString();
-                numNoOfCopies3.Text = drow["NoOfCopies3"].ToString();
-                divDocsCode3.Visible = (numNoOfOriginals3.Value > 0);
-
-                txtOtherDocs1.Text = drow["OtherDocs1"].ToString();
-                txtOtherDocs2.Text = drow["OtherDocs2"].ToString();
-                txtOtherDocs3.Text = drow["OtherDocs3"].ToString();
-
-                if (!string.IsNullOrEmpty(drow["TraceDate"].ToString()) &&
-                    drow["TraceDate"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteTraceDate.SelectedDate = DateTime.Parse(drow["TraceDate"].ToString());
-                }
-
-                if (!string.IsNullOrEmpty(drow["DocsReceivedDate_Supplemental"].ToString()) &&
-                    drow["DocsReceivedDate_Supplemental"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteDocsReceivedDate_Supplemental.SelectedDate =
-                        DateTime.Parse(drow["DocsReceivedDate_Supplemental"].ToString());
-                }
-
-                txtPresentorRefNo_Supplemental.Text = drow["PresentorRefNo_Supplemental"].ToString();
-                txtDocs_Supplemental1.Text = drow["Docs_Supplemental1"].ToString();
-
-                ((bc.MultiTextBox)txtDiscrepancies).setText(drow["Discrepancies"].ToString(), true);
-                txtDisposalOfDocs.Text = drow["DisposalOfDocs"].ToString();
-            }
-            else
-            {
-                comboPresentorNo.SelectedValue = string.Empty;
-                txtPresentorName.Text = string.Empty;
-                txtPresentorRefNo.Text = string.Empty;
-                lblCurrency.Text = string.Empty;
-                numAmount.Value = 0;
-
-                dteBookingDate.SelectedDate = DateTime.Now;
-                dteDocsReceivedDate.SelectedDate = DateTime.Now;
-
-                comboDocsCode1.SelectedValue = string.Empty;
-                numNoOfOriginals1.Value = 0;
-                numNoOfCopies1.Value = 0;
-
-                comboDocsCode2.SelectedValue = string.Empty;
-                numNoOfOriginals2.Value = 0;
-                numNoOfCopies2.Value = 0;
-                
-
-                comboDocsCode3.SelectedValue = string.Empty;
-                numNoOfOriginals3.Value = 0;
-                numNoOfCopies3.Value = 0;
-
-                divDocsCode2.Visible = false;
-                divDocsCode3.Visible = false;
-
-                txtOtherDocs1.Text = string.Empty;
-                txtOtherDocs2.Text = string.Empty;
-                txtOtherDocs3.Text = string.Empty;
-
-                dteTraceDate.SelectedDate = null;
-                dteDocsReceivedDate_Supplemental.SelectedDate = null;
-
-                txtPresentorRefNo_Supplemental.Text = string.Empty;
-                txtDocs_Supplemental1.Text = string.Empty;
-                txtDisposalOfDocs.Text = string.Empty;
-            }
-
-            #endregion
-
-            #region Tab Charges
-            if (dsDoc.Tables[3].Rows.Count > 0)
-            {
-                var drow1 = dsDoc.Tables[3].Rows[0];
-                comboWaiveCharges.SelectedValue = drow1["WaiveCharges"].ToString();
-                tbChargeRemarks.Text = drow1["ChargeRemarks"].ToString();
-                tbVatNo.Text = drow1["VATNo"].ToString();
-
-                rcbChargeCcy.SelectedValue = drow1["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
-                {
-                    LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy.SelectedValue, ref rcbChargeAcct);
-                    rcbChargeAcct.SelectedValue = drow1["ChargeAcct"].ToString();
-                }
-
-                tbChargeAmt.Value = (double?)drow1["ChargeAmt"];
-                rcbPartyCharged.SelectedValue = drow1["PartyCharged"].ToString();
-                rcbOmortCharge.SelectedValue = drow1["OmortCharges"].ToString();
-                rcbChargeStatus.SelectedValue = drow1["ChargeStatus"].ToString();
-                lblTaxCode.Text = drow1["TaxCode"].ToString();
-                lblTaxAmt.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
-            }
-            else
-            {
-                rcbChargeAcct.SelectedValue = string.Empty;
-                rcbChargeCcy.SelectedValue = string.Empty;
-                tbChargeAmt.Value = 0;
-                rcbPartyCharged.SelectedValue = "A";
-                rcbChargeStatus.SelectedValue = string.Empty;
-                lblTaxCode.Text = string.Empty;
-                lblTaxAmt.Text = string.Empty;
-            }
-
-            if (dsDoc.Tables[4].Rows.Count > 0)
-            {
-                var drow1 = dsDoc.Tables[4].Rows[0];
-
-                rcbChargeCcy2.SelectedValue = drow1["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
-                {
-                    LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy2.SelectedValue, ref rcbChargeAcct2);
-                    rcbChargeAcct2.SelectedValue = drow1["ChargeAcct"].ToString();
-                }
-
-                tbChargeAmt2.Value = (double?)drow1["ChargeAmt"];
-                rcbPartyCharged2.SelectedValue = drow1["PartyCharged"].ToString();
-                rcbOmortCharges2.SelectedValue = drow1["OmortCharges"].ToString();
-                rcbChargeStatus2.SelectedValue = drow1["ChargeStatus"].ToString();
-                lblTaxCode2.Text = drow1["TaxCode"].ToString();
-                lblTaxAmt2.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
-            }
-            else
-            {
-                rcbChargeAcct2.SelectedValue = string.Empty;
-                rcbChargeCcy2.SelectedValue = string.Empty;
-                tbChargeAmt2.Value = 0;
-                rcbPartyCharged2.SelectedValue = string.Empty;
-                rcbOmortCharges2.SelectedValue = string.Empty;
-                rcbChargeStatus2.SelectedValue = string.Empty;
-                lblTaxCode2.Text = string.Empty;
-                lblTaxAmt2.Text = string.Empty;
-            }
-
-            if (dsDoc.Tables[5].Rows.Count > 0)
-            {
-                var drow1 = dsDoc.Tables[5].Rows[0];
-
-                rcbChargeCcy3.SelectedValue = drow1["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
-                {
-                    LoadChargeAcct(hiddenCustomerName.Value, rcbChargeCcy3.SelectedValue, ref rcbChargeAcct3);
-                    rcbChargeAcct3.SelectedValue = drow1["ChargeAcct"].ToString();
-                }
-
-                tbChargeAmt3.Value = (double?)drow1["ChargeAmt"];
-                rcbPartyCharged3.SelectedValue = drow1["PartyCharged"].ToString();
-                rcbOmortCharges3.SelectedValue = drow1["OmortCharges"].ToString();
-                rcbChargeStatus3.SelectedValue = drow1["ChargeStatus"].ToString();
-                lblTaxCode3.Text = drow1["TaxCode"].ToString();
-                lblTaxAmt3.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
-            }
-            else
-            {
-                rcbChargeAcct3.SelectedValue = string.Empty;
-                rcbChargeCcy3.SelectedValue = string.Empty;
-                tbChargeAmt3.Value = 0;
-                rcbPartyCharged3.SelectedValue = "A";
-                rcbOmortCharges3.SelectedValue = string.Empty;
-                rcbChargeStatus3.SelectedValue = string.Empty;
-                lblTaxCode3.Text = string.Empty;
-                lblTaxAmt3.Text = string.Empty;
-            }
-            #endregion
-
-            if (dsDoc.Tables[1].Rows.Count > 0)
-            {
-                var drow = dsDoc.Tables[1].Rows[0];
-                hiddenCustomerName.Value = drow["ApplicantName"].ToString();
-                lblCurrency.Text = drow["Currency"].ToString();
-
-                // call func check status
-                CheckStatus(drow);
-
-                // User enter code moi
-                if (dsDoc.Tables[0].Rows.Count <= 0)
-                {
-                    numAmount.Value = (double?) drow["Amount"];
-                }
-
-                if (status.Equals(bd.TransactionStatus.AUT))
-                {
-                    LoadToolBar(false);
-                    RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
-                    RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-                    //Reject
-                    if (this.TabId == TabDocsReject)
-                    {
-                        comboDrawType.SelectedValue = "CR";
-                        RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                        if (String.IsNullOrEmpty(rejectStatus))
-                        {
-                            //Chuan bi Reject
-                            RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                        }
-                        else
-                        {
-                            if (rejectStatus.Equals(bd.TransactionStatus.UNA))
-                            {
-                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                            }
-                            /*else if (rejectStatus.Equals(bd.TransactionStatus.AUT))
-                            {
-                                RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                            }*/
-                        }
-
-                        return;
-                    }                    
-                    // Neu AUT thi ko cho phep sua
-                    lblError.Text = "This LC has authorized";
-                }
-            }
-
-            // The previous payment has not been authorized yet. 
-            // kiem tra khi Preview
-            if (CheckReview())
-            {
-                if (string.IsNullOrEmpty(Request.QueryString["disable"]) && CheckPreviousPayment(dsDoc))
-                {
-                    LoadToolBar(false);
-                    SetDisableByReview(false);
-                    RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
-                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                }
-                else
-                {
-                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                }
-            }
-
-            if (Request.QueryString["disable"] != null)
-            {
-                txtCode.Text = Request.QueryString["paycode"];
-            }
-            else
-            {
-                txtCode.Text = dsDoc.Tables[2].Rows[0]["PaymentId"].ToString();
-            }
-        }
-
-        protected void comboPresentorNo_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            txtPresentorName.Text = comboPresentorNo.SelectedItem != null
-                                        ? comboPresentorNo.SelectedItem.Attributes["BankName"]
-                                        : "";
-            comboPresentorNo_734.SelectedValue = comboPresentorNo.SelectedValue;
-            loadMT734PresentorInfo();
-        }
-
-        protected void CheckStatus(DataRow drow)
-        {
-            if (drow["Status"].ToString().Equals(bd.TransactionStatus.UNA))
-            {
-                lblError.Text = "This LC has not authorized at Amend step.";
-                SetDisableByReview(false);
-                txtCode.Enabled = true;
-                divDocsCode2.Disabled = true;
-                divDocsCode3.Disabled = true;
-                divDocsCode1.Disabled = true;
-            }
-            else if (!string.IsNullOrEmpty(drow["Cancel_Status"].ToString()) &&
-                        drow["Cancel_Status"].ToString().Equals(bd.TransactionStatus.AUT))
-            {
-                lblError.Text = "This LC is cancel";
-                SetDisableByReview(false);
-                txtCode.Enabled = true;
-                divDocsCode2.Disabled = true;
-                divDocsCode3.Disabled = true;
-                divDocsCode1.Disabled = true;
-            }
-            else if (!string.IsNullOrEmpty(drow["Amend_Status"].ToString()) &&
-                     !drow["Amend_Status"].ToString().Equals(bd.TransactionStatus.AUT))
-            {
-                lblError.Text = "This LC has not authorized at Amend step.";
-                SetDisableByReview(false);
-                txtCode.Enabled = true;
-                divDocsCode2.Disabled = true;
-                divDocsCode3.Disabled = true;
-                divDocsCode1.Disabled = true;
-            }
-        }
-
-         protected bool CheckReview()
-        {
-            if (txtCode.Text.Trim().Length > 15)
-            {
-                return true;
-            }
-            return false;
-        }
-
-         protected bool CheckPreviousPayment(DataSet dsPayment)
-         {
-             DataTable tbl = dsPayment.Tables[2];
-             if (tbl != null && tbl.Rows.Count > 0 && tbl.Rows[0]["Status"].ToString().Equals(bd.TransactionStatus.UNA))
-             {
-                 bc.Commont.ShowClientMessageBox(Page, this.GetType(), "The previous payment has not been authorized yet.");
-                 return true;
-             }
-             return false;
-         }
-
+        
         protected bool CheckAmountAvailable()
         {
             var orginalCode = "";
@@ -1316,37 +856,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
         }
 
-        protected void rcbApplicantID_SelectIndexChange(object sender, EventArgs e)
-        {
-            loadMT734PresentorInfo();
-        }
-
-        protected void rcbApplicantID_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
-        {
-            var row = e.Item.DataItem as DataRowView;
-            e.Item.Attributes["BankName"] = row["BankName"].ToString();
-            e.Item.Attributes["City"] = row["City"].ToString();
-            e.Item.Attributes["Country"] = row["Country"].ToString();
-            e.Item.Attributes["Continent"] = row["Continent"].ToString();
-            e.Item.Attributes["SwiftCode"] = row["SwiftCode"].ToString();
-        }
-
-        private void loadMT734PresentorInfo()
-        {
-            txtPresentorName_734.Text = "";
-            txtPresentorAddr_734_1.Text = "";
-            txtPresentorAddr_734_2.Text = "";
-            txtPresentorAddr_734_3.Text = "";
-            //
-            if (comboPresentorNo_734.SelectedItem != null)
-            {
-                RadComboBoxItem cb = comboPresentorNo_734.SelectedItem;
-                txtPresentorName_734.Text = cb.Attributes["BankName"];
-                txtPresentorAddr_734_2.Text = cb.Attributes["City"];
-                txtPresentorAddr_734_3.Text = cb.Attributes["Country"];
-            }
-        }
-
         protected void btDownloadMT734_Click(object sender, EventArgs e)
         {
             showReport(1);
@@ -1398,6 +907,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             {
                 lblError.Text = err.Message;
             }
+        }
+
+        protected void txtPresentorNo_OnTextChanged(object sender, EventArgs e)
+        {
+            lblPresentorNoMsg.Text = "";
+            txtPresentorName.Text = "";
+            DataRow dr = bc.Commont.loadBankSwiftCodeInfo(txtPresentorNo.Text, ref lblPresentorNo_734Msg, ref txtPresentorName_734, ref txtPresentorAddr_734_1, ref txtPresentorAddr_734_2, ref txtPresentorAddr_734_3);
+            if (dr == null)
+            {
+                lblPresentorNoMsg.Text = "Can not find this Bank.";
+                return;
+            }
+            txtPresentorNo_734.Text = txtPresentorNo.Text;
+            txtPresentorName.Text = txtPresentorName_734.Text;
+        }
+        protected void txtPresentorNo_734_OnTextChanged(object sender, EventArgs e)
+        {
+            bc.Commont.loadBankSwiftCodeInfo(txtPresentorNo_734.Text, ref lblPresentorNo_734Msg, ref txtPresentorName_734, ref txtPresentorAddr_734_1, ref txtPresentorAddr_734_2, ref txtPresentorAddr_734_3);
         }
     }
 }
