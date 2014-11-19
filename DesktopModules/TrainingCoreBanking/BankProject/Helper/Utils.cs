@@ -294,7 +294,7 @@ namespace BankProject.Helper
             DataTable datatable = new DataTable();
             foreach (PropertyInfo info in properties)
             {
-                datatable.Columns.Add(new DataColumn(info.Name, info.PropertyType));
+                datatable.Columns.Add(new DataColumn(info.Name, Nullable.GetUnderlyingType(info.PropertyType) ?? info.PropertyType));
             }
             foreach (T entity in list)
             {
