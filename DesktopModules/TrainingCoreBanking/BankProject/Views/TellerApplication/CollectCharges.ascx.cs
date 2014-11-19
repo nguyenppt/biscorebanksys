@@ -78,7 +78,8 @@ namespace BankProject.Views.TellerApplication
                                                         , txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0, tbVATAmountLCY.Value.HasValue ? tbVATAmountLCY.Value.Value : 0
                                                         , tbVATAmount.Value.HasValue ? tbVATAmount.Value.Value : 0, tbTotalAmountLCY.Value.HasValue ? tbTotalAmountLCY.Value.Value : 0
                                                         , tbTotalAmount.Value.HasValue ? tbTotalAmount.Value.Value : 0, tbVATSerialNo.Text, tbNarrative.Text, this.UserId
-                                                        , lblCustomerID.Text, lblCustomerName.Text, rcbCurrency.Text);
+                                                        , lblCustomerID.Text, lblCustomerName.Text, rcbCurrency.Text
+                                                        , tbOldBalance.Value.HasValue ? tbOldBalance.Value.Value : 0, tbNewBalance.Value.HasValue? tbNewBalance.Value.Value : 0);
 
                     BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                     firstLoad();
@@ -147,6 +148,7 @@ namespace BankProject.Views.TellerApplication
         {
             tbVATAmountLCY.Value = tbChargeAmountLCY.Value * percentVat;
             tbTotalAmountLCY.Value = tbVATAmountLCY.Value + tbChargeAmountLCY.Value;
+            tbNewBalance.Value = tbOldBalance.Value - tbTotalAmountLCY.Value;
         }
 
         protected void tbChargeAmountFCY_TextChanged(object sender, EventArgs e)
@@ -162,6 +164,7 @@ namespace BankProject.Views.TellerApplication
             tbChargeAmountLCY.Value = tbChargeAmountFCY.Value * DealRateValue;
             tbVATAmountLCY.Value = tbChargeAmountLCY.Value * percentVat;
             tbTotalAmountLCY.Value = tbVATAmountLCY.Value + tbChargeAmountLCY.Value;
+            tbNewBalance.Value = tbOldBalance.Value - tbTotalAmount.Value; //
         }
 
         protected void txtDealRate_TextChanged(object sender, EventArgs e)
@@ -194,7 +197,7 @@ namespace BankProject.Views.TellerApplication
                     lbAccountId.Text = ds.Tables[0].Rows[0]["Id"].ToString();
                     lbAccountTitle.Text = ds.Tables[0].Rows[0]["AccountTitle"].ToString();
                     rcbCurrency.Text = ds.Tables[0].Rows[0]["Currency"].ToString();
-
+                    tbOldBalance.Text = ds.Tables[0].Rows[0]["WorkingAmount"].ToString();
                     //if (ds.Tables[0].Rows[0]["WorkingAmount"] != null && ds.Tables[0].Rows[0]["WorkingAmount"] != DBNull.Value)
                     //    lblCustBal.Value = double.Parse(ds.Tables[0].Rows[0]["WorkingAmount"].ToString());
 
