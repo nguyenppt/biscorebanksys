@@ -38,7 +38,7 @@ namespace BankProject.FTTeller
                     { ShowMsgBox("Deal Rate value is not inputted. Please check again !"); return; }
                 double dealrate = (txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0);
                 if (lbDebitCurrency.Text == rcbCreditCurrency.SelectedValue) dealrate = 1;
-                TriTT.BINWARD_CASH_WITHDRAW_Insert(txtId.Text, "UNA", rcbClearingID.SelectedValue, lbDebitCurrency.Text, lbDebitAccount.Text, tbDebitAmtLCY.Value.HasValue ? tbDebitAmtLCY.Value.Value : 0,
+                TriTT.BINWARD_CASH_WITHDRAW_Insert(txtId.Text, "UNA", tbClearingID.Text, lbDebitCurrency.Text, lbDebitAccount.Text, tbDebitAmtLCY.Value.HasValue ? tbDebitAmtLCY.Value.Value : 0,
                     tbDebitAmtFCY.Value.HasValue ? tbDebitAmtFCY.Value.Value : 0, dealrate, rcbCreditAccount.SelectedValue,
                     rcbCreditAccount.Text, rcbCreditCurrency.SelectedValue, tbCreditAmtLCY.Value.HasValue ? tbCreditAmtLCY.Value.Value : 0,
                     tbCreditAmtFCY.Value.HasValue ? tbCreditAmtFCY.Value.Value : 0, txtBOName.Text, txtFOName.Text, txtIdentityCard.Text,txtIsssueDate.SelectedDate.HasValue? txtIsssueDate.SelectedDate : null
@@ -67,9 +67,9 @@ namespace BankProject.FTTeller
                 LoadInfo_forREV();
             }
         }
-        protected void rcbClearingID_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void tbClearingID_OntextChanged(object sender, EventArgs e)
         {
-            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(rcbClearingID.SelectedValue);
+            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(tbClearingID.Text);
             DataRow dr = ds.Tables[0].Rows[0];
             lbDebitCurrency.Text = dr["Currency"].ToString();
             lbDebitAccount.Text = dr["CreditAcctID"].ToString();
@@ -85,7 +85,7 @@ namespace BankProject.FTTeller
         }
         protected void LoadInfo_forREV()
         {
-            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(rcbClearingID.SelectedValue);
+            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(tbClearingID.Text);
             DataRow dr = ds.Tables[0].Rows[0];
             tbAmount.Text = dr["Amount"].ToString();
         }
@@ -101,7 +101,7 @@ namespace BankProject.FTTeller
                 DataRow dr = ds.Tables[0].Rows[0];
                 txtId.Text = dr["ID"].ToString();
                 lbDebitCurrency.Text = dr["DebitCurrency"].ToString();
-                rcbClearingID.SelectedValue = dr["ClearingID"].ToString();
+                tbClearingID.Text = dr["ClearingID"].ToString();
                 lbDebitAccount.Text = dr["DebitAccount"].ToString();
                 if (dr["DebitAmtLCY"].ToString() != "0.00") tbDebitAmtLCY.Text = dr["DebitAmtLCY"].ToString();
                 if (dr["DebitAmtFCY"].ToString() != "0.00") tbDebitAmtFCY.Text = dr["DebitAmtFCY"].ToString();
@@ -128,20 +128,19 @@ namespace BankProject.FTTeller
         private void FirstLoad()
         {
             this.txtId.Text = TriTT.B_BMACODE_GetNewID_3part_new("B_BMACODE_GetNewID_3part_new", "INWARD_CASH_ID", "TT", ".");
-            LoadClearingID();
             LoadCurrency();
             LoadCreditAccount();
         }
-        protected void LoadClearingID()
-        {
-            rcbClearingID.Items.Clear();
-            rcbClearingID.Items.Add(new RadComboBoxItem(""));
-            rcbClearingID.AppendDataBoundItems = true;
-            rcbClearingID.DataTextField = "ID";
-            rcbClearingID.DataValueField = "ID";
-            rcbClearingID.DataSource = BankProject.DataProvider.TriTT.Load_ClearingID();
-            rcbClearingID.DataBind();
-        }
+        //protected void LoadClearingID()
+        //{
+        //    rcbClearingID.Items.Clear();
+        //    rcbClearingID.Items.Add(new RadComboBoxItem(""));
+        //    rcbClearingID.AppendDataBoundItems = true;
+        //    rcbClearingID.DataTextField = "ID";
+        //    rcbClearingID.DataValueField = "ID";
+        //    rcbClearingID.DataSource = BankProject.DataProvider.TriTT.Load_ClearingID();
+        //    rcbClearingID.DataBind();
+        //}
         protected void LoadCreditAccount()
         {
             var InternalBankAccount = Teller.InternalBankAccount();

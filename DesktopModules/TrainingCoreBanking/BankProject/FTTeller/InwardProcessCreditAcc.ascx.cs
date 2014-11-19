@@ -39,7 +39,7 @@ namespace BankProject.FTTeller
                     { ShowMsgBox("Deal Rate value is not inputted. Please check again !"); return; }
                 double dealrate = (txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0);
                 if (lblDebitCurrency.Text == rcbCreditCurrency.SelectedValue) dealrate = 1;
-                TriTT.BINWARD_PROC_CRE_ACCT_Insert(tbId.Text,"UNA", rcbClearingID.SelectedValue, lblDebitCurrency.Text, lbDebitAccount.Text,
+                TriTT.BINWARD_PROC_CRE_ACCT_Insert(tbId.Text,"UNA", tbClearingID.Text, lblDebitCurrency.Text, lbDebitAccount.Text,
                     tbDebitAmtLCY.Value.HasValue? tbDebitAmtLCY.Value.Value: 0, tbDebitAmtFCY.Value.HasValue ? tbDebitAmtFCY.Value.Value : 0 ,
                     dealrate, tbDebitAmt.Value.HasValue ? tbDebitAmt.Value.Value : 0,txtBOName.Text, rcbCreditCurrency.SelectedValue, rcbCreditAccount.SelectedValue
                     , rcbCreditAccount.Text, tbCrAmtLCY.Value.HasValue ? tbCrAmtLCY.Value.Value : 0, tbCrAmtFCY.Value.HasValue? tbCrAmtFCY.Value.Value : 0,
@@ -81,8 +81,7 @@ namespace BankProject.FTTeller
             {
                 DataRow dr = ds.Tables[0].Rows[0];
                 tbId.Text = dr["ID"].ToString();
-                Load_ClearingID();
-                rcbClearingID.SelectedValue = dr["ClearingID"].ToString();
+                tbClearingID.Text = dr["ClearingID"].ToString();
                 lblDebitCurrency.Text = dr["DebitCurrency"].ToString();
                 lbDebitAccount.Text = dr["DebitAccount"].ToString();
                 tbDebitAmtLCY.Text = dr["DebitAmtLCY"].ToString();
@@ -112,17 +111,16 @@ namespace BankProject.FTTeller
         private void FirstLoad()
         {
             tbId.Text = TriTT.B_BMACODE_3part_varMaCode_varSP("B_BMACODE_3part_varMaCode_varSP", "INWARD_ACCT_ID", "TT");
-            Load_ClearingID();
             LoadCurrency();
             LoadCreditAccount();
         }
-        protected void rcbClearingID_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void tbClearing_TextChanged(object sender, EventArgs e)
         {
             Load_Detail_ID();
         }
         protected void Load_Detail_ID()
         {
-            DataSet ds = TriTT.BINWARD_PROC_CRE_ACCT_Load_Detail_ID(rcbClearingID.SelectedValue);
+            DataSet ds = TriTT.BINWARD_PROC_CRE_ACCT_Load_Detail_ID(tbClearingID.Text);
             DataRow dr = ds.Tables[0].Rows[0];
             lblDebitCurrency.Text = dr["Currency"].ToString();
             lbDebitAccount.Text = dr["DebitAcctID"].ToString();
@@ -137,17 +135,17 @@ namespace BankProject.FTTeller
             //tbNarrative.Text = dr["Narrative"].ToString();
             //tbNarrative2.Text = dr["Narrative2"].ToString();
         }
-        protected void Load_ClearingID()
-        {
-            var ClearingID = TriTT.BINWARD_PROC_CRE_ACCT_Load_ClearingID();
-            rcbClearingID.Items.Clear();
-            rcbClearingID.Items.Add(new RadComboBoxItem(""));
-            rcbClearingID.AppendDataBoundItems = true;
-            rcbClearingID.DataValueField = "ID";
-            rcbClearingID.DataTextField = "ID";
-            rcbClearingID.DataSource = ClearingID;
-            rcbClearingID.DataBind();
-        }
+        //protected void Load_ClearingID()
+        //{
+        //    var ClearingID = TriTT.BINWARD_PROC_CRE_ACCT_Load_ClearingID();
+        //    rcbClearingID.Items.Clear();
+        //    rcbClearingID.Items.Add(new RadComboBoxItem(""));
+        //    rcbClearingID.AppendDataBoundItems = true;
+        //    rcbClearingID.DataValueField = "ID";
+        //    rcbClearingID.DataTextField = "ID";
+        //    rcbClearingID.DataSource = ClearingID;
+        //    rcbClearingID.DataBind();
+        //}
         protected void LoadCreditAccount()
         {
             var InternalBankAccount = Teller.InternalBankAccount();

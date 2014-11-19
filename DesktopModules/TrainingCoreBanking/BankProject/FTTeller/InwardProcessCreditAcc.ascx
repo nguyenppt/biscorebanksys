@@ -54,23 +54,17 @@
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldValidator8"
-                        ControlToValidate="rcbClearingID"
+                        ControlToValidate="tbClearingID"
                         ValidationGroup="Commit"
                         InitialValue=""
                         ErrorMessage="Clearing ID is Required" ForeColor="Red">
                     </asp:RequiredFieldValidator>
                     </td>
                 <td class="MyContent">
-                    <telerik:RadComboBox ID="rcbClearingID"
-                        MarkFirstMatch="True"
-                        AllowCustomText="false" Width="220"
+                    <telerik:RadTextBox ID="tbClearingID"
                         AutoPostBack="True"
-                        OnSelectedIndexChanged="rcbClearingID_OnSelectedIndexChanged"
-                        runat="server" >
-                        <Items>
-                            <telerik:RadComboBoxItem Value="" Text="" />
-                        </Items>
-                    </telerik:RadComboBox>
+                        OnTextChanged="tbClearing_TextChanged"
+                        runat="server" />                        
                 </td>
                
             </tr>
@@ -375,7 +369,7 @@
 <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" 
     DefaultLoadingPanelID="AjaxLoadingPanel1" >
     <AjaxSettings>
-        <telerik:AjaxSetting AjaxControlID="rcbClearingID">
+        <telerik:AjaxSetting AjaxControlID="tbClearingID">
             <UpdatedControls>
                  <telerik:AjaxUpdatedControl ControlID="lblDebitCurrency" />
                 <telerik:AjaxUpdatedControl ControlID="lbDebitAccount" />
