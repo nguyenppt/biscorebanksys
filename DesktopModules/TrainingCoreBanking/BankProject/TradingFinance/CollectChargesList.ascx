@@ -6,11 +6,9 @@
             <telerik:GridBoundColumn HeaderText="Trans Code" DataField="TransCode" />            
             <telerik:GridTemplateColumn HeaderText="Amount">
                 <ItemStyle HorizontalAlign="Right" />
-                <ItemTemplate><%# Eval("DebitAmount")  + " " + Eval("DebitCurrency") %>
+                <ItemTemplate><%# Eval("TotalChargeAmount")  + " " + Eval("ChargeCurrency") %>
                 </ItemTemplate>
             </telerik:GridTemplateColumn>
-            <telerik:GridBoundColumn HeaderText="Order Customer Id" DataField="OrderCustomerId" />
-            <telerik:GridBoundColumn HeaderText="Order Customer Name" DataField="OrderCustomerName" />
             <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
             <telerik:GridTemplateColumn>
                 <ItemStyle Width="150" />
