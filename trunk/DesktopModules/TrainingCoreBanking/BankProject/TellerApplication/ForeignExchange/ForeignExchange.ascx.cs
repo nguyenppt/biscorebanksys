@@ -14,9 +14,9 @@ namespace BankProject.Views.TellerApplication.ForeignExchange
         {
             if (IsPostBack) return;
             //
-            DataTable tList = bd.Teller.ExchangeRate();
-            bc.Commont.initRadComboBox(ref cboDebitCurrency, "Title", "Value", tList);
-            bc.Commont.initRadComboBox(ref cboCurrencyPaid, "Title", "Value", tList);
+            DataTable tList = bd.SQLData.B_BCURRENCY_GetAll().Tables[0];
+            bc.Commont.initRadComboBox(ref cboDebitCurrency, "Code", "Code", tList);
+            bc.Commont.initRadComboBox(ref cboCurrencyPaid, "Code", "Code", tList);
             cboCurrencyPaid.SelectedValue = "VND";
             //
             tList = bd.Teller.InternalBankAccount();
