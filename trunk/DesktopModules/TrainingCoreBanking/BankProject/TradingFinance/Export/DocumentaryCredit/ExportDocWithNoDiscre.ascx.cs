@@ -38,6 +38,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             
                 var tid = Request.QueryString["tid"].ToString();
                 var dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == tid).FirstOrDefault();
+                if (TabId == TabDocsAmend)
+                {
+                    var findTypeAmend = tid.Split('.');
+                    if (findTypeAmend != null && findTypeAmend.Length > 0)
+                    {
+                        if (findTypeAmend.Length == 2)
+                        {
+                            dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == tid && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+                        }
+                        else {
+                            dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == tid).FirstOrDefault();
+                        }
+                    }
+                }
                 if (dsDetail == null)
                 {
                     lblError.Text = "This Docs not found !";
@@ -398,6 +412,204 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     lblTaxAmt3.Text = "";
                     tbExcheRate3.Text = "";
                     tbChargeAmt3.Text = "";
+        }
+        private void SaveAmend()
+        {
+            try
+            {
+                int AmendPreId = 0;
+                string AmendNo = "";
+                var findTypeAmend = txtCode.Text.Split('.');
+                
+                if (findTypeAmend != null && findTypeAmend.Length > 0)
+                {
+                    //truong hop them moi
+                    if (findTypeAmend.Length == 3)
+                    {
+                        //xet xem so TF nay co hay chua
+                        var chkAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
+                        //neu chua co thi them moi, co roi thi update
+                        //truong hop chua co--> se them moi
+                        if (chkAmend == null)
+                        {
+                            //xet record truoc do bang cach lay id -1 neu lon hon 0 se update TF.x.y, nguoc lai chi update TF.x
+                            if (!String.IsNullOrEmpty(findTypeAmend[2]))
+                            {
+                                AmendPreId = int.Parse(findTypeAmend[2]) - 1;
+                            }
+                            if (AmendPreId > 0)
+                            {
+                                //xet Amend truoc do
+                                AmendNo = findTypeAmend[0] + "." + findTypeAmend[1] + "." + AmendPreId;
+                                var objPreAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == AmendNo).FirstOrDefault();
+                                if (objPreAmend != null)
+                                {
+                                    objPreAmend.ActiveRecordFlag = YesNo.NO;
+                                }
+                                //
+                            }
+                            else
+                            {
+                                AmendNo = findTypeAmend[0] + "." + findTypeAmend[1];
+                                var objPreAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == AmendNo).FirstOrDefault();
+                                if (objPreAmend != null)
+                                {
+                                    objPreAmend.ActiveRecordFlag = YesNo.NO;
+                                }
+                            }
+                            //update
+                            entContext.SaveChanges();
+                            //them moi record hien tai
+                            BEXPORT_DOCUMENTPROCESSING objInsertAmend = new BEXPORT_DOCUMENTPROCESSING
+                            {
+                                DrawType = comboDrawType.SelectedValue,
+                                PresentorNo = comboPresentorNo.Text,
+                                PresentorName = txtPresentorName.Text,
+                                PresentorRefNo = txtPresentorRefNo.Text,
+                                Currency = lblCurrency.Text,
+                                BookingDate = dteBookingDate.SelectedDate,
+                                DocsReceivedDate = dteDocsReceivedDate.SelectedDate,
+                                DocsCode1 = comboDocsCode1.SelectedValue,
+                                DocsCode2 = comboDocsCode2.SelectedValue,
+                                DocsCode3 = comboDocsCode3.SelectedValue,
+                                OtherDocs1 = txtOtherDocs1.Text,
+                                OtherDocs2 = txtOtherDocs2.Text,
+                                OtherDocs3 = txtOtherDocs3.Text,
+                                Discrepancies = txtDiscrepancies.Text,
+                                DisposalOfDocs = txtDisposalOfDocs.Text,
+                                TraceDate = dteTraceDate.SelectedDate,
+                                DocsReceivedDate_Supplemental = dteDocsReceivedDate_Supplemental.SelectedDate,
+                                PresentorRefNo_Supplemental = txtPresentorRefNo_Supplemental.Text,
+                                Docs_Supplemental1 = txtDocs_Supplemental1.Text,
+                                LCCode = findTypeAmend[0],
+                                PaymentNo = long.Parse(findTypeAmend[1]),
+                                PaymentId = findTypeAmend[0] + "." + findTypeAmend[1],
+                                Id = long.Parse(findTypeAmend[1]),
+                                DocumentType = TabId.ToString(),
+                                FullDocsAmount = txtFullDocsAmount.Value,
+                                WaiveCharges = comboWaiveCharges.SelectedValue,
+                                ChargeRemarks = tbChargeRemarks.Text,
+                                VATNo = tbVatNo.Text,
+                                AmendId = int.Parse(findTypeAmend[2]),
+                                AmendNo = txtCode.Text,
+                                ActiveRecordFlag = YesNo.YES,
+                                Status = "AUT",
+                                OldDocsReceivedDate = dteDocsReceivedDate.SelectedDate,
+                                RefAmendNo = AmendNo,
+                                AmendStatus = "UNA"
+                            };
+                            if (!String.IsNullOrEmpty(numAmount.Text))
+                            {
+                                objInsertAmend.Amount = double.Parse(numAmount.Text);
+                                objInsertAmend.OldAmount = numAmount.Value;
+                            }
+                            if (!String.IsNullOrEmpty(numNoOfOriginals1.Text))
+                            {
+                                objInsertAmend.NoOfOriginals1 = long.Parse(numNoOfOriginals1.Text);
+                            }
+                            if (!String.IsNullOrEmpty(numNoOfOriginals2.Text))
+                            {
+                                objInsertAmend.NoOfOriginals2 = long.Parse(numNoOfOriginals2.Text);
+                            }
+                            if (!String.IsNullOrEmpty(numNoOfOriginals3.Text))
+                            {
+                                objInsertAmend.NoOfOriginals3 = long.Parse(numNoOfOriginals3.Text);
+                            }
+
+                            if (!String.IsNullOrEmpty(numNoOfCopies1.Text))
+                            {
+                                objInsertAmend.NoOfCopies1 = long.Parse(numNoOfCopies1.Text);
+                            }
+                            if (!String.IsNullOrEmpty(numNoOfCopies2.Text))
+                            {
+                                objInsertAmend.NoOfCopies2 = long.Parse(numNoOfCopies2.Text);
+                            }
+                            if (!String.IsNullOrEmpty(numNoOfCopies3.Text))
+                            {
+                                objInsertAmend.NoOfCopies3 = long.Parse(numNoOfCopies3.Text);
+                            }
+                            entContext.BEXPORT_DOCUMENTPROCESSINGs.Add(objInsertAmend);
+                            entContext.SaveChanges();
+                            //
+                        }
+                        else
+                        { 
+                            //truong hop update du lieu da co
+                            chkAmend.DrawType = comboDrawType.SelectedValue;
+                            chkAmend.PresentorNo = comboPresentorNo.Text;
+                                chkAmend.PresentorName = txtPresentorName.Text;
+                                chkAmend.PresentorRefNo = txtPresentorRefNo.Text;
+                                chkAmend.Currency = lblCurrency.Text;
+                                chkAmend.BookingDate = dteBookingDate.SelectedDate;
+                                chkAmend.DocsReceivedDate = dteDocsReceivedDate.SelectedDate;
+                                chkAmend.DocsCode1 = comboDocsCode1.SelectedValue;
+                                chkAmend.DocsCode2 = comboDocsCode2.SelectedValue;
+                                chkAmend.DocsCode3 = comboDocsCode3.SelectedValue;
+                                chkAmend.OtherDocs1 = txtOtherDocs1.Text;
+                                chkAmend.OtherDocs2 = txtOtherDocs2.Text;
+                                chkAmend.OtherDocs3 = txtOtherDocs3.Text;
+                                chkAmend.Discrepancies = txtDiscrepancies.Text;
+                                chkAmend.DisposalOfDocs = txtDisposalOfDocs.Text;
+                                chkAmend.TraceDate = dteTraceDate.SelectedDate;
+                                chkAmend.DocsReceivedDate_Supplemental = dteDocsReceivedDate_Supplemental.SelectedDate;
+                                chkAmend.PresentorRefNo_Supplemental = txtPresentorRefNo_Supplemental.Text;
+                                chkAmend.Docs_Supplemental1 = txtDocs_Supplemental1.Text;
+                                chkAmend.LCCode = findTypeAmend[0];
+                                chkAmend.PaymentNo = long.Parse(findTypeAmend[1]);
+                                chkAmend.PaymentId = findTypeAmend[0] + "." + findTypeAmend[1];
+                                //chkAmend.Id = long.Parse(findTypeAmend[1]);
+                                chkAmend.DocumentType = TabId.ToString();
+                                chkAmend.FullDocsAmount = txtFullDocsAmount.Value;
+                                chkAmend.WaiveCharges = comboWaiveCharges.SelectedValue;
+                                chkAmend.ChargeRemarks = tbChargeRemarks.Text;
+                                chkAmend.VATNo = tbVatNo.Text;
+                                chkAmend.AmendId = int.Parse(findTypeAmend[2]);
+                                chkAmend.AmendNo = txtCode.Text;
+                                chkAmend.ActiveRecordFlag = YesNo.YES;
+                                chkAmend.Status = "AUT";
+                                chkAmend.OldDocsReceivedDate = dteDocsReceivedDate.SelectedDate;
+                                chkAmend.RefAmendNo = AmendNo;
+                                chkAmend.AmendStatus = "UNA";
+                            //
+                                if (!String.IsNullOrEmpty(numAmount.Text))
+                                {
+                                    chkAmend.Amount = double.Parse(numAmount.Text);
+                                    chkAmend.OldAmount = numAmount.Value;
+                                }
+                                if (!String.IsNullOrEmpty(numNoOfOriginals1.Text))
+                                {
+                                    chkAmend.NoOfOriginals1 = long.Parse(numNoOfOriginals1.Text);
+                                }
+                                if (!String.IsNullOrEmpty(numNoOfOriginals2.Text))
+                                {
+                                    chkAmend.NoOfOriginals2 = long.Parse(numNoOfOriginals2.Text);
+                                }
+                                if (!String.IsNullOrEmpty(numNoOfOriginals3.Text))
+                                {
+                                    chkAmend.NoOfOriginals3 = long.Parse(numNoOfOriginals3.Text);
+                                }
+
+                                if (!String.IsNullOrEmpty(numNoOfCopies1.Text))
+                                {
+                                    chkAmend.NoOfCopies1 = long.Parse(numNoOfCopies1.Text);
+                                }
+                                if (!String.IsNullOrEmpty(numNoOfCopies2.Text))
+                                {
+                                    chkAmend.NoOfCopies2 = long.Parse(numNoOfCopies2.Text);
+                                }
+                                if (!String.IsNullOrEmpty(numNoOfCopies3.Text))
+                                {
+                                    chkAmend.NoOfCopies3 = long.Parse(numNoOfCopies3.Text);
+                                }
+                                entContext.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+            }
         }
         private void CommitData()
         {
@@ -766,6 +978,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         else if (TabId == TabDocsAmend)
                         {
                             dr.AmendStatus = TransactionStatus.UNA;
+
                         }
                         entContext.SaveChanges();
                     }
@@ -783,10 +996,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         case TabDocsWithNoDiscrepancies:
                         case TabDocsWithDiscrepancies:
-                        case TabDocsAmend:
+                        
                             if (CheckAmountAvailable())
                             {
                                 CommitData();
+                                //xu ly submit cho Amend
+
                                 if (this.TabId == TabDocsAmend)
                                 //bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId);
                                 {
@@ -795,6 +1010,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 Response.Redirect("Default.aspx?tabid=" + TabId);
                             }
                             break;
+                        case TabDocsAmend:
+                            if (CheckAmountAvailable())
+                            {
+                                SaveAmend();
+                                //xu ly submit cho Amend
+                                
+                                Response.Redirect("Default.aspx?tabid=" + TabId);
+                            }
+                            break;
+
                         case TabDocsReject:
                         case TabDocsAccept:
                             //bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId, txtAcceptRemarks.Text);
@@ -836,6 +1061,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void UpdateStatus(string status)
         {
             var obj = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == txtCode.Text).FirstOrDefault();
+            if (TabId == TabDocsAmend)
+            {
+                var findTypeAmend = txtCode.Text.Split('.');
+                if (findTypeAmend != null && findTypeAmend.Length > 0)
+                {
+                    if (findTypeAmend.Length == 2)
+                    {
+                        var AmendNo = findTypeAmend[0] + "." + findTypeAmend[1];
+                        obj = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == AmendNo && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+                    }
+                    else
+                    {
+                        obj = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
+                    }
+                }
+            }
             if (obj != null)
             {
                 switch (TabId)
@@ -1074,8 +1315,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtAcceptRemarks.Text = dsDetail.AcceptRemarts;
             //
             txtFullDocsAmount.Value = dsDetail.FullDocsAmount;
-
-            txtCode.Text = dsDetail.PaymentId;
+            //
+            if (TabId != TabDocsAmend)
+            {
+                txtCode.Text = dsDetail.PaymentId;
+            }
+            else {
+                txtCode.Text = dsDetail.AmendNo;
+            }
             comboDrawType.SelectedValue = dsDetail.DrawType;
             comboPresentorNo.Text = dsDetail.PresentorNo;
             txtPresentorName.Text = dsDetail.PresentorName;
@@ -1181,9 +1428,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (drDetail.TaxAmt!=null)
                 lblTaxAmt.Text = drDetail.TaxAmt.ToString();
         }
-    
-    
-    
+        
         protected void btSearch_Click(object sender, EventArgs e)
         {
             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
@@ -1193,7 +1438,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case TabDocsWithDiscrepancies:
                 case TabDocsWithNoDiscrepancies:
                     //fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
-                    var dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text && dr.Status == "UNA").FirstOrDefault();                    
+                    var dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text && dr.Status == "UNA"&&(dr.ActiveRecordFlag==null||dr.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();                    
                     var dsCharge = new List<BEXPORT_DOCUMENTPROCESSINGCHARGE>();
                     if (!String.IsNullOrEmpty(txtCode.Text) && txtCode.Text.LastIndexOf(".") > 0)
                     {
@@ -1330,7 +1575,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case TabDocsReject:
                 case TabDocsAmend:
                 case TabDocsAccept:
-                    var chkdsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == txtCode.Text).FirstOrDefault();                    
+                    var chkdsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == txtCode.Text&&(dr.ActiveRecordFlag==null||dr.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();
+                    if (this.TabId == TabDocsAmend)
+                    {
+                        var chkfindTypeAmend = txtCode.Text.Split('.');
+                        if (chkfindTypeAmend != null && chkfindTypeAmend.Length > 0)
+                        {
+                            if (chkfindTypeAmend.Length == 3) {
+                                chkdsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
+                            }
+                        }
+                    }
                     var chkdsCharge = new List<BEXPORT_DOCUMENTPROCESSINGCHARGE>();
                     if (chkdsDetail != null)
                     {
@@ -1380,24 +1635,113 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 }
                                 break;
                             case TabDocsAmend:
-                                if (!Status.Equals(bd.TransactionStatus.AUT))
+                                //xet xem truong hop Amend user nhap TF.x hay TF.x.y
+                                var findTypeAmend = txtCode.Text.Split('.');
+                                if (findTypeAmend != null && findTypeAmend.Length > 0)
                                 {
-                                    lblError.Text = "This Docs is not allow amend !";
-                                    return;
-                                }
-                                else if (AmendStatus == "AUT")
-                                {
-                                    lblError.Text = "This LC was approve for amend";
-                                }
-                                else if (AmendStatus == "REV")
-                                {
-                                    lblError.Text = "This LC was revert for amend";
-                                }
-                                else if (RejectStatus != null)
-                                {
-                                    lblError.Text = "This LC was rejected or waited for approve reject";
+                                    if (findTypeAmend.Length == 2)
+                                    {
+                                        if (!Status.Equals(bd.TransactionStatus.AUT))
+                                        {
+                                            lblError.Text = "This Docs is not allow amend !";
+                                            return;
+                                        }
+                                        //else if (AmendStatus == "AUT")
+                                        //{
+                                        //    lblError.Text = "This LC was approve for amend";
+                                        //}
+                                        else if (AmendStatus == "REV")
+                                        {
+                                            lblError.Text = "This LC Amend was revert";
+                                            return;
+                                        }
+                                        else if (!String.IsNullOrEmpty(RejectStatus))
+                                        {
+                                            lblError.Text = "This LC was rejected or waited for approve reject";
+                                            return;
+                                        }
+                                        //them phan Amend ngay 18/11/2014
+                                        else
+                                        {
+                                            var objAmend = new BEXPORT_DOCUMENTPROCESSING();
+                                            var chkAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).ToList();
+                                            if (chkAmend != null && chkAmend.Count > 0)
+                                            {
+                                                objAmend = chkAmend.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES) && (x.AmendStatus == "UNA")).FirstOrDefault();
+                                                if (objAmend != null)
+                                                {
+                                                    loadDocsDetail(objAmend, chkdsCharge);
+                                                    bc.Commont.SetTatusFormControls(this.Controls, this.TabId == TabDocsAmend);
+                                                    comboDrawType.Enabled = false;
+                                                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                                                }
+                                                else
+                                                {
+                                                    var maxAmendId = chkAmend.Max(x => x.AmendId);
+                                                    if (maxAmendId == null)
+                                                    {
+                                                        maxAmendId = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        maxAmendId = maxAmendId + 1;
+                                                    }
+                                                    var code = txtCode.Text;
+                                                    
+                                                    //lay dong dang active de Amend tiep
+                                                    var ctnAmend = chkAmend.Where(x => x.ActiveRecordFlag==null||x.ActiveRecordFlag == YesNo.YES).FirstOrDefault();
+                                                    //
+                                                    loadDocsDetail(ctnAmend, chkdsCharge);
+                                                    bc.Commont.SetTatusFormControls(this.Controls, this.TabId == TabDocsAmend);
+                                                    comboDrawType.Enabled = false;
+                                                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                                                    txtCode.Text = code + "." + maxAmendId;
+                                                }
+                                            }
+                                            //chua co dong Amend nao nhu vay
+
+                                        }
+                                        return;
+                                    }
+                                    else if(findTypeAmend.Length==3) { 
+                                        if (!Status.Equals(bd.TransactionStatus.AUT))
+                                        {
+                                            lblError.Text = "This Docs is not allow amend !";
+                                            return;
+                                        }
+                                        else if (AmendStatus == "AUT")
+                                        {
+                                            lblError.Text = "This LC amend has approve ";
+                                            return;
+                                        }
+                                        else if (AmendStatus == "REV")
+                                        {
+                                            lblError.Text = "This LC Amend was revert";
+                                            return;
+                                        }
+                                        else if (!String.IsNullOrEmpty(RejectStatus))
+                                        {
+                                            lblError.Text = "This LC was rejected or waited for approve reject";
+                                            return;
+                                        }
+                                        //them phan Amend ngay 18/11/2014
+                                        else
+                                        {
+                                            var objAmend = new BEXPORT_DOCUMENTPROCESSING();
+                                            var chkAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
+                                            if (chkAmend != null)
+                                            {
+                                                loadDocsDetail(chkAmend, chkdsCharge);
+                                                bc.Commont.SetTatusFormControls(this.Controls, this.TabId == TabDocsAmend);
+                                                comboDrawType.Enabled = false;
+                                                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                                            }
+                                        }
+
+                                    }
                                 }
                                 
+                                //
                                 break;
 
                         }

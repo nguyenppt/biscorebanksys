@@ -8,14 +8,7 @@
         
         jQuery(function($) {
             $('#tabs-demo').dnnTabs();
-            if(tabId==240)
-            {
-                $("#<%=divCharge.ClientID%>").Style.Add("display", "block");   
-            }
-            else
-            {
-                $("#<%=divCharge.ClientID%>").Style.Add("display", "none");
-            }
+            
         });
         function OnclientSelectedIndexChanged(sender, eventArgs)
         {

@@ -47,7 +47,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
                 else if (this.TabId == TabDocsAmend)
                 {
-                    tbl1.Rows.Add(item.PaymentId, item.Amount, item.Currency, item.AmendStatus);
+                    tbl1.Rows.Add(item.AmendNo, item.Amount, item.Currency, item.AmendStatus);
                 }
                 else if (this.TabId == TabDocsAccept)
                 {
