@@ -337,6 +337,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     comboPresentorCusNo.SelectedValue = drow["PresentorCusNo"].ToString();
                     comboCountryCode.SelectedValue = drow["CountryCode"].ToString();
+                    rcbIsCreateMT103.SelectedValue = drow["SelectedTypeMT"].ToString();
                 }
                 else
                 {
@@ -361,6 +362,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     comboPresentorCusNo.SelectedValue = string.Empty;
                     comboCountryCode.SelectedValue = string.Empty;
+                    rcbIsCreateMT103.SelectedValue = "1";
                 }
 
                 #endregion
@@ -1179,7 +1181,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                                                        , ""
                                                        , UserId
                                                        , comboPresentorCusNo.SelectedValue
-                                                       , comboCountryCode.SelectedValue);
+                                                       , comboCountryCode.SelectedValue, int.Parse(rcbIsCreateMT103.SelectedValue));
 
             if (tbChargeCode.Text != "")
             {
