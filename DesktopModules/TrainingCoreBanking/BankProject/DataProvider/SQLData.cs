@@ -730,7 +730,7 @@ namespace BankProject.DataProvider
                                                               , string PaymentRemarks2
                                                               , string PaymentRemarks3
                                                               , int CurrentUserId
-                                                              , string PresentorCusNo, string CountryCode)
+                                                              , string PresentorCusNo, string CountryCode, int seletedTypeMT)
         {
             sqldata.ndkExecuteNonQuery("B_INCOMINGCOLLECTIONPAYMENT_Insert", CollectionPaymentCode
                                        , DrawType
@@ -749,7 +749,8 @@ namespace BankProject.DataProvider
                                        , PaymentRemarks3
                                        , CurrentUserId
                                        , PresentorCusNo
-                                       , CountryCode);
+                                       , CountryCode
+                                       , seletedTypeMT);
         }
 
         public static DataSet B_INCOMINGCOLLECTIONPAYMENT_GetByReview(string CurrentUserId)
