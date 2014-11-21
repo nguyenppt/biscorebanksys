@@ -2259,6 +2259,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
             else
             {
+                comGenerate.SelectedValue = "NO";
                 lblDocumentaryCreditNumber_747.Text = string.Empty;
                 txtReceivingBank_747.Text = string.Empty;
 

@@ -32,8 +32,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
             InitDataSource();
             //Lấy chi tiết
-            if (string.IsNullOrEmpty(Request.QueryString["tid"])) return;
-            DataSet dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, Request.QueryString["tid"]);
+            string TransId = Request.QueryString["tid"];
+            if (string.IsNullOrEmpty(TransId)) return;
+            DataSet dsDetail;
+            if (TransId.IndexOf(".", TransId.IndexOf(".") + 1) > 0)
+                dsDetail = bd.IssueLC.ImportLCDocsProcessDetail4Amend(TransId);
+            else
+                dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, TransId);
             if (dsDetail == null || dsDetail.Tables.Count <= 0)
             {
                 lblError.Text = "This Docs not found !";
@@ -55,6 +60,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         lblError.Text = "Wrong function !";
                         return;
                     }
+                    if (DocsStatus.Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblError.Text = "This docs already authorized !";
+                        return;
+                    }
                     if (!string.IsNullOrEmpty(Request.QueryString["lst"]))
                     {
                         //Hiển thị nút duyệt
@@ -68,11 +78,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                                 break;  
                             default:
-                                lblError.Text = "Wrong status (" + drDetail["Status"] + ")";
+                                lblError.Text = "Wrong status (" + DocsStatus + ")";
                                 break;
                         }
                         return;
-                    }                        
+                    }
+                    //Cho phep edit neu UNA, REV
+                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                    bc.Commont.SetTatusFormControls(this.Controls, true);
+                    DisableDefaultControl();
+
                     break;
                 case TabDocsReject:
                 case TabDocsAmend:
@@ -83,6 +98,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     {
                         comboDrawType.SelectedValue = "AC";                        
                     }
+                    else
+                        txtCode.Text = TransId;
                     if (!string.IsNullOrEmpty(Request.QueryString["lst"]))
                     {
                         RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
@@ -90,38 +107,81 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                         RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                         RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                     }
                     else
                     {
-                        if (this.TabId == TabDocsAmend && (DocsStatus.Equals(bd.TransactionStatus.UNA) || DocsStatus.Equals(bd.TransactionStatus.REV)))
+                        string ssStatus;
+                        if (this.TabId == TabDocsReject)
                         {
-                            //Cho phép Edit
-                            bc.Commont.SetTatusFormControls(this.Controls, true);
-                            RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                            ssStatus = drDetail["RejectStatus"].ToString();
+                            if (ssStatus.Equals(bd.TransactionStatus.UNA) || ssStatus.Equals(bd.TransactionStatus.REV))
+                            {
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                            }
+                        }
+                        if (this.TabId == TabDocsAmend)
+                        {
+                            ssStatus = drDetail["AmendStatus"].ToString();
+                            if (ssStatus.Equals(bd.TransactionStatus.UNA) || ssStatus.Equals(bd.TransactionStatus.REV))
+                            {
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                            }
+                        }
+                        if (this.TabId == TabDocsAccept)
+                        {
+                            ssStatus = drDetail["AcceptStatus"].ToString();
+                            if (ssStatus.Equals(bd.TransactionStatus.UNA) || ssStatus.Equals(bd.TransactionStatus.REV))
+                            {
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                                txtAcceptDate.Enabled = true;
+                                txtAcceptRemarks.Enabled = true;
+                            }
                         }
                     }
                     break;
             }
         }
-
+        private void DisableDefaultControl()
+        {
+            comboDrawType.Enabled = false;
+            txtDisposalOfDocs_734.Enabled = false;
+            tbVatNo.Enabled = false;
+            tbChargeCode.Enabled = false;
+            tbChargeCode2.Enabled = false;
+            tbChargeCode3.Enabled = false;
+        }
         private void loadDocsDetail(DataSet dsDetail)
         {
             DataTable tbDetail;
             DataRow drDetail = dsDetail.Tables[0].Rows[0];
-            //Tab Main
-            string Status = drDetail["Status"].ToString(), AmendStatus = drDetail["AmendStatus"].ToString();
             bool isReadOnly = true;
-            if ((this.TabId == TabDocsWithDiscrepancies && Status.Equals(bd.TransactionStatus.UNA)) ||
-                    (this.TabId == TabDocsAmend && (string.IsNullOrEmpty(AmendStatus) || AmendStatus.Equals(bd.TransactionStatus.UNA))))
-                isReadOnly = false;
-            if (!string.IsNullOrEmpty(Request.QueryString["lst"])) isReadOnly = true;
-            //
+            if (string.IsNullOrEmpty(Request.QueryString["lst"]))
+            {
+                switch (this.TabId)
+                {
+                    case TabDocsWithDiscrepancies:
+                    case TabDocsWithNoDiscrepancies:
+                        switch (drDetail["Status"].ToString())
+                        {
+                            case bd.TransactionStatus.UNA:
+                            case bd.TransactionStatus.REV:
+                                isReadOnly = false;
+                                break;
+                        }
+                        break;
+                    case TabDocsAmend:
+                        switch (drDetail["AmendStatus"].ToString())
+                        {
+                            case bd.TransactionStatus.UNA:
+                            case bd.TransactionStatus.REV:
+                                isReadOnly = false;
+                                break;
+                        }
+                        break;
+                }
+            }
+            //Tab Main
             hiddenCustomerName.Value = drDetail["CustomerName"].ToString();
             if (drDetail["AcceptDate"] != DBNull.Value)
                 txtAcceptDate.SelectedDate = Convert.ToDateTime(drDetail["AcceptDate"]);
@@ -135,6 +195,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             txtPresentorRefNo.Text = drDetail["PresentorRefNo"].ToString();
             lblCurrency.Text = drDetail["Currency"].ToString();
             numAmount.Value = Convert.ToDouble(drDetail["Amount"]);
+            if (this.TabId == TabDocsAmend && drDetail["OldAmount"] != DBNull.Value)
+                txtOldAmount.Value = drDetail["OldAmount"].ToString();
             dteBookingDate.SelectedDate = Convert.ToDateTime(drDetail["BookingDate"]);
             dteDocsReceivedDate.SelectedDate = Convert.ToDateTime(drDetail["DocsReceivedDate"]);
             //
@@ -335,8 +397,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             if (CheckAmountAvailable())
                             {
                                 CommitData();
-                                if (this.TabId == TabDocsAmend)
-                                    bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId);
                                 Response.Redirect("Default.aspx?tabid=" + TabId);
                             }
                             break;
@@ -355,10 +415,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
                 case bc.Commands.Reverse:
                     bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.REV, TabId, UserId);
-                    if (TabId == TabDocsWithDiscrepancies || TabId == TabDocsWithNoDiscrepancies)
-                        Response.Redirect("Default.aspx?tabid=" + TabDocsAmend + "&tid=" + txtCode.Text.Trim());
-                    else
-                        Response.Redirect("Default.aspx?tabid=" + TabId);
+                    Response.Redirect("Default.aspx?tabid=" + this.TabId + "&tid=" + txtCode.Text.Trim());
                     break;
             }
         }
@@ -470,7 +527,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                                           TabId);
 
             }
-            if (this.TabId == TabDocsWithDiscrepancies)
+            if (this.TabId == TabDocsWithDiscrepancies
+                || (this.TabId == TabDocsAmend && string.IsNullOrEmpty(divMT734.Attributes.CssStyle["display"])))
             {
                 bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_MT734_Insert(txtCode.Text
                     , txtPresentorNo_734.Text
@@ -556,15 +614,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             case bd.TransactionStatus.UNA:
                                 RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                                 bc.Commont.SetTatusFormControls(this.Controls, true);
+                                DisableDefaultControl();
                                 break;
-                            /*case bd.TransactionStatus.AUT:
-                                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                                RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                                bc.Commont.SetTatusFormControls(this.Controls, true);
-                                break;*/
                         }
                         loadDocsDetail(dsDetail);
                         
@@ -616,7 +667,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         lblError.Text = "This LC is canceled !";
                         return;
                     }
-                    txtCode.Text = drDetail["PaymentId"].ToString();                    
+                    txtCode.Text = drDetail["PaymentId"].ToString();
+                    lblSenderTRN.Text = txtCode.Text;
                     hiddenCustomerName.Value = drDetail["ApplicantName"].ToString();
                     lblCurrency.Text = drDetail["Currency"].ToString();
                     lblUtilizationCurrency.Text = lblCurrency.Text;
@@ -633,7 +685,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 case TabDocsReject:                    
                 case TabDocsAmend:
                 case TabDocsAccept:
-                    dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, txtCode.Text);
+                    if (this.TabId != TabDocsAmend)
+                        dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, txtCode.Text);
+                    else
+                        dsDetail = bd.IssueLC.ImportLCDocsProcessDetail4Amend(txtCode.Text);
                     if (dsDetail == null || dsDetail.Tables.Count <= 0 || dsDetail.Tables[0].Rows.Count <= 0)
                     {
                         lblError.Text = "This Docs not found !";
@@ -641,28 +696,28 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     }
                     //
                     drDetail = dsDetail.Tables[0].Rows[0];
+                    if (Convert.ToInt32(drDetail["PaymentFullFlag"]) != 0)
+                    {
+                        lblError.Text = "This Doc is already payment completed !";
+                        return;
+                    }
                     string Status = "", RejectStatus = "";
                     if (drDetail["Status"] != DBNull.Value) Status = drDetail["Status"].ToString();
+                    if (!Status.Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblError.Text = "This Docs is not authorize !";
+                        return;
+                    }
                     if (drDetail["RejectStatus"] != DBNull.Value) RejectStatus = drDetail["RejectStatus"].ToString();
+                    if (!(String.IsNullOrEmpty(RejectStatus) || RejectStatus.Equals(bd.TransactionStatus.REV)))
+                    {
+                        lblError.Text = "This Docs is rejected !";
+                        return;
+                    }
                     switch (this.TabId)
                     {
                         case TabDocsReject:
                         case TabDocsAccept:
-                            if (!Status.Equals(bd.TransactionStatus.AUT))
-                            {
-                                lblError.Text = "This Docs is not authorize !";
-                                return;
-                            }
-                            if (!(String.IsNullOrEmpty(RejectStatus) || RejectStatus.Equals(bd.TransactionStatus.REV)))
-                            {
-                                lblError.Text = "This Docs is reject !";
-                                return;
-                            }
-                            if (Convert.ToInt32(drDetail["PaymentFullFlag"]) != 0)
-                            {
-                                lblError.Text = "This Doc is already payment completed !";
-                                return;
-                            }
                             if (this.TabId == TabDocsAccept)
                             {
                                 string AcceptStatus = "";
@@ -688,25 +743,52 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             break;
                     }
                     loadDocsDetail(dsDetail);
-                    bc.Commont.SetTatusFormControls(this.Controls, this.TabId == TabDocsAmend);
                     comboDrawType.Enabled = false;
                     RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                     switch (this.TabId)
                     {
                         case TabDocsReject:
+                            bc.Commont.SetTatusFormControls(this.Controls, false);
                             comboDrawType.SelectedValue = "CR";
                             break;
                         case TabDocsAccept:
+                            bc.Commont.SetTatusFormControls(this.Controls, false);
                             comboDrawType.SelectedValue = "AC";
                             txtAcceptDate.SelectedDate = DateTime.Now;
                             txtAcceptDate.Enabled = true;
                             txtAcceptRemarks.Enabled = true;
                             break;
+                        case TabDocsAmend:
+                            if (Convert.ToInt32(drDetail["IsPaying"]) > 0)
+                            {
+                                lblError.Text = "This docs is under payment !";
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                                bc.Commont.SetTatusFormControls(this.Controls, false);
+                                return;
+                            }
+                            if (string.IsNullOrEmpty(drDetail["NewAmendNo"].ToString()))
+                            {
+                                txtCode.Text = drDetail["AmendNo"].ToString();
+                                string AmendStatus = "";
+                                if (drDetail["AmendStatus"] != DBNull.Value) AmendStatus = drDetail["AmendStatus"].ToString();
+                                if (AmendStatus.Equals(bd.TransactionStatus.UNA))
+                                {
+                                    bc.Commont.SetTatusFormControls(this.Controls, true);
+                                    DisableDefaultControl();
+                                    return;
+                                }
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                                bc.Commont.SetTatusFormControls(this.Controls, false);
+                                return;
+                            }
+                            txtCode.Text = drDetail["NewAmendNo"].ToString();
+                            bc.Commont.SetTatusFormControls(this.Controls, true);
+                            DisableDefaultControl();
+                            break;
                     }                    
 
                     break;
             }
-            lblSenderTRN.Text = txtCode.Text;
         }
 
         private void setDocsCodeData(DataRow drDetail, int stt, ref RadComboBox cboDocsCode, ref RadNumericTextBox txtNumOfOriginals, ref RadNumericTextBox txtNumOfCopies, ref RadTextBox txtOtherDocs)
@@ -866,6 +948,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             showReport(2);
         }
 
+        protected void btDownloadXuatNB_Click(object sender, EventArgs e)
+        {
+            showReport(3);
+        }
+
+        protected void btDownloadNhapNB_Click(object sender, EventArgs e)
+        {
+            showReport(4);
+        }
+
         private void showReport(int reportType)
         {
             string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/DocumentaryCredit/";
@@ -888,6 +980,18 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         reportTemplate = Context.Server.MapPath(reportTemplate + "VAT.doc");
                         saveName = "VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         reportData = bd.IssueLC.ImportLCDocumentReport(2, txtCode.Text.Trim(), this.UserInfo.Username);
+                        reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 3:
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "PHIEUXUATNGOAIBANG.doc");
+                        saveName = "PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.IssueLC.ImportLCDocumentReport(3, txtCode.Text.Trim(), this.UserInfo.Username);
+                        reportData.Tables[0].TableName = "Table1";
+                        break;
+                    case 4:
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "PHIEUNHAPNGOAIBANG.doc");
+                        saveName = "PHIEUNHAPNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.IssueLC.ImportLCDocumentReport(3, txtCode.Text.Trim(), this.UserInfo.Username);
                         reportData.Tables[0].TableName = "Table1";
                         break;
                 }
