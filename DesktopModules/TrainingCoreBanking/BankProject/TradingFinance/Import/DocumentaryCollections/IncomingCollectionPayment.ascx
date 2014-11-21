@@ -2335,6 +2335,18 @@
             </UpdatedControls>
         </telerik:AjaxSetting>
 
+        <telerik:AjaxSetting AjaxControlID="numDrawingAmount">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="numAmount_MT400" />
+                <telerik:AjaxUpdatedControl ControlID="numAmount" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode" />
+                <telerik:AjaxUpdatedControl ControlID="lblInterBankSettleAmount_MT103" />
+                <telerik:AjaxUpdatedControl ControlID="numSenderCharges_MT103" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        
     </AjaxSettings>
 </telerik:RadAjaxManager>
 
