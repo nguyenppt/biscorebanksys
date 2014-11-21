@@ -59,7 +59,7 @@ namespace BankProject.TradingFinance
         }
         private string getVATNo()
         {
-            DataSet ds = bd.Database.B_BMACODE_GetNewSoTT("CollectCharges");
+            DataSet ds = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 return ds.Tables[0].Rows[0]["SoTT"].ToString();
 
@@ -123,6 +123,7 @@ namespace BankProject.TradingFinance
                     }
                     else
                     {
+                        cc.Status = bd.TransactionStatus.UNA;
                         cc.UserUpdate = this.UserInfo.Username;
                         cc.DateTimeUpdate = DateTime.Now;
                     }
@@ -221,7 +222,7 @@ namespace BankProject.TradingFinance
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-            if (!cc.Status.Equals(bd.TransactionStatus.UNA))
+            if (cc.Status.Equals(bd.TransactionStatus.AUT))
             {
                 divCmdChargeType.Visible = false;
                 divCmdChargeType1.Visible = false;
@@ -395,17 +396,9 @@ namespace BankProject.TradingFinance
                 lblError.Text = err.Message;
             }
         }
-        protected void btnReportPhieuCK_Click(object sender, EventArgs e)
-        {
-            showReport(1);
-        }
-        protected void btnReportMT103_Click(object sender, EventArgs e)
-        {
-            showReport(2);
-        }
         protected void btnReportVAT_Click(object sender, EventArgs e)
         {
-            showReport(3);
+            showReport(1);
         }
     }
 }
