@@ -48,10 +48,10 @@ namespace BankProject.Views.TellerApplication
                 case "Commit":
                     if (hdfCheckCustomer.Value == "0") return;
 
-                    BankProject.DataProvider.Database.BCASHDEPOSIT_Insert(rcbAccountType.SelectedValue, txtId.Text, lbAccountId.Text, lblAmtPaidToCust.Value.HasValue ? lblAmtPaidToCust.Value.Value:0, 
+                    BankProject.DataProvider.Database.BCASHDEPOSIT_Insert(rcbAccountType.SelectedValue, txtId.Text, cmbCustomerAccount.Text, lblAmtPaidToCust.Value.HasValue ? lblAmtPaidToCust.Value.Value : 0, 
                         lblCustBal.Value.HasValue ? lblCustBal.Value.Value : 0, lblNewCustBal.Value.HasValue ? lblNewCustBal.Value.Value : 0,
                         cmbCurrencyDeposited.SelectedValue, txtAmtDeposited.Value.HasValue ? txtAmtDeposited.Value.Value:0, txtDealRate.Value.HasValue ?  txtDealRate.Value.Value : 0, cmbWaiveCharges.SelectedValue,
-                        txtNarrative.Text, txtPrintLnNoOfPS.Text, this.UserId, txtTellerId.Text, cmbCashAccount.SelectedValue);
+                        txtNarrative.Text, txtPrintLnNoOfPS.Text, this.UserId, txtTellerId.Text, cmbCashAccount.SelectedValue, lblCustomerId.Text, lblCustomerName.Text, cmbCurrency.Text);
 
                     if (cmbWaiveCharges.SelectedValue == "NO") Response.Redirect(EditUrl("waivecharges"));
 
@@ -147,15 +147,15 @@ namespace BankProject.Views.TellerApplication
         {
             DataSet ds;
             if (code != "")
-                ds = DataProvider.Database.BCASHDEPOSIT_GetByCode(code);
+                ds = DataProvider.Database.BCASHDEPOSIT_GetByID(code);
             else
-                ds = DataProvider.Database.BCASHDEPOSIT_GetByID(int.Parse(Request.QueryString["codeid"].ToString()));
+                ds = DataProvider.Database.BCASHDEPOSIT_GetByID(Request.QueryString["codeid"].ToString());
             if (ds.Tables[0].Rows.Count > 0)
             {
                 txtId.Text = ds.Tables[0].Rows[0]["Code"].ToString();
-                
 
-                this.cmbCustomerAccount.Text = ds.Tables[0].Rows[0]["AccountCode"].ToString();
+
+                this.cmbCustomerAccount.Text = ds.Tables[0].Rows[0]["CustomerAccount"].ToString();
                 this.lbAccountId.Text = ds.Tables[0].Rows[0]["CustomerAccount"].ToString();
                 this.rcbAccountType.SelectedValue = ds.Tables[0].Rows[0]["AccountType"].ToString();
                 cmbCustomerAccount_TextChanged(cmbCustomerAccount, null);

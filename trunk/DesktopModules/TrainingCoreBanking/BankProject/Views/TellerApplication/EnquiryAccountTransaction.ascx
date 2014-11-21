@@ -137,7 +137,7 @@
             <telerik:GridTemplateColumn>
                    <ItemStyle width="25" />
                    <ItemTemplate>
-                       <a href='<%# getUrlPreview(Eval("Id").ToString(), Eval("get_for").ToString()) %>'><img src="Icons/bank/text_preview.png" width="20" /></a>
+                       <a href='<%# getUrlPreview(Eval("Code").ToString(), Eval("get_for").ToString()) %>'><img src="Icons/bank/text_preview.png" width="20" /></a>
                    </ItemTemplate>
                </telerik:GridTemplateColumn>
         </Columns>
