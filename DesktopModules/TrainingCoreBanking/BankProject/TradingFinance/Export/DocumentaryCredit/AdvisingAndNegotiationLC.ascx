@@ -19,7 +19,7 @@
     function OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
-            args.set_cancel(true);
+            args.set_cancel(false);
             radconfirm("Do you want to download Thu Thong Bao file ?", confirmCallbackFunction_ThuThongBao, 420, 150, null, 'Download');
         }
     }
