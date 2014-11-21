@@ -815,7 +815,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTION_Report", code);
         }
-
+        public static DataSet B_BBANKSWIFTCODE_GETALL()
+        { 
+            return sqldata.ndkExecuteDataset("B_BBANKSWIFTCODE_GETALL");
+        }
         public static DataSet B_BSWIFTCODE_GetAll()
         {
             return sqldata.ndkExecuteDataset("B_BSWIFTCODE_GetAll");
@@ -1122,9 +1125,10 @@ namespace BankProject.DataProvider
                                                                  , string CancelDate
                                                                  , string ContingentExpiryDate
                                                                  , string CancelRemark
+                                                                 , string AccountOfficer
                                                                  , string AcceptedDate
                                                                  , string AcceptedRemark
-                                                                 , string screenType
+                                                                 , string screenType                                                                 
                                                                  )
         {
             sqldata.ndkExecuteNonQuery("B_BEXPORT_DOCUMETARYCOLLECTION_Insert", DocCollectCode
@@ -1171,9 +1175,11 @@ namespace BankProject.DataProvider
                                        , CancelDate
                                        , ContingentExpiryDate
                                        , CancelRemark
+                                       , AccountOfficer
                                        , AcceptedDate
                                        , AcceptedRemark
-                                       , screenType);
+                                       , screenType
+                                       );
         }
 
         public static DataSet B_BEXPORT_DOCUMETARYCOLLECTION_GetbyStatus(string status, string currentUserId)
@@ -1386,6 +1392,11 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("B_INCOMINGCOLLECTIONPAYMENT_PHIEUCHUYENKHOAN_Report", code,
                                              currentuserlogin);
+        }
+
+        public static DataSet B_BCOMMODITY_GetAllByTransactionType(string TransactionType)
+        {
+            return sqldata.ndkExecuteDataset("B_BCOMMODITY_GetAllAsType", TransactionType);
         }
 
         public static DataSet B_BCOMMODITY_GetByTransactionType(string TransactionType)
