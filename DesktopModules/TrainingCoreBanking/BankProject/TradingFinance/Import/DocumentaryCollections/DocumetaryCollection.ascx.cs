@@ -6,8 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BankProject.Controls;
-using BankProject.DataProvider;
+using bc = BankProject.Controls;
+using bd = BankProject.DataProvider;
 using Telerik.Web.UI;
 using Telerik.Web.UI.Calendar;
 
@@ -100,7 +100,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtCode.Enabled = true;
                 tbChargeRemarks.Enabled = true;
                 // =tab charge
-                if (dataRow != null && dataRow["Status"].ToString() == "AUT")
+                if (dataRow != null && dataRow["Status"].ToString() == bd.TransactionStatus.AUT)
                 {
                     txtCancelRemark.Enabled = true;
                     txtRemittingBankRef.Enabled = true;
@@ -156,7 +156,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 
 
                 // =tab charge
-                if (dataRow != null && dataRow["Status"].ToString() == "AUT")
+                if (dataRow != null && dataRow["Status"].ToString() == bd.TransactionStatus.AUT)
                 {
                     divIncomingCollectionAcception.Visible = true;
                     dteAcceptedDate.Enabled = true;
@@ -228,20 +228,20 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void InitDataChargeCode()
         {
-            var datasource = SQLData.CreateGenerateDatas("XXXX");
+            var datasource = bd.SQLData.CreateGenerateDatas("XXXX");
             switch (TabId)
             {
                 case 217: // Register Documetary Collection
-                    datasource = SQLData.CreateGenerateDatas("ChargeCode_Register", 217);
+                    datasource = bd.SQLData.CreateGenerateDatas("ChargeCode_Register", 217);
                     break;
                 case 218: // Incoming Collection Amendments
-                    datasource = SQLData.CreateGenerateDatas("ChargeCode_Amendments", 218);
+                    datasource = bd.SQLData.CreateGenerateDatas("ChargeCode_Amendments", 218);
                     break;
                 case 219: // Documentary Collection Cancel
-                    datasource = SQLData.CreateGenerateDatas("ChargeCode_Cancel", 219);
+                    datasource = bd.SQLData.CreateGenerateDatas("ChargeCode_Cancel", 219);
                     break;
                 case 281: // Incoming Collection Acception
-                    datasource = SQLData.CreateGenerateDatas("ChargeCode_Acception", 281);
+                    datasource = bd.SQLData.CreateGenerateDatas("ChargeCode_Acception", 281);
                     break;
             }
 
@@ -266,42 +266,42 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             comboCollectionType.Items.Add(new RadComboBoxItem(""));
             comboCollectionType.DataValueField = "Id";
             comboCollectionType.DataTextField = "Id";
-            comboCollectionType.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_CollectionType");
+            comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_CollectionType");
             comboCollectionType.DataBind();
 
             comboDraweeCusNo.Items.Clear();
             comboDraweeCusNo.Items.Add(new RadComboBoxItem(""));
             comboDraweeCusNo.DataValueField = "CustomerID";
             comboDraweeCusNo.DataTextField = "CustomerID";
-            comboDraweeCusNo.DataSource = SQLData.B_BCUSTOMERS_OnlyBusiness();
+            comboDraweeCusNo.DataSource = bd.SQLData.B_BCUSTOMERS_OnlyBusiness();
             comboDraweeCusNo.DataBind();
 
             comboCommodity.Items.Clear();
             comboCommodity.Items.Add(new RadComboBoxItem(""));
             comboCommodity.DataValueField = "ID";
             comboCommodity.DataTextField = "Name";
-            comboCommodity.DataSource = SQLData.B_BCOMMODITY_GetByTransactionType("OTC");
+            comboCommodity.DataSource = bd.SQLData.B_BCOMMODITY_GetByTransactionType("OTC");
             comboCommodity.DataBind();
 
             comboDocsCode1.Items.Clear();
             comboDocsCode1.Items.Add(new RadComboBoxItem(""));
             comboDocsCode1.DataValueField = "Id";
             comboDocsCode1.DataTextField = "Description";
-            comboDocsCode1.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            comboDocsCode1.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             comboDocsCode1.DataBind();
 
             comboDocsCode2.Items.Clear();
             comboDocsCode2.Items.Add(new RadComboBoxItem(""));
             comboDocsCode2.DataValueField = "Id";
             comboDocsCode2.DataTextField = "Description";
-            comboDocsCode2.DataSource = SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
+            comboDocsCode2.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             comboDocsCode2.DataBind();
 
             comboAccountOfficer.Items.Clear();
             comboAccountOfficer.Items.Add(new RadComboBoxItem(""));
             comboAccountOfficer.DataValueField = "Code";
             comboAccountOfficer.DataTextField = "Description";
-            comboAccountOfficer.DataSource = SQLData.B_BACCOUNTOFFICER_GetAll();
+            comboAccountOfficer.DataSource = bd.SQLData.B_BACCOUNTOFFICER_GetAll();
             comboAccountOfficer.DataBind();
         }
 
@@ -342,7 +342,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void comboDraweeCusNo_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            var drow = DataTam.B_BCUSTOMERS_GetbyID(comboDraweeCusNo.SelectedItem.Text).Tables[0].Rows[0];
+            var drow = bd.DataTam.B_BCUSTOMERS_GetbyID(comboDraweeCusNo.SelectedItem.Text).Tables[0].Rows[0];
 
             txtDraweeCusName.Text = drow["CustomerName"].ToString();
             txtDraweeAddr1.Text = drow["Address"].ToString();
@@ -377,10 +377,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             switch (commandName)
             {
                 case "save":
-                    if (!CheckFtVaild())
-                    {
-                        return;
-                    }
+                    if (!CheckFtVaild()) return;
 
                     SaveData();
 
@@ -447,19 +444,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     break;
 
                 case "authorize":
-                    if (!CheckFtVaild())
-                    {
-                        return;
-                    }
+                    if (!CheckFtVaild()) return;
 
                     Authorize();
                     break;
 
                 case "revert":
-                    if (!CheckFtVaild())
-                    {
-                        return;
-                    }
+                    if (!CheckFtVaild()) return;
                     Revert();
                     break;
             }
@@ -475,10 +466,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             {
                 comeFromUrl = Request.QueryString["key"];
             }
-            SQLData.B_BDOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString(), comeFromUrl);
+            bd.SQLData.B_BDOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.AUT, UserId.ToString(), comeFromUrl);
 
             // Generate Code
-            txtCode.Text = SQLData.B_BMACODE_GetNewID("OVERSEASTRANSFER", Refix_BMACODE());
+            txtCode.Text = bd.SQLData.B_BMACODE_GetNewID("OVERSEASTRANSFER", Refix_BMACODE());
 
             // Generate VAT No
             GeneralVATNo();
@@ -526,7 +517,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             {
                 comeFromUrl = Request.QueryString["key"];
             }
-            SQLData.B_BDOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString(), comeFromUrl);
+            bd.SQLData.B_BDOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString(), comeFromUrl);
 
             // Active control
             SetDisableByReview(true);
@@ -563,15 +554,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         protected void LoadData(ref DataRow drowDocColl)
         {
             // neu FT = null thì ko get data
-            if (string.IsNullOrEmpty(txtCode.Text))
-            {
-                return;
-            }
+            if (string.IsNullOrEmpty(txtCode.Text)) return;
 
-
-            var dsDoc = SQLData.B_BDOCUMETARYCOLLECTION_GetByDocCollectCode(txtCode.Text.Trim(), TabId);
+            var dsDoc = bd.SQLData.B_BDOCUMETARYCOLLECTION_GetByDocCollectCode(txtCode.Text.Trim(), TabId);
             if (dsDoc == null || dsDoc.Tables.Count <= 0)
             {
+                lblError.Text = "Can not find this Docs !";
                 return;
             }
 
@@ -684,24 +672,32 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                 // ===Amount_New, Tenor_New, TracerDate_New =================
                 // Incoming Collection Amendments => tabid=218
-                if (TabId == 218 && !string.IsNullOrEmpty(drow["Amount_Old"].ToString()))
+                if (TabId == 218)
                 {
-                    lblAmount_New.Text = Double.Parse(drow["Amount_Old"].ToString()).ToString("C", CultureInfo.CurrentCulture).Replace("$", "");
-                    divAmount.Visible = true;
-                }
-
-                if (TabId == 218 && !string.IsNullOrEmpty(drow["Tenor_New"].ToString()))
-                {
-                    lblTenor_New.Text = drow["Tenor_New"].ToString();
-                    divTenor.Visible = true;
-                }
-
-                if (TabId == 218 && !string.IsNullOrEmpty(drow["TracerDate_New"].ToString()))
-                {
-                    if (drow["TracerDate_New"].ToString().IndexOf("1/1/1900") == -1)
+                    if (!string.IsNullOrEmpty(drow["Amount_Old"].ToString()))
                     {
-                        lblTracerDate_New.Text = String.Format("{0:M/d/yyyy}", DateTime.Parse(drow["TracerDate_New"].ToString()));//.ToString("MM/dd/yyyy");
-                        divTracerDate.Visible = true;
+                        lblAmount_New.Text = Double.Parse(drow["Amount_Old"].ToString()).ToString("C", CultureInfo.CurrentCulture).Replace("$", "");
+                        divAmount.Visible = true;
+                    }
+                    if (!string.IsNullOrEmpty(drow["Tenor_New"].ToString()))
+                    {
+                        lblTenor_New.Text = drow["Tenor_New"].ToString();
+                        divTenor.Visible = true;
+                    }
+                    if (!string.IsNullOrEmpty(drow["TracerDate_New"].ToString()))
+                    {
+                        if (drow["TracerDate_New"].ToString().IndexOf("1/1/1900") == -1)
+                        {
+                            lblTracerDate_New.Text = String.Format("{0:M/d/yyyy}", DateTime.Parse(drow["TracerDate_New"].ToString()));//.ToString("MM/dd/yyyy");
+                            divTracerDate.Visible = true;
+                        }
+                    }
+                    if (txtCode.Text.IndexOf(".") <= 0)
+                    {
+                        if (!string.IsNullOrEmpty(drow["NewAmendNo"].ToString()))
+                            txtCode.Text = drow["NewAmendNo"].ToString();
+                        else
+                            txtCode.Text = drow["AmendNo"].ToString();
                     }
                 }
                 // ===================================================
@@ -976,7 +972,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 comeFromUrl = "incollaccepted";
             }
 
-            SQLData.B_BDOCUMETARYCOLLECTION_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_BDOCUMETARYCOLLECTION_Insert(txtCode.Text.Trim()
                 , comboCollectionType.SelectedValue
                 , txtRemittingBankNo.Text
                 , txtRemittingBankAddr1.Text.Trim()
@@ -1028,7 +1024,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 , txtDraftNo.Text
                 );
 
-            SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
+            bd.SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
                 tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue, tbChargePeriod.Text,
                 rcbChargeCcy.SelectedValue, tbExcheRate.Text, tbChargeAmt.Text, rcbPartyCharged.SelectedValue,
                 rcbOmortCharge.SelectedValue, "", "",
@@ -1037,14 +1033,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
             //Ban đầu tạo 2 code phí, sau đó xóa đi 1 code phí, thì hệ thống không ghi nhận (không xóa được code phí)
             //-> Xư lý dấu '-' remove all value control 2
-            SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
+            bd.SQLData.B_BDOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
                 tbChargecode2.SelectedValue, rcbChargeAcct2.SelectedValue, tbChargePeriod2.Text,
                 rcbChargeCcy2.SelectedValue, tbExcheRate2.Text, tbChargeAmt2.Text, rcbPartyCharged2.SelectedValue,
                 rcbOmortCharges2.SelectedValue, "", "",
                 rcbChargeStatus2.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode2.Text,
                 lblTaxCcy2.Text, lblTaxAmt2.Text, "", "", "2", TabId);
 
-            SQLData.B_BDOCUMETARYCOLLECTIONMT410_Insert(txtCode.Text.Trim(),
+            bd.SQLData.B_BDOCUMETARYCOLLECTIONMT410_Insert(txtCode.Text.Trim(),
                 comboCreateMT410.SelectedValue.Trim(),
                 txtGeneralMT410_2.Text.Trim(),
                 txtSendingBankTRN.Text.Trim(),
@@ -1283,7 +1279,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct.DataValueField = "Id";
             rcbChargeAcct.DataTextField = "Id";
-            rcbChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDraweeCusNo.SelectedItem.Attributes["CustomerName2"] ,rcbChargeCcy.SelectedValue);
+            rcbChargeAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDraweeCusNo.SelectedItem.Attributes["CustomerName2"] ,rcbChargeCcy.SelectedValue);
             rcbChargeAcct.DataBind();
         }
 
@@ -1293,7 +1289,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct2.DataValueField = "Id";
             rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDraweeCusNo.SelectedItem.Attributes["CustomerName2"], rcbChargeCcy2.SelectedValue);
+            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDraweeCusNo.SelectedItem.Attributes["CustomerName2"], rcbChargeCcy2.SelectedValue);
             rcbChargeAcct2.DataBind();
         }
 
@@ -1338,7 +1334,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             lblRemittingBankName.Text = "";
             if (!string.IsNullOrEmpty(txtRemittingBankNo.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtRemittingBankNo.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtRemittingBankNo.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     lblRemittingBankName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -1474,7 +1470,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BDOCUMETARYCOLLECTIONMT410_Report(txtCode.Text);
+            ds = bd.SQLData.B_BDOCUMETARYCOLLECTIONMT410_Report(txtCode.Text);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1492,7 +1488,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_BDOCUMETARYCOLLECTION_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1510,7 +1506,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BDOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username, TabId);
+            ds = bd.SQLData.B_BDOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username, TabId);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1529,7 +1525,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONAMENDMENT_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONAMENDMENT_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1547,7 +1543,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONAMENDMENT_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONAMENDMENT_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1565,7 +1561,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONAMENDMENT_VAT_Report(txtCode.Text, UserInfo.Username, TabId);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONAMENDMENT_VAT_Report(txtCode.Text, UserInfo.Username, TabId);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1584,7 +1580,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_DOCUMENTARYCOLLECTIONCANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
+            ds = bd.SQLData.B_DOCUMENTARYCOLLECTIONCANCEL_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1602,7 +1598,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_DOCUMENTARYCOLLECTIONCANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_DOCUMENTARYCOLLECTIONCANCEL_PHIEUXUATNGOAIBANG_REPORT(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1621,7 +1617,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONACCEPTION_MT410_Report(txtCode.Text);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONACCEPTION_MT410_Report(txtCode.Text);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1639,7 +1635,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONACCEPTION_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONACCEPTION_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1657,7 +1653,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONACCEPTION_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONACCEPTION_PHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1759,13 +1755,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         }
         protected void GeneralVATNo()
         {
-            tbVatNo.Text = Database.B_BMACODE_GetNewSoTT("VATNO").Tables[0].Rows[0]["SoTT"].ToString();
+            tbVatNo.Text = bd.Database.B_BMACODE_GetNewSoTT("VATNO").Tables[0].Rows[0]["SoTT"].ToString();
         }
         protected void GeneralCode()
         {
             if (TabId == 217) //Register Documetary Collection
             {
-                txtCode.Text = SQLData.B_BMACODE_GetNewID("DOCUMETARYCOLLECTION", Refix_BMACODE());
+                txtCode.Text = bd.SQLData.B_BMACODE_GetNewID("DOCUMETARYCOLLECTION", Refix_BMACODE());
             }
             else
             {
@@ -1792,14 +1788,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                         //1. Đã authorised màn hình nhập nhờ thu (Reg)
                         //2, Chưa thực hiện cancel
                         //3, Chưa thực hiện thanh toán full 
-                        if (drow["Status"].ToString() != "AUT")
+                        if (drow["Status"].ToString() != bd.TransactionStatus.AUT)
                         {
                             lblError.Text = errorUn_AUT;
                             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
                             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
                             RadToolBar1.FindItemByValue("btRevert").Enabled = false;
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
-                        } else if (drow["Amend_Status"].ToString() == "AUT")
+                        } else if (drow["Amend_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This Documentary was authorized";
 
@@ -1808,7 +1804,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
                             RadToolBar1.FindItemByValue("btPrint").Enabled = true;
 
-                        } else if (drow["Cancel_Status"].ToString() == "AUT")
+                        } else if (drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This Documentary is cancel";
 
@@ -1835,7 +1831,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                         //Chỉ cho cancel khi BCT:
                         //1, Nhập BCT đã được authorised
                         //2, Chưa thực hiện thanh toán full
-                        if (drow["Status"].ToString() != "AUT")
+                        if (drow["Status"].ToString() != bd.TransactionStatus.AUT)
                         {
                             lblError.Text = errorUn_AUT;
                             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
@@ -1843,7 +1839,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             RadToolBar1.FindItemByValue("btRevert").Enabled = false;
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
                         }
-                        else if (drow["Cancel_Status"].ToString() == "AUT")
+                        else if (drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This Documentary is cancel";
 
@@ -1866,15 +1862,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 case 281: //Incoming Collection Acception
                     if (TabId == 281 && Request.QueryString["key"] == null)
                     {
-                        if (drow["Status"].ToString() != "AUT"
-                            || (!string.IsNullOrEmpty(drow["Cancel_Status"].ToString()) &&  drow["Cancel_Status"].ToString() == "AUT")
-                            || (!string.IsNullOrEmpty(drow["Amend_Status"].ToString()) && drow["Amend_Status"].ToString() != "AUT"))
+                        if (drow["Status"].ToString() != bd.TransactionStatus.AUT
+                            || (!string.IsNullOrEmpty(drow["Cancel_Status"].ToString()) &&  drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
+                            || (!string.IsNullOrEmpty(drow["Amend_Status"].ToString()) && drow["Amend_Status"].ToString() != bd.TransactionStatus.AUT))
                         {
-                            if (!string.IsNullOrEmpty(drow["Cancel_Status"].ToString()) && drow["Cancel_Status"].ToString() == "AUT")
+                            if (!string.IsNullOrEmpty(drow["Cancel_Status"].ToString()) && drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                             {
                                 lblError.Text = "This Documentary is cancel";
                             }
-                            else if (!string.IsNullOrEmpty(drow["Amend_Status"].ToString()) && drow["Amend_Status"].ToString() != "AUT")
+                            else if (!string.IsNullOrEmpty(drow["Amend_Status"].ToString()) && drow["Amend_Status"].ToString() != bd.TransactionStatus.AUT)
                             {
                                 lblError.Text = "This Documentary has not authorized at Amendment step.";
                             }
@@ -1888,7 +1884,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             RadToolBar1.FindItemByValue("btRevert").Enabled = false;
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
                         }
-                        else if (drow["Accept_Status"].ToString() == "AUT")
+                        else if (drow["Accept_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This Documentary was authorized";
 
@@ -1912,7 +1908,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 case 217: // Register Documetary Collection
                     if (TabId == 217 && Request.QueryString["key"] == null)
                     {
-                        if (drow["Status"].ToString() == "AUT" && drow["PaymentFullFlag"].ToString() == "1")
+                        if (drow["Status"].ToString() == bd.TransactionStatus.AUT && drow["PaymentFullFlag"].ToString() == "1")
                         {
                             lblError.Text = "This Documentary has payment full";
                             InitToolBar(false);
@@ -1921,7 +1917,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             RadToolBar1.FindItemByValue("btPrint").Enabled = true;
 
                         }
-                        else if (drow["Cancel_Status"].ToString() == "AUT")
+                        else if (drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This Documentary was canceled";
                             InitToolBar(false);
@@ -1929,7 +1925,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                             RadToolBar1.FindItemByValue("btSave").Enabled = false;
                             RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         }
-                        else if (drow["Status"].ToString() == "AUT")
+                        else if (drow["Status"].ToString() == bd.TransactionStatus.AUT)
                         {
                             lblError.Text = "This Documentary was authorized";
                             InitToolBar(false);
@@ -1953,7 +1949,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONAMENDMENT_MT410_Report(txtCode.Text);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONAMENDMENT_MT410_Report(txtCode.Text);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1981,11 +1977,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected bool CheckFtVaild()
         {
-            if (txtCode.Text.Length > 14 || txtCode.Text.Length < 14)
+            /*if (txtCode.Text.Length > 14 || txtCode.Text.Length < 14)
             {
-                Commont.ShowClientMessageBox(Page, GetType(), "FT No. is invalid", 150);
+                bc.Commont.ShowClientMessageBox(Page, GetType(), "FT No. is invalid", 150);
                 return false;
-            }
+            }*/
             return true;
         }
 
