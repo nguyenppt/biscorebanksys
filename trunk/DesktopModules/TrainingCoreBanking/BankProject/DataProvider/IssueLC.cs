@@ -135,5 +135,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("P_ExportLCPaymentReport", ReportType, PaymentId, UserId);
         }
+
+        public static DataSet ImportLCDocsProcessDetail4Amend(string DocCode)
+        {
+            return sqldata.ndkExecuteDataset("P_ImportLCDocsProcessDetail4Amend", DocCode);
+        }
     }
 }
