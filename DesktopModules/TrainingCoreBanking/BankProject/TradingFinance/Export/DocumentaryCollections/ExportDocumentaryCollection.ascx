@@ -249,7 +249,7 @@
                     </td>
                 </tr>
 
-                <tr style="display:none">
+                <tr>
                     <td class="MyLable">2.4 Drawer Ref No.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDrawerRefNo" runat="server" Width="355" />
@@ -288,10 +288,10 @@
                                 <table cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td style="width: 100px;">
-                                            <%# DataBinder.Eval(Container.DataItem, "Code")%> 
+                                            <%# DataBinder.Eval(Container.DataItem, "SwiftCode")%> 
                                         </td>
                                         <td>
-                                            <%# DataBinder.Eval(Container.DataItem, "Description")%> 
+                                            <%# DataBinder.Eval(Container.DataItem, "BankName")%> 
                                         </td>
                                     </tr>
                                 </table>
@@ -412,10 +412,10 @@
                                 <table cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td style="width: 100px;">
-                                            <%# DataBinder.Eval(Container.DataItem, "Code")%> 
+                                            <%# DataBinder.Eval(Container.DataItem, "SwiftCode")%> 
                                         </td>
                                         <td>
-                                            <%# DataBinder.Eval(Container.DataItem, "Description")%> 
+                                            <%# DataBinder.Eval(Container.DataItem, "BankName")%> 
                                         </td>
                                     </tr>
                                 </table>
@@ -434,7 +434,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">6 Currency<span class="Required"> (*)</span></td>
+                    <td class="MyLable">5 Currency<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:RadComboBox
                             ID="comboCurrency" runat="server"
@@ -453,7 +453,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">7 Amount<span class="Required"> (*)</span></td>
+                    <td class="MyLable">6 Amount<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="numAmount" runat="server" />
                         <asp:RequiredFieldValidator
@@ -476,21 +476,21 @@
                 </div>
 
                 <tr>
-                    <td class="MyLable">8 Docs Received Date</td>
+                    <td class="MyLable">7 Docs Received Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteDocsReceivedDate" runat="server" AutoPostBack="True" OnSelectedDateChanged="dteDocsReceivedDate_OnSelectedDateChanged" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">9 Maturity Date</td>
+                    <td class="MyLable">8 Maturity Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteMaturityDate" runat="server" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">10 Tenor</td>
+                    <td class="MyLable">9 Tenor</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtTenor" runat="server" Text="AT SIGHT" />
                     </td>
@@ -508,9 +508,21 @@
 
 
                 <tr>
-                    <td class="MyLable">11 Tracer Date</td>
+                    <td class="MyLable">10 Tracer Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteTracerDate" runat="server" />
+                    </td>
+                </tr>
+
+                <tr>    
+                    <td class="MyLable">11 Account Officer</td>
+                    <td class="MyContent">
+                        <telerik:RadComboBox Width="355" AppendDataBoundItems="true"
+                            ID="comboAccountOfficer" Runat="server"
+                            MarkFirstMatch="True"
+                            AllowCustomText="false" >
+                        </telerik:RadComboBox>
+                        <%--<telerik:RadTextBox ID="txtProfitCenteCust" runat="server" Width="355" />--%>
                     </td>
                 </tr>
 
@@ -595,7 +607,7 @@
             <div runat="server" id="divDocsCode2">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable">14.1 Docs Code</td>
+                        <td class="MyLable">15.1 Docs Code</td>
                         <td style="width: 150px" class="MyContent">
                             <telerik:RadComboBox Width="355"
                                 AppendDataBoundItems="True"
@@ -611,7 +623,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">14.2 No. of Originals</td>
+                        <td class="MyLable">15.2 No. of Originals</td>
                         <td class="MyContent">
                             <telerik:RadNumericTextBox ID="numNoOfOriginals2" runat="server" MaxValue="999" MaxLength="3">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -620,7 +632,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">14.3 No. of Copies</td>
+                        <td class="MyLable">15.3 No. of Copies</td>
                         <td class="MyContent">
                             <telerik:RadNumericTextBox ID="numNoOfCopies2" runat="server" MaxValue="999" MaxLength="3">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -632,7 +644,7 @@
             <div runat="server" id="divDocsCode3">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable">14.1 Docs Code</td>
+                        <td class="MyLable">16.1 Docs Code</td>
                         <td style="width: 150px" class="MyContent">
                             <telerik:RadComboBox Width="355"
                                 AppendDataBoundItems="True"
@@ -648,7 +660,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">14.2 No. of Originals</td>
+                        <td class="MyLable">16.2 No. of Originals</td>
                         <td class="MyContent">
                             <telerik:RadNumericTextBox ID="numNoOfOriginals3" runat="server" MaxValue="999" MaxLength="3">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -657,7 +669,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">14.3 No. of Copies</td>
+                        <td class="MyLable">16.3 No. of Copies</td>
                         <td class="MyContent">
                             <telerik:RadNumericTextBox ID="numNoOfCopies3" runat="server" MaxValue="999" MaxLength="3">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -668,7 +680,7 @@
             </div>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">15 Other Docs</td>
+                    <td class="MyLable">17 Other Docs</td>
                     <td class="MyContent">
                         <telerik:RadTextBox Width="100%" Height="100" ID="txtOtherDocs" runat="server" TextMode="MultiLine" />
                     </td>
@@ -676,7 +688,7 @@
 
 
                 <tr>
-                    <td class="MyLable">16 Remarks</td>
+                    <td class="MyLable">18 Remarks</td>
                     <td class="MyContent">
                         <telerik:RadTextBox Width="355" ID="txtRemarks" runat="server" />
                     </td>
@@ -1352,12 +1364,12 @@
             if (tabId == 226 || tabId == 227) { // Register Documetary Collection
                 if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                     args.set_cancel(true);
-                    radconfirm("Do you want to download COVER file from Customer?", confirmCallbackRegisterCOVER, 340, 150, null, 'Download');
+                    confirmCallbackRegisterCOVER(true);
                 }
             }
             if (tabId == 229) { // Incoming Collection Amendments
                 if (button.get_commandName() == "print") {
-                    args.set_cancel(true);
+                    args.set_cancel(false);
 
                     showPhieuNhap_Xuat();
 
@@ -1407,7 +1419,9 @@
             if (result) {
                 $("#<%=btnCOVERReport.ClientID %>").click();
             }
-            radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Customer?", confirmCallbackRegisterNNB1, 340, 150, null, 'Download');
+            setTimeout(function(){
+                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Customer?", confirmCallbackRegisterNNB1, 340, 150, null, 'Download');
+            },4000);
         }
         function confirmCallbackRegisterNNB1(result) {
             clickCalledAfterRadconfirm = false;
@@ -1415,7 +1429,9 @@
                 $("#<%=btnRegisterNhapNgoaiBang1.ClientID %>").click();
             }
             if (chargeAmt > 0) {
-                radconfirm("Do you want to download VAT file?", confirmCallbackVATRegister, 400, 150, null, 'Download');
+                setTimeout(function(){
+                    radconfirm("Do you want to download VAT file?", confirmCallbackVATRegister, 400, 150, null, 'Download');
+                },4000);
             }
             //radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file to Collecting Bank?", confirmCallbackRegisterXNB1, 420, 150, null, 'Download');
         }
@@ -1424,7 +1440,9 @@
             if (result) {
                 $("#<%=btnRegisterXuatNgoaiBang1.ClientID %>").click();
             }
-            radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Collecting Bank?", confirmCallbackRegisterNNB2, 420, 150, null, 'Download');
+            setTimeout(function(){
+                radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Collecting Bank?", confirmCallbackRegisterNNB2, 420, 150, null, 'Download');
+            },4000);
         }
         function confirmCallbackVATRegister(result) {
             if (result) {
