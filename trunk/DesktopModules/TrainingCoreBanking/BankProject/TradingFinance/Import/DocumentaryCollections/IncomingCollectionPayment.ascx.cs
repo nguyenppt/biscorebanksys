@@ -275,10 +275,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         protected void LoadData()
         {
             // neu FT = null thì ko get data
-            if (string.IsNullOrEmpty(txtCode.Text))
-            {
-                return;
-            }
+            if (string.IsNullOrEmpty(txtCode.Text)) return;
 
             var dsPayment = SQLData.B_INCOMINGCOLLECTIONPAYMENT_GetByPaymentCode(txtCode.Text.Trim());
             var status = string.Empty;
