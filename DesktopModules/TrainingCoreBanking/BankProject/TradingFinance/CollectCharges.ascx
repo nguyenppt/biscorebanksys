@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CollectCharges.ascx.cs" Inherits="BankProject.TradingFinance.CollectCharges" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"  />
 <style>
@@ -217,7 +216,7 @@
                 window.location = '<%=EditUrl("list")%>';
             }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
-                args.set_cancel(true);
+                args.set_cancel(false);
                 radconfirm("Do you want to download VAT file ?", showReport1, 420, 150, null, 'Download');
             }
         }
@@ -233,41 +232,38 @@
             }
         });
         //
-        $(document).ready(
-          function () {
-              $('a.addChargeType').live('click',
-                  function () {
-                      var index = $(this).attr('index');
-                      if (index == "1") {
-                          if ($('#<%=divChargeType2.ClientID%>').css('display') == 'none')
-                              $('#<%=divChargeType1.ClientID%> .addChargeType').css('display', '');
-                          else
-                              $('#<%=divChargeType1.ClientID%> .addChargeType').css('display', 'none');
-                          $find("<%=cboChargeType1.ClientID%>").set_value('');
-                          $('#<%=divChargeType1.ClientID%>').css('display', '');
-                      }
-                      else if (index == "2") {
-                          $('#<%=divChargeType2.ClientID%> .addChargeType').css('display', '');
-                          $find("<%=cboChargeType2.ClientID%>").set_value('');
-                          $('#<%=divChargeType2.ClientID%>').css('display', '');
-                      }
-                      $(this).css('display', 'none');
-                  });
-              $('a.removeChargeType').live('click',
-                  function () {
-                      var index = $(this).attr('index');
-                      if (index == "2") {
-                          $('#<%=divChargeType.ClientID%> .addChargeType').css('display', '');
-                          $find("<%=cboChargeType1.ClientID%>").set_value('');
-                          $('#<%=divChargeType1.ClientID%>').css('display', 'none');
-                      }
-                      else if (index == "3") {
-                          $('#<%=divChargeType1.ClientID%> .addChargeType').css('display', '');
-                          $find("<%=cboChargeType2.ClientID%>").set_value('');
-                          $('#<%=divChargeType2.ClientID%>').css('display', 'none');
-                      }
-                  });
-          });
+        $('a.addChargeType').click(function () {
+                var index = $(this).attr('index');
+                if (index == "1") {
+                    if ($('#<%=divChargeType2.ClientID%>').css('display') == 'none')
+                        $('#<%=divChargeType1.ClientID%> .addChargeType').css('display', '');
+                    else
+                        $('#<%=divChargeType1.ClientID%> .addChargeType').css('display', 'none');
+                    $find("<%=cboChargeType1.ClientID%>").set_value('');
+                    $('#<%=divChargeType1.ClientID%>').css('display', '');
+                }
+                else if (index == "2") {
+                    $('#<%=divChargeType2.ClientID%> .addChargeType').css('display', '');
+                    $find("<%=cboChargeType2.ClientID%>").set_value('');
+                    $('#<%=divChargeType2.ClientID%>').css('display', '');
+                }
+                $(this).css('display', 'none');
+            });
+        $('a.removeChargeType').click(function () {
+                var index = $(this).attr('index');
+                if (index == "2") {
+                    $('#<%=divChargeType.ClientID%> .addChargeType').css('display', '');
+                    $find("<%=cboChargeType1.ClientID%>").get_items().getItem(0).select();
+                    $find("<%=txtChargeAmount1.ClientID%>").set_value(0);
+                    $('#<%=divChargeType1.ClientID%>').css('display', 'none');
+                }
+                else if (index == "3") {
+                    $('#<%=divChargeType1.ClientID%> .addChargeType').css('display', '');
+                    $find("<%=cboChargeType2.ClientID%>").get_items().getItem(0).select();
+                    $find("<%=txtChargeAmount1.ClientID%>").set_value(0);
+                    $('#<%=divChargeType2.ClientID%>').css('display', 'none');
+                }
+            });
     </script>
 </telerik:RadCodeBlock>
 <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" /></telerik:RadAjaxLoadingPanel>
