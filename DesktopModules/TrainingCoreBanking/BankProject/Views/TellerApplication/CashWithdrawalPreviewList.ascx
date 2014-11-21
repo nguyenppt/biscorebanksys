@@ -5,7 +5,7 @@
         <Columns>
             <telerik:GridBoundColumn HeaderText="Withdrawal Code" HeaderStyle-Width = "15%" DataField="Code" />
             <telerik:GridBoundColumn HeaderText="Account Type" HeaderStyle-Width = "20%" DataField="AccountTypeName" />
-            <telerik:GridBoundColumn HeaderText="Account Code" HeaderStyle-Width = "15%" DataField="AccountCode" />
+            <telerik:GridBoundColumn HeaderText="Account Code" HeaderStyle-Width = "15%" DataField="CustomerAccount" />
             <telerik:GridBoundColumn HeaderText="Amount Paid" DataField="Amount" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "15%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal"  DataFormatString="{0:N}" />
             <telerik:GridBoundColumn HeaderText="Ballance" DataField="CustBallance" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "15%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal" DataFormatString="{0:N}" />
             <telerik:GridBoundColumn HeaderText="New Ballance" DataField="NewCustBallance" HeaderStyle-HorizontalAlign="right" HeaderStyle-Width = "15%"  ItemStyle-HorizontalAlign="Right" DataType="System.Decimal" DataFormatString="{0:N}" />
@@ -13,7 +13,7 @@
             <telerik:GridTemplateColumn>
                 <ItemStyle Width="25" />
                 <ItemTemplate>  
-                    <a href='Default.aspx?tabid=125&preview=1&codeid=<%# Eval("Id") %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" /> </a> 
+                    <a href='Default.aspx?tabid=125&preview=1&codeid=<%# Eval("Code") %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" /> </a> 
                 </itemtemplate>
             </telerik:GridTemplateColumn>
         </Columns>

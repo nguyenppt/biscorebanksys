@@ -45,9 +45,9 @@ namespace BankProject.Views.TellerApplication
                 case "Commit":
                     if (hdfCheckOverdraft.Value == "0" || hdfCheckCredit.Value == "0" || hdfCheckDebit.Value == "0") return;
 
-                    BankProject.DataProvider.Database.BTRANSFERWITHDRAWAL_Insert(rcbAccountType.SelectedValue, txtId.Text, lbDebitAccountId.Text, txtDebitAmt.Value.HasValue ? txtDebitAmt.Value.Value : 0, 
+                    BankProject.DataProvider.Database.BTRANSFERWITHDRAWAL_Insert(rcbAccountType.SelectedValue, txtId.Text, cmbDebitAccount.Text, txtDebitAmt.Value.HasValue ? txtDebitAmt.Value.Value : 0, 
                         lblCustBal.Value.HasValue ? lblCustBal.Value.Value : 0, lblNewCustBal.Value.HasValue ? lblNewCustBal.Value.Value : 0,
-                        rdpValueDate.SelectedDate, lbCreditAccountId.Text, lblAmtCreditForCust.Value.HasValue ? lblAmtCreditForCust.Value.Value : 0, txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0,
+                        rdpValueDate.SelectedDate, cmbCreditAccount.Text, lblAmtCreditForCust.Value.HasValue ? lblAmtCreditForCust.Value.Value : 0, txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0,
                         rdpCreditValueDate.SelectedDate, cmbWaiveCharges.SelectedValue, txtNarrative.Text, this.UserId, lblCustomerId.Text, lblCustomerName.Text
                         , lbCustomerID_CR.Text, lbCustomerName_CR.Text, cmbDebitCurrency.Text, cmbCreditCurrency.Text, UserInfo.Username.ToString());
 
@@ -107,13 +107,14 @@ namespace BankProject.Views.TellerApplication
         {
             DataSet ds;
             if (code != "")
-                ds = DataProvider.Database.BTRANSFERWITHDRAWAL_GetByCode(code);
+                //ds = DataProvider.Database.BTRANSFERWITHDRAWAL_GetByCode(code);
+                ds = DataProvider.Database.BTRANSFERWITHDRAWAL_GetByID(code);
             else
-                ds = DataProvider.Database.BTRANSFERWITHDRAWAL_GetByID(int.Parse(Request.QueryString["codeid"].ToString()));
+                ds = DataProvider.Database.BTRANSFERWITHDRAWAL_GetByID((Request.QueryString["codeid"].ToString()));
             if (ds.Tables[0].Rows.Count > 0)
             {
                 txtId.Text = ds.Tables[0].Rows[0]["Code"].ToString();
-                this.cmbDebitAccount.Text = ds.Tables[0].Rows[0]["DebitAccountCode"].ToString();
+                this.cmbDebitAccount.Text = ds.Tables[0].Rows[0]["DebitAccount"].ToString();
                 rcbAccountType.SelectedValue = ds.Tables[0].Rows[0]["AccountType"].ToString();
                 cmbDebitAccount_TextChanged(cmbDebitAccount, null);
                 this.txtDebitAmt.Value = ds.Tables[0].Rows[0]["DebitAmount"] != null && ds.Tables[0].Rows[0]["DebitAmount"] != DBNull.Value ?
@@ -128,7 +129,7 @@ namespace BankProject.Views.TellerApplication
                 if (ds.Tables[0].Rows[0]["DebitValueDate"] != null && ds.Tables[0].Rows[0]["DebitValueDate"] != DBNull.Value)
                     this.rdpValueDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["DebitValueDate"].ToString());
 
-                this.cmbCreditAccount.Text = ds.Tables[0].Rows[0]["CreditAccountCode"].ToString();
+                this.cmbCreditAccount.Text = ds.Tables[0].Rows[0]["CreditAccount"].ToString();
                 cmbCreditAccount_TextChanged(cmbCreditAccount, null);
 
                 this.lblAmtCreditForCust.Value = ds.Tables[0].Rows[0]["AmountCreditForCustomer"] != null && ds.Tables[0].Rows[0]["AmountCreditForCustomer"] != DBNull.Value ?
