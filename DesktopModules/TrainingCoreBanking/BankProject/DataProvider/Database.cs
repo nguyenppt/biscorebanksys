@@ -307,7 +307,7 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("BTRANSFERWITHDRAWAL_UpdateStatus", accounttype, Status, NormalLCCode, userid);
         }
 
-        public static DataSet BTRANSFERWITHDRAWAL_GetByID(int id)
+        public static DataSet BTRANSFERWITHDRAWAL_GetByID(string id)
         {
             return sqldata.ndkExecuteDataset("BTRANSFERWITHDRAWAL_GetByID", id);
         }
@@ -346,7 +346,7 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("BCASHDEPOSIT_LoadStatus", RefID, Type).Tables[0].Rows[0]["Status"].ToString();
         }
-        public static DataSet BCASHDEPOSIT_GetByID(int id)
+        public static DataSet BCASHDEPOSIT_GetByID(string id)
         {
             return sqldata.ndkExecuteDataset("BCASHDEPOSIT_GetByID", id);
         }
@@ -362,11 +362,12 @@ namespace BankProject.DataProvider
         }
 
         public static void BCASHDEPOSIT_Insert(string AccountType, string Code, string CustomerAccount, double AmtPaidToCust, double CustBallance, double NewCustBallance, string CurrencyDeposited,
-                                                double AmountDeposited, double DealRate, string WaiveCharges, string Narrative, string PrintLnNoOfPS, int Userid, string teller, string cashaccount
+                                                double AmountDeposited, double DealRate, string WaiveCharges, string Narrative, string PrintLnNoOfPS, int Userid, string teller, string cashaccount,
+            string CustomerID, string CustomerName, string CUrrency
             )
         {
             sqldata.ndkExecuteNonQuery("BCASHDEPOSIT_Insert", AccountType, Code, CustomerAccount, AmtPaidToCust, CustBallance, NewCustBallance, CurrencyDeposited, AmountDeposited,
-                                    DealRate, WaiveCharges, Narrative, PrintLnNoOfPS, Userid, teller, cashaccount);
+                                    DealRate, WaiveCharges, Narrative, PrintLnNoOfPS, Userid, teller, cashaccount, CustomerID, CustomerName, CUrrency);
         }
         #endregion
 
@@ -381,7 +382,7 @@ namespace BankProject.DataProvider
             sqldata.ndkExecuteNonQuery("BCASHWITHRAWAL_UpdateStatus", accountType, Status, NormalLCCode, userid);
         }
 
-        public static DataSet BCASHWITHRAWAL_GetByID(int id)
+        public static DataSet BCASHWITHRAWAL_GetByID(string id)
         {
             return sqldata.ndkExecuteDataset("BCASHWITHRAWAL_GetByID", id);
         }
@@ -393,10 +394,10 @@ namespace BankProject.DataProvider
 
         public static void BCASHWITHRAWAL_Insert(string accountType, string Code, string CustomerAccount, double AmtPaidToCust, double CustBallance, double NewCustBallance, string CurrencyDeposited,
                                                 double AmountDeposited, double DealRate, string WaiveCharges, string Narrative, string PrintLnNoOfPS, int Userid, string teller, string cashaccount
-            )
+           , string CustomerID, string CustomerName, string Currency )
         {
             sqldata.ndkExecuteNonQuery("BCASHWITHRAWAL_Insert", accountType, Code, CustomerAccount, AmtPaidToCust, CustBallance, NewCustBallance, CurrencyDeposited, AmountDeposited,
-                                    DealRate, WaiveCharges, Narrative, PrintLnNoOfPS, Userid, teller, cashaccount);
+                                    DealRate, WaiveCharges, Narrative, PrintLnNoOfPS, Userid, teller, cashaccount, CustomerID, CustomerName, Currency);
         }
         #endregion
 
@@ -622,10 +623,6 @@ namespace BankProject.DataProvider
         public static DataTable ExchangeRate()
         {
             return sqldata.ndkExecuteDataset("P_ExchangeRate").Tables[0];
-        }
-		public static DataTable B_BCHARGECODE_ByTransType(string TransType)
-        {
-            return sqldata.ndkExecuteDataset("P_ChargeCodeByTransType", TransType).Tables[0];
         }
     }
 }
