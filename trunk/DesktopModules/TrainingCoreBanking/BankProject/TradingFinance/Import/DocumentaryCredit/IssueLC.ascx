@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="IssueLC.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCredit.IssueLC" %>
-
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
-
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <script type="text/javascript">
         var amount =  parseFloat(<%= Amount %>);
@@ -47,6 +45,20 @@
                         radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_CancelLC_XuatNgoaiBang, 420, 150, null, 'Download');
                         break;
                 }
+            }
+            if (button.get_commandName() == "<%=BankProject.Controls.Commands.Commit%>") {
+                args.set_cancel(true);
+                var ExpiryDate = $find("<%= tbExpiryDate.ClientID %>").get_selectedDate();
+                if (ExpiryDate != null){
+                    var IssuingDate = $find("<%= tbIssuingDate.ClientID %>").get_selectedDate();
+                    if (IssuingDate != null){
+                        if (ExpiryDate < IssuingDate){
+                            alert('ExpiryDate must be greater than IssuingDate');
+                            return;
+                        }
+                    }
+                }
+                args.set_cancel(false);
             }
         }
         
@@ -447,7 +459,7 @@
                         ID="RequiredFieldValidator3"
                         ControlToValidate="ntSoTien"
                         ValidationGroup="Commit"
-                        InitialValue=""
+                        InitialValue="0"
                         ErrorMessage="Amount is Required" ForeColor="Red">
                     </asp:RequiredFieldValidator>
                 </td>
@@ -834,7 +846,7 @@
 
         <fieldset>
             <legend>
-                <div style="font-weight: bold; text-transform: uppercase;">Commodity/Prov Details</div>
+                <div style="font-weight: bold; text-transform: uppercase;">OTHER</div>
             </legend>
 
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -893,7 +905,7 @@
                             ID="RequiredFieldValidator6"
                             ControlToValidate="numPro"
                             ValidationGroup="Commit"
-                            InitialValue=""
+                            InitialValue="0"
                             ErrorMessage="Prov % is required" ForeColor="Red">
                         </asp:RequiredFieldValidator>
                     </td>
@@ -902,37 +914,17 @@
                     </td>
                 </tr>
             </table>
-
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <!-- -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="display:none;">
                 <tr>
                     <td class="MyLable">16. Lc Amount Secured <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator7"
-                            ControlToValidate="numLcAmountSecured"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="PLc Amount Secured is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator>
-
                     </td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox runat="server" ID="numLcAmountSecured" />
                     </td>
                 </tr>
-            </table>
-
-            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">17. Lc Amt UnSecured <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator8"
-                            ControlToValidate="numLcAmountUnSecured"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="Lc Amount UnSecured is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator>
                     </td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox runat="server" ID="numLcAmountUnSecured" />
@@ -941,10 +933,20 @@
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">18. Loan Principal</td>
+                    <td class="MyLable">17. Loan Principal</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox runat="server" ID="numLoanPrincipal" />
                     </td>
+                </tr>
+            </table>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="MyLable">18. Import Limit</td>
+                    <td class="MyContent">
+                        <telerik:RadNumericTextBox runat="server" ID="txtImportLimit" Enabled="false" Value="10000000" />
+                    </td>
+                    <td style="color:GrayText;"><asp:Label ID="lblImportLimitCurrency" runat="server" Text="USD"></asp:Label></td>
+                    <td style="color:GrayText;"><asp:Label ID="lblImportLimitMessage" runat="server" Text=""></asp:Label></td><!--Available Import Limit : ....-->
                 </tr>
             </table>
         </fieldset>
@@ -1177,7 +1179,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">32B. Currency Code, Amount<span class="Required">(*)</span>
+                    <td style="width: 250px" class="MyLable">32B. Currency Code, Amount <span class="Required">(*)</span>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator10"
@@ -1186,13 +1188,12 @@
                             InitialValue=""
                             ErrorMessage="[MT700] Currency Code is required" ForeColor="Red">
                         </asp:RequiredFieldValidator>
-
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator11"
                             ControlToValidate="numAmount700"
                             ValidationGroup="Commit"
-                            InitialValue=""
+                            InitialValue="0"
                             ErrorMessage="[MT700] Amount is required" ForeColor="Red">
                         </asp:RequiredFieldValidator>
                     </td>
@@ -2872,7 +2873,6 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             <Tabs>
                 <telerik:RadTab Text="Cable Charge" />
                 <telerik:RadTab Text="Open charge" />
-                <telerik:RadTab Text="Open Charge for Import LC (Amort)" />
             </Tabs>
         </telerik:RadTabStrip>
 
@@ -4010,8 +4010,8 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 
     </script>
 </telerik:RadCodeBlock>
-
-<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="AjaxLoadingPanel1">
+<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" /></telerik:RadAjaxLoadingPanel>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
     <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="rcbLCType">
             <UpdatedControls>

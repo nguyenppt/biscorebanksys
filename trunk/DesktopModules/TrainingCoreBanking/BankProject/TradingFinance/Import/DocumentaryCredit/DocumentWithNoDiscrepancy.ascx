@@ -32,6 +32,15 @@
                   {%>
                 radconfirm("Do you want to download MT734 file?", confirmCallbackFunction_MT734, 340, 150, null, 'Download');
                 <%}%>
+                <%if (TabId == TabDocsAmend)
+                  {%>
+                var Amount = Number($find("<%=numAmount.ClientID%>").get_value());
+                var OldAmount = Number($('#<%=txtOldAmount.ClientID%>').val());
+                if (Amount < OldAmount)
+                    radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file ?", confirmCallbackFunction_XUATNGOAIBANG, 340, 150, null, 'Download');
+                else if (Amount > OldAmount)
+                    radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file ?", confirmCallbackFunction_NHAPNGOAIBANG, 340, 150, null, 'Download');
+                <%}%>
             }
         }
         
@@ -45,6 +54,16 @@
         function confirmCallbackFunction_VAT(result) {
             if (result) {
                 $("#<%=btDownloadVAT.ClientID %>").click();
+            }
+        }
+        function confirmCallbackFunction_XUATNGOAIBANG(result) {
+            if (result) {
+                $("#<%=btDownloadXuatNB.ClientID %>").click();
+            }
+        }
+        function confirmCallbackFunction_NHAPNGOAIBANG(result) {
+            if (result) {
+                $("#<%=btDownloadNhapNB.ClientID %>").click();
             }
         }
     </script>
@@ -163,7 +182,7 @@
                         ValidationGroup="Commit"
                         InitialValue=""
                         ErrorMessage="Document Amount is required" ForeColor="Red">
-                    </asp:RequiredFieldValidator>
+                    </asp:RequiredFieldValidator><asp:HiddenField ID="txtOldAmount" runat="server" />
                 </td>
             </tr>
             
@@ -336,9 +355,9 @@
             </legend>
             
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr><td colspan="2"><uc1:MultiTextBox runat="server" id="txtDiscrepancies" Label="33.1 Discrepancies" /></td></tr>
+                <tr><td colspan="2"><uc1:MultiTextBox runat="server" id="txtDiscrepancies" Label="33.1 Discrepancies" LabelWidth="170" /></td></tr>
                 <tr>
-                    <td class="MyLable">69.5.1 Disposal of Docs</td>
+                    <td class="MyLable" style="width:170px;">69.5.1 Disposal of Docs</td>
                     <td class="MyContent">
                         <telerik:Radtextbox runat="server" ID="txtDisposalOfDocs" Width="355" />
                     </td>
@@ -1024,3 +1043,5 @@
 <div style="visibility: hidden;"><asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" /></div>
 <div style="visibility: hidden;"><asp:Button ID="btDownloadMT734" runat="server" OnClick="btDownloadMT734_Click" Text="DownloadMT734" /></div>
 <div style="visibility: hidden;"><asp:Button ID="btDownloadVAT" runat="server" OnClick="btDownloadVAT_Click" Text="DownloadVAT" /></div>
+<div style="visibility: hidden;"><asp:Button ID="btDownloadXuatNB" runat="server" OnClick="btDownloadXuatNB_Click" Text="DownloadXuatNB" /></div>
+<div style="visibility: hidden;"><asp:Button ID="btDownloadNhapNB" runat="server" OnClick="btDownloadNhapNB_Click" Text="DownloadNhapNB" /></div>

@@ -175,6 +175,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
+        /// txtOldAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField txtOldAmount;
+        
+        /// <summary>
         /// dteBookingDate control.
         /// </summary>
         /// <remarks>
@@ -1127,5 +1136,23 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btDownloadVAT;
+        
+        /// <summary>
+        /// btDownloadXuatNB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btDownloadXuatNB;
+        
+        /// <summary>
+        /// btDownloadNhapNB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btDownloadNhapNB;
     }
 }

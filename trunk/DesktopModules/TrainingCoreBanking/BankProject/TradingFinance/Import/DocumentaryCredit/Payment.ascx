@@ -53,7 +53,6 @@
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
         $('#Charges').dnnTabs();
-
     });
 </script>
 <div class="dnnForm" id="tabs-demo">    
