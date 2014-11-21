@@ -214,14 +214,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 var dsDetails = entContext.B_ExportLCPayments.Where(x => x.LCCode == txtCode.Text).FirstOrDefault();
                 if (dsDetails == null)
                 {
-                    var drDetails = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).FirstOrDefault();
-                    if (drDetails == null)
+                    var lstDetails = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).ToList();
+                    if (lstDetails == null)
                     {
                         lblError.Text = "This Docs was not found";
                         return;
                     }
                     else
                     {
+                        var drDetails=new BEXPORT_DOCUMENTPROCESSING();
+                        if (lstDetails.Count == 1)
+                        {
+                            drDetails = lstDetails[0];
+                        }
+                        else
+                        {
+                            drDetails = lstDetails.Where(x => x.ActiveRecordFlag == YesNo.YES).FirstOrDefault();
+                        }
                         //kiem tra lai Status !AUT, RejectStatus 
                         if (drDetails.Status != "AUT")
                         {
