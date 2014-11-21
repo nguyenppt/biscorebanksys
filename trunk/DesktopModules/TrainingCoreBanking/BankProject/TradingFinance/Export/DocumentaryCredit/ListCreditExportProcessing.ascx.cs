@@ -84,12 +84,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                  ds= entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.RejectStatus == Status).ToList();
             }   
-            if(ds!=null&&ds.Count>0)
-            {
-                var lst=CreateDataset(ds);
-                radGridReview.DataSource = lst;
-            }
             
+                var lst=CreateDataset(ds);
+                radGridReview.DataSource = lst;            
         }
     }
 }

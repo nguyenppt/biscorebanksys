@@ -118,7 +118,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     }
                     else
                     {
-                        if (this.TabId == TabDocsAmend && (DocsStatus.Equals(bd.TransactionStatus.UNA) || DocsStatus.Equals(bd.TransactionStatus.REV)))
+                        if (this.TabId == TabDocsAmend && (DocsStatus.Equals(bd.TransactionStatus.AUT) || DocsStatus.Equals(bd.TransactionStatus.REV)))
                         {
                             //Cho phép Edit
                             bc.Commont.SetTatusFormControls(this.Controls, true);
@@ -1442,7 +1442,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     var dsCharge = new List<BEXPORT_DOCUMENTPROCESSINGCHARGE>();
                     if (!String.IsNullOrEmpty(txtCode.Text) && txtCode.Text.LastIndexOf(".") > 0)
                     {
-                        var drDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).FirstOrDefault();
+                        var drDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
                         if (drDetail == null)
                         {
                             lblError.Text = "This Docs not found !";
@@ -1480,12 +1480,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 break;
                             case bd.TransactionStatus.AUT:
                                 RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                                RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+                                RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                                 RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                                 bc.Commont.SetTatusFormControls(this.Controls, false);
-                                txtCode.Enabled = true;
+                                txtCode.Enabled = false;
+                                lblError.Text = "This LC has approved";
                                 break;
                         }
                         if (drDetail.WaiveCharges == "YES")
@@ -1493,6 +1494,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == drDetail.PaymentId).ToList();
                         }
                         loadDocsDetail(drDetail,dsCharge);
+                        
                         return;
                     }
                     if (dsDetail != null)
@@ -1650,11 +1652,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         //{
                                         //    lblError.Text = "This LC was approve for amend";
                                         //}
-                                        else if (AmendStatus == "REV")
-                                        {
-                                            lblError.Text = "This LC Amend was revert";
-                                            return;
-                                        }
                                         else if (!String.IsNullOrEmpty(RejectStatus))
                                         {
                                             lblError.Text = "This LC was rejected or waited for approve reject";
@@ -1712,11 +1709,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         else if (AmendStatus == "AUT")
                                         {
                                             lblError.Text = "This LC amend has approve ";
-                                            return;
-                                        }
-                                        else if (AmendStatus == "REV")
-                                        {
-                                            lblError.Text = "This LC Amend was revert";
                                             return;
                                         }
                                         else if (!String.IsNullOrEmpty(RejectStatus))

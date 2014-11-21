@@ -57,16 +57,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.Status == "UNA").Select(q => new { q.NormalLCCode,q.Status }).ToList();
                     break;
                 case AdvisingAndNegotiationScreenType.Amend:
-                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.AmendStatus == "UNA" || q.AmendStatus =="REV").Select(q => new { q.NormalLCCode, Status = q.AmendStatus }).ToList();
+                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.AmendStatus == "UNA").Select(q => new { q.NormalLCCode, Status = q.AmendStatus }).ToList();
                     break;
                 case AdvisingAndNegotiationScreenType.Cancel:
-                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.CancelStatus == "UNA" || q.CancelStatus == "REV").Select(q => new { q.NormalLCCode, Status = q.CancelStatus }).ToList();
+                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.CancelStatus == "UNA").Select(q => new { q.NormalLCCode, Status = q.CancelStatus }).ToList();
                     break;
                 case AdvisingAndNegotiationScreenType.Close:
-                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.CloseStatus == "UNA" || q.CloseStatus == "REV").Select(q => new { q.NormalLCCode, Status=q.CloseStatus }).ToList();
+                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.CloseStatus == "UNA").Select(q => new { q.NormalLCCode, Status=q.CloseStatus }).ToList();
                     break;
                 case AdvisingAndNegotiationScreenType.Acception:
-                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.AcceptStatus == "UNA" || q.AcceptStatus == "REV").Select(q => new {q.NormalLCCode,Status=q.AcceptStatus }).ToList();
+                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.AcceptStatus == "UNA").Select(q => new {q.NormalLCCode,Status=q.AcceptStatus }).ToList();
                     break;
                 //case AdvisingAndNegotiationScreenType.Amend:
                 //    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.AmendStatus == "UNA" || q.AmendStatus =="REV").Select(q => new { q.NormalLCCode, Status = q.AmendStatus }).ToList();

@@ -96,6 +96,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 //SetVisibilityByStatus(ref dataRow);
                 tbEssurLCCode.Enabled = false;
                 RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                //RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
             }
             switch (ScreenType)
             {
@@ -251,15 +252,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         lblError.Text = "This LC was accepted.";
                     }
-                    else if (_exportDoc.AcceptStatus=="REV")
-                    {
-                        lblError.Text = "This LC was reverted.";
-                    }
                     else // Not yet authorize
                     {
                         RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                     }
-                    SetDisableByReview(false);
+                    //SetDisableByReview(false);
                 }
             }
             
@@ -301,7 +298,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                         RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                        //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                     }
                     SetDisableByReview(false);
                 }
@@ -320,10 +317,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was cancelled or waiting for cancelling";
                     }
-                    else if (_exportDoc.CloseStatus == "UNA")
-                    {
-                        lblError.Text = "This Documentary was closed and waited for approve";
-                    }
+                    
                     else if (_exportDoc.CloseStatus == "AUT")
                     {
                         lblError.Text = "This LC was closed";
@@ -332,7 +326,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                     }
-                    SetDisableByReview(false);
+                    //SetDisableByReview(false);
                 }
             }
         }
@@ -410,12 +404,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             lblError.Text = "This Amend Documentary was not authorized";
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         }
-                        else if (_exportDoc.CancelStatus == "REV")
-                        {
-                            //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                            lblError.Text = "This Cancel Documentary was revert";
-                            RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
-                        }
                         else if (_exportDoc.CancelStatus == "AUT")
                         {
                             //RadToolBar1.FindItemByValue("btPrint").Enabled = true;
@@ -432,8 +420,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         {
                             RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                         }
-                        SetDisableByReview(false);
-                        if (_exportDoc.CancelStatus != "AUT"&&_exportDoc.CancelStatus!="REV")
+                        if (_exportDoc.CancelStatus != "AUT")
                         {
                             dteCancelDate.Enabled = true;
                             dteContingentExpiryDate.Enabled = true;
