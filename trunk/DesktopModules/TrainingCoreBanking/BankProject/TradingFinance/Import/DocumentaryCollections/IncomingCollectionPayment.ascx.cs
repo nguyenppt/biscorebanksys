@@ -781,8 +781,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                         dteValueDate_MT103.SelectedDate = DateTime.Parse(drow103["ValueDate"].ToString());
                     }
 
-                    comboCurrency.SelectedValue = drow103["Currency"].ToString();
-
+                    
+                    comboCurrency_MT103.SelectedValue = drow103["Currency"].ToString();
                     lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", drow103["InterBankSettleAmount"]).Replace("$", "");
                     lblInstancedAmount_MT103.Text = String.Format("{0:C}", drow103["InstancedAmount"]).Replace("$", "");
 
@@ -2574,16 +2574,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             {
                 case "SHA":
                 case "OUR":
-                    if (numAmount.Value > 0)
+                    if (numDrawingAmount.Value > 0)
                     {
-                        lblInstancedAmount_MT103.Text = String.Format("{0:C}", numAmount.Value).Replace("$", "");
+                        lblInstancedAmount_MT103.Text = String.Format("{0:C}", numDrawingAmount.Value).Replace("$", "");
                     }
                     break;
 
                 case "BEN":
-                    if (numAmount.Value > 0)
+                    if (numDrawingAmount.Value > 0)
                     {
-                        lblInstancedAmount_MT103.Text = String.Format("{0:C}", numAmount.Value).Replace("$", "");
+                        lblInstancedAmount_MT103.Text = String.Format("{0:C}", numDrawingAmount.Value).Replace("$", "");
                     }
                     break;
             }
@@ -2599,14 +2599,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             {
                 case "SHA":
                 case "OUR":
-                    if (numAmount.Value > 0)
+                    if (numDrawingAmount.Value > 0)
                     {
-                        lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", numAmount.Value).Replace("$", "");
+                        lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", numDrawingAmount.Value).Replace("$", "");
                     }
                     break;
 
                 case "BEN":
-                    totalAmount = numAmount.Value - (totalCharges);
+                    totalAmount = numDrawingAmount.Value - (totalCharges);
                     if (totalAmount > 0)
                     {
                         lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", totalAmount).Replace("$", "");
