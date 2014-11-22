@@ -195,5 +195,15 @@ namespace BankProject.Controls
 
             return dr;
         }
+        //Fix bug
+        //A critical error has occurred. Value of '1/1/1900 12:00:00 AM' is not valid for 'SelectedDate'. 'SelectedDate' should be between 'MinDate' and 'MaxDate'. Parameter name: SelectedDate
+        public static void setDate(object dbDate, ref RadDatePicker txtDate)
+        {
+            if (dbDate != DBNull.Value)
+            {
+                if (!Convert.ToDateTime(dbDate).ToString("yyyyMMdd").Equals("19000101"))
+                    txtDate.SelectedDate = Convert.ToDateTime(dbDate);
+            }
+        }
     }
 }
