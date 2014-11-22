@@ -140,5 +140,10 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("P_ImportLCDocsProcessDetail4Amend", DocCode);
         }
+
+        public static DataSet ImportLCPaymentChargeAcc(string PartyCharged, string CustomerID, string Currency)
+        {
+            return sqldata.ndkExecuteDataset("P_ImportLCPaymentChargeAcc", PartyCharged, CustomerID, Currency);
+        }
     }
 }
