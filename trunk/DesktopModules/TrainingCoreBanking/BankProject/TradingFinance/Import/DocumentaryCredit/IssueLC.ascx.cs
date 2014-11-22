@@ -280,6 +280,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             e.Item.Attributes["IssuePlace"] = row["IssuePlace"].ToString();
             e.Item.Attributes["City"] = row["City"].ToString();
             e.Item.Attributes["Country"] = row["Country"].ToString();
+            e.Item.Attributes["ImportLimitAmt"] = row["ImportLimitAmt"].ToString();
         }
 
         protected void rcCommodity_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -1735,6 +1736,17 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 if (!string.IsNullOrEmpty(drow["ContingentExpiry"].ToString()) &&  drow["ContingentExpiry"].ToString().IndexOf("1/1/1900") == -1)
                 {
                     tbContingentExpiry.SelectedDate = DateTime.Parse(drow["ContingentExpiry"].ToString());
+                }
+                if (!string.IsNullOrEmpty(rcbApplicantID.SelectedValue))
+                {
+                    double ImportLimit = Convert.ToDouble(rcbApplicantID.SelectedItem.Attributes["ImportLimitAmt"].ToString());
+                    txtImportLimit.Value = ImportLimit;
+                    if (!string.IsNullOrEmpty(ntSoTien.Text))
+                    {
+                        ImportLimit -= Convert.ToDouble(ntSoTien.Text);
+                        if (!string.IsNullOrEmpty(numPro.Text)) ImportLimit -= ImportLimit * (Convert.ToDouble(numPro.Text) / 100);
+                    }
+                    lblImportLimitMessage.Text = "Available Import Limit : " + String.Format("{0:C}", ImportLimit).Replace("$", "");
                 }
 
                 // ===Amount_Old

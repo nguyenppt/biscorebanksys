@@ -910,7 +910,7 @@
                         </asp:RequiredFieldValidator>
                     </td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox runat="server" ID="numPro" Type="Percent" MaxValue="100" />
+                        <telerik:RadNumericTextBox runat="server" ID="numPro" Type="Percent" MaxValue="100" ClientEvents-OnValueChanged="numPro_OnValueChanged" />
                     </td>
                 </tr>
             </table>
@@ -943,9 +943,8 @@
                 <tr>
                     <td class="MyLable">18. Import Limit</td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox runat="server" ID="txtImportLimit" Enabled="false" Value="10000000" />
+                        <telerik:RadNumericTextBox runat="server" ID="txtImportLimit" Enabled="false" />
                     </td>
-                    <td style="color:GrayText;"><asp:Label ID="lblImportLimitCurrency" runat="server" Text="USD"></asp:Label></td>
                     <td style="color:GrayText;"><asp:Label ID="lblImportLimitMessage" runat="server" Text=""></asp:Label></td><!--Available Import Limit : ....-->
                 </tr>
             </table>
@@ -3526,7 +3525,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 numCreditAmount = $find("<%= numCreditAmount.ClientID %>"),
                 numAmount_747 = $find("<%= numAmount_747.ClientID %>"),
                 amount = $find('<%=ntSoTien.ClientID %>').get_value();
-            
+            changeImportLimitMessage();
             if (numAmount700) {
                 numAmount700.set_value(amount);
             }
@@ -3538,6 +3537,10 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             if (numCreditAmount) {
                 numCreditAmount.set_value(amount);
             }
+        }
+
+        function numPro_OnValueChanged(sender, eventArgs) {
+            changeImportLimitMessage();
         }
 
         function tbcrTolerance_TextChanged(sender, eventArgs) {
@@ -3783,13 +3786,31 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             }
         }
         
+        function changeImportLimitMessage(){
+            var lblImportLimitMessage = $('#<%=lblImportLimitMessage.ClientID%>');
+            var ImportLimit = $find('<%=txtImportLimit.ClientID %>').get_value();
+            var LCAmount = $find('<%=ntSoTien.ClientID %>').get_value();
+            if (ImportLimit == null || ImportLimit == 0){
+                lblImportLimitMessage.text('');
+                return;
+            }
+            if (LCAmount == null) LCAmount = 0;
+            var ProvPercent = $find('<%=numPro.ClientID %>').get_value();
+            if (ProvPercent != null){
+                LCAmount = LCAmount + LCAmount * (ProvPercent/100);
+            }
+            ImportLimit = ImportLimit - LCAmount;
+            lblImportLimitMessage.text('Available Import Limit : ' + ImportLimit);
+        }
         function rcbApplicantID_OnClientSelectedIndexChanged() {
-            var rcbApplicantID = $find('<%=rcbApplicantID.ClientID %>'),                
+            var rcbApplicantID = $find('<%=rcbApplicantID.ClientID %>').get_selectedItem(),                
                 
                 tbApplicantName = $find('<%=tbApplicantName.ClientID %>'),
                 tbApplicantAddr1 = $find('<%=tbApplicantAddr1.ClientID %>'),
                 tbApplicantAddr2 = $find('<%=tbApplicantAddr2.ClientID %>'),
                 tbApplicantAddr3 = $find('<%=tbApplicantAddr3.ClientID %>'),
+                txtImportLimit = $find('<%=txtImportLimit.ClientID %>'),
+                lblImportLimitMessage = $('#<%=lblImportLimitMessage.ClientID%>'),
                 
                 tbApplicantNo700 = $find('<%=tbApplicantNo700.ClientID %>'),
                 tbApplicantName700 = $find('<%=tbApplicantName700.ClientID %>'),
@@ -3798,18 +3819,27 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 tbApplicantAddr700_3 = $find('<%=tbApplicantAddr700_3.ClientID %>');                       
             
             if (tbApplicantName) {
-                tbApplicantName.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("CustomerName"));
-                tbApplicantAddr1.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Address"));
-                tbApplicantAddr2.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("City"));
-                tbApplicantAddr3.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Country"));
+                tbApplicantName.set_value(rcbApplicantID.get_attributes().getAttribute("CustomerName"));
+                tbApplicantAddr1.set_value(rcbApplicantID.get_attributes().getAttribute("Address"));
+                tbApplicantAddr2.set_value(rcbApplicantID.get_attributes().getAttribute("City"));
+                tbApplicantAddr3.set_value(rcbApplicantID.get_attributes().getAttribute("Country"));
+                txtImportLimit.set_value(rcbApplicantID.get_attributes().getAttribute("ImportLimitAmt"));
             }
+            else{
+                tbApplicantName.set_value('');
+                tbApplicantAddr1.set_value('');
+                tbApplicantAddr2.set_value('');
+                tbApplicantAddr3.set_value('');
+                txtImportLimit.set_value(0);
+            }
+            changeImportLimitMessage();
 
             if (tbApplicantNo700) {
                 tbApplicantNo700.set_value(rcbApplicantID.get_value());
-                tbApplicantName700.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("CustomerName"));
-                tbApplicantAddr700_1.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Address"));
-                tbApplicantAddr700_2.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("City"));
-                tbApplicantAddr700_3.set_value(rcbApplicantID.get_selectedItem().get_attributes().getAttribute("Country"));
+                tbApplicantName700.set_value(rcbApplicantID.get_attributes().getAttribute("CustomerName"));
+                tbApplicantAddr700_1.set_value(rcbApplicantID.get_attributes().getAttribute("Address"));
+                tbApplicantAddr700_2.set_value(rcbApplicantID.get_attributes().getAttribute("City"));
+                tbApplicantAddr700_3.set_value(rcbApplicantID.get_attributes().getAttribute("Country"));
             }
         }
         
@@ -4346,8 +4376,6 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_6" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-
-
     </AjaxSettings>
 </telerik:RadAjaxManager>
 
