@@ -35,8 +35,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             string TransId = Request.QueryString["tid"];
             if (string.IsNullOrEmpty(TransId)) return;
             DataSet dsDetail;
-            if (TransId.IndexOf(".", TransId.IndexOf(".") + 1) > 0)
-                dsDetail = bd.IssueLC.ImportLCDocsProcessDetail4Amend(TransId);
+            if (TransId.IndexOf(".") > 0)
+            {
+                if (TransId.IndexOf(".", TransId.IndexOf(".") + 1) > 0)
+                    dsDetail = bd.IssueLC.ImportLCDocsProcessDetail4Amend(TransId);
+                else
+                    dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, TransId);
+            }
             else
                 dsDetail = bd.IssueLC.ImportLCDocsProcessDetail(null, TransId);
             if (dsDetail == null || dsDetail.Tables.Count <= 0)
@@ -247,8 +252,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblSenderTRN.Text = drDetail["SenderTRN"].ToString();
                 //
                 txtPresentingBankRef.Text = drDetail["PresentingBankRef"].ToString();
-                if (drDetail["DateUtilization"] != DBNull.Value)
-                    dteDateUtilization.SelectedDate = Convert.ToDateTime(drDetail["DateUtilization"]);
+                bc.Commont.setDate(drDetail["DateUtilization"], ref dteDateUtilization);
                 numAmountUtilization.Value = Convert.ToInt32(drDetail["AmountUtilization"]);
                 lblUtilizationCurrency.Text = drDetail["Currency"].ToString();
                 lblSenderTRN.Text = drDetail["SenderTRN"].ToString();

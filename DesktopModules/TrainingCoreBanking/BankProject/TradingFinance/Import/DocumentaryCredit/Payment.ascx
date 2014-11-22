@@ -394,25 +394,25 @@
                 <tr>
                     <td style="width: 200px" class="MyLable">Account With Institution Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtAccountWithInstitutionName" runat="server" Width="400" />
+                        <telerik:RadTextBox ID="txtAccountWithInstitutionName" runat="server" Width="400" ClientEvents-OnValueChanged="txtAccountWithInstitutionName_OnValueChanged" />
                     </td>
                 </tr>                
                 <tr>
                     <td style="width: 200px" class="MyLable">Account With Institution Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr1" runat="server" Width="400" />
+                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr1" runat="server" Width="400" ClientEvents-OnValueChanged="txtAccountWithInstitutionAddr1_OnValueChanged" />
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 200px" class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr2" runat="server" Width="400" />
+                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr2" runat="server" Width="400" ClientEvents-OnValueChanged="txtAccountWithInstitutionAddr2_OnValueChanged" />
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 200px" class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr3" runat="server" Width="400" />
+                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr3" runat="server" Width="400" ClientEvents-OnValueChanged="txtAccountWithInstitutionAddr3_OnValueChanged" />
                     </td>
                 </tr>
             </table>
@@ -1502,6 +1502,27 @@
             var swiftCode = $find("<%=cboNostroAcct.ClientID%>").get_selectedItem().get_attributes().getAttribute("Code");
             $find("<%=txtSenderCorrespondentNo.ClientID%>").set_value(swiftCode);
         }
+
+        function autoCompleteReceiverCorrespondent() {
+            if ($find("<%=comboAccountWithInstitutionType.ClientID%>").get_selectedItem().get_value() == "D") {
+                $find('<%=txtReceiverCorrespondentName.ClientID %>').set_value($find('<%=txtAccountWithInstitutionName.ClientID %>').get_value());
+                $find('<%=txtReceiverCorrespondentAddr1.ClientID %>').set_value($find('<%=txtAccountWithInstitutionAddr1.ClientID %>').get_value());
+                $find('<%=txtReceiverCorrespondentAddr2.ClientID %>').set_value($find('<%=txtAccountWithInstitutionAddr2.ClientID %>').get_value());
+                $find('<%=txtReceiverCorrespondentAddr3.ClientID %>').set_value($find('<%=txtAccountWithInstitutionAddr3.ClientID %>').get_value());
+            }
+        }
+        function txtAccountWithInstitutionName_OnValueChanged(sender, eventArgs) {
+            autoCompleteReceiverCorrespondent();
+        }
+        function txtAccountWithInstitutionAddr1_OnValueChanged(sender, eventArgs) {
+            autoCompleteReceiverCorrespondent();
+        }
+        function txtAccountWithInstitutionAddr2_OnValueChanged(sender, eventArgs) {
+            autoCompleteReceiverCorrespondent();
+        }
+        function txtAccountWithInstitutionAddr3_OnValueChanged(sender, eventArgs) {
+            autoCompleteReceiverCorrespondent();
+        }
     </script>
 </telerik:RadCodeBlock>
 <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" /></telerik:RadAjaxLoadingPanel>
@@ -1553,7 +1574,8 @@
         <telerik:AjaxSetting AjaxControlID="tabCableCharge_cboPartyCharged">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="tabCableCharge_txtTaxAmt" />
-                <telerik:AjaxUpdatedControl ControlID="tabCableCharge_txtTaxCode" />  
+                <telerik:AjaxUpdatedControl ControlID="tabCableCharge_txtTaxCode" />
+                <telerik:AjaxUpdatedControl ControlID="tabCableCharge_cboChargeAcc" />  
                 <telerik:AjaxUpdatedControl ControlID="txtAmountCredited" />  
                 <telerik:AjaxUpdatedControl ControlID="numAmount" />
                 <telerik:AjaxUpdatedControl ControlID="numAmount_MT400" />    
@@ -1562,7 +1584,8 @@
         <telerik:AjaxSetting AjaxControlID="tabPaymentCharge_cboPartyCharged">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="tabPaymentCharge_txtTaxAmt" />
-                <telerik:AjaxUpdatedControl ControlID="tabPaymentCharge_txtTaxCode" />  
+                <telerik:AjaxUpdatedControl ControlID="tabPaymentCharge_txtTaxCode" /> 
+                <telerik:AjaxUpdatedControl ControlID="tabPaymentCharge_cboChargeAcc" />   
                 <telerik:AjaxUpdatedControl ControlID="txtAmountCredited" />  
                 <telerik:AjaxUpdatedControl ControlID="numAmount" />
                 <telerik:AjaxUpdatedControl ControlID="numAmount_MT400" />    
@@ -1571,7 +1594,8 @@
         <telerik:AjaxSetting AjaxControlID="tabHandlingCharge_cboPartyCharged">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="tabHandlingCharge_txtTaxAmt" />
-                <telerik:AjaxUpdatedControl ControlID="tabHandlingCharge_txtTaxCode" />  
+                <telerik:AjaxUpdatedControl ControlID="tabHandlingCharge_txtTaxCode" /> 
+                <telerik:AjaxUpdatedControl ControlID="tabHandlingCharge_cboChargeAcc" />    
                 <telerik:AjaxUpdatedControl ControlID="txtAmountCredited" /> 
                 <telerik:AjaxUpdatedControl ControlID="numAmount" />
                 <telerik:AjaxUpdatedControl ControlID="numAmount_MT400" />     
@@ -1580,7 +1604,8 @@
         <telerik:AjaxSetting AjaxControlID="tabDiscrepenciesCharge_cboPartyCharged">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="tabDiscrepenciesCharge_txtTaxAmt" />
-                <telerik:AjaxUpdatedControl ControlID="tabDiscrepenciesCharge_txtTaxCode" />   
+                <telerik:AjaxUpdatedControl ControlID="tabDiscrepenciesCharge_txtTaxCode" /> 
+                <telerik:AjaxUpdatedControl ControlID="tabDiscrepenciesCharge_cboChargeAcc" />
                 <telerik:AjaxUpdatedControl ControlID="txtAmountCredited" />    
                 <telerik:AjaxUpdatedControl ControlID="numAmount" />
                 <telerik:AjaxUpdatedControl ControlID="numAmount_MT400" /> 
@@ -1590,6 +1615,7 @@
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="tabOtherCharge_txtTaxAmt" />
                 <telerik:AjaxUpdatedControl ControlID="tabOtherCharge_txtTaxCode" />   
+                <telerik:AjaxUpdatedControl ControlID="tabOtherCharge_cboChargeAcc" />
                 <telerik:AjaxUpdatedControl ControlID="txtAmountCredited" />  
                 <telerik:AjaxUpdatedControl ControlID="numAmount" />
                 <telerik:AjaxUpdatedControl ControlID="numAmount_MT400" />   

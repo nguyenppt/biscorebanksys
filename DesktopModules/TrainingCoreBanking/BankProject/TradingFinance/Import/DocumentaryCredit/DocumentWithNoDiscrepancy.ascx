@@ -103,11 +103,11 @@
             <% if (TabId == TabDocsWithDiscrepancies || DocsType == TabDocsWithDiscrepancies) %>
                 <%{ %>
                 <li><a href="#tabMT734">MT734</a></li>
-                <li><a href="#tabCharge">Charge</a></li>
+                <li style="display:none;"><a href="#tabCharge">Charge</a></li>
             <% }
                else if (TabId == TabDocsReject) %>
                     <%{%>
-                        <li><a href="#tabCharge">Charge</a></li>
+                        <li style="display:none;"><a href="#tabCharge">Charge</a></li>
             <% } %>
         </ul>
     </telerik:RadCodeBlock>    
@@ -512,7 +512,7 @@
         </div>
     </div>
        
-    <div id="tabCharge" class="dnnClear">
+    <div id="tabCharge" class="dnnClear" style="display:none;">
         <div runat="server" ID="divCharge">
             <asp:HiddenField ID="hiddenCustomerName" runat="server" />
             <table width="100%" cellpadding="0" cellspacing="0">

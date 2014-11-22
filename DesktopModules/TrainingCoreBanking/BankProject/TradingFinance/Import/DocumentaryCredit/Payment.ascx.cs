@@ -46,15 +46,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             addData2TableList(ref tblList, "B");
             addData2TableList(ref tblList, "BC");
             bc.Commont.initRadComboBox(ref tabCableCharge_cboPartyCharged, "Text", "Value", tblList);
-            tabCableCharge_cboPartyCharged.SelectedValue = "BC";
+            tabCableCharge_cboPartyCharged.SelectedValue = "B";
             bc.Commont.initRadComboBox(ref tabPaymentCharge_cboPartyCharged, "Text", "Value", tblList);
-            tabPaymentCharge_cboPartyCharged.SelectedValue = "BC";
+            tabPaymentCharge_cboPartyCharged.SelectedValue = "B";
             bc.Commont.initRadComboBox(ref tabHandlingCharge_cboPartyCharged, "Text", "Value", tblList);
-            tabHandlingCharge_cboPartyCharged.SelectedValue = "BC";
+            tabHandlingCharge_cboPartyCharged.SelectedValue = "B";
             bc.Commont.initRadComboBox(ref tabDiscrepenciesCharge_cboPartyCharged, "Text", "Value", tblList);
-            tabDiscrepenciesCharge_cboPartyCharged.SelectedValue = "BC";
+            tabDiscrepenciesCharge_cboPartyCharged.SelectedValue = "B";
             bc.Commont.initRadComboBox(ref tabOtherCharge_cboPartyCharged, "Text", "Value", tblList);
-            tabOtherCharge_cboPartyCharged.SelectedValue = "BC";
+            tabOtherCharge_cboPartyCharged.SelectedValue = "B";
             //Amort Charges
             tblList = createTableList();
             addData2TableList(ref tblList, bd.YesNo.NO);
@@ -102,12 +102,37 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     return;
                 }
                 //
+                RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                 bc.Commont.SetTatusFormControls(this.Controls, false);
                 loadPaymentDetail(ds);
-                //
-                if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
-                    setToolbar(2);
+                DataRow dr = ds.Tables[0].Rows[0];
+                switch (dr["Status"].ToString())
+                {
+                    case bd.TransactionStatus.UNA:
+                    case bd.TransactionStatus.REV:
+                        if (!String.IsNullOrEmpty(Request.QueryString["lst"]))
+                        {
+                            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        }
+                        else//cho phep edit
+                        {
+                            RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                            bc.Commont.SetTatusFormControls(this.Controls, true);
+                            DisableDefaultControl();
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
+        }
+        private void DisableDefaultControl()
+        {
         }
 
         private void loadPaymentDetail(DataSet dsDetail)
@@ -257,11 +282,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             cboChargeCode.SelectedValue = drCharge["ChargeCode"].ToString();
             cboChargeCcy.SelectedValue = drCharge["ChargeCcy"].ToString();
-            bc.Commont.initRadComboBox(ref cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, cboChargeCcy.SelectedValue));
-            cboChargeAcc.SelectedValue = drCharge["ChargeAcct"].ToString();
+            cboPartyCharged.SelectedValue = drCharge["PartyCharged"].ToString();
+            //bc.Commont.initRadComboBox(ref cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, cboChargeCcy.SelectedValue));
+            loadChargeAcc(cboPartyCharged.SelectedValue, cboChargeCcy.SelectedValue, ref cboChargeAcc);
+            cboChargeAcc.SelectedValue = drCharge["ChargeAcct"].ToString();            
             if (drCharge["ChargeAmt"] != DBNull.Value)
                 txtChargeAmt.Value = Convert.ToDouble(drCharge["ChargeAmt"]);
-            cboPartyCharged.SelectedValue = drCharge["PartyCharged"].ToString();
+            
             cboAmortCharge.SelectedValue = drCharge["AmortCharge"].ToString();
             txtTaxCode.Text = drCharge["TaxCode"].ToString();
             if (drCharge["TaxAmt"] != DBNull.Value)
@@ -295,7 +322,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
                 case bc.Commands.Reverse:
                     bd.IssueLC.ImportLCPaymentUpdateStatus(Convert.ToInt64(txtPaymentId.Value), bd.TransactionStatus.REV, this.UserId.ToString());
-                    Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    Response.Redirect("Default.aspx?tabid=" + this.TabId + "&tid=" + txtPaymentId.Value);
                     break;
             }
         }
@@ -425,6 +452,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 numAmount_MT400.Value = AmountCredited;
             }
         }
+        private void loadChargeAcc(string PartyCharged, string ChargeCurrency, ref RadComboBox cboChargeAcc)
+        {
+            cboChargeAcc.Items.Clear();
+            bc.Commont.initRadComboBox(ref cboChargeAcc, "Display", "Id", bd.IssueLC.ImportLCPaymentChargeAcc(PartyCharged, txtCustomerID.Value, ChargeCurrency));
+        }
         //
         protected void tabCableCharge_txtChargeAmt_TextChanged(object sender, EventArgs e)
         {
@@ -433,6 +465,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void tabCableCharge_cboPartyCharged_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             calculateTaxAmt(tabCableCharge_txtChargeAmt, tabCableCharge_cboPartyCharged, ref tabCableCharge_txtTaxAmt, ref tabCableCharge_txtTaxCode);
+            loadChargeAcc(tabCableCharge_cboPartyCharged.SelectedValue, tabCableCharge_cboChargeCcy.SelectedValue, ref tabCableCharge_cboChargeAcc);
         }
         //
         protected void tabPaymentCharge_txtChargeAmt_TextChanged(object sender, EventArgs e)
@@ -442,6 +475,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void tabPaymentCharge_cboPartyCharged_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             calculateTaxAmt(tabPaymentCharge_txtChargeAmt, tabPaymentCharge_cboPartyCharged, ref tabPaymentCharge_txtTaxAmt, ref tabPaymentCharge_txtTaxCode);
+            loadChargeAcc(tabPaymentCharge_cboPartyCharged.SelectedValue, tabPaymentCharge_cboChargeCcy.SelectedValue, ref tabPaymentCharge_cboChargeAcc);
         }
         //
         protected void tabHandlingCharge_txtChargeAmt_TextChanged(object sender, EventArgs e)
@@ -451,6 +485,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void tabHandlingCharge_cboPartyCharged_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             calculateTaxAmt(tabHandlingCharge_txtChargeAmt, tabHandlingCharge_cboPartyCharged, ref tabHandlingCharge_txtTaxAmt, ref tabHandlingCharge_txtTaxCode);
+            loadChargeAcc(tabHandlingCharge_cboPartyCharged.SelectedValue, tabHandlingCharge_cboChargeCcy.SelectedValue, ref tabHandlingCharge_cboChargeAcc);
         }
         //
         protected void tabDiscrepenciesCharge_txtChargeAmt_TextChanged(object sender, EventArgs e)
@@ -460,6 +495,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void tabDiscrepenciesCharge_cboPartyCharged_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             calculateTaxAmt(tabDiscrepenciesCharge_txtChargeAmt, tabDiscrepenciesCharge_cboPartyCharged, ref tabDiscrepenciesCharge_txtTaxAmt, ref tabDiscrepenciesCharge_txtTaxCode);
+            loadChargeAcc(tabDiscrepenciesCharge_cboPartyCharged.SelectedValue, tabDiscrepenciesCharge_cboChargeCcy.SelectedValue, ref tabDiscrepenciesCharge_cboChargeAcc);
         }
         //
         protected void tabOtherCharge_txtChargeAmt_TextChanged(object sender, EventArgs e)
@@ -469,6 +505,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void tabOtherCharge_cboPartyCharged_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             calculateTaxAmt(tabOtherCharge_txtChargeAmt, tabOtherCharge_cboPartyCharged, ref tabOtherCharge_txtTaxAmt, ref tabOtherCharge_txtTaxCode);
+            loadChargeAcc(tabOtherCharge_cboPartyCharged.SelectedValue, tabOtherCharge_cboChargeCcy.SelectedValue, ref tabOtherCharge_cboChargeAcc);
         }
         //
         private void showReport(int reportType)
@@ -695,23 +732,23 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void tabCableCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bc.Commont.initRadComboBox(ref tabCableCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabCableCharge_cboChargeCcy.SelectedValue));
+            loadChargeAcc(tabCableCharge_cboPartyCharged.SelectedValue, tabCableCharge_cboChargeCcy.SelectedValue, ref tabCableCharge_cboChargeAcc);
         }
         protected void tabPaymentCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bc.Commont.initRadComboBox(ref tabPaymentCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabPaymentCharge_cboChargeCcy.SelectedValue));
+            loadChargeAcc(tabPaymentCharge_cboPartyCharged.SelectedValue, tabPaymentCharge_cboChargeCcy.SelectedValue, ref tabPaymentCharge_cboChargeAcc);
         }
         protected void tabHandlingCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bc.Commont.initRadComboBox(ref tabHandlingCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabHandlingCharge_cboChargeCcy.SelectedValue));
+            loadChargeAcc(tabHandlingCharge_cboPartyCharged.SelectedValue, tabHandlingCharge_cboChargeCcy.SelectedValue, ref tabHandlingCharge_cboChargeAcc);
         }
         protected void tabDiscrepenciesCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bc.Commont.initRadComboBox(ref tabDiscrepenciesCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabDiscrepenciesCharge_cboChargeCcy.SelectedValue));
+            loadChargeAcc(tabDiscrepenciesCharge_cboPartyCharged.SelectedValue, tabDiscrepenciesCharge_cboChargeCcy.SelectedValue, ref tabDiscrepenciesCharge_cboChargeAcc);
         }
         protected void tabOtherCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bc.Commont.initRadComboBox(ref tabOtherCharge_cboChargeAcc, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Value, tabOtherCharge_cboChargeCcy.SelectedValue));
+            loadChargeAcc(tabOtherCharge_cboPartyCharged.SelectedValue, tabOtherCharge_cboChargeCcy.SelectedValue, ref tabOtherCharge_cboChargeAcc);
         }
     }
 }
