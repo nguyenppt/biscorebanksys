@@ -208,6 +208,8 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Open
                     RadToolBar1.FindItemByValue("btReverse").Enabled = true;
                     RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                     break;
+                //case "preview_Enquiry":
+
                 default:
                     RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
                     RadToolBar1.FindItemByValue("btPreview").Enabled = true;
@@ -418,6 +420,22 @@ namespace BankProject.TellerApplication.AccountManagement.SavingsAC.Open
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                 RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+            }
+
+            if (arrearLoadAccount.Status != AuthoriseStatus.AUT.ToString())
+            {
+                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                ///reset lai
+                RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+                RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+                RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+
+                //set lai
+                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
             }
         }
 
