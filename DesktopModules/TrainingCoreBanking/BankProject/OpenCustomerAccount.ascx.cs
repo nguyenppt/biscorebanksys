@@ -3,6 +3,7 @@ using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using System.Data;
 using System.Configuration;
+using BankProject.DataProvider;
 
 namespace BankProject
 {
@@ -88,31 +89,35 @@ namespace BankProject
             string commandName = toolBarButton.CommandName;
             if (commandName == "Commit")
             {
+                DataSet ds = TriTT.BOPENACCOUNT_CHECK_ACCT(cmbCustomerId.SelectedValue, cmbProductLine.SelectedValue, cmbCurrency.SelectedValue);
+                if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    string  status = ds.Tables[0].Rows[0]["Status"].ToString();
+                    if (status == "AUT")
+                    {
+                        ShowMsgBox("Your Account adready had this "+cmbCurrency.SelectedValue+ " Currency. Please choose other one !"); return;
+                    }
+                    else
+                    {
+                        ShowMsgBox("This Account was created but not authorized, Please do the Authorize Process !"); return;
+                    }
+                }
                 string Category = cmbCategory.Text != "" ? cmbCategory.Text.Split('-')[1].Trim() : "";
                 string ProductLine = cmbProductLine.Text != "" ? cmbProductLine.Text.Split('-')[1].Trim() : "";
                 string ChargeCode = cmbChargeCode.Text != "" ? cmbChargeCode.Text.Split('-')[1].Trim() : "";
                 string RestrictTxn = cmbRestrictTxn.Text != "" ? cmbRestrictTxn.Text : "";
                 string RelationCode = cmbRelationCode.Text != "" ? cmbRelationCode.Text.Split('-')[1].Trim() : "";
+                DataProvider.Database.BOPENACCOUNT_Insert(txtId.Text, cmbCustomerId.SelectedValue, lbCustomerType.Text, lbCustomerName.Text, cmbCategory.SelectedValue,
+                Category, cmbCurrency.SelectedValue, txtAccountTitle.Text, txtShortTitle.Text, tbIntCaptoAC.Text,
+                cmbAccountOfficer.SelectedValue, cmbAccountOfficer.Text, cmbProductLine.SelectedValue, ProductLine, cmbChargeCode.SelectedValue,
+                ChargeCode, cmbRestrictTxn.SelectedValue, RestrictTxn, cmbIDJoinHolder.SelectedValue, lbJoinHolderName.Text,
+                cmbRelationCode.SelectedValue, RelationCode, txtJoinNotes.Text, "",
+                "", "", "", "", "", this.UserId.ToString(), "", txtDocID.Text, lbCategoryType.Text);
+                //Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
 
-                //DataSet ds = BankProject.DataProvider.Database.BOPENACCOUNT_KiemTraTK_ThanhToan(cmbCustomerId.SelectedValue, cmbCurrency.SelectedValue);
-                //if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                //{
-                //    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "test", string.Format("<script>alert('This customer already has the {0} current account'); </script>", cmbCurrency.SelectedValue));
-                //}
-                //else
-                //{
-                    DataProvider.Database.BOPENACCOUNT_Insert(txtId.Text, cmbCustomerId.SelectedValue, lbCustomerType.Text, lbCustomerName.Text, cmbCategory.SelectedValue,
-                    Category, cmbCurrency.SelectedValue, txtAccountTitle.Text, txtShortTitle.Text, tbIntCaptoAC.Text,
-                    cmbAccountOfficer.SelectedValue, cmbAccountOfficer.Text, cmbProductLine.SelectedValue, ProductLine, cmbChargeCode.SelectedValue,
-                    ChargeCode, cmbRestrictTxn.SelectedValue, RestrictTxn, cmbIDJoinHolder.SelectedValue, lbJoinHolderName.Text,
-                    cmbRelationCode.SelectedValue, RelationCode, txtJoinNotes.Text, "",
-                    "", "", "", "", "", this.UserId.ToString(), "", txtDocID.Text, lbCategoryType.Text);
-                    //Response.Redirect(string.Format("Default.aspx?tabid={0}", this.TabId.ToString()));
-
-                    BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
-                    string SoTT = BankProject.DataProvider.Database.B_BMACODE_GetNewSoTT("BOPENACCOUNT").Tables[0].Rows[0]["SoTT"].ToString();
-                    this.txtId.Text = "07" + SoTT.PadLeft(9, '0') + "5";
-                //}
+                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                string SoTT = BankProject.DataProvider.Database.B_BMACODE_GetNewSoTT("BOPENACCOUNT").Tables[0].Rows[0]["SoTT"].ToString();
+                this.txtId.Text = "07" + SoTT.PadLeft(9, '0') + "5";
             }
 
                 
@@ -285,6 +290,13 @@ namespace BankProject
             document.MailMerge.ExecuteWithRegions(ds.Tables["Detail"]);
             // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
             document.Save("OpenAccount_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+        }
+        protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
+        {
+            string radalertscript =
+                "<script language='javascript'>function f(){radalert('" + contents + "', " + width + ", '" + hiegth +
+                "', 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
         }
     }
 }
