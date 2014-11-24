@@ -95,11 +95,12 @@ namespace BankProject
                     string  status = ds.Tables[0].Rows[0]["Status"].ToString();
                     if (status == "AUT")
                     {
-                        ShowMsgBox("Your Account adready had this "+cmbCurrency.SelectedValue+ " Currency. Please choose other one !"); return;
+                        ShowMsgBox("This Customer already has this "+cmbCurrency.SelectedValue+ " current account. Please check !"); return;
                     }
                     else
                     {
-                        ShowMsgBox("This Account was created but not authorized, Please do the Authorize Process !"); return;
+                        //ShowMsgBox("This Account was created but not authorized, Please do the Authorize Process !"); return;
+                        ShowMsgBox("This " + cmbCurrency.SelectedValue + " current account has not been authorized yet. Please do the Authorize Process !"); return;
                     }
                 }
                 string Category = cmbCategory.Text != "" ? cmbCategory.Text.Split('-')[1].Trim() : "";
