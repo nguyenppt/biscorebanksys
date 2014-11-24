@@ -46,8 +46,8 @@ namespace BankProject.Views.TellerApplication
                 case "Commit":
 
                     if (hdfCheckOverdraft.Value == "0" || hdfCheckCustomer.Value == "0") return;
-                    
-                    BankProject.DataProvider.Database.BCASHWITHRAWAL_Insert(rcbAccountType.SelectedValue, txtId.Text, lbAccountId.Text, lblAmtPaidToCust.Value.HasValue ? lblAmtPaidToCust.Value.Value:0, 
+
+                    BankProject.DataProvider.Database.BCASHWITHRAWAL_Insert(rcbAccountType.SelectedValue, txtId.Text, cmbCustomerAccount.Text, lblAmtPaidToCust.Value.HasValue ? lblAmtPaidToCust.Value.Value : 0, 
                         lblCustBal.Value.HasValue ? lblCustBal.Value.Value : 0, lblNewCustBal.Value.HasValue ? lblNewCustBal.Value.Value : 0,
                         cmbCurrencyPaid.SelectedValue, txtAmtLCY_FCY.Value.HasValue ? txtAmtLCY_FCY.Value.Value : 0, txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0, cmbWaiveCharges.SelectedValue, txtNarrative.Text,
                         txtPrintLnNoOfPS.Text, this.UserId, txtTellerId.Text, cmbCashAccount.SelectedValue, lblCustomerId.Text, lblCustomerName.Text, cmbCurrency.Text);
