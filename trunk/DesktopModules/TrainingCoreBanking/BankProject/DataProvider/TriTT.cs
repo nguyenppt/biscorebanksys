@@ -896,9 +896,9 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("Load_Customer_Info_From_BCUSTOMER_INFO", CustomerID);
         }
-        public static DataSet BOPENACCOUNT_CHECK_ACCT(string CustomerID, string ProductLine, string Currency)
+        public static DataSet BOPENACCOUNT_CHECK_ACCT(string CustomerID, string ProductLine, string Currency, string AccountCode)
         {
-            return sqldata.ndkExecuteDataset("BOPENACCOUNT_CHECK_ACCT", CustomerID, ProductLine, Currency);
+            return sqldata.ndkExecuteDataset("BOPENACCOUNT_CHECK_ACCT", CustomerID, ProductLine, Currency, AccountCode);
         }
         #endregion
 
