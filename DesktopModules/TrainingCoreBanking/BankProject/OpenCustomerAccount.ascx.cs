@@ -89,7 +89,7 @@ namespace BankProject
             string commandName = toolBarButton.CommandName;
             if (commandName == "Commit")
             {
-                DataSet ds = TriTT.BOPENACCOUNT_CHECK_ACCT(cmbCustomerId.SelectedValue, cmbProductLine.SelectedValue, cmbCurrency.SelectedValue);
+                DataSet ds = TriTT.BOPENACCOUNT_CHECK_ACCT(cmbCustomerId.SelectedValue, cmbProductLine.SelectedValue, cmbCurrency.SelectedValue, txtId.Text);
                 if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     string  status = ds.Tables[0].Rows[0]["Status"].ToString();
@@ -99,7 +99,6 @@ namespace BankProject
                     }
                     else
                     {
-                        //ShowMsgBox("This Account was created but not authorized, Please do the Authorize Process !"); return;
                         ShowMsgBox("This " + cmbCurrency.SelectedValue + " current account has not been authorized yet. Please do the Authorize Process !"); return;
                     }
                 }
