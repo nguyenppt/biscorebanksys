@@ -44,7 +44,10 @@ namespace BankProject.Views.TellerApplication
             {
                 case "Commit":
                     if (hdfCheckOverdraft.Value == "0" || hdfCheckCredit.Value == "0" || hdfCheckDebit.Value == "0") return;
-
+                    if (cmbDebitCurrency.Text != cmbCreditCurrency.Text)
+                    {
+                        ShowMsgBox("Currency of Credit Account is which is not matching with Currency of Debit Account"); return;
+                    }
                     BankProject.DataProvider.Database.BTRANSFERWITHDRAWAL_Insert(rcbAccountType.SelectedValue, txtId.Text, cmbDebitAccount.Text, txtDebitAmt.Value.HasValue ? txtDebitAmt.Value.Value : 0, 
                         lblCustBal.Value.HasValue ? lblCustBal.Value.Value : 0, lblNewCustBal.Value.HasValue ? lblNewCustBal.Value.Value : 0,
                         rdpValueDate.SelectedDate, cmbCreditAccount.Text, lblAmtCreditForCust.Value.HasValue ? lblAmtCreditForCust.Value.Value : 0, txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0,
