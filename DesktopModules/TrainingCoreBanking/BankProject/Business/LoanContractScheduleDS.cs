@@ -165,6 +165,14 @@ namespace BankProject.Business
             set { cl_isDisbursalRow = value; }
         }
 
+        DataColumn cl_isPeriodicAutomaticRow = new DataColumn("PeriodicAutomaticRow", Type.GetType("System.Boolean"));
+
+        public DataColumn Cl_isPeriodicAutomaticRow
+        {
+            get { return cl_isPeriodicAutomaticRow; }
+            set { cl_isPeriodicAutomaticRow = value; }
+        }
+
         DataColumn cl_durationDate = new DataColumn("duration_day");
 
         public DataColumn Cl_durationDate
@@ -196,8 +204,10 @@ namespace BankProject.Business
             dtItems.Columns.Add(cl_isPaymentRow);
             dtItems.Columns.Add(cl_isInterestedRow);
             dtItems.Columns.Add(cl_isDisbursalRow);
+            dtItems.Columns.Add(cl_isPeriodicAutomaticRow);
             dtItems.Columns.Add(cl_durationDate);
             dtItems.Columns.Add(cl_DisbursalAmount);
+
 
             dateReport.Columns.Add("day");
             dateReport.Columns.Add("month");
