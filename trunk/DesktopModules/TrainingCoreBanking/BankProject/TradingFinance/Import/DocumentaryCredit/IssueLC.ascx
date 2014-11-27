@@ -209,14 +209,20 @@
         </telerik:RadToolBarButton>
     </Items>
 </telerik:RadToolBar>
-
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width: 200px; padding: 5px 0 5px 20px;">
-            <asp:TextBox ID="txtCode" runat="server" Width="200" />&nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" /></td>
+            <asp:TextBox ID="txtCode" runat="server" Width="200" /><span class="Required">(*)</span>
+                    <asp:RequiredFieldValidator
+                        runat="server" Display="None"
+                        ID="RequiredFieldValidator4"
+                        ControlToValidate="txtCode"
+                        ValidationGroup="Commit"
+                        InitialValue=""
+                        ErrorMessage="Code is Required" ForeColor="Red">
+                    </asp:RequiredFieldValidator>&nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" /></td>
     </tr>
 </table>
-
 <div class="dnnForm" id="tabs-demo">
     <telerik:RadCodeBlock ID="RadCodeBlock3" runat="server">
         <ul class="dnnAdminTabNav">
@@ -234,7 +240,6 @@
             <li><a href="#Charges">Charges</a></li>
         </ul>
     </telerik:RadCodeBlock>
-
     <div id="Main" class="dnnClear">
         <div runat="server" id="divCancelLC">
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -244,14 +249,12 @@
                         <telerik:RadDatePicker ID="dteCancelDate" runat="server" />
                     </td>
                 </tr>
-
                 <tr>
                     <td class="MyLable">Contingent Expiry Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteContingentExpiryDate" runat="server" />
                     </td>
                 </tr>
-
                 <tr>
                     <td class="MyLable">Cancel Remark</td>
                     <td class="MyContent">
@@ -265,7 +268,6 @@
                 </tr>
             </table>
         </div>
-
         <div runat="server" id="divCloseLC" visible="false">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
@@ -308,7 +310,6 @@
                 </tr>
             </table>
         </div>
-
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">1. LC Type <span class="Required">(*)</span>
@@ -321,7 +322,6 @@
                         ErrorMessage="LC Type is Required" ForeColor="Red">
                     </asp:RequiredFieldValidator>
                 </td>
-
                 <td class="MyContent" style="width: 355px;">
                     <telerik:RadComboBox
                         AppendDataBoundItems="True"
@@ -582,13 +582,13 @@
                 </tr>
             </table>
 
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">11.1 Beneficiary No.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryNo" runat="server" Width="355" MaxLength="34"
-                            ClientEvents-OnValueChanged="txtBeneficiaryNo_OnValueChanged" />
+                        <telerik:RadTextBox ID="txtBeneficiaryNo" runat="server" MaxLength="34" AutoPostBack="True" OnTextChanged="txtBeneficiaryNo_OnTextChanged" />
                     </td>
+                    <td><asp:Label ID="lblBeneficiaryBankMessage" runat="server" Text="" ForeColor="Red"></asp:Label></td>
                 </tr>
             </table>
 
@@ -596,32 +596,28 @@
                 <tr>
                     <td class="MyLable">11.2 Beneficiary Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryBankName" runat="server" Width="355" MaxLength="35"
-                            ClientEvents-OnValueChanged="txtBeneficiaryBankName_OnValueChanged" />
+                        <telerik:RadTextBox ID="txtBeneficiaryBankName" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryBankName_OnValueChanged" />
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable">11.3 Beneficiary Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr1" runat="server" Width="355" MaxLength="35"
-                            ClientEvents-OnValueChanged="txtBeneficiaryBankAddr1_OnValueChanged" />
+                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr1" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryBankAddr1_OnValueChanged" />
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr2" runat="server" Width="355" MaxLength="35"
-                            ClientEvents-OnValueChanged="txtBeneficiaryBankAddr2_OnValueChanged" />
+                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr2" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryBankAddr2_OnValueChanged" />
                     </td>
                 </tr>
 
                 <tr>
                     <td class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr3" runat="server" Width="355" MaxLength="35"
-                            ClientEvents-OnValueChanged="txtBeneficiaryBankAddr3_OnValueChanged" />
+                        <telerik:RadTextBox ID="txtBeneficiaryBankAddr3" runat="server" Width="355" ClientEvents-OnValueChanged="txtBeneficiaryBankAddr3_OnValueChanged" />
                     </td>
                 </tr>
             </table>
@@ -632,33 +628,19 @@
                 <div style="font-weight: bold; text-transform: uppercase;">Advising/Reimbursing Bank Details</div>
             </legend>
 
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">12.1 Advise Bank No</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox
-                            ID="rcbAdviseBankNo"
-                            runat="server"
-                            AppendDataBoundItems="true"
-                            OnItemDataBound="SwiftCode_ItemDataBound"
-                            OnClientSelectedIndexChanged="AdviseBank_OnClientSelectedIndexChanged"
-                            MarkFirstMatch="True"
-                            Width="355"
-                            Height="150"
-                            AllowCustomText="false">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtAdviseBankNo" runat="server" AutoPostBack="True" OnTextChanged="txtAdviseBankNo_OnTextChanged" />
                     </td>
+                    <td><asp:Label ID="lblAdviseBankMessage" runat="server" Text=""></asp:Label></td>
                 </tr>
-
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">12.2 Advise Bank Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAdviseBankName" runat="server" Width="355" MaxLength="35"/>
+                        <telerik:RadTextBox ID="tbAdviseBankName" runat="server" Width="355" MaxLength="35" />
                     </td>
                 </tr>
 
@@ -706,29 +688,14 @@
                 </tr>
             </table>
 
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">13.2 Reimb. Bank No</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox
-                            ID="rcbReimbBankNo"
-                            runat="server"
-                            AppendDataBoundItems="true"
-                            OnItemDataBound="SwiftCode_ItemDataBound"
-                            MarkFirstMatch="True"
-                            Width="355"
-                            Height="150"
-                            AllowCustomText="false"
-                            OnClientSelectedIndexChanged="rcbReimbBankNo_OnClientSelectedIndexChanged">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
-                    </td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtReimbBankNo" runat="server" AutoPostBack="True" OnTextChanged="txtReimbBankNo_OnTextChanged" /></td>
+                    <td><asp:Label ID="lblReimbBankMessage" runat="server" Text=""></asp:Label></td>
                 </tr>
-
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">13.3 Reimb. Bank Name</td>
                     <td class="MyContent">
@@ -784,29 +751,15 @@
                         </telerik:RadComboBox>
                     </td>
                 </tr>
-
+            </table>
+            <table cellpadding="0" cellspacing="0">            
                 <tr>
                     <td class="MyLable">14.2 Advise Thru No.</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox
-                            ID="rcbAdviseThruNo"
-                            runat="server"
-                            AppendDataBoundItems="true"
-                            OnItemDataBound="SwiftCode_ItemDataBound"
-                            OnClientSelectedIndexChanged="rcbAdviseThruNo_OnClientSelectedIndexChanged"
-                            MarkFirstMatch="True"
-                            Width="355"
-                            Height="150"
-                            AllowCustomText="false">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
-                    </td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtAdviseThruNo" runat="server" AutoPostBack="True" OnTextChanged="txtAdviseThruNo_OnTextChanged" /></td>
+                    <td><asp:Label ID="lblAdviseThruMessage" runat="server" Text=""></asp:Label></td>
                 </tr>
-
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">14.3 Advise Thru Name</td>
                     <td class="MyContent">
@@ -838,9 +791,6 @@
                             ClientEvents-OnValueChanged="tbAdviseThruAddr3_OnClientSelectedIndexChanged"/>
                     </td>
                 </tr>
-            </table>
-
-            <table width="100%" cellpadding="0" cellspacing="0">
             </table>
         </fieldset>
 
@@ -970,9 +920,9 @@
                         </telerik:RadComboBox>--%>
                         <telerik:RadTextBox ID="txtRevivingBank700" runat="server" Width="355" />
                     </td>
-                    <%-- <td>
+                    <td>
                         <asp:Label ID="tbRevivingBankName" runat="server" />
-                    </td>--%>
+                    </td>
                 </tr>
 
                 <tr>
@@ -1080,7 +1030,7 @@
                 <tr>
                     <td style="width: 250px" class="MyLable">50.1 Applicant</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbApplicantNo700" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="tbApplicantNo700" runat="server" />
                     </td>
                 </tr>
             </table>
@@ -1137,8 +1087,7 @@
                 <tr>
                     <td class="MyLable" style="width: 250px">59.1 Beneficiary No.</td>
                     <td class="MyContent" style="width: 150px">
-                        <telerik:RadTextBox ID="txtBeneficiaryNo700" runat="server" Width="355"
-                            AutoPostBack="false" OnTextChanged="txtBeneficiaryNo700_OnTextChanged" />
+                        <telerik:RadTextBox ID="txtBeneficiaryNo700" runat="server" AutoPostBack="false" OnTextChanged="txtBeneficiaryNo700_OnTextChanged" />
                     </td>
                     <td>
                         <asp:Label ID="lblBeneficiaryNo700Error" runat="server" Text="" ForeColor="red" />
@@ -1274,25 +1223,8 @@
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td style="width: 250px" class="MyLable">41D.2 Available With No.</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox
-                            ID="comboAvailableWithNo"
-                            runat="server"
-                            AppendDataBoundItems="true"
-                            AutoPostBack="True"
-                            OnItemDataBound="SwiftCode_ItemDataBound"
-                            OnSelectedIndexChanged="comboAvailableWithNo_OnSelectedIndexChanged"
-                            MarkFirstMatch="True"
-                            Width="355"
-                            Height="150"
-                            AllowCustomText="false">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
-                    </td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtAvailableWithNo" runat="server" AutoPostBack="True" OnTextChanged="txtAvailableWithNo_OnTextChanged" /></td>
+                    <td><asp:Label ID="lblAvailableWithMessage" runat="server" Text=""></asp:Label></td>
                 </tr>
             </table>
 
@@ -1368,7 +1300,6 @@
                     </td>
                 </tr>
             </table>
-
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td style="width: 250px" class="MyLable">42A.1 Drawee Type</td>
@@ -1387,31 +1318,15 @@
                         </telerik:RadComboBox>
                     </td>
                 </tr>
-
+            </table>
+            <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">42A.2 Drawee No</td>
-                    <td class="MyContent">
-                        <%--<telerik:RadTextBox ID="txtDraweeCusNo" runat="server" Width="355" Text="VVTBVNVX" />--%>
-                        <telerik:RadComboBox
-                            ID="comboDraweeCusNo700"
-                            runat="server"
-                            AppendDataBoundItems="true"
-                            AutoPostBack="True"
-                            OnItemDataBound="SwiftCode_ItemDataBound"
-                            OnSelectedIndexChanged="comboDraweeCusNo700_OnSelectedIndexChanged"
-                            MarkFirstMatch="True"
-                            Width="355"
-                            Height="150"
-                            AllowCustomText="false">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
-                    </td>
+                    <td class="MyLable" style="width:250px;">42A.2 Drawee No</td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtDraweeCusNo700" runat="server" AutoPostBack="True" OnTextChanged="txtDraweeCusNo700_OnTextChanged" /></td>
+                    <td><asp:Label ID="lblDraweeCusNo700Message" runat="server" Text=""></asp:Label></td>
                 </tr>
-
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td style="width: 250px" class="MyLable">42A.3 Drawee Name</td>
                     <td class="MyContent">
@@ -1757,29 +1672,14 @@ ARE FOR ACCOUNT OF BENEFICIARY " />--%>
                     </td>
                 </tr>
             </table>
-
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 250px;">53.2 Reimb. Bank No</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox
-                            ID="rcbReimbBankNo700"
-                            runat="server"
-                            AppendDataBoundItems="true"
-                            OnItemDataBound="SwiftCode_ItemDataBound"
-                            MarkFirstMatch="True"
-                            Width="355"
-                            Height="150"
-                            AllowCustomText="false">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
-                    </td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtReimbBankNo700" runat="server" AutoPostBack="True" OnTextChanged="txtReimbBankNo700_OnTextChanged" /></td>
+                    <td><asp:Label ID="lblReimbBankNo700Message" runat="server" Text=""></asp:Label></td>
                 </tr>
-
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 250px;">53.3 Reimb. Bank Name</td>
                     <td class="MyContent">
@@ -1842,30 +1742,14 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                     </td>
                 </tr>
             </table>
-
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 250px;">57.1 Advise Through No</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox
-                            ID="comboAdviseThroughBankNo700"
-                            runat="server"
-                            AppendDataBoundItems="true"
-                            AutoPostBack="False"
-                            OnItemDataBound="SwiftCode_ItemDataBound"
-                            MarkFirstMatch="True"
-                            Width="355"
-                            Height="150"
-                            AllowCustomText="false">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
-                    </td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtAdviseThroughBankNo700" runat="server" AutoPostBack="True" OnTextChanged="txtAdviseThroughBankNo700_OnTextChanged" /></td>
+                    <td><asp:Label ID="lblAdviseThroughBankNo700" runat="server" Text=""></asp:Label></td>
                 </tr>
-
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 250px;">57.2 Advise Through Name</td>
                     <td class="MyContent">
@@ -1991,7 +1875,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td style="width: 250px" class="MyLable">59.2 Beneficiary No.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbBeneficiaryNo740" runat="server" Width="355"  />
+                        <telerik:RadTextBox ID="tbBeneficiaryNo740" runat="server"  />
                     </td>
                     <td>
                         <asp:Label ID="lblBeneficiaryError740" runat="server" Text="" ForeColor="red" />
@@ -2091,8 +1975,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td style="width: 250px" class="MyLable">41A.2 Available With No.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbAvailableWithNo740" runat="server" Width="355"
-                            AutoPostBack="True" OnTextChanged="tbAvailableWithNo740_OnTextChanged" />
+                        <telerik:RadTextBox ID="tbAvailableWithNo740" runat="server" AutoPostBack="True" OnTextChanged="tbAvailableWithNo740_OnTextChanged" />
                     </td>
                     <td>
                         <asp:Label ID="lblAvailableWithNoError740" runat="server" Text="" ForeColor="red" />
@@ -2151,7 +2034,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td style="width: 250px" class="MyLable">42A.2 Drawee No</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="tbDraweeCusNo740" runat="server" Width="355" Text="VVTBVNVX" />
+                        <telerik:RadTextBox ID="tbDraweeCusNo740" runat="server" Text="VVTBVNVX" />
                     </td>
                 </tr>
                 <tr>
@@ -2268,7 +2151,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td class="MyLable">52A.1 Issuing Bank Reference</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtIssuingBankReferenceNo_707" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="txtIssuingBankReferenceNo_707" runat="server" />
                     </td>
                 </tr>
 
@@ -2353,7 +2236,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td class="MyLable" style="width: 250px">59.1 Beneficiary No.</td>
                     <td class="MyContent" style="width: 150px">
-                        <telerik:RadTextBox ID="txtBeneficiaryNo_707" runat="server" Width="355" />
+                        <telerik:RadTextBox ID="txtBeneficiaryNo_707" runat="server" />
                     </td>
                 </tr>
 
@@ -2621,29 +2504,14 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                     </td>
                 </tr>
             </table>
-
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 250px;">21.2 Reimb. Bank No</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox
-                            ID="comboReimbBankNo_747"
-                            runat="server"
-                            AppendDataBoundItems="true"
-                            OnItemDataBound="SwiftCode_ItemDataBound"
-                            MarkFirstMatch="True"
-                            Width="355"
-                            Height="150"
-                            AllowCustomText="false">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
-                    </td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtReimbBankNo_747" runat="server" AutoPostBack="True" OnTextChanged="txtReimbBankNo_747_OnTextChanged" /></td>
+                    <td><asp:Label ID="lblReimbBankNo_747" runat="server" Text=""></asp:Label></td>
                 </tr>
-
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 250px;">21.3 Reimb. Bank Name</td>
                     <td class="MyContent">
@@ -3592,63 +3460,6 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 numPercentageCreditTolerance_747_2.set_value(tbdrTolerance);
             }
         }
-
-
-        function AdviseBank_OnClientSelectedIndexChanged() {
-            var txtRevivingBank700 = $find("<%= txtRevivingBank700.ClientID %>"),
-                rcbAdviseBankNo = $find("<%=rcbAdviseBankNo.ClientID %>");
-
-            if (txtRevivingBank700) {
-                txtRevivingBank700.set_value(rcbAdviseBankNo.get_value());
-                txtRevivingBank700.set_textBoxValue(rcbAdviseBankNo.get_value());
-                txtRevivingBank700.set_displayValue(rcbAdviseBankNo.get_value());
-            }
-
-            $find("<%= tbAdviseBankName.ClientID %>").set_value(rcbAdviseBankNo.get_selectedItem().get_attributes().getAttribute("BankName"));
-        }
-        
-        function rcbReimbBankNo_OnClientSelectedIndexChanged() {
-            var rcbReimbBankNo = $find("<%= rcbReimbBankNo.ClientID %>"),
-                tbReimbBankName = $find("<%= tbReimbBankName.ClientID %>"),
-                rcbReimbBankNo700 = $find("<%= rcbReimbBankNo700.ClientID %>"),
-                tbReimbBankName700 = $find("<%= tbReimbBankName700.ClientID %>"),                
-                txtRemittingBankNo = $find("<%= txtRemittingBankNo.ClientID %>"),
-                lblReceivingBank_747 = $find("<%= txtReceivingBank_747.ClientID %>"),
-                comboReimbBankNo_747 = $find("<%= comboReimbBankNo_747.ClientID %>"),
-                txtReimbBankName_747 = $find("<%= txtReimbBankName_747.ClientID %>");
-
-            if (rcbReimbBankNo700) {
-                rcbReimbBankNo700.set_text(rcbReimbBankNo.get_selectedItem().get_text());
-                rcbReimbBankNo700.set_value(rcbReimbBankNo.get_value());
-                
-                tbReimbBankName700.set_value(rcbReimbBankNo.get_selectedItem().get_attributes().getAttribute("BankName"));
-            }
-            
-            //comboRevivingBank = $find(""),
-            //if (comboRevivingBank) {
-            //    comboRevivingBank.set_text(rcbReimbBankNo.get_selectedItem().get_text());
-            //    comboRevivingBank.set_value(rcbReimbBankNo.get_value());
-            //}
-
-            if (txtRemittingBankNo) {
-                txtRemittingBankNo.set_value(rcbReimbBankNo.get_value());
-            }
-            
-            if (lblReceivingBank_747) {
-                lblReceivingBank_747.set_value(rcbReimbBankNo.get_value());
-            }
-            
-            if (comboReimbBankNo_747) {
-                comboReimbBankNo_747.set_text(rcbReimbBankNo.get_selectedItem().get_text());
-                comboReimbBankNo_747.set_value(rcbReimbBankNo.get_value());
-                
-                txtReimbBankName_747.set_value(rcbReimbBankNo.get_selectedItem().get_attributes().getAttribute("BankName"));
-            }
-
-            if (tbReimbBankName) {
-                tbReimbBankName.set_value(rcbReimbBankNo.get_selectedItem().get_attributes().getAttribute("BankName"));
-            }
-        }
         
         $("#<%=txtCode.ClientID %>").keyup(function (event) {
             if (event.keyCode == 13) {
@@ -3842,26 +3653,6 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 tbApplicantAddr700_3.set_value(rcbApplicantID.get_attributes().getAttribute("Country"));
             }
         }
-        
-        function txtBeneficiaryNo_OnValueChanged() {
-            var txtBeneficiaryNo = $find('<%=txtBeneficiaryNo.ClientID %>'),
-                bankCode = txtBeneficiaryNo.get_value(),
-                txtBeneficiaryNo700 = $find('<%=txtBeneficiaryNo700.ClientID %>'),                
-                tbBeneficiaryNo740 = $find('<%=tbBeneficiaryNo740.ClientID %>'),                
-                txtBeneficiaryNo_707 = $find('<%=txtBeneficiaryNo_707.ClientID %>');
-            
-            if (txtBeneficiaryNo700) {
-                txtBeneficiaryNo700.set_value(bankCode);
-            }
-            
-            if (tbBeneficiaryNo740) {
-                tbBeneficiaryNo740.set_value(bankCode);
-            }
-            
-            if (txtBeneficiaryNo_707) {
-                txtBeneficiaryNo_707.set_value(bankCode);
-            }            
-        }
 
         function tbApplicantName_OnValueChanged () {
             var val = $find('<%=tbApplicantName.ClientID %>').get_value(),
@@ -3896,26 +3687,6 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 
             if (tbApplicantAddr700_3) {
                 tbApplicantAddr700_3.set_value(val);
-            }
-        }
-
-        function rcbAdviseThruNo_OnClientSelectedIndexChanged() {
-            var rcbAdviseThruNo = $find('<%=rcbAdviseThruNo.ClientID %>'),
-                bankCode = rcbAdviseThruNo.get_value(),
-                bankName = rcbAdviseThruNo.get_selectedItem().get_attributes().getAttribute('BankName'),
-                tbAdviseThruName = $find('<%=tbAdviseThruName.ClientID %>'),
-                comboAdviseThroughBankNo700 = $find('<%=comboAdviseThroughBankNo700.ClientID %>'),
-                txtAdviseThroughBankName700 = $find('<%=txtAdviseThroughBankName700.ClientID %>');
-            
-            if (tbAdviseThruName) {
-                tbAdviseThruName.set_value(bankName);
-            }
-            
-            if (comboAdviseThroughBankNo700) {
-                comboAdviseThroughBankNo700.set_text(rcbAdviseThruNo.get_selectedItem().get_text());
-                comboAdviseThroughBankNo700.set_value(bankCode);
-                
-                txtAdviseThroughBankName700.set_value(bankName);
             }
         }
 
@@ -3965,8 +3736,8 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 comboReimbBankType700.set_value(comboReimbBankType.get_value());
                 comboReimbBankType700.set_text(comboReimbBankType.get_selectedItem().get_text());
 
-                $find('<%=rcbReimbBankNo700.ClientID %>').set_value('');
-                $find('<%=rcbReimbBankNo700.ClientID %>').set_text('');
+                $find('<%=txtReimbBankNo700.ClientID %>').set_value('');
+                $find('<%=txtReimbBankNo700.ClientID %>').set_text('');
 
                 $find('<%=tbReimbBankName700.ClientID %>').set_value('');
                 $find('<%=tbReimbBankAddr700_1.ClientID %>').set_value('');
@@ -3978,8 +3749,8 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 comboReimbBankType_747.set_value(comboReimbBankType.get_value());
                 comboReimbBankType_747.set_text(comboReimbBankType.get_selectedItem().get_text());
 
-                $find('<%=comboReimbBankNo_747.ClientID %>').set_value('');
-                $find('<%=comboReimbBankNo_747.ClientID %>').set_text('');
+                $find('<%=txtReimbBankNo_747.ClientID %>').set_value('');
+                $find('<%=txtReimbBankNo_747.ClientID %>').set_text('');
 
                 $find('<%=txtReimbBankName_747.ClientID %>').set_value('');
                 $find('<%=txtReimbBankAddr_747_1.ClientID %>').set_value('');
@@ -4114,13 +3885,6 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             </UpdatedControls>
         </telerik:AjaxSetting>
 
-        <%-- <telerik:AjaxSetting AjaxControlID="rcbAdviseBankNo">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="tbAdviseBankName" />
-                
-            </UpdatedControls>
-        </telerik:AjaxSetting>--%>
-
         <telerik:AjaxSetting AjaxControlID="tbReimbBankName">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankName700" />
@@ -4161,17 +3925,25 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             </UpdatedControls>
         </telerik:AjaxSetting>
 
-        <telerik:AjaxSetting AjaxControlID="comboAvailableWithNo">
+        <telerik:AjaxSetting AjaxControlID="txtAvailableWithNo">
             <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblAvailableWithMessage" />
                 <telerik:AjaxUpdatedControl ControlID="tbAvailableWithName" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr3" />
+
                 <telerik:AjaxUpdatedControl ControlID="tbAvailableWithNo740" />
                 <telerik:AjaxUpdatedControl ControlID="tbAvailableWithName740" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr740_1" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr740_2" />
+                <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr740_3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
         <telerik:AjaxSetting AjaxControlID="rcbAvailableWithType">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="comboAvailableWithNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtAvailableWithNo" />
                 <telerik:AjaxUpdatedControl ControlID="tbAvailableWithName" />
                 <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="tbAvailableWithAddr2" />
@@ -4322,7 +4094,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr3" />
 
                 <telerik:AjaxUpdatedControl ControlID="comboAdviseThroughBankType700" />
-                <telerik:AjaxUpdatedControl ControlID="comboAdviseThroughBankNo700" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankNo700" />
                 <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankName700" />
                 <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_1" />
                 <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_2" />
@@ -4339,7 +4111,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 
         <telerik:AjaxSetting AjaxControlID="comboDraweeCusType">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="comboDraweeCusNo700" />
+                <telerik:AjaxUpdatedControl ControlID="txtDraweeCusNo700" />
                 <telerik:AjaxUpdatedControl ControlID="txtDraweeCusName" />
                 <telerik:AjaxUpdatedControl ControlID="txtDraweeAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtDraweeAddr2" />
@@ -4347,9 +4119,13 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             </UpdatedControls>
         </telerik:AjaxSetting>
 
-        <telerik:AjaxSetting AjaxControlID="comboDraweeCusNo700">
+        <telerik:AjaxSetting AjaxControlID="txtDraweeCusNo700">
             <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblDraweeCusNo700Message" />
                 <telerik:AjaxUpdatedControl ControlID="txtDraweeCusName" />
+                <telerik:AjaxUpdatedControl ControlID="txtDraweeAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtDraweeAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtDraweeAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
@@ -4374,6 +4150,115 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_4" />
                 <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_5" />
                 <telerik:AjaxUpdatedControl ControlID="txtNarrative_747_6" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="txtBeneficiaryNo">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblBeneficiaryBankMessage" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryBankName" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryBankAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryBankAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryBankAddr3" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryNo700" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryName700" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr700_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr700_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr700_3" />
+                <telerik:AjaxUpdatedControl ControlID="tbBeneficiaryNo740" />
+                <telerik:AjaxUpdatedControl ControlID="tbBeneficiaryName740" />
+                <telerik:AjaxUpdatedControl ControlID="tbBeneficiaryAddr740_1" />
+                <telerik:AjaxUpdatedControl ControlID="tbBeneficiaryAddr740_2" />
+                <telerik:AjaxUpdatedControl ControlID="tbBeneficiaryAddr740_3" />
+                <%--<telerik:AjaxUpdatedControl ControlID="txtBeneficiaryNo_707" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryName_707" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr_707_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr_707_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr_707_3" />--%>
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="txtAdviseBankNo">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblAdviseBankMessage" />
+                <telerik:AjaxUpdatedControl ControlID="tbAdviseBankName" />
+                <telerik:AjaxUpdatedControl ControlID="tbAdviseBankAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="tbAdviseBankAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="tbAdviseBankAddr3" />
+                <telerik:AjaxUpdatedControl ControlID="txtRevivingBank700" />
+                <telerik:AjaxUpdatedControl ControlID="tbRevivingBankName" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="txtReimbBankNo">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblReimbBankMessage" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankName" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr3" />
+
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankNo700" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankName700" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_1" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_2" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_3" />
+
+                <telerik:AjaxUpdatedControl ControlID="txtRemittingBankNo" />
+                <telerik:AjaxUpdatedControl ControlID="lblReceivingBankNoError" />
+                <telerik:AjaxUpdatedControl ControlID="lblReceivingBankName" />
+
+                <%--<telerik:AjaxUpdatedControl ControlID="txtReceivingBank_747" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankNo_747" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankName_747" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_3" />--%>
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="txtAdviseThruNo">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblAdviseThruMessage" />
+                <telerik:AjaxUpdatedControl ControlID="tbAdviseThruName" />
+                <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr3" />
+
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankNo700" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankName700" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="txtReimbBankNo700">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblReimbBankNo700Message" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankName700" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_1" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_2" />
+                <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr700_3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="txtAdviseThroughBankNo700">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblAdviseThroughBankNo700" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankName700" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="txtReimbBankNo_747">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblReimbBankNo_747" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankName_747" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankAddr_747_3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>
