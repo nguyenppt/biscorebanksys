@@ -537,7 +537,7 @@ namespace BankProject.Views.TellerApplication
 
             NewLoanInterestedKeyRepository facade = new NewLoanInterestedKeyRepository();
             var src = facade.GetAll().ToList();
-            Util.LoadData2RadCombo(rcbDepositeRate, src, "Id", "LoanInterest_Key", "-Select Interest Key-", true);
+            Util.LoadData2RadCombo(rcbDepositeRate, src, "MonthLoanRateNo", "LoanInterest_Key", "-Select Interest Key-", true);
 
             if (!String.IsNullOrEmpty(selectedid))
             {
