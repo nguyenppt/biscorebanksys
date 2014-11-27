@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using BankProject.DBContext;
 using Telerik.Web.UI;
 using BankProject.Model;
+using BankProject.DataProvider;
+using System.Data;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
@@ -57,7 +59,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.Status == "UNA").Select(q => new { q.NormalLCCode,q.Status }).ToList();
                     break;
                 case AdvisingAndNegotiationScreenType.Amend:
-                    radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.AmendStatus == "UNA").Select(q => new { q.NormalLCCode, Status = q.AmendStatus }).ToList();
+                    DataSet datasource = new DataSet();//Tab1
+                    DataTable tbl1 = new DataTable();
+                    tbl1.Columns.Add("NormalLCCode");
+                    tbl1.Columns.Add("Status");
+                    var lst = entContext.BAdvisingAndNegotiationLCs.Where(q => q.AmendStatus == "UNA" && (q.ActiveRecordFlag == null || q.ActiveRecordFlag == YesNo.YES)).ToList();
+                    foreach (var item in lst)
+                    {
+                        if (!String.IsNullOrEmpty(item.AmendNo))
+                        {
+                            tbl1.Rows.Add(item.AmendNo, item.AmendStatus);
+                        }
+                    }
+                    datasource.Tables.Add(tbl1);
+                    radGridReview.DataSource = datasource;
                     break;
                 case AdvisingAndNegotiationScreenType.Cancel:
                     radGridReview.DataSource = entContext.BAdvisingAndNegotiationLCs.Where(q => q.CancelStatus == "UNA").Select(q => new { q.NormalLCCode, Status = q.CancelStatus }).ToList();

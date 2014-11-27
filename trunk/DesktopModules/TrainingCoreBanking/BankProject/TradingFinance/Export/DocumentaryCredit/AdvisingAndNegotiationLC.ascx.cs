@@ -433,67 +433,113 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void InitToolBarForAmend()
         {
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-            if (_exportDoc != null)
+            var chkfindTypeAmend = tbEssurLCCode.Text.Split('.');
+            //var chkdsDetail = new BAdvisingAndNegotiationLC();
+            if (chkfindTypeAmend != null && chkfindTypeAmend.Length > 1)
             {
-                if (Disable) // Authorizing
+                if (chkfindTypeAmend.Length == 2)
                 {
-                    if (_exportDoc.Status != "AUT")
+                    _exportDoc = entContext.BAdvisingAndNegotiationLCs.Where(x => x.AmendNo == tbEssurLCCode.Text).FirstOrDefault();
+                    if (_exportDoc != null)
                     {
-                        lblError.Text = "This LC was not authorized";
-                    }
-                    else if (_exportDoc.AmendStatus == "AUT")
-                    {
-                        lblError.Text = "This LC was approve for amend";
-                    }
-                    else if (_exportDoc.AmendStatus == "REV")
-                    {
-                        lblError.Text = "This LC was revert for amend";
-                    }
-                    else if (_exportDoc.CancelStatus != null)
-                    {
-                        lblError.Text = "This LC was canceled or waited for approve cancel";
-                    }
-                    else if (_exportDoc.CloseStatus != null)
-                    {
-                        lblError.Text = "This LC was closed or waited for approve closed";
-                    }
-                    else // Not yet authorize
-                    {
-                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                    }
-                    SetDisableByReview(false);
-                }
-                else // Editing
-                {
-                    if (_exportDoc.Status != "AUT") // Authorized
-                    {
-                        lblError.Text = "This LC was not authorized";
-                        SetDisableByReview(false);
-                    }
-                    else if (_exportDoc.CancelStatus != null)
-                    {
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                        lblError.Text = "This LC was canceled or waited for approve cancel";
-                        SetDisableByReview(false);
-                    }
-                    else if (_exportDoc.CloseStatus!=null)
-                    {
-                        lblError.Text = "This LC was closed or waited for approve closed";
-                        SetDisableByReview(false);
-                    }
-                    else // Not yet authorize
-                    {
-                        RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
-                        tbEssurLCCode.Enabled = false;
-                    }
+                        if (Disable) // Authorizing
+                        {
+                            if (_exportDoc.Status != "AUT")
+                            {
+                                lblError.Text = "This LC was not authorized";
+                            }
+                            else if (_exportDoc.AmendStatus == "AUT")
+                            {
+                                lblError.Text = "This LC was approve for amend";
+                            }
+                            else if (_exportDoc.CancelStatus != null)
+                            {
+                                lblError.Text = "This LC was canceled or waited for approve cancel";
+                            }
+                            else if (_exportDoc.CloseStatus != null)
+                            {
+                                lblError.Text = "This LC was closed or waited for approve closed";
+                            }
+                            else // Not yet authorize
+                            {
+                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                                RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                            }
+                            SetDisableByReview(false);
+                        }
+                        else // Editing
+                        {
+                            if (_exportDoc.Status != "AUT") // Authorized
+                            {
+                                lblError.Text = "This LC was not authorized";
+                                SetDisableByReview(false);
+                            }
+                            else if (_exportDoc.AmendStatus == "AUT")
+                            {
+                                lblError.Text = "This LC was amend";
+                                SetDisableByReview(false);
+                            }
+                            else if (_exportDoc.CancelStatus != null)
+                            {
+                                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                                lblError.Text = "This LC was canceled or waited for approve cancel";
+                                SetDisableByReview(false);
+                            }
+                            else if (_exportDoc.CloseStatus != null)
+                            {
+                                lblError.Text = "This LC was closed or waited for approve closed";
+                                SetDisableByReview(false);
+                            }
+                            
+                            else // Not yet authorize
+                            {
+                                RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                                tbEssurLCCode.Enabled = false;
+                            }
 
+                        }
+                    }
                 }
             }
             else
             {
+                var objAmend = new BAdvisingAndNegotiationLC();
+                var chkAmend = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == tbEssurLCCode.Text).ToList();
+                if (chkAmend != null && chkAmend.Count > 0)
+                {
+                    objAmend = chkAmend.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES) && (x.AmendStatus == "UNA"||x.AmendStatus=="REV")).FirstOrDefault();
+                    if (objAmend != null)
+                    {
+                        bc.Commont.SetTatusFormControls(this.Controls, this.TabId == TabIssueLCAmend);
+                        RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                        tbEssurLCCode.Text = objAmend.AmendNo;
+                    }
+                    else
+                    {
+                        var maxAmendId = chkAmend.Max(x => x.AmendId);
+                        if (maxAmendId == null)
+                        {
+                            maxAmendId = 1;
+                        }
+                        else
+                        {
+                            maxAmendId = maxAmendId + 1;
+                        }
+                        var code = tbEssurLCCode.Text;
 
+                        var ctnAmend = chkAmend.Where(x => x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES).FirstOrDefault();
+                        if (ctnAmend != null)
+                        {
+                            tbEssurLCCode.Text = ctnAmend.NormalLCCode;
+                            LoadData();
+                        }
+                        RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                        tbEssurLCCode.Text = code + "." + maxAmendId;
+                    }
+                }
+                
             }
         }
         protected void InitToolBarForRegister()
@@ -561,8 +607,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //load tab main
             if (!String.IsNullOrWhiteSpace(tbEssurLCCode.Text))
             {
-
-                var dt = entContext.BAdvisingAndNegotiationLCs.Where(dr => dr.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
+                var dt = new BAdvisingAndNegotiationLC();
+                if (tbEssurLCCode.Text.IndexOf('.') == -1)
+                {
+                    dt = entContext.BAdvisingAndNegotiationLCs.Where(dr => dr.NormalLCCode == tbEssurLCCode.Text && (dr.ActiveRecordFlag == null || dr.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+                }
+                else
+                {
+                    dt = entContext.BAdvisingAndNegotiationLCs.Where(dr => dr.AmendNo == tbEssurLCCode.Text && (dr.ActiveRecordFlag == null || dr.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+                }
                 if (dt != null)
                 {
                     //
@@ -1486,6 +1539,257 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             else
                 RadToolBar1.FindItemByValue("btPrint").Enabled = false;
         }
+        protected bool SaveAmend()
+        {
+            try {
+                int AmendPreId = 0;
+                string AmendNo = "";
+                if (tbEssurLCCode.Text == "")
+                {
+                    lblError.Text = "Please fill in the Code";
+                    return false;
+                }
+                if (tbEssurLCCode.Text.IndexOf('.') != -1)
+                {
+                    var findTypeAmend = tbEssurLCCode.Text.Split('.');
+                    if (findTypeAmend != null && findTypeAmend.Length > 0)
+                    {
+                        if (findTypeAmend.Length == 2)
+                        { 
+                            //xet xem so Amend No nay da co hay chua
+                            var chkAmend = entContext.BAdvisingAndNegotiationLCs.Where(x => x.AmendNo == tbEssurLCCode.Text).FirstOrDefault();
+                            //truong hop chua co
+                            if (chkAmend == null)
+                            {
+                                if (!String.IsNullOrEmpty(findTypeAmend[1]))
+                                {
+                                    AmendPreId = int.Parse(findTypeAmend[1]) - 1;
+                                }
+                                if (AmendPreId > 0)
+                                {
+                                    ///xet Amend truoc do
+                                    ///
+                                    AmendNo = findTypeAmend[0] + "." + AmendPreId;
+                                    var objPreAmend = entContext.BAdvisingAndNegotiationLCs.Where(x => x.AmendNo == AmendNo).FirstOrDefault();
+                                    if (objPreAmend != null)
+                                    {
+                                        objPreAmend.ActiveRecordFlag = YesNo.NO;
+                                    }
+                                }
+                                else
+                                {
+                                    //nguoc lai update Status cho Amend goc
+                                    AmendNo = findTypeAmend[0];
+                                    var objPreAmend = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == AmendNo).FirstOrDefault();
+                                    if (objPreAmend != null)
+                                    {
+                                        objPreAmend.ActiveRecordFlag = YesNo.NO;
+                                    }
+                                }
+                                //update
+                                entContext.SaveChanges();
+                                //them moi dong hien tai
+                                BAdvisingAndNegotiationLC objInsertAmend = new BAdvisingAndNegotiationLC
+                                {
+                                    NormalLCCode = findTypeAmend[0],
+                                    ReceivingBank = txtRevivingBank700.Text.Trim(),
+                                    SequenceOfTotal = tbBaquenceOfTotal.Text.Trim(),
+                                    FormDocumentaryCredit = comboFormOfDocumentaryCredit.SelectedValue,
+                                    DocumentaryCreditNumber = lblDocumentaryCreditNumber.Text,
+                                    DateOfIssue = dteDateOfIssue.SelectedDate,
+                                    DateExpiry = dteMT700DateAndPlaceOfExpiry.SelectedDate,
+                                    PlaceOfExpiry = tbPlaceOfExpiry.Text.Trim(),
+                                    ApplicationRule = comboAvailableRule.SelectedValue,
+                                    ApplicantType = rcbApplicantBankType700.SelectedValue,
+                                    ApplicantNo = tbApplicantNo700.Text.Trim(),
+                                    ApplicantName = tbApplicantName700.Text.Trim(),
+                                    ApplicantAddr1 = tbApplicantAddr700_1.Text.Trim(),
+                                    ApplicantAddr2 = tbApplicantAddr700_2.Text.Trim(),
+                                    ApplicantAddr3 = tbApplicantAddr700_3.Text.Trim(),
+                                    Currency = comboCurrency700.SelectedValue,
+                                    Amount = numAmount700.Value,
+                                    PercentageCredit = numPercentCreditAmount1.Value,
+                                    AmountTolerance = numPercentCreditAmount2.Value,
+                                    MaximumCreditAmount = comboMaximumCreditAmount700.SelectedValue,
+                                    AvailableWithType = rcbAvailableWithType.SelectedValue,
+                                    AvailableWithNo = comboAvailableWithNo.SelectedValue,
+                                    AvailableWithName = tbAvailableWithName.Text.Trim(),
+                                    AvailableWithAddr1 = tbAvailableWithAddr1.Text.Trim(),
+                                    AvailableWithAddr2 = tbAvailableWithAddr2.Text.Trim(),
+                                    AvailableWithAddr3 = tbAvailableWithAddr3.Text.Trim(),
+                                    Available_By = comboAvailableWithBy.SelectedValue,
+                                    MixedPaymentDetails1 = txtMixedPaymentDetails700_1.Text.Trim(),
+                                    MixedPaymentDetails2 = txtMixedPaymentDetails700_2.Text.Trim(),
+                                    MixedPaymentDetails3 = txtMixedPaymentDetails700_3.Text.Trim(),
+                                    MixedPaymentDetails4 = txtMixedPaymentDetails700_4.Text.Trim(),
+                                    DeferredPaymentDetails1 = txtDeferredPaymentDetails700_1.Text.Trim(),
+                                    DeferredPaymentDetails2 = txtMixedPaymentDetails700_2.Text.Trim(),
+                                    DeferredPaymentDetails3 = txtMixedPaymentDetails700_3.Text.Trim(),
+                                    DeferredPaymentDetails4 = txtMixedPaymentDetails700_4.Text.Trim(),
+                                    PatialShipment = rcbPatialShipment.SelectedValue,
+                                    Transhipment = rcbTranshipment.SelectedValue,
+                                    PlaceOfTakingInCharge = tbPlaceoftakingincharge.Text,
+                                    PortOfLoading = tbPortofloading.Text,
+                                    PortOfDischarge = tbPortofDischarge.Text,
+                                    PlaceOfFinalInDistination = tbPlaceoffinalindistination.Text,
+                                    LatesDateOfShipment = tbLatesDateofShipment.SelectedDate,
+                                    ShipmentPeriod1 = txtShipmentPeriod700_1.Text,
+                                    ShipmentPeriod2 = txtShipmentPeriod700_2.Text,
+                                    ShipmentPeriod3 = txtShipmentPeriod700_3.Text,
+                                    ShipmentPeriod4 = txtShipmentPeriod700_4.Text,
+                                    DescrpGoodsBervices = txtEdittor_DescrpofGoods.Content,
+                                    DocsRequired = txtEdittor_OrderDocs700.Content,
+                                    AdditionalConditions = txtEdittor_AdditionalConditions700.Content,
+                                    Charges = txtEdittor_Charges700.Content,
+                                    PeriodForPresentation = txtEdittor_PeriodforPresentation700.Content,
+                                    ConfimationInstructions = rcbConfimationInstructions.SelectedValue,
+                                    InstrToPaygAccptgNegotgBank = txtEdittor_NegotgBank700.Content,
+                                    SenderReceiverInfomation = txtEdittor_SendertoReceiverInfomation700.Content,
+                                    BeneficiaryType = comboBeneficiaryType700.SelectedValue,
+                                    BeneficiaryNo = txtBeneficiaryNo700.Text,
+                                    BeneficiaryName = txtBeneficiaryName700.Text,
+                                    BeneficiaryAddr1 = txtBeneficiaryAddr700_1.Text,
+                                    BeneficiaryAddr2 = txtBeneficiaryAddr700_2.Text,
+                                    BeneficiaryAddr3 = txtBeneficiaryAddr700_3.Text,
+                                    AdviseThroughBankType = comboAdviseThroughBankType700.SelectedValue,
+                                    AdviseThroughBankNo = comboAdviseThroughBankNo700.SelectedValue,
+                                    AdviseThroughBankName = txtAdviseThroughBankName700.Text,
+                                    AdviseThroughBankAddr1 = txtAdviseThroughBankAddr700_1.Text,
+                                    AdviseThroughBankAddr2 = txtAdviseThroughBankAddr700_2.Text,
+                                    AdviseThroughBankAddr3 = txtAdviseThroughBankAddr700_3.Text,
+                                    ReimbBankType = comboReimbBankType700.SelectedValue,
+                                    ReimbBankNo = rcbReimbBankNo700.SelectedValue,
+                                    ReimbBankName = tbReimbBankName700.Text,
+                                    ReimbBankAddr1 = tbReimbBankAddr700_1.Text,
+                                    ReimbBankAddr2 = tbReimbBankAddr700_2.Text,
+                                    ReimbBankAddr3 = tbReimbBankAddr700_3.Text,
+                                    AdditionalAmountsCovered1 = txtAdditionalAmountsCovered700_1.Text,
+                                    AdditionalAmountsCovered2 = txtAdditionalAmountsCovered700_2.Text,
+                                    DraftsAt1 = txtDraftsAt700_1.Text,
+                                    DraftsAt2 = txtDraftsAt700_2.Text,
+                                    //
+                                    DraweeType = comboDraweeCusType.SelectedValue,
+                                    DraweeNo = comboDraweeCusNo700.SelectedValue,
+                                    DraweeName = txtDraweeCusName.Text,
+                                    DraweeAddr1 = txtDraweeAddr1.Text,
+                                    DraweeAddr2 = txtDraweeAddr2.Text,
+                                    DraweeAddr3 = txtDraweeAddr3.Text,
+                                    AmendId = int.Parse(findTypeAmend[1]),
+                                    AmendNo = tbEssurLCCode.Text,
+                                    ActiveRecordFlag = YesNo.YES,
+                                    Status = "AUT",
+                                    RefAmendNo = AmendNo,
+                                    AmendStatus = "UNA"
+                                };
+                                entContext.BAdvisingAndNegotiationLCs.Add(objInsertAmend);
+                                entContext.SaveChanges();
+                            }
+                            else
+                            {
+                                chkAmend.NormalLCCode = findTypeAmend[0];
+                                chkAmend.ReceivingBank = txtRevivingBank700.Text.Trim();
+                                chkAmend.SequenceOfTotal = tbBaquenceOfTotal.Text.Trim();
+                                chkAmend.FormDocumentaryCredit = comboFormOfDocumentaryCredit.SelectedValue;
+                                chkAmend.DocumentaryCreditNumber = lblDocumentaryCreditNumber.Text;
+                                chkAmend.DateOfIssue = dteDateOfIssue.SelectedDate;
+                                chkAmend.DateExpiry = dteMT700DateAndPlaceOfExpiry.SelectedDate;
+                                chkAmend.PlaceOfExpiry = tbPlaceOfExpiry.Text.Trim();
+                                chkAmend.ApplicationRule = comboAvailableRule.SelectedValue;
+                                chkAmend.ApplicantType = rcbApplicantBankType700.SelectedValue;
+                                chkAmend.ApplicantNo = tbApplicantNo700.Text.Trim();
+                                chkAmend.ApplicantName = tbApplicantName700.Text.Trim();
+                                chkAmend.ApplicantAddr1 = tbApplicantAddr700_1.Text.Trim();
+                                chkAmend.ApplicantAddr2 = tbApplicantAddr700_2.Text.Trim();
+                                chkAmend.ApplicantAddr3 = tbApplicantAddr700_3.Text.Trim();
+                                chkAmend.Currency = comboCurrency700.SelectedValue;
+                                chkAmend.Amount = numAmount700.Value;
+                                chkAmend.PercentageCredit = numPercentCreditAmount1.Value;
+                                chkAmend.AmountTolerance = numPercentCreditAmount2.Value;
+                                chkAmend.MaximumCreditAmount = comboMaximumCreditAmount700.SelectedValue;
+                                chkAmend.AvailableWithType = rcbAvailableWithType.SelectedValue;
+                                chkAmend.AvailableWithNo = comboAvailableWithNo.SelectedValue;
+                                chkAmend.AvailableWithName = tbAvailableWithName.Text.Trim();
+                                chkAmend.AvailableWithAddr1 = tbAvailableWithAddr1.Text.Trim();
+                                chkAmend.AvailableWithAddr2 = tbAvailableWithAddr2.Text.Trim();
+                                chkAmend.AvailableWithAddr3 = tbAvailableWithAddr3.Text.Trim();
+                                chkAmend.Available_By = comboAvailableWithBy.SelectedValue;
+                                chkAmend.MixedPaymentDetails1 = txtMixedPaymentDetails700_1.Text.Trim();
+                                chkAmend.MixedPaymentDetails2 = txtMixedPaymentDetails700_2.Text.Trim();
+                                chkAmend.MixedPaymentDetails3 = txtMixedPaymentDetails700_3.Text.Trim();
+                                chkAmend.MixedPaymentDetails4 = txtMixedPaymentDetails700_4.Text.Trim();
+                                chkAmend.DeferredPaymentDetails1 = txtDeferredPaymentDetails700_1.Text.Trim();
+                                chkAmend.DeferredPaymentDetails2 = txtMixedPaymentDetails700_2.Text.Trim();
+                                chkAmend.DeferredPaymentDetails3 = txtMixedPaymentDetails700_3.Text.Trim();
+                                chkAmend.DeferredPaymentDetails4 = txtMixedPaymentDetails700_4.Text.Trim();
+                                chkAmend.PatialShipment = rcbPatialShipment.SelectedValue;
+                                chkAmend.Transhipment = rcbTranshipment.SelectedValue;
+                                chkAmend.PlaceOfTakingInCharge = tbPlaceoftakingincharge.Text;
+                                chkAmend.PortOfLoading = tbPortofloading.Text;
+                                chkAmend.PortOfDischarge = tbPortofDischarge.Text;
+                                chkAmend.PlaceOfFinalInDistination = tbPlaceoffinalindistination.Text;
+                                chkAmend.LatesDateOfShipment = tbLatesDateofShipment.SelectedDate;
+                                chkAmend.ShipmentPeriod1 = txtShipmentPeriod700_1.Text;
+                                chkAmend.ShipmentPeriod2 = txtShipmentPeriod700_2.Text;
+                                chkAmend.ShipmentPeriod3 = txtShipmentPeriod700_3.Text;
+                                chkAmend.ShipmentPeriod4 = txtShipmentPeriod700_4.Text;
+                                chkAmend.DescrpGoodsBervices = txtEdittor_DescrpofGoods.Content;
+                                chkAmend.DocsRequired = txtEdittor_OrderDocs700.Content;
+                                chkAmend.AdditionalConditions = txtEdittor_AdditionalConditions700.Content;
+                                chkAmend.Charges = txtEdittor_Charges700.Content;
+                                chkAmend.PeriodForPresentation = txtEdittor_PeriodforPresentation700.Content;
+                                chkAmend.ConfimationInstructions = rcbConfimationInstructions.SelectedValue;
+                                chkAmend.InstrToPaygAccptgNegotgBank = txtEdittor_NegotgBank700.Content;
+                                chkAmend.SenderReceiverInfomation = txtEdittor_SendertoReceiverInfomation700.Content;
+                                chkAmend.BeneficiaryType = comboBeneficiaryType700.SelectedValue;
+                                chkAmend.BeneficiaryNo = txtBeneficiaryNo700.Text;
+                                chkAmend.BeneficiaryName = txtBeneficiaryName700.Text;
+                                chkAmend.BeneficiaryAddr1 = txtBeneficiaryAddr700_1.Text;
+                                chkAmend.BeneficiaryAddr2 = txtBeneficiaryAddr700_2.Text;
+                                chkAmend.BeneficiaryAddr3 = txtBeneficiaryAddr700_3.Text;
+                                chkAmend.AdviseThroughBankType = comboAdviseThroughBankType700.SelectedValue;
+                                chkAmend.AdviseThroughBankNo = comboAdviseThroughBankNo700.SelectedValue;
+                                chkAmend.AdviseThroughBankName = txtAdviseThroughBankName700.Text;
+                                chkAmend.AdviseThroughBankAddr1 = txtAdviseThroughBankAddr700_1.Text;
+                                chkAmend.AdviseThroughBankAddr2 = txtAdviseThroughBankAddr700_2.Text;
+                                chkAmend.AdviseThroughBankAddr3 = txtAdviseThroughBankAddr700_3.Text;
+                                chkAmend.ReimbBankType = comboReimbBankType700.SelectedValue;
+                                chkAmend.ReimbBankNo = rcbReimbBankNo700.SelectedValue;
+                                chkAmend.ReimbBankName = tbReimbBankName700.Text;
+                                chkAmend.ReimbBankAddr1 = tbReimbBankAddr700_1.Text;
+                                chkAmend.ReimbBankAddr2 = tbReimbBankAddr700_2.Text;
+                                chkAmend.ReimbBankAddr3 = tbReimbBankAddr700_3.Text;
+                                chkAmend.AdditionalAmountsCovered1 = txtAdditionalAmountsCovered700_1.Text;
+                                chkAmend.AdditionalAmountsCovered2 = txtAdditionalAmountsCovered700_2.Text;
+                                chkAmend.DraftsAt1 = txtDraftsAt700_1.Text;
+                                chkAmend.DraftsAt2 = txtDraftsAt700_2.Text;
+                                //
+                                chkAmend.DraweeType = comboDraweeCusType.SelectedValue;
+                                chkAmend.DraweeNo = comboDraweeCusNo700.SelectedValue;
+                                chkAmend.DraweeName = txtDraweeCusName.Text;
+                                chkAmend.DraweeAddr1 = txtDraweeAddr1.Text;
+                                chkAmend.DraweeAddr2 = txtDraweeAddr2.Text;
+                                chkAmend.DraweeAddr3 = txtDraweeAddr3.Text;
+                                chkAmend.AmendId = int.Parse(findTypeAmend[1]);
+                                chkAmend.AmendNo = tbEssurLCCode.Text;
+                                chkAmend.ActiveRecordFlag = YesNo.YES;
+                                chkAmend.Status = "AUT";
+                                chkAmend.RefAmendNo = AmendNo;
+                                chkAmend.AmendStatus = "UNA";
+                                entContext.SaveChanges();
+                            }
+                            
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                lblError.Text = ex.Message;
+                return false;
+            }
+        }
         protected bool SaveData()
         {
             try
@@ -1911,9 +2215,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             switch (commandName)
             {
                 case bc.Commands.Commit:
-                    if (SaveData())
+                    if (TabId == TabIssueLCAmend)
                     {
-                        Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
+                        if (SaveAmend())
+                        {
+                            Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
+                        }
+                    }
+                    else
+                    {
+                        if (SaveData())
+                        {
+                            Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
+                        }
                     }
                     break;
                 case bc.Commands.Preview:
@@ -1936,7 +2250,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         protected void UpdateStatus(string status)
         {
-            var obj = entContext.BAdvisingAndNegotiationLCs.Where(dr => dr.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
+            var obj = new BAdvisingAndNegotiationLC();
+            if (tbEssurLCCode.Text.IndexOf('.') == -1)
+            {
+                obj = entContext.BAdvisingAndNegotiationLCs.Where(dr => dr.NormalLCCode == tbEssurLCCode.Text).FirstOrDefault();
+            }
+            else
+            {
+                obj = entContext.BAdvisingAndNegotiationLCs.Where(x => x.AmendNo == tbEssurLCCode.Text && (x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+            }
             if (obj != null)
             {
                 switch (ScreenType)

@@ -1460,7 +1460,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         var namese = name[0];
                         if(name!=null)
                         {
-                            var lstOriginalBA = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == namese).FirstOrDefault();
+                            var lstOriginalBA = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == namese&&(x.ActiveRecordFlag==null||x.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();
                             if(lstOriginalBA!=null)
                             {
                                 txtCustomerName.Value = lstOriginalBA.BeneficiaryName;
