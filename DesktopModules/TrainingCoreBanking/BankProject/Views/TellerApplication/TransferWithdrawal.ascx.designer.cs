@@ -256,6 +256,24 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadNumericTextBox lblAmtCreditForCust;
         
         /// <summary>
+        /// tbCredit_OldCustBallance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox tbCredit_OldCustBallance;
+        
+        /// <summary>
+        /// tbCredit_NewCustBallance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox tbCredit_NewCustBallance;
+        
+        /// <summary>
         /// rdpCreditValueDate control.
         /// </summary>
         /// <remarks>
