@@ -248,6 +248,16 @@
                             <NumberFormat DecimalDigits="2" />
                         </telerik:RadNumericTextBox>
                     </td>
+                    <td style="visibility:hidden;">
+                        <telerik:RadNumericTextBox ID="tbCredit_OldCustBallance" readonly="true" BorderWidth="0" runat="server" >
+                            <NumberFormat DecimalDigits="2" />
+                        </telerik:RadNumericTextBox>
+                    </td>
+                    <td style="visibility:hidden;">
+                        <telerik:RadNumericTextBox ID="tbCredit_NewCustBallance" readonly="true" BorderWidth="0" runat="server" >
+                            <NumberFormat DecimalDigits="2" />
+                        </telerik:RadNumericTextBox>
+                    </td>
                 </tr>
                 <tr>
                     <td class="MyLable">Value Date</td>
@@ -343,11 +353,12 @@
         if (amtDeposited > custBal) {
             showmessage();
         }
-
+        var Credit_OldCustBalance = $find("<%=tbCredit_OldCustBallance.ClientID%>").get_value();
         var parCurrency1 = amtDeposited * dealRate;
         if (parCurrency1) {
             newCustBalElement.set_value(custBal - amtDeposited);
             nAmtPaidToCustElement.set_value(parCurrency1);
+            $find("<%=tbCredit_NewCustBallance.ClientID%>").set_value((Credit_OldCustBalance + amtDeposited).toLocaleString("en-US"))
         }
     }
 
@@ -462,6 +473,8 @@
                  <telerik:AjaxUpdatedControl ControlID="lbErrorDebitAccount" />
                  <telerik:AjaxUpdatedControl ControlID="lbDebitAccountTitle" />
                  <telerik:AjaxUpdatedControl ControlID="hdfCheckDebit" />
+                 <telerik:AjaxUpdatedControl ControlID="txtDebitAmt" />
+                 <telerik:AjaxUpdatedControl ControlID="lblCustBal" />
                 
                 
             </UpdatedControls>
@@ -475,7 +488,9 @@
                  <telerik:AjaxUpdatedControl ControlID="cmbCreditCurrency" />
                  <telerik:AjaxUpdatedControl ControlID="lbErrorCreditAccount" />
                  <telerik:AjaxUpdatedControl ControlID="lbCreditAccountTitle" />
-                 <telerik:AjaxUpdatedControl ControlID="hdfCheckCredit" />
+                 <telerik:AjaxUpdatedControl ControlID="hdfCheckCredit" /> 
+                 <telerik:AjaxUpdatedControl ControlID="tbCredit_NewCustBallance" />
+                 <telerik:AjaxUpdatedControl ControlID="tbCredit_OldCustBallance" />
                 
             </UpdatedControls>
         </telerik:AjaxSetting>

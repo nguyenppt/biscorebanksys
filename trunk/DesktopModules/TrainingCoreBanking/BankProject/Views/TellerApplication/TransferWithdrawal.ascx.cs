@@ -48,11 +48,17 @@ namespace BankProject.Views.TellerApplication
                     {
                         ShowMsgBox("Currency of Credit Account is which is not matching with Currency of Debit Account"); return;
                     }
+                    //if (lbErrorCreditAccount.Text == "Credit account does not exist" || lbErrorDebitAccount.Text == "Debit account does not exist")
+                    //{
+                    //    ShowMsgBox("Credit Account Or Debit Account does not exist !"); return;
+                    //}
+
                     BankProject.DataProvider.Database.BTRANSFERWITHDRAWAL_Insert(rcbAccountType.SelectedValue, txtId.Text, cmbDebitAccount.Text, txtDebitAmt.Value.HasValue ? txtDebitAmt.Value.Value : 0, 
                         lblCustBal.Value.HasValue ? lblCustBal.Value.Value : 0, lblNewCustBal.Value.HasValue ? lblNewCustBal.Value.Value : 0,
                         rdpValueDate.SelectedDate, cmbCreditAccount.Text, lblAmtCreditForCust.Value.HasValue ? lblAmtCreditForCust.Value.Value : 0, txtDealRate.Value.HasValue ? txtDealRate.Value.Value : 0,
                         rdpCreditValueDate.SelectedDate, cmbWaiveCharges.SelectedValue, txtNarrative.Text, this.UserId, lblCustomerId.Text, lblCustomerName.Text
-                        , lbCustomerID_CR.Text, lbCustomerName_CR.Text, cmbDebitCurrency.Text, cmbCreditCurrency.Text, UserInfo.Username.ToString());
+                        , lbCustomerID_CR.Text, lbCustomerName_CR.Text, cmbDebitCurrency.Text, cmbCreditCurrency.Text, UserInfo.Username.ToString(),
+                        tbCredit_OldCustBallance.Value.HasValue? tbCredit_OldCustBallance.Value.Value : 0, tbCredit_NewCustBallance.Value.HasValue? tbCredit_NewCustBallance.Value.Value : 0);
 
                     if (cmbWaiveCharges.SelectedValue == "NO") Response.Redirect(EditUrl("waivecharges"));
 
@@ -146,7 +152,8 @@ namespace BankProject.Views.TellerApplication
 
                 this.cmbWaiveCharges.SelectedValue = ds.Tables[0].Rows[0]["WaiveCharges"].ToString();
                 this.txtNarrative.Text = ds.Tables[0].Rows[0]["Narrative"].ToString();
-
+                tbCredit_OldCustBallance.Text = ds.Tables[0].Rows[0]["Credit_OldBalance"].ToString();
+                tbCredit_NewCustBallance.Text = ds.Tables[0].Rows[0]["Credit_NewBalance"].ToString();
                 bool isautho = ds.Tables[0].Rows[0]["Status"].ToString() == "AUT";
                 this.EnableControls(Request.QueryString["codeid"] == null && !isautho);
                 LoadToolBar(Request.QueryString["codeid"] != null);
@@ -180,6 +187,7 @@ namespace BankProject.Views.TellerApplication
                 DataSet ds = BankProject.DataProvider.Database.BOPENACCOUNT_GetByCode_OPEN(cmbDebitAccount.Text, rcbAccountType.SelectedValue);
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
+                    txtDebitAmt.Text = ""; lblCustBal.Text = "";
                     lblCustomerId.Text = ds.Tables[0].Rows[0]["CustomerId"].ToString();
                     lblCustomerName.Text = ds.Tables[0].Rows[0]["CustomerName"].ToString();
                     lbDebitAccountId.Text = ds.Tables[0].Rows[0]["Id"].ToString();
@@ -245,6 +253,8 @@ namespace BankProject.Views.TellerApplication
                     lbCreditAccountId.Text = ds.Tables[0].Rows[0]["Id"].ToString();
                     cmbCreditCurrency.Text = ds.Tables[0].Rows[0]["Currency"].ToString();
                     lbCreditAccountTitle.Text = ds.Tables[0].Rows[0]["AccountTitle"].ToString();
+                    tbCredit_OldCustBallance.Text = ds.Tables[0].Rows[0]["WorkingAmount"].ToString();
+                    tbCredit_NewCustBallance.Text = Convert.ToString(Convert.ToDouble(tbCredit_OldCustBallance.Text !="" ?tbCredit_OldCustBallance.Text : "0") + (txtDebitAmt.Value.HasValue ? txtDebitAmt.Value.Value:0));
                     hdfCheckCredit.Value = "1";
                     lbErrorCreditAccount.Visible = false;
                 }
