@@ -112,7 +112,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Acception Date</td>
+                    <td class="MyLable">Maturity Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dtAcceptDate" runat="server" />
                     </td>
@@ -1232,8 +1232,8 @@
 </div>--%>
 
 </div>
-
-<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="AjaxLoadingPanel1">
+<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" /></telerik:RadAjaxLoadingPanel>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
     <ajaxsettings>
         
         <telerik:AjaxSetting AjaxControlID="comboCollectionType">
@@ -1249,6 +1249,8 @@
                 <telerik:AjaxUpdatedControl ControlID="txtDrawerAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtDrawerAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="txtDrawerAddr3" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
+                
             </UpdatedControls>
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="txtDraweeCusNo">
@@ -1360,6 +1362,7 @@
         });
 
         function RadToolBar1_OnClientButtonClicking(sender, args) {
+            
             var button = args.get_item();
             if (tabId == 226 || tabId == 227) { // Register Documetary Collection
                 if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
@@ -1369,7 +1372,7 @@
             }
             if (tabId == 229) { // Incoming Collection Amendments
                 if (button.get_commandName() == "print") {
-                    args.set_cancel(false);
+                    args.set_cancel(true);
 
                     showPhieuNhap_Xuat();
 
@@ -1388,18 +1391,21 @@
             }
         }
         function showPhieuNhap_Xuat() {
+            //args.set_cancel(true);
                 // Neu amount > amount_old -> tu chinh tang tienb, xuat phieu [nhap ngoai bang]
                 //amount < amount_Old -> tu chinh giam tien,xuat phieu [xuat phieu ngoai bang]
                 // amount = amoun_old -> ko xuat phieu xuat nhap ngoai bang
             if (amount > 0 && amountOld > 0 && amount > amountOld) {//b4_AUT_Amount
                     radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
-                } else if (amountOld > 0 && amount < amountOld) {
+            } else if (amountOld > 0 && amount < amountOld) {
+               
                     radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang_Amendments, 420, 150, null, 'Download');
                 }
 
             }
 
         function confirmCallbackFunction_NhapNgoaiBang_Amendments(result) {
+            
             clickCalledAfterRadconfirm218 = false;
             if (result) {
                 $("#<%=btnAmendNhapNgoaiBang.ClientID %>").click();
@@ -1407,6 +1413,7 @@
         }
 
         function confirmCallbackFunction_XuatNgoaiBang_Amendments(result) {
+            
             clickCalledAfterRadconfirm218 = false;
             if (result) {
                 $("#<%=btnAmendXuatNgoaiBang.ClientID %>").click();

@@ -270,7 +270,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 return 0;
             }
         }
-
+        
+            
+        
         protected void InitDefaultData()
         {
             foreach (RadToolBarItem item in RadToolBar1.Items)
@@ -377,36 +379,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboAccountOfficer.DataSource = bd.SQLData.B_BACCOUNTOFFICER_GetAll();
             comboAccountOfficer.DataBind();
             //
-
-
-            comboCurrency.Items.Clear();
-            comboCurrency.Items.Add(new RadComboBoxItem(""));
-            comboCurrency.DataValueField = "Code";
-            comboCurrency.DataTextField = "Code";
-            comboCurrency.DataSource = _entities.BCURRENCies.ToList();
-            comboCurrency.DataBind();
-
-            rcbChargeCcy.Items.Clear();
-            rcbChargeCcy.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy.DataValueField = "Code";
-            rcbChargeCcy.DataTextField = "Code";
-            rcbChargeCcy.DataSource = _entities.BCURRENCies.ToList();
-            rcbChargeCcy.DataBind();
-
-            rcbChargeCcy2.Items.Clear();
-            rcbChargeCcy2.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy2.DataValueField = "Code";
-            rcbChargeCcy2.DataTextField = "Code";
-            rcbChargeCcy2.DataSource = _entities.BCURRENCies.ToList();
-            rcbChargeCcy2.DataBind();
-
-            rcbChargeCcy3.Items.Clear();
-            rcbChargeCcy3.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy3.DataValueField = "Code";
-            rcbChargeCcy3.DataTextField = "Code";
-            rcbChargeCcy3.DataSource = _entities.BCURRENCies.ToList();
-            rcbChargeCcy3.DataBind();
-
+            var tblList = bd.SQLData.B_BCURRENCY_GetAll().Tables[0];
+            bc.Commont.initRadComboBox(ref comboCurrency, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", tblList);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", tblList);
 
             tbChargeCode.SelectedValue = "EC.RECEIVE";
             tbChargeCode.Enabled = false;
@@ -414,8 +391,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             tbChargeCode2.Enabled = false;
             tbChargeCode3.SelectedValue = "EC.OTHER";
             tbChargeCode3.Enabled = false;
-
-
         }
 
         private void SetVisibilityByStatus(DataSet dsDoc)
@@ -1508,7 +1483,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct.DataValueField = "Id";
             rcbChargeAcct.DataTextField = "Id";
-            rcbChargeAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedValue, rcbChargeCcy.SelectedValue);
+            rcbChargeAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, rcbChargeCcy.SelectedValue);
             rcbChargeAcct.DataBind();
         }
 
@@ -1518,7 +1493,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct2.DataValueField = "Id";
             rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedValue, rcbChargeCcy.SelectedValue);
+            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, rcbChargeCcy.SelectedValue);
             rcbChargeAcct2.DataBind();
         }
 
@@ -1528,7 +1503,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct3.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct3.DataValueField = "Id";
             rcbChargeAcct3.DataTextField = "Id";
-            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedValue, rcbChargeCcy.SelectedValue);
+            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, rcbChargeCcy.SelectedValue);
             rcbChargeAcct3.DataBind();
         }
 
@@ -1697,7 +1672,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG.doc");
                         saveName = "RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         reportData = bd.SQLData.P_BEXPORTDOCUMETARYCOLLECTION_AMEND_PHIEUXUATNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-                        reportData.Tables[0].TableName = "Table1";
+                        //reportData.Tables[0].TableName = "Table1";
                         break;
                     case 5://NhapNgoaiBang
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG.doc");
@@ -1721,7 +1696,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         reportTemplate = Context.Server.MapPath(reportTemplate + "COVER NHO THU XK.doc");
                         saveName = "COVER NHO THU XK_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report(txtCode.Text, UserInfo.Username);
-                        reportData.Tables[0].TableName = "Table1";
+                        //reportData.Tables[0].TableName = "Table1";
                         break;
                 }
                 if (reportData != null)

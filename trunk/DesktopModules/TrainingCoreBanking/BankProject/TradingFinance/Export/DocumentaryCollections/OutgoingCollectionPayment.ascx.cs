@@ -119,7 +119,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             if (_entities.BOUTGOINGCOLLECTIONPAYMENTs.Any(q => q.CollectionPaymentCode == docCode))
             {
-                return docCode + "." + (_entities.BOUTGOINGCOLLECTIONPAYMENTs.Max(q => q.PaymentNo) + 1);
+                var lst = _entities.BOUTGOINGCOLLECTIONPAYMENTs.Where(q => q.CollectionPaymentCode == docCode).ToList();
+                var Id = lst.Max(q => q.PaymentNo);
+                if (Id == null)
+                    return docCode + ".1";
+                else
+                {
+                    Id++;
+                    return docCode + "." + Id;
+                }
             }
             return docCode + ".1";
         }
@@ -411,6 +419,63 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             LoadCharges();
             bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(outColPayment.Currency)).ToList());
         }
+        private void LoadData(string strtxtCode)
+        {
+            var outCoPayment =
+                        _entities.BOUTGOINGCOLLECTIONPAYMENTs.FirstOrDefault(q => q.PaymentId == strtxtCode);
+            if (outCoPayment == null)
+            {
+                lblError.Text = "Not found payment";
+            }
+            else
+            {
+                //txtCode.Text = CodeId;
+                var expDocCode = CodeId.Substring(0, 14);
+                lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
+                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode);
+                if (expDoc == null)
+                {
+                    lblError.Text = "Document does not exists";
+                    return;
+                }
+                if (CheckStatusExportDocumentCollection(expDoc))
+                {
+                    LoadExpDoc(expDoc);
+                    LoadPaymentDetail(outCoPayment);
+                    LoadMT910();
+                }
+
+                if (Disable) // authorize
+                {
+                    if (outCoPayment.Status == "AUT")
+                    {
+                        lblError.Text = "Payment was authorized";
+                        mainToolbar.FindItemByValue("btPrint").Enabled = true;
+                    }
+                    else // Not yet authorize
+                    {
+                        mainToolbar.FindItemByValue("btAuthorize").Enabled = true;
+                        mainToolbar.FindItemByValue("btRevert").Enabled = true;
+                        mainToolbar.FindItemByValue("btPrint").Enabled = true;
+                    }
+                    SetDisableByReview(false);
+                }
+                else // Editing
+                {
+                    if (outCoPayment.Status == "AUT") // Authorized
+                    {
+                        mainToolbar.FindItemByValue("btPrint").Enabled = true;
+                        lblError.Text = "Payment was authorized";
+                        SetDisableByReview(false);
+                    }
+                    else // Not yet authorize
+                    {
+                        mainToolbar.FindItemByValue("btSave").Enabled = true;
+                    }
+
+                }
+            }
+        }
         private void LoadPayment()
         {
             mainToolbar.FindItemByValue("btReview").Enabled = true;
@@ -428,6 +493,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 }
                 if (CheckStatusExportDocumentCollection(expDoc))
                 {
+                    var lstDoc = _entities.BOUTGOINGCOLLECTIONPAYMENTs.Where(x => x.CollectionPaymentCode == CodeId).ToList();
+                    if (lstDoc != null && lstDoc.Count > 0)
+                    {
+                        var DetailDoc = lstDoc.Where(x => x.Status == "UNA"||x.Status=="REV").FirstOrDefault();
+                        if (DetailDoc != null)
+                        {
+                            txtCode.Text = DetailDoc.PaymentId;
+                            LoadData(txtCode.Text);
+                            return;
+                        }
+                    }
                     txtCode.Text = GetNextPaymentCode(CodeId);
                     GenerateVatNo();
                     LoadExpDoc(expDoc);
