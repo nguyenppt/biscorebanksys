@@ -66,6 +66,7 @@ namespace BankProject.Views.TellerApplication
             rcbCurrency.DataSource = TriTT.B_LoadCurrency("USD", "VND");
             rcbCurrency.DataValueField = "Code";
             rcbCurrency.DataTextField = "Code";
+            rcbCurrency.SelectedValue = "VND";
             rcbCurrency.DataBind();
         }
         protected void LoadCollateralType()
