@@ -146,8 +146,8 @@ namespace BankProject.Business
             }
             remainAmount = getCurrentLoanAmount(normalLoanEntryM, replaymentTimes);
 
-            if (rateType != 2)//du no giam dan
-            {
+            //if (rateType != 2)//du no giam dan
+            //{
 
                 getPaymentInputControl(ref periosDate, ref endDate, ref numberOfPerios, ref instalmant, ref instalmantEnd, ref fregV, normalLoanEntryM, replaymentTimes);
                 instalmentdDay = periosDate != null ? ((DateTime)periosDate).Day : 0;
@@ -198,37 +198,37 @@ namespace BankProject.Business
                 ds.DtItems.Rows.Add(dr);
 
 
-            }
-            else
-            {
-                ds.DtInfor.Rows[0][ds.Cl_freq] = "Cuối kỳ";
-                NewLoanControlRepository facade = new NewLoanControlRepository();
-                BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, replaymentTimes, "EP")
-                    .Union(facade.FindLoanControl(normalLoanEntryM.Code, replaymentTimes, "P"))
-                    .Union(facade.FindLoanControl(normalLoanEntryM.Code, replaymentTimes, "I+P")).FirstOrDefault();//All get Priciple date
-                if (it != null)
-                {
-                    instalmantEnd = it.AmountAction == null ? (decimal)normalLoanEntryM.LoanAmount : (decimal)it.AmountAction;
-                    endDate = it.Date == null ? normalLoanEntryM.MaturityDate : it.Date;
+            //}
+            //else
+            //{
+            //    ds.DtInfor.Rows[0][ds.Cl_freq] = "Cuối kỳ";
+            //    NewLoanControlRepository facade = new NewLoanControlRepository();
+            //    BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, replaymentTimes, "EP")
+            //        .Union(facade.FindLoanControl(normalLoanEntryM.Code, replaymentTimes, "P"))
+            //        .Union(facade.FindLoanControl(normalLoanEntryM.Code, replaymentTimes, "I+P")).FirstOrDefault();//All get Priciple date
+            //    if (it != null)
+            //    {
+            //        instalmantEnd = it.AmountAction == null ? (decimal)normalLoanEntryM.LoanAmount : (decimal)it.AmountAction;
+            //        endDate = it.Date == null ? normalLoanEntryM.MaturityDate : it.Date;
 
-                }
+            //    }
 
 
-                instalmant = (decimal)(instalmantEnd == 0 ? normalLoanEntryM.LoanAmount : instalmantEnd);
+            //    instalmant = (decimal)(instalmantEnd == 0 ? normalLoanEntryM.LoanAmount : instalmantEnd);
 
-                DataRow dr = ds.DtItems.NewRow();
-                dr[ds.Cl_dueDate] = endDate == null ? normalLoanEntryM.MaturityDate : endDate;
-                dr[ds.Cl_principle] = instalmantEnd == 0 ? normalLoanEntryM.LoanAmount : instalmantEnd;
-                dr[ds.Cl_PrintOSPlan] = 0;
-                dr[ds.Cl_PrintOs] = remainAmountActual - instalmant;
-                dr[ds.Cl_isInterestedRow] = false;
-                dr[ds.Cl_isPeriodicAutomaticRow] = false;
-                dr[ds.Cl_isDisbursalRow] = false;
-                dr[ds.Cl_isPaymentRow] = true;
-                dr[ds.Cl_DisbursalAmount] = 0;
-                ds.DtItems.Rows.Add(dr);
+            //    DataRow dr = ds.DtItems.NewRow();
+            //    dr[ds.Cl_dueDate] = endDate == null ? normalLoanEntryM.MaturityDate : endDate;
+            //    dr[ds.Cl_principle] = instalmantEnd == 0 ? normalLoanEntryM.LoanAmount : instalmantEnd;
+            //    dr[ds.Cl_PrintOSPlan] = 0;
+            //    dr[ds.Cl_PrintOs] = remainAmountActual - instalmant;
+            //    dr[ds.Cl_isInterestedRow] = false;
+            //    dr[ds.Cl_isPeriodicAutomaticRow] = false;
+            //    dr[ds.Cl_isDisbursalRow] = false;
+            //    dr[ds.Cl_isPaymentRow] = true;
+            //    dr[ds.Cl_DisbursalAmount] = 0;
+            //    ds.DtItems.Rows.Add(dr);
 
-            }
+            //}
 
         }
 
@@ -341,6 +341,8 @@ namespace BankProject.Business
                 interestedValue = (normalLoanEntryM.InterestRate == null ? 0 : (decimal)normalLoanEntryM.InterestRate);
             }
 
+
+
             ds.DtInfor.Rows[0][ds.Cl_interest] = interestedValue;
             ds.DtInfor.Rows[0][ds.Cl_interestKey] = durationDate / 30;
 
@@ -430,9 +432,16 @@ namespace BankProject.Business
                 DataRow dr = ds.DtItems.Rows[i];
                 durationsDay = ((DateTime)dr[ds.Cl_dueDate.ColumnName]).Subtract(prevInterestDate).Days;
 
-                
 
-                interestAmount = durationsDay * ((interestedValue / 36000) * currentAmount);
+                if (rateType.Equals("2"))//fix for initial
+                {
+                    interestAmount = durationsDay * ((interestedValue / 36000) * (decimal)normalLoanEntryM.LoanAmount);
+                }
+                else
+                {
+                    interestAmount = durationsDay * ((interestedValue / 36000) * currentAmount);
+                }
+
                 dr[ds.Cl_durationDate.ColumnName] = durationsDay;
 
                 if (dr[ds.Cl_isPaymentRow.ColumnName] != null && !(bool)dr[ds.Cl_isPaymentRow.ColumnName])
@@ -554,7 +563,7 @@ namespace BankProject.Business
                 }
                 else
                 {
-                    dr[ds.Cl_isPeriodicAutomaticRow] = true;
+                    dr[ds.Cl_isPeriodicAutomaticRow.ColumnName] = true;
                 }
 
             }
