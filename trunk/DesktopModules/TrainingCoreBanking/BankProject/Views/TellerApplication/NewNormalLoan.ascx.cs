@@ -25,7 +25,6 @@ namespace BankProject.Views.TellerApplication
         BNEWNORMALLOAN normalLoanEntryM;
         bool isApprovalRole = false;
         public double remainLoanAmountDis = 0;
-        private DateTime? disbursalDate = null;
 
         private string REFIX_MACODE = "LD";
         bool isEdit = false;
@@ -107,6 +106,12 @@ namespace BankProject.Views.TellerApplication
                         RadWindowManager1.RadAlert("Drawdown date cannot be greater than product limit Offered Until date [" + ((DateTime)utildate).ToString("MM/dd/yyyy") + "]", 340, 150, "Alert", null);
                         return false;
                     }
+                }
+
+                if (normalLoanEntryM.Drawdown == null && normalLoanEntryM.RateType.Equals("2"))
+                {
+                    RadWindowManager1.RadAlert("[Fix for Initial] rate type is not supported for this case!", 340, 150, "Alert", null);
+                    return false;
                 }
 
             }
