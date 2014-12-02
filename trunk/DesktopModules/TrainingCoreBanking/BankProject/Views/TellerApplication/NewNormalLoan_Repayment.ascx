@@ -53,7 +53,7 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#Main">Main Info</a></li>
-        <li><a id="A2" href="#Full">Full View</a></li>
+        <li><a id="A2" href="#Full">Repayment Schedule</a></li>
     </ul>
 
     <div id="Main" class="dnnClear">

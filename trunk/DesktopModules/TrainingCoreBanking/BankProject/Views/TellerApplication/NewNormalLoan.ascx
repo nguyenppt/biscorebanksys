@@ -56,7 +56,7 @@
     <ul class="dnnAdminTabNav">
         <li><a href="#Main">Main Info</a></li>
         <li><a href="#Other">Other Info</a></li>
-        <li><a id="A2" href="#Full">Full View</a></li>
+        <li><a id="A2" href="#Full">Repayment Schedule</a></li>
         <li><a id="disA" href="#Disbursal">Disbursal Schedule</a></li>
     </ul>
 
