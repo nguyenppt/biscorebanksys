@@ -255,7 +255,7 @@ namespace BankProject.Business
                         dr[ds.Cl_dueDate] = disbursalDrawdawnDate;
                         dr[ds.Cl_isInterestedRow] = false;
                         dr[ds.Cl_isPeriodicAutomaticRow] = false;
-                        dr[ds.Cl_isPaymentRow] = true;
+                        dr[ds.Cl_isPaymentRow] = false;
                         dr[ds.Cl_principle] = 0;
                         dr[ds.Cl_PrintOs] = 0;
                         ds.DtItems.Rows.Add(dr);
@@ -427,6 +427,7 @@ namespace BankProject.Business
 
             int periousIndex = 0;
             DataRow removeRow = null;
+            List<DataRow> removeL = new List<DataRow>();
             for (int i = 0; i < ds.DtItems.Rows.Count; i++)
             {
                 DataRow dr = ds.DtItems.Rows[i];
@@ -444,7 +445,7 @@ namespace BankProject.Business
 
                 dr[ds.Cl_durationDate.ColumnName] = durationsDay;
 
-                if (dr[ds.Cl_isPaymentRow.ColumnName] != null && !(bool)dr[ds.Cl_isPaymentRow.ColumnName])
+                if (!(bool)dr[ds.Cl_isPaymentRow.ColumnName] && !(bool)dr[ds.Cl_isDisbursalRow.ColumnName])
                 {
                     dr[ds.Cl_PrintOs.ColumnName] = currentAmount;
                 }
@@ -467,13 +468,11 @@ namespace BankProject.Business
                     interestedValue = interestedValue2;
                 }
 
-                if ((dr[ds.Cl_isInterestedRow.ColumnName] != null && !(bool)dr[ds.Cl_isInterestedRow.ColumnName])
-                    && (dr[ds.Cl_isPaymentRow.ColumnName] != null && !(bool)dr[ds.Cl_isPaymentRow.ColumnName])
-                    && (dr[ds.Cl_isDisbursalRow.ColumnName] != null && !(bool)dr[ds.Cl_isDisbursalRow.ColumnName])
-                    && (dr[ds.Cl_isPeriodicAutomaticRow.ColumnName] != null && (bool)dr[ds.Cl_isPeriodicAutomaticRow.ColumnName]))
+                if (!(bool)dr[ds.Cl_isInterestedRow.ColumnName]&& !(bool)dr[ds.Cl_isPaymentRow.ColumnName]
+                     && ((bool)dr[ds.Cl_isPeriodicAutomaticRow.ColumnName] || (bool)dr[ds.Cl_isDisbursalRow.ColumnName]))
                 {
-                    
-                    removeRow = dr;
+                    removeL.Add(dr);
+                    //removeRow = dr;
                 }
                 else
                 {
@@ -488,9 +487,9 @@ namespace BankProject.Business
 
             }
 
-            if (removeRow != null)
+            foreach (var removeit in removeL)
             {
-                ds.DtItems.Rows.Remove(removeRow);
+                ds.DtItems.Rows.Remove(removeit);
             }
         }
 
