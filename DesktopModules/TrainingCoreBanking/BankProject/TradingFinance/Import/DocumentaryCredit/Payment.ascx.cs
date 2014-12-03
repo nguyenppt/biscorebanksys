@@ -679,6 +679,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void comboAccountWithInstitutionType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            if (comboAccountWithInstitutionType.SelectedValue.Equals("D")) comboReceiverCorrespondentType.SelectedValue = "D";
             showHideBank(!comboAccountWithInstitutionType.SelectedValue.Equals("A"), ref txtAccountWithInstitution, ref txtAccountWithInstitutionName, ref txtAccountWithInstitutionAddr1, ref txtAccountWithInstitutionAddr2, ref txtAccountWithInstitutionAddr3);
         }
 

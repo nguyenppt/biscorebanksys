@@ -1666,6 +1666,7 @@
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="comboAccountWithInstitutionType">
             <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="comboReceiverCorrespondentType" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitution" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionName" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr1" />

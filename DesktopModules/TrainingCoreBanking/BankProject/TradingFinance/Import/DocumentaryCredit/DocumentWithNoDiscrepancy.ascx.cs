@@ -160,32 +160,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {
             DataTable tbDetail;
             DataRow drDetail = dsDetail.Tables[0].Rows[0];
-            bool isReadOnly = true;
-            if (string.IsNullOrEmpty(Request.QueryString["lst"]))
-            {
-                switch (this.TabId)
-                {
-                    case TabDocsWithDiscrepancies:
-                    case TabDocsWithNoDiscrepancies:
-                        switch (drDetail["Status"].ToString())
-                        {
-                            case bd.TransactionStatus.UNA:
-                            case bd.TransactionStatus.REV:
-                                isReadOnly = false;
-                                break;
-                        }
-                        break;
-                    case TabDocsAmend:
-                        switch (drDetail["AmendStatus"].ToString())
-                        {
-                            case bd.TransactionStatus.UNA:
-                            case bd.TransactionStatus.REV:
-                                isReadOnly = false;
-                                break;
-                        }
-                        break;
-                }
-            }
             //Tab Main
             hiddenCustomerName.Value = drDetail["CustomerName"].ToString();
             if (drDetail["AcceptDate"] != DBNull.Value)
@@ -226,7 +200,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             fieldsetDiscrepancies.Visible = isDocsDiscrepancies;
             if (isDocsDiscrepancies)
             {
-                ((bc.MultiTextBox)txtDiscrepancies).setText(drDetail["Discrepancies"].ToString(), isReadOnly);
+                txtDiscrepancies.Text = drDetail["Discrepancies"].ToString();
                 txtDisposalOfDocs.Text = drDetail["DisposalOfDocs"].ToString();
             }
             comboWaiveCharges.SelectedValue = drDetail["WaiveCharges"].ToString();
@@ -260,7 +234,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 lblTotalAmountClaimed.Text = drDetail["TotalAmountClaimed"].ToString();
                 txtAccountWithBank.Text = drDetail["AccountWithBankNo"].ToString();
                 tbSendertoReceiverInfomation.Text = drDetail["SendertoReceiverInfomation"].ToString();
-                ((bc.MultiTextBox)txtDiscrepancies_734).setText(drDetail["Discrepancies"].ToString(), isReadOnly);
+                txtDiscrepancies_734.Text = drDetail["Discrepancies"].ToString();
                 txtDisposalOfDocs_734.Text = drDetail["DisposalOfDocs"].ToString();
             }
             //Tab Charge
@@ -456,7 +430,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                                                         , ""
                                                         , UserId
                                                         , TabId
-                                                        , ((bc.MultiTextBox)txtDiscrepancies).getText()
+                                                        , txtDiscrepancies.Text
                                                         , txtDisposalOfDocs.Text
                                                         , comboWaiveCharges.SelectedValue
                                                         , tbChargeRemarks.Text
@@ -550,7 +524,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     , txtAccountWithBank.Text
                     , ""
                     , tbSendertoReceiverInfomation.Text
-                    , ((bc.MultiTextBox)txtDiscrepancies_734).getText()
+                    , txtDiscrepancies_734.Text
                     , txtDisposalOfDocs_734.Text);
             }
         }
