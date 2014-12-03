@@ -6,7 +6,7 @@ using BankProject.DBContext;
 
 namespace BankProject.DBRespository
 {
-    public class CountryRepository:BaseRepository<BCOUNTRY>
+    public class CountryRepository:BaseRepository<B_COUNTRY>
     {
     }
 }
