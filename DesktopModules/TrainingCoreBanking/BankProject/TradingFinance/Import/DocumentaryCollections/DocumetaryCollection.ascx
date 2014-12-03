@@ -397,7 +397,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">2.3 Remitting Bank Addr.</td>
+                    <td class="MyLable">2.3 Remitting Bank Address</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtRemittingBankAddr1" runat="server" Width="355" />
                     </td>

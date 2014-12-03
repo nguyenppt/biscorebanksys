@@ -20,28 +20,31 @@
 
             if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                 args.set_cancel(true);
-                radconfirm("Do you want to download MT103 file?", confirmCallbackFunction_MT103, 340, 150, null, 'Download');
+                if ($find("<%=rcbIsCreateMT103.ClientID%>").get_selectedItem().get_value() == "Yes") {
+                    radconfirm("Do you want to download MT103 file?", confirmCallbackFunction_MT103, 340, 150, null, 'Download');
+                } else {
+                    radconfirm("Do you want to download MT202 file?", confirmCallbackFunction_MT202, 340, 150, null, 'Download');
+                }
             }
         }
 
         function confirmCallbackFunction_MT103(result) {
             if (result) {
                 $("#<%=btnMT103Report.ClientID %>").click();
-            }
-            radconfirm("Do you want to download MT202 file?", confirmCallbackFunction_MT202, 340, 150, null, 'Download');
+            }            
         }
 
         function confirmCallbackFunction_MT202(result) {
             clickCalledAfterRadconfirm = false;
             if (result) {
                 $("#<%=btnMT202Report.ClientID %>").click();
+            }
+            if (createMT400 == 'YES') {
+                radconfirm("Do you want to download MT400 file?", confirmCallbackFunction_MT400, 340, 150, null, 'Download');
+            } else {
+                radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_PhieuNgoaiBang, 420, 150, null, 'Download');
+            }
         }
-        if (createMT400 == 'YES') {
-            radconfirm("Do you want to download MT400 file?", confirmCallbackFunction_MT400, 340, 150, null, 'Download');
-        } else {
-            radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_PhieuNgoaiBang, 420, 150, null, 'Download');
-        }
-    }
 
     function confirmCallbackFunction_MT400(result) {
         clickCalledAfterRadconfirm = false;
@@ -601,14 +604,24 @@
                         <telerik:RadTextBox ID="txtIntermediaryInstruction1_MT103" runat="server" Width="400" />
                     </td>
                 </tr>
-
                 <tr>
                     <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtIntermediaryInstruction2_MT103" runat="server" Width="400" />
                     </td>
                 </tr>
-
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtIntermediaryInstruction3_MT103" runat="server" Width="400" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtIntermediaryInstruction4_MT103" runat="server" Width="400" />
+                    </td>
+                </tr>
                 <tr>
                     <td class="MyLable">Intermediary Bank Acct</td>
                     <td class="MyContent">
@@ -656,14 +669,24 @@
                         <telerik:RadTextBox ID="txtAccountWithBankAcct_MT103" runat="server" Width="400" />
                     </td>
                 </tr>
-
                 <tr>
                     <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtAccountWithBankAcct2_MT103" runat="server" Width="400" />
                     </td>
                 </tr>
-
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtAccountWithBankAcct3_MT103" runat="server" Width="400" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtAccountWithBankAcct4_MT103" runat="server" Width="400" />
+                    </td>
+                </tr>
                 <tr>
                     <td class="MyLable">Beneficiary Account</td>
                     <td class="MyContent">
@@ -2075,8 +2098,8 @@
     </div>
 
 </div>
-
-<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="AjaxLoadingPanel1">
+<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" /></telerik:RadAjaxLoadingPanel>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
     <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="numExchRate">
             <UpdatedControls>
@@ -2300,6 +2323,8 @@
                 <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstitutionNo_MT103" />
                 <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstruction1_MT103" />
                 <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstruction2_MT103" />
+                <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstruction3_MT103" />
+                <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstruction4_MT103" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
@@ -2316,6 +2341,8 @@
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionNo_MT103" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithBankAcct_MT103" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithBankAcct2_MT103" />
+                <telerik:AjaxUpdatedControl ControlID="txtAccountWithBankAcct3_MT103" />
+                <telerik:AjaxUpdatedControl ControlID="txtAccountWithBankAcct4_MT103" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 

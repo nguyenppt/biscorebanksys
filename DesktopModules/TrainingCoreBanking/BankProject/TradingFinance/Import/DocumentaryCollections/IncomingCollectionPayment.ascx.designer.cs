@@ -472,6 +472,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtIntermediaryInstruction2_MT103;
         
         /// <summary>
+        /// txtIntermediaryInstruction3_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtIntermediaryInstruction3_MT103;
+        
+        /// <summary>
+        /// txtIntermediaryInstruction4_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtIntermediaryInstruction4_MT103;
+        
+        /// <summary>
         /// txtIntermediaryBankAcct_MT103 control.
         /// </summary>
         /// <remarks>
@@ -533,6 +551,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtAccountWithBankAcct2_MT103;
+        
+        /// <summary>
+        /// txtAccountWithBankAcct3_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtAccountWithBankAcct3_MT103;
+        
+        /// <summary>
+        /// txtAccountWithBankAcct4_MT103 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtAccountWithBankAcct4_MT103;
         
         /// <summary>
         /// txtBeneficiaryCustomer1_MT103 control.
@@ -1901,6 +1937,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTaxAmt4;
+        
+        /// <summary>
+        /// RadAjaxLoadingPanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxLoadingPanel RadAjaxLoadingPanel1;
         
         /// <summary>
         /// RadAjaxManager1 control.
