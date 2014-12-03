@@ -85,70 +85,7 @@ namespace BankProject.Views.TellerApplication
 
         #region Events
 
-        private bool IsUnderlimitAmount()
-        {
-
-            StoreProRepository facade = new StoreProRepository();
-            if (!isAmendPage)
-            {
-
-                var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount(normalLoanEntryM.LimitReference).First<decimal?>();
-                if (limit < normalLoanEntryM.LoanAmount)
-                {
-                    RadWindowManager1.RadAlert("Loan amount cannot exceed " + limit, 340, 150, "Alert", null);
-                    return false;
-                }
-                else
-                {
-                    var utildate = facade.StoreProcessor().B_Normal_Loan_Get_OfferedUntilDate(normalLoanEntryM.LimitReference).First<DateTime?>();
-                    if (utildate != null && normalLoanEntryM.Drawdown != null && normalLoanEntryM.Drawdown > utildate)
-                    {
-                        RadWindowManager1.RadAlert("Drawdown date cannot be greater than product limit Offered Until date [" + ((DateTime)utildate).ToString("MM/dd/yyyy") + "]", 340, 150, "Alert", null);
-                        return false;
-                    }
-                }
-
-                if (normalLoanEntryM.Drawdown == null && normalLoanEntryM.RateType.Equals("2"))
-                {
-                    RadWindowManager1.RadAlert("[Fix for Initial] rate type is not supported for this case!", 340, 150, "Alert", null);
-                    return false;
-                }
-
-            }
-            var productLine = facade.StoreProcessor().B_Normal_Loan_Get_Productline_Info(normalLoanEntryM.LimitReference).First();
-
-            if (productLine != null && productLine.MaxSecured != null && productLine.MaxSecured > 0)
-            {
-                if (!normalLoanEntryM.Secured.Equals("Y"))
-                {
-                    RadWindowManager1.RadAlert("Field Secured (Y/N) must be Yes", 340, 150, "Alert", null);
-                    return false;
-                }
-            }
-
-            if (normalLoanEntryM.Secured.Equals("Y"))
-            {
-                if (String.IsNullOrEmpty(normalLoanEntryM.CollateralID)
-                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_1)
-                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_2)
-                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_3))
-                {
-                    RadWindowManager1.RadAlert("Collateral ID not completed", 340, 150, "Alert", null);
-                    return false;
-                }
-
-                if (normalLoanEntryM.AmountAlloc == null || normalLoanEntryM.AmountAlloc <= 0)
-                {
-                    RadWindowManager1.RadAlert("Collateral Amount must be >0", 340, 150, "Alert", null);
-                    return false;
-                }
-            }
-
-
-
-            return true;
-        }
-
+        
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
             string normalLoan = tbNewNormalLoan.Text;
@@ -174,10 +111,14 @@ namespace BankProject.Views.TellerApplication
 
                 case "authorize":
                     BindField2Data(ref normalLoanEntryM);
-                    loanBusiness.Entity = normalLoanEntryM;
-                    loanBusiness.authorizeProcess(this.UserId);
-                    UpdateSchedulePaymentToDB();
-                    this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    String errorMess = "";
+                    if (isCanBeAuthorizeProcess(normalLoanEntryM))
+                    {
+                        loanBusiness.Entity = normalLoanEntryM;
+                        loanBusiness.authorizeProcess(this.UserId);
+                        UpdateSchedulePaymentToDB();
+                        this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    }
                     break;
 
                 case "reverse":
@@ -422,6 +363,129 @@ namespace BankProject.Views.TellerApplication
         #endregion
 
         #region Common Function
+
+        private bool IsUnderlimitAmount()
+        {
+
+            StoreProRepository facade = new StoreProRepository();
+            if (!isAmendPage)
+            {
+
+                var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount(normalLoanEntryM.LimitReference).First<decimal?>();
+                if (limit < normalLoanEntryM.LoanAmount)
+                {
+                    RadWindowManager1.RadAlert("Loan amount cannot exceed " + limit, 340, 150, "Alert", null);
+                    return false;
+                }
+                else
+                {
+                    var utildate = facade.StoreProcessor().B_Normal_Loan_Get_OfferedUntilDate(normalLoanEntryM.LimitReference).First<DateTime?>();
+                    if (utildate != null && normalLoanEntryM.Drawdown != null && normalLoanEntryM.Drawdown > utildate)
+                    {
+                        RadWindowManager1.RadAlert("Drawdown date cannot be greater than product limit Offered Until date [" + ((DateTime)utildate).ToString("MM/dd/yyyy") + "]", 340, 150, "Alert", null);
+                        return false;
+                    }
+                }
+
+                if (normalLoanEntryM.Drawdown == null && normalLoanEntryM.RateType.Equals("2"))
+                {
+                    RadWindowManager1.RadAlert("[Fix for Initial] rate type is not supported for this case!", 340, 150, "Alert", null);
+                    return false;
+                }
+
+            }
+            var productLine = facade.StoreProcessor().B_Normal_Loan_Get_Productline_Info(normalLoanEntryM.LimitReference).First();
+
+            if (productLine != null && productLine.MaxSecured != null && productLine.MaxSecured > 0)
+            {
+                if (!normalLoanEntryM.Secured.Equals("Y"))
+                {
+                    RadWindowManager1.RadAlert("Field Secured (Y/N) must be Yes", 340, 150, "Alert", null);
+                    return false;
+                }
+            }
+
+            if (normalLoanEntryM.Secured.Equals("Y"))
+            {
+                if (String.IsNullOrEmpty(normalLoanEntryM.CollateralID)
+                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_1)
+                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_2)
+                    && String.IsNullOrEmpty(normalLoanEntryM.CollateralID_3))
+                {
+                    RadWindowManager1.RadAlert("Collateral ID not completed", 340, 150, "Alert", null);
+                    return false;
+                }
+
+                if (normalLoanEntryM.AmountAlloc == null || normalLoanEntryM.AmountAlloc <= 0)
+                {
+                    RadWindowManager1.RadAlert("Collateral Amount must be >0", 340, 150, "Alert", null);
+                    return false;
+                }
+            }
+
+
+
+            return true;
+        }
+
+        private bool isCanBeAuthorizeProcess(BNEWNORMALLOAN normalLoanEntry)
+        {
+            if (normalLoanEntry == null || String.IsNullOrEmpty(normalLoanEntry.Code))
+            {
+                
+                RadWindowManager1.RadAlert("Loan Contract is Empty!", 340, 150, "Alert", null);
+                return false;
+            }
+            CollateralContingentEntryRespository colaFacade = new CollateralContingentEntryRespository();
+
+            if (!string.IsNullOrEmpty(normalLoanEntry.CollateralID))
+            {
+                var ite = colaFacade.GetCollateralContingentInfo(normalLoanEntry.CollateralID).FirstOrDefault();
+                if (ite == null)
+                {
+
+                    RadWindowManager1.RadAlert("This Loan Contract cannot be authorized because Collateral ID [" + normalLoanEntry.CollateralID + "] has not processed contigent entry yet.", 340, 150, "Alert", null);
+                    return false;
+                }
+
+            }
+
+            if (!string.IsNullOrEmpty(normalLoanEntry.CollateralID_1))
+            {
+                var ite = colaFacade.GetCollateralContingentInfo(normalLoanEntry.CollateralID_1).FirstOrDefault();
+                if (ite == null)
+                {
+                    RadWindowManager1.RadAlert("This Loan Contract cannot be authorized because Collateral ID [" + normalLoanEntry.CollateralID_1 + "] has not processed contigent entry yet.", 340, 150, "Alert", null);
+                    return false;
+                }
+
+            }
+
+            if (!string.IsNullOrEmpty(normalLoanEntry.CollateralID_2))
+            {
+                var ite = colaFacade.GetCollateralContingentInfo(normalLoanEntry.CollateralID_2).FirstOrDefault();
+                if (ite == null)
+                {
+                    RadWindowManager1.RadAlert("This Loan Contract cannot be authorized because Collateral ID [" + normalLoanEntry.CollateralID_2 + "] has not processed contigent entry yet.", 340, 150, "Alert", null);
+                    return false;
+                }
+
+            }
+
+            if (!string.IsNullOrEmpty(normalLoanEntry.CollateralID_3))
+            {
+                var ite = colaFacade.GetCollateralContingentInfo(normalLoanEntry.CollateralID_3).FirstOrDefault();
+                if (ite == null)
+                {
+                    RadWindowManager1.RadAlert("This Loan Contract cannot be authorized because Collateral ID [" + normalLoanEntry.CollateralID_3 + "] has not processed contigent Entry yet.", 340, 150, "Alert", null);
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
+
         private void processApproriateAction()
         {
             if (normalLoanEntryM == null || String.IsNullOrEmpty(normalLoanEntryM.Code))
