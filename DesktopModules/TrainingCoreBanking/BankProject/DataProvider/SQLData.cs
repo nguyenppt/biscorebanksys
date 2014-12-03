@@ -2539,7 +2539,8 @@ namespace BankProject.DataProvider
                                                            , string IntermediaryType
                                                            , string IntermediaryInstruction1
                                                            , string IntermediaryInstruction2
-            , string OrderingCustAccName, string OrderingCustAccAddr1, string OrderingCustAccAddr2, string OrderingCustAccAddr3)
+            , string OrderingCustAccName, string OrderingCustAccAddr1, string OrderingCustAccAddr2, string OrderingCustAccAddr3
+            , string AccountWithBankAcct3, string AccountWithBankAcct4, string IntermediaryInstruction3, string IntermediaryInstruction4)
         {
             sqldata.ndkExecuteNonQuery("B_BINCOMINGCOLLECTIONPAYMENTMT103_Insert", CollectionPaymentCode
                                        , PendingMT
