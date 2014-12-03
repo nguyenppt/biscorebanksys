@@ -818,6 +818,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     comboAccountType_MT103.SelectedValue = drow103["AccountType"].ToString();
                     txtAccountWithBankAcct2_MT103.Text = drow103["AccountWithBankAcct2"].ToString();
+                    txtAccountWithBankAcct3_MT103.Text = drow103["AccountWithBankAcct3"].ToString();
+                    txtAccountWithBankAcct4_MT103.Text = drow103["AccountWithBankAcct4"].ToString();
 
                     txtBeneficiaryCustomer1_MT103.Text = drow103["BeneficiaryCustomer1"].ToString();
                     txtBeneficiaryCustomer2_MT103.Text = drow103["BeneficiaryCustomer2"].ToString();
@@ -879,6 +881,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     comboAccountType_MT103.SelectedValue = string.Empty;
                     txtAccountWithBankAcct2_MT103.Text = string.Empty;
+                    txtAccountWithBankAcct3_MT103.Text = string.Empty;
+                    txtAccountWithBankAcct4_MT103.Text = string.Empty;
 
                     txtBeneficiaryCustomer1_MT103.Text = string.Empty;
                     txtBeneficiaryCustomer2_MT103.Text = string.Empty;
@@ -1361,7 +1365,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 , txtBeneficiaryCustomer2_MT103.Text.Trim()
                 , txtBeneficiaryCustomer3_MT103.Text.Trim()
                 , comboAccountType_MT103.SelectedValue
-                , txtAccountWithBankAcct2_MT103.Text.Trim()
+                , txtAccountWithBankAcct2_MT103.Text.Trim()                
                 , txtBeneficiaryCustomer4_MT103.Text.Trim()
                 , txtBeneficiaryCustomer5_MT103.Text.Trim()
                 , comboIntermediaryType_MT103.SelectedValue
@@ -1371,6 +1375,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 , txtOrderingCustomer2_MT103.Text
                 , txtOrderingCustomer3_MT103.Text
                 , txtOrderingCustomer4_MT103.Text
+                , txtAccountWithBankAcct3_MT103.Text.Trim()
+                , txtAccountWithBankAcct4_MT103.Text.Trim()
+                , txtIntermediaryInstruction3_MT103.Text.Trim()
+                , txtIntermediaryInstruction4_MT103.Text.Trim()
                 );
         }
 
@@ -2513,12 +2521,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     txtAccountWithInstitutionNo_MT103.Enabled = true;
                     txtAccountWithBankAcct_MT103.Enabled = false;
                     txtAccountWithBankAcct2_MT103.Enabled = false;
+                    txtAccountWithBankAcct3_MT103.Enabled = false;
+                    txtAccountWithBankAcct4_MT103.Enabled = false;
                     break;
                 case "B":
                 case "D":
                     txtAccountWithInstitutionNo_MT103.Enabled = false;
                     txtAccountWithBankAcct_MT103.Enabled = true;
                     txtAccountWithBankAcct2_MT103.Enabled = true;
+                    txtAccountWithBankAcct3_MT103.Enabled = true;
+                    txtAccountWithBankAcct4_MT103.Enabled = true;
                     break;
             }
         }
