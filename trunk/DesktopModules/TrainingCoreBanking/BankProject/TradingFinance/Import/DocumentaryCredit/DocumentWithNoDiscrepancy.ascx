@@ -352,10 +352,14 @@
         <fieldset runat="server" ID="fieldsetDiscrepancies" visible="false">
             <legend>
                 <div style="font-weight: bold; text-transform: uppercase;">Discrepancies and Disposal of Docs</div>
-            </legend>
-            
+            </legend>            
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr><td colspan="2"><uc1:MultiTextBox runat="server" id="txtDiscrepancies" Label="33.1 Discrepancies" LabelWidth="170" /></td></tr>
+                <tr>
+                    <td class="MyLable" style="width:170px; vertical-align:top;">33.1 Discrepancies</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtDiscrepancies" runat="server" TextMode="MultiLine" MaxLength="2000" Height="100px" Width="355px" Resize="None" />
+                    </td>
+                </tr>
                 <tr>
                     <td class="MyLable" style="width:170px;">69.5.1 Disposal of Docs</td>
                     <td class="MyContent">
@@ -501,7 +505,12 @@
                     <telerik:RadTextBox ID="tbSendertoReceiverInfomation" runat="server" Width="355" />
                 </td>
             </tr>
-            <tr><td colspan="2"><uc1:MultiTextBox runat="server" id="txtDiscrepancies_734" Label="77.J Discrepancies" LabelWidth="200" /></td></tr>            
+            <tr>
+                <td class="MyLable" style="width:170px; vertical-align:top;">77.J Discrepancies</td>
+                <td class="MyContent">
+                    <telerik:RadTextBox ID="txtDiscrepancies_734" runat="server" TextMode="MultiLine" MaxLength="2000" Height="100px" Width="355px" Resize="None" />
+                </td>
+            </tr>
             <tr>
                 <td class="MyLable">77.B Disposal of Docs</td>
                 <td class="MyContent">

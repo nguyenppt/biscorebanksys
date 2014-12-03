@@ -406,7 +406,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl txtDiscrepancies;
+        protected global::Telerik.Web.UI.RadTextBox txtDiscrepancies;
         
         /// <summary>
         /// txtDisposalOfDocs control.
@@ -613,7 +613,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl txtDiscrepancies_734;
+        protected global::Telerik.Web.UI.RadTextBox txtDiscrepancies_734;
         
         /// <summary>
         /// txtDisposalOfDocs_734 control.

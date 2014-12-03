@@ -237,7 +237,10 @@
             <li><a href="#MT707">MT707</a></li>
             <li><a href="#MT747">MT747</a></li>
             <% } %>
+            <% if (TabId != TabIssueLCClose) %>
+            <%{ %>
             <li><a href="#Charges">Charges</a></li>
+            <% } %>
         </ul>
     </telerik:RadCodeBlock>
     <div id="Main" class="dnnClear">
@@ -889,13 +892,14 @@
                     </td>
                 </tr>
             </table>
-            <table cellpadding="0" cellspacing="0">
+            <!-- An F18 do phuc tap van de ngoai te -->
+            <table cellpadding="0" cellspacing="0" style="display:none;">
                 <tr>
                     <td class="MyLable">18. Import Limit</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox runat="server" ID="txtImportLimit" Enabled="false" />
                     </td>
-                    <td style="color:GrayText;"><asp:Label ID="lblImportLimitMessage" runat="server" Text=""></asp:Label></td><!--Available Import Limit : ....-->
+                    <td style="color:GrayText;"><asp:Label ID="lblImportLimitMessage" runat="server" Text=""></asp:Label></td>
                 </tr>
             </table>
         </fieldset>
@@ -3299,10 +3303,9 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
         function tbExpiryDate_DateSelected(sender, eventArgs) {
             var datePicker = $find("<%= tbContingentExpiry.ClientID %>");
             var ExpiryDate = $find("<%= tbExpiryDate.ClientID %>");
-            var PlaceOfExpiry = $find("<%= dteMT700DateAndPlaceOfExpiry.ClientID %>");
-            
-            var ExpiryDate740 = $find("<%= tbExpiryDate740.ClientID %>");
-            
+            var PlaceOfExpiry = $find("<%= dteMT700DateAndPlaceOfExpiry.ClientID %>");            
+            var ExpiryDate740 = $find("<%= tbExpiryDate740.ClientID %>");            
+            var NewDateOfExpiry747 = $find("<%= dteNewDateOfExpiry_747.ClientID %>");
 
             var date = ExpiryDate.get_selectedDate();
             var dateP = ExpiryDate.get_selectedDate();
@@ -3316,6 +3319,10 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 
             if (ExpiryDate740) {
                 ExpiryDate740.set_selectedDate(ExpiryDate.get_selectedDate());
+            }
+
+            if (NewDateOfExpiry747) {
+                NewDateOfExpiry747.set_selectedDate(ExpiryDate.get_selectedDate());
             }
         }
         
@@ -3729,16 +3736,16 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
         function comboReimbBankType_OnClientSelectedIndexChanged () {
             var comboReimbBankType = $find('<%=comboReimbBankType.ClientID %>'),
                 comboReimbBankType700 = $find('<%=comboReimbBankType700.ClientID %>'),
-                comboReimbBankType_747 = $find('<%=comboReimbBankType_747.ClientID %>');
-                
-
+                comboReimbBankType_747 = $find('<%=comboReimbBankType_747.ClientID %>');                
+            //13.1+14.1: khi chuyển từ type A sang D thì 13.2+14.2: phải xóa giá trị hiện có và làm mờ
+            if (comboReimbBankType.get_selectedItem().get_text() == 'D'){
+                $find('<%=txtReimbBankNo.ClientID %>').set_value('');
+            }
             if (comboReimbBankType700) {
                 comboReimbBankType700.set_value(comboReimbBankType.get_value());
                 comboReimbBankType700.set_text(comboReimbBankType.get_selectedItem().get_text());
 
                 $find('<%=txtReimbBankNo700.ClientID %>').set_value('');
-                $find('<%=txtReimbBankNo700.ClientID %>').set_text('');
-
                 $find('<%=tbReimbBankName700.ClientID %>').set_value('');
                 $find('<%=tbReimbBankAddr700_1.ClientID %>').set_value('');
                 $find('<%=tbReimbBankAddr700_2.ClientID %>').set_value('');
@@ -3750,8 +3757,6 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 comboReimbBankType_747.set_text(comboReimbBankType.get_selectedItem().get_text());
 
                 $find('<%=txtReimbBankNo_747.ClientID %>').set_value('');
-                $find('<%=txtReimbBankNo_747.ClientID %>').set_text('');
-
                 $find('<%=txtReimbBankName_747.ClientID %>').set_value('');
                 $find('<%=txtReimbBankAddr_747_1.ClientID %>').set_value('');
                 $find('<%=txtReimbBankAddr_747_2.ClientID %>').set_value('');
@@ -4073,21 +4078,17 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 
         <telerik:AjaxSetting AjaxControlID="comboReimbBankType">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="rcbReimbBankNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtReimbBankNo" />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankName" />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr3" />
-
-                <telerik:AjaxUpdatedControl ControlID="comboReimbBankType" />
-
-
             </UpdatedControls>
         </telerik:AjaxSetting>
 
         <telerik:AjaxSetting AjaxControlID="rcbAdviseThruType">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="rcbAdviseThruNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtAdviseThruNo" />
                 <telerik:AjaxUpdatedControl ControlID="tbAdviseThruName" />
                 <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="tbAdviseThruAddr2" />

@@ -469,8 +469,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void comboReimbBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_ReimbBankType();
-            comboReimbBankType700.SelectedValue = comboReimbBankType.SelectedValue;
-            
+            comboReimbBankType700.SelectedValue = comboReimbBankType.SelectedValue;            
             txtReimbBankNo.Text = string.Empty;
             tbReimbBankName.Text = string.Empty;
             tbReimbBankAddr1.Text = string.Empty;
