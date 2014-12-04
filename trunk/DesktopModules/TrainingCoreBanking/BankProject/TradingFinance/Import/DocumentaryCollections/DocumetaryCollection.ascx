@@ -924,7 +924,7 @@
         </fieldset>
     </div>
 
-    <div id="TabMT410" class="dnnClear">
+    <div id="TabMT410" class="dnnClear" style="display:none;">
         <fieldset>
         <legend>
             <div style="font-weight: bold; text-transform: uppercase;"></div>
