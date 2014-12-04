@@ -8,6 +8,9 @@ using BankProject.DBContext;
 using DotNetNuke.Common;
 using Telerik.Web.UI;
 using Telerik.Web.UI.Calendar;
+using BankProject.DataProvider;
+using System.Collections.Generic;
+
 
 namespace BankProject.TradingFinance.Export.DocumentaryCollections
 {
@@ -30,6 +33,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         public double AmountAut = 0;
         public double ChargeAmount = 0;
         private DataRow _exportDoc;
+        private BEXPORT_DOCUMETARYCOLLECTION _exportCollection;
         private ExportDocumentaryScreenType ScreenType
         {
             get
@@ -64,7 +68,75 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             return "TF";
         }
+        //load phan thong tin amend
+        private void LoadExportDocAmend()
+        {
+            var Code = CodeId;
+            if (Code != null)
+            {
+                //nhap vao khong co dau .
+                if (Code.IndexOf('.') == -1)
+                {
+                    var objAmend = new BEXPORT_DOCUMETARYCOLLECTION();
+                    var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.DocCollectCode == Code).ToList();
+                    if (lstDoc != null && lstDoc.Count > 0)
+                    {
 
+                        objAmend = lstDoc.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES) && (x.Amend_Status == "UNA" || x.Amend_Status == "REV")).FirstOrDefault();
+                        if (objAmend != null)
+                        {
+                            var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == objAmend.DocCollectCode).ToList();
+                            LoadDataForAmend(objAmend, objCharge);
+                            txtCode.Text = objAmend.AmendNo;
+                            _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
+                            _exportCollection = objAmend;
+                        }
+                        else
+                        {
+                            //truong hop chua co
+                            var maxAmendId = lstDoc.Max(x => x.AmendId);
+                            if (maxAmendId == null)
+                            {
+                                maxAmendId = 1;
+                            }
+                            else
+                            {
+                                maxAmendId = maxAmendId + 1;
+                            }
+                            var code = CodeId;
+                            var ctnAmend = lstDoc.Where(x => x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES).FirstOrDefault();
+                            if (ctnAmend != null)
+                            {
+
+                                var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == ctnAmend.DocCollectCode).ToList();
+                                LoadDataForAmend(ctnAmend, objCharge);
+                            }
+                            RadToolBar1.FindItemByValue("btSave").Enabled = true;
+                            txtCode.Text = code + "." + maxAmendId;
+                            //
+                        }
+                    }
+                }
+                else
+                {
+                    var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == Code).FirstOrDefault();
+                    if (lstDoc != null)
+                    {
+                        var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode).ToList();
+                        LoadDataForAmend(lstDoc, objCharge);
+                        txtCode.Text = lstDoc.AmendNo;
+                        _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
+                        _exportCollection = lstDoc;
+                    }
+                    else
+                    {
+                        lblError.Text = "This Amend ID was not found";
+                    }
+                }
+            }
+        }
+        //
+        
         private void LoadExportDoc()
         {
             var dsDoc = bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode(CodeId);
@@ -87,30 +159,33 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
 
             InitDefaultData();
-            LoadExportDoc();
+            //LoadExportDoc();
 
             switch (ScreenType)
             {
                 case ExportDocumentaryScreenType.RegisterCc:
                 case ExportDocumentaryScreenType.Register:
-
+                    LoadExportDoc();
                     InitToolBarForRegister();
 
                     lblAmount_New.Visible = false;
                   
                     break;
                 case ExportDocumentaryScreenType.Amend:
+                    LoadExportDocAmend();
                     InitToolBarForAmend();
                     //tabCharges.Visible = false;
                     //Charges.Visible = false;
                     break;
                 case ExportDocumentaryScreenType.Cancel:
+                    LoadExportDoc();
                     InitToolBarForCancel();
 
                     lblAmount_New.Visible = false;
                     divDocumentaryCollectionCancel.Visible = true;
                     break;
                 case ExportDocumentaryScreenType.Acception:
+                    LoadExportDoc();
                     InitToolBarForAccept();
 
                     lblAmount_New.Visible = false;
@@ -470,7 +545,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             switch (commandName)
             {
                 case "save":
-                    SaveData();
+                    if (TabId == 229)
+                    {
+                        SaveDataAmend();
+                    }
+                    else
+                    {
+                        SaveData();
+                    }
                     Response.Redirect(Globals.NavigateURL(TabId));
                     /*
                     // reset form
@@ -532,20 +614,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void InitToolBarForAmend()
         {
             RadToolBar1.FindItemByValue("btReview").Enabled = true;
-            if (_exportDoc != null)
+            if (_exportCollection != null)
             {
                 if (Disable) // Authorizing
                 {
-                    if (_exportDoc["Status"].ToString() != "AUT") // Authorized
+                    if (_exportCollection.Status != "AUT") // Authorized
                     {
                         lblError.Text = "This Documentary was not authorized";
                     }
-                    else if (_exportDoc["Amend_Status"].ToString() == "AUT")
+                    else if (_exportCollection.Amend_Status == "AUT")
                     {
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Amend Documentary was authorized";
                     }
-                    else if (_exportDoc["Cancel_Status"].ToString() == "AUT")
+                    else if (_exportCollection.Cancel_Status == "AUT")
                     {
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was canceled";
@@ -560,17 +642,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 }
                 else // Editing
                 {
-                    if (_exportDoc["Status"].ToString() != "AUT") // Authorized
+                    if (_exportCollection.Status != "AUT") // Authorized
                     {
                         lblError.Text = "This Documentary was not authorized";
                         SetDisableByReview(false);
                     }
-                    else if (_exportDoc["Cancel_Status"].ToString() == "AUT")
+                    else if (_exportCollection.Cancel_Status == "AUT")
                     {
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was canceled";
                     }
-                    else if (_exportDoc["Amend_Status"].ToString() == "AUT") // Authorized
+                    else if (_exportCollection.Amend_Status == "AUT") // Authorized
                     {
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Amend Documentary was authorized";
@@ -583,9 +665,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                 }
             }
-            else 
+            else
             {
-                
+
             }
         }
         protected void InitToolBarForRegister()
@@ -768,6 +850,393 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             }
         }
+        protected void SaveDataAmend()
+        {
+            try
+            {
+                int AmendPreId = 0;
+                string AmendNo = "";
+                var Code = txtCode.Text.Trim();
+                var objPreAmend = new BEXPORT_DOCUMETARYCOLLECTION();
+                if (!String.IsNullOrEmpty(Code))
+                {
+                    if (Code.IndexOf('.') != -1)
+                    {
+
+                        var findTypeAmend = Code.Split('.');
+                        if (findTypeAmend != null && findTypeAmend.Length > 0)
+                        {
+                            if (findTypeAmend.Length == 2)
+                            {
+                                var chkAmend = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == Code).FirstOrDefault();
+                                //truong hop chua co
+                                if (chkAmend == null)
+                                {
+                                    if (!String.IsNullOrEmpty(findTypeAmend[1]))
+                                    {
+                                        AmendPreId = int.Parse(findTypeAmend[1]) - 1;
+                                    }
+                                    if (AmendPreId > 0)
+                                    {
+                                        ///xet Amend truoc do
+                                        ///
+                                        AmendNo = findTypeAmend[0] + "." + AmendPreId;
+
+                                        objPreAmend = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == AmendNo).FirstOrDefault();
+                                        if (objPreAmend != null)
+                                        {
+                                            objPreAmend.ActiveRecordFlag = YesNo.NO;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //nguoc lai update Status cho Amend goc
+                                        AmendNo = findTypeAmend[0];
+                                        objPreAmend = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.DocCollectCode == AmendNo).FirstOrDefault();
+                                        if (objPreAmend != null)
+                                        {
+                                            objPreAmend.ActiveRecordFlag = YesNo.NO;
+                                        }
+                                    }
+                                    _entities.SaveChanges();
+                                    //them moi dong hien tai
+                                    BEXPORT_DOCUMETARYCOLLECTION objInsert = new BEXPORT_DOCUMETARYCOLLECTION
+                                    {
+                                        DocCollectCode = findTypeAmend[0],
+                                        DrawerCusNo = comboDrawerCusNo.SelectedValue,
+                                        DrawerCusName = txtDrawerCusName.Text.Trim(),
+                                        DrawerAddr1 = txtDrawerAddr1.Text.Trim(),
+                                        DrawerAddr2 = txtDrawerAddr2.Text.Trim(),
+                                        DrawerAddr3 = txtDrawerAddr3.Text.Trim(),
+                                        DrawerRefNo = txtDrawerRefNo.Text.Trim(),
+                                        CollectingBankNo = comboCollectingBankNo.SelectedValue,
+                                        CollectingBankName = txtCollectingBankName.Text.Trim(),
+                                        CollectingBankAddr1 = txtCollectingBankAddr1.Text.Trim(),
+                                        CollectingBankAddr2 = txtCollectingBankAddr2.Text.Trim(),
+                                        CollectingBankAcct = comboCollectingBankAcct.SelectedValue,
+                                        DraweeCusNo = txtDraweeCusNo.Text.Trim(),
+                                        DraweeCusName = txtDraweeCusName.Text.Trim(),
+                                        DraweeAddr1 = txtDraweeAddr1.Text.Trim(),
+                                        DraweeAddr2 = txtDraweeAddr2.Text.Trim(),
+                                        DraweeAddr3 = txtDraweeAddr3.Text.Trim(),
+                                        NostroCusNo = comboNostroCusNo.SelectedValue,
+                                        Currency = comboCurrency.SelectedValue,
+                                        Amount = numAmount.Value,
+                                        DocsReceivedDate = dteDocsReceivedDate.SelectedDate,
+                                        MaturityDate = dteMaturityDate.SelectedDate,
+                                        Tenor = txtTenor.Text.Trim(),
+                                        TracerDate = dteTracerDate.SelectedDate,
+                                        Commodity = comboCommodity.SelectedValue,
+                                        DocsCode1 = comboDocsCode1.SelectedValue,
+                                        DocsCode2 = comboDocsCode2.SelectedValue,
+                                        DocsCode3 = comboDocsCode3.SelectedValue,
+                                        OtherDocs = txtOtherDocs.Text.Trim(),
+                                        Remarks = txtRemarks.Text.Trim(),
+                                        CreateBy = UserId.ToString(),
+                                        CollectionType = comboCollectionType.SelectedValue,
+                                        CancelDate = dteCancelDate.SelectedDate,
+                                        ContingentExpiryDate = dteContingentExpiryDate.SelectedDate,
+                                        CancelRemark = txtCancelRemark.Text.Trim(),
+                                        Accountofficer = comboAccountOfficer.SelectedValue,
+                                        AcceptedDate = dtAcceptDate.SelectedDate,
+                                        AcceptedRemarks = txtAcceptREmark.Text.Trim(),
+                                        //Amend
+                                        Amend_Status = "UNA",
+                                        AmendBy = UserId.ToString(),
+                                        AmendNo = txtCode.Text,
+                                        RefAmendNo = findTypeAmend[0],
+                                        ActiveRecordFlag=YesNo.YES,
+                                        Status="AUT"
+                                        //
+                                    };
+                                    if (objPreAmend != null)
+                                    {
+
+                                        objInsert.OldAmount = objPreAmend.Amount;
+                                        objInsert.OldDocsReceivedDate = objPreAmend.OldDocsReceivedDate;
+                                    }
+                                    if (!String.IsNullOrEmpty(findTypeAmend[1]))
+                                    {
+                                        objInsert.AmendId = int.Parse(findTypeAmend[1]);
+                                    }
+                                    if (!String.IsNullOrEmpty(numReminderDays.Value.ToString()))
+                                    {
+                                        objInsert.ReminderDays = long.Parse(numReminderDays.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfOriginals1.Value.ToString()))
+                                    {
+                                        objInsert.NoOfOriginals1 = int.Parse(numNoOfOriginals1.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfCopies1.Value.ToString()))
+                                    {
+                                        objInsert.NoOfCopies1 = int.Parse(numNoOfCopies1.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfOriginals2.Value.ToString()))
+                                    {
+                                        objInsert.NoOfOriginals2 = int.Parse(numNoOfOriginals2.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfCopies2.Value.ToString()))
+                                    {
+                                        objInsert.NoOfCopies2 = int.Parse(numNoOfCopies2.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfOriginals3.Value.ToString()))
+                                    {
+                                        objInsert.NoOfOriginals3 = int.Parse(numNoOfOriginals3.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfCopies3.Value.ToString()))
+                                    {
+                                        objInsert.NoOfCopies3 = int.Parse(numNoOfCopies3.Value.ToString());
+                                    }
+                                    _entities.BEXPORT_DOCUMETARYCOLLECTION.Add(objInsert);
+                                    _entities.SaveChanges();
+                                }
+                                else
+                                {
+                                    chkAmend.DocCollectCode = findTypeAmend[0];
+                                    chkAmend.DrawerCusNo = comboDrawerCusNo.SelectedValue;
+                                    chkAmend.DrawerCusName = txtDrawerCusName.Text.Trim();
+                                    chkAmend.DrawerAddr1 = txtDrawerAddr1.Text.Trim();
+                                    chkAmend.DrawerAddr2 = txtDrawerAddr2.Text.Trim();
+                                    chkAmend.DrawerAddr3 = txtDrawerAddr3.Text.Trim();
+                                    chkAmend.DrawerRefNo = txtDrawerRefNo.Text.Trim();
+                                    chkAmend.CollectingBankNo = comboCollectingBankNo.SelectedValue;
+                                    chkAmend.CollectingBankName = txtCollectingBankName.Text.Trim();
+                                    chkAmend.CollectingBankAddr1 = txtCollectingBankAddr1.Text.Trim();
+                                    chkAmend.CollectingBankAddr2 = txtCollectingBankAddr2.Text.Trim();
+                                    chkAmend.CollectingBankAcct = comboCollectingBankAcct.SelectedValue;
+                                    chkAmend.DraweeCusNo = txtDraweeCusNo.Text.Trim();
+                                    chkAmend.DraweeCusName = txtDraweeCusName.Text.Trim();
+                                    chkAmend.DraweeAddr1 = txtDraweeAddr1.Text.Trim();
+                                    chkAmend.DraweeAddr2 = txtDraweeAddr2.Text.Trim();
+                                    chkAmend.DraweeAddr3 = txtDraweeAddr3.Text.Trim();
+                                    chkAmend.NostroCusNo = comboNostroCusNo.SelectedValue;
+                                    chkAmend.Currency = comboCurrency.SelectedValue;
+                                    chkAmend.Amount = numAmount.Value;
+                                    chkAmend.DocsReceivedDate = dteDocsReceivedDate.SelectedDate;
+                                    chkAmend.MaturityDate = dteMaturityDate.SelectedDate;
+                                    chkAmend.Tenor = txtTenor.Text.Trim();
+                                    chkAmend.TracerDate = dteTracerDate.SelectedDate;
+                                    chkAmend.Commodity = comboCommodity.SelectedValue;
+                                    chkAmend.DocsCode1 = comboDocsCode1.SelectedValue;
+                                    chkAmend.DocsCode2 = comboDocsCode2.SelectedValue;
+                                    chkAmend.DocsCode3 = comboDocsCode3.SelectedValue;
+                                    chkAmend.OtherDocs = txtOtherDocs.Text.Trim();
+                                    chkAmend.Remarks = txtRemarks.Text.Trim();
+                                    chkAmend.CreateBy = UserId.ToString();
+                                    chkAmend.CollectionType = comboCollectionType.SelectedValue;
+                                    chkAmend.CancelDate = dteCancelDate.SelectedDate;
+                                    chkAmend.ContingentExpiryDate = dteContingentExpiryDate.SelectedDate;
+                                    chkAmend.CancelRemark = txtCancelRemark.Text.Trim();
+                                    chkAmend.Accountofficer = comboAccountOfficer.SelectedValue;
+                                    chkAmend.AcceptedDate = dtAcceptDate.SelectedDate;
+                                    chkAmend.AcceptedRemarks = txtAcceptREmark.Text.Trim();
+                                    //Amend
+                                    chkAmend.Amend_Status = "UNA";
+                                    chkAmend.AmendBy = UserId.ToString();
+                                    chkAmend.AmendNo = txtCode.Text;
+                                    chkAmend.RefAmendNo = findTypeAmend[0];
+                                    chkAmend.Status = "AUT";
+                                    if (!String.IsNullOrEmpty(findTypeAmend[1]))
+                                    {
+                                        chkAmend.AmendId = int.Parse(findTypeAmend[1]);
+                                    }
+                                    if (!String.IsNullOrEmpty(numReminderDays.Value.ToString()))
+                                    {
+                                        chkAmend.ReminderDays = long.Parse(numReminderDays.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfOriginals1.Value.ToString()))
+                                    {
+                                        chkAmend.NoOfOriginals1 = int.Parse(numNoOfOriginals1.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfCopies1.Value.ToString()))
+                                    {
+                                        chkAmend.NoOfCopies1 = int.Parse(numNoOfCopies1.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfOriginals2.Value.ToString()))
+                                    {
+                                        chkAmend.NoOfOriginals2 = int.Parse(numNoOfOriginals2.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfCopies2.Value.ToString()))
+                                    {
+                                        chkAmend.NoOfCopies2 = int.Parse(numNoOfCopies2.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfOriginals3.Value.ToString()))
+                                    {
+                                        chkAmend.NoOfOriginals3 = int.Parse(numNoOfOriginals3.Value.ToString());
+                                    }
+                                    if (!String.IsNullOrEmpty(numNoOfCopies3.Value.ToString()))
+                                    {
+                                        chkAmend.NoOfCopies3 = int.Parse(numNoOfCopies3.Value.ToString());
+                                    }
+                                    _entities.SaveChanges();
+                                }
+                                //save phan Charge
+                                //var lstCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == findTypeAmend[0]).ToList();
+                                ////truong hop da co -->update
+                                //if (lstCharge != null && lstCharge.Count > 0)
+                                //{
+                                //    foreach (var item in lstCharge)
+                                //    {
+                                //        if (item.Chargecode == "EC.RECEIVE")
+                                //        {
+                                //            item.DocCollectCode = findTypeAmend[0];
+                                //            item.WaiveCharges = comboWaiveCharges.SelectedValue;
+                                //            item.Chargecode = tbChargeCode.SelectedValue;
+                                //            item.ChargeAcct = rcbChargeAcct.SelectedValue;
+                                //            item.ChargeCcy = rcbChargeCcy.SelectedValue;
+                                //            if (!String.IsNullOrEmpty(tbChargeAmt.Value.ToString()))
+                                //            {
+                                //                item.ChargeAmt = decimal.Parse(tbChargeAmt.Value.ToString());
+                                //            }
+                                //            item.PartyCharged = rcbPartyCharged.SelectedValue;
+                                //            item.OmortCharges = rcbOmortCharge.SelectedValue;
+                                //            item.ChargeStatus = rcbChargeStatus.SelectedValue;
+                                //            item.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                                //            item.VATNo = tbVatNo.Text;
+                                //            item.TaxCode = lblTaxCode.Text;
+                                //            item.TaxAmt = lblTaxAmt.Text;
+                                //            item.Rowchages = "1";
+                                //        }
+                                //        else if (item.Chargecode == "EC.COURIER")
+                                //        {
+                                //            item.DocCollectCode = findTypeAmend[0];
+                                //            item.WaiveCharges = comboWaiveCharges.SelectedValue;
+                                //            item.Chargecode = tbChargeCode2.SelectedValue;
+                                //            item.ChargeAcct = rcbChargeAcct2.SelectedValue;
+                                //            item.ChargeCcy = rcbChargeCcy2.SelectedValue;
+                                //            if (!String.IsNullOrEmpty(tbChargeAmt2.Value.ToString()))
+                                //            {
+                                //                item.ChargeAmt = decimal.Parse(tbChargeAmt2.Value.ToString());
+                                //            }
+                                //            item.PartyCharged = rcbPartyCharged2.SelectedValue;
+                                //            item.OmortCharges = rcbOmortCharge2.SelectedValue;
+                                //            item.ChargeStatus = rcbChargeStatus2.SelectedValue;
+                                //            item.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                                //            item.VATNo = tbVatNo.Text;
+                                //            item.TaxCode = lblTaxCode2.Text;
+                                //            item.TaxAmt = lblTaxAmt2.Text;
+                                //            item.Rowchages = "1";
+                                //        }
+                                //        else if (item.Chargecode == "EC.OTHER")
+                                //        {
+                                //            item.DocCollectCode = findTypeAmend[0];
+                                //            item.WaiveCharges = comboWaiveCharges.SelectedValue;
+                                //            item.Chargecode = tbChargeCode3.SelectedValue;
+                                //            item.ChargeAcct = rcbChargeAcct3.SelectedValue;
+                                //            item.ChargeCcy = rcbChargeCcy3.SelectedValue;
+                                //            if (!String.IsNullOrEmpty(tbChargeAmt3.Value.ToString()))
+                                //            {
+                                //                item.ChargeAmt = decimal.Parse(tbChargeAmt3.Value.ToString());
+                                //            }
+                                //            item.PartyCharged = rcbPartyCharged3.SelectedValue;
+                                //            item.OmortCharges = rcbOmortCharge3.SelectedValue;
+                                //            item.ChargeStatus = rcbChargeStatus3.SelectedValue;
+                                //            item.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                                //            item.VATNo = tbVatNo.Text;
+                                //            item.TaxCode = lblTaxCode3.Text;
+                                //            item.TaxAmt = lblTaxAmt3.Text;
+                                //            item.Rowchages = "1";
+                                //        }
+                                //        _entities.SaveChanges();
+                                //    }
+                                //}
+                                //else
+                                //{ 
+                                //    //chua co them moi
+                                //    var objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
+                                //    if (!String.IsNullOrWhiteSpace(tbChargeAmt.Text))
+                                //    {
+                                //        objCharge.DocCollectCode = findTypeAmend[0];
+                                //        objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
+                                //        objCharge.Chargecode = tbChargeCode.SelectedValue;
+                                //        objCharge.ChargeAcct = rcbChargeAcct.SelectedValue;
+                                //        objCharge.ChargeCcy = rcbChargeCcy.SelectedValue;
+                                //        if(!String.IsNullOrEmpty(tbChargeAmt.Value.ToString()))
+                                //        {
+                                //            objCharge.ChargeAmt = decimal.Parse(tbChargeAmt.Value.ToString());
+                                //        }
+                                //        objCharge.PartyCharged = rcbPartyCharged.SelectedValue;
+                                //        objCharge.OmortCharges = rcbOmortCharge.SelectedValue;
+                                //        objCharge.ChargeStatus = rcbChargeStatus.SelectedValue;
+                                //        objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                                //        objCharge.VATNo = tbVatNo.Text;
+                                //        objCharge.TaxCode = lblTaxCode.Text;
+                                //        objCharge.TaxAmt = lblTaxAmt.Text;
+                                //        objCharge.Rowchages = "1";
+                                //    }
+                                //    _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                //    _entities.SaveChanges();
+                                //    //
+                                //    objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
+                                //    if (!String.IsNullOrWhiteSpace(tbChargeAmt2.Text))
+                                //    {
+                                //        objCharge.DocCollectCode = findTypeAmend[0];
+                                //        objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
+                                //        objCharge.Chargecode = tbChargeCode2.SelectedValue;
+                                //        objCharge.ChargeAcct = rcbChargeAcct2.SelectedValue;
+                                //        objCharge.ChargeCcy = rcbChargeCcy2.SelectedValue;
+                                //        if (!String.IsNullOrEmpty(tbChargeAmt2.Value.ToString()))
+                                //        {
+                                //            objCharge.ChargeAmt = decimal.Parse(tbChargeAmt2.Value.ToString());
+                                //        }
+                                //        objCharge.PartyCharged = rcbPartyCharged2.SelectedValue;
+                                //        objCharge.OmortCharges = rcbOmortCharge2.SelectedValue;
+                                //        objCharge.ChargeStatus = rcbChargeStatus2.SelectedValue;
+                                //        objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                                //        objCharge.VATNo = tbVatNo.Text;
+                                //        objCharge.TaxCode = lblTaxCode2.Text;
+                                //        objCharge.TaxAmt = lblTaxAmt2.Text;
+                                //        objCharge.Rowchages = "1";
+                                //    }
+                                //    //
+                                //    _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                //    _entities.SaveChanges();
+                                //    //
+                                //    objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
+                                //    if (!String.IsNullOrWhiteSpace(tbChargeAmt3.Text))
+                                //    {
+                                //        objCharge.DocCollectCode = findTypeAmend[0];
+                                //        objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
+                                //        objCharge.Chargecode = tbChargeCode3.SelectedValue;
+                                //        objCharge.ChargeAcct = rcbChargeAcct3.SelectedValue;
+                                //        objCharge.ChargeCcy = rcbChargeCcy3.SelectedValue;
+                                //        if (!String.IsNullOrEmpty(tbChargeAmt3.Value.ToString()))
+                                //        {
+                                //            objCharge.ChargeAmt = decimal.Parse(tbChargeAmt3.Value.ToString());
+                                //        }
+                                //        objCharge.PartyCharged = rcbPartyCharged3.SelectedValue;
+                                //        objCharge.OmortCharges = rcbOmortCharge3.SelectedValue;
+                                //        objCharge.ChargeStatus = rcbChargeStatus3.SelectedValue;
+                                //        objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                                //        objCharge.VATNo = tbVatNo.Text;
+                                //        objCharge.TaxCode = lblTaxCode3.Text;
+                                //        objCharge.TaxAmt = lblTaxAmt3.Text;
+                                //        objCharge.Rowchages = "1";
+                                //        //
+                                //        _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                //        _entities.SaveChanges();
+                                //    }
+                                //}
+                                //
+
+                                //
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEX)
+            {
+                Exception raise = dbEX;
+                foreach (var validationError in dbEX.EntityValidationErrors)
+                {
+                    string message = string.Format("{0}:{1}", validationError.Entry.Entity.ToString(), validationError.ValidationErrors);
+                    raise = new InvalidOperationException(message, raise);
+                }
+                throw raise;
+            }
+        }
         protected void SaveData()
         {
             bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_Insert(txtCode.Text.Trim()
@@ -851,7 +1320,270 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     /*lblTaxCcy2.Text*/, lblTaxAmt3.Text, "", "", "3");
             }
         }
+        protected void LoadDataForAmend(BEXPORT_DOCUMETARYCOLLECTION obj, List<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> lstCharge)
+        {
+            if (obj != null)
+            {
+                RadToolBar1.FindItemByValue("btReview").Enabled = false;
+                
+                    if (!String.IsNullOrEmpty(obj.OldAmount.ToString()))
+                    {
+                        AmountOld = double.Parse(obj.OldAmount.ToString());
+                    }
+                    if (!String.IsNullOrEmpty(obj.Amount.ToString()))
+                    {
+                        Amount = double.Parse(obj.Amount.ToString());
+                    }
+                
+                
+                // DocumentaryCollectionCancel
+                if (!string.IsNullOrEmpty(obj.CancelDate.ToString()) && obj.CancelDate.ToString().IndexOf("1/1/1900") == -1)
+                {
+                    dteCancelDate.SelectedDate = DateTime.Parse(obj.CancelDate.ToString());
+                }
+                if (!string.IsNullOrEmpty(obj.ContingentExpiryDate.ToString()) && obj.ContingentExpiryDate.ToString().IndexOf("1/1/1900") == -1)
+                {
+                    dteContingentExpiryDate.SelectedDate = DateTime.Parse(obj.ContingentExpiryDate.ToString());
+                }
 
+                if (string.IsNullOrEmpty(obj.Cancel_Status))
+                {
+                    dteCancelDate.SelectedDate = DateTime.Now;
+                    dteContingentExpiryDate.SelectedDate = DateTime.Now;
+                }
+
+                txtCancelRemark.Text = obj.CancelRemark;
+
+                // Outgoing Document Acception
+                if (!string.IsNullOrEmpty(obj.AcceptedDate.ToString()) && obj.AcceptedDate.ToString().IndexOf("1/1/1900") == -1)
+                {
+                    dtAcceptDate.SelectedDate = DateTime.Parse(obj.AcceptedDate.ToString());
+                }
+
+
+                if (string.IsNullOrEmpty(obj.AcceptStatus))
+                {
+                    dtAcceptDate.SelectedDate = DateTime.Now;
+                }
+
+                txtAcceptREmark.Text = obj.AcceptedRemarks;
+
+                ///////////////////////////////////////
+                // CC
+                if (obj.CollectionType == "CC")
+                {
+                    comboCollectionType.Items.Clear();
+                    comboCollectionType.DataValueField = "ID";
+                    comboCollectionType.DataTextField = "ID";
+                    comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
+                    comboCollectionType.DataBind();
+                    divCollectionType.Visible = false;
+                    divDocsCode.Visible = false;
+                    divDocsCode2.Visible = false;
+                    divDocsCode3.Visible = false;
+
+                }
+                // end cc
+                comboCollectionType.SelectedValue = obj.CollectionType;
+                lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
+
+                comboAccountOfficer.SelectedValue = obj.Accountofficer;
+                comboDrawerCusNo.SelectedValue = obj.DrawerCusNo;
+                txtDrawerCusName.Text = obj.DrawerCusName;
+                txtDrawerAddr1.Text = obj.DrawerAddr1;
+                txtDrawerAddr2.Text = obj.DrawerAddr2;
+                txtDrawerAddr3.Text = obj.DrawerAddr3;
+                txtDrawerRefNo.Text = obj.DrawerRefNo;
+                comboCollectingBankNo.SelectedValue = obj.CollectingBankNo;
+                txtCollectingBankName.Text = obj.CollectingBankName;
+                txtCollectingBankAddr1.Text = obj.CollectingBankAddr1;
+                txtCollectingBankAddr2.Text = obj.CollectingBankAddr2;
+                comboCollectingBankAcct.SelectedValue = obj.CollectingBankAcct;
+                txtDraweeCusNo.Text = obj.DraweeCusNo;
+                txtDraweeCusName.Text = obj.DraweeCusName;
+                txtDraweeAddr1.Text = obj.DraweeAddr1;
+                txtDraweeAddr2.Text = obj.DraweeAddr2;
+                txtDraweeAddr3.Text = obj.DraweeAddr3;
+                comboNostroCusNo.SelectedValue = obj.NostroCusNo;
+                lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
+                comboCurrency.SelectedValue = obj.Currency;
+                numAmount.Value = Amount;
+                lblAmount_New.Text = AmountOld.ToString("C");
+                txtTenor.Text = obj.Tenor;
+                numReminderDays.Text = obj.ReminderDays.ToString();
+
+                comboCommodity.SelectedValue = obj.Commodity;
+                //txtCommodityName.Text = comboCommodity.SelectedItem.Attributes["Name2;
+
+                comboDocsCode1.SelectedValue = obj.DocsCode1;
+                numNoOfOriginals1.Text = obj.NoOfOriginals1.ToString();
+                numNoOfCopies1.Text = obj.NoOfCopies1.ToString();
+
+
+                comboDocsCode2.SelectedValue = obj.DocsCode2;
+                numNoOfOriginals2.Text = obj.NoOfOriginals2.ToString();
+                numNoOfCopies2.Text = obj.NoOfCopies2.ToString();
+
+                comboDocsCode3.SelectedValue = obj.DocsCode3;
+                numNoOfOriginals3.Text = obj.NoOfOriginals3.ToString();
+                numNoOfCopies3.Text = obj.NoOfCopies3.ToString();
+
+
+
+                if ((!string.IsNullOrWhiteSpace(obj.NoOfOriginals2.ToString()) &&
+                     int.Parse(obj.NoOfOriginals2.ToString()) > 0) ||
+                    (!string.IsNullOrWhiteSpace(obj.NoOfCopies2.ToString()) &&
+                     int.Parse(obj.NoOfCopies2.ToString()) > 0))
+                {
+                    divDocsCode2.Visible = true;
+                }
+                if ((!string.IsNullOrWhiteSpace(obj.NoOfOriginals3.ToString()) &&
+                     int.Parse(obj.NoOfOriginals3.ToString()) > 0) ||
+                    (!string.IsNullOrWhiteSpace(obj.NoOfCopies3.ToString()) &&
+                     int.Parse(obj.NoOfCopies3.ToString()) > 0))
+                {
+                    divDocsCode3.Visible = true;
+                }
+
+                txtOtherDocs.Text = obj.OtherDocs;
+                txtRemarks.Text = obj.Remarks;
+
+                if (!string.IsNullOrEmpty(obj.DocsReceivedDate.ToString()) && obj.DocsReceivedDate.ToString().IndexOf("1/1/1900") == -1)
+                {
+                    dteDocsReceivedDate.SelectedDate = DateTime.Parse(obj.DocsReceivedDate.ToString());
+                }
+                if (!string.IsNullOrEmpty(obj.MaturityDate.ToString()) && obj.MaturityDate.ToString().IndexOf("1/1/1900") == -1)
+                
+                {
+                    dteMaturityDate.SelectedDate = DateTime.Parse(obj.MaturityDate.ToString());
+                }
+                if (!string.IsNullOrEmpty(obj.TracerDate.ToString()) && obj.TracerDate.ToString().IndexOf("1/1/1900") == -1)
+                
+                {
+                    dteTracerDate.SelectedDate = DateTime.Parse(obj.TracerDate.ToString());
+                }
+            }
+            else
+            {
+                comboCollectionType.SelectedValue = string.Empty;
+                lblCollectionTypeName.Text = string.Empty;
+
+
+                comboNostroCusNo.SelectedValue = string.Empty;
+                txtDrawerCusName.Text = string.Empty;
+                txtDrawerAddr1.Text = string.Empty;
+                txtDrawerAddr2.Text = string.Empty;
+                txtDrawerAddr3.Text = string.Empty;
+                txtDrawerRefNo.Text = string.Empty;
+                comboCollectingBankNo.SelectedValue = string.Empty;
+                txtCollectingBankName.Text = string.Empty;
+                txtCollectingBankAddr1.Text = string.Empty;
+                txtCollectingBankAddr2.Text = string.Empty;
+                comboCollectingBankAcct.SelectedValue = string.Empty;
+                txtDraweeCusName.Text = string.Empty;
+                txtDraweeAddr1.Text = string.Empty;
+                txtDraweeAddr2.Text = string.Empty;
+                txtDraweeAddr3.Text = string.Empty;
+                comboNostroCusNo.SelectedValue = string.Empty;
+                comboCurrency.SelectedValue = string.Empty;
+                numAmount.Text = string.Empty;
+                txtTenor.Text = "AT SIGHT";
+                numReminderDays.Text = string.Empty;
+
+                comboCommodity.SelectedValue = string.Empty;
+                comboDocsCode1.SelectedValue = string.Empty;
+                numNoOfOriginals1.Text = string.Empty;
+                numNoOfCopies1.Text = string.Empty;
+
+                comboDocsCode2.SelectedValue = string.Empty;
+                numNoOfOriginals2.Text = string.Empty;
+                numNoOfCopies2.Text = string.Empty;
+
+                txtOtherDocs.Text = string.Empty;
+                txtRemarks.Text = string.Empty;
+
+                dteDocsReceivedDate.SelectedDate = null;
+                dteMaturityDate.SelectedDate = null;
+                dteTracerDate.SelectedDate = null;
+
+                Cal_TracerDate(false);
+            }
+            foreach (var item in lstCharge)
+            {
+                if (item.Chargecode == "EC.RECEIVE")
+                {
+                    comboWaiveCharges.SelectedValue = item.WaiveCharges;
+                    rcbChargeAcct.SelectedValue = item.ChargeAcct;
+                    //tbChargePeriod.Text = item.ChargePeriod;
+                    rcbChargeCcy.SelectedValue = item.ChargeCcy;
+                    if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
+                    {
+                        LoadChargeAcct();
+                    }
+                    //tbExcheRate.Text = item.ExchRate;
+                    tbChargeAmt.Text = item.ChargeAmt.ToString();
+                    rcbPartyCharged.SelectedValue = item.PartyCharged;
+                    lblPartyCharged.Text = item.PartyCharged;
+                    rcbOmortCharge.SelectedValue = item.OmortCharges;
+                    rcbChargeStatus.SelectedValue = item.ChargeStatus;
+                    lblChargeStatus.Text = item.ChargeStatus;
+
+                    tbChargeRemarks.Text = item.ChargeRemarks;
+                    tbVatNo.Text = item.VATNo;
+                    lblTaxCode.Text = item.TaxCode;
+                    //lblTaxCcy.Text = item.TaxCcy;
+                    lblTaxAmt.Text = item.TaxAmt;
+                    tbChargeCode.SelectedValue = item.Chargecode;
+                    ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
+                }
+                else if (item.Chargecode == "EC.COURIER")
+                {
+                    rcbChargeAcct2.SelectedValue = item.ChargeAcct;
+
+                    rcbChargeCcy2.SelectedValue = item.ChargeCcy;
+                    if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
+                    {
+                        LoadChargeAcct2();
+                    }
+
+                    tbChargeAmt2.Text = item.ChargeAmt.ToString();
+                    rcbPartyCharged2.SelectedValue = item.PartyCharged;
+                    lblPartyCharged2.Text = item.PartyCharged;
+                    rcbChargeStatus2.SelectedValue = item.ChargeStatus;
+                    lblChargeStatus2.Text = item.ChargeStatus;
+
+                    lblTaxCode2.Text = item.TaxCode;
+                    lblTaxAmt2.Text = item.TaxAmt;
+
+                    tbChargeCode2.SelectedValue = item.Chargecode;
+                    ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
+                }
+                else if (item.Chargecode == "EC.OTHER")
+                {
+                    rcbChargeAcct3.SelectedValue = item.ChargeAcct;
+
+                    rcbChargeCcy3.SelectedValue = item.ChargeCcy;
+                    if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
+                    {
+                        LoadChargeAcct3();
+                    }
+
+                    tbChargeAmt3.Text = item.ChargeAmt.ToString();
+                    rcbPartyCharged3.SelectedValue = item.PartyCharged;
+                    lblPartyCharged3.Text = item.PartyCharged;
+                    rcbChargeStatus3.SelectedValue = item.ChargeStatus;
+                    //lblChargeStatus3.Text = item.ChargeStatus;
+
+                    lblTaxCode3.Text = item.TaxCode;
+                    lblTaxAmt3.Text = item.TaxAmt;
+
+                    tbChargeCode3.SelectedValue = item.Chargecode;
+                    ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
+                }
+
+            }
+            //SetVisibilityByStatus(dsDoc);
+        }
         protected void LoadData(DataSet dsDoc)
         {
             if (dsDoc.Tables[0].Rows.Count > 0)
@@ -865,8 +1597,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 }
                 else
                 {
-                    double.TryParse(drow["AmountNew"].ToString(), out Amount);
-                    double.TryParse(drow["Amount"].ToString(), out AmountOld);
+                    double.TryParse(drow["Amount"].ToString(), out Amount);
+                    double.TryParse(drow["OldAmount"].ToString(), out AmountOld);
                 }
 
                 // DocumentaryCollectionCancel
@@ -982,16 +1714,18 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                 txtOtherDocs.Text = drow["OtherDocs"].ToString();
                 txtRemarks.Text = drow["Remarks"].ToString();
-                
-                if (drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
+                if (!string.IsNullOrEmpty(drow["DocsReceivedDate"].ToString()) && drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
+                //if (drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
                 {
                     dteDocsReceivedDate.SelectedDate = DateTime.Parse(drow["DocsReceivedDate"].ToString());
                 }
-                if (drow["MaturityDate"].ToString().IndexOf("1/1/1900") == -1)
+                if (!string.IsNullOrEmpty(drow["MaturityDate"].ToString()) && drow["MaturityDate"].ToString().IndexOf("1/1/1900") == -1)
+                //if (drow["MaturityDate"].ToString().IndexOf("1/1/1900") == -1)
                 {
                     dteMaturityDate.SelectedDate = DateTime.Parse(drow["MaturityDate"].ToString());
                 }
-                if (drow["TracerDate"].ToString().IndexOf("1/1/1900") == -1)
+                if (!string.IsNullOrEmpty(drow["TracerDate"].ToString()) && drow["TracerDate"].ToString().IndexOf("1/1/1900") == -1)
+                //if (drow["TracerDate"].ToString().IndexOf("1/1/1900") == -1)
                 {
                     dteTracerDate.SelectedDate = DateTime.Parse(drow["TracerDate"].ToString());
                 }
@@ -1201,15 +1935,37 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void Authorize()
         {
-            bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString(), ScreenType.ToString("G"));
-            
+            if (TabId != 229)
+            {
+                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString(), ScreenType.ToString("G"));
+            }
+            else
+            {
+                var detail = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == txtCode.Text && x.ActiveRecordFlag == YesNo.YES).FirstOrDefault();
+                if (detail != null)
+                {
+                    detail.Amend_Status = "AUT";
+                }
+                _entities.SaveChanges();
+            }
             Response.Redirect(Globals.NavigateURL(TabId));
         }
 
         protected void Revert()
         {
-            bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString(), ScreenType.ToString("G"));
-
+            if (TabId != 229)
+            {
+                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString(), ScreenType.ToString("G"));
+            }
+            else
+            {
+                var detail = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == txtCode.Text && x.ActiveRecordFlag == YesNo.YES).FirstOrDefault();
+                if (detail != null)
+                {
+                    detail.Amend_Status = "REV";
+                }
+                _entities.SaveChanges();
+            }
             //// Active control
             //SetDisableByReview(true);
 
@@ -1696,7 +2452,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         reportTemplate = Context.Server.MapPath(reportTemplate + "COVER NHO THU XK.doc");
                         saveName = "COVER NHO THU XK_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report(txtCode.Text, UserInfo.Username);
-                        //reportData.Tables[0].TableName = "Table1";
+                        reportData.Tables[0].TableName = "Table1";
                         break;
                 }
                 if (reportData != null)
