@@ -1013,11 +1013,19 @@ namespace BankProject.Views.TellerApplication
             license.SetLicense("Aspose.Words.lic");
             //Open template
             //string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraLai.docx");
+            bool isRepayment = false;
+            var ds = PrepareDataForLoanContractSchedule(ref isRepayment);
+
             string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraNoHopDongVay.docx");
+
+            if (isRepayment)
+            {
+                docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/LoanContract/LichTraNoHopDongVayRepayment.docx");
+            }
             //Open the template document
             Aspose.Words.Document document = new Aspose.Words.Document(docPath);
             //Execute the mail merge.
-            var ds = PrepareDataForLoanContractSchedule();
+            
             // Fill the fields in the document with user data.
             document.MailMerge.ExecuteWithRegions(ds.DtInfor);
             document.MailMerge.ExecuteWithRegions(ds.DtItems.DefaultView);
@@ -1045,7 +1053,7 @@ namespace BankProject.Views.TellerApplication
 
         
 
-        private LoanContractScheduleDS PrepareDataForLoanContractSchedule()
+        private LoanContractScheduleDS PrepareDataForLoanContractSchedule(ref bool isRepayment)
         {
             if (normalLoanEntryM == null)
             {
@@ -1056,6 +1064,15 @@ namespace BankProject.Views.TellerApplication
 
             if (normalLoanEntryM == null)
                 return null;
+
+            if (normalLoanEntryM.RepaymentTimes > 0)
+            {
+                isRepayment = true;
+            }
+            else
+            {
+                isRepayment = false;
+            }
 
             return loanBusiness.PrepareDataForLoanContractSchedule(normalLoanEntryM, normalLoanEntryM.RepaymentTimes);
         }
