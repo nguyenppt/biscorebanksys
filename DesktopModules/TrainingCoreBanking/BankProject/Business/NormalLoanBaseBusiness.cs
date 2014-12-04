@@ -39,7 +39,8 @@ namespace BankProject.Business
                 }
             }
 
-            drInfor[dsOut.Cl_loadAmount] = getCurrentLoanAmount(normalLoanEntryM, replaymentTimes);
+            drInfor[dsOut.Cl_loadAmount] = normalLoanEntryM.LoanAmount;
+            drInfor[dsOut.Cl_loadAmountRepayment] = getCurrentLoanAmount(normalLoanEntryM, replaymentTimes);
             drInfor[dsOut.Cl_interestKey] = "";
             drInfor[dsOut.Cl_interest] = 0;
             dsOut.DtInfor.Rows.Add(drInfor);
@@ -295,7 +296,14 @@ namespace BankProject.Business
             currentProcessAmount = 0;
             foreach (DataRow dr in ds.DtItems.Rows)
             {
-                currentProcessAmount = currentProcessAmount + (decimal)dr[ds.Cl_DisbursalAmount.ColumnName];
+                if (normalLoanEntryM.RepaymentTimes > 0)
+                {
+                    currentProcessAmount = getCurrentLoanAmount(normalLoanEntryM, normalLoanEntryM.RepaymentTimes);
+                }
+                else
+                {
+                    currentProcessAmount = currentProcessAmount + (decimal)dr[ds.Cl_DisbursalAmount.ColumnName];
+                }
                 dr[ds.Cl_PrintOs.ColumnName] = (decimal)dr[ds.Cl_PrintOs.ColumnName] + currentProcessAmount;
             }
 
