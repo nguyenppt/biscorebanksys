@@ -60,6 +60,15 @@ namespace BankProject.Business
             get { return cl_loadAmount; }
             set { cl_loadAmount = value; }
         }
+
+        DataColumn cl_loadAmountRepayment = new DataColumn("LoadAmountRepayment", Type.GetType("System.Decimal"));
+
+        public DataColumn Cl_loadAmountRepayment
+        {
+            get { return cl_loadAmountRepayment; }
+            set { cl_loadAmountRepayment = value; }
+        }
+
         DataColumn cl_drawdown = new DataColumn("Drawdown", Type.GetType("System.DateTime"));
 
         public DataColumn Cl_drawdown
@@ -190,6 +199,7 @@ namespace BankProject.Business
             dtInfor.Columns.Add(cl_cust);
             dtInfor.Columns.Add(cl_custID);
             dtInfor.Columns.Add(cl_loadAmount);
+            dtInfor.Columns.Add(cl_loadAmountRepayment);
             dtInfor.Columns.Add(cl_drawdown);
             dtInfor.Columns.Add(cl_interestKey);
             dtInfor.Columns.Add(cl_freq);
