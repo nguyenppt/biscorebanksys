@@ -398,7 +398,7 @@ namespace BankProject.Business
                     dr[ds.Cl_dueDate.ColumnName] = startInterestDate;
                     dr[ds.Cl_isDisbursalRow.ColumnName] = false;
                     dr[ds.Cl_isPaymentRow.ColumnName] = false;
-                    dr[ds.Cl_isPeriodicAutomaticRow] = false;
+                    dr[ds.Cl_isPeriodicAutomaticRow.ColumnName] = false;
                     dr[ds.Cl_principle.ColumnName] = 0;
                     dr[ds.Cl_PrintOs.ColumnName] = 0;
                     ds.DtItems.Rows.Add(dr);
@@ -562,7 +562,7 @@ namespace BankProject.Business
                     dr[ds.Cl_dueDate.ColumnName] = newrateDate;
                     dr[ds.Cl_isDisbursalRow.ColumnName] = false;
                     dr[ds.Cl_isPaymentRow.ColumnName] = false;
-                    dr[ds.Cl_isPeriodicAutomaticRow] = true;
+                    dr[ds.Cl_isPeriodicAutomaticRow.ColumnName] = true;
                     dr[ds.Cl_isInterestedRow.ColumnName] = false;
                     dr[ds.Cl_principle.ColumnName] = 0;
                     dr[ds.Cl_PrintOs.ColumnName] = 0;
