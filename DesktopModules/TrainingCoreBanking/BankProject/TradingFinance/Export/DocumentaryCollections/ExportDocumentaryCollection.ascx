@@ -268,36 +268,9 @@
                 <tr>
                     <td class="MyLable">3.1 Collecting Bank No.</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox DropDownCssClass="KDDL"
-                            AppendDataBoundItems="True" Width="450" OnItemDataBound="commomSwiftCode_ItemDataBound"
-                            ID="comboCollectingBankNo" runat="server" AutoPostBack="True"
-                            OnSelectedIndexChanged="comboCollectingBankNo_OnSelectedIndexChanged"
-                            MarkFirstMatch="True"
-                            AllowCustomText="false">
-                            <HeaderTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">Id
-                                        </td>
-                                        <td>Description
-                                        </td>
-                                    </tr>
-                                </table>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">
-                                            <%# DataBinder.Eval(Container.DataItem, "SwiftCode")%> 
-                                        </td>
-                                        <td>
-                                            <%# DataBinder.Eval(Container.DataItem, "BankName")%> 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ItemTemplate>
-                        </telerik:RadComboBox>
+                        <telerik:RadTextBox ID="comboCollectingBankNo" runat="server" AutoPostBack="True" OnTextChanged="comboCollectingBankNo_OnSelectedIndexChanged" />
                     </td>
+                    <td><asp:Label ID="lblAdviseBankMessage" runat="server" Text=""></asp:Label></td>
                     <%--<td><asp:Label ID="lblCollectingBankName" runat="server"  />--%>
                 </tr>
             </table>
@@ -323,6 +296,13 @@
                         <telerik:RadTextBox ID="txtCollectingBankAddr2" runat="server" Width="355" />
                     </td>
                 </tr>
+                <tr style="display:none">
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtCollectingBankAddr3" runat="server" Width="355" />
+                    </td>
+                </tr>
+
 
                 <tr style="display:none">
                     <td class="MyLable">3.3 Collecting Bank Acct</td>
@@ -1263,6 +1243,9 @@
          <telerik:AjaxSetting AjaxControlID="comboCollectingBankNo">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="txtCollectingBankName" />
+                <telerik:AjaxUpdatedControl ControlID="txtCollectingBankAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtCollectingBankAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtCollectingBankAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         
@@ -1395,7 +1378,7 @@
                 // Neu amount > amount_old -> tu chinh tang tienb, xuat phieu [nhap ngoai bang]
                 //amount < amount_Old -> tu chinh giam tien,xuat phieu [xuat phieu ngoai bang]
                 // amount = amoun_old -> ko xuat phieu xuat nhap ngoai bang
-            if (amount > 0 && amountOld > 0 && amount > amountOld) {//b4_AUT_Amount
+            if (amount > 0 && amountOld > 0 && amount >= amountOld) {//b4_AUT_Amount
                     radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang_Amendments, 420, 150, null, 'Download');
             } else if (amountOld > 0 && amount < amountOld) {
                

@@ -226,7 +226,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboCollectingBankNo;
+        protected global::Telerik.Web.UI.RadTextBox comboCollectingBankNo;
+        
+        /// <summary>
+        /// lblAdviseBankMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAdviseBankMessage;
         
         /// <summary>
         /// txtCollectingBankName control.
@@ -254,6 +263,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtCollectingBankAddr2;
+        
+        /// <summary>
+        /// txtCollectingBankAddr3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtCollectingBankAddr3;
         
         /// <summary>
         /// comboCollectingBankAcct control.

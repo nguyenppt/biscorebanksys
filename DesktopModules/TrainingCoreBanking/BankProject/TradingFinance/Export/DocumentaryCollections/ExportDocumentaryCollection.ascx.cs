@@ -402,12 +402,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             // bind collecting bank no
             var dsSwiftCode = bd.SQLData.B_BBANKSWIFTCODE_GETALL();
-            comboCollectingBankNo.Items.Clear();
-            comboCollectingBankNo.Items.Add(new RadComboBoxItem(""));
-            comboCollectingBankNo.DataValueField = "SwiftCode";
-            comboCollectingBankNo.DataTextField = "BankName";
-            comboCollectingBankNo.DataSource = dsSwiftCode;
-            comboCollectingBankNo.DataBind();
+            //comboCollectingBankNo.Items.Clear();
+            //comboCollectingBankNo.Items.Add(new RadComboBoxItem(""));
+            //comboCollectingBankNo.DataValueField = "SwiftCode";
+            //comboCollectingBankNo.DataTextField = "BankName";
+            //comboCollectingBankNo.DataSource = dsSwiftCode;
+            //comboCollectingBankNo.DataBind();
 
             // bind nostro cus no
             comboNostroCusNo.Items.Clear();
@@ -909,7 +909,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         DrawerAddr2 = txtDrawerAddr2.Text.Trim(),
                                         DrawerAddr3 = txtDrawerAddr3.Text.Trim(),
                                         DrawerRefNo = txtDrawerRefNo.Text.Trim(),
-                                        CollectingBankNo = comboCollectingBankNo.SelectedValue,
+                                        CollectingBankNo = comboCollectingBankNo.Text,
                                         CollectingBankName = txtCollectingBankName.Text.Trim(),
                                         CollectingBankAddr1 = txtCollectingBankAddr1.Text.Trim(),
                                         CollectingBankAddr2 = txtCollectingBankAddr2.Text.Trim(),
@@ -999,7 +999,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                     chkAmend.DrawerAddr2 = txtDrawerAddr2.Text.Trim();
                                     chkAmend.DrawerAddr3 = txtDrawerAddr3.Text.Trim();
                                     chkAmend.DrawerRefNo = txtDrawerRefNo.Text.Trim();
-                                    chkAmend.CollectingBankNo = comboCollectingBankNo.SelectedValue;
+                                    chkAmend.CollectingBankNo = comboCollectingBankNo.Text;
                                     chkAmend.CollectingBankName = txtCollectingBankName.Text.Trim();
                                     chkAmend.CollectingBankAddr1 = txtCollectingBankAddr1.Text.Trim();
                                     chkAmend.CollectingBankAddr2 = txtCollectingBankAddr2.Text.Trim();
@@ -1246,7 +1246,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                                           , txtDrawerAddr2.Text.Trim()
                                                           , txtDrawerAddr3.Text.Trim()
                                                           , txtDrawerRefNo.Text.Trim()
-                                                          , comboCollectingBankNo.SelectedValue
+                                                          , comboCollectingBankNo.Text
                                                           , txtCollectingBankName.Text.Trim()
                                                           , txtCollectingBankAddr1.Text.Trim(),
                                                           txtCollectingBankAddr2.Text.Trim()
@@ -1394,7 +1394,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDrawerAddr2.Text = obj.DrawerAddr2;
                 txtDrawerAddr3.Text = obj.DrawerAddr3;
                 txtDrawerRefNo.Text = obj.DrawerRefNo;
-                comboCollectingBankNo.SelectedValue = obj.CollectingBankNo;
+                comboCollectingBankNo.Text = obj.CollectingBankNo;
                 txtCollectingBankName.Text = obj.CollectingBankName;
                 txtCollectingBankAddr1.Text = obj.CollectingBankAddr1;
                 txtCollectingBankAddr2.Text = obj.CollectingBankAddr2;
@@ -1475,7 +1475,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDrawerAddr2.Text = string.Empty;
                 txtDrawerAddr3.Text = string.Empty;
                 txtDrawerRefNo.Text = string.Empty;
-                comboCollectingBankNo.SelectedValue = string.Empty;
+                comboCollectingBankNo.Text = string.Empty;
                 txtCollectingBankName.Text = string.Empty;
                 txtCollectingBankAddr1.Text = string.Empty;
                 txtCollectingBankAddr2.Text = string.Empty;
@@ -1661,7 +1661,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDrawerAddr2.Text = drow["DrawerAddr2"].ToString();
                 txtDrawerAddr3.Text = drow["DrawerAddr3"].ToString();
                 txtDrawerRefNo.Text = drow["DrawerRefNo"].ToString();
-                comboCollectingBankNo.SelectedValue = drow["CollectingBankNo"].ToString();
+                comboCollectingBankNo.Text = drow["CollectingBankNo"].ToString();
                 txtCollectingBankName.Text = drow["CollectingBankName"].ToString();
                 txtCollectingBankAddr1.Text = drow["CollectingBankAddr1"].ToString();
                 txtCollectingBankAddr2.Text = drow["CollectingBankAddr2"].ToString();
@@ -1742,7 +1742,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDrawerAddr2.Text = string.Empty;
                 txtDrawerAddr3.Text = string.Empty;
                 txtDrawerRefNo.Text = string.Empty;
-                comboCollectingBankNo.SelectedValue = string.Empty;
+                comboCollectingBankNo.Text = string.Empty;
                 txtCollectingBankName.Text = string.Empty;
                 txtCollectingBankAddr1.Text = string.Empty;
                 txtCollectingBankAddr2.Text = string.Empty;
@@ -2002,9 +2002,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             e.Item.Attributes["CustomerID"] = row["CustomerID"].ToString();
             e.Item.Attributes["CustomerName2"] = row["CustomerName2"].ToString();
         }
-        protected void comboCollectingBankNo_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void comboCollectingBankNo_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            txtCollectingBankName.Text = comboCollectingBankNo.SelectedItem.Attributes["BankName"];
+            //txtCollectingBankName.Text = comboCollectingBankNo.SelectedItem.Attributes["BankName"];
+            bc.Commont.loadBankSwiftCodeInfo(comboCollectingBankNo.Text, ref lblAdviseBankMessage, ref txtCollectingBankName, ref txtCollectingBankAddr3, ref txtCollectingBankAddr1, ref txtCollectingBankAddr2);
+            //txtRevivingBank700.Text = txtAdviseBankNo.Text;
+            //txtCollectingBankName.Text = tbAdviseBankName.Text;
         }
 
         protected void commomSwiftCode_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
