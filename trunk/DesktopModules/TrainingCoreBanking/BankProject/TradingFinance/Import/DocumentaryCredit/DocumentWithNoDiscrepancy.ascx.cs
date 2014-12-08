@@ -156,6 +156,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbChargeCode2.Enabled = false;
             tbChargeCode3.Enabled = false;
         }
+        protected void IntialEdittor(RadEditor txtEdittor)
+        {
+            txtEdittor.EditModes = EditModes.Design;
+            txtEdittor.Modules.Clear();
+        }
+
         private void loadDocsDetail(DataSet dsDetail)
         {
             DataTable tbDetail;
@@ -700,11 +706,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             {
                                 string AcceptStatus = "";
                                 if (drDetail["AcceptStatus"] != DBNull.Value) AcceptStatus = drDetail["AcceptStatus"].ToString();
-                                if (AcceptStatus.Equals(bd.TransactionStatus.AUT))
+                                /*if (AcceptStatus.Equals(bd.TransactionStatus.AUT))
                                 {
                                     lblError.Text = "This Docs is accepted !";
                                     return;
-                                }
+                                }*/
                                 if (AcceptStatus.Equals(bd.TransactionStatus.UNA))
                                 {
                                     lblError.Text = "This Docs is waiting for accept approve !";
@@ -818,9 +824,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void comboWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             cboWaiveChargesChanged();
-            //
-            //((bc.MultiTextBox)txtDiscrepancies).setText(((bc.MultiTextBox)txtDiscrepancies).getText());
-           // ((bc.MultiTextBox)txtDiscrepancies_734).setText(((bc.MultiTextBox)txtDiscrepancies_734).getText());
         }
         private void cboWaiveChargesChanged()
         {

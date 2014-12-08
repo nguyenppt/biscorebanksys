@@ -778,22 +778,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadDatePicker dteDateOfIssue;
         
         /// <summary>
-        /// dteMT700DateAndPlaceOfExpiry control.
+        /// txtDateOfExpiry700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dteMT700DateAndPlaceOfExpiry;
+        protected global::Telerik.Web.UI.RadDatePicker txtDateOfExpiry700;
         
         /// <summary>
-        /// tbPlaceOfExpiry control.
+        /// txtPlaceOfExpiry700 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tbPlaceOfExpiry;
+        protected global::Telerik.Web.UI.RadTextBox txtPlaceOfExpiry700;
         
         /// <summary>
         /// comboAvailableRule control.
@@ -1615,22 +1615,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::System.Web.UI.WebControls.Label lblDocumentaryCreditNumber740;
         
         /// <summary>
-        /// tbExpiryDate740 control.
+        /// txtDateOfExpiry740 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker tbExpiryDate740;
+        protected global::Telerik.Web.UI.RadDatePicker txtDateOfExpiry740;
         
         /// <summary>
-        /// tb31DPlaceOfExpiry control.
+        /// txtPlaceOfExpiry740 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox tb31DPlaceOfExpiry;
+        protected global::Telerik.Web.UI.RadTextBox txtPlaceOfExpiry740;
         
         /// <summary>
         /// rcbBeneficiaryType740 control.

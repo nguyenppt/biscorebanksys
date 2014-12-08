@@ -1681,6 +1681,12 @@
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr3" />
+
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentName" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="comboBeneficiaryBankType">

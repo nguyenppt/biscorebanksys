@@ -455,7 +455,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         private void loadChargeAcc(string PartyCharged, string ChargeCurrency, ref RadComboBox cboChargeAcc)
         {
             cboChargeAcc.Items.Clear();
-            bc.Commont.initRadComboBox(ref cboChargeAcc, "Display", "Id", bd.IssueLC.ImportLCPaymentChargeAcc(PartyCharged, txtCustomerID.Value, ChargeCurrency));
+            if (PartyCharged.ToUpper().Equals("A") || PartyCharged.ToUpper().Equals("AC"))
+                bc.Commont.initRadComboBox(ref cboChargeAcc, "Display", "Id", bd.IssueLC.ImportLCPaymentChargeAcc(PartyCharged, txtCustomerID.Value, ChargeCurrency));
+            else
+                cboChargeAcc.Items.Add(cboNostroAcct.SelectedItem);
         }
         //
         protected void tabCableCharge_txtChargeAmt_TextChanged(object sender, EventArgs e)
@@ -686,11 +689,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void txtAccountWithInstitution_OnTextChanged(object sender, EventArgs e)
         {
             bc.Commont.loadBankSwiftCodeInfo(txtAccountWithInstitution.Text, ref lblAccountWithInstitutionError, ref txtAccountWithInstitutionName, ref txtAccountWithInstitutionAddr1, ref txtAccountWithInstitutionAddr2, ref txtAccountWithInstitutionAddr3);
-            if (comboCreateMT756.SelectedValue == bd.YesNo.YES)
-            {
-                txtReceiverCorrespondentNo.Text = txtAccountWithInstitution.Text;
-                //txtReceiverCorrespondentName.Text = txtAccountWithInstitutionName.Text;
-            }
+            txtReceiverCorrespondentNo.Text = txtAccountWithInstitution.Text;
+            txtReceiverCorrespondentName.Text = txtAccountWithInstitutionName.Text;
+            txtReceiverCorrespondentAddr1.Text = txtAccountWithInstitutionAddr1.Text;
+            txtReceiverCorrespondentAddr2.Text = txtAccountWithInstitutionAddr2.Text;
+            txtReceiverCorrespondentAddr3.Text = txtAccountWithInstitutionAddr3.Text;
         }
 
         protected void comboBeneficiaryBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)

@@ -13,13 +13,6 @@
             var button = args.get_item();
             //
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Commit%>') {
-                try{
-                dnn_ctr1017_DocumentWithNoDiscrepancy_txtDiscrepancies_divMultiTextBox_submit();
-                }catch(e){
-                }
-                try{
-                dnn_ctr1017_DocumentWithNoDiscrepancy_txtDiscrepancies_734_divMultiTextBox_submit();
-                }catch(e){}
             }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Preview%>') {
                 window.location = '<%=EditUrl("preview_nodiscrepancy")%>&lst=4appr';
@@ -355,11 +348,13 @@
             </legend>            
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable" style="width:170px; vertical-align:top;">33.1 Discrepancies</td>
+                    <td class="MyLable" style="width:170px; vertical-align:top;">33 Discrepancies</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtDiscrepancies" runat="server" TextMode="MultiLine" MaxLength="2000" Height="100px" Width="355px" Resize="None" />
+                        <telerik:RadTextBox ID="txtDiscrepancies" runat="server" TextMode="MultiLine" Height="100" Width="355" ClientEvents-OnValueChanged="txtDiscrepancies_OnValueChanged"></telerik:RadTextBox>
                     </td>
                 </tr>
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width:170px;">69.5.1 Disposal of Docs</td>
                     <td class="MyContent">
@@ -367,8 +362,7 @@
                     </td>
                 </tr>
             </table>
-        </fieldset>
-        
+        </fieldset>        
         <div runat="server" ID="divLast">
         <fieldset>
             <legend>
@@ -506,9 +500,8 @@
                 </td>
             </tr>
             <tr>
-                <td class="MyLable" style="width:170px; vertical-align:top;">77.J Discrepancies</td>
-                <td class="MyContent">
-                    <telerik:RadTextBox ID="txtDiscrepancies_734" runat="server" TextMode="MultiLine" MaxLength="2000" Height="100px" Width="355px" Resize="None" />
+                <td class="MyLable" style="vertical-align:top;">77.J Discrepancies</td>
+                <td class="MyContent"><telerik:RadTextBox runat="server" ID="txtDiscrepancies_734" Height="100" Width="355" TextMode="MultiLine" />
                 </td>
             </tr>
             <tr>
@@ -1028,6 +1021,18 @@
             }
         });
 
+        $("#<%=txtDiscrepancies.ClientID %>").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#<%=txtDiscrepancies.ClientID %>").val($("#<%=txtDiscrepancies.ClientID %>").val() + '\n');
+            }
+        });
+
+        $("#<%=txtDiscrepancies_734.ClientID %>").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#<%=txtDiscrepancies_734.ClientID %>").val($("#<%=txtDiscrepancies_734.ClientID %>").val() + '\n');
+            }
+        });
+
         function txtPresentorRefNo_OnValueChanged() {
             var txt = $find("<%=txtPresentorRefNo.ClientID%>").get_value();
             $find("<%=txtPresentingBankRef.ClientID %>").set_value(txt);
@@ -1047,6 +1052,10 @@
             var txt = $find("<%=txtDiscrepancies.ClientID%>").get_value();
             $find("<%=txtDiscrepancies_734.ClientID %>").set_value(txt);
         };
+
+        function txtDiscrepancies_OnValueChanged() {
+            $find("<%=txtDiscrepancies_734.ClientID %>").set_value($find("<%=txtDiscrepancies.ClientID %>").get_value());
+        }
     </script>
 </telerik:RadCodeBlock>
 <div style="visibility: hidden;"><asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" /></div>

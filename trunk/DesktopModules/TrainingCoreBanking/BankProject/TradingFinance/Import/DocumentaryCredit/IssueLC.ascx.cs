@@ -604,14 +604,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             dteDateOfIssue.SelectedDate = now;
 
             now = DateTime.Now;
-            dteMT700DateAndPlaceOfExpiry.SelectedDate = now.AddDays(15);
+            txtDateOfExpiry700.SelectedDate = now.AddDays(15);
 
             now = DateTime.Now;
             tbContingentExpiry.SelectedDate = now.AddDays(30);
 
             dteDateOfIssue.Enabled = false;
-            dteMT700DateAndPlaceOfExpiry.Enabled = false;
-            tbPlaceOfExpiry.Enabled = false;
             comboCurrency700.Enabled = false;
             numAmount700.Enabled = false;
             numPercentCreditAmount1.Enabled = false;
@@ -871,8 +869,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             tbChargeCode3.Enabled = false;
 
             dteDateOfIssue.Enabled = false;
-            dteMT700DateAndPlaceOfExpiry.Enabled = false;
-            tbPlaceOfExpiry.Enabled = false;
+            txtDateOfExpiry700.Enabled = false;
+            txtPlaceOfExpiry700.Enabled = false;
             comboCurrency700.Enabled = false;
             numAmount700.Enabled = false;
             numPercentCreditAmount1.Enabled = false;
@@ -1397,8 +1395,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 , comboFormOfDocumentaryCredit.SelectedValue
                 , lblDocumentaryCreditNumber.Text
                 , dteDateOfIssue.SelectedDate
-                , dteMT700DateAndPlaceOfExpiry.SelectedDate
-                , tbPlaceOfExpiry.Text.Trim()
+                , txtDateOfExpiry700.SelectedDate
+                , txtPlaceOfExpiry700.Text.Trim()
                 , comboAvailableRule.SelectedValue
                 , rcbApplicantBankType700.SelectedValue
                 , rcbApplicantID.SelectedValue
@@ -1494,8 +1492,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 comGenerate.SelectedValue,
                 txtRemittingBankNo.Text.Trim(),
                 lblDocumentaryCreditNumber740.Text,
-                tbExpiryDate740.SelectedDate,
-                tb31DPlaceOfExpiry.Text.Trim(),
+                txtDateOfExpiry740.SelectedDate,
+                txtPlaceOfExpiry740.Text.Trim(),
                 rcbBeneficiaryType740.SelectedValue,
                 tbBeneficiaryNo740.Text.Trim(),
                 txtBeneficiaryBankName.Text,//tbBeneficiaryName740.Text.Trim(),
@@ -1807,289 +1805,295 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             #endregion
 
             #region tab MT700
-            if (dsDoc.Tables[1].Rows.Count > 0)
+            if (this.TabId == TabIssueLCAddNew)
             {
-                var drow = dsDoc.Tables[1].Rows[0];
-                ReceivingBank_700 = drow["ReceivingBank"].ToString();
-
-                txtRevivingBank700.Text = drow["ReceivingBank"].ToString();
-                tbBaquenceOfTotal.Text = drow["SequenceOfTotal"].ToString();
-                comboFormOfDocumentaryCredit.SelectedValue = drow["FormDocumentaryCredit"].ToString();
-                lblDocumentaryCreditNumber.Text = drow["DocumentaryCreditNumber"].ToString();
-                tbPlaceOfExpiry.Text = drow["PlaceOfExpiry"].ToString();
-                comboAvailableRule.SelectedValue = drow["ApplicationRule"].ToString();
-
-                rcbApplicantBankType700.SelectedValue = drow["ApplicantType"].ToString();
-                tbApplicantNo700.Text = drow["ApplicantNo"].ToString();
-                tbApplicantName700.Text = drow["ApplicantName"].ToString();
-                tbApplicantAddr700_1.Text = drow["ApplicantAddr1"].ToString();
-                tbApplicantAddr700_2.Text = drow["ApplicantAddr2"].ToString();
-                tbApplicantAddr700_3.Text = drow["ApplicantAddr3"].ToString();
-
-                comboBeneficiaryType700.SelectedValue = drow["BeneficiaryType"].ToString();
-                txtBeneficiaryNo700.Text = drow["BeneficiaryNo"].ToString();
-                txtBeneficiaryName700.Text = drow["BeneficiaryName"].ToString();
-                txtBeneficiaryAddr700_1.Text = drow["BeneficiaryAddr1"].ToString();
-                txtBeneficiaryAddr700_2.Text = drow["BeneficiaryAddr2"].ToString();
-                txtBeneficiaryAddr700_3.Text = drow["BeneficiaryAddr3"].ToString();
-
-                comboCurrency700.SelectedValue = drow["Currency"].ToString();
-                numAmount700.Value = (double?)drow["Amount"];
-                numPercentCreditAmount1.Value = (double?) drow["PercentageCredit"];
-                numPercentCreditAmount2.Value = (double?) drow["AmountTolerance"];
-                comboMaximumCreditAmount700.SelectedValue = drow["MaximumCreditAmount"].ToString();
-
-                rcbAvailableWithType.SelectedValue = drow["AvailableWithType"].ToString();
-                txtAvailableWithNo.Text = drow["AvailableWithNo"].ToString();
-                tbAvailableWithName.Text = drow["AvailableWithName"].ToString();
-                tbAvailableWithAddr1.Text = drow["AvailableWithAddr1"].ToString();
-                tbAvailableWithAddr2.Text = drow["AvailableWithAddr2"].ToString();
-                tbAvailableWithAddr3.Text = drow["AvailableWithAddr3"].ToString();
-
-                comboAvailableWithBy.SelectedValue = drow["Available_By"].ToString();
-
-                rcbPatialShipment.SelectedValue = drow["PatialShipment"].ToString();
-                rcbTranshipment.SelectedValue = drow["Transhipment"].ToString();
-                tbPlaceoftakingincharge.Text = drow["PlaceOfTakingInCharge"].ToString();
-                tbPortofloading.Text = drow["PortOfLoading"].ToString();
-                tbPortofDischarge.Text = drow["PortOfDischarge"].ToString();
-                tbPlaceoffinalindistination.Text = drow["PlaceOfFinalInDistination"].ToString();
-
-                txtEdittor_DescrpofGoods.Content = drow["DescrpGoodsBervices"].ToString();
-                txtEdittor_OrderDocs700.Content = drow["DocsRequired"].ToString();
-                txtEdittor_AdditionalConditions700.Content = drow["AdditionalConditions"].ToString();
-                txtEdittor_Charges700.Content = drow["Charges"].ToString();
-                txtEdittor_PeriodforPresentation700.Content = drow["PeriodForPresentation"].ToString();
-                rcbConfimationInstructions.SelectedValue = drow["ConfimationInstructions"].ToString();
-                txtEdittor_NegotgBank700.Content = drow["InstrToPaygAccptgNegotgBank"].ToString();
-                txtEdittor_SendertoReceiverInfomation700.Content = drow["SenderReceiverInfomation"].ToString();
-
-                if (!string.IsNullOrEmpty(drow["LatesDateOfShipment"].ToString())  && drow["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
+                if (dsDoc.Tables[1].Rows.Count > 0)
                 {
-                    tbLatesDateofShipment.SelectedDate = DateTime.Parse(drow["LatesDateOfShipment"].ToString());
+                    var drow = dsDoc.Tables[1].Rows[0];
+                    ReceivingBank_700 = drow["ReceivingBank"].ToString();
+
+                    txtRevivingBank700.Text = drow["ReceivingBank"].ToString();
+                    tbBaquenceOfTotal.Text = drow["SequenceOfTotal"].ToString();
+                    comboFormOfDocumentaryCredit.SelectedValue = drow["FormDocumentaryCredit"].ToString();
+                    lblDocumentaryCreditNumber.Text = drow["DocumentaryCreditNumber"].ToString();
+                    txtPlaceOfExpiry700.Text = drow["PlaceOfExpiry"].ToString();
+                    comboAvailableRule.SelectedValue = drow["ApplicationRule"].ToString();
+
+                    rcbApplicantBankType700.SelectedValue = drow["ApplicantType"].ToString();
+                    tbApplicantNo700.Text = drow["ApplicantNo"].ToString();
+                    tbApplicantName700.Text = drow["ApplicantName"].ToString();
+                    tbApplicantAddr700_1.Text = drow["ApplicantAddr1"].ToString();
+                    tbApplicantAddr700_2.Text = drow["ApplicantAddr2"].ToString();
+                    tbApplicantAddr700_3.Text = drow["ApplicantAddr3"].ToString();
+
+                    comboBeneficiaryType700.SelectedValue = drow["BeneficiaryType"].ToString();
+                    txtBeneficiaryNo700.Text = drow["BeneficiaryNo"].ToString();
+                    txtBeneficiaryName700.Text = drow["BeneficiaryName"].ToString();
+                    txtBeneficiaryAddr700_1.Text = drow["BeneficiaryAddr1"].ToString();
+                    txtBeneficiaryAddr700_2.Text = drow["BeneficiaryAddr2"].ToString();
+                    txtBeneficiaryAddr700_3.Text = drow["BeneficiaryAddr3"].ToString();
+
+                    comboCurrency700.SelectedValue = drow["Currency"].ToString();
+                    numAmount700.Value = (double?)drow["Amount"];
+                    numPercentCreditAmount1.Value = (double?)drow["PercentageCredit"];
+                    numPercentCreditAmount2.Value = (double?)drow["AmountTolerance"];
+                    comboMaximumCreditAmount700.SelectedValue = drow["MaximumCreditAmount"].ToString();
+
+                    rcbAvailableWithType.SelectedValue = drow["AvailableWithType"].ToString();
+                    txtAvailableWithNo.Text = drow["AvailableWithNo"].ToString();
+                    tbAvailableWithName.Text = drow["AvailableWithName"].ToString();
+                    tbAvailableWithAddr1.Text = drow["AvailableWithAddr1"].ToString();
+                    tbAvailableWithAddr2.Text = drow["AvailableWithAddr2"].ToString();
+                    tbAvailableWithAddr3.Text = drow["AvailableWithAddr3"].ToString();
+
+                    comboAvailableWithBy.SelectedValue = drow["Available_By"].ToString();
+
+                    rcbPatialShipment.SelectedValue = drow["PatialShipment"].ToString();
+                    rcbTranshipment.SelectedValue = drow["Transhipment"].ToString();
+                    tbPlaceoftakingincharge.Text = drow["PlaceOfTakingInCharge"].ToString();
+                    tbPortofloading.Text = drow["PortOfLoading"].ToString();
+                    tbPortofDischarge.Text = drow["PortOfDischarge"].ToString();
+                    tbPlaceoffinalindistination.Text = drow["PlaceOfFinalInDistination"].ToString();
+
+                    txtEdittor_DescrpofGoods.Content = drow["DescrpGoodsBervices"].ToString();
+                    txtEdittor_OrderDocs700.Content = drow["DocsRequired"].ToString();
+                    txtEdittor_AdditionalConditions700.Content = drow["AdditionalConditions"].ToString();
+                    txtEdittor_Charges700.Content = drow["Charges"].ToString();
+                    txtEdittor_PeriodforPresentation700.Content = drow["PeriodForPresentation"].ToString();
+                    rcbConfimationInstructions.SelectedValue = drow["ConfimationInstructions"].ToString();
+                    txtEdittor_NegotgBank700.Content = drow["InstrToPaygAccptgNegotgBank"].ToString();
+                    txtEdittor_SendertoReceiverInfomation700.Content = drow["SenderReceiverInfomation"].ToString();
+
+                    if (!string.IsNullOrEmpty(drow["LatesDateOfShipment"].ToString()) && drow["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        tbLatesDateofShipment.SelectedDate = DateTime.Parse(drow["LatesDateOfShipment"].ToString());
+                    }
+                    if (!string.IsNullOrEmpty(drow["DateExpiry"].ToString()) && drow["DateExpiry"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        txtDateOfExpiry700.SelectedDate = DateTime.Parse(drow["DateExpiry"].ToString());
+                    }
+                    if (!string.IsNullOrEmpty(drow["DateOfIssue"].ToString()) && drow["DateOfIssue"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteDateOfIssue.SelectedDate = DateTime.Parse(drow["DateOfIssue"].ToString());
+                    }
+
+                    comboAdviseThroughBankType700.SelectedValue = drow["AdviseThroughBankType"].ToString();
+                    txtAdviseThroughBankNo700.Text = drow["AdviseThroughBankNo"].ToString();
+                    txtAdviseThroughBankName700.Text = drow["AdviseThroughBankName"].ToString();
+                    txtAdviseThroughBankAddr700_1.Text = drow["AdviseThroughBankAddr1"].ToString();
+                    txtAdviseThroughBankAddr700_2.Text = drow["AdviseThroughBankAddr2"].ToString();
+                    txtAdviseThroughBankAddr700_3.Text = drow["AdviseThroughBankAddr3"].ToString();
+
+                    comboReimbBankType700.SelectedValue = drow["ReimbBankType"].ToString();
+                    txtReimbBankNo700.Text = drow["ReimbBankNo"].ToString();
+                    tbReimbBankName700.Text = drow["ReimbBankName"].ToString();
+                    tbReimbBankAddr700_1.Text = drow["ReimbBankAddr1"].ToString();
+                    tbReimbBankAddr700_2.Text = drow["ReimbBankAddr2"].ToString();
+                    tbReimbBankAddr700_3.Text = drow["ReimbBankAddr3"].ToString();
+
+                    txtAdditionalAmountsCovered700_1.Text = drow["AdditionalAmountsCovered1"].ToString();
+                    txtAdditionalAmountsCovered700_2.Text = drow["AdditionalAmountsCovered2"].ToString();
+                    txtDraftsAt700_1.Text = drow["DraftsAt1"].ToString();
+                    txtDraftsAt700_2.Text = drow["DraftsAt2"].ToString();
+
+                    txtMixedPaymentDetails700_1.Text = drow["MixedPaymentDetails1"].ToString();
+                    txtMixedPaymentDetails700_2.Text = drow["MixedPaymentDetails2"].ToString();
+                    txtMixedPaymentDetails700_3.Text = drow["MixedPaymentDetails3"].ToString();
+                    txtMixedPaymentDetails700_4.Text = drow["MixedPaymentDetails4"].ToString();
+
+                    txtDeferredPaymentDetails700_1.Text = drow["DeferredPaymentDetails1"].ToString();
+                    txtDeferredPaymentDetails700_2.Text = drow["DeferredPaymentDetails2"].ToString();
+                    txtDeferredPaymentDetails700_3.Text = drow["DeferredPaymentDetails3"].ToString();
+                    txtDeferredPaymentDetails700_4.Text = drow["DeferredPaymentDetails4"].ToString();
+
+                    txtShipmentPeriod700_1.Text = drow["ShipmentPeriod1"].ToString();
+                    txtShipmentPeriod700_2.Text = drow["ShipmentPeriod2"].ToString();
+                    txtShipmentPeriod700_3.Text = drow["ShipmentPeriod3"].ToString();
+                    txtShipmentPeriod700_4.Text = drow["ShipmentPeriod4"].ToString();
+                    txtShipmentPeriod700_5.Text = drow["ShipmentPeriod3"].ToString();
+                    txtShipmentPeriod700_6.Text = drow["ShipmentPeriod4"].ToString();
+
+                    comboDraweeCusType.SelectedValue = drow["DraweeType"].ToString();
+                    txtDraweeCusNo700.Text = drow["DraweeNo"].ToString();
+                    txtDraweeCusName.Text = drow["DraweeName"].ToString();
+                    txtDraweeAddr1.Text = drow["DraweeAddr1"].ToString();
+                    txtDraweeAddr2.Text = drow["DraweeAddr2"].ToString();
+                    txtDraweeAddr3.Text = drow["DraweeAddr3"].ToString();
                 }
-                if (!string.IsNullOrEmpty(drow["DateExpiry"].ToString())  && drow["DateExpiry"].ToString().IndexOf("1/1/1900") == -1)
+                else
                 {
-                    dteMT700DateAndPlaceOfExpiry.SelectedDate = DateTime.Parse(drow["DateExpiry"].ToString());
+                    txtRevivingBank700.Text = string.Empty;
+                    tbBaquenceOfTotal.Text = string.Empty;
+                    comboFormOfDocumentaryCredit.SelectedValue = string.Empty;
+                    lblDocumentaryCreditNumber.Text = string.Empty;
+                    txtPlaceOfExpiry700.Text = string.Empty;
+                    comboAvailableRule.SelectedValue = "EUCP LASTED VERSION";
+
+                    rcbApplicantBankType700.SelectedValue = string.Empty;
+                    tbApplicantNo700.Text = string.Empty;
+                    tbApplicantName700.Text = string.Empty;
+                    tbApplicantAddr700_1.Text = string.Empty;
+                    tbApplicantAddr700_2.Text = string.Empty;
+                    tbApplicantAddr700_3.Text = string.Empty;
+
+                    comboBeneficiaryType700.SelectedValue = "D";
+                    txtBeneficiaryNo700.Text = string.Empty;
+                    txtBeneficiaryName700.Text = string.Empty;
+                    txtBeneficiaryAddr700_1.Text = string.Empty;
+                    txtBeneficiaryAddr700_2.Text = string.Empty;
+                    txtBeneficiaryAddr700_3.Text = string.Empty;
+
+                    comboCurrency700.SelectedValue = string.Empty;
+                    numAmount700.Value = 0;
+                    numPercentCreditAmount1.Value = 0;
+                    numPercentCreditAmount2.Value = 0;
+                    comboMaximumCreditAmount700.SelectedValue = string.Empty;
+
+                    rcbAvailableWithType.SelectedValue = string.Empty;
+                    rcbAvailableWithType.SelectedValue = string.Empty;
+                    tbAvailableWithName.Text = string.Empty;
+                    tbAvailableWithAddr1.Text = string.Empty;
+                    tbAvailableWithAddr2.Text = string.Empty;
+                    tbAvailableWithAddr3.Text = string.Empty;
+
+                    comboAvailableWithBy.SelectedValue = string.Empty;
+
+                    rcbPatialShipment.SelectedValue = string.Empty;
+                    rcbTranshipment.SelectedValue = string.Empty;
+                    tbPlaceoftakingincharge.Text = string.Empty;
+                    tbPortofloading.Text = string.Empty;
+                    tbPortofDischarge.Text = string.Empty;
+                    tbPlaceoffinalindistination.Text = string.Empty;
+
+                    comboAdviseThroughBankType700.SelectedValue = string.Empty;
+                    txtAdviseThroughBankNo700.Text = string.Empty;
+                    txtAdviseThroughBankName700.Text = string.Empty;
+                    txtAdviseThroughBankAddr700_1.Text = string.Empty;
+                    txtAdviseThroughBankAddr700_2.Text = string.Empty;
+                    txtAdviseThroughBankAddr700_3.Text = string.Empty;
+
+                    comboReimbBankType700.SelectedValue = string.Empty;
+                    txtReimbBankNo700.Text = string.Empty;
+                    tbReimbBankName700.Text = string.Empty;
+                    tbReimbBankAddr700_1.Text = string.Empty;
+                    tbReimbBankAddr700_2.Text = string.Empty;
+                    tbReimbBankAddr700_3.Text = string.Empty;
+
+                    txtAdditionalAmountsCovered700_1.Text = string.Empty;
+                    txtAdditionalAmountsCovered700_2.Text = string.Empty;
+                    txtDraftsAt700_1.Text = string.Empty;
+                    txtDraftsAt700_2.Text = string.Empty;
+
+                    txtMixedPaymentDetails700_1.Text = string.Empty;
+                    txtMixedPaymentDetails700_2.Text = string.Empty;
+                    txtMixedPaymentDetails700_3.Text = string.Empty;
+                    txtMixedPaymentDetails700_4.Text = string.Empty;
+
+                    txtDeferredPaymentDetails700_1.Text = string.Empty;
+                    txtDeferredPaymentDetails700_2.Text = string.Empty;
+
+                    txtShipmentPeriod700_1.Text = string.Empty;
+                    txtShipmentPeriod700_2.Text = string.Empty;
+                    txtShipmentPeriod700_3.Text = string.Empty;
+                    txtShipmentPeriod700_4.Text = string.Empty;
+                    txtShipmentPeriod700_5.Text = string.Empty;
+                    txtShipmentPeriod700_6.Text = string.Empty;
+
+                    comboDraweeCusType.SelectedValue = string.Empty;
+                    txtDraweeCusNo700.Text = string.Empty;
+                    txtDraweeCusName.Text = string.Empty;
+                    txtDraweeAddr1.Text = string.Empty;
+                    txtDraweeAddr2.Text = string.Empty;
+                    txtDraweeAddr3.Text = string.Empty;
                 }
-                if (!string.IsNullOrEmpty(drow["DateOfIssue"].ToString())  && drow["DateOfIssue"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteDateOfIssue.SelectedDate = DateTime.Parse(drow["DateOfIssue"].ToString());
-                }
-
-                comboAdviseThroughBankType700.SelectedValue = drow["AdviseThroughBankType"].ToString();
-                txtAdviseThroughBankNo700.Text = drow["AdviseThroughBankNo"].ToString();
-                txtAdviseThroughBankName700.Text = drow["AdviseThroughBankName"].ToString();
-                txtAdviseThroughBankAddr700_1.Text = drow["AdviseThroughBankAddr1"].ToString();
-                txtAdviseThroughBankAddr700_2.Text = drow["AdviseThroughBankAddr2"].ToString();
-                txtAdviseThroughBankAddr700_3.Text = drow["AdviseThroughBankAddr3"].ToString();
-
-                comboReimbBankType700.SelectedValue = drow["ReimbBankType"].ToString();
-                txtReimbBankNo700.Text = drow["ReimbBankNo"].ToString();
-                tbReimbBankName700.Text = drow["ReimbBankName"].ToString();
-                tbReimbBankAddr700_1.Text = drow["ReimbBankAddr1"].ToString();
-                tbReimbBankAddr700_2.Text = drow["ReimbBankAddr2"].ToString();
-                tbReimbBankAddr700_3.Text = drow["ReimbBankAddr3"].ToString();
-
-                txtAdditionalAmountsCovered700_1.Text = drow["AdditionalAmountsCovered1"].ToString();
-                txtAdditionalAmountsCovered700_2.Text = drow["AdditionalAmountsCovered2"].ToString();
-                txtDraftsAt700_1.Text = drow["DraftsAt1"].ToString();
-                txtDraftsAt700_2.Text = drow["DraftsAt2"].ToString();
-
-                txtMixedPaymentDetails700_1.Text = drow["MixedPaymentDetails1"].ToString();
-                txtMixedPaymentDetails700_2.Text = drow["MixedPaymentDetails2"].ToString();
-                txtMixedPaymentDetails700_3.Text = drow["MixedPaymentDetails3"].ToString();
-                txtMixedPaymentDetails700_4.Text = drow["MixedPaymentDetails4"].ToString();
-
-                txtDeferredPaymentDetails700_1.Text = drow["DeferredPaymentDetails1"].ToString();
-                txtDeferredPaymentDetails700_2.Text = drow["DeferredPaymentDetails2"].ToString();
-                txtDeferredPaymentDetails700_3.Text = drow["DeferredPaymentDetails3"].ToString();
-                txtDeferredPaymentDetails700_4.Text = drow["DeferredPaymentDetails4"].ToString();
-
-                txtShipmentPeriod700_1.Text = drow["ShipmentPeriod1"].ToString();
-                txtShipmentPeriod700_2.Text = drow["ShipmentPeriod2"].ToString();
-                txtShipmentPeriod700_3.Text = drow["ShipmentPeriod3"].ToString();
-                txtShipmentPeriod700_4.Text = drow["ShipmentPeriod4"].ToString();
-                txtShipmentPeriod700_5.Text = drow["ShipmentPeriod3"].ToString();
-                txtShipmentPeriod700_6.Text = drow["ShipmentPeriod4"].ToString();
-
-                comboDraweeCusType.SelectedValue = drow["DraweeType"].ToString();
-                txtDraweeCusNo700.Text = drow["DraweeNo"].ToString();
-                txtDraweeCusName.Text = drow["DraweeName"].ToString();
-                txtDraweeAddr1.Text = drow["DraweeAddr1"].ToString();
-                txtDraweeAddr2.Text = drow["DraweeAddr2"].ToString();
-                txtDraweeAddr3.Text = drow["DraweeAddr3"].ToString();
-            }
-            else
-            {
-                txtRevivingBank700.Text = string.Empty;
-                tbBaquenceOfTotal.Text = string.Empty;
-                comboFormOfDocumentaryCredit.SelectedValue = string.Empty;
-                lblDocumentaryCreditNumber.Text = string.Empty;
-                tbPlaceOfExpiry.Text = string.Empty;
-                comboAvailableRule.SelectedValue = "EUCP LASTED VERSION";
-
-                rcbApplicantBankType700.SelectedValue = string.Empty;
-                tbApplicantNo700.Text = string.Empty;
-                tbApplicantName700.Text = string.Empty;
-                tbApplicantAddr700_1.Text = string.Empty;
-                tbApplicantAddr700_2.Text = string.Empty;
-                tbApplicantAddr700_3.Text = string.Empty;
-
-                comboBeneficiaryType700.SelectedValue = "D";
-                txtBeneficiaryNo700.Text = string.Empty;
-                txtBeneficiaryName700.Text = string.Empty;
-                txtBeneficiaryAddr700_1.Text = string.Empty;
-                txtBeneficiaryAddr700_2.Text = string.Empty;
-                txtBeneficiaryAddr700_3.Text = string.Empty;
-
-                comboCurrency700.SelectedValue = string.Empty;
-                numAmount700.Value = 0;
-                numPercentCreditAmount1.Value = 0;
-                numPercentCreditAmount2.Value = 0;
-                comboMaximumCreditAmount700.SelectedValue = string.Empty;
-
-                rcbAvailableWithType.SelectedValue = string.Empty;
-                rcbAvailableWithType.SelectedValue = string.Empty;
-                tbAvailableWithName.Text = string.Empty;
-                tbAvailableWithAddr1.Text = string.Empty;
-                tbAvailableWithAddr2.Text = string.Empty;
-                tbAvailableWithAddr3.Text = string.Empty;
-
-                comboAvailableWithBy.SelectedValue = string.Empty;
-                
-                rcbPatialShipment.SelectedValue = string.Empty;
-                rcbTranshipment.SelectedValue = string.Empty;
-                tbPlaceoftakingincharge.Text = string.Empty;
-                tbPortofloading.Text = string.Empty;
-                tbPortofDischarge.Text = string.Empty;
-                tbPlaceoffinalindistination.Text = string.Empty;
-
-                comboAdviseThroughBankType700.SelectedValue = string.Empty;
-                txtAdviseThroughBankNo700.Text = string.Empty;
-                txtAdviseThroughBankName700.Text = string.Empty;
-                txtAdviseThroughBankAddr700_1.Text = string.Empty;
-                txtAdviseThroughBankAddr700_2.Text = string.Empty;
-                txtAdviseThroughBankAddr700_3.Text = string.Empty;
-
-                comboReimbBankType700.SelectedValue = string.Empty;
-                txtReimbBankNo700.Text = string.Empty;
-                tbReimbBankName700.Text = string.Empty;
-                tbReimbBankAddr700_1.Text = string.Empty;
-                tbReimbBankAddr700_2.Text = string.Empty;
-                tbReimbBankAddr700_3.Text = string.Empty;
-
-                txtAdditionalAmountsCovered700_1.Text = string.Empty;
-                txtAdditionalAmountsCovered700_2.Text = string.Empty;
-                txtDraftsAt700_1.Text = string.Empty;
-                txtDraftsAt700_2.Text = string.Empty;
-
-                txtMixedPaymentDetails700_1.Text = string.Empty;
-                txtMixedPaymentDetails700_2.Text = string.Empty;
-                txtMixedPaymentDetails700_3.Text = string.Empty;
-                txtMixedPaymentDetails700_4.Text = string.Empty;
-
-                txtDeferredPaymentDetails700_1.Text = string.Empty;
-                txtDeferredPaymentDetails700_2.Text = string.Empty;
-
-                txtShipmentPeriod700_1.Text = string.Empty;
-                txtShipmentPeriod700_2.Text = string.Empty;
-                txtShipmentPeriod700_3.Text = string.Empty;
-                txtShipmentPeriod700_4.Text = string.Empty;
-                txtShipmentPeriod700_5.Text = string.Empty;
-                txtShipmentPeriod700_6.Text = string.Empty;
-
-                comboDraweeCusType.SelectedValue = string.Empty;
-                txtDraweeCusNo700.Text = string.Empty;
-                txtDraweeCusName.Text = string.Empty;
-                txtDraweeAddr1.Text = string.Empty;
-                txtDraweeAddr2.Text = string.Empty;
-                txtDraweeAddr3.Text = string.Empty;
             }
             #endregion
 
             #region tab MT740
-            if (dsDoc.Tables[2].Rows.Count > 0)
+            if (this.TabId == TabIssueLCAddNew)
             {
-                var drow = dsDoc.Tables[2].Rows[0];
-
-                comGenerate.SelectedValue = drow["GenerateMT740"].ToString();
-                Generate740 = comGenerate.SelectedValue;
-                ReceivingBank_740 = drow["ReceivingBank"].ToString();
-
-                txtRemittingBankNo.Text = drow["ReceivingBank"].ToString();
-                lblDocumentaryCreditNumber740.Text = drow["DocumentaryCreditNumber"].ToString();
-                tb31DPlaceOfExpiry.Text = drow["PlaceExpiry"].ToString();
-
-                rcbBeneficiaryType740.SelectedValue = drow["BeneficiaryType"].ToString();
-                tbBeneficiaryNo740.Text = drow["BeneficiaryNo"].ToString();
-                tbBeneficiaryName740.Text = drow["BeneficiaryName"].ToString();
-                tbBeneficiaryAddr740_1.Text = drow["BeneficiaryAddr1"].ToString();
-                tbBeneficiaryAddr740_2.Text = drow["BeneficiaryAddr2"].ToString();
-                tbBeneficiaryAddr740_3.Text = drow["BeneficiaryAddr3"].ToString();
-
-                numCreditAmount.Value = (double?) drow["CreditAmount"];
-                comboCreditCurrency.SelectedValue = drow["CreditCurrency"].ToString();
-                lblApplicableRule740.Text = drow["ApplicableRule"].ToString();
-                numPercentageCreditAmountTolerance740_1.Value = (double?)drow["PercentageCreditAmountTolerance1"];
-                numPercentageCreditAmountTolerance740_2.Value = (double?)drow["PercentageCreditAmountTolerance2"];
-
-                rcbAvailableWithType740.SelectedValue = drow["AvailableWithType"].ToString();
-                tbAvailableWithNo740.Text = drow["AvailableWithNo"].ToString();
-                tbAvailableWithName740.Text = drow["AvailableWithName"].ToString();
-                tbAvailableWithAddr740_1.Text = drow["AvailableWithAddr1"].ToString();
-                tbAvailableWithAddr740_2.Text = drow["AvailableWithAddr2"].ToString();
-                tbAvailableWithAddr740_3.Text = drow["AvailableWithAddr3"].ToString();
-                
-                comboReimbursingBankChange.SelectedValue = drow["ReimbursingBankChanges"].ToString();
-
-                if (!string.IsNullOrEmpty(drow["DateExpiry"].ToString()) && drow["DateExpiry"].ToString().IndexOf("1/1/1900", StringComparison.Ordinal) == -1)
+                if (dsDoc.Tables[2].Rows.Count > 0)
                 {
-                    tbExpiryDate740.SelectedDate = DateTime.Parse(drow["DateExpiry"].ToString());
+                    var drow = dsDoc.Tables[2].Rows[0];
+
+                    comGenerate.SelectedValue = drow["GenerateMT740"].ToString();
+                    Generate740 = comGenerate.SelectedValue;
+                    ReceivingBank_740 = drow["ReceivingBank"].ToString();
+
+                    txtRemittingBankNo.Text = drow["ReceivingBank"].ToString();
+                    lblDocumentaryCreditNumber740.Text = drow["DocumentaryCreditNumber"].ToString();
+                    txtPlaceOfExpiry740.Text = drow["PlaceExpiry"].ToString();
+
+                    rcbBeneficiaryType740.SelectedValue = drow["BeneficiaryType"].ToString();
+                    tbBeneficiaryNo740.Text = drow["BeneficiaryNo"].ToString();
+                    tbBeneficiaryName740.Text = drow["BeneficiaryName"].ToString();
+                    tbBeneficiaryAddr740_1.Text = drow["BeneficiaryAddr1"].ToString();
+                    tbBeneficiaryAddr740_2.Text = drow["BeneficiaryAddr2"].ToString();
+                    tbBeneficiaryAddr740_3.Text = drow["BeneficiaryAddr3"].ToString();
+
+                    numCreditAmount.Value = (double?)drow["CreditAmount"];
+                    comboCreditCurrency.SelectedValue = drow["CreditCurrency"].ToString();
+                    lblApplicableRule740.Text = drow["ApplicableRule"].ToString();
+                    numPercentageCreditAmountTolerance740_1.Value = (double?)drow["PercentageCreditAmountTolerance1"];
+                    numPercentageCreditAmountTolerance740_2.Value = (double?)drow["PercentageCreditAmountTolerance2"];
+
+                    rcbAvailableWithType740.SelectedValue = drow["AvailableWithType"].ToString();
+                    tbAvailableWithNo740.Text = drow["AvailableWithNo"].ToString();
+                    tbAvailableWithName740.Text = drow["AvailableWithName"].ToString();
+                    tbAvailableWithAddr740_1.Text = drow["AvailableWithAddr1"].ToString();
+                    tbAvailableWithAddr740_2.Text = drow["AvailableWithAddr2"].ToString();
+                    tbAvailableWithAddr740_3.Text = drow["AvailableWithAddr3"].ToString();
+
+                    comboReimbursingBankChange.SelectedValue = drow["ReimbursingBankChanges"].ToString();
+
+                    if (!string.IsNullOrEmpty(drow["DateExpiry"].ToString()) && drow["DateExpiry"].ToString().IndexOf("1/1/1900", StringComparison.Ordinal) == -1)
+                    {
+                        txtDateOfExpiry740.SelectedDate = DateTime.Parse(drow["DateExpiry"].ToString());
+                    }
+
+                    txtSenderToReceiverInformation740_1.Text = drow["SenderToReceiverInformation1"].ToString();
+                    txtSenderToReceiverInformation740_2.Text = drow["SenderToReceiverInformation2"].ToString();
+                    txtSenderToReceiverInformation740_3.Text = drow["SenderToReceiverInformation3"].ToString();
+                    txtSenderToReceiverInformation740_4.Text = drow["SenderToReceiverInformation4"].ToString();
+
+                    txtDraftsAt740_1.Text = drow["DraftsAt1"].ToString();
+                    txtDraftsAt740_2.Text = drow["DraftsAt2"].ToString();
                 }
+                else
+                {
+                    comGenerate.SelectedValue = string.Empty;
+                    txtRemittingBankNo.Text = string.Empty;
+                    lblDocumentaryCreditNumber740.Text = string.Empty;
+                    txtPlaceOfExpiry740.Text = string.Empty;
 
-                txtSenderToReceiverInformation740_1.Text = drow["SenderToReceiverInformation1"].ToString();
-                txtSenderToReceiverInformation740_2.Text = drow["SenderToReceiverInformation2"].ToString();
-                txtSenderToReceiverInformation740_3.Text = drow["SenderToReceiverInformation3"].ToString();
-                txtSenderToReceiverInformation740_4.Text = drow["SenderToReceiverInformation4"].ToString();
+                    rcbBeneficiaryType740.SelectedValue = "D";
+                    tbBeneficiaryNo740.Text = string.Empty;
+                    tbBeneficiaryName740.Text = string.Empty;
+                    tbBeneficiaryAddr740_1.Text = string.Empty;
+                    tbBeneficiaryAddr740_2.Text = string.Empty;
+                    tbBeneficiaryAddr740_3.Text = string.Empty;
 
-                txtDraftsAt740_1.Text = drow["DraftsAt1"].ToString();
-                txtDraftsAt740_2.Text = drow["DraftsAt2"].ToString();
-            }
-            else
-            {
-                comGenerate.SelectedValue = string.Empty;
-                txtRemittingBankNo.Text = string.Empty;
-                lblDocumentaryCreditNumber740.Text = string.Empty;
-                tb31DPlaceOfExpiry.Text = string.Empty;
+                    numCreditAmount.Value = 0;
+                    comboCreditCurrency.SelectedValue = string.Empty;
 
-                rcbBeneficiaryType740.SelectedValue = "D";
-                tbBeneficiaryNo740.Text = string.Empty;
-                tbBeneficiaryName740.Text = string.Empty;
-                tbBeneficiaryAddr740_1.Text = string.Empty;
-                tbBeneficiaryAddr740_2.Text = string.Empty;
-                tbBeneficiaryAddr740_3.Text = string.Empty;
+                    rcbAvailableWithType740.SelectedValue = string.Empty;
+                    tbAvailableWithNo740.Text = string.Empty;
+                    tbAvailableWithName740.Text = string.Empty;
+                    tbAvailableWithAddr740_1.Text = string.Empty;
+                    tbAvailableWithAddr740_2.Text = string.Empty;
+                    tbAvailableWithAddr740_3.Text = string.Empty;
 
-                numCreditAmount.Value = 0;
-                comboCreditCurrency.SelectedValue = string.Empty;
+                    comboReimbursingBankChange.SelectedValue = string.Empty;
 
-                rcbAvailableWithType740.SelectedValue = string.Empty;
-                tbAvailableWithNo740.Text = string.Empty;
-                tbAvailableWithName740.Text = string.Empty;
-                tbAvailableWithAddr740_1.Text = string.Empty;
-                tbAvailableWithAddr740_2.Text = string.Empty;
-                tbAvailableWithAddr740_3.Text = string.Empty;
-                
-                comboReimbursingBankChange.SelectedValue = string.Empty;
+                    lblApplicableRule740.Text = comboAvailableRule.SelectedValue;
+                    numPercentageCreditAmountTolerance740_1.Value = 0;
+                    numPercentageCreditAmountTolerance740_2.Value = 0;
 
-                lblApplicableRule740.Text = comboAvailableRule.SelectedValue;
-                numPercentageCreditAmountTolerance740_1.Value = 0;
-                numPercentageCreditAmountTolerance740_2.Value = 0;
+                    txtDraftsAt740_1.Text = string.Empty;
+                    txtDraftsAt740_2.Text = string.Empty;
 
-                txtDraftsAt740_1.Text = string.Empty;
-                txtDraftsAt740_2.Text = string.Empty;
 
-                
+                }
             }
             #endregion
 
@@ -2192,110 +2196,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             #endregion
 
             #region tab MT747
-
-            if (dsDoc.Tables[6].Rows.Count > 0)
+            if (this.TabId == TabIssueLCAmend)
             {
-                var drow = dsDoc.Tables[6].Rows[0];
-                comboGenerateMT747.SelectedValue = drow["GenerateMT747"].ToString();
-                Generate747 = comboGenerateMT747.SelectedValue;
-
-                txtReceivingBank_747.Text = drow["ReceivingBank"].ToString();
-                lblDocumentaryCreditNumber_747.Text = drow["DocumentaryCreditNumber"].ToString();
-                comboReimbBankType_747.SelectedValue = drow["ReimbBankType"].ToString();
-                txtReimbBankNo_747.Text = drow["ReimbBankNo"].ToString();
-                txtReimbBankName_747.Text = drow["ReimbBankName"].ToString();
-                txtReimbBankAddr_747_1.Text = drow["ReimbBankAddr1"].ToString();
-                txtReimbBankAddr_747_2.Text = drow["ReimbBankAddr2"].ToString();
-                txtReimbBankAddr_747_3.Text = drow["ReimbBankAddr3"].ToString();
-
-                if (!string.IsNullOrEmpty(drow["DateOriginalAuthorization"].ToString()) &&
-                    drow["DateOriginalAuthorization"].ToString().IndexOf("1/1/1900") == -1)
+                if (dsDoc.Tables[6].Rows.Count > 0)
                 {
-                    dteDateOfOriginalAuthorization_747.SelectedDate =
-                        DateTime.Parse(drow["DateOriginalAuthorization"].ToString());
-                }
+                    var drow = dsDoc.Tables[6].Rows[0];
+                    comboGenerateMT747.SelectedValue = drow["GenerateMT747"].ToString();
+                    Generate747 = comboGenerateMT747.SelectedValue;
 
-                if (!string.IsNullOrEmpty(drow["DateOfExpiry"].ToString()) &&
-                    drow["DateOfExpiry"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteNewDateOfExpiry_747.SelectedDate = DateTime.Parse(drow["DateOfExpiry"].ToString());
-                }
-
-                comboCurrency_747.SelectedValue = drow["Currency"].ToString();
-                numAmount_747.Text = drow["Amount"].ToString();
-                numPercentageCreditTolerance_747_1.Text = drow["PercentageCreditAmountTolerance1"].ToString();
-                numPercentageCreditTolerance_747_2.Text = drow["PercentageCreditAmountTolerance2"].ToString();
-                comboMaximumCreditAmount_747.SelectedValue = drow["MaximumCreditAmount"].ToString();
-
-                txtAdditionalCovered_747_1.Text = drow["AdditionalCovered1"].ToString();
-                txtAdditionalCovered_747_2.Text = drow["AdditionalCovered2"].ToString();
-                txtAdditionalCovered_747_3.Text = drow["AdditionalCovered3"].ToString();
-                txtAdditionalCovered_747_4.Text = drow["AdditionalCovered4"].ToString();
-
-                txtSenderToReceiverInfomation_747_1.Text = drow["SenderToReceiverInformation1"].ToString();
-                txtSenderToReceiverInfomation_747_2.Text = drow["SenderToReceiverInformation2"].ToString();
-                txtSenderToReceiverInfomation_747_3.Text = drow["SenderToReceiverInformation3"].ToString();
-                txtSenderToReceiverInfomation_747_4.Text = drow["SenderToReceiverInformation4"].ToString();
-
-                txtNarrative_747_1.Text = drow["Narrative1"].ToString();
-                txtNarrative_747_2.Text = drow["Narrative2"].ToString();
-                txtNarrative_747_3.Text = drow["Narrative3"].ToString();
-                txtNarrative_747_4.Text = drow["Narrative4"].ToString();
-                txtNarrative_747_5.Text = drow["Narrative5"].ToString();
-                txtNarrative_747_6.Text = drow["Narrative6"].ToString();
-
-                GenerateMT747();
-            }
-            else
-            {
-                comGenerate.SelectedValue = "NO";
-                lblDocumentaryCreditNumber_747.Text = string.Empty;
-                txtReceivingBank_747.Text = string.Empty;
-
-                comboReimbBankType_747.SelectedValue = string.Empty;
-                txtReimbBankNo_747.Text = string.Empty;
-                txtReimbBankName_747.Text = string.Empty;
-                txtReimbBankAddr_747_1.Text = string.Empty;
-                txtReimbBankAddr_747_2.Text = string.Empty;
-                txtReimbBankAddr_747_3.Text = string.Empty;
-
-                numPercentageCreditTolerance_747_1.Value = 0;
-                numPercentageCreditTolerance_747_1.Value = 0;
-
-                comboGenerateMT747.SelectedValue = string.Empty;
-
-                dteDateOfOriginalAuthorization_747.SelectedDate = DateTime.Now;
-                dteNewDateOfExpiry_747.SelectedDate = null;
-
-                comboCurrency_747.SelectedValue = string.Empty;
-                numAmount_747.Text = string.Empty;
-                comboMaximumCreditAmount_747.SelectedValue = string.Empty;
-
-                txtAdditionalCovered_747_1.Text = string.Empty;
-                txtAdditionalCovered_747_2.Text = string.Empty;
-                txtAdditionalCovered_747_3.Text = string.Empty;
-                txtAdditionalCovered_747_4.Text = string.Empty;
-
-                txtSenderToReceiverInfomation_747_1.Text = string.Empty;
-                txtSenderToReceiverInfomation_747_2.Text = string.Empty;
-                txtSenderToReceiverInfomation_747_3.Text = string.Empty;
-                txtSenderToReceiverInfomation_747_4.Text = string.Empty;
-
-                txtNarrative_747_1.Text = string.Empty;
-                txtNarrative_747_2.Text = string.Empty;
-                txtNarrative_747_3.Text = string.Empty;
-                txtNarrative_747_4.Text = string.Empty;
-                txtNarrative_747_5.Text = string.Empty;
-                txtNarrative_747_6.Text = string.Empty;
-
-                // set default values
-                if (dsDoc.Tables[0].Rows.Count > 0)
-                {
-                    var drow = dsDoc.Tables[0].Rows[0];
-
-                    lblDocumentaryCreditNumber_747.Text = drow["NormalLCCode"].ToString();
-                    txtReceivingBank_747.Text = drow["ReimbBankNo"].ToString();
-
+                    txtReceivingBank_747.Text = drow["ReceivingBank"].ToString();
+                    lblDocumentaryCreditNumber_747.Text = drow["DocumentaryCreditNumber"].ToString();
                     comboReimbBankType_747.SelectedValue = drow["ReimbBankType"].ToString();
                     txtReimbBankNo_747.Text = drow["ReimbBankNo"].ToString();
                     txtReimbBankName_747.Text = drow["ReimbBankName"].ToString();
@@ -2303,170 +2213,154 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     txtReimbBankAddr_747_2.Text = drow["ReimbBankAddr2"].ToString();
                     txtReimbBankAddr_747_3.Text = drow["ReimbBankAddr3"].ToString();
 
-                    numPercentageCreditTolerance_747_1.Text = drow["CrTolerance"].ToString();
-                    numPercentageCreditTolerance_747_2.Text = drow["DrTolerance"].ToString();
+                    if (!string.IsNullOrEmpty(drow["DateOriginalAuthorization"].ToString()) &&
+                        drow["DateOriginalAuthorization"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteDateOfOriginalAuthorization_747.SelectedDate =
+                            DateTime.Parse(drow["DateOriginalAuthorization"].ToString());
+                    }
+
+                    if (!string.IsNullOrEmpty(drow["DateOfExpiry"].ToString()) &&
+                        drow["DateOfExpiry"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteNewDateOfExpiry_747.SelectedDate = DateTime.Parse(drow["DateOfExpiry"].ToString());
+                    }
 
                     comboCurrency_747.SelectedValue = drow["Currency"].ToString();
                     numAmount_747.Text = drow["Amount"].ToString();
-                }
+                    numPercentageCreditTolerance_747_1.Text = drow["PercentageCreditAmountTolerance1"].ToString();
+                    numPercentageCreditTolerance_747_2.Text = drow["PercentageCreditAmountTolerance2"].ToString();
+                    comboMaximumCreditAmount_747.SelectedValue = drow["MaximumCreditAmount"].ToString();
 
-                if (dsDoc.Tables[2].Rows.Count > 0)
+                    txtAdditionalCovered_747_1.Text = drow["AdditionalCovered1"].ToString();
+                    txtAdditionalCovered_747_2.Text = drow["AdditionalCovered2"].ToString();
+                    txtAdditionalCovered_747_3.Text = drow["AdditionalCovered3"].ToString();
+                    txtAdditionalCovered_747_4.Text = drow["AdditionalCovered4"].ToString();
+
+                    txtSenderToReceiverInfomation_747_1.Text = drow["SenderToReceiverInformation1"].ToString();
+                    txtSenderToReceiverInfomation_747_2.Text = drow["SenderToReceiverInformation2"].ToString();
+                    txtSenderToReceiverInfomation_747_3.Text = drow["SenderToReceiverInformation3"].ToString();
+                    txtSenderToReceiverInfomation_747_4.Text = drow["SenderToReceiverInformation4"].ToString();
+
+                    txtNarrative_747_1.Text = drow["Narrative1"].ToString();
+                    txtNarrative_747_2.Text = drow["Narrative2"].ToString();
+                    txtNarrative_747_3.Text = drow["Narrative3"].ToString();
+                    txtNarrative_747_4.Text = drow["Narrative4"].ToString();
+                    txtNarrative_747_5.Text = drow["Narrative5"].ToString();
+                    txtNarrative_747_6.Text = drow["Narrative6"].ToString();
+
+                    GenerateMT747();
+                }
+                else
                 {
-                    var drow740 = dsDoc.Tables[2].Rows[0];
+                    comGenerate.SelectedValue = "NO";
+                    lblDocumentaryCreditNumber_747.Text = string.Empty;
+                    txtReceivingBank_747.Text = string.Empty;
 
-                    txtSenderToReceiverInfomation_747_1.Text = drow740["SenderToReceiverInformation1"].ToString();
-                    txtSenderToReceiverInfomation_747_2.Text = drow740["SenderToReceiverInformation2"].ToString();
-                    txtSenderToReceiverInfomation_747_3.Text = drow740["SenderToReceiverInformation3"].ToString();
-                    txtSenderToReceiverInfomation_747_4.Text = drow740["SenderToReceiverInformation4"].ToString();
+                    comboReimbBankType_747.SelectedValue = string.Empty;
+                    txtReimbBankNo_747.Text = string.Empty;
+                    txtReimbBankName_747.Text = string.Empty;
+                    txtReimbBankAddr_747_1.Text = string.Empty;
+                    txtReimbBankAddr_747_2.Text = string.Empty;
+                    txtReimbBankAddr_747_3.Text = string.Empty;
+
+                    numPercentageCreditTolerance_747_1.Value = 0;
+                    numPercentageCreditTolerance_747_1.Value = 0;
+
+                    comboGenerateMT747.SelectedValue = string.Empty;
+
+                    dteDateOfOriginalAuthorization_747.SelectedDate = DateTime.Now;
+                    dteNewDateOfExpiry_747.SelectedDate = null;
+
+                    comboCurrency_747.SelectedValue = string.Empty;
+                    numAmount_747.Text = string.Empty;
+                    comboMaximumCreditAmount_747.SelectedValue = string.Empty;
+
+                    txtAdditionalCovered_747_1.Text = string.Empty;
+                    txtAdditionalCovered_747_2.Text = string.Empty;
+                    txtAdditionalCovered_747_3.Text = string.Empty;
+                    txtAdditionalCovered_747_4.Text = string.Empty;
+
+                    txtSenderToReceiverInfomation_747_1.Text = string.Empty;
+                    txtSenderToReceiverInfomation_747_2.Text = string.Empty;
+                    txtSenderToReceiverInfomation_747_3.Text = string.Empty;
+                    txtSenderToReceiverInfomation_747_4.Text = string.Empty;
+
+                    txtNarrative_747_1.Text = string.Empty;
+                    txtNarrative_747_2.Text = string.Empty;
+                    txtNarrative_747_3.Text = string.Empty;
+                    txtNarrative_747_4.Text = string.Empty;
+                    txtNarrative_747_5.Text = string.Empty;
+                    txtNarrative_747_6.Text = string.Empty;
+
+                    // set default values
+                    if (dsDoc.Tables[0].Rows.Count > 0)
+                    {
+                        var drow = dsDoc.Tables[0].Rows[0];
+
+                        lblDocumentaryCreditNumber_747.Text = drow["NormalLCCode"].ToString();
+                        txtReceivingBank_747.Text = drow["ReimbBankNo"].ToString();
+
+                        comboReimbBankType_747.SelectedValue = drow["ReimbBankType"].ToString();
+                        txtReimbBankNo_747.Text = drow["ReimbBankNo"].ToString();
+                        txtReimbBankName_747.Text = drow["ReimbBankName"].ToString();
+                        txtReimbBankAddr_747_1.Text = drow["ReimbBankAddr1"].ToString();
+                        txtReimbBankAddr_747_2.Text = drow["ReimbBankAddr2"].ToString();
+                        txtReimbBankAddr_747_3.Text = drow["ReimbBankAddr3"].ToString();
+
+                        numPercentageCreditTolerance_747_1.Text = drow["CrTolerance"].ToString();
+                        numPercentageCreditTolerance_747_2.Text = drow["DrTolerance"].ToString();
+
+                        comboCurrency_747.SelectedValue = drow["Currency"].ToString();
+                        numAmount_747.Text = drow["Amount"].ToString();
+                    }
+
+                    if (dsDoc.Tables[2].Rows.Count > 0)
+                    {
+                        var drow740 = dsDoc.Tables[2].Rows[0];
+
+                        txtSenderToReceiverInfomation_747_1.Text = drow740["SenderToReceiverInformation1"].ToString();
+                        txtSenderToReceiverInfomation_747_2.Text = drow740["SenderToReceiverInformation2"].ToString();
+                        txtSenderToReceiverInfomation_747_3.Text = drow740["SenderToReceiverInformation3"].ToString();
+                        txtSenderToReceiverInfomation_747_4.Text = drow740["SenderToReceiverInformation4"].ToString();
+                    }
+
+                    GenerateMT747();
                 }
-
-                GenerateMT747();
             }
-
             #endregion
 
             #region tab MT707
-
-            if (dsDoc.Tables[7].Rows.Count > 0)
+            if (this.TabId == TabIssueLCAmend)
             {
-                var drow = dsDoc.Tables[7].Rows[0];
-
-                txtReceivingBankId_707.Text = drow["ReceivingBank"].ToString();
-                lblSenderReference_707.Text = drow["SenderReference"].ToString();
-                txtReceiverReference_707.Text = drow["ReceiverReference"].ToString();
-                txtReferenceToPreAdvice_707.Text = drow["ReferenceToPreAdvice"].ToString();
-
-                txtIssuingBankReferenceNo_707.Text = drow["IssuingBankNo"].ToString();
-                txtIssuingBankReferenceName_707.Text = drow["IssuingBankName"].ToString();
-                txtIssuingBankReferenceAddr_707_1.Text = drow["IssuingBankAddr1"].ToString();
-                txtIssuingBankReferenceAddr_707_2.Text = drow["IssuingBankAddr2"].ToString();
-                txtIssuingBankReferenceAddr_707_3.Text = drow["IssuingBankAddr3"].ToString();
-
-                if (!string.IsNullOrEmpty(drow["DateOfIssue"].ToString()) &&
-                    drow["DateOfIssue"].ToString().IndexOf("1/1/1900") == -1)
+                if (dsDoc.Tables[7].Rows.Count > 0)
                 {
-                    dteDateOfIssue_707.SelectedDate = DateTime.Parse(drow["DateOfIssue"].ToString());
-                }
+                    var drow = dsDoc.Tables[7].Rows[0];
 
-                comboAvailableRule_707.SelectedValue = drow["ApplicableRule"].ToString();
+                    txtReceivingBankId_707.Text = drow["ReceivingBank"].ToString();
+                    lblSenderReference_707.Text = drow["SenderReference"].ToString();
+                    txtReceiverReference_707.Text = drow["ReceiverReference"].ToString();
+                    txtReferenceToPreAdvice_707.Text = drow["ReferenceToPreAdvice"].ToString();
 
-                if (!string.IsNullOrEmpty(drow["DateOfAmendment"].ToString()) &&
-                    drow["DateOfAmendment"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteDateOfAmendment_707.SelectedDate = DateTime.Parse(drow["DateOfAmendment"].ToString());
-                }
+                    txtIssuingBankReferenceNo_707.Text = drow["IssuingBankNo"].ToString();
+                    txtIssuingBankReferenceName_707.Text = drow["IssuingBankName"].ToString();
+                    txtIssuingBankReferenceAddr_707_1.Text = drow["IssuingBankAddr1"].ToString();
+                    txtIssuingBankReferenceAddr_707_2.Text = drow["IssuingBankAddr2"].ToString();
+                    txtIssuingBankReferenceAddr_707_3.Text = drow["IssuingBankAddr3"].ToString();
 
-                comboBeneficiaryType_707.SelectedValue = drow["BeneficiaryType"].ToString();
-                txtBeneficiaryNo_707.Text = drow["BeneficiaryNo"].ToString();
-                txtBeneficiaryName_707.Text = drow["BeneficiaryName"].ToString();
-                txtBeneficiaryAddr_707_1.Text = drow["BeneficiaryAddr1"].ToString();
-                txtBeneficiaryAddr_707_2.Text = drow["BeneficiaryAddr2"].ToString();
-                txtBeneficiaryAddr_707_3.Text = drow["BeneficiaryAddr3"].ToString();
+                    if (!string.IsNullOrEmpty(drow["DateOfIssue"].ToString()) &&
+                        drow["DateOfIssue"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteDateOfIssue_707.SelectedDate = DateTime.Parse(drow["DateOfIssue"].ToString());
+                    }
 
-                if (!string.IsNullOrEmpty(drow["NewDateOfExpiry"].ToString()) &&
-                    drow["NewDateOfExpiry"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteNewDateOfExpiry_707.SelectedDate = DateTime.Parse(drow["NewDateOfExpiry"].ToString());
-                }
+                    comboAvailableRule_707.SelectedValue = drow["ApplicableRule"].ToString();
 
-                numPercentageCreditAmountTolerance_707_1.Text = drow["PercentageCreditAmountTolerance1"].ToString();
-                numPercentageCreditAmountTolerance_707_2.Text = drow["PercentageCreditAmountTolerance2"].ToString();
-
-                comboMaximumCreditAmount_707.SelectedValue = drow["MaximumCreditAmount"].ToString();
-
-                txtAdditionalAmountsCovered_707_1.Text = drow["AdditionalAmountsCovered1"].ToString();
-                txtAdditionalAmountsCovered_707_2.Text = drow["AdditionalAmountsCovered2"].ToString();
-
-                txtPlaceoftakingincharge_707.Text = drow["PlaceOfTakingInCharge"].ToString();
-                txtPlaceoffinalindistination_707.Text = drow["PlaceOfFinalInDistination"].ToString();
-
-                if (!string.IsNullOrEmpty(drow["LatesDateOfShipment"].ToString()) &&
-                    drow["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteLatesDateofShipment_707.SelectedDate = DateTime.Parse(drow["LatesDateOfShipment"].ToString());
-                }
-
-
-                txtShipmentPeriod_707_1.Text = drow["ShipmentPeriod1"].ToString();
-                txtShipmentPeriod_707_2.Text = drow["ShipmentPeriod2"].ToString();
-                txtShipmentPeriod_707_3.Text = drow["ShipmentPeriod3"].ToString();
-                txtShipmentPeriod_707_4.Text = drow["ShipmentPeriod4"].ToString();
-                txtShipmentPeriod_707_5.Text = drow["ShipmentPeriod5"].ToString();
-                txtShipmentPeriod_707_6.Text = drow["ShipmentPeriod6"].ToString();
-
-                txtPortofloading_707.Text = drow["PortOfLoading"].ToString();
-                txtPortofDischarge_707.Text = drow["PortOfDischarge"].ToString();
-                txtEdittor_Narrative_707.Content = drow["Narrative"].ToString();
-
-                txtSenderToReceiverInformation_707_1.Text = drow["SenderReceiverInfomation1"].ToString();
-                txtSenderToReceiverInformation_707_2.Text = drow["SenderReceiverInfomation2"].ToString();
-                txtSenderToReceiverInformation_707_3.Text = drow["SenderReceiverInfomation3"].ToString();
-                txtSenderToReceiverInformation_707_4.Text = drow["SenderReceiverInfomation4"].ToString();
-                txtSenderToReceiverInformation_707_5.Text = drow["SenderReceiverInfomation5"].ToString();
-                txtSenderToReceiverInformation_707_6.Text = drow["SenderReceiverInfomation6"].ToString();
-            }
-            else
-            {
-                txtReceivingBankId_707.Text = string.Empty;
-                lblSenderReference_707.Text = string.Empty;
-                numPercentageCreditAmountTolerance_707_1.Value = 0;
-                numPercentageCreditAmountTolerance_707_2.Value = 0;
-
-                comboBeneficiaryType_707.SelectedValue = string.Empty;
-                txtBeneficiaryNo_707.Text = string.Empty;
-                txtBeneficiaryName_707.Text = string.Empty;
-                txtBeneficiaryAddr_707_1.Text = string.Empty;
-                txtBeneficiaryAddr_707_2.Text = string.Empty;
-                txtBeneficiaryAddr_707_3.Text = string.Empty;
-
-                txtReferenceToPreAdvice_707.Text = string.Empty;
-                txtIssuingBankReferenceNo_707.Text = string.Empty;
-                txtIssuingBankReferenceName_707.Text = string.Empty;
-                txtIssuingBankReferenceAddr_707_1.Text = string.Empty;
-                txtIssuingBankReferenceAddr_707_2.Text = string.Empty;
-                txtIssuingBankReferenceAddr_707_3.Text = string.Empty;
-
-                txtReceiverReference_707.Text = string.Empty;
-
-                dteDateOfIssue_707.SelectedDate = DateTime.Now;
-                comboAvailableRule_707.SelectedValue = string.Empty;
-                dteDateOfAmendment_707.SelectedDate = DateTime.Now;
-
-                dteNewDateOfExpiry_707.SelectedDate = null;
-                comboMaximumCreditAmount_707.SelectedValue = string.Empty;
-                txtAdditionalAmountsCovered_707_1.Text = string.Empty;
-                txtAdditionalAmountsCovered_707_2.Text = string.Empty;
-                txtPlaceoftakingincharge_707.Text = string.Empty;
-                txtPlaceoffinalindistination_707.Text = string.Empty;
-                dteLatesDateofShipment_707.SelectedDate = null;
-
-                txtShipmentPeriod_707_1.Text = string.Empty;
-                txtShipmentPeriod_707_2.Text = string.Empty;
-                txtShipmentPeriod_707_3.Text = string.Empty;
-                txtShipmentPeriod_707_4.Text = string.Empty;
-                txtShipmentPeriod_707_5.Text = string.Empty;
-                txtShipmentPeriod_707_6.Text = string.Empty;
-
-                txtPortofloading_707.Text = string.Empty;
-                txtPortofDischarge_707.Text = string.Empty;
-                txtEdittor_Narrative_707.Content = string.Empty;
-
-                txtSenderToReceiverInformation_707_1.Text = "PLEASE ADVISE THIS AMENDMENT TO THE BENEFICIARY THROUGH";
-                txtSenderToReceiverInformation_707_2.Text = string.Empty;
-                txtSenderToReceiverInformation_707_3.Text = string.Empty;
-                txtSenderToReceiverInformation_707_4.Text = string.Empty;
-                txtSenderToReceiverInformation_707_5.Text = string.Empty;
-                txtSenderToReceiverInformation_707_6.Text = string.Empty;
-
-                // set default values
-                if (dsDoc.Tables[0].Rows.Count > 0)
-                {
-                    var drow = dsDoc.Tables[0].Rows[0];
-
-                    
-                    lblSenderReference_707.Text = drow["NormalLCCode"].ToString();
-                    numPercentageCreditAmountTolerance_707_1.Text = drow["CrTolerance"].ToString();
-                    numPercentageCreditAmountTolerance_707_2.Text = drow["DrTolerance"].ToString();
+                    if (!string.IsNullOrEmpty(drow["DateOfAmendment"].ToString()) &&
+                        drow["DateOfAmendment"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteDateOfAmendment_707.SelectedDate = DateTime.Parse(drow["DateOfAmendment"].ToString());
+                    }
 
                     comboBeneficiaryType_707.SelectedValue = drow["BeneficiaryType"].ToString();
                     txtBeneficiaryNo_707.Text = drow["BeneficiaryNo"].ToString();
@@ -2475,53 +2369,165 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     txtBeneficiaryAddr_707_2.Text = drow["BeneficiaryAddr2"].ToString();
                     txtBeneficiaryAddr_707_3.Text = drow["BeneficiaryAddr3"].ToString();
 
-                    comboAvailableRule_707.SelectedValue = drow["ApplicationRule"].ToString();
-                }                
-
-                if (dsDoc.Tables[1].Rows.Count > 0)
-                {
-                    var drow700 = dsDoc.Tables[1].Rows[0];
-
-                    txtReceivingBankId_707.Text = drow700["ReceivingBank"].ToString();
-
-                    txtIssuingBankReferenceNo_707.Text = drow700["DraweeNo"].ToString();
-                    txtIssuingBankReferenceName_707.Text = drow700["DraweeName"].ToString();
-                    txtIssuingBankReferenceAddr_707_1.Text = drow700["DraweeAddr1"].ToString();
-                    txtIssuingBankReferenceAddr_707_2.Text = drow700["DraweeAddr2"].ToString();
-                    txtIssuingBankReferenceAddr_707_3.Text = drow700["DraweeAddr3"].ToString();
-
-                    comboMaximumCreditAmount_707.SelectedValue = drow700["MaximumCreditAmount"].ToString();
-
-                    txtAdditionalAmountsCovered_707_1.Text = drow700["AdditionalAmountsCovered1"].ToString();
-                    txtAdditionalAmountsCovered_707_2.Text = drow700["AdditionalAmountsCovered2"].ToString();
-
-                    txtPlaceoftakingincharge_707.Text = drow700["PlaceOfTakingInCharge"].ToString();
-                    txtPlaceoffinalindistination_707.Text = drow700["PlaceOfFinalInDistination"].ToString();
-
-                    if (!string.IsNullOrEmpty(drow700["LatesDateOfShipment"].ToString()) &&
-                    drow700["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
+                    if (!string.IsNullOrEmpty(drow["NewDateOfExpiry"].ToString()) &&
+                        drow["NewDateOfExpiry"].ToString().IndexOf("1/1/1900") == -1)
                     {
-                        dteLatesDateofShipment_707.SelectedDate = DateTime.Parse(drow700["LatesDateOfShipment"].ToString());
+                        dteNewDateOfExpiry_707.SelectedDate = DateTime.Parse(drow["NewDateOfExpiry"].ToString());
                     }
 
-                    if (!string.IsNullOrEmpty(drow700["DateExpiry"].ToString()) &&
-                    drow700["DateExpiry"].ToString().IndexOf("1/1/1900") == -1)
+                    numPercentageCreditAmountTolerance_707_1.Text = drow["PercentageCreditAmountTolerance1"].ToString();
+                    numPercentageCreditAmountTolerance_707_2.Text = drow["PercentageCreditAmountTolerance2"].ToString();
+
+                    comboMaximumCreditAmount_707.SelectedValue = drow["MaximumCreditAmount"].ToString();
+
+                    txtAdditionalAmountsCovered_707_1.Text = drow["AdditionalAmountsCovered1"].ToString();
+                    txtAdditionalAmountsCovered_707_2.Text = drow["AdditionalAmountsCovered2"].ToString();
+
+                    txtPlaceoftakingincharge_707.Text = drow["PlaceOfTakingInCharge"].ToString();
+                    txtPlaceoffinalindistination_707.Text = drow["PlaceOfFinalInDistination"].ToString();
+
+                    if (!string.IsNullOrEmpty(drow["LatesDateOfShipment"].ToString()) &&
+                        drow["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
                     {
-                        dteNewDateOfExpiry_707.SelectedDate = DateTime.Parse(drow700["DateExpiry"].ToString());
-                    }                    
+                        dteLatesDateofShipment_707.SelectedDate = DateTime.Parse(drow["LatesDateOfShipment"].ToString());
+                    }
 
-                    txtShipmentPeriod_707_1.Text = drow700["ShipmentPeriod1"].ToString();
-                    txtShipmentPeriod_707_2.Text = drow700["ShipmentPeriod2"].ToString();
-                    txtShipmentPeriod_707_3.Text = drow700["ShipmentPeriod3"].ToString();
-                    txtShipmentPeriod_707_4.Text = drow700["ShipmentPeriod4"].ToString();
-                    txtShipmentPeriod_707_5.Text = drow700["ShipmentPeriod5"].ToString();
-                    txtShipmentPeriod_707_6.Text = drow700["ShipmentPeriod6"].ToString();
 
-                    txtPortofloading_707.Text = drow700["PortOfLoading"].ToString();
-                    txtPortofDischarge_707.Text = drow700["PortOfDischarge"].ToString();
-                }                
+                    txtShipmentPeriod_707_1.Text = drow["ShipmentPeriod1"].ToString();
+                    txtShipmentPeriod_707_2.Text = drow["ShipmentPeriod2"].ToString();
+                    txtShipmentPeriod_707_3.Text = drow["ShipmentPeriod3"].ToString();
+                    txtShipmentPeriod_707_4.Text = drow["ShipmentPeriod4"].ToString();
+                    txtShipmentPeriod_707_5.Text = drow["ShipmentPeriod5"].ToString();
+                    txtShipmentPeriod_707_6.Text = drow["ShipmentPeriod6"].ToString();
+
+                    txtPortofloading_707.Text = drow["PortOfLoading"].ToString();
+                    txtPortofDischarge_707.Text = drow["PortOfDischarge"].ToString();
+                    txtEdittor_Narrative_707.Content = drow["Narrative"].ToString();
+
+                    txtSenderToReceiverInformation_707_1.Text = drow["SenderReceiverInfomation1"].ToString();
+                    txtSenderToReceiverInformation_707_2.Text = drow["SenderReceiverInfomation2"].ToString();
+                    txtSenderToReceiverInformation_707_3.Text = drow["SenderReceiverInfomation3"].ToString();
+                    txtSenderToReceiverInformation_707_4.Text = drow["SenderReceiverInfomation4"].ToString();
+                    txtSenderToReceiverInformation_707_5.Text = drow["SenderReceiverInfomation5"].ToString();
+                    txtSenderToReceiverInformation_707_6.Text = drow["SenderReceiverInfomation6"].ToString();
+                }
+                else
+                {
+                    txtReceivingBankId_707.Text = string.Empty;
+                    lblSenderReference_707.Text = string.Empty;
+                    numPercentageCreditAmountTolerance_707_1.Value = 0;
+                    numPercentageCreditAmountTolerance_707_2.Value = 0;
+
+                    comboBeneficiaryType_707.SelectedValue = string.Empty;
+                    txtBeneficiaryNo_707.Text = string.Empty;
+                    txtBeneficiaryName_707.Text = string.Empty;
+                    txtBeneficiaryAddr_707_1.Text = string.Empty;
+                    txtBeneficiaryAddr_707_2.Text = string.Empty;
+                    txtBeneficiaryAddr_707_3.Text = string.Empty;
+
+                    txtReferenceToPreAdvice_707.Text = string.Empty;
+                    txtIssuingBankReferenceNo_707.Text = string.Empty;
+                    txtIssuingBankReferenceName_707.Text = string.Empty;
+                    txtIssuingBankReferenceAddr_707_1.Text = string.Empty;
+                    txtIssuingBankReferenceAddr_707_2.Text = string.Empty;
+                    txtIssuingBankReferenceAddr_707_3.Text = string.Empty;
+
+                    txtReceiverReference_707.Text = string.Empty;
+
+                    dteDateOfIssue_707.SelectedDate = DateTime.Now;
+                    comboAvailableRule_707.SelectedValue = string.Empty;
+                    dteDateOfAmendment_707.SelectedDate = DateTime.Now;
+
+                    dteNewDateOfExpiry_707.SelectedDate = null;
+                    comboMaximumCreditAmount_707.SelectedValue = string.Empty;
+                    txtAdditionalAmountsCovered_707_1.Text = string.Empty;
+                    txtAdditionalAmountsCovered_707_2.Text = string.Empty;
+                    txtPlaceoftakingincharge_707.Text = string.Empty;
+                    txtPlaceoffinalindistination_707.Text = string.Empty;
+                    dteLatesDateofShipment_707.SelectedDate = null;
+
+                    txtShipmentPeriod_707_1.Text = string.Empty;
+                    txtShipmentPeriod_707_2.Text = string.Empty;
+                    txtShipmentPeriod_707_3.Text = string.Empty;
+                    txtShipmentPeriod_707_4.Text = string.Empty;
+                    txtShipmentPeriod_707_5.Text = string.Empty;
+                    txtShipmentPeriod_707_6.Text = string.Empty;
+
+                    txtPortofloading_707.Text = string.Empty;
+                    txtPortofDischarge_707.Text = string.Empty;
+                    txtEdittor_Narrative_707.Content = string.Empty;
+
+                    txtSenderToReceiverInformation_707_1.Text = "PLEASE ADVISE THIS AMENDMENT TO THE BENEFICIARY THROUGH";
+                    txtSenderToReceiverInformation_707_2.Text = string.Empty;
+                    txtSenderToReceiverInformation_707_3.Text = string.Empty;
+                    txtSenderToReceiverInformation_707_4.Text = string.Empty;
+                    txtSenderToReceiverInformation_707_5.Text = string.Empty;
+                    txtSenderToReceiverInformation_707_6.Text = string.Empty;
+
+                    // set default values
+                    if (dsDoc.Tables[0].Rows.Count > 0)
+                    {
+                        var drow = dsDoc.Tables[0].Rows[0];
+
+
+                        lblSenderReference_707.Text = drow["NormalLCCode"].ToString();
+                        numPercentageCreditAmountTolerance_707_1.Text = drow["CrTolerance"].ToString();
+                        numPercentageCreditAmountTolerance_707_2.Text = drow["DrTolerance"].ToString();
+
+                        comboBeneficiaryType_707.SelectedValue = drow["BeneficiaryType"].ToString();
+                        txtBeneficiaryNo_707.Text = drow["BeneficiaryNo"].ToString();
+                        txtBeneficiaryName_707.Text = drow["BeneficiaryName"].ToString();
+                        txtBeneficiaryAddr_707_1.Text = drow["BeneficiaryAddr1"].ToString();
+                        txtBeneficiaryAddr_707_2.Text = drow["BeneficiaryAddr2"].ToString();
+                        txtBeneficiaryAddr_707_3.Text = drow["BeneficiaryAddr3"].ToString();
+
+                        comboAvailableRule_707.SelectedValue = drow["ApplicationRule"].ToString();
+                    }
+
+                    if (dsDoc.Tables[1].Rows.Count > 0)
+                    {
+                        var drow700 = dsDoc.Tables[1].Rows[0];
+
+                        txtReceivingBankId_707.Text = drow700["ReceivingBank"].ToString();
+
+                        txtIssuingBankReferenceNo_707.Text = drow700["DraweeNo"].ToString();
+                        txtIssuingBankReferenceName_707.Text = drow700["DraweeName"].ToString();
+                        txtIssuingBankReferenceAddr_707_1.Text = drow700["DraweeAddr1"].ToString();
+                        txtIssuingBankReferenceAddr_707_2.Text = drow700["DraweeAddr2"].ToString();
+                        txtIssuingBankReferenceAddr_707_3.Text = drow700["DraweeAddr3"].ToString();
+
+                        comboMaximumCreditAmount_707.SelectedValue = drow700["MaximumCreditAmount"].ToString();
+
+                        txtAdditionalAmountsCovered_707_1.Text = drow700["AdditionalAmountsCovered1"].ToString();
+                        txtAdditionalAmountsCovered_707_2.Text = drow700["AdditionalAmountsCovered2"].ToString();
+
+                        txtPlaceoftakingincharge_707.Text = drow700["PlaceOfTakingInCharge"].ToString();
+                        txtPlaceoffinalindistination_707.Text = drow700["PlaceOfFinalInDistination"].ToString();
+
+                        if (!string.IsNullOrEmpty(drow700["LatesDateOfShipment"].ToString()) &&
+                        drow700["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
+                        {
+                            dteLatesDateofShipment_707.SelectedDate = DateTime.Parse(drow700["LatesDateOfShipment"].ToString());
+                        }
+
+                        if (!string.IsNullOrEmpty(drow700["DateExpiry"].ToString()) &&
+                        drow700["DateExpiry"].ToString().IndexOf("1/1/1900") == -1)
+                        {
+                            dteNewDateOfExpiry_707.SelectedDate = DateTime.Parse(drow700["DateExpiry"].ToString());
+                        }
+
+                        txtShipmentPeriod_707_1.Text = drow700["ShipmentPeriod1"].ToString();
+                        txtShipmentPeriod_707_2.Text = drow700["ShipmentPeriod2"].ToString();
+                        txtShipmentPeriod_707_3.Text = drow700["ShipmentPeriod3"].ToString();
+                        txtShipmentPeriod_707_4.Text = drow700["ShipmentPeriod4"].ToString();
+                        txtShipmentPeriod_707_5.Text = drow700["ShipmentPeriod5"].ToString();
+                        txtShipmentPeriod_707_6.Text = drow700["ShipmentPeriod6"].ToString();
+
+                        txtPortofloading_707.Text = drow700["PortOfLoading"].ToString();
+                        txtPortofDischarge_707.Text = drow700["PortOfDischarge"].ToString();
+                    }
+                }
             }
-
             #endregion
 
             if (string.IsNullOrEmpty(tbVatNo.Text)) GenerateVAT();
@@ -2836,7 +2842,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             if (comGenerate.SelectedValue.ToLower() == "yes")
             {
                 txtRemittingBankNo.Enabled = true;
-                tb31DPlaceOfExpiry.Enabled = true;
+                txtPlaceOfExpiry740.Enabled = true;
 
                 rcbBeneficiaryType740.Enabled = true;
                 tbBeneficiaryNo740.Enabled = true;
@@ -2854,7 +2860,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                
                 comboReimbursingBankChange.Enabled = true;
 
-                tbExpiryDate740.Enabled = true;
+                txtDateOfExpiry740.Enabled = true;
 
                 numPercentageCreditAmountTolerance740_1.Enabled = true;
                 numPercentageCreditAmountTolerance740_2.Enabled = true;
@@ -2870,7 +2876,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             else
             {
                 txtRemittingBankNo.Enabled = false;
-                tb31DPlaceOfExpiry.Enabled = false;
+                txtPlaceOfExpiry740.Enabled = false;
 
                 rcbBeneficiaryType740.Enabled = false;
                 tbBeneficiaryNo740.Enabled = false;
@@ -2887,7 +2893,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
   
                 comboReimbursingBankChange.Enabled = false;
 
-                tbExpiryDate740.Enabled = false;
+                txtDateOfExpiry740.Enabled = false;
 
                 numPercentageCreditAmountTolerance740_1.Enabled = false;
                 numPercentageCreditAmountTolerance740_2.Enabled = false;
@@ -3070,7 +3076,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }
         protected void txtReimbBankNo_OnTextChanged(object sender, EventArgs e)
         {
+            lblReceivingBankNoError.Text = "";
             bc.Commont.loadBankSwiftCodeInfo(txtReimbBankNo.Text, ref lblReimbBankMessage, ref tbReimbBankName, ref tbReimbBankAddr1, ref tbReimbBankAddr2, ref tbReimbBankAddr3);
+            txtRemittingBankNo.Text = txtReimbBankNo.Text;
+            lblReceivingBankName.Text = tbReimbBankName.Text;
             if (string.IsNullOrEmpty(txtReimbBankNo700.Text))
             {
                 txtReimbBankNo700.Text = txtReimbBankNo.Text;
