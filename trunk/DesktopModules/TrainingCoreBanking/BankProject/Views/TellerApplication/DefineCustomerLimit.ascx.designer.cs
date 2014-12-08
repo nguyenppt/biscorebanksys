@@ -265,6 +265,15 @@ namespace BankProject.Views.TellerApplication {
         protected global::System.Web.UI.WebControls.Label lblOnlineLimit;
         
         /// <summary>
+        /// lblExchangeRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExchangeRate;
+        
+        /// <summary>
         /// lblAvailableAmt control.
         /// </summary>
         /// <remarks>

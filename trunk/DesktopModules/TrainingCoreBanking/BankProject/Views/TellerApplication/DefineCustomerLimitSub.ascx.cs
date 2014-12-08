@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using BankProject.DataProvider;
 using Telerik.Web.UI;
 using System.Data;
+using BankProject.DBRespository;
 
 namespace BankProject.Views.TellerApplication
 {
@@ -318,10 +319,18 @@ namespace BankProject.Views.TellerApplication
             string HanMucCon = SubLimitID.Substring(8, 4);
             string STTSub = SubLimitID.Substring(13, 2);
             string KieuHanMuc = "";
+            decimal rateusd = 1;
             if (HanMucCon == "7700") { KieuHanMuc = "7000"; }
             else if (HanMucCon == "8700") { KieuHanMuc = "8000"; }
             Load_MainLimit_DataToReview(CustomerID + "." + KieuHanMuc); //Load data cho phan Han muc cha
             tbLimitID.Text = SubLimitID;
+
+            ExchangeRatesRepository exchangeFacade = new ExchangeRatesRepository();
+            var exchangeRate = exchangeFacade.GetRate("USD").FirstOrDefault();
+            if (exchangeRate != null)
+            {
+                rateusd = exchangeRate.Rate;
+            }
 
             if (TriTT.B_CUSTOMER_LIMIT_LoadCustomerName(SubLimitID.Substring(0, 7)) != null)  // lay customreID
             {
@@ -371,17 +380,43 @@ namespace BankProject.Views.TellerApplication
                 {
                     lblCollateralAmt.Text = ds2.Tables[0].Rows[0]["SecuredAmount"].ToString();
                 }
+
+                decimal amtVND = 0;
+                decimal amtUSD = 0;
                 DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0,7), "VND","AvailableAmt");
                 if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
                 {
-                    lblAvailableAmt.Text = ds3.Tables[0].Rows[0]["Avaiable_Amt"].ToString();
+
+                    decimal.TryParse(ds3.Tables[0].Rows[0]["Avaiable_Amt"].ToString(),out amtVND);
                 }
+                DataSet ds31 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0, 7), "USD", "AvailableAmt");
+                if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
+                {
+
+                    decimal.TryParse(ds31.Tables[0].Rows[0]["Avaiable_Amt"].ToString(),out amtUSD);
+                    amtUSD = amtUSD  * rateusd;
+                }
+                lblAvailableAmt.Text = (amtUSD + amtVND).ToString("#,##.00");
+
+                decimal outVND = 0;
+                decimal outUSD = 0;
                 DataSet ds4 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0, 7), "VND", "OutstandingAmt");
                 if (ds4.Tables != null && ds4.Tables.Count > 0 && ds4.Tables[0].Rows.Count > 0)
                 {
-                    lblTotalOutstand.Text = ds4.Tables[0].Rows[0]["Outstanding_Loan_Amt"].ToString();
+                    decimal.TryParse(ds4.Tables[0].Rows[0]["Outstanding_Loan_Amt"].ToString(), out outVND);
                 }
+                DataSet ds41 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0, 7), "USD", "OutstandingAmt");
+                if (ds4.Tables != null && ds4.Tables.Count > 0 && ds4.Tables[0].Rows.Count > 0)
+                {
+                    decimal.TryParse(ds41.Tables[0].Rows[0]["Outstanding_Loan_Amt"].ToString(),out outUSD);
+                    outUSD = outUSD * rateusd;
+                }
+
+                lblTotalOutstand.Text = (outVND + outUSD).ToString("#,##.00");
+
+
                 lblOnlineLimit.Text = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit(SubLimitID.Substring(0,7));//load theo yeu cau cua nghiep vu 
+                lblExchangeRate.Text = rateusd.ToString("#,###.##");
             }
 
         }
