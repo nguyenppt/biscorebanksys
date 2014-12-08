@@ -49,6 +49,18 @@
         <fieldset>
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
+                <td class="MyLable">Transfer Type</td>
+                <td class="MyContent">
+                    <telerik:RadComboBox id="rcbTransferType" runat="server" appenddataboundItem="true" markFirstmatch="true" AllowCustomeText="false">
+                         <Items>
+                            <telerik:RadComboBoxItem Value="" Text="" />
+                            <telerik:RadComboBoxItem Value="Cash" Text="Transfer By Cash" />
+                            <telerik:RadComboBoxItem Value="Account" Text="Transfer By Account" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </td>
+            </tr>
+            <tr>
                 <td class="MyLable">Clearing ID <span class="Required">(*)</span>
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
