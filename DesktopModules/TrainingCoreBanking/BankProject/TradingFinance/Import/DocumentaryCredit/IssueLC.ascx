@@ -510,7 +510,7 @@
                 <td class="MyLable">7. Expiry Place</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="tbExpiryPlace" Width="355" runat="server"
-                        ClientEvents-OnValueChanged="rcbExpiryPlace_OnClientSelectedIndexChanged">
+                        ClientEvents-OnValueChanged="tbExpiryPlace_OnValueChanged">
                     </telerik:RadTextBox>
                 </td>
             </tr>
@@ -982,10 +982,10 @@
                 <tr>
                     <td style="width: 250px" class="MyLable">31D. Date and Place of Expiry</td>
                     <td style="width: 200px" class="MyContent">
-                        <telerik:RadDatePicker ID="dteMT700DateAndPlaceOfExpiry" Width="200" runat="server" />
+                        <telerik:RadDatePicker ID="txtDateOfExpiry700" Width="200" runat="server"></telerik:RadDatePicker>
                     </td>
                     <td>
-                        <telerik:RadTextBox ID="tbPlaceOfExpiry" runat="server" />
+                        <telerik:RadTextBox ID="txtPlaceOfExpiry700" runat="server" /></td>
                 </tr>
                 <tr>
                     <td style="width: 250px" class="MyLable">40E. Applicable Rule</td>
@@ -1847,10 +1847,10 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <tr>
                     <td style="width: 250px" class="MyLable">31D. Date and Place of Expiry</td>
                     <td style="width: 200px" class="MyContent">
-                        <telerik:RadDatePicker Width="200" ID="tbExpiryDate740" runat="server"></telerik:RadDatePicker>
+                        <telerik:RadDatePicker Width="200" ID="txtDateOfExpiry740" runat="server"></telerik:RadDatePicker>
                     </td>
                     <td>
-                        <telerik:RadTextBox Width="200" ID="tb31DPlaceOfExpiry" runat="server" />
+                        <telerik:RadTextBox Width="200" ID="txtPlaceOfExpiry740" runat="server" />
                     </td>
                 </tr>
             </table>
@@ -3300,29 +3300,32 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
     <script type="text/javascript">
-        function tbExpiryDate_DateSelected(sender, eventArgs) {
-            var datePicker = $find("<%= tbContingentExpiry.ClientID %>");
-            var ExpiryDate = $find("<%= tbExpiryDate.ClientID %>");
-            var PlaceOfExpiry = $find("<%= dteMT700DateAndPlaceOfExpiry.ClientID %>");            
-            var ExpiryDate740 = $find("<%= tbExpiryDate740.ClientID %>");            
-            var NewDateOfExpiry747 = $find("<%= dteNewDateOfExpiry_747.ClientID %>");
+        function tbExpiryDate_DateSelected(sender, eventArgs) {            
+            var txtExpiryDate = $find("<%= tbExpiryDate.ClientID %>");
+            var ExpiryDate = txtExpiryDate.get_selectedDate();
+            //alert(ExpiryDate.getDate());
+            var ContingentExpiry = new Date(ExpiryDate);
+            ContingentExpiry.setDate(ExpiryDate.getDate() + 15);
+            $find("<%= tbContingentExpiry.ClientID %>").set_selectedDate(ContingentExpiry);
 
-            var date = ExpiryDate.get_selectedDate();
-            var dateP = ExpiryDate.get_selectedDate();
+            var txtDateOfExpiry700 = $find("<%= txtDateOfExpiry700.ClientID %>");
+            if (txtDateOfExpiry700) {
+                txtDateOfExpiry700.set_selectedDate(ExpiryDate);
+            }
 
-            date.setDate(date.getDate() + 15);
-            datePicker.set_selectedDate(date);
+            var txtDateOfExpiry740 = $find("<%= txtDateOfExpiry740.ClientID %>");
+            if (txtDateOfExpiry740) {
+                txtDateOfExpiry740.set_selectedDate(ExpiryDate);
+            }
             
-            if (PlaceOfExpiry) {
-                PlaceOfExpiry.set_selectedDate(dateP);
+            var dteNewDateOfExpiry_707 = $find("<%= dteNewDateOfExpiry_707.ClientID %>");
+            if (dteNewDateOfExpiry_707) {
+                dteNewDateOfExpiry_707.set_selectedDate(ExpiryDate);
             }
 
-            if (ExpiryDate740) {
-                ExpiryDate740.set_selectedDate(ExpiryDate.get_selectedDate());
-            }
-
+            var NewDateOfExpiry747 = $find("<%= dteNewDateOfExpiry_747.ClientID %>");
             if (NewDateOfExpiry747) {
-                NewDateOfExpiry747.set_selectedDate(ExpiryDate.get_selectedDate());
+                NewDateOfExpiry747.set_selectedDate(ExpiryDate);
             }
         }
         
@@ -3350,14 +3353,17 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
             }
         }
 
-        function rcbExpiryPlace_OnClientSelectedIndexChanged(sender, eventArgs) {
-            var combo = $find('<%=tbExpiryPlace.ClientID %>');
-            var txtDate = $find("<%= tbPlaceOfExpiry.ClientID %>");
-            var PlaceOfExpiry740 = $find("<%= tb31DPlaceOfExpiry.ClientID %>");
+        function tbExpiryPlace_OnValueChanged(sender, eventArgs) {
+            var ExpiryPlace = $find('<%=tbExpiryPlace.ClientID %>').get_value();
             
-            txtDate.set_value(combo.get_value());
-            if (PlaceOfExpiry740) {
-                PlaceOfExpiry740.set_value(combo.get_value());    
+            var txtPlaceOfExpiry700 = $find("<%= txtPlaceOfExpiry700.ClientID %>");
+            if (txtPlaceOfExpiry700) {
+                txtPlaceOfExpiry700.set_value(ExpiryPlace);    
+            }
+
+            var txtPlaceOfExpiry740 = $find("<%= txtPlaceOfExpiry740.ClientID %>");            
+            if (txtPlaceOfExpiry740) {
+                txtPlaceOfExpiry740.set_value(ExpiryPlace);    
             }
         }
 
@@ -4030,7 +4036,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
         <telerik:AjaxSetting AjaxControlID="comGenerate">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="txtRemittingBankNo" />
-                <telerik:AjaxUpdatedControl ControlID="tb31DPlaceOfExpiry" />
+                <telerik:AjaxUpdatedControl ControlID="txtPlaceOfExpiry740" />
 
                 <telerik:AjaxUpdatedControl ControlID="rcbBeneficiaryType740" />
                 <telerik:AjaxUpdatedControl ControlID="tbBeneficiaryNo740" />
@@ -4044,7 +4050,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="rcbAvailableWithType740" />
                 <telerik:AjaxUpdatedControl ControlID="tbAvailableWithNo740" />
                 <telerik:AjaxUpdatedControl ControlID="comboReimbursingBankChange" />
-                <telerik:AjaxUpdatedControl ControlID="tbExpiryDate740" />
+                <telerik:AjaxUpdatedControl ControlID="txtDateOfExpiry740" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInformation740_1" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInformation740_2" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInformation740_3" />
