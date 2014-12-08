@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="IncomingCollectionPayment.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCollections.IncomingCollectionPayment" %>
-
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true" />
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
-
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <script type="text/javascript">
         var clickCalledAfterRadconfirm = false;
@@ -20,7 +18,7 @@
 
             if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                 args.set_cancel(true);
-                if ($find("<%=rcbIsCreateMT103.ClientID%>").get_selectedItem().get_value() == "Yes") {
+                if ($find("<%=rcbIsCreateMT103.ClientID%>").get_selectedItem().get_value() == "1") {
                     radconfirm("Do you want to download MT103 file?", confirmCallbackFunction_MT103, 340, 150, null, 'Download');
                 } else {
                     radconfirm("Do you want to download MT202 file?", confirmCallbackFunction_MT202, 340, 150, null, 'Download');
@@ -220,7 +218,7 @@
                             ID="RequiredFieldValidator2"
                             ControlToValidate="numDrawingAmount"
                             ValidationGroup="Commit"
-                            InitialValue=""
+                            InitialValue="0"
                             ErrorMessage="Drawing Amount is required" ForeColor="Red">
                         </asp:RequiredFieldValidator>
                     </td>
@@ -2201,6 +2199,8 @@
                 <telerik:AjaxUpdatedControl ControlID="numAmount" />
                 <telerik:AjaxUpdatedControl ControlID="numAmtDrFromAcct" />
                 <telerik:AjaxUpdatedControl ControlID="numAmountCollected" />
+                <telerik:AjaxUpdatedControl ControlID="lblInterBankSettleAmount_MT103" />
+                <telerik:AjaxUpdatedControl ControlID="lblInstancedAmount_MT103" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 

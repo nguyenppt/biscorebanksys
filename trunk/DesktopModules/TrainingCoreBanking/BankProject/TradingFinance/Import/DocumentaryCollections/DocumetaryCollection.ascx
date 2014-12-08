@@ -1,9 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DocumetaryCollection.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCollections.DocumetaryCollection" %>
-
-
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true" />
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
-
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <script type="text/javascript">
         var lastClickedItem = null;

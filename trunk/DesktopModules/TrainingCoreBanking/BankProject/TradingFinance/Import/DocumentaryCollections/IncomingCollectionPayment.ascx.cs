@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BankProject.DataProvider;
+using bd = BankProject.DataProvider;
 using Telerik.Web.UI;
-using BankProject.Controls;
+using bc = BankProject.Controls;
 
 namespace BankProject.TradingFinance.Import.DocumentaryCollections
 {
@@ -39,62 +39,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
             InitToolBar(false);
 
-            comboPresentorCusNo.Items.Clear();
-            comboPresentorCusNo.Items.Add(new RadComboBoxItem(""));
-            comboPresentorCusNo.DataValueField = "Name";
-            comboPresentorCusNo.DataTextField = "Name";
-            comboPresentorCusNo.DataSource = SQLData.B_BBANKING_GetAll();
-            comboPresentorCusNo.DataBind();
+            bc.Commont.initRadComboBox(ref comboPresentorCusNo, "Name", "Name", bd.SQLData.B_BBANKING_GetAll());
+            bc.Commont.initRadComboBox(ref comboCountryCode, "TenTA", "TenTA", bd.SQLData.B_BCOUNTRY_GetAll());
+            var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
+            bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy4, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref comboCurrency_MT103, "Code", "Code", dsCurrency);
 
-            comboCountryCode.Items.Clear();
-            comboCountryCode.Items.Add(new RadComboBoxItem(""));
-            comboCountryCode.DataValueField = "TenTA";
-            comboCountryCode.DataTextField = "TenTA";
-            comboCountryCode.DataSource = SQLData.B_BCOUNTRY_GetAll();
-            comboCountryCode.DataBind();
-
-            var dsCurrency = SQLData.B_BCURRENCY_GetAll();
-            rcbChargeCcy.Items.Clear();
-            rcbChargeCcy.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy.DataValueField = "Code";
-            rcbChargeCcy.DataTextField = "Code";
-            rcbChargeCcy.DataSource = dsCurrency;
-            rcbChargeCcy.DataBind();
-
-            rcbChargeCcy2.Items.Clear();
-            rcbChargeCcy2.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy2.DataValueField = "Code";
-            rcbChargeCcy2.DataTextField = "Code";
-            rcbChargeCcy2.DataSource = dsCurrency;
-            rcbChargeCcy2.DataBind();
-
-            rcbChargeCcy3.Items.Clear();
-            rcbChargeCcy3.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy3.DataValueField = "Code";
-            rcbChargeCcy3.DataTextField = "Code";
-            rcbChargeCcy3.DataSource = dsCurrency;
-            rcbChargeCcy3.DataBind();
-
-            rcbChargeCcy4.Items.Clear();
-            rcbChargeCcy4.Items.Add(new RadComboBoxItem(""));
-            rcbChargeCcy4.DataValueField = "Code";
-            rcbChargeCcy4.DataTextField = "Code";
-            rcbChargeCcy4.DataSource = dsCurrency;
-            rcbChargeCcy4.DataBind();
-
-            comboCurrency_MT103.Items.Clear();
-            comboCurrency_MT103.Items.Add(new RadComboBoxItem(""));
-            comboCurrency_MT103.DataValueField = "Code";
-            comboCurrency_MT103.DataTextField = "Code";
-            comboCurrency_MT103.DataSource = dsCurrency;
-            comboCurrency_MT103.DataBind();
-
-            comboOrderingCustAcc_MT103.Items.Clear();
-            comboOrderingCustAcc_MT103.Items.Add(new RadComboBoxItem(""));
-            comboOrderingCustAcc_MT103.DataValueField = "CustomerID";
-            comboOrderingCustAcc_MT103.DataTextField = "CustomerID";
-            comboOrderingCustAcc_MT103.DataSource = SQLData.B_BCUSTOMERS_OnlyBusiness();
-            comboOrderingCustAcc_MT103.DataBind();
+            bc.Commont.initRadComboBox(ref comboOrderingCustAcc_MT103, "CustomerID", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
             // BGIN MT 400
             
             SetDefaultValue();
@@ -142,7 +96,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                         return;
                     }
 
-                    SQLData.B_INCOMINGCOLLECTIONPAYMENT_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString());
+                    bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString());
                     
                     Response.Redirect("Default.aspx?tabid=221");
                     break;
@@ -174,9 +128,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             //LoadNostroAcct();
             LoadChargeAcct();
             LoadData();
-
             lblError.Text = "";
-
             // check coi du tien chua, neu DƯ/THIẾU thi ko cho payment nua
             //PaymentAmount: so tien goc
             //IncreaseMental: when AUT so tien se dc cong don len dua vao DrawingAmount
@@ -187,7 +139,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             if (!string.IsNullOrEmpty(txtCode.Text))
             {
                 var orginalCode = txtCode.Text.Trim().Substring(0, 14);
-                var dtCheck = SQLData.B_INCOMINGCOLLECTIONPAYMENT_CheckAvailableAmt(orginalCode, txtCode.Text.Trim());
+                var dtCheck = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_CheckAvailableAmt(orginalCode, txtCode.Text.Trim());
 
                 double paymentAmount = Double.Parse(dtCheck.Rows[0]["PaymentAmount"].ToString());
                 double IncreaseMentalB4Aut = Double.Parse(dtCheck.Rows[0]["IncreaseMentalB4Aut"].ToString());
@@ -277,7 +229,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // neu FT = null thì ko get data
             if (string.IsNullOrEmpty(txtCode.Text)) return;
 
-            var dsPayment = SQLData.B_INCOMINGCOLLECTIONPAYMENT_GetByPaymentCode(txtCode.Text.Trim());
+            var dsPayment = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_GetByPaymentCode(txtCode.Text.Trim());
             var status = string.Empty;
 
             lblTransactionReferenceNumber.Text = txtCode.Text.Trim();
@@ -763,9 +715,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 }
 
                 #endregion
-
-
-                #region MT  103
+                
+                #region tab MT103
                 if (dsPayment.Tables[9].Rows.Count > 0)
                 {
                     var drow103 = dsPayment.Tables[9].Rows[0];
@@ -777,7 +728,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     {
                         dteValueDate_MT103.SelectedDate = DateTime.Parse(drow103["ValueDate"].ToString());
                     }
-
                     
                     comboCurrency_MT103.SelectedValue = drow103["Currency"].ToString();
                     lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", drow103["InterBankSettleAmount"]).Replace("$", "");
@@ -850,15 +800,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     lblSenderReference_MT103.Text = string.Empty;
                     lblBankOperationCode_MT103.Text = string.Empty;
                     dteValueDate_MT103.SelectedDate = DateTime.Now;
-                    comboCurrency_MT103.SelectedValue = string.Empty;
+                    comboCurrency_MT103.SelectedValue = lblCurrency.Text;
                     lblInterBankSettleAmount_MT103.Text = "0";
                     lblInstancedAmount_MT103.Text = "0";
                     comboOrderingCustAcc_MT103.SelectedValue = string.Empty;
                     txtOrderingInstitution_MT103.Text = string.Empty;
                     lblSenderCorrespondent_MT103.Text = string.Empty;
-
                     txtReceiverCorrespondent_MT103.Text = string.Empty;
-
                     txtReceiverCorrBankAct_MT103.Text = string.Empty;
                     txtIntermediaryInstitutionNo_MT103.Text = string.Empty;
                     lblIntermediaryInstitutionName_MT103.Text = string.Empty;
@@ -903,9 +851,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     var drow = dsPayment.Tables[5].Rows[0];
                     double drawingAmt = 0;
 
-                    if (!string.IsNullOrEmpty(drow["Amount"].ToString()))
+                    if (drow["Amount"] != DBNull.Value)
                     {
                         drawingAmt = double.Parse(drow["Amount"].ToString());
+                        numDrawingAmount.Value = drawingAmt;
+                        lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
+                        lblInstancedAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
                     }
 
                     //LoadDebitAcctNo(drow["DraweeCusName"].ToString());
@@ -1036,9 +987,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                 #endregion
 
-
-                
-
                 // The previous payment has not been authorized yet. 
                 // kiem tra khi Preview
 
@@ -1129,7 +1077,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void Revert()
         {
-            SQLData.B_INCOMINGCOLLECTIONPAYMENT_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString());
+            bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString());
 
             // Active control
             SetDisableByReview(true);
@@ -1165,7 +1113,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 AmtCredited = double.Parse(lblAmtCredited.Text);
             }
 
-            SQLData.B_INCOMINGCOLLECTIONPAYMENT_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_Insert(txtCode.Text.Trim()
                                                        , lblDrawType.Text
                                                        , lblCurrency.Text
                                                        , DrawingAmount
@@ -1186,7 +1134,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
             if (tbChargeCode.Text != "")
             {
-                SQLData.B_INCOMINGCOLLECTIONPAYMENTCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
+                bd.SQLData.B_INCOMINGCOLLECTIONPAYMENTCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
                                                                   tbChargeCode.SelectedValue, txtChargeAcct1.Text.Trim(),
                                                                   tbChargePeriod.Text,
                                                                   rcbChargeCcy.SelectedValue, tbExcheRate.Text,
@@ -1199,7 +1147,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             }
 
             // charge code 2
-            SQLData.B_INCOMINGCOLLECTIONPAYMENTCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
+            bd.SQLData.B_INCOMINGCOLLECTIONPAYMENTCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
                                                               tbChargecode2.SelectedValue, txtChargeAcct2.Text.Trim(),
                                                               tbChargePeriod2.Text,
                                                               rcbChargeCcy2.SelectedValue, tbExcheRate2.Text,
@@ -1211,7 +1159,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                                                               numChargeAmtFCY2.Value.ToString());
 
             // ccharge code 3
-            SQLData.B_INCOMINGCOLLECTIONPAYMENTCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
+            bd.SQLData.B_INCOMINGCOLLECTIONPAYMENTCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
                                                               tbChargecode3.SelectedValue,
                                                               txtChargeAcct3.Text.Trim(),
                                                               tbChargePeriod3.Text,
@@ -1229,7 +1177,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                                                               numChargeAmtFCY2.Value.ToString());
 
             // ccharge code 4
-            SQLData.B_INCOMINGCOLLECTIONPAYMENTCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
+            bd.SQLData.B_INCOMINGCOLLECTIONPAYMENTCHARGES_Insert(txtCode.Text.Trim(), comboWaiveCharges.SelectedValue,
                                                               tbChargecode4.SelectedValue,
                                                               txtChargeAcct4.Text.Trim(),
                                                               tbChargePeriod4.Text,
@@ -1247,7 +1195,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                                                               numChargeAmtFCY2.Value.ToString());
 
             // tab MT 202
-            SQLData.B_INCOMINGCOLLECTIONPAYMENTMT202_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_INCOMINGCOLLECTIONPAYMENTMT202_Insert(txtCode.Text.Trim()
                                                             , lblTransactionReferenceNumber.Text
                                                             , txtRelatedReference.Text
                                                             , dteValueDate_MT202.SelectedDate.ToString()
@@ -1283,7 +1231,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                                                             , txtSenderToReceiverInformation3.Text);
 
             // tab MT 400
-            SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT400_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT400_Insert(txtCode.Text.Trim()
                                                              , comboCreateMT410.SelectedValue
                                                              , txtSendingBankTRN.Text.Trim()
                                                              , txtRelatedReferenceMT400.Text
@@ -1336,7 +1284,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 ReceiverCharges = double.Parse(lblReceiverCharges_MT103.Text);
             }
 
-            SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT103_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT103_Insert(txtCode.Text.Trim()
                 , ""
                 , lblSenderReference_MT103.Text
                 , ""
@@ -1462,7 +1410,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT202_Report(txtCode.Text);
+            ds = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT202_Report(txtCode.Text);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1486,7 +1434,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document docMT400 = new Aspose.Words.Document(pathMT400);
             //Execute the mail merge.
             DataSet dsMT400 = new DataSet();
-            dsMT400 = SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT400_Report(txtCode.Text);
+            dsMT400 = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT400_Report(txtCode.Text);
 
             // Fill the fields in the document with user data.
             docMT400.MailMerge.ExecuteWithRegions(dsMT400); //moas mat thoi jan voi cuc gach nay woa 
@@ -1521,7 +1469,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
             //Execute the mail merge.
             DataSet dsMT400 = new DataSet();
-            dsMT400 = SQLData.B_BINCOMINGCOLLECTIONPAYMENT_HOADONVAT(txtCode.Text, UserInfo.DisplayName);
+            dsMT400 = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENT_HOADONVAT(txtCode.Text, UserInfo.DisplayName);
 
             // Fill the fields in the document with user data.
             docMT400.MailMerge.ExecuteWithRegions(dsMT400); //moas mat thoi jan voi cuc gach nay woa 
@@ -1550,7 +1498,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
             //Execute the mail merge.
             DataSet dsMT400 = new DataSet();
-            dsMT400 = SQLData.B_BINCOMINGCOLLECTIONPAYMENTPHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
+            dsMT400 = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTPHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             docMT400.MailMerge.ExecuteWithRegions(dsMT400); //moas mat thoi jan voi cuc gach nay woa 
@@ -1566,12 +1514,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             comboNostroAcct.Items.Add(new RadComboBoxItem(""));
             comboNostroAcct.DataValueField = "Code";
             comboNostroAcct.DataTextField = "Description";
-            comboNostroAcct.DataSource = SQLData.B_BSWIFTCODE_GetByCurrency(lblCurrency.Text);
+            comboNostroAcct.DataSource = bd.SQLData.B_BSWIFTCODE_GetByCurrency(lblCurrency.Text);
             comboNostroAcct.DataBind();
         }
 
-        protected void comboAccountWithInstitutionType_OnSelectedIndexChanged(object sender,
-                                                                              RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void comboAccountWithInstitutionType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_AccountWithInstitution();
         }
@@ -1598,8 +1545,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             }
         }
 
-        protected void comboIntermediaryBankType_OnSelectedIndexChanged(object sender,
-                                                                        RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void comboIntermediaryBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_IntermediaryBank();
         }
@@ -1626,8 +1572,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             }
         }
 
-        protected void comboBeneficiaryBankType_OnSelectedIndexChanged(object sender,
-                                                                       RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void comboBeneficiaryBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             SetRelation_BeneficiaryBank();
         }
@@ -1785,7 +1730,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONPAYMENT_VAT_B_Report(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_VAT_B_Report(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1815,7 +1760,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_INCOMINGCOLLECTIONPAYMENT_PHIEUCHUYENKHOAN_Report(txtCode.Text, UserInfo.Username);
+            ds = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_PHIEUCHUYENKHOAN_Report(txtCode.Text, UserInfo.Username);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -1872,7 +1817,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         protected bool B_INCOMINGCOLLECTIONPAYMENT_CheckAvailableAmt()
         {
             var code = txtCode.Text.Trim().Substring(0, 14);
-            var dtAmt = SQLData.B_INCOMINGCOLLECTIONPAYMENT_CheckAvailableAmt(code, txtCode.Text.Trim());
+            var dtAmt = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_CheckAvailableAmt(code, txtCode.Text.Trim());
 
             double paymentAmount = Double.Parse(dtAmt.Rows[0]["PaymentAmount"].ToString());
             double creditAmount = Double.Parse(dtAmt.Rows[0]["CreditAmount"].ToString());
@@ -1974,7 +1919,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             txtIntermediaryBankName.Text = "";
             if (!string.IsNullOrEmpty(txtIntermediaryBank.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtIntermediaryBank.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtIntermediaryBank.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     txtIntermediaryBankName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -1992,7 +1937,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             txtBeneficiaryBankName.Text = "";
             if (!string.IsNullOrEmpty(txtBeneficiaryBank.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtBeneficiaryBank.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtBeneficiaryBank.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     txtBeneficiaryBankName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -2010,7 +1955,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             txtAccountWithInstitutionName.Text = "";
             if (!string.IsNullOrEmpty(txtAccountWithInstitution.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtAccountWithInstitution.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtAccountWithInstitution.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     txtAccountWithInstitutionName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -2034,7 +1979,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             txtReceiverCorrespondentName.Text = "";
             if (!string.IsNullOrEmpty(txtReceiverCorrespondentNo.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtReceiverCorrespondentNo.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtReceiverCorrespondentNo.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     txtReceiverCorrespondentName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -2048,16 +1993,20 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void numDrawingAmount_OnTextChanged(object sender, EventArgs e)
         {
-            numAmtDrFromAcct.Value = numDrawingAmount.Value;
-            numAmountCollected.Value = numDrawingAmount.Value;
-            numAmount.Value = numDrawingAmount.Value;
-            numAmount_MT400.Value = numDrawingAmount.Value;
-            //Cal_ChargeAmt();
+            double? drawingAmt = numDrawingAmount.Value;
+            if (!drawingAmt.HasValue) drawingAmt = 0;
+
+            numAmtDrFromAcct.Value = drawingAmt;
+            numAmountCollected.Value = drawingAmt;
+            numAmount.Value = drawingAmt;
+            numAmount_MT400.Value = drawingAmt;
+            lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
+            lblInstancedAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
         }
         
         protected void LoadPartyCharged()
         {
-            var dtSource = SQLData.CreateGenerateDatas("PartyCharged");
+            var dtSource = bd.SQLData.CreateGenerateDatas("PartyCharged");
 
             rcbPartyCharged.Items.Clear();
             rcbPartyCharged.DataValueField = "Id";
@@ -2409,7 +2358,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             txtSenderCorrespondentName.Text = "";
             if (!string.IsNullOrEmpty(txtSenderCorrespondentNo.Text.Trim()))
             {
-                var dtBSWIFTCODE = SQLData.B_BBANKSWIFTCODE_GetByCode(txtSenderCorrespondentNo.Text.Trim());
+                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtSenderCorrespondentNo.Text.Trim());
                 if (dtBSWIFTCODE.Rows.Count > 0)
                 {
                     txtSenderCorrespondentName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
@@ -2432,7 +2381,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void LoadChargeCode()
         {
-            var datasource = SQLData.CreateGenerateDatas("ChargeCode_Payment", TabId);
+            var datasource = bd.SQLData.CreateGenerateDatas("ChargeCode_Payment", TabId);
 
             tbChargeCode.Items.Clear();
             tbChargeCode.Items.Add(new RadComboBoxItem(""));
@@ -2465,7 +2414,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void GenerateVAT()
         {
-            DataSet vatno = Database.B_BMACODE_GetNewSoTT("VATNO");
+            DataSet vatno = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
             tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
         }
 
@@ -2573,7 +2522,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected DataTable CheckExistBankSwiftCode(string bankSwiftCode)
         {
-            return SQLData.B_BBANKSWIFTCODE_GetByCode(bankSwiftCode);
+            return bd.SQLData.B_BBANKSWIFTCODE_GetByCode(bankSwiftCode);
         }
 
         protected void CalculatorInstructedAmount()
@@ -2657,7 +2606,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             Aspose.Words.Document doc = new Aspose.Words.Document(path);
             //Execute the mail merge.
             DataSet ds = new DataSet();
-            ds = SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT103_Report(txtCode.Text);
+            ds = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT103_Report(txtCode.Text);
 
             // Fill the fields in the document with user data.
             doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
@@ -2677,7 +2626,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         {
             if (txtCode.Text.Length < 14)
             {
-                Commont.ShowClientMessageBox(Page, GetType(), "FT No. is invalid", 150);
+                bc.Commont.ShowClientMessageBox(Page, GetType(), "FT No. is invalid", 150);
                 return false;
             }
             return true;
