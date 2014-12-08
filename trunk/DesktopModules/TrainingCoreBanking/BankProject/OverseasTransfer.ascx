@@ -708,6 +708,12 @@
                     </telerik:RadComboBox>
                 </td>
             </tr>
+            <tr>    
+                <td class="MyLable" >Party identify</td>
+                <td class="MyContent">
+                    <telerik:RadTextBox ID="txtPartyIdentifyForInter" runat="server" MaxLength="34"/>
+                </td>
+            </tr>
         </table>
 
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -760,6 +766,12 @@
                             <telerik:RadComboBoxItem Value="D" Text="D" />
                         </Items>
                     </telerik:RadComboBox>
+                </td>
+            </tr>
+            <tr>    
+                <td class="MyLable" >Party identify</td>
+                <td class="MyContent">
+                    <telerik:RadTextBox ID="txtPartyIdentifyForInsti" runat="server" MaxLength="34"/>
                 </td>
             </tr>
         </table>

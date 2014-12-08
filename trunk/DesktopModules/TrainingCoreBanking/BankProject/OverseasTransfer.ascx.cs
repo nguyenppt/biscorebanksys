@@ -476,6 +476,8 @@ namespace BankProject
                 , txtOrderingCustomer2.Text
                 , txtOrderingCustomer3.Text
                 , txtOrderingCustomer4.Text
+                ,txtPartyIdentifyForInter.Text.Trim()
+                ,txtPartyIdentifyForInsti.Text.Trim()
                 );
 
             double CommissionAmount = 0, ChargeAmount = 0, TotalChargeAmount = 0, TotalTaxAmount = 0;
@@ -740,6 +742,9 @@ namespace BankProject
                     txtIntermediaryInstruction1.Text = drow103["IntermediaryInstruction1"].ToString();
                     txtIntermediaryInstruction2.Text = drow103["IntermediaryInstruction2"].ToString();
 
+                    txtPartyIdentifyForInter.Text = drow103["PartyIdentifyForInter"].ToString();
+                    txtPartyIdentifyForInsti.Text = drow103["PartyIdentifyForInsti"].ToString();
+
                     SetRelation_AccountWithInstitution();
                     SetRelation_IntermediaryInstruction();
 
@@ -801,6 +806,8 @@ namespace BankProject
                     comboIntermediaryType.SelectedValue = string.Empty;
                     txtIntermediaryInstruction1.Text = string.Empty;
                     txtIntermediaryInstruction2.Text = string.Empty;
+                    txtPartyIdentifyForInter.Text = string.Empty;
+                    txtPartyIdentifyForInsti.Text = string.Empty;
                 }
                 #endregion
 
@@ -1091,7 +1098,8 @@ namespace BankProject
                     //lblInterBankSettleAmount.Text = numCreditAmount.Text;
                     if (numCreditAmount.Value > 0)
                     {
-                        lblInstancedAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");    
+                        lblInstancedAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
+                        lblInterBankSettleAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
                     }
                     
                     break;
@@ -1105,6 +1113,7 @@ namespace BankProject
                     if (numCreditAmount.Value > 0)
                     {
                         lblInstancedAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");
+                        lblInterBankSettleAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
                     }
                     
                     break;

@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using System.Data;
+using BankProject.DBRespository;
+using BankProject.Common;
 
 namespace BankProject
 {
@@ -21,10 +23,23 @@ namespace BankProject
             rcbCustomerID.DataValueField = "CustomerID";
             rcbCustomerID.DataBind();
 
+            LoadCurrency(null);
             LoadNewsID();
 
             
 
+        }
+
+        private void LoadCurrency(string selectedid)
+        {
+            CurrencyRepository facade = new CurrencyRepository();
+            var src = facade.GetAll().ToList();
+            Util.LoadData2RadCombo(rcbCurrentcy, src, "Code", "Code", "-Select Currency-", false);
+
+            if (!String.IsNullOrEmpty(selectedid))
+            {
+                rcbCurrentcy.SelectedValue = selectedid;
+            }
         }
 
         private void LoadNewsID()
