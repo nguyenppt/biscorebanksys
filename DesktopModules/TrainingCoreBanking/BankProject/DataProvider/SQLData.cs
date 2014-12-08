@@ -1219,14 +1219,12 @@ namespace BankProject.DataProvider
                                                                             string DrawerAddrr, string Amend_Status,
                                                                             string currentUserId)
         {
-            return sqldata.ndkExecuteDataset("B_BEXPORT_DOCUMETARYCOLLECTION_GetByAmendment", DocCollectCode, Drawee,
-                                             DraweeAddr, Drawer, DrawerAddrr, Amend_Status, currentUserId);
+            return sqldata.ndkExecuteDataset("B_BEXPORT_DOCUMETARYCOLLECTION_GetByAmendment", DocCollectCode, Drawee, DraweeAddr, Drawer, DrawerAddrr, Amend_Status, currentUserId);
         }
 
         public static DataSet B_BINCOMINGCOLLECTIONPAYMENTPHIEUNHAPNGOAIBANG_Report(string code, string currentuserlogin)
         {
-            return sqldata.ndkExecuteDataset("B_BINCOMINGCOLLECTIONPAYMENTPHIEUNHAPNGOAIBANG_Report", code,
-                                             currentuserlogin);
+            return sqldata.ndkExecuteDataset("B_BINCOMINGCOLLECTIONPAYMENTPHIEUNHAPNGOAIBANG_Report", code, currentuserlogin);
         }
 
         public static DataSet B_BRPODCATEGORY_GetAll_IdOver200()
@@ -2584,7 +2582,8 @@ namespace BankProject.DataProvider
                                        , OrderingCustAccName
                                        , OrderingCustAccAddr1
                                        , OrderingCustAccAddr2
-                                       , OrderingCustAccAddr3);
+                                       , OrderingCustAccAddr3
+                                       ,AccountWithBankAcct3, AccountWithBankAcct4, IntermediaryInstruction3, IntermediaryInstruction4);
         }
     }
 }
