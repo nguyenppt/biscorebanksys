@@ -3,9 +3,11 @@ using BankProject.DataProvider;
 using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using System.Data;
-using BankProject.Repository;
 using bd = BankProject.DataProvider;
 using bc = BankProject.Controls;
+using BankProject.Common;
+using BankProject.DBRespository;
+using System.Linq;
 
 namespace BankProject.Views.TellerApplication
 {
@@ -37,7 +39,8 @@ namespace BankProject.Views.TellerApplication
             rcbCounterparty.DataValueField = "CustomerID";
             rcbCounterparty.DataBind();
 
-            
+            LoadAccountOfficer(null);
+
             var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
             bc.Commont.initRadComboBox(ref rcbBuyCurrency, "Code", "Code", dsCurrency);
 
@@ -210,6 +213,18 @@ namespace BankProject.Views.TellerApplication
                         txtRate.Value = 0;
                     }
                 }
+        }
+
+        private void LoadAccountOfficer(string selectedid)
+        {
+            AccountOfficerRepository facade = new AccountOfficerRepository();
+            var src = facade.GetAll().ToList();
+            Util.LoadData2RadCombo(rcbAccountOfficer, src, "Code", "description", "-Select Account Officer-", false);
+
+            if (!String.IsNullOrEmpty(selectedid))
+            {
+                rcbAccountOfficer.SelectedValue = selectedid;
+            }
         }
 
         protected void txtCustomerReceivingAC_OnTextChanged(object sender, EventArgs e)

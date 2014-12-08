@@ -365,13 +365,13 @@
                         AllowCustomText="false"  Width="250"
                         runat="server" >
                         <Items>
-                        <telerik:RadComboBoxItem Value="" Text="" />
+                        <%--<telerik:RadComboBoxItem Value="" Text="" />
                         <telerik:RadComboBoxItem Value="312" Text="312 - Le Thi Hoa" />
                             <telerik:RadComboBoxItem Value="313" Text="313 - Tran Thi Lan" />
                             <telerik:RadComboBoxItem Value="314" Text="314 - Nguyen Thi Thu" />
                             <telerik:RadComboBoxItem Value="315" Text="315 - Nguyen Khoa Minh Tri" />
                             <telerik:RadComboBoxItem Value="316" Text="316 - Le Tran Hong Phuc" />
-                            <telerik:RadComboBoxItem Value="317" Text="317 - Phan Minh Hoang" />
+                            <telerik:RadComboBoxItem Value="317" Text="317 - Phan Minh Hoang" />--%>
                             </Items>
                     </telerik:RadComboBox>
                 </td>
