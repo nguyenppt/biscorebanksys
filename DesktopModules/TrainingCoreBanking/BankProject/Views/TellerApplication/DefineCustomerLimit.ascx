@@ -253,8 +253,10 @@
                 <td class="MyContent">
                     <asp:Label ID="lblOnlineLimit" runat="server" />
                 </td>
-                <td class="MyLable"></td>
-                <td class="MyContent"></td>
+                <td class="MyLable">USD Rate:</td>
+                <td class="MyContent">
+                    <asp:Label ID="lblExchangeRate" runat="server" />
+                </td>
             </tr>
             <tr>
                 <td class="MyLable">Available Amount:</td>
