@@ -1646,7 +1646,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 tbApplicantAddr2.Text = drow["ApplicantAddr2"].ToString();
                 tbApplicantAddr3.Text = drow["ApplicantAddr3"].ToString();
                 rcbCcyAmount.SelectedValue = drow["Currency"].ToString();
-                ntSoTien.Text = drow["B4_AUT_Amount"].ToString();
+                ntSoTien.Text = drow["Amount"].ToString();
                 tbcrTolerance.Text = drow["CrTolerance"].ToString();
                 tbdrTolerance.Text = drow["DrTolerance"].ToString();
 
