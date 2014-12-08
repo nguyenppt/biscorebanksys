@@ -2270,7 +2270,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     comboGenerateMT747.SelectedValue = string.Empty;
 
                     dteDateOfOriginalAuthorization_747.SelectedDate = DateTime.Now;
-                    dteNewDateOfExpiry_747.SelectedDate = null;
+                    dteNewDateOfExpiry_747.SelectedDate = tbExpiryDate.SelectedDate;
 
                     comboCurrency_747.SelectedValue = string.Empty;
                     numAmount_747.Text = string.Empty;
@@ -3042,31 +3042,23 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void txtBeneficiaryNo_OnTextChanged(object sender, EventArgs e)
         {
             bc.Commont.loadBankSwiftCodeInfo(txtBeneficiaryNo.Text, ref lblBeneficiaryBankMessage, ref txtBeneficiaryBankName, ref txtBeneficiaryBankAddr1, ref txtBeneficiaryBankAddr2, ref txtBeneficiaryBankAddr3);
+            txtBeneficiaryNo700.Text = txtBeneficiaryNo.Text;
+            txtBeneficiaryName700.Text = txtBeneficiaryBankName.Text;
+            txtBeneficiaryAddr700_1.Text = txtBeneficiaryBankAddr1.Text;
+            txtBeneficiaryAddr700_2.Text = txtBeneficiaryBankAddr2.Text;
+            txtBeneficiaryAddr700_3.Text = txtBeneficiaryBankAddr3.Text;
             //
-            if (string.IsNullOrEmpty(txtBeneficiaryNo700.Text))
-            {
-                txtBeneficiaryNo700.Text = txtBeneficiaryNo.Text;
-                txtBeneficiaryName700.Text = txtBeneficiaryBankName.Text;
-                txtBeneficiaryAddr700_1.Text = txtBeneficiaryBankAddr1.Text;
-                txtBeneficiaryAddr700_2.Text = txtBeneficiaryBankAddr2.Text;
-                txtBeneficiaryAddr700_3.Text = txtBeneficiaryBankAddr3.Text;
-            }
-            if (string.IsNullOrEmpty(tbBeneficiaryNo740.Text))
-            {
-                tbBeneficiaryNo740.Text = txtBeneficiaryNo.Text;
-                tbBeneficiaryName740.Text = txtBeneficiaryBankName.Text;
-                tbBeneficiaryAddr740_1.Text = txtBeneficiaryBankAddr1.Text;
-                tbBeneficiaryAddr740_2.Text = txtBeneficiaryBankAddr2.Text;
-                tbBeneficiaryAddr740_3.Text = txtBeneficiaryBankAddr3.Text;
-            }
-            if (string.IsNullOrEmpty(txtBeneficiaryNo_707.Text))
-            {
-                txtBeneficiaryNo_707.Text = txtBeneficiaryNo.Text;
-                txtBeneficiaryName_707.Text = txtBeneficiaryBankName.Text;
-                txtBeneficiaryAddr_707_1.Text = txtBeneficiaryBankAddr1.Text;
-                txtBeneficiaryAddr_707_2.Text = txtBeneficiaryBankAddr2.Text;
-                txtBeneficiaryAddr_707_3.Text = txtBeneficiaryBankAddr3.Text;
-            }
+            tbBeneficiaryNo740.Text = txtBeneficiaryNo.Text;
+            tbBeneficiaryName740.Text = txtBeneficiaryBankName.Text;
+            tbBeneficiaryAddr740_1.Text = txtBeneficiaryBankAddr1.Text;
+            tbBeneficiaryAddr740_2.Text = txtBeneficiaryBankAddr2.Text;
+            tbBeneficiaryAddr740_3.Text = txtBeneficiaryBankAddr3.Text;
+            //
+            txtBeneficiaryNo_707.Text = txtBeneficiaryNo.Text;
+            txtBeneficiaryName_707.Text = txtBeneficiaryBankName.Text;
+            txtBeneficiaryAddr_707_1.Text = txtBeneficiaryBankAddr1.Text;
+            txtBeneficiaryAddr_707_2.Text = txtBeneficiaryBankAddr2.Text;
+            txtBeneficiaryAddr_707_3.Text = txtBeneficiaryBankAddr3.Text;
         }
         protected void txtAdviseBankNo_OnTextChanged(object sender, EventArgs e)
         {            
@@ -3080,63 +3072,47 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             bc.Commont.loadBankSwiftCodeInfo(txtReimbBankNo.Text, ref lblReimbBankMessage, ref tbReimbBankName, ref tbReimbBankAddr1, ref tbReimbBankAddr2, ref tbReimbBankAddr3);
             txtRemittingBankNo.Text = txtReimbBankNo.Text;
             lblReceivingBankName.Text = tbReimbBankName.Text;
-            if (string.IsNullOrEmpty(txtReimbBankNo700.Text))
-            {
-                txtReimbBankNo700.Text = txtReimbBankNo.Text;
-                tbReimbBankName700.Text = tbReimbBankName.Text;
-                tbReimbBankAddr700_1.Text = tbReimbBankAddr1.Text;
-                tbReimbBankAddr700_2.Text = tbReimbBankAddr2.Text;
-                tbReimbBankAddr700_3.Text = tbReimbBankAddr3.Text;
-            }
-            if (string.IsNullOrEmpty(txtReimbBankNo700.Text))
-            {
-                txtReimbBankNo700.Text = txtReimbBankNo.Text;
-                tbReimbBankName700.Text = tbReimbBankName.Text;
-                tbReimbBankAddr700_1.Text = tbReimbBankAddr1.Text;
-                tbReimbBankAddr700_2.Text = tbReimbBankAddr2.Text;
-                tbReimbBankAddr700_3.Text = tbReimbBankAddr3.Text;
-            }
-            if (string.IsNullOrEmpty(txtRemittingBankNo.Text))
-            {
-                lblReceivingBankNoError.Text = lblReimbBankMessage.Text;
-                lblReceivingBankName.Text = tbReimbBankName.Text;
-            }
-            if (string.IsNullOrEmpty(txtReceivingBank_747.Text))
-            {
-                txtReceivingBank_747.Text = txtReimbBankNo.Text;
-            }
-            if (string.IsNullOrEmpty(txtReimbBankNo_747.Text))
-            {
-                txtReimbBankNo_747.Text = txtReimbBankNo.Text;
-                txtReimbBankName_747.Text = tbReimbBankName.Text;
-                txtReimbBankAddr_747_1.Text = tbReimbBankAddr1.Text;
-                txtReimbBankAddr_747_2.Text = tbReimbBankAddr2.Text;
-                txtReimbBankAddr_747_3.Text = tbReimbBankAddr3.Text;
-            }
+            //
+            txtReimbBankNo700.Text = txtReimbBankNo.Text;
+            tbReimbBankName700.Text = tbReimbBankName.Text;
+            tbReimbBankAddr700_1.Text = tbReimbBankAddr1.Text;
+            tbReimbBankAddr700_2.Text = tbReimbBankAddr2.Text;
+            tbReimbBankAddr700_3.Text = tbReimbBankAddr3.Text;
+            //
+            txtReimbBankNo700.Text = txtReimbBankNo.Text;
+            tbReimbBankName700.Text = tbReimbBankName.Text;
+            tbReimbBankAddr700_1.Text = tbReimbBankAddr1.Text;
+            tbReimbBankAddr700_2.Text = tbReimbBankAddr2.Text;
+            tbReimbBankAddr700_3.Text = tbReimbBankAddr3.Text;
+            //
+            lblReceivingBankNoError.Text = lblReimbBankMessage.Text;
+            lblReceivingBankName.Text = tbReimbBankName.Text;
+            //
+            txtReceivingBank_747.Text = txtReimbBankNo.Text;
+            //
+            txtReimbBankNo_747.Text = txtReimbBankNo.Text;
+            txtReimbBankName_747.Text = tbReimbBankName.Text;
+            txtReimbBankAddr_747_1.Text = tbReimbBankAddr1.Text;
+            txtReimbBankAddr_747_2.Text = tbReimbBankAddr2.Text;
+            txtReimbBankAddr_747_3.Text = tbReimbBankAddr3.Text;
         }
         protected void txtAdviseThruNo_OnTextChanged(object sender, EventArgs e)
         {
             bc.Commont.loadBankSwiftCodeInfo(txtAdviseThruNo.Text, ref lblAdviseThruMessage, ref tbAdviseThruName, ref tbAdviseThruAddr1, ref tbAdviseThruAddr2, ref tbAdviseThruAddr3);
-            if (string.IsNullOrEmpty(txtReimbBankNo700.Text))
-            {
-                txtAdviseThroughBankNo700.Text = txtAdviseThruNo.Text;
-                txtAdviseThroughBankName700.Text = tbAdviseThruName.Text;
-                txtAdviseThroughBankAddr700_1.Text = tbAdviseThruAddr1.Text;
-                txtAdviseThroughBankAddr700_2.Text = tbAdviseThruAddr2.Text;
-                txtAdviseThroughBankAddr700_3.Text = tbAdviseThruAddr3.Text;
-            }
+            txtAdviseThroughBankNo700.Text = txtAdviseThruNo.Text;
+            txtAdviseThroughBankName700.Text = tbAdviseThruName.Text;
+            txtAdviseThroughBankAddr700_1.Text = tbAdviseThruAddr1.Text;
+            txtAdviseThroughBankAddr700_2.Text = tbAdviseThruAddr2.Text;
+            txtAdviseThroughBankAddr700_3.Text = tbAdviseThruAddr3.Text;
         }
         protected void txtAvailableWithNo_OnTextChanged(object sender, EventArgs e)
         {
             bc.Commont.loadBankSwiftCodeInfo(txtAvailableWithNo.Text, ref lblAvailableWithMessage, ref tbAvailableWithName, ref tbAvailableWithAddr1, ref tbAvailableWithAddr2, ref tbAvailableWithAddr3);
-            if (string.IsNullOrEmpty(tbAvailableWithNo740.Text))
-            {
-                tbAvailableWithNo740.Text = txtAvailableWithNo.Text;
-                tbAvailableWithName740.Text = tbAvailableWithName.Text;
-                tbAvailableWithAddr740_1.Text = tbAvailableWithAddr1.Text;
-                tbAvailableWithAddr740_2.Text = tbAvailableWithAddr2.Text;
-                tbAvailableWithAddr740_3.Text = tbAvailableWithAddr3.Text;
-            }
+            tbAvailableWithNo740.Text = txtAvailableWithNo.Text;
+            tbAvailableWithName740.Text = tbAvailableWithName.Text;
+            tbAvailableWithAddr740_1.Text = tbAvailableWithAddr1.Text;
+            tbAvailableWithAddr740_2.Text = tbAvailableWithAddr2.Text;
+            tbAvailableWithAddr740_3.Text = tbAvailableWithAddr3.Text;
         }
         protected void txtDraweeCusNo700_OnTextChanged(object sender, EventArgs e)
         {
