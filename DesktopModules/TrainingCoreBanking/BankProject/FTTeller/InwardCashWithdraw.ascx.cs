@@ -42,7 +42,7 @@ namespace BankProject.FTTeller
                     tbDebitAmtFCY.Value.HasValue ? tbDebitAmtFCY.Value.Value : 0, dealrate, rcbCreditAccount.SelectedValue,
                     rcbCreditAccount.Text, rcbCreditCurrency.SelectedValue, tbCreditAmtLCY.Value.HasValue ? tbCreditAmtLCY.Value.Value : 0,
                     tbCreditAmtFCY.Value.HasValue ? tbCreditAmtFCY.Value.Value : 0, txtBOName.Text, txtFOName.Text, txtIdentityCard.Text,txtIsssueDate.SelectedDate.HasValue? txtIsssueDate.SelectedDate : null
-                    , txtIsssuePlace.Text, tbPhone.Text, txtNarrative.Text, txtNarrative2.Text, UserInfo.Username);
+                    , txtIsssuePlace.Text, tbPhone.Text, txtNarrative.Text, txtNarrative2.Text, UserInfo.Username, rcbTransferType.SelectedValue);
                 Response.Redirect( "Default.aspx?tabid=171");
             }
             if(commandName=="Preview")
@@ -66,10 +66,14 @@ namespace BankProject.FTTeller
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
                 LoadInfo_forREV();
             }
+            if (commandName == "print")
+            {
+                Print_Deal_Slip();
+            }
         }
         protected void tbClearingID_OntextChanged(object sender, EventArgs e)
         {
-            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(tbClearingID.Text);
+            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(tbClearingID.Text, rcbTransferType.SelectedValue);
             DataRow dr = ds.Tables[0].Rows[0];
             lbDebitCurrency.Text = dr["Currency"].ToString();
             lbDebitAccount.Text = dr["CreditAcctID"].ToString();
@@ -85,7 +89,7 @@ namespace BankProject.FTTeller
         }
         protected void LoadInfo_forREV()
         {
-            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(tbClearingID.Text);
+            DataSet ds = TriTT.B_BINWARD_CASH_WITHDRAW_Load_ID_Info(tbClearingID.Text, rcbTransferType.SelectedValue);
             DataRow dr = ds.Tables[0].Rows[0];
             tbAmount.Text = dr["Amount"].ToString();
         }
@@ -118,6 +122,7 @@ namespace BankProject.FTTeller
                 txtIsssuePlace.Text = dr["IssuePlace"].ToString();
                 txtNarrative.Text = dr["Narrative1"].ToString();
                 txtNarrative2.Text = dr["Narrative2"].ToString();
+                rcbTransferType.SelectedValue = dr["TransferType"].ToString();
                 if (dr["Status"].ToString() == "AUT")
                 {
                     LoadToolBar_AllFalse();
@@ -131,16 +136,23 @@ namespace BankProject.FTTeller
             LoadCurrency();
             LoadCreditAccount();
         }
-        //protected void LoadClearingID()
-        //{
-        //    rcbClearingID.Items.Clear();
-        //    rcbClearingID.Items.Add(new RadComboBoxItem(""));
-        //    rcbClearingID.AppendDataBoundItems = true;
-        //    rcbClearingID.DataTextField = "ID";
-        //    rcbClearingID.DataValueField = "ID";
-        //    rcbClearingID.DataSource = BankProject.DataProvider.TriTT.Load_ClearingID();
-        //    rcbClearingID.DataBind();
-        //}
+        protected void Print_Deal_Slip()
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+            //Open template
+            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/AccountTransaction/process_cash_withdrawl.doc");
+            //Open the template document
+            Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+            //Execute the mail merge.
+            var ds = TriTT.Print_Deal_theo_ID(txtId.Text);
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                ds.Tables[0].TableName = "Info";
+                document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+                document.Save("ProcessCash_Withdraw_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            }
+        }
         protected void LoadCreditAccount()
         {
             var InternalBankAccount = Teller.InternalBankAccount();
@@ -169,7 +181,7 @@ namespace BankProject.FTTeller
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btReverse").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
         }
         protected void LoadToolBar_AllFalse()
         {
@@ -178,7 +190,7 @@ namespace BankProject.FTTeller
             RadToolBar1.FindItemByValue("btAuthorize").Enabled =false;
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
         }
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
         {
