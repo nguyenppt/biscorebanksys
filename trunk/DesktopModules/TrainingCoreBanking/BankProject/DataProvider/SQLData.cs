@@ -439,7 +439,9 @@ namespace BankProject.DataProvider
                                                            , string IntermediaryType
                                                            , string IntermediaryInstruction1
                                                            , string IntermediaryInstruction2
-            , string OrderingCustAccName, string OrderingCustAccAddr1, string OrderingCustAccAddr2, string OrderingCustAccAddr3)
+            , string OrderingCustAccName, string OrderingCustAccAddr1, string OrderingCustAccAddr2, string OrderingCustAccAddr3
+                                                            , string PartyIdentifyForInter
+                                                            , string PartyIdentifyForInsti)
         {
             sqldata.ndkExecuteNonQuery("B_BOVERSEASTRANSFERMT103_Insert", OverseasTransferCode
                                        , PendingMT
@@ -479,7 +481,9 @@ namespace BankProject.DataProvider
                                        , OrderingCustAccName
                                        , OrderingCustAccAddr1
                                        , OrderingCustAccAddr2
-                                       , OrderingCustAccAddr3);
+                                       , OrderingCustAccAddr3
+                                       , PartyIdentifyForInter
+                                       , PartyIdentifyForInsti);
         }
 
         public static void B_BOVERSEASTRANSFERCHARGECOMMISSION_Insert(string OverseasTransferCode
