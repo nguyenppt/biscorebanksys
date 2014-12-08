@@ -766,16 +766,17 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("Load_ClearingID");
         }
-        public static DataSet B_BINWARD_CASH_WITHDRAW_Load_ID_Info(string ID)
+        public static DataSet B_BINWARD_CASH_WITHDRAW_Load_ID_Info(string ID, string TransferType)
         {
-            return sqldata.ndkExecuteDataset("B_BINWARD_CASH_WITHDRAW_Load_ID_Info", ID);
+            return sqldata.ndkExecuteDataset("B_BINWARD_CASH_WITHDRAW_Load_ID_Info", ID, TransferType);
         }
         public static void BINWARD_CASH_WITHDRAW_Insert(string ID, string status, string ClearingID, string DebitCurrency, string DebitAcct, double DebitLCY
             , double DebitFCY, double DealRate, string CreditAcctID, string CreditAcctName, string CreditCurrency, double CreditLCY, double CreditFCY,
-            string BOName, string FOName, string IdentityCard, DateTime? IssueDate, string IssuePlace, string Tellephone, string Narrative1, string Narrative2, string CreatedUser)
+            string BOName, string FOName, string IdentityCard, DateTime? IssueDate, string IssuePlace, string Tellephone, string Narrative1, string Narrative2, string CreatedUser
+            , string TransferType)
         {
             sqldata.ndkExecuteNonQuery("BINWARD_CASH_WITHDRAW_Insert", ID, status, ClearingID, DebitCurrency, DebitAcct, DebitLCY, DebitFCY, DealRate, CreditAcctID, CreditAcctName, CreditCurrency
-                , CreditLCY, CreditFCY, BOName, FOName, IdentityCard, IssueDate, IssuePlace, Tellephone, Narrative1, Narrative2, CreatedUser);
+                , CreditLCY, CreditFCY, BOName, FOName, IdentityCard, IssueDate, IssuePlace, Tellephone, Narrative1, Narrative2, CreatedUser, TransferType);
         }
         public static DataSet BINWARD_CASH_WITHDRAW_PreviewList()
         {
@@ -866,6 +867,10 @@ namespace BankProject.DataProvider
         public static DataSet Print_Deal_slip(string type, string typeProduct,string RefID)
         {
             return sqldata.ndkExecuteDataset("Print_Deal_slip", type,typeProduct , RefID);
+        }
+        public static DataSet Print_Deal_theo_ID(string RefID)
+        {
+            return sqldata.ndkExecuteDataset("Print_Deal_theo_ID", RefID);
         }
         #endregion
         #region INWARD  PROCESS CREDIT ACCOUNT
