@@ -68,6 +68,7 @@ namespace BankProject.Views.TellerApplication
             txtDealDate.SelectedDate = DateTime.Today;
             txtValueDate.SelectedDate = DateTime.Today;
             GeneralCode();
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -212,6 +213,9 @@ namespace BankProject.Views.TellerApplication
                         txtSellAmount.Value = 0;
                         txtRate.Value = 0;
                     }
+
+
+                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 }
         }
 

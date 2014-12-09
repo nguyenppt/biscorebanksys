@@ -242,6 +242,7 @@ namespace BankProject.TradingFinance
             RadToolBar1.FindItemByValue("btCommit").Enabled = true;
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
             RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
             DisableDefaultControl();
         }
 
