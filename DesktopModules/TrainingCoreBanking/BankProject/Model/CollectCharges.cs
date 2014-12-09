@@ -14,6 +14,14 @@ namespace BankProject.Model.CollectCharges.Reports
         public string UserName { get; set; }
         public string ChargeRemarks { get; set; }
         //
+        public string ChargeAmount1Text { get; set; }
+        public string ChargeAmount2Text { get; set; }
+        public string ChargeAmount3Text { get; set; }
+        //
+        public string TotalTaxText { get; set; }
+        public string TotalTaxAmountText { get; set; }
+        //
+        public string TotalChargeAmountText { get; set; }
         public string TotalChargeAmountWord { get; set; }
     }
 }
