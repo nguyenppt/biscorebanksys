@@ -98,7 +98,7 @@
             
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
-                    <td style="width: 230px;" class="MyLable">Transaction Type<span class="Required"> (*)</span></td>
+                    <td style="width: 230px;" class="MyLable">Transaction Type<span class="Required"> </span></td>
                     <td style="width: 150px" class="MyContent">
                         <telerik:RadComboBox width="355" DropDownCssClass="KDDL"  AppendDataBoundItems="True" 
                             ID="comboTransactionType" Runat="server" AutoPostBack="True" 
@@ -354,7 +354,7 @@
                 </tr>
                 
                 <tr>    
-                    <td style="width: 230px;" class="MyLable">Debit Amount<span class="Required"> (*)</span></td>
+                    <td style="width: 230px;" class="MyLable">Debit Amount<span class="Required"> </span></td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="numDebitAmount" runat="server" 
                             AutoPostBack="True"
@@ -474,7 +474,7 @@
                 </tr>
                 
                 <tr>    
-                    <td style="width: 230px;" class="MyLable">Credit Amount<span class="Required"> (*)</span></td>
+                    <td style="width: 230px;" class="MyLable">Credit Amount<span class="Required"> </span></td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="numCreditAmount" runat="server" 
                             AutoPostBack="True"
@@ -580,7 +580,7 @@
         <fieldset>
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable">Ordering Customer Acc.</td>
+                <td class="MyLable">Ordering Customer Account</td>
                 <td class="MyContent">
                     <telerik:RadComboBox width="400"
                         AppendDataBoundItems="True"
@@ -603,7 +603,7 @@
             </tr>
             
             <tr>    
-                <td class="MyLable" >Ordering Customer Addr.</td>
+                <td class="MyLable" >Ordering Customer Address</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtOrderingCustomer2" runat="server" Width="400"/>
                 </td>
@@ -694,7 +694,7 @@
             </tr>
             
             <tr>    
-                <td class="MyLable">Intermediary Type</td>
+                <td class="MyLable">Intermediary Institution Option</td>
                 <td class="MyContent">
                     <telerik:RadComboBox AutoPostBack="True" OnSelectedIndexChanged="comboIntermediaryType_OnSelectedIndexChanged"
                         ID="comboIntermediaryType" Runat="server"
@@ -718,7 +718,7 @@
 
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable">Intermediary Institution</td>
+                <td class="MyLable">Intermediary Institution Code</td>
                 <td style="width: 150px" class="MyContent">
                     <telerik:RadTextBox ID="txtIntermediaryInstitutionNo" runat="server" 
                         AutoPostBack="True" 
@@ -733,28 +733,28 @@
         
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable" >Intermediary Acct</td>
+                <td class="MyLable" >Intermediary Name</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtIntermediaryInstruction1" runat="server" Width="400"/>
                 </td>
             </tr>
 
             <tr>    
-                <td class="MyLable" >Intermediary Acct</td>
+                <td class="MyLable" >Intermediary Address</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtIntermediaryInstruction2" runat="server" Width="400"/>
                 </td>
             </tr>
 
             <tr>    
-                <td class="MyLable" >Intermediary Bank Acct</td>
+                <td class="MyLable" >Account at Intermediary Institution</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtIntermediaryBankAcct" runat="server"/>
                 </td>
             </tr>
             
             <tr>    
-                <td class="MyLable">Account Type</td>
+                <td class="MyLable">Account With Institution Option</td>
                 <td class="MyContent">
                     <telerik:RadComboBox AutoPostBack="True" OnSelectedIndexChanged="comboAccountType_OnSelectedIndexChanged"
                         ID="comboAccountType" Runat="server"
@@ -778,7 +778,7 @@
 
         <table width="100%" cellpadding="0" cellspacing="0"> 
             <tr>    
-                <td class="MyLable">Account With Institution</td>
+                <td class="MyLable">Account With Institution Code</td>
                 <td style="width: 150px" class="MyContent">
                     <telerik:RadTextBox ID="txtAccountWithInstitutionNo" runat="server" 
                         AutoPostBack="True" 
@@ -791,7 +791,7 @@
 
         <table width="100%" cellpadding="0" cellspacing="0"> 
             <tr>    
-                <td class="MyLable">Account With Bank Acct</td>
+                <td class="MyLable">Account With Institution (name and address)</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtAccountWithBankAcct" runat="server" Width="400"/>
                 </td>
@@ -812,14 +812,14 @@
             </tr>
             
             <tr>    
-                <td class="MyLable">Beneficiary Name</td>
+                <td class="MyLable">Beneficiary Customer</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtBeneficiaryCustomer2" runat="server" Width="400" />
                 </td>
             </tr>
             
             <tr>    
-                <td class="MyLable">Beneficiary Name Addr.</td>
+                <td class="MyLable"> </td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtBeneficiaryCustomer3" runat="server" Width="400" />
                 </td>
@@ -917,7 +917,7 @@
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
-                    <td class="MyLable">Charge Acct</td>
+                    <td class="MyLable">Charge Account</td>
                     <td  class="MyContent">
                         <telerik:RadComboBox width="355" 
                             DropDownCssClass="KDDL"
@@ -1001,7 +1001,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
-                    <td class="MyLable">Commission Amount<span class="Required"> (*)</span></td>
+                    <td class="MyLable">Commission Amount<span class="Required"> </span></td>
                     <td style="width: 150px" class="MyContent">
                         <telerik:RadNumericTextBox ID="numCommissionAmount" runat="server"  
                             AutoPostBack="True" 
@@ -1093,7 +1093,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>    
-                    <td class="MyLable">Charge Amount<span class="Required"> (*)</span></td>
+                    <td class="MyLable">Charge Amount<span class="Required"> </span></td>
                     <td style="width: 150px" class="MyContent">
                         <telerik:RadNumericTextBox ID="numChargeAmount" Runat="server" AutoPostBack="True" 
                             OnTextChanged="numChargeAmount_OnTextChanged"/>
