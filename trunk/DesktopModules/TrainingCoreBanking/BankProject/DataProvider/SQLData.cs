@@ -1058,9 +1058,9 @@ namespace BankProject.DataProvider
         }
 
 
-        public static DataSet B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode(string code)
+        public static DataSet B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode(string code, int TabId)
         {
-            return sqldata.ndkExecuteDataset("B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode", code);
+            return sqldata.ndkExecuteDataset("B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode", code,TabId);
         }
         public static DataSet P_BEXPORT_DOCUMETARYCLEANCOLLECTION_GetByDocCollectCode(string code)
         {
@@ -1076,13 +1076,13 @@ namespace BankProject.DataProvider
                                                                         , string ChargeRemarks, string VATNo,
                                                                         string TaxCode, string TaxCcy, string TaxAmt,
                                                                         string TaxinLCCYAmt, string TaxDate,
-                                                                        string Rowchages)
+                                                                        string Rowchages,int TabId)
         {
             sqldata.ndkExecuteNonQuery("B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert", NormalLCCode, WaiveCharges,
                                        Chargecode, ChargeAcct, ChargePeriod, ChargeCcy
                                        , ExchRate, ChargeAmt, PartyCharged, OmortCharges, AmtInLocalCCY, AmtDRfromAcct,
                                        ChargeStatus
-                                       , ChargeRemarks, VATNo, TaxCode, TaxCcy, TaxAmt, TaxinLCCYAmt, TaxDate, Rowchages);
+                                       , ChargeRemarks, VATNo, TaxCode, TaxCcy, TaxAmt, TaxinLCCYAmt, TaxDate, Rowchages, TabId);
         }
 
         public static void B_BEXPORT_DOCUMETARYCOLLECTION_Insert(string DocCollectCode
