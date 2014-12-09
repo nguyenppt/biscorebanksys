@@ -33,7 +33,7 @@
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width: 200px; padding: 5px 0 5px 20px;">
-            <asp:TextBox ID="txtCode" runat="server" Width="200" /><span class="Required"> (*)</span><asp:RequiredFieldValidator
+            <asp:TextBox ID="txtCode" runat="server" Width="200" /><span class="Required"> </span><asp:RequiredFieldValidator
             runat="server" Display="None"
             ID="RequiredFieldValidator6"
             ControlToValidate="txtCode"
@@ -60,7 +60,7 @@
             </legend>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Charge Acct <span class="Required"> (*)</span><asp:RequiredFieldValidator
+                    <td class="MyLable">Charge Acct <span class="Required"> </span><asp:RequiredFieldValidator
             runat="server" Display="None"
             ID="RequiredFieldValidator1"
             ControlToValidate="txtCode"
