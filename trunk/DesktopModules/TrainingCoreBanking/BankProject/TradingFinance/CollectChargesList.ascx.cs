@@ -36,12 +36,12 @@ namespace BankProject.TradingFinance
         {
             if (!IsPostBack)
             {
+                string Status = bd.TransactionStatus.AUT;
                 if (lstType != null && lstType.ToLower().Equals("4appr"))
-                    radGridReview.DataSource = db.B_CollectCharges.Where(p => p.Status.Equals(bd.TransactionStatus.UNA)).OrderByDescending(p => p.DateTimeCreate)
-                        .Select(q => new { q.TransCode, q.TotalChargeAmount, q.ChargeCurrency, q.Status }).ToList();
-                else
-                    radGridReview.DataSource = db.B_CollectCharges.Where(p => p.Status.Equals(bd.TransactionStatus.AUT)).OrderByDescending(p => p.DateTimeCreate)
-                        .Select(q => new { q.TransCode, q.TotalChargeAmount, q.ChargeCurrency, q.Status }).ToList();
+                    Status = bd.TransactionStatus.UNA;
+                //
+                radGridReview.DataSource = db.B_CollectCharges.Where(p => p.Status.Equals(Status)).OrderByDescending(p => p.DateTimeCreate)
+                    .Select(q => new { q.TransCode, q.TotalChargeAmount, q.ChargeCurrency, q.Status }).ToList();
             }
         }
     }

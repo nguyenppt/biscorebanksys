@@ -357,9 +357,37 @@ namespace BankProject.TradingFinance
                         var VAT = new Model.CollectCharges.Reports.VAT()
                         {
                             VATNo = cc2.VATNo, TransCode = cc2.TransCode, UserName = cc.UserCreate, ChargeAcct = cc2.ChargeAcct, ChargeRemarks = cc2.AddRemarks1 + " " + cc2.AddRemarks2, 
-                            ChargeType1 = cc2.ChargeType1, ChargeAmount1 = cc2.ChargeAmount1, ChargeType2 = cc2.ChargeType2, ChargeAmount2 = cc2.ChargeAmount2, 
-                            ChargeType3 = cc2.ChargeType3, ChargeAmount3 = cc2.ChargeAmount3, TotalTaxAmount = cc2.TotalTaxAmount
+                            ChargeType1 = getChargeTypeInfo(cc2.ChargeType1, 1), ChargeAmount1 = (!String.IsNullOrEmpty(cc2.ChargeType1)?cc2.ChargeAmount1:null), 
+                            ChargeType2 = getChargeTypeInfo(cc2.ChargeType2, 1), ChargeAmount2 = (!String.IsNullOrEmpty(cc2.ChargeType2)?cc2.ChargeAmount2:null), 
+                            ChargeType3 = getChargeTypeInfo(cc2.ChargeType3, 1), ChargeAmount3 = (!String.IsNullOrEmpty(cc2.ChargeType2)?cc2.ChargeAmount3:null), 
+                            TotalTaxAmount = cc2.TotalTaxAmount, TotalChargeAmount = cc2.TotalChargeAmount, ChargeCurrency = cc2.ChargeCurrency
                         };
+                        if (!String.IsNullOrEmpty(cc2.ChargeType1) && cc2.ChargeAmount1.HasValue && cc2.ChargeAmount1 != 0)
+                        {
+                            VAT.ChargeType1 = getChargeTypeInfo(cc2.ChargeType1, 1);
+                            VAT.ChargeAmount1Text = cc2.ChargeAmount1.Value + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType1, 2);
+                        }
+                        if (!String.IsNullOrEmpty(cc2.ChargeType2) && cc2.ChargeAmount2.HasValue && cc2.ChargeAmount2 != 0)
+                        {
+                            VAT.ChargeType2 = getChargeTypeInfo(cc2.ChargeType2, 1);
+                            VAT.ChargeAmount2Text = cc2.ChargeAmount2.Value + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType2, 2);
+                        }
+                        if (!String.IsNullOrEmpty(cc2.ChargeType3) && cc2.ChargeAmount3.HasValue && cc2.ChargeAmount3 != 0)
+                        {
+                            VAT.ChargeType3 = getChargeTypeInfo(cc2.ChargeType3, 1);
+                            VAT.ChargeAmount3Text = cc2.ChargeAmount3.Value + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType3, 2);
+                        }
+                        if (VAT.TotalChargeAmount.HasValue)
+                        {
+                            VAT.TotalChargeAmountText = VAT.TotalChargeAmount.Value + VAT.ChargeCurrency;
+                            VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, VAT.TotalChargeAmount.Value);
+                        }
+                        //Phân loại phí phát sinh VAT hoặc phí không phát sinh VAT => Thảo sẽ gửi anh danh sách Code phí phân theo có VAT và không
+                        if (VAT.TotalTaxAmount.HasValue)
+                        {
+                            VAT.TotalTaxText = "VAT";
+                            VAT.TotalTaxAmountText = VAT.TotalTaxAmount.Value + VAT.ChargeCurrency + " PL90304";
+                        }
                         var cc3 = db.BDRFROMACCOUNTs.Where(p => p.Id.Equals(cc2.ChargeAcct)).FirstOrDefault();
                         if (cc3 != null)
                         {
@@ -369,10 +397,9 @@ namespace BankProject.TradingFinance
                                 VAT.CustomerID = cc4.CustomerID;
                                 VAT.CustomerName = cc4.CustomerName;
                                 VAT.CustomerAddress = cc4.Address;
+                                VAT.IdentityNo = cc4.IdentityNo;
                             }
-                        }
-                        if (VAT.TotalChargeAmount.HasValue)
-                            VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, VAT.TotalChargeAmount.Value);
+                        }                        
                         var lst2 = new List<Model.CollectCharges.Reports.VAT>();
                         lst2.Add(VAT);
                         reportData = new DataSet();
@@ -400,6 +427,20 @@ namespace BankProject.TradingFinance
         protected void btnReportVAT_Click(object sender, EventArgs e)
         {
             showReport(1);
+        }
+        private string getChargeTypeInfo(string ChargeType, int infoType)
+        {
+            var cc = db.BCHARGECODEs.Where(p => p.Code.Equals(ChargeType)).FirstOrDefault();
+            if (cc == null) return "";
+            switch (infoType)
+            {
+                case 1:
+                    return cc.Name_VN;
+                case 2:
+                    return cc.PLAccount;
+            }
+
+            return "";
         }
     }
 }
