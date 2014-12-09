@@ -49,7 +49,7 @@
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Customer ID 
-                    <span class="Required">(*)</span>
+                    <span class="Required"> </span>
                     <asp:RequiredFieldValidator
                         runat="server" Display="None"
                         ID="RequiredFieldValidator1"
@@ -81,7 +81,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="MyLable">Category Code<span class="Required">(*)</span></td>
+                <td class="MyLable">Category Code<span class="Required"> </span></td>
                 <td class="MyContent">
                     <telerik:radcombobox
                         id="rcbCategoryCode" runat="server"
@@ -96,7 +96,7 @@
                     <i>Deposit account for TF</i></td>
             </tr>
             <tr>
-                <td class="MyLable">Currency <span class="Required">(*)</span><asp:RequiredFieldValidator
+                <td class="MyLable">Currency <span class="Required"> </span><asp:RequiredFieldValidator
                     runat="server" Display="None"
                     ID="RequiredFieldValidator2"
                     ControlToValidate="rcbCurrentcy"
