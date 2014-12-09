@@ -182,7 +182,7 @@
 
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Exchange Type <span class="Required">(*)</span></td>
+                <td class="MyLable">Exchange Type <span class="Required"> </span></td>
                 <td class="MyContent" style="width:160px">
                     <telerik:RadComboBox ID="rcbExchangeType"
                         MarkFirstMatch="True" Width="160"
