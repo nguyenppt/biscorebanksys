@@ -59,6 +59,7 @@ namespace BankProject
             {
                 txtCode.Text = Request.QueryString["CodeID"];
                 LoadData();
+                RadToolBar1.FindItemByValue("btprint").Enabled = true;
             }
             else
             {

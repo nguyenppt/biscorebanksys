@@ -24,6 +24,7 @@ namespace BankProject
             rcbCustomerID.DataBind();
 
             LoadCurrency(null);
+            LoadProductLine(null);
             LoadNewsID();
 
             
@@ -39,6 +40,18 @@ namespace BankProject
             if (!String.IsNullOrEmpty(selectedid))
             {
                 rcbCurrentcy.SelectedValue = selectedid;
+            }
+        }
+
+        private void LoadProductLine(string selectedid)
+        {
+            ProduceLineRepository facade = new ProduceLineRepository();
+            var src = facade.LoadProductLineList("6").ToList();
+            Util.LoadData2RadCombo(rcbProductLine, src, "Description", "Description", "-Select Product Line-", true);
+
+            if (!String.IsNullOrEmpty(selectedid))
+            {
+                rcbProductLine.SelectedValue = selectedid;
             }
         }
 
@@ -82,6 +95,7 @@ namespace BankProject
                 tbShortName.Text = "";
                 rcbCustomerID.SelectedValue = "";
                 rcbCurrentcy.SelectedValue = "";
+                rcbProductLine.SelectedValue = "";
                 lblCustomer.Text = "";
             }
             
@@ -107,6 +121,7 @@ namespace BankProject
                 tbNotes.Text = ds.Tables[0].Rows[0]["Notes"].ToString();
                 tbShortName.Text = ds.Tables[0].Rows[0]["ShortName"].ToString();
                 rcbCurrentcy.SelectedValue = ds.Tables[0].Rows[0]["Currentcy"].ToString();
+                rcbProductLine.SelectedValue = ds.Tables[0].Rows[0]["ProductLine"].ToString();
 
                 lblDepositCode.Text = "TKKQ " + rcbCurrentcy.SelectedValue + " " + rcbCustomerID.SelectedValue; 
                 
