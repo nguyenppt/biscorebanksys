@@ -778,6 +778,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadDatePicker dteDateOfIssue;
         
         /// <summary>
+        /// comboAvailableRule control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox comboAvailableRule;
+        
+        /// <summary>
         /// txtDateOfExpiry700 control.
         /// </summary>
         /// <remarks>
@@ -794,15 +803,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtPlaceOfExpiry700;
-        
-        /// <summary>
-        /// comboAvailableRule control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboAvailableRule;
         
         /// <summary>
         /// rcbApplicantBankType700 control.
