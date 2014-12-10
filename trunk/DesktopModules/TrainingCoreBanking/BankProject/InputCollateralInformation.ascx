@@ -3,14 +3,14 @@
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register Assembly="BankProject" Namespace="BankProject.Controls" TagPrefix="customControl" %>
-<telerik:RadWindowManager id="RadWindowManager1" runat="server" EnableShadow="true" />
+<telerik:radwindowmanager id="RadWindowManager1" runat="server" enableshadow="true" />
 <script type="text/javascript">
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
     })
 </script>
 
- <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" OnButtonClick="RadToolBar1_ButtonClick">
+<telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" onbuttonclick="RadToolBar1_ButtonClick">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
@@ -33,14 +33,15 @@
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/edit.png" 
             ToolTip="Edit Data" Value="btEdit" CommandName="edit" />
     </Items>
-</telerik:RadToolBar>
+</telerik:radtoolbar>
 
 <div>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td style="width:260px; padding:5px 0 5px 20px">
-                <telerik:RadTextBox ID="tbCollInfoID" runat="server" ForeColor="Black"  ValidationGroup="Group1"  />
-                <i><asp:Label ID="lblCheckCustomer" runat="server" Text="" ForeColor="Black" /></i>
+            <td style="width: 260px; padding: 5px 0 5px 20px">
+                <telerik:radtextbox id="tbCollInfoID" runat="server" forecolor="Black" validationgroup="Group1" />
+                <i>
+                    <asp:Label ID="lblCheckCustomer" runat="server" Text="" ForeColor="Black" /></i>
             </td>
         </tr>
     </table>
@@ -49,303 +50,313 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#blank1">Collateral Information</a></li>
-        <li style="visibility:hidden;"><a href="#blank2">Contingent Entry Information</a></li>
+        <li style="visibility: hidden;"><a href="#blank2">Contingent Entry Information</a></li>
     </ul>
     <div id="blank1" class="dnnClear">
-         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
-        ShowSummary="False" ValidationGroup="Commit" />
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
+            ShowSummary="False" ValidationGroup="Commit" />
         <fieldset>
-            <legend style="text-transform:uppercase ;font-weight:bold;">Collateral Detais</legend>
+            <legend style="text-transform: uppercase; font-weight: bold;">Collateral Detais</legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">Collateral Type:</td>
                     <td class="MyContent" width="350">
-                        <telerik:RadComboBox ID="rcbCollateralType" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems ="true"
-                            autoPostBack="true" width="350" OnselectedIndexchanged="rcbCollateralType_OnselectedIndexchanged" ForeColor="Black" >
+                        <telerik:radcombobox id="rcbCollateralType" runat="server" markfirstmatch="true" allowcustomtext="false" appenddatabounditems="true"
+                            autopostback="true" width="350" onselectedindexchanged="rcbCollateralType_OnselectedIndexchanged" forecolor="Black">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                             <telerik:RadComboBoxItem Value="" Text="" />
                             </Items>
-                        </telerik:RadComboBox>
+                        </telerik:radcombobox>
                     </td>
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Collateral Code:</td> 
+                    <td class="MyLable">Collateral Code:</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox ID="rcbCollateralCode" runat="server" MarkFirstMatch="true" AllowCustomText="false" 
-                            width="350" AutoPostBack="true" OnSelectedIndexChanged="rcbCollateralCode_OnSelectedIndexChanged" 
-                            ForeColor="Black" >
+                        <telerik:radcombobox id="rcbCollateralCode" runat="server" markfirstmatch="true" allowcustomtext="false"
+                            width="350" autopostback="true" onselectedindexchanged="rcbCollateralCode_OnSelectedIndexChanged"
+                            forecolor="Black">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
                             </Items>
-                        </telerik:RadComboBox>
-                    </td>                    
+                        </telerik:radcombobox>
+                    </td>
                 </tr>
-                 <tr>
-                    <td class="MyLable" >Currency:</td>
+                <tr>
+                    <td class="MyLable">Currency:</td>
                     <td class="MyContent" width="200">
-                        <telerik:RadComboBox ID="rcbCurrency" runat="server" MarkFirstMatch="true" AllowCustomText="false" ForeColor="Black" 
-                           width="150" AutoPostback="true" OnselectedIndexchanged="rcbCurrency_OnClientSelectedIndexChanged">
+                        <telerik:radcombobox id="rcbCurrency" runat="server" markfirstmatch="true" allowcustomtext="false" forecolor="Black"
+                            width="150" autopostback="true" onselectedindexchanged="rcbCurrency_OnClientSelectedIndexChanged">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>                     
                                     <telerik:RadComboBoxItem Value="" Text="" />
                             </Items>
-                        </telerik:RadComboBox>
+                        </telerik:radcombobox>
                     </td>
-                    
+
                 </tr>
                 <tr>
                     <td class="MyLable">Contingent Acct:<span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator1"
-                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Contingent Account is required"
-                    ForeColor="Red"></asp:RequiredFieldValidator> 
+                        <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator1"
+                            ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Contingent Account is required"
+                            ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
-                    <td class="MyContent" width=350>
-                        <telerik:RadComboBox ID="rcbContingentAcct" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="350" ForeColor="Black" >
+                    <td class="MyContent" width="350">
+                        <telerik:radcombobox id="rcbContingentAcct" runat="server" markfirstmatch="true" allowcustomtext="false"
+                            width="350" forecolor="Black">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
                             </Items>
-                        </telerik:RadComboBox>
+                        </telerik:radcombobox>
                     </td>
-                    
+
                 </tr>
                 <tr>
                     <td class="MyLable">Description:</td>
                     <td class="MyContent" width="350">
-                        <telerik:RadTextBox ID="tbDescription" runat="server" ValidationGroup="Group1" Width="350" textmode="MultiLine" ForeColor="Black" />
+                        <telerik:radtextbox id="tbDescription" runat="server" validationgroup="Group1" width="350" textmode="MultiLine" forecolor="Black" />
                     </td>
                     <td><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%></td>
-                   
+
                 </tr>
-                </table>
+            </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Address:<span class="Required">(*)</span>                        
+                    <td class="MyLable">Address:<span class="Required">(*)</span>
                         <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator2" ControlToValidate="tbAddress"
                             ValidationGroup="Commit" InitialValue="" ErrorMessage="Address is Required !" ForeColor="red" />
                     </td>
                     <td class="MyContent" width="350">
-                        <telerik:RadTextBox ID="tbAddress" runat="server" ValidationGroup="Group1" Width="350" ForeColor="Black"  />
+                        <telerik:radtextbox id="tbAddress" runat="server" validationgroup="Group1" width="350" forecolor="Black" />
                     </td>
-                    <td  Class="MyLable"><%--<a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%></td>
-                    <td Class="MyContent"></td>
-                        </tr>
-                    </table>
-                    <table width="100%" cellpadding="0" cellspacing="0">
-            
+                    <td class="MyLable"><%--<a class="add"> <img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%></td>
+                    <td class="MyContent"></td>
+                </tr>
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
+
                 <tr>
                     <td class="MyLable">Collateral Status:<span class="Required">(*)</span>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="None" ControlToValidate="rcbCollateralStatus"
                             ValidationGroup="Commit" InitialValue="" ErrorMessage="Collateral Status is Required !" />
                     </td>
                     <td class="MyContent">
-                        <telerik:RadComboBox ID="rcbCollateralStatus" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="150" ForeColor="Black" >
+                        <telerik:radcombobox id="rcbCollateralStatus" runat="server" markfirstmatch="true" allowcustomtext="false"
+                            width="150" forecolor="Black">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
                             </Items>
-                        </telerik:RadComboBox>
-                    </td> 
-                    <td Class="MyLable"></td>
-                    <td Class="MyContent"></td>                  
+                        </telerik:radcombobox>
+                    </td>
+                    <td class="MyLable"></td>
+                    <td class="MyContent"></td>
                 </tr>
                 <tr>
                     <td class="MyLable">Customer ID/ Name:</td>
                     <td class="MyContent" width="350">
-                        <telerik:RadTextBox ID="tbCustomerIDName" runat="server" Width="350" ValidationGroup="Group1" ForeColor="Black" />
+                        <telerik:radtextbox id="tbCustomerIDName" runat="server" width="350" validationgroup="Group1" forecolor="Black" />
                     </td>
-                   
+
                 </tr>
                 <tr>
                     <td class="MyLable">Collateral Owner:</td>
                     <td class="MyContent">
-                         <telerik:RadTextBox ID="tbNotes" runat="server" Width="350" ValidationGroup="Group1" textMode="MultiLine" ForeColor="Black" />
+                        <telerik:radtextbox id="tbNotes" runat="server" width="350" validationgroup="Group1" textmode="MultiLine" forecolor="Black" />
                     </td>
-                    <td ><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png">--%></td>                    
+                    <td><%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png">--%></td>
                 </tr>
-                        </table>
+            </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">Company Storage:<span class="Required">(*)</span>
-                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" Display="None" ControlToValidate="rcbCompanyStorage"
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" Display="None" ControlToValidate="rcbCompanyStorage"
                             ValidationGroup="Commit" InitialValue="" ErrorMessage="Company Storage is Required !" />
                     </td>
                     <td class="MyContent" width="250">
-                         <telerik:RadComboBox ID="rcbCompanyStorage" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="350" ForeColor="Black" >
+                        <telerik:radcombobox id="rcbCompanyStorage" runat="server" markfirstmatch="true" allowcustomtext="false"
+                            width="350" forecolor="Black">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />                           
                             </Items>
-                        </telerik:RadComboBox>
+                        </telerik:radcombobox>
                     </td>
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
-                <tr>
+            </table>
+            <table id="divGlobalID1" width="100%" cellpadding="0" cellspacing="0">
+                <tr >
                     <td class="MyLable">Global Limit ID:</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox id="rcbGlobalLimitID" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true"
-                            ForeColor="Black" >
+                        <telerik:radcombobox id="rcbGlobalLimitID" runat="server" markfirstmatch="true" allowcustomtext="false" appenddatabounditems="true"
+                            forecolor="Black">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
                             </Items>
-                        </telerik:RadComboBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="MyLable">Global Limit ID:</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox id="rcbGlobalLimitID2" runat="server" MarkFirstMatch="true" AllowCustomText="false" appendDataboundItems="true"
-                            ForeColor="Black" >
-                            <CollapseAnimation Type="None" />
-                            <ExpandAnimation Type="None" />
-                            <Items>
-                                <telerik:RadComboBoxItem Value="" Text="" />
-                            </Items>
-                        </telerik:RadComboBox>
+                        </telerik:radcombobox>
+                        <asp:ImageButton ID="btGlobalLimitID" runat="server" OnClick="btGlobalLimitID_Click" ImageUrl="~/Icons/Sigma/Add_16X16_Standard.png" />
+
                     </td>
                 </tr>
             </table>
+            <table id="divGlobalID2" width="100%" cellpadding="0" cellspacing="0">
+                <tr >
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:radcombobox id="rcbGlobalLimitID2" runat="server" markfirstmatch="true" allowcustomtext="false" appenddatabounditems="true"
+                            forecolor="Black">
+                            <CollapseAnimation Type="None" />
+                            <ExpandAnimation Type="None" />
+                            <Items>
+                                <telerik:RadComboBoxItem Value="" Text="" />
+                            </Items>
+                        </telerik:radcombobox>
+                        <asp:ImageButton ID="btRemoveGlobalLimitID" runat="server" OnClick="btRemoveGlobalLimitID_Click" ImageUrl="~/Icons/Sigma/Delete_16X16_Standard.png" />
+
+                    </td>
+                </tr>
+
+            </table>
         </fieldset>
         <fieldset>
-            <legend style="text-transform:uppercase ;font-weight:bold;">Value Detais</legend>
+            <legend style="text-transform: uppercase; font-weight: bold;">Value Detais</legend>
             <table width="100%" cellpadding="0" cellspacing="0">
-               
+
                 <tr>
                     <td class="MyLable">Country:</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox ID="rcbCountry" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="200" ForeColor="Black" appendDataBoundItems="true">
+                        <telerik:radcombobox id="rcbCountry" runat="server" markfirstmatch="true" allowcustomtext="false"
+                            width="200" forecolor="Black" appenddatabounditems="true">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>                  
                                <telerik:RadComboBoxItem Value="" Text="" /> 
                             </Items>
-                        </telerik:RadComboBox>
+                        </telerik:radcombobox>
                     </td>
-                     <td class="MyLable"></td>
+                    <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
-                    <tr>
+                <tr>
                     <td class="MyLable">Nominal Value:<span class="Required">(*)</span>
-                         <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" Display="None" ControlToValidate="tbNominalValue"
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" Display="None" ControlToValidate="tbNominalValue"
                             ValidationGroup="Commit" InitialValue="" ErrorMessage="Nominal Value is Required !" />
                     </td>
                     <td class="MyContent">
-                        <telerik:radtextbox ID="tbNominalValue" runat="server" ValidationGroup="Group1" Width="150"
-                            ForeColor="Black" >
+                        <telerik:radtextbox id="tbNominalValue" runat="server" validationgroup="Group1" width="150"
+                            forecolor="Black">
                              <ClientEvents  OnBlur="SetNumber" OnFocus="ClearCommas"/> 
                         </telerik:radtextbox>
-                       
+
                     </td>
                 </tr>
-    <asp:HiddenField ID="hfInternalLimit" runat="server" />
-                
+                <asp:HiddenField ID="hfInternalLimit" runat="server" />
+
                 <tr>
                     <td class="MyLable">Provision Value:</td>
                     <td class="MyContent">
-                        <telerik:radnumerictextbox runat="server" id="tbProvisionValue" borderwidth="0" readonly="true" ForeColor="Black" ></telerik:radnumerictextbox>
-                    <td class="MyLable"></td>
+                        <telerik:radnumerictextbox runat="server" id="tbProvisionValue" borderwidth="0" readonly="true" forecolor="Black"></telerik:radnumerictextbox>
+                        <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
                 <tr>
                     <td class="MyLable">Maximum Loan Value:</td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox ID="tbExeValue" runat="server" ValidationGroup="Group1" Width="150"
-                            NumberFormat-DecimalDigits="2" ForeColor="Black" >
-                        </telerik:RadNumericTextBox>
-                    </td>                   
+                        <telerik:radnumerictextbox id="tbExeValue" runat="server" validationgroup="Group1" width="150"
+                            numberformat-decimaldigits="2" forecolor="Black">
+                        </telerik:radnumerictextbox>
+                    </td>
                 </tr>
                 <tr>
                     <td class="MyLable">Allocated Amt:</td>
                     <td class="MyContent">
-                         <asp:Label ID="lblAllocatedAmt" runat="server" ForeColor="Black"  />
+                        <asp:Label ID="lblAllocatedAmt" runat="server" ForeColor="Black" />
                     </td>
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
                 </tr>
                 <tr>
                     <td class="MyLable">Value Date:</td>
-                    <td class="MyContent" >
-                        <telerik:RadDatePicker ID="rdpValueDate" width="150" runat="server"  ForeColor="Black" ></telerik:RadDatePicker>
+                    <td class="MyContent">
+                        <telerik:raddatepicker id="rdpValueDate" width="150" runat="server" forecolor="Black"></telerik:raddatepicker>
                     </td>
                     <td class="MyLable">Expiry Date:</td>
                     <td class="MyContent">
-                        <telerik:RadDatePicker ID="rdpExpiryDate" width="150"  runat="server" ForeColor="Black" ></telerik:RadDatePicker>
+                        <telerik:raddatepicker id="rdpExpiryDate" width="150" runat="server" forecolor="Black"></telerik:raddatepicker>
                     </td>
                 </tr>
                 <tr>
                     <td class="MyLable">Review Date Freq:</td>
                     <td class="MyContent">
-                        <telerik:raddatepicker runat="server" ID="rdpReviewDate"  Width="150" ForeColor="Black" ></telerik:raddatepicker>
-                    </td>  
-                    <td style="visibility:hidden;">
-                         <telerik:radnumerictextbox runat="server" ID="tbRate" NumberFormat-DecimalDigits="5"
-                              ClientEvents-OnBlur="clientEvent_NominalValue" ForeColor="Black"  >
+                        <telerik:raddatepicker runat="server" id="rdpReviewDate" width="150" forecolor="Black"></telerik:raddatepicker>
+                    </td>
+                    <td style="visibility: hidden;">
+                        <telerik:radnumerictextbox runat="server" id="tbRate" numberformat-decimaldigits="5"
+                            clientevents-onblur="clientEvent_NominalValue" forecolor="Black">
                          </telerik:radnumerictextbox>
-                     </td>                 
+                    </td>
                 </tr>
             </table>
         </fieldset>
-        <fieldset style="visibility:hidden;">
-            <legend style="text-transform:uppercase ;font-weight:bold;">Credit Card Information</legend>
+        <fieldset style="visibility: hidden;">
+            <legend style="text-transform: uppercase; font-weight: bold;">Credit Card Information</legend>
             <table width="100%" cellpadding="0" cellspacing="0">
-                <tr style="visibility:hidden;">
+                <tr style="visibility: hidden;">
                     <td class="MyLable">Maximum Value:</td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox ID="tbMaxValue" NumberFormat-DecimalDigits="0" runat="server" ValidationGroup="Group1" Width="150"></telerik:RadNumericTextBox>
-                        
+                        <telerik:radnumerictextbox id="tbMaxValue" numberformat-decimaldigits="0" runat="server" validationgroup="Group1" width="150"></telerik:radnumerictextbox>
+
                     </td>
                 </tr>
                 <tr>
                     <td class="MyLable">Credit Card No:</td>
                     <td class="MyContent" width="150">
-                        <telerik:RadNumericTextBox ID="tbCreditCardNo" runat="server" ValidationGroup="Group1" Width="150"
-                           NumberFormat-GroupSeparator="" NumberFormat-DecimalDigits="0"></telerik:RadNumericTextBox>
-                                            </td>
-                    <td ><a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png" /></a></td>
-                     </tr>
-                   </table>
-                     <table width="100%" cellpadding="0" cellspacing="0"> 
+                        <telerik:radnumerictextbox id="tbCreditCardNo" runat="server" validationgroup="Group1" width="150"
+                            numberformat-groupseparator="" numberformat-decimaldigits="0"></telerik:radnumerictextbox>
+                    </td>
+                    <td><a class="add">
+                        <img src="Icons/Sigma/Add_16X16_Standard.png" /></a></td>
+                </tr>
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">Card Type:</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox ID="rcbCardType" runat="server" MarkFirstMatch="true" AllowCustomText="false"
+                        <telerik:radcombobox id="rcbCardType" runat="server" markfirstmatch="true" allowcustomtext="false"
                             width="150">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" /> 
                             </Items>
-                        </telerik:RadComboBox>
+                        </telerik:radcombobox>
                     </td>
                 </tr>
                 <tr>
                     <td class="MyLable">Cardholder:</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox ID="rcbCardholder" runat="server" MarkFirstMatch="true" AllowCustomText="false"
+                        <telerik:radcombobox id="rcbCardholder" runat="server" markfirstmatch="true" allowcustomtext="false"
                             width="150">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />  
                             </Items>
-                        </telerik:RadComboBox>
+                        </telerik:radcombobox>
                     </td>
                     <td class="MyLable"></td>
                     <td class="MyContent"></td>
@@ -353,36 +364,36 @@
                 <tr>
                     <td class="MyLable">Total Col Amt:</td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox ID="tbTotalColAmt" runat="server" ValidationGroup="Group1" 
-                            NumberFormat-DecimalDigits="0" Width="150"></telerik:RadNumericTextBox>
-                       
+                        <telerik:radnumerictextbox id="tbTotalColAmt" runat="server" validationgroup="Group1"
+                            numberformat-decimaldigits="0" width="150"></telerik:radnumerictextbox>
+
                     </td>
-                </tr>       
+                </tr>
             </table>
         </fieldset>
     </div>
 
-    <%-- Contingent Entry information --%>
-    <div id="blank2" class="dnnClear">
-        <fieldset>
-            <legend style="text-transform:uppercase ;font-weight:bold;">Customer Information</legend>
-            <table width="100%" cellpadding="0" cellspacing="0">
-                <tr >
-                    <td class="MyLable">Contingent Entry ID: </td>
-                    <td class="MyContent" > 
-                        <asp:TextBox ID="tbContingentEntryID" runat="server" ValidationGroup="Group1" ReadOnly="true" />
-                    </td>
-                </tr>
+<%-- Contingent Entry information --%>
+<div id="blank2" class="dnnClear">
+    <fieldset>
+        <legend style="text-transform: uppercase; font-weight: bold;">Customer Information</legend>
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="MyLable">Contingent Entry ID: </td>
+                <td class="MyContent">
+                    <asp:TextBox ID="tbContingentEntryID" runat="server" ValidationGroup="Group1" ReadOnly="true" />
+                </td>
+            </tr>
         </table>
-             <table width="100%" cellpadding="0" cellspacing="0">
-                 <tr>
-                     <td class="MyLable">Customer ID:</td>
-                     <td class="MyContent">
-                         <table width="100%" cellpadding="0" cellspacing="0" >
-                             <tr>
-                                 <td width="350">
-                                     <telerik:RadTextBox ID="tbCustomerIDName_Cont" runat="server" validationGroup="Group1" readOnly="true" width="350"/>
-                                     <%--<telerik:RadComboBox ID="rcbCustomerID" runat="server" AllowCustomText="false"
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="MyLable">Customer ID:</td>
+                <td class="MyContent">
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="350">
+                                <telerik:radtextbox id="tbCustomerIDName_Cont" runat="server" validationgroup="Group1" readonly="true" width="350" />
+                                <%--<telerik:RadComboBox ID="rcbCustomerID" runat="server" AllowCustomText="false"
                                          MarkFirstMatch="true" width="350" AppendDataBoundItems="true" >                                          
                                          <ExpandAnimation Type="None" />
                                          <CollapseAnimation Type="None" />
@@ -390,48 +401,48 @@
                                              <telerik:RadComboBoxItem Value="" Text="" />
                                          </Items>
                                      </telerik:RadComboBox> --%>
-                                      </td>
-                                 </tr>
-                             </table>
-                           </td>
-                           </tr>
-                 <tr>
-                     <td class="MyLable">Address:</td>
-                     <td class="MyContent">
-                         <telerik:RadTextBox ID="tbAddress_cont" runat="server" ValidationGroup="Group1" Width="350" TextMode="MultiLine" readonly="true" />
-                         <%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%>
-                     </td>
-                     <td ></td>
-                     </tr> 
-                           </table>
-            <table width="100%" cellpadding="0" cellspacing="0">
-                 
-                 <tr>
-                     <td class="MyLable">ID / Tax Code:</td>
-                     <td class="MyContent" width="350">
-                         <telerik:RadTextBox ID="tbIDTaxCode" runat="server" ValidationGroup="Group1" Width="150" readonly="true" />
-                     </td>
-                     <td class="MyLable">Date Of Issue:</td>
-                     <td class="MyContent">
-                         <telerik:RadTextBox id="tbDateOfIssue" runat="server"  readonly="true" />
-                        <%-- <telerik:RadDatePicker ID="rdpDateOfIssue" runat="server" />--%>
-                     </td>
-                 </tr>            
-             </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable">Address:</td>
+                <td class="MyContent">
+                    <telerik:radtextbox id="tbAddress_cont" runat="server" validationgroup="Group1" width="350" textmode="MultiLine" readonly="true" />
+                    <%--<a class="add"><img src="Icons/Sigma/Add_16X16_Standard.png" /></a>--%>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        <table width="100%" cellpadding="0" cellspacing="0">
 
-        </fieldset>
-        <fieldset>
-            <legend style="text-transform:uppercase ;font-weight:bold;">CONTINGENT&nbsp; Information</legend>
-             <table width="100%" cellpadding="0" cellspacing="0">
-                 <tr>
-                     <td class="MyLable">Transaction Code:<span class="Required">(*)</span>
-                         <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator5"
-                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Transaction Code is required"
-                    ForeColor="Red"></asp:RequiredFieldValidator> 
-                     </td>
-                     <td class="MyContent">
-                          <telerik:RadComboBox ID="rcbTransactionCode" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="150" OnSelectedIndexChanged="rcbTransactionCode_OnSelectedIndexChanged" autoPostBack="true">
+            <tr>
+                <td class="MyLable">ID / Tax Code:</td>
+                <td class="MyContent" width="350">
+                    <telerik:radtextbox id="tbIDTaxCode" runat="server" validationgroup="Group1" width="150" readonly="true" />
+                </td>
+                <td class="MyLable">Date Of Issue:</td>
+                <td class="MyContent">
+                    <telerik:radtextbox id="tbDateOfIssue" runat="server" readonly="true" />
+                    <%-- <telerik:RadDatePicker ID="rdpDateOfIssue" runat="server" />--%>
+                </td>
+            </tr>
+        </table>
+
+    </fieldset>
+    <fieldset>
+        <legend style="text-transform: uppercase; font-weight: bold;">CONTINGENT&nbsp; Information</legend>
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="MyLable">Transaction Code:<span class="Required">(*)</span>
+                    <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator5"
+                        ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Transaction Code is required"
+                        ForeColor="Red"></asp:RequiredFieldValidator>
+                </td>
+                <td class="MyContent">
+                    <telerik:radcombobox id="rcbTransactionCode" runat="server" markfirstmatch="true" allowcustomtext="false"
+                        width="150" onselectedindexchanged="rcbTransactionCode_OnSelectedIndexChanged" autopostback="true">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -439,19 +450,19 @@
                                 <telerik:RadComboBoxItem Value="901" Text="901 - Nhap ngoai bang" />                               
                                 <telerik:RadComboBoxItem Value="902" Text="902 - Xuat ngoai bang" />                               
                             </Items>
-                        </telerik:RadComboBox>
-                     </td>
-                     
-                 </tr>
-                 <tr>
-                     <td class="MyLable">Debit or Credit:<span class="Required">(*)</span>
-                          <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator6"
-                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Debit or Credit is required"
-                    ForeColor="Red"></asp:RequiredFieldValidator> 
-                     </td>
-                     <td class="MyContent">
-                         <telerik:RadComboBox ID="rcbDebitOrCredit" runat="server" MarkFirstMatch="true" AllowCustomText="false"
-                            width="150" Enabled="false" >
+                        </telerik:radcombobox>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="MyLable">Debit or Credit:<span class="Required">(*)</span>
+                    <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator6"
+                        ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Debit or Credit is required"
+                        ForeColor="Red"></asp:RequiredFieldValidator>
+                </td>
+                <td class="MyContent">
+                    <telerik:radcombobox id="rcbDebitOrCredit" runat="server" markfirstmatch="true" allowcustomtext="false"
+                        width="150" enabled="false">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
@@ -459,98 +470,98 @@
                                 <telerik:RadComboBoxItem Value="D" Text="D - Debit" /> 
                                 <telerik:RadComboBoxItem Value="C" Text="C - Credit" />                               
                             </Items>
-                        </telerik:RadComboBox>
-                     </td>                     
-                 </tr>
-                 <tr>
-                     <td class="MyLable">Currency:</td>
-                     <td class="MyContent">
-                         <telerik:RadComboBox ID="rcbFreignCcy" runat="server" MarkFirstMatch="true" AllowCustomText="false" 
-                            width="150">
+                        </telerik:radcombobox>
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable">Currency:</td>
+                <td class="MyContent">
+                    <telerik:radcombobox id="rcbFreignCcy" runat="server" markfirstmatch="true" allowcustomtext="false"
+                        width="150">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />                                
                             </Items>
-                        </telerik:RadComboBox>
-                     </td>                     
-                 </tr>
-                 <tr>
-                     <td class="MyLable">Account No:<span class="Required">(*)</span>
-                         <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator7"
-                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="CategoryID is required"
-                    ForeColor="Red"></asp:RequiredFieldValidator> 
-                     </td>
-                     <td class="MyContent">
-                         <telerik:RadComboBox ID="rcbAccountNo" runat="server" AllowCustomText="false" MarkFirstMatch="true"
-                             width="350">
+                        </telerik:radcombobox>
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable">Account No:<span class="Required">(*)</span>
+                    <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator7"
+                        ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="CategoryID is required"
+                        ForeColor="Red"></asp:RequiredFieldValidator>
+                </td>
+                <td class="MyContent">
+                    <telerik:radcombobox id="rcbAccountNo" runat="server" allowcustomtext="false" markfirstmatch="true"
+                        width="350">
                              <CollapseAnimation Type="None" />
                              <ExpandAnimation Type="None" />
                              <Items>
                                  <telerik:RadComboBoxItem value="" text=""/>
                              </Items>
-                         </telerik:RadComboBox>
-                     </td>                    
-                 </tr>
-                 <tr>
-                     <td class="MyLable">Amount:</td>
-                     <td class="MyContent">
-                         <telerik:RadNumericTextBox ID="tbAmount" runat="server" Width="150"  ValidationGroup="Group1"></telerik:RadNumericTextBox>
-                         
-                     </td>
-                      <td class="MyLable">Deal Rate:</td>
-                     <td class="MyContent">
-                         <telerik:RadNumericTextBox ID="tbDealRate" runat="server" ValidationGroup="Group1" 
-                             NumberFormat-DecimalDigits="5" ></telerik:RadNumericTextBox>
-                         
-                     </td>
-                     
-                 </tr>
-                
-                 <tr>
-                     <td class="MyLable">Value Date:</td>
-                     <td class="MyContent">
-                         <telerik:RadDatePicker width="150" ID="rdpValuedate_cont" runat="server" ValidationGroup="Group1"></telerik:RadDatePicker>
-                        
-                     </td>
-                 </tr>
-                 <tr>
-                     <td class="MyLable">Reference No:<span class="Required">(*)</span>
-                         <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator8"
-                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Reference No is required"
-                    ForeColor="Red"></asp:RequiredFieldValidator> 
-                     </td>
-                     <td class="MyContent">
-                         <telerik:RadTextBox ID="tbReferenceNo" runat="server" ValidationGroup="Group1" width="150" Readonly="true" />
-                     </td>
-                     
-                 </tr>
-                 <tr>
-                     <td class="MyLable">Narrative:<span class="Required">(*)</span>
-                         <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator9"
-                     ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Narrative is required"
-                    ForeColor="Red"></asp:RequiredFieldValidator> 
-                     </td>
-                     <td class="MyContent" width="350">
-                         <telerik:RadTextBox ID="tbNarrative" runat="server" ValidationGroup="Group1" Width="350" TextMode="MultiLine" />
-                     </td>
-                     
-                     
-                 </tr>
-             </table>
+                         </telerik:radcombobox>
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable">Amount:</td>
+                <td class="MyContent">
+                    <telerik:radnumerictextbox id="tbAmount" runat="server" width="150" validationgroup="Group1"></telerik:radnumerictextbox>
 
-        </fieldset>
-    </div>
+                </td>
+                <td class="MyLable">Deal Rate:</td>
+                <td class="MyContent">
+                    <telerik:radnumerictextbox id="tbDealRate" runat="server" validationgroup="Group1"
+                        numberformat-decimaldigits="5"></telerik:radnumerictextbox>
+
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="MyLable">Value Date:</td>
+                <td class="MyContent">
+                    <telerik:raddatepicker width="150" id="rdpValuedate_cont" runat="server" validationgroup="Group1"></telerik:raddatepicker>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="MyLable">Reference No:<span class="Required">(*)</span>
+                    <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator8"
+                        ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Reference No is required"
+                        ForeColor="Red"></asp:RequiredFieldValidator>
+                </td>
+                <td class="MyContent">
+                    <telerik:radtextbox id="tbReferenceNo" runat="server" validationgroup="Group1" width="150" readonly="true" />
+                </td>
+
+            </tr>
+            <tr>
+                <td class="MyLable">Narrative:<span class="Required">(*)</span>
+                    <asp:RequiredFieldValidator runat="server" Display="None" ID="RequiredFieldValidator9"
+                        ControlToValidate="rcbContingentAcct" ValidationGroup="Commit" InitialValue="" ErrorMessage="Narrative is required"
+                        ForeColor="Red"></asp:RequiredFieldValidator>
+                </td>
+                <td class="MyContent" width="350">
+                    <telerik:radtextbox id="tbNarrative" runat="server" validationgroup="Group1" width="350" textmode="MultiLine" />
+                </td>
+
+
+            </tr>
+        </table>
+
+    </fieldset>
+</div>
 </div>
 
-<telerik:RadCodeBlock id="RadCodeBlock2" runat="server"> 
+<telerik:radcodeblock id="RadCodeBlock2" runat="server"> 
 <script type="text/javascript">
     $("#<%=tbCollInfoID.ClientID%>").keyup(function (event) {
 
         if (event.keyCode == 13) {
             $("#<%=btSearch.ClientID%>").click();
         }
-      });
+    });
     function clientEvent_NominalValue()//(sender, args)
     {
         var NominalValue = $find("<%= tbNominalValue.ClientID%>");
@@ -592,6 +603,18 @@
         console.log(m);
         sender.set_value(m);
     }
+
+
+
+    function DisableGlobleID2() {
+        divGlobalID2.style.display = 'none';
+    }
+
+    function EnableGlobleID2() {
+        divGlobalID2.style.display = 'block';
+    }
+
+
     function SetNumber(sender, args) {
         //sender.set_value(sender.get_value().toUpperCase());
         var number;
@@ -641,8 +664,8 @@
         clientEvent_NominalValue();
     }
   </script>
-    </telerik:RadCodeBlock> 
-<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" >
+    </telerik:radcodeblock>
+<telerik:radajaxmanager id="RadAjaxManager1" runat="server">
     <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="rcbCollateralType">
             <UpdatedControls>  
@@ -673,7 +696,7 @@
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>
-</telerik:RadAjaxManager> 
-<div style="visibility:hidden;">
+</telerik:radajaxmanager>
+<div style="visibility: hidden;">
     <asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click1" Text="Search" />
 </div>
