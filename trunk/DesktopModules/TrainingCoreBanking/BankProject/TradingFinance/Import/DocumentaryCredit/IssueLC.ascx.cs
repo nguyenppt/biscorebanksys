@@ -527,23 +527,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             //bc.Commont.initRadComboBox(ref rcbApplicant700, "CustomerName", "CustomerID", dsc);
             bc.Commont.initRadComboBox(ref rcbAccountOfficer, "Description", "Code", bd.SQLData.B_BACCOUNTOFFICER_GetAll());
 
-            // dsAdviseBankNo = bd.SQLData.B_BBANKSWIFTCODE_GetByType("RMA");
-            //bc.Commont.initRadComboBox(ref rcbAdviseBankNo, "SwiftCode", "SwiftCode", dsAdviseBankNo);
-                        
-            //var dsNostro = bd.SQLData.B_BBANKSWIFTCODE_GetByType("Nostro");
-            //bc.Commont.initRadComboBox(ref rcbReimbBankNo, "SwiftCode", "SwiftCode", dsNostro);
-            //bc.Commont.initRadComboBox(ref rcbReimbBankNo700, "SwiftCode", "SwiftCode", dsNostro);
-            //bc.Commont.initRadComboBox(ref comboRevivingBank, "SwiftCode", "SwiftCode", dsNostro);
-            //bc.Commont.initRadComboBox(ref comboReimbBankNo_747, "SwiftCode", "SwiftCode", dsNostro);
-
-            //var dsall = bd.SQLData.B_BBANKSWIFTCODE_GetByType("all");
-            //bc.Commont.initRadComboBox(ref rcbAdviseThruNo, "SwiftCode", "SwiftCode", dsall);
-            //bc.Commont.initRadComboBox(ref comboAdviseThroughBankNo700, "SwiftCode", "SwiftCode", dsall);
-            //bc.Commont.initRadComboBox(ref comboAvailableWithNo, "SwiftCode", "SwiftCode", dsall);
-            //bc.Commont.initRadComboBox(ref comboDraweeCusNo700, "SwiftCode", "SwiftCode", dsall);
-
             bc.Commont.initRadComboBox(ref rcbLCType, "LCTYPE", "LCTYPE", bd.DataTam.B_BLCTYPES_GetAll());
-            bc.Commont.initRadComboBox(ref rcCommodity, "ID", "ID", bd.SQLData.B_BCOMMODITY_GetByTransactionType("OTC"));
+            bc.Commont.initRadComboBox(ref rcCommodity, "Name", "ID", bd.SQLData.B_BCOMMODITY_GetByTransactionType("OTC"));
             var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
             bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
