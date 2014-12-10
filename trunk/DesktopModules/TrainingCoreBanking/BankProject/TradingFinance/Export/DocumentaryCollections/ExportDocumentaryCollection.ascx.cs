@@ -78,7 +78,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 if (Code.IndexOf('.') == -1)
                 {
                     var objAmend = new BEXPORT_DOCUMETARYCOLLECTION();
-                    var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.DocCollectCode == Code).ToList();
+                    var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => (x.DocCollectCode == Code)).ToList();
                     if (lstDoc != null && lstDoc.Count > 0)
                     {
 
@@ -104,11 +104,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                 maxAmendId = maxAmendId + 1;
                             }
                             var code = CodeId;
-                            var ctnAmend = lstDoc.Where(x => x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES).FirstOrDefault();
+                            var ctnAmend = lstDoc.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
                             if (ctnAmend != null)
                             {
+                                _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
+                                _exportCollection = ctnAmend;
 
-                                var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == ctnAmend.DocCollectCode).ToList();
+                                var objCharge = new List<BEXPORT_DOCUMETARYCOLLECTIONCHARGES>();
                                 LoadDataForAmend(ctnAmend, objCharge);
                             }
                             RadToolBar1.FindItemByValue("btSave").Enabled = true;
@@ -122,7 +124,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == Code).FirstOrDefault();
                     if (lstDoc != null)
                     {
-                        var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode).ToList();
+                        var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode&&x.AmendNo==Code).ToList();
                         LoadDataForAmend(lstDoc, objCharge);
                         txtCode.Text = lstDoc.AmendNo;
                         _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
@@ -549,6 +551,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 if (TabId == 229)
                 {
+                    datasource.Rows.Add("EC.RECEIVE", "");
                     datasource.Rows.Add("EC.AMEND", "");
                 }
                 else if (TabId == 377)
@@ -756,7 +759,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Documentary was canceled";
                     }
-                    else if (_exportCollection.Amend_Status == "AUT") // Authorized
+                    else if (_exportCollection.Amend_Status == "AUT" && _exportCollection.AmendNo == txtCode.Text) // Authorized
                     {
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         lblError.Text = "This Amend Documentary was authorized";
@@ -781,34 +784,44 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             RadToolBar1.FindItemByValue("btReview").Enabled = true;
             if (_exportDoc != null)
             {
-                if (Disable) // Authorizing
+                if (!String.IsNullOrEmpty(_exportDoc["DocsType"].ToString()))
                 {
-                    if (_exportDoc["Status"].ToString() == "AUT") // Authorized
+                    if (_exportDoc["DocsType"].ToString() == ScreenType.ToString())
                     {
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                        lblError.Text = "This Documentary was authorized";
+                        if (Disable) // Authorizing
+                        {
+                            if (_exportDoc["Status"].ToString() == "AUT") // Authorized
+                            {
+                                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                                lblError.Text = "This Documentary was authorized";
+                            }
+                            else // Not yet authorize
+                            {
+                                RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                                RadToolBar1.FindItemByValue("btRevert").Enabled = true;
+                                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            }
+                            SetDisableByReview(false);
+                        }
+                        else // Editing
+                        {
+                            if (_exportDoc["Status"].ToString() == "AUT") // Authorized
+                            {
+                                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                                lblError.Text = "This Documentary was authorized";
+                                SetDisableByReview(false);
+                            }
+                            else // Not yet authorize
+                            {
+                                RadToolBar1.FindItemByValue("btSave").Enabled = true;
+                                SetEnableForReview();
+                            }
+                        }
                     }
-                    else // Not yet authorize
+                    else
                     {
-                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                        RadToolBar1.FindItemByValue("btRevert").Enabled = true;
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                          Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
                     }
-                    SetDisableByReview(false);
-                }
-                else // Editing
-                {
-                    if (_exportDoc["Status"].ToString() == "AUT") // Authorized
-                    {
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                        lblError.Text = "This Documentary was authorized";
-                        SetDisableByReview(false);
-                    }
-                    else // Not yet authorize
-                    {
-                        RadToolBar1.FindItemByValue("btSave").Enabled = true;
-                    }
-                    
                 }
             }
             else // Creating
@@ -1057,6 +1070,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         RefAmendNo = findTypeAmend[0],
                                         ActiveRecordFlag=YesNo.YES,
                                         Status="AUT"
+                                        
                                         //
                                     };
                                     if (objPreAmend != null)
@@ -1182,7 +1196,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                 }
                                 //save phan Charge
                                 var name = findTypeAmend[0];
-                                var lstCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == name).ToList();
+                                var lstCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == name && x.AmendNo == Code).ToList();
                                 //truong hop da co -->update
                                 if (lstCharge != null && lstCharge.Count > 0)
                                 {
@@ -1208,6 +1222,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                             item.TaxAmt = lblTaxAmt.Text;
                                             item.Rowchages = "1";
                                             item.TabId = TabId;
+                                            item.AmendNo = Code;
+                                            if(!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                                            {
+                                                item.AmendId = int.Parse(findTypeAmend[1].ToString());
+                                            }
                                         }
                                         else if (item.Chargecode == "EC.CABLE")
                                         {
@@ -1229,6 +1248,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                             item.TaxAmt = lblTaxAmt2.Text;
                                             item.Rowchages = "2";
                                             item.TabId = TabId;
+                                            item.AmendNo = Code;
+                                            if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                                            {
+                                                item.AmendId = int.Parse(findTypeAmend[1].ToString());
+                                            }
                                         }
                                         else if (item.Chargecode == "EC.COURIER")
                                         {
@@ -1250,6 +1274,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                             item.TaxAmt = lblTaxAmt3.Text;
                                             item.Rowchages = "3";
                                             item.TabId = TabId;
+                                            item.AmendNo = Code;
+                                            if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                                            {
+                                                item.AmendId = int.Parse(findTypeAmend[1].ToString());
+                                            }
                                         }
                                         else if (item.Chargecode == "EC.OTHER")
                                         {
@@ -1299,10 +1328,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         objCharge.TaxAmt = lblTaxAmt.Text;
                                         objCharge.Rowchages = "1";
                                         objCharge.TabId = TabId;
+                                        objCharge.AmendNo = Code;
+                                        //item.AmendNo = Code;
+                                        if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                                        {
+                                            objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
+                                        }
+                                        _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                        _entities.SaveChanges();
+                                        //
                                     }
-                                    _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
-                                    _entities.SaveChanges();
-                                    //
+                                    
                                     objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
                                     if (!String.IsNullOrWhiteSpace(tbChargeAmt2.Text))
                                     {
@@ -1324,10 +1360,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         objCharge.TaxAmt = lblTaxAmt2.Text;
                                         objCharge.Rowchages = "2";
                                         objCharge.TabId = TabId;
+                                        objCharge.AmendNo = Code;
+                                        if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                                        {
+                                            objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
+                                        }
+                                        _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                        _entities.SaveChanges();
                                     }
                                     //
-                                    _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
-                                    _entities.SaveChanges();
+                                    
                                     //
                                     objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
                                     if (!String.IsNullOrWhiteSpace(tbChargeAmt3.Text))
@@ -1350,6 +1392,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         objCharge.TaxAmt = lblTaxAmt3.Text;
                                         objCharge.Rowchages = "3";
                                         objCharge.TabId = TabId;
+                                        objCharge.AmendNo = Code;
+                                        if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                                        {
+                                            objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
+                                        }
                                         //
                                         _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
                                         _entities.SaveChanges();
@@ -1376,6 +1423,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         objCharge.TaxAmt = lblTaxAmt4.Text;
                                         objCharge.Rowchages = "4";
                                         objCharge.TabId = TabId;
+                                        objCharge.AmendNo = Code;
+                                        if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                                        {
+                                            objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
+                                        }
                                         //
                                         _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
                                         _entities.SaveChanges();
@@ -1403,95 +1455,104 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void SaveData()
         {
-            bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_Insert(txtCode.Text.Trim()
-                                                          , comboDrawerCusNo.SelectedValue
-                                                          , txtDrawerCusName.Text.Trim()
-                                                          , txtDrawerAddr1.Text.Trim()
-                                                          , txtDrawerAddr2.Text.Trim()
-                                                          , txtDrawerAddr3.Text.Trim()
-                                                          , txtDrawerRefNo.Text.Trim()
-                                                          , comboCollectingBankNo.Text
-                                                          , txtCollectingBankName.Text.Trim()
-                                                          , txtCollectingBankAddr1.Text.Trim(),
-                                                          txtCollectingBankAddr2.Text.Trim()
-                                                          , ""
-                                                          , comboCollectingBankAcct.SelectedValue
-                                                          , txtDraweeCusNo.Text
-                                                          , txtDraweeCusName.Text.Trim()
-                                                          , txtDraweeAddr1.Text.Trim()
-                                                          , txtDraweeAddr2.Text.Trim()
-                                                          , txtDraweeAddr3.Text.Trim()
-                                                          , comboNostroCusNo.SelectedValue
-                                                          , comboCurrency.SelectedValue
-                                                          , numAmount.Value.ToString()
-                                                          , dteDocsReceivedDate.SelectedDate.ToString()
-                                                          , dteMaturityDate.SelectedDate.ToString()
-                                                          , txtTenor.Text.Trim()
-                                                          , "0"//numDays.Value.ToString()
-                                                          , dteTracerDate.SelectedDate.ToString()
-                                                          , numReminderDays.Value.ToString()
-                                                          , comboCommodity.SelectedValue
-                                                          , comboDocsCode1.SelectedValue
-                                                          , numNoOfOriginals1.Value.ToString()
-                                                          , numNoOfCopies1.Value.ToString()
-                                                          , comboDocsCode2.SelectedValue
-                                                          , numNoOfOriginals2.Value.ToString()
-                                                          , numNoOfCopies2.Value.ToString()
-                                                          , comboDocsCode3.SelectedValue
-                                                          , numNoOfOriginals3.Value.ToString()
-                                                          , numNoOfCopies3.Value.ToString()
-                                                          , txtOtherDocs.Text.Trim()
-                                                          , txtRemarks.Text.Trim()
-                                                          , UserId.ToString()
-                                                          , comboCollectionType.SelectedValue
-                                                          , dteCancelDate.SelectedDate.ToString()
-                                                          , dteContingentExpiryDate.SelectedDate.ToString()
-                                                          , txtCancelRemark.Text
-                                                          , comboAccountOfficer.SelectedValue
-                                                          , dtAcceptDate.SelectedDate.ToString()
-                                                          , txtAcceptREmark.Text
-                                                          , ScreenType.ToString("G")
-                );
+            try
+            {
 
-            if (!string.IsNullOrWhiteSpace(tbChargeAmt.Text))
-            {
-                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
-                    comboWaiveCharges.SelectedValue, tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue, ""
-                    /*tbChargePeriod.Text*/,
-                    rcbChargeCcy.SelectedValue, "0" /*tbExcheRate.Text*/, tbChargeAmt.Text,
-                    rcbPartyCharged.SelectedValue, rcbOmortCharge.SelectedValue, "", "",
-                    rcbChargeStatus.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode.Text, ""
-                    /*lblTaxCcy.Text*/, lblTaxAmt.Text, "", "", "1",TabId);
+                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTION_Insert(txtCode.Text.Trim()
+                                                              , comboDrawerCusNo.SelectedValue
+                                                              , txtDrawerCusName.Text.Trim()
+                                                              , txtDrawerAddr1.Text.Trim()
+                                                              , txtDrawerAddr2.Text.Trim()
+                                                              , txtDrawerAddr3.Text.Trim()
+                                                              , txtDrawerRefNo.Text.Trim()
+                                                              , comboCollectingBankNo.Text
+                                                              , txtCollectingBankName.Text.Trim()
+                                                              , txtCollectingBankAddr1.Text.Trim(),
+                                                              txtCollectingBankAddr2.Text.Trim()
+                                                              , ""
+                                                              , comboCollectingBankAcct.SelectedValue
+                                                              , txtDraweeCusNo.Text
+                                                              , txtDraweeCusName.Text.Trim()
+                                                              , txtDraweeAddr1.Text.Trim()
+                                                              , txtDraweeAddr2.Text.Trim()
+                                                              , txtDraweeAddr3.Text.Trim()
+                                                              , comboNostroCusNo.SelectedValue
+                                                              , comboCurrency.SelectedValue
+                                                              , numAmount.Value.ToString()
+                                                              , dteDocsReceivedDate.SelectedDate.ToString()
+                                                              , dteMaturityDate.SelectedDate.ToString()
+                                                              , txtTenor.Text.Trim()
+                                                              , "0"//numDays.Value.ToString()
+                                                              , dteTracerDate.SelectedDate.ToString()
+                                                              , numReminderDays.Value.ToString()
+                                                              , comboCommodity.SelectedValue
+                                                              , comboDocsCode1.SelectedValue
+                                                              , numNoOfOriginals1.Value.ToString()
+                                                              , numNoOfCopies1.Value.ToString()
+                                                              , comboDocsCode2.SelectedValue
+                                                              , numNoOfOriginals2.Value.ToString()
+                                                              , numNoOfCopies2.Value.ToString()
+                                                              , comboDocsCode3.SelectedValue
+                                                              , numNoOfOriginals3.Value.ToString()
+                                                              , numNoOfCopies3.Value.ToString()
+                                                              , txtOtherDocs.Text.Trim()
+                                                              , txtRemarks.Text.Trim()
+                                                              , UserId.ToString()
+                                                              , comboCollectionType.SelectedValue
+                                                              , dteCancelDate.SelectedDate.ToString()
+                                                              , dteContingentExpiryDate.SelectedDate.ToString()
+                                                              , txtCancelRemark.Text
+                                                              , comboAccountOfficer.SelectedValue
+                                                              , TabId.ToString()
+                                                              , dtAcceptDate.SelectedDate.ToString()
+                                                              , txtAcceptREmark.Text
+                                                              , ScreenType.ToString("G")
+                    );
+
+                if (!string.IsNullOrWhiteSpace(tbChargeAmt.Text))
+                {
+                    bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
+                        comboWaiveCharges.SelectedValue, tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue, ""
+                        /*tbChargePeriod.Text*/,
+                        rcbChargeCcy.SelectedValue, "0" /*tbExcheRate.Text*/, tbChargeAmt.Text,
+                        rcbPartyCharged.SelectedValue, rcbOmortCharge.SelectedValue, "", "",
+                        rcbChargeStatus.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode.Text, ""
+                        /*lblTaxCcy.Text*/, lblTaxAmt.Text, "", "", "1", TabId);
+                }
+                if (!string.IsNullOrWhiteSpace(tbChargeAmt2.Text))
+                {
+                    bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
+                        comboWaiveCharges.SelectedValue, tbChargeCode2.SelectedValue, rcbChargeAcct2.SelectedValue, ""
+                        /*tbChargePeriod2.Text*/,
+                        rcbChargeCcy2.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt2.Text,
+                        rcbPartyCharged2.SelectedValue, rcbOmortCharge2.SelectedValue, "", "",
+                        rcbChargeStatus2.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode2.Text, ""
+                        /*lblTaxCcy2.Text*/, lblTaxAmt2.Text, "", "", "2", TabId);
+                }
+                if (!string.IsNullOrWhiteSpace(tbChargeAmt3.Text))
+                {
+                    bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
+                        comboWaiveCharges.SelectedValue, tbChargeCode3.SelectedValue, rcbChargeAcct3.SelectedValue, ""
+                        /*tbChargePeriod3.Text*/,
+                        rcbChargeCcy3.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt3.Text,
+                        rcbPartyCharged3.SelectedValue, rcbOmortCharge3.SelectedValue, "", "",
+                        rcbChargeStatus3.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode3.Text, ""
+                        /*lblTaxCcy2.Text*/, lblTaxAmt3.Text, "", "", "3", TabId);
+                }
+                if (!string.IsNullOrWhiteSpace(tbChargeCode4.Text))
+                {
+                    bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
+                        comboWaiveCharges.SelectedValue, tbChargeCode4.SelectedValue, rcbChargeAcct4.SelectedValue, ""
+                        /*tbChargePeriod4.Text*/,
+                        rcbChargeCcy4.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt4.Text,
+                        rcbPartyCharged4.SelectedValue, rcbOmortCharge4.SelectedValue, "", "",
+                        rcbChargeStatus4.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode4.Text, ""
+                        /*lblTaxCcy2.Text*/, lblTaxAmt4.Text, "", "", "4", TabId);
+                }
             }
-            if (!string.IsNullOrWhiteSpace(tbChargeAmt2.Text))
+            catch (Exception ex)
             {
-                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
-                    comboWaiveCharges.SelectedValue, tbChargeCode2.SelectedValue, rcbChargeAcct2.SelectedValue, ""
-                    /*tbChargePeriod2.Text*/,
-                    rcbChargeCcy2.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt2.Text,
-                    rcbPartyCharged2.SelectedValue, rcbOmortCharge2.SelectedValue, "", "",
-                    rcbChargeStatus2.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode2.Text, ""
-                    /*lblTaxCcy2.Text*/, lblTaxAmt2.Text, "", "", "2", TabId);
-            }
-            if (!string.IsNullOrWhiteSpace(tbChargeAmt3.Text))
-            {
-                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
-                    comboWaiveCharges.SelectedValue, tbChargeCode3.SelectedValue, rcbChargeAcct3.SelectedValue, ""
-                    /*tbChargePeriod3.Text*/,
-                    rcbChargeCcy3.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt3.Text,
-                    rcbPartyCharged3.SelectedValue, rcbOmortCharge3.SelectedValue, "", "",
-                    rcbChargeStatus3.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode3.Text, ""
-                    /*lblTaxCcy2.Text*/, lblTaxAmt3.Text, "", "", "3", TabId);
-            }
-            if (!string.IsNullOrWhiteSpace(tbChargeCode4.Text))
-            {
-                bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
-                    comboWaiveCharges.SelectedValue, tbChargeCode4.SelectedValue, rcbChargeAcct4.SelectedValue, ""
-                    /*tbChargePeriod4.Text*/,
-                    rcbChargeCcy4.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt4.Text,
-                    rcbPartyCharged4.SelectedValue, rcbOmortCharge4.SelectedValue, "", "",
-                    rcbChargeStatus4.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode4.Text, ""
-                    /*lblTaxCcy2.Text*/, lblTaxAmt4.Text, "", "", "4", TabId);
+                throw ex;
             }
         }
         protected void LoadDataForAmend(BEXPORT_DOCUMETARYCOLLECTION obj, List<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> lstCharge)
@@ -1682,9 +1743,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                 Cal_TracerDate(false);
             }
+            //khong load tab charge
             foreach (var item in lstCharge)
             {
-                if (item.Chargecode == "EC.AMEND")
+                if (item.Chargecode == "EC.RECEIVE")
                 {
                     comboWaiveCharges.SelectedValue = item.WaiveCharges;
                     rcbChargeAcct.SelectedValue = item.ChargeAcct;
@@ -1710,7 +1772,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     tbChargeCode.SelectedValue = item.Chargecode;
                     ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
                 }
-                else if (item.Chargecode == "EC.CABLE")
+                else if (item.Chargecode == "EC.COURIER")
                 {
                     rcbChargeAcct2.SelectedValue = item.ChargeAcct;
 
@@ -1732,7 +1794,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     tbChargeCode2.SelectedValue = item.Chargecode;
                     ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
                 }
-                else if (item.Chargecode == "EC.COURIER")
+                else if (item.Chargecode == "EC.OTHER")
                 {
                     rcbChargeAcct3.SelectedValue = item.ChargeAcct;
 
@@ -1754,7 +1816,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     tbChargeCode3.SelectedValue = item.Chargecode;
                     ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
                 }
-                else if (item.Chargecode == "EC.OTHER")
+                else if (item.Chargecode == "EC.AMEND")
                 {
                     rcbChargeAcct4.SelectedValue = item.ChargeAcct;
 

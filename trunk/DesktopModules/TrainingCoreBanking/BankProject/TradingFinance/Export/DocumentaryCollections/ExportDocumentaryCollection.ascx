@@ -778,7 +778,7 @@
         <telerik:RadTabStrip runat="server" ID="RadTabStrip14" SelectedIndex="0" MultiPageID="RadMultiPage1" Orientation="HorizontalTop">
             
             <Tabs>
-                <telerik:RadTab Text="Cable Charge">
+                <telerik:RadTab Text="Receive Charge">
                 </telerik:RadTab>
                 <telerik:RadTab Text="Courier Charge ">
                 </telerik:RadTab>
