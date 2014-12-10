@@ -1058,9 +1058,9 @@ namespace BankProject.DataProvider
         }
 
 
-        public static DataSet B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode(string code, int TabId)
+        public static DataSet B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode(string code,int TabId)
         {
-            return sqldata.ndkExecuteDataset("B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode", code,TabId);
+            return sqldata.ndkExecuteDataset("B_BEXPORT_DOCUMETARYCOLLECTION_GetByDocCollectCode", code, TabId);
         }
         public static DataSet P_BEXPORT_DOCUMETARYCLEANCOLLECTION_GetByDocCollectCode(string code)
         {
@@ -1130,9 +1130,10 @@ namespace BankProject.DataProvider
                                                                  , string ContingentExpiryDate
                                                                  , string CancelRemark
                                                                  , string AccountOfficer
+                                                                 , string TabId
                                                                  , string AcceptedDate
                                                                  , string AcceptedRemark
-                                                                 , string screenType                                                                 
+                                                                 , string screenType                                                 
                                                                  )
         {
             sqldata.ndkExecuteNonQuery("B_BEXPORT_DOCUMETARYCOLLECTION_Insert", DocCollectCode
@@ -1180,6 +1181,7 @@ namespace BankProject.DataProvider
                                        , ContingentExpiryDate
                                        , CancelRemark
                                        , AccountOfficer
+                                       , TabId
                                        , AcceptedDate
                                        , AcceptedRemark
                                        , screenType
