@@ -26,6 +26,7 @@ namespace BankProject
             {
                 LoadToolBar(true);
             }
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Remove", "DisableGlobleID2();", true);
         }
 
         protected void FirstLoad()
@@ -408,6 +409,16 @@ namespace BankProject
                 
         }
         #endregion
+
+        protected void btGlobalLimitID_Click(object sender, ImageClickEventArgs e)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Add", "EnableGlobleID2();", true);
+        }
+
+        protected void btRemoveGlobalLimitID_Click(object sender, ImageClickEventArgs e)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Remove", "DisableGlobleID2();", true);
+        }
         
         
     }

@@ -193,6 +193,15 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadComboBox rcbGlobalLimitID;
         
         /// <summary>
+        /// btGlobalLimitID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btGlobalLimitID;
+        
+        /// <summary>
         /// rcbGlobalLimitID2 control.
         /// </summary>
         /// <remarks>
@@ -200,6 +209,15 @@ namespace BankProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbGlobalLimitID2;
+        
+        /// <summary>
+        /// btRemoveGlobalLimitID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btRemoveGlobalLimitID;
         
         /// <summary>
         /// rcbCountry control.
