@@ -20,7 +20,7 @@ function MTIsValidInput(MTContainerId, ignoreIds) {
             }
         }
         if (pattern.test($(this).val())) {
-            alert("User can’t input special characters (!@#$%^&*) in '" + itemId + "' the Tab '" + $('#' + MTContainerId).attr('id') + "'. Please check and remove");
+            alert("User can’t input special characters (!@#$%^&*) in the Tab '" + $('#' + MTContainerId).attr('id') + "'. Please check and remove");
             $(this).focus();
             isValid = false;
         }
