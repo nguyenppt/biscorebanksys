@@ -1557,6 +1557,7 @@
 </telerik:RadAjaxManager>
 
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+    <script type="text/javascript" src="DesktopModules/TrainingCoreBanking/BankProject/Scripts/Common.js"></script>
     <script type="text/javascript">
         var amount =  parseFloat(<%= Amount %>);
         var amountOld = parseFloat(<%= AmountOld %>);
@@ -1565,9 +1566,16 @@
         var clickCalledAfterRadconfirm = false;
 
         $("#<%=txtCode.ClientID %>").keyup(function (event) {
-
             if (event.keyCode == 13) {
-                window.location.href = "Default.aspx?tabid=" + tabId + "&CodeID=" + $("#<%=txtCode.ClientID %>").val();
+                var chk=chkSpecialCharacter(this.value);
+                if(chk=="")
+                {
+                    window.location.href = "Default.aspx?tabid=" + tabId + "&CodeID=" + $("#<%=txtCode.ClientID %>").val();
+                }
+                else{
+                    alert(chk);
+                    return false;
+                }
             }
         });
 
