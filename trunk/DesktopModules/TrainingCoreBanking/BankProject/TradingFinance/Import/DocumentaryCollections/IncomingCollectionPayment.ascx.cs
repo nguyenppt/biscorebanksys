@@ -261,7 +261,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     lblDrawType.Text = drow["DrawType"].ToString();
                     lblCurrency.Text = drow["Currency"].ToString();
-                    numDrawingAmount.Text = drow["DrawingAmount"].ToString();
+                    //numDrawingAmount.Text = drow["DrawingAmount"].ToString();
                     if (drow["ValueDate"].ToString().IndexOf("1/1/1900") == -1)
                     {
                         dteValueDate.SelectedDate = DateTime.Parse(drow["ValueDate"].ToString());
@@ -846,7 +846,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                 #region get data from Register Documetary Collection, neu chua co thong tin trong BINCOMINGCOLLECTIONPAYMENT
 
-                if (dsPayment.Tables[5].Rows.Count > 0)
+                if (dsPayment.Tables[5].Rows.Count > 0 && dsPayment.Tables[0].Rows.Count <= 0)
                 {
                     var drow = dsPayment.Tables[5].Rows[0];
                     double drawingAmt = 0;
