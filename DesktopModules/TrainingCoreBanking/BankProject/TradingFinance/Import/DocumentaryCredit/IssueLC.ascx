@@ -2,6 +2,7 @@
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+    <script type="text/javascript" src="DesktopModules/TrainingCoreBanking/BankProject/Scripts/Common.js"></script>
     <script type="text/javascript">
         var amount =  parseFloat(<%= Amount %>);
         var amount_Old = parseFloat(<%= Amount_Old %>);
@@ -58,10 +59,22 @@
                         }
                     }
                 }
-                args.set_cancel(false);
+                //
+                <% if (TabId == TabIssueLCAddNew) %>
+                <%{ %>
+                if (!MTIsValidInput('MT700', new Array('<%=numPercentCreditAmount1.ClientID%>', '<%=numPercentCreditAmount2.ClientID%>'))) return;
+                if (!MTIsValidInput('MT740', new Array('<%=numPercentageCreditAmountTolerance740_1.ClientID%>', '<%=numPercentageCreditAmountTolerance740_2.ClientID%>'))) return;
+                    <% }
+                    else if (TabId == TabIssueLCAmend) %>
+                <%{%>
+                if (!MTIsValidInput('MT707', null)) return;
+                if (!MTIsValidInput('MT747', null)) return;
+                <% } %>
+                //                
+                args.set_cancel(false);//MT700
             }
         }
-        
+
         function showPhieuNhap_Xuat() {
             // Neu amount > amount_old -> tu chinh tang tienb, xuat phieu [nhap ngoai bang]
             //amount < amount_Old -> tu chinh giam tien,xuat phieu [xuat phieu ngoai bang]
