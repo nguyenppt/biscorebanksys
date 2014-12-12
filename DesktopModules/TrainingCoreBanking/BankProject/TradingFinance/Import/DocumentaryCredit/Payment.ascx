@@ -1,5 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Payment.ascx.cs" Inherits="BankProject.TradingFinance.Import.DocumentaryCredit.Payment" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:radwindowmanager id="RadWindowManager1" runat="server" enableshadow="true" />
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"/>
 <style>
@@ -1665,13 +1664,19 @@
             </UpdatedControls>
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="comboAccountWithInstitutionType">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="comboReceiverCorrespondentType" />
+            <UpdatedControls>                
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitution" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionName" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr3" />
+
+                <telerik:AjaxUpdatedControl ControlID="comboReceiverCorrespondentType" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentName" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="txtAccountWithInstitution">

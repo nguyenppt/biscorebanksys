@@ -415,17 +415,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 case "B":
                 case "D":
                     txtAvailableWithNo.Text = string.Empty;
+                    txtAvailableWithNo.Text = string.Empty;
+                    tbAvailableWithName.Text = string.Empty;
+                    tbAvailableWithAddr1.Text = string.Empty;
+                    tbAvailableWithAddr2.Text = string.Empty;
+                    tbAvailableWithAddr3.Text = string.Empty;
+
+                    tbAvailableWithNo740.Text = string.Empty;
+                    tbAvailableWithName740.Text = string.Empty;
+                    tbAvailableWithAddr740_1.Text = string.Empty;
+                    tbAvailableWithAddr740_2.Text = string.Empty;
+                    tbAvailableWithAddr740_3.Text = string.Empty;
                     break;
             }
 
             SetRelation_AvailableWithType();
 
             rcbAvailableWithType740.SelectedValue = rcbAvailableWithType.SelectedValue;
-            tbAvailableWithNo740.Text = string.Empty;
-            tbAvailableWithName740.Text = string.Empty;
-            tbAvailableWithAddr740_1.Text = string.Empty;
-            tbAvailableWithAddr740_2.Text = string.Empty;
-            tbAvailableWithAddr740_3.Text = string.Empty;       
+                   
         }
 
         protected void rcbAvailableWithType740_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -2142,7 +2149,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 rcbChargeAcct2.SelectedValue = string.Empty;
                 rcbChargeCcy2.SelectedValue = string.Empty;
                 tbChargeAmt2.Value = 0;
-                rcbPartyCharged2.SelectedValue = string.Empty;
                 rcbOmortCharges2.SelectedValue = string.Empty;
                 rcbChargeStatus2.SelectedValue = string.Empty;
                 lblTaxCode2.Text = string.Empty;
@@ -2238,7 +2244,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 }
                 else
                 {
-                    comGenerate.SelectedValue = "NO";
+                    comboGenerateMT747.SelectedValue = "NO";
                     lblDocumentaryCreditNumber_747.Text = string.Empty;
                     txtReceivingBank_747.Text = string.Empty;
 
@@ -2251,8 +2257,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
                     numPercentageCreditTolerance_747_1.Value = 0;
                     numPercentageCreditTolerance_747_1.Value = 0;
-
-                    comboGenerateMT747.SelectedValue = string.Empty;
 
                     dteDateOfOriginalAuthorization_747.SelectedDate = DateTime.Now;
                     dteNewDateOfExpiry_747.SelectedDate = tbExpiryDate.SelectedDate;
