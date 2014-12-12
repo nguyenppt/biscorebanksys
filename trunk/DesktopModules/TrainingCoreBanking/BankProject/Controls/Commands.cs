@@ -9,5 +9,6 @@
         public const string Search = "search";
         public const string Edit = "edit";
         public const string Print = "print";
+        public const string Hold = "hold";
     }
 }
