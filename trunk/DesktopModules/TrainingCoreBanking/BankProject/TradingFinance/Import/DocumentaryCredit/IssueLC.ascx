@@ -76,7 +76,8 @@
             }
             //
             if (button.get_commandName() == "<%=BankProject.Controls.Commands.Hold%>") {
-                alert('Chức năng này sẽ được thực hiện trong thời gian tới !');
+                //args.set_cancel(true);
+                //alert('Chức năng này sẽ được thực hiện trong thời gian tới !');
             }
         }
 
@@ -211,7 +212,7 @@
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/hold.png"
-            ToolTip="Hold Data" Value="btHoldData" CommandName="hold" postback="false">
+            ToolTip="Hold Data" Value="btHoldData" CommandName="hold" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
             ToolTip="Preview" Value="btPreview" CommandName="preview">

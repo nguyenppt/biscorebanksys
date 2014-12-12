@@ -62,10 +62,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             {                
                 if (TabId == TabIssueLCAddNew)
                 {
+                    RadToolBar1.FindItemByValue("btHoldData").Enabled = true;
                     GenerateLCCode();
                     GenerateVAT();
                 }
             }
+            RadToolBar1.FindItemByValue("btHoldData").Visible = (TabId == TabIssueLCAddNew);
 
             if (TabId == TabIssueLCCancel) // Cancel LC
             {
@@ -79,6 +81,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                 RadToolBar1.FindItemByValue("btPreview").Enabled = false;
             }
+            #region TabIssueLCClose
             if (TabId == TabIssueLCClose)
             {
                 RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
@@ -131,6 +134,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         lblError.Text = "This LC closed !";
                 }
             }
+            #endregion
 
             Session["DataKey"] = txtCode.Text;
         }
@@ -997,6 +1001,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
             switch (commandName)
             {
+                case bc.Commands.Hold:
+                    SaveData(bd.TransactionStatus.HLD);
+                    Response.Redirect("Default.aspx?tabid=" + TabId.ToString() + "&CodeID=" + txtCode.Text.Trim());
+                    break;
                 case bc.Commands.Commit:
                     if (CheckFtVaild() == false) return;
 
@@ -1008,7 +1016,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         bd.IssueLC.ImportLCClose(this.UserId.ToString(), txtCode.Text, bd.TransactionStatus.UNA,
                             cboGenerateDelivery.SelectedValue, ExternalReference, txtClosingRemark.Text);
                     }
-                    else SaveData();
+                    else SaveData(bd.TransactionStatus.UNA);
                     
                     Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
                     break;
@@ -1170,7 +1178,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             }
         }
 
-        protected void SaveData()
+        protected void SaveData(string Status)
         {
             double amount_main = 0;
             double amount_Old = 0;
@@ -1216,7 +1224,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 loanPrincipal = double.Parse(numLoanPrincipal.Value.ToString());
             }
 
-            bd.SQLData.B_BIMPORT_NORMAILLC_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_BIMPORT_NORMAILLC_Insert(Status, txtCode.Text.Trim()
                 , rcbLCType.SelectedValue
                 , rcbApplicantID.SelectedValue
                 , tbApplicantName.Text.Trim()
@@ -2584,16 +2592,25 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             {
                 case TabIssueLCAddNew: // Issue LC
                     if (Request.QueryString["key"] != null) return;
-                    if (drow["Status"].ToString() == bd.TransactionStatus.AUT && drow["PaymentFullFlag"].ToString() == "1")
+                    if (drow["Status"].ToString() == bd.TransactionStatus.HLD)
                     {
-                        lblError.Text = "This LC has payment full";
+                        LoadToolBar(false);
+                        RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                        RadToolBar1.FindItemByValue("btHoldData").Enabled = true;
+                    }
+                    if (drow["Status"].ToString() == bd.TransactionStatus.AUT)
+                    {
                         LoadToolBar(false);
                         SetDisableByReview(false);
                         RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        if (drow["PaymentFullFlag"].ToString() == "1")
+                            lblError.Text = "This LC has payment full";
+                        else
+                            lblError.Text = "This LC was authorized";
 
                         return;
-                    }
+                    }                    
                     if (drow["Cancel_Status"].ToString() == bd.TransactionStatus.AUT)
                     {
                         lblError.Text = "This LC was canceled";
@@ -2604,16 +2621,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
                         return;
                     }
-                    if (drow["Status"].ToString() == bd.TransactionStatus.AUT)
-                    {
-                        lblError.Text = "This LC was authorized";
-                        LoadToolBar(false);
-                        SetDisableByReview(false);
-                        RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-
-                        return;
-                    }
+                    
                     break;
                 case TabIssueLCAmend: //Amend LC
                     if (Request.QueryString["key"] != null) return;
