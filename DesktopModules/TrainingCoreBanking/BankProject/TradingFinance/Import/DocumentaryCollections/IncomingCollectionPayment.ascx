@@ -18,20 +18,48 @@
 
             if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                 args.set_cancel(true);
-                if ($find("<%=rcbIsCreateMT103.ClientID%>").get_selectedItem().get_value() == "1") {
-                    radconfirm("Do you want to download MT103 file?", confirmCallbackFunction_MT103, 340, 150, null, 'Download');
-                } else {
-                    radconfirm("Do you want to download MT202 file?", confirmCallbackFunction_MT202, 340, 150, null, 'Download');
-                }
+                radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_PhieuNgoaiBang, 420, 150, null, 'Download');
             }
         }
-
+        //
+        function confirmCallbackFunction_PhieuNgoaiBang(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnPHIEUNHAPNGOAIBANG.ClientID %>").click();
+            }
+            radconfirm("Do you want to download PHIEU CHUYEN KHHOAN file?", confirmCallbackFunction_PhieuCK, 420, 150, null, 'Download');
+        }
+        function confirmCallbackFunction_PhieuCK(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnPhieuCK.ClientID %>").click();
+            }
+            if ($find("<%=comboWaiveCharges.ClientID%>").get_selectedItem().get_value() == "NO") {
+                radconfirm("Do you want to download HOA DON VAT file?", confirmCallbackFunction_VATB, 365, 150, null, 'Download');
+            }
+            else {
+                printMT();
+            }
+        }
+        function confirmCallbackFunction_VATB(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnVAT_B_Report.ClientID %>").click();
+            }
+            printMT();
+        }
+        function printMT() {
+            if ($find("<%=rcbIsCreateMT103.ClientID%>").get_selectedItem().get_value() == "1") {
+                radconfirm("Do you want to download MT103 file?", confirmCallbackFunction_MT103, 340, 150, null, 'Download');
+            } else {
+                radconfirm("Do you want to download MT202 file?", confirmCallbackFunction_MT202, 340, 150, null, 'Download');
+            }
+        }
         function confirmCallbackFunction_MT103(result) {
             if (result) {
                 $("#<%=btnMT103Report.ClientID %>").click();
             }            
         }
-
         function confirmCallbackFunction_MT202(result) {
             clickCalledAfterRadconfirm = false;
             if (result) {
@@ -39,28 +67,14 @@
             }
             if (createMT400 == 'YES') {
                 radconfirm("Do you want to download MT400 file?", confirmCallbackFunction_MT400, 340, 150, null, 'Download');
-            } else {
-                radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_PhieuNgoaiBang, 420, 150, null, 'Download');
             }
         }
-
-    function confirmCallbackFunction_MT400(result) {
-        clickCalledAfterRadconfirm = false;
-        if (result) {
-            $("#<%=btnMT400Report.ClientID %>").click();
-                }
-                radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_PhieuNgoaiBang, 420, 150, null, 'Download');
+        function confirmCallbackFunction_MT400(result) {
+            clickCalledAfterRadconfirm = false;
+            if (result) {
+                $("#<%=btnMT400Report.ClientID %>").click();
             }
-
-            function confirmCallbackFunction_PhieuNgoaiBang(result) {
-                clickCalledAfterRadconfirm = false;
-                if (result) {
-                    $("#<%=btnPHIEUNHAPNGOAIBANG.ClientID %>").click();
-            }
-            radconfirm("Do you want to download PHIEU CHUYEN KHHOAN file?", confirmCallbackFunction_PhieuCK, 420, 150, null, 'Download');
-
         }
-
         function confirmCallbackFunction_VAT(result) {
             clickCalledAfterRadconfirm = false;
             if (result) {
@@ -109,32 +123,24 @@
             }
         }
 
-        function confirmCallbackFunction_VATB(result) {
-            clickCalledAfterRadconfirm = false;
-            if (result) {
-                $("#<%=btnVAT_B_Report.ClientID %>").click();
-                }
+        function AccountWithInstitution_OnClientValueChanged(sender, eventArgs) {
+            var txtReceiverCorrespondentName = $find('<%=txtReceiverCorrespondentName.ClientID %>');
+            if (txtReceiverCorrespondentName) {
+                txtReceiverCorrespondentName.set_value($find('<%=txtAccountWithInstitutionName.ClientID %>').get_value());
             }
-
-            function confirmCallbackFunction_PhieuCK(result) {
-                clickCalledAfterRadconfirm = false;
-                if (result) {
-                    $("#<%=btnPhieuCK.ClientID %>").click();
-                }
-                    // B/BC ko can in VAT
-                    //<telerik:RadComboBoxItem Value="Openner" Text="A" />
-                    //<telerik:RadComboBoxItem Value="Correspondent Charges for the Openner" Text="AC" />
-                    //<telerik:RadComboBoxItem Value="Beneficiary" Text="B" />
-                    //<telerik:RadComboBoxItem Value="Correspondent Charges for the Beneficiary" Text="BC" />
-                if (partyCharged === 'B') {
-                    radconfirm("Do you want to download HOA DON VAT file?", confirmCallbackFunction_VATB, 365, 150, null, 'Download');
-                }
-                    //else if (partyCharged === 'AC') {
-                    //    radconfirm("Do you want to download HOA DON VAT file?", confirmCallbackFunction_VATB, 365, 150, null, 'Download');
-                    //}
+            var txtReceiverCorrespondentAddr1 = $find('<%=txtReceiverCorrespondentAddr1.ClientID %>');
+            if (txtReceiverCorrespondentAddr1) {
+                txtReceiverCorrespondentAddr1.set_value($find('<%=txtAccountWithInstitutionAddr1.ClientID %>').get_value());
             }
-
-
+            var txtReceiverCorrespondentAddr2 = $find('<%=txtReceiverCorrespondentAddr2.ClientID %>');
+            if (txtReceiverCorrespondentAddr2) {
+                txtReceiverCorrespondentAddr2.set_value($find('<%=txtAccountWithInstitutionAddr2.ClientID %>').get_value());
+            }
+            var txtReceiverCorrespondentAddr3 = $find('<%=txtReceiverCorrespondentAddr3.ClientID %>');
+            if (txtReceiverCorrespondentAddr3) {
+                txtReceiverCorrespondentAddr3.set_value($find('<%=txtAccountWithInstitutionAddr3.ClientID %>').get_value());
+            }
+        }
     </script>
 </telerik:RadCodeBlock>
 
@@ -986,28 +992,28 @@
                 <tr>
                     <td style="width: 200px" class="MyLable">Account With Institution Name</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtAccountWithInstitutionName" runat="server" Width="400" />
+                        <telerik:RadTextBox ID="txtAccountWithInstitutionName" runat="server" Width="400" ClientEvents-OnValueChanged="AccountWithInstitution_OnClientValueChanged" />
                     </td>
                 </tr>
 
                 <tr>
                     <td style="width: 200px" class="MyLable">Account With Institution Addr.</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr1" runat="server" Width="400" />
+                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr1" runat="server" Width="400" ClientEvents-OnValueChanged="AccountWithInstitution_OnClientValueChanged" />
                     </td>
                 </tr>
 
                 <tr>
                     <td style="width: 200px" class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr2" runat="server" Width="400" />
+                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr2" runat="server" Width="400" ClientEvents-OnValueChanged="AccountWithInstitution_OnClientValueChanged" />
                     </td>
                 </tr>
 
                 <tr>
                     <td style="width: 200px" class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr3" runat="server" Width="400" />
+                        <telerik:RadTextBox ID="txtAccountWithInstitutionAddr3" runat="server" Width="400" ClientEvents-OnValueChanged="AccountWithInstitution_OnClientValueChanged" />
                     </td>
                 </tr>
             </table>
@@ -2119,6 +2125,13 @@
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr3" />
+
+                <telerik:AjaxUpdatedControl ControlID="comboReceiverCorrespondentType" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentName" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
@@ -2160,8 +2173,15 @@
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblAccountWithInstitutionError" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionName" />
+                <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionAddr3" />
+
                 <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentNo" />
                 <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentName" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 

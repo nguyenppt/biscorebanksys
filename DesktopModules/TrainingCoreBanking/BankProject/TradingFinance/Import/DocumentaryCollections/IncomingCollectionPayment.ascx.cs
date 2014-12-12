@@ -516,6 +516,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     lblTaxCcy4.Text = string.Empty;
                     lblTaxAmt4.Text = "";
                 }
+                comboWaiveCharges_OnSelectedIndexChanged(null, null);
 
                 #endregion
 
@@ -855,6 +856,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     {
                         drawingAmt = double.Parse(drow["Amount"].ToString());
                         numDrawingAmount.Value = drawingAmt;
+                        numAmtDrFromAcct.Value = drawingAmt;
                         lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
                         lblInstancedAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
                     }
@@ -1524,6 +1526,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         }
         protected void SetRelation_AccountWithInstitution()
         {
+            txtAccountWithInstitution.Text = "";
+            txtAccountWithInstitutionName.Text = "";
+            txtAccountWithInstitutionAddr1.Text = "";
+            txtAccountWithInstitutionAddr2.Text = "";
+            txtAccountWithInstitutionAddr3.Text = "";
             switch (comboAccountWithInstitutionType.SelectedValue)
             {
                 case "A":
@@ -1543,6 +1550,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     txtAccountWithInstitutionAddr3.Enabled = true;
                     break;
             }
+            comboReceiverCorrespondentType.SelectedValue = comboAccountWithInstitutionType.SelectedValue;
+            comboReceiverCorrespondentType_OnSelectedIndexChanged(null, null);
         }
 
         protected void comboIntermediaryBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -1675,6 +1684,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         }
         protected void SetRelation_ReceiverCorrespondent()
         {
+            txtReceiverCorrespondentNo.Text = "";
+            txtReceiverCorrespondentName.Text = "";
+            txtReceiverCorrespondentAddr1.Text = "";
+            txtReceiverCorrespondentAddr2.Text = "";
+            txtReceiverCorrespondentAddr3.Text = "";
             switch (comboReceiverCorrespondentType.SelectedValue)
             {
                 case "A":
@@ -1951,26 +1965,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void txtAccountWithInstitution_OnTextChanged(object sender, EventArgs e)
         {
-            lblAccountWithInstitutionError.Text = "";
-            txtAccountWithInstitutionName.Text = "";
-            if (!string.IsNullOrEmpty(txtAccountWithInstitution.Text.Trim()))
-            {
-                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtAccountWithInstitution.Text.Trim());
-                if (dtBSWIFTCODE.Rows.Count > 0)
-                {
-                    txtAccountWithInstitutionName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
-
-                    if (comboCreateMT410.SelectedValue == "YES")
-                    {
-                        txtReceiverCorrespondentNo.Text = txtAccountWithInstitution.Text;
-                        txtReceiverCorrespondentName.Text = txtAccountWithInstitutionName.Text;
-                    }                    
-                }
-                else
-                {
-                    lblAccountWithInstitutionError.Text = "No found swiftcode";
-                }
-            }
+            bc.Commont.loadBankSwiftCodeInfo(txtAccountWithInstitution.Text.Trim(), ref lblAccountWithInstitutionError, ref txtAccountWithInstitutionName, ref txtAccountWithInstitutionAddr1, ref txtAccountWithInstitutionAddr2, ref txtAccountWithInstitutionAddr3);
+            txtReceiverCorrespondentNo.Text = txtAccountWithInstitution.Text.Trim();
+            txtReceiverCorrespondentName.Text = txtAccountWithInstitutionName.Text;
+            txtReceiverCorrespondentAddr1.Text = txtAccountWithInstitutionAddr1.Text;
+            txtReceiverCorrespondentAddr2.Text = txtAccountWithInstitutionAddr2.Text;
+            txtReceiverCorrespondentAddr3.Text = txtAccountWithInstitutionAddr3.Text;
         }
 
         protected void txtReceiverCorrespondentNo_OnTextChanged(object sender, EventArgs e)
@@ -1993,13 +1993,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void numDrawingAmount_OnTextChanged(object sender, EventArgs e)
         {
-            double? drawingAmt = numDrawingAmount.Value;
-            if (!drawingAmt.HasValue) drawingAmt = 0;
+            double drawingAmt = 0;
+            if (numDrawingAmount.Value.HasValue) drawingAmt = numDrawingAmount.Value.Value;
 
             numAmtDrFromAcct.Value = drawingAmt;
             numAmountCollected.Value = drawingAmt;
-            numAmount.Value = drawingAmt;
-            numAmount_MT400.Value = drawingAmt;
+            /*numAmount.Value = drawingAmt - chargeAmt;
+            numAmount_MT400.Value = drawingAmt - chargeAmt;*/
+            Cal_ChargeAmt();
             lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
             lblInstancedAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
         }
