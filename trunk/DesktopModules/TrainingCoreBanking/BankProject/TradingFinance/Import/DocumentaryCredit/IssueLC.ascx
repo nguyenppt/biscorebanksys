@@ -47,6 +47,7 @@
                         break;
                 }
             }
+            //
             if (button.get_commandName() == "<%=BankProject.Controls.Commands.Commit%>") {
                 args.set_cancel(true);
                 var ExpiryDate = $find("<%= tbExpiryDate.ClientID %>").get_selectedDate();
@@ -67,11 +68,15 @@
                     <% }
                     else if (TabId == TabIssueLCAmend) %>
                 <%{%>
-                if (!MTIsValidInput('MT707', null)) return;
-                if (!MTIsValidInput('MT747', null)) return;
+                if (!MTIsValidInput('MT707', new Array('<%=numPercentageCreditAmountTolerance_707_1.ClientID%>', '<%=numPercentageCreditAmountTolerance_707_2.ClientID%>'))) return;
+                if (!MTIsValidInput('MT747', new Array('<%=numPercentageCreditTolerance_747_1.ClientID%>', '<%=numPercentageCreditTolerance_747_2.ClientID%>'))) return;
                 <% } %>
                 //                
-                args.set_cancel(false);//MT700
+                args.set_cancel(false);
+            }
+            //
+            if (button.get_commandName() == "<%=BankProject.Controls.Commands.Hold%>") {
+                alert('Chức năng này sẽ được thực hiện trong thời gian tới !');
             }
         }
 
@@ -204,6 +209,9 @@
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/hold.png"
+            ToolTip="Hold Data" Value="btHoldData" CommandName="hold" postback="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
             ToolTip="Preview" Value="btPreview" CommandName="preview">
@@ -842,15 +850,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">16. Prov % <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator6"
-                            ControlToValidate="numPro"
-                            ValidationGroup="Commit"
-                            InitialValue="0"
-                            ErrorMessage="Prov % is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator>
+                    <td class="MyLable">16. Prov % 
                     </td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox runat="server" ID="numPro" Type="Percent" MaxValue="100" ClientEvents-OnValueChanged="numPro_OnValueChanged" />
@@ -2243,7 +2243,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 </tr>
 
                 <tr>
-                    <td class="MyLable" style="width: 250px;">33E. New Date of Expiry</td>
+                    <td class="MyLable" style="width: 250px;">31E. New Date of Expiry</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker runat="server" ID="dteNewDateOfExpiry_707" />
                     </td>
@@ -2522,7 +2522,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 </tr>
 
                 <tr>
-                    <td class="MyLable" style="width: 250px;">33E. New Date of Expiry</td>
+                    <td class="MyLable" style="width: 250px;">31E. New Date of Expiry</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker runat="server" ID="dteNewDateOfExpiry_747" />
                     </td>

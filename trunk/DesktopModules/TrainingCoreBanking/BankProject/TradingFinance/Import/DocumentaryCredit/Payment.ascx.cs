@@ -87,11 +87,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
             }
             //
-            comboIntermediaryBankType_OnSelectedIndexChanged(sender, null);
-            comboAccountWithInstitutionType_OnSelectedIndexChanged(sender, null);
-            comboBeneficiaryBankType_OnSelectedIndexChanged(sender, null);
-            comboSenderCorrespondentType_OnSelectedIndexChanged(sender, null);
-            comboReceiverCorrespondentType_OnSelectedIndexChanged(sender, null);
+            comboIntermediaryBankType_OnSelectedIndexChanged(null, null);
+            comboAccountWithInstitutionType_OnSelectedIndexChanged(null, null);
+            comboBeneficiaryBankType_OnSelectedIndexChanged(null, null);
+            comboSenderCorrespondentType_OnSelectedIndexChanged(null, null);
+            comboReceiverCorrespondentType_OnSelectedIndexChanged(null, null);
             //
             if (!String.IsNullOrEmpty(Request.QueryString["tid"]))
             {
@@ -454,11 +454,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }
         private void loadChargeAcc(string PartyCharged, string ChargeCurrency, ref RadComboBox cboChargeAcc)
         {
-            cboChargeAcc.Items.Clear();
             if (PartyCharged.ToUpper().Equals("A") || PartyCharged.ToUpper().Equals("AC"))
                 bc.Commont.initRadComboBox(ref cboChargeAcc, "Display", "Id", bd.IssueLC.ImportLCPaymentChargeAcc(PartyCharged, txtCustomerID.Value, ChargeCurrency));
             else
-                cboChargeAcc.Items.Add(cboNostroAcct.SelectedItem);
+            {
+                RadComboBoxItem it = cboNostroAcct.Items[cboNostroAcct.SelectedIndex];
+                cboChargeAcc.Items.Clear();//"Description", "AccountNo"
+                cboChargeAcc.Items.Add(new RadComboBoxItem(it.Text, it.Value));
+            }
         }
         //
         protected void tabCableCharge_txtChargeAmt_TextChanged(object sender, EventArgs e)
@@ -682,7 +685,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void comboAccountWithInstitutionType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            if (comboAccountWithInstitutionType.SelectedValue.Equals("D")) comboReceiverCorrespondentType.SelectedValue = "D";
+            if (comboAccountWithInstitutionType.SelectedValue.Equals("D"))
+            {
+                comboReceiverCorrespondentType.SelectedValue = "D";
+                txtAccountWithInstitution.Text = "";
+                txtAccountWithInstitutionName.Text = "";
+                txtAccountWithInstitutionAddr1.Text = "";
+                txtAccountWithInstitutionAddr2.Text = "";
+                txtAccountWithInstitutionAddr3.Text = "";
+                comboReceiverCorrespondentType_OnSelectedIndexChanged(null, null);
+            }
             showHideBank(!comboAccountWithInstitutionType.SelectedValue.Equals("A"), ref txtAccountWithInstitution, ref txtAccountWithInstitutionName, ref txtAccountWithInstitutionAddr1, ref txtAccountWithInstitutionAddr2, ref txtAccountWithInstitutionAddr3);
         }
 
@@ -718,6 +730,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void comboReceiverCorrespondentType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            if (comboReceiverCorrespondentType.SelectedValue.Equals("D"))
+            {
+                txtReceiverCorrespondentNo.Text = "";
+                txtReceiverCorrespondentName.Text = "";
+                txtReceiverCorrespondentAddr1.Text = "";
+                txtReceiverCorrespondentAddr2.Text = "";
+                txtReceiverCorrespondentAddr3.Text = "";
+            }
             showHideBank(!comboReceiverCorrespondentType.SelectedValue.Equals("A"), ref txtReceiverCorrespondentNo, ref txtReceiverCorrespondentName, ref txtReceiverCorrespondentAddr1, ref txtReceiverCorrespondentAddr2, ref txtReceiverCorrespondentAddr3);
         }
 
