@@ -1604,7 +1604,7 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BCUSTOMER_INFO_GetByStatus", status);
         }
 
-        public static void B_BIMPORT_NORMAILLC_Insert(string NormalLCCode
+        public static void B_BIMPORT_NORMAILLC_Insert(string Status, string NormalLCCode
                                                       , string LCType
                                                       , string ApplicantId
                                                       , string ApplicantName
@@ -1664,16 +1664,7 @@ namespace BankProject.DataProvider
                                                       , string CancelRemark
             )
         {
-            //DateTime? xCancelLCDate = null, xContingentExpiryDate = null;
-            //if (CancelLCDate != null)
-            //{
-            //    xCancelLCDate = DateTime.Parse(CancelLCDate);
-            //}
-            //if (ContingentExpiryDate != null)
-            //{
-            //    xContingentExpiryDate = DateTime.Parse(ContingentExpiryDate);
-            //}
-            sqldata.ndkExecuteNonQuery("B_BIMPORT_NORMAILLC_Insert", NormalLCCode
+            sqldata.ndkExecuteNonQuery("B_BIMPORT_NORMAILLC_Insert", Status, NormalLCCode
                                        , LCType
                                        , ApplicantId
                                        , ApplicantName
