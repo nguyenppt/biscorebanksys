@@ -4,16 +4,32 @@
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+    <script type="text/javascript" src="DesktopModules/TrainingCoreBanking/BankProject/Scripts/Common.js"></script>
     <script type="text/javascript">
         jQuery(function ($) {
             $('#tabs-demo').dnnTabs({ selected: 0 });
         });
+
+
+
+
         function MainToolbar_OnClientButtonClicking(sender, args) {
+
             var button = args.get_item();
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
                 args.set_cancel(true);
                 radconfirm("Do you want to download PHIEU CHUYEN KHOAN file ?", confirmCallbackFunction_PhieuChuyenKhoan, 420, 150, null, 'Download');
             }
+            //
+            if (button.get_commandName() == "save") {
+                args.set_cancel(true);//Khong cho commit
+                //
+                if (!MTIsValidInput('MT910', null)) return;
+                //                
+                args.set_cancel(false);//Cho phép commit
+            }
+            //
+
         }
         function confirmCallbackFunction_PhieuChuyenKhoan(result) {
             clickCalledAfterRadconfirm = false;
@@ -1794,6 +1810,7 @@
     </ajaxsettings>
 </telerik:RadAjaxManager>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+    
     <script type="text/javascript">
         var tabId = <%= TabId %>;
         var clickCalledAfterRadconfirm = false;
