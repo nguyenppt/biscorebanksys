@@ -13,13 +13,22 @@ namespace BankProject.Views.TellerApplication
     public partial class CollateralContingentEntry : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         public static int AutoID = 1;
+        public string pageid = "392";
         private string Refix_BMACODE()
         {
             return "DC";
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.QueryString["tabid"] != null)
+            {
+                pageid = Request.QueryString["tabid"].ToString();
+                
+            }
+            
             if (IsPostBack) return;
+
+            
 
             if (Request.QueryString["ID"] != null)
             {
@@ -47,7 +56,7 @@ namespace BankProject.Views.TellerApplication
                         , rcbDebitOrCredit.SelectedValue, rcbDebitOrCredit.Text.Replace(rcbDebitOrCredit.SelectedValue + " - ", ""), rcbCurrency.SelectedValue,
                         rcbAccountNo.SelectedValue, rcbAccountNo.Text,tbAmount.Text ==""? 0: Convert.ToDecimal(tbAmount.Value),Convert.ToDecimal( Rate), rdpValuedate_cont.SelectedDate, tbNarrative.Text
                         , UserInfo.Username.ToString(), tbCollateralType.Text);
-                Response.Redirect("Default.aspx?tabid=383");
+                Response.Redirect("Default.aspx?tabid=" + pageid);
             }
             if (commandname == "search")
             {
