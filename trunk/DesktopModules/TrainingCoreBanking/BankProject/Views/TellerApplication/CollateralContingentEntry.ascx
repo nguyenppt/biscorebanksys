@@ -202,7 +202,7 @@
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                      </td>
                      <td class="MyContent">
-                         <telerik:RadTextBox ID="tbReferenceNo" runat="server" ValidationGroup="Group1" width="150" Readonly="true" />
+                         <telerik:RadTextBox ID="tbReferenceNo" runat="server" ValidationGroup="Group1" width="150"  />
                      </td>
                      
                  </tr>
