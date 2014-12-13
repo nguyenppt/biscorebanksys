@@ -55,7 +55,7 @@ namespace BankProject.Views.TellerApplication
                         , tbDateOfIssue.Text == "" ? "" : tbDateOfIssue.Text, rcbTransactionCode.SelectedValue, rcbTransactionCode.Text.Replace(rcbTransactionCode.SelectedValue + " - ", "")
                         , rcbDebitOrCredit.SelectedValue, rcbDebitOrCredit.Text.Replace(rcbDebitOrCredit.SelectedValue + " - ", ""), rcbCurrency.SelectedValue,
                         rcbAccountNo.SelectedValue, rcbAccountNo.Text,tbAmount.Text ==""? 0: Convert.ToDecimal(tbAmount.Value),Convert.ToDecimal( Rate), rdpValuedate_cont.SelectedDate, tbNarrative.Text
-                        , UserInfo.Username.ToString(), tbCollateralType.Text);
+                        , UserInfo.Username.ToString(), tbCollateralType.Text, tbReferenceNo.Text.Trim());
                 Response.Redirect("Default.aspx?tabid=" + pageid);
             }
             if (commandname == "search")
@@ -102,7 +102,7 @@ namespace BankProject.Views.TellerApplication
                     {
                         tbDateOfIssue.Text = (Convert.ToDateTime(dr["DocIssueDate"].ToString())).ToShortDateString();
                     }
-                    tbReferenceNo.Text = ContingentID;
+                    tbReferenceNo.Text = dr["ReferenceID"].ToString(); ;
                     rcbTransactionCode.SelectedValue = dr["TransactionCode"].ToString();
                     rcbDebitOrCredit.SelectedValue = dr["DCTypeCode"].ToString();
                     rcbCurrency.SelectedValue = dr["Currency"].ToString();
