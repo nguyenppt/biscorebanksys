@@ -410,10 +410,10 @@ namespace BankProject.DataProvider
         }
         public static void B_CONTINGENT_ENTRY_Insert_Update(string CollateralInfoID, string ContingentEntryID, string CustomerID, string CustomerAddress, string DocIDTaxCode
             , string DateOfIssue, string TransactionCode, string TransactionName, string DCMode, string DCName, string Currency, string AccountNo, string AccountName,
-            decimal? Amount, decimal? DealRate, DateTime? ValueDate, string Narrative, string ApprovedUser, string CollateralCode)
+            decimal? Amount, decimal? DealRate, DateTime? ValueDate, string Narrative, string ApprovedUser, string CollateralCode, string ReferenceID)
         {
             sqldata.ndkExecuteNonQuery("B_CONTINGENT_ENTRY_Insert_Update", CollateralInfoID, ContingentEntryID, CustomerID, CustomerAddress, DocIDTaxCode, DateOfIssue, TransactionCode,
-                TransactionName, DCMode, DCName, Currency, AccountNo, AccountName, Amount, DealRate, ValueDate, Narrative, ApprovedUser, CollateralCode);
+                TransactionName, DCMode, DCName, Currency, AccountNo, AccountName, Amount, DealRate, ValueDate, Narrative, ApprovedUser, CollateralCode, ReferenceID);
         }
         public static DataSet B_COLLATERAL_INFO_LoadCustomer_Info(string CustomerID)
         {
