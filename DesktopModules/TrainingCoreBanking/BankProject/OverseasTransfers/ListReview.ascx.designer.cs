@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BankProject.OverseasTransfers {
+namespace BankProject.TradingFinance.OverseasFundsTransfer {
     
     
     public partial class ListReview {
