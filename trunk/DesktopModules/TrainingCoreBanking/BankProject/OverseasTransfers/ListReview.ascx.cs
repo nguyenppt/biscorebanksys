@@ -2,7 +2,7 @@
 using BankProject.DataProvider;
 using Telerik.Web.UI;
 
-namespace BankProject.OverseasTransfers
+namespace BankProject.TradingFinance.OverseasFundsTransfer
 {
     public partial class ListReview : DotNetNuke.Entities.Modules.PortalModuleBase
     {
