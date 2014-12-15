@@ -376,17 +376,21 @@ namespace BankProject.TradingFinance
                         {
                             VAT.ChargeType3 = getChargeTypeInfo(cc2.ChargeType3, 1);
                             VAT.ChargeAmount3Text = cc2.ChargeAmount3.Value + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType3, 2);
-                        }
-                        if (VAT.TotalChargeAmount.HasValue)
-                        {
-                            VAT.TotalChargeAmountText = VAT.TotalChargeAmount.Value + VAT.ChargeCurrency;
-                            VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, VAT.TotalChargeAmount.Value);
-                        }
+                        }                        
                         //Phân loại phí phát sinh VAT hoặc phí không phát sinh VAT => Thảo sẽ gửi anh danh sách Code phí phân theo có VAT và không
                         if (VAT.TotalTaxAmount.HasValue)
                         {
                             VAT.TotalTaxText = "VAT";
                             VAT.TotalTaxAmountText = VAT.TotalTaxAmount.Value + VAT.ChargeCurrency + " PL90304";
+                            if (VAT.TotalChargeAmount.HasValue) 
+                                VAT.TotalChargeAmount += VAT.TotalTaxAmount;
+                            else
+                                VAT.TotalChargeAmount = VAT.TotalTaxAmount;
+                        }
+                        if (VAT.TotalChargeAmount.HasValue)
+                        {
+                            VAT.TotalChargeAmountText = VAT.TotalChargeAmount.Value + VAT.ChargeCurrency;
+                            VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, VAT.TotalChargeAmount.Value);
                         }
                         var cc3 = db.BDRFROMACCOUNTs.Where(p => p.Id.Equals(cc2.ChargeAcct)).FirstOrDefault();
                         if (cc3 != null)
