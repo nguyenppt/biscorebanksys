@@ -659,7 +659,6 @@ namespace BankProject.DataProvider
                 sqldata.ndkExecuteDataset("B_BMACODE_GetNewID", MaCode, refix, flat).Tables[0].Rows[0]["Code"].ToString();
         }
 
-
         public static DataSet B_BOVERSEASTRANSFER_Report(string MaCode)
         {
             return sqldata.ndkExecuteDataset("B_BOVERSEASTRANSFER_Report", MaCode);
@@ -1584,11 +1583,11 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BFREETEXTMESSAGE_Report", Id);
         }
 
-        public static DataSet B_BDOCUMETARYCOLLECTION_GetByEnquiry(string LCCode, string TransactionType,
+        public static DataSet B_BOVERSEASTRANSFER_GetByEnquiry(string LCCode, string TransactionType,
                                                                    string CountryCode, string Commodity, string CusId,
                                                                    string CusName, int currentUserId)
         {
-            return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTION_GetByEnquiry", LCCode, TransactionType,
+            return sqldata.ndkExecuteDataset("B_BOVERSEASTRANSFER_GetByEnquiry", LCCode, TransactionType,
                                              CountryCode, Commodity, CusId, CusName, currentUserId);
         }
 
