@@ -71,7 +71,7 @@ namespace BankProject.Views.TellerApplication
                             || loan.CollateralID_2.Equals(tbID.Text.Trim())
                             || loan.CollateralID_3.Equals(tbID.Text.Trim())))
                     {
-                        ShowMsgBox("Can’t process because this collateral is still valid"); return;
+                        ShowMsgBox("Can’t process this collateral because it is still belong to valid loan contract. Please check again !"); return;
                     }
                 }
 
