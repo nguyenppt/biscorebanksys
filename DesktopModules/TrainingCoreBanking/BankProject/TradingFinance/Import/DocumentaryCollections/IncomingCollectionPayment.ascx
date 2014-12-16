@@ -2,6 +2,7 @@
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true" />
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+    <script type="text/javascript" src="DesktopModules/TrainingCoreBanking/BankProject/Scripts/Common.js"></script>
     <script type="text/javascript">
         var clickCalledAfterRadconfirm = false;
         var partyCharged = '<%= PartyCharged %>';
@@ -19,6 +20,25 @@
             if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                 args.set_cancel(true);
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_PhieuNgoaiBang, 420, 150, null, 'Download');
+            }
+            if (button.get_commandName() == "save") {
+                if ($find("<%=rcbIsCreateMT103.ClientID%>").get_selectedItem().get_value() == "1") {
+                    if (!MTIsValidInput('MT103', null)) {
+                        args.set_cancel(true);
+                        return;
+                    }
+                } else {
+                    if (!MTIsValidInput('MT202', null)) {
+                        args.set_cancel(true);
+                        return;
+                    }
+                    if ($find("<%=comboCreateMT410.ClientID%>").get_selectedItem().get_value() == "YES") {
+                        if (!MTIsValidInput('MT410', null)) {
+                            args.set_cancel(true);
+                            return;
+                        }
+                    }
+                }
             }
         }
         //

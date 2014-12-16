@@ -91,15 +91,9 @@
             <Columns>
                 <telerik:GridBoundColumn HeaderText="Documetary Collection Code" DataField="DocCollectCode"  />
                 <telerik:GridBoundColumn HeaderText="Collection Type" DataField="CollectionType" />
-                <telerik:GridBoundColumn HeaderText="CCY" DataField="Currency" >
-                    <ItemStyle Width="100" />
-                </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" >
-                    <ItemStyle Width="100" HorizontalAlign="Right" />
-                </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn HeaderText="Status" DataField="Status" >
-                    <ItemStyle Width="100" HorizontalAlign="Center" />
-                </telerik:GridBoundColumn>
+                <telerik:GridBoundColumn HeaderText="CCY" DataField="Currency" />
+                <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" />
+                <telerik:GridBoundColumn HeaderText="Status" DataField="Status" />
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="25" />
                     <ItemTemplate>
