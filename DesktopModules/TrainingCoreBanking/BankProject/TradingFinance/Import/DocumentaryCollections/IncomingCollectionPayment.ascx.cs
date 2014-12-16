@@ -1389,96 +1389,77 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             //Cal_ChargeAmt();
         }
 
-        // tab MT 202
         protected void comboRelatedReference_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             DataRowView row = e.Item.DataItem as DataRowView;
             e.Item.Attributes["Code"] = row["Code"].ToString();
             e.Item.Attributes["Description"] = row["Description"].ToString();
         }
-        // tab MT 400
-      
-        protected string PrintMT202()
+
+        private void loadReport(string report)
         {
-
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path =
-                Context.Server.MapPath(
-                    "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT202.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT202_Report(txtCode.Text);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionPaymentMT202_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf",
-                     Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
-
-            return "";
+            string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/", reportSaveName = "";
+            Aspose.Words.SaveFormat reportSaveFormat = Aspose.Words.SaveFormat.Doc;
+            DataSet reportData = null;
+            switch (report)
+            {
+                case "MT202":
+                    reportTemplate += "IncomingCollectionPaymentMT202.doc";
+                    reportData = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT202_Report(txtCode.Text);
+                    reportSaveName = "IncomingCollectionPaymentMT202_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
+                    reportSaveFormat = Aspose.Words.SaveFormat.Pdf;
+                    break;
+                case "MT400":
+                    reportTemplate += "IncomingCollectionPaymentMT400.doc";
+                    reportData = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT400_Report(txtCode.Text);
+                    reportSaveName = "IncomingCollectionPaymentMT400_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
+                    reportSaveFormat = Aspose.Words.SaveFormat.Pdf;
+                    break;
+                case "VAT":
+                    reportTemplate += "HOADONVAT.doc";
+                    reportData = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENT_HOADONVAT(txtCode.Text, UserInfo.Username);
+                    reportSaveName = "HOADONVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                    break;
+                case "PHIEUNHAPNGOAIBANG":
+                    reportTemplate += "IncomingCollectionPaymentPHIEUXUATNGOAIBANG.doc";
+                    reportData = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTPHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
+                    reportSaveName = "IncomingCollectionPaymentPHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                    break;
+                case "VATb":
+                    reportTemplate += "IncomingCollectionPaymentVAT_B.doc";
+                    reportData = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_VAT_B_Report(txtCode.Text, UserInfo.Username);
+                    reportSaveName = "IncomingCollectionPaymentVAT_B_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                    break;
+                case "PHIEUCHUYENKHOAN":
+                    reportTemplate += "IncomingCollectionPaymentPHIEUCHUYENKHOAN.doc";
+                    reportData = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_PHIEUCHUYENKHOAN_Report(txtCode.Text, UserInfo.Username);
+                    reportSaveName = "IncomingCollectionPaymentPHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                    break;
+                case "MT103":
+                    reportTemplate += "IncomingCollectionPaymentMT103.doc";
+                    reportData = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT103_Report(txtCode.Text);
+                    reportSaveName = "IncomingCollectionPaymentMT103_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
+                    reportSaveFormat = Aspose.Words.SaveFormat.Pdf;
+                    break;
+            }
+            if (reportData != null)
+            {
+                bc.Reports.createFileDownload(Context.Server.MapPath(reportTemplate), reportData, reportSaveName, reportSaveFormat, Aspose.Words.SaveType.OpenInApplication, Response);
+            }
         }
-
-        protected void PrintMT400()
-        {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string pathMT400 =
-                Context.Server.MapPath(
-                    "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT400.doc");
-            //Open the template document
-            Aspose.Words.Document docMT400 = new Aspose.Words.Document(pathMT400);
-            //Execute the mail merge.
-            DataSet dsMT400 = new DataSet();
-            dsMT400 = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT400_Report(txtCode.Text);
-
-            // Fill the fields in the document with user data.
-            docMT400.MailMerge.ExecuteWithRegions(dsMT400); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            docMT400.Save("IncomingCollectionPaymentMT400_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf",
-                          Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
-            //docMT400.Save();
-            //            
-        }
-
         protected void btnMT202Report_Click(object sender, EventArgs e)
         {
-            PrintMT202();
+            loadReport("MT202");
         }
 
         protected void btnMT400Report_Click(object sender, EventArgs e)
         {
-            PrintMT400();
+            loadReport("MT400");
         }
 
         protected void btnVATReport_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string pathMT400 =
-                Context.Server.MapPath(
-                    "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/HOADONVAT.doc");
-            //Open the template document
-            Aspose.Words.Document docMT400 = new Aspose.Words.Document(pathMT400);
-
-            //Execute the mail merge.
-            DataSet dsMT400 = new DataSet();
-            dsMT400 = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENT_HOADONVAT(txtCode.Text, UserInfo.DisplayName);
-
-            // Fill the fields in the document with user data.
-            docMT400.MailMerge.ExecuteWithRegions(dsMT400); //moas mat thoi jan voi cuc gach nay woa 
-
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            docMT400.Save("HOADONVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc,
-                          Aspose.Words.SaveType.OpenInApplication, Response);
+            loadReport("VAT");
         }
 
         protected void comboCountryCode_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -1488,26 +1469,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void btnPHIEUNHAPNGOAIBANGReport_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string pathMT400 =
-                Context.Server.MapPath(
-                    "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/IncomingCollectionPaymentPHIEUXUATNGOAIBANG.doc");
-            //Open the template document
-            Aspose.Words.Document docMT400 = new Aspose.Words.Document(pathMT400);
-
-            //Execute the mail merge.
-            DataSet dsMT400 = new DataSet();
-            dsMT400 = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTPHIEUNHAPNGOAIBANG_Report(txtCode.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            docMT400.MailMerge.ExecuteWithRegions(dsMT400); //moas mat thoi jan voi cuc gach nay woa 
-
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            docMT400.Save("PHIEUXUATNGOAIBANG_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc",
-                          Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
+            loadReport("PHIEUNHAPNGOAIBANG");
         }
 
         protected void LoadNostroAcct()
@@ -1733,24 +1695,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void btnVAT_B_Report_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
+            loadReport("VATb");
+        }
 
-            //Open template
-            string path =
-                Context.Server.MapPath(
-                    "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/IncomingCollectionPaymentVAT_B.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_VAT_B_Report(txtCode.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionPaymentVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc",
-                     Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
+        protected void btnMT103Report_Click(object sender, EventArgs e)
+        {
+            loadReport("MT103");
         }
 
         protected void rcbChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -1763,24 +1713,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void btnPhieuCK_Report_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path =
-                Context.Server.MapPath(
-                    "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/IncomingCollectionPaymentPHIEUCHUYENKHOAN.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_INCOMINGCOLLECTIONPAYMENT_PHIEUCHUYENKHOAN_Report(txtCode.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionPaymentPHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc",
-                     Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
+            loadReport("PHIEUCHUYENKHOAN");
         }
 
         protected void comboWaiveCharges_OnSelectedIndexChanged(object sender,
@@ -2000,8 +1933,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             numAmountCollected.Value = drawingAmt;
             /*numAmount.Value = drawingAmt - chargeAmt;
             numAmount_MT400.Value = drawingAmt - chargeAmt;*/
-            Cal_ChargeAmt();
-            lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
+            Cal_ChargeAmt();            
             lblInstancedAmount_MT103.Text = String.Format("{0:C}", drawingAmt).Replace("$", "");
         }
         
@@ -2192,9 +2124,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             amountForB = amountForB + amountForAC + VATForB;
             txtSenderToReceiverInformation1_400_1.Text = String.Format("{0:C}", amountForB).Replace("$", "");
             // end
-
             numAmount_MT400.Value = amountTab200;
             numAmount.Value = amountTab200;
+            lblInterBankSettleAmount_MT103.Text = String.Format("{0:C}", amountTab200).Replace("$", "");
         }
 
         protected void chargeAmt_Changed()
@@ -2595,26 +2527,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     break;
             }
         }
-
-        protected void btnMT103Report_Click(object sender, EventArgs e)
-        {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT103.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = bd.SQLData.B_BINCOMINGCOLLECTIONPAYMENTMT103_Report(txtCode.Text);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("IncomingCollectionPaymentMT103_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
-        }
-
+        
         protected void comboDraweeCusNo_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             var row = e.Item.DataItem as DataRowView;

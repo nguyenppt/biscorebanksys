@@ -5,7 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BankProject.DataProvider;
+using bd = BankProject.DataProvider;
+using bc = BankProject.Controls;
 using Telerik.Web.UI;
 
 namespace BankProject.TradingFinance.Import.DocumentaryCredit
@@ -53,12 +54,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             {
                 if (hdfDisable.Value == "0") return;
 
-                Database.ProvisionTransfer_DC_Insert(tbDepositCode.Text,tbLCNo.Text,rcbOrderedby.SelectedValue, "", rcbDebitAccount.Text,
+                bd.Database.ProvisionTransfer_DC_Insert(tbDepositCode.Text,tbLCNo.Text,rcbOrderedby.SelectedValue, "", rcbDebitAccount.Text,
                     rcbDebitCurrency.SelectedValue, tbDebitAmout.Text, rdpDebitDDate.SelectedDate.ToString(), rcbCreditAccount.Text, lblCreditCurrency.Text, "",
                     tbCreditAmount.Text, rdpCreditDate.SelectedDate.ToString(), "", rcbType.SelectedValue, rcbType.SelectedItem.Text, this.UserId.ToString(), txtAddRemarks1.Text, txtAddRemarks2.Text);
                 
                 RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                Database.ProvisionTransfer_DC_UpdateStatus("UNA", tbDepositCode.Text, this.UserId.ToString());
+                bd.Database.ProvisionTransfer_DC_UpdateStatus("UNA", tbDepositCode.Text, this.UserId.ToString());
 
                 BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                 clearComboBox();
@@ -118,7 +119,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void SetDebitAcc()
         {
-            var dtDebitAcc = SQLData.B_BFOREIGNEXCHANGE_GetByDebitAccount("", rcbDebitCurrency.SelectedValue, rcbOrderedby.SelectedValue , "provision_transfers");
+            var dtDebitAcc = bd.SQLData.B_BFOREIGNEXCHANGE_GetByDebitAccount("", rcbDebitCurrency.SelectedValue, rcbOrderedby.SelectedValue, "provision_transfers");
             if (dtDebitAcc != null && dtDebitAcc.Rows.Count > 0)
             {
                 rcbDebitAccount.Text = dtDebitAcc.Rows[0]["Id"].ToString();
@@ -149,7 +150,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }
         private void FirstLoad()
         {
-            DataSet ds = DataProvider.DataTam.ProvisionTransfer_GetNewID();
+            DataSet ds = bd.DataTam.ProvisionTransfer_GetNewID();
             if (ds.Tables[0].Rows.Count > 0)
             {
                 tbDepositCode.Text = ds.Tables[0].Rows[0]["Code"].ToString();
@@ -288,33 +289,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             dt.Rows.Add(dr);
             dsc.Tables.Add(dt);
 
-            rcb.DataSource = null;
-            rcb.DataSource = dsc;
-            rcb.DataTextField = name;
-            rcb.DataValueField = id;
-            rcb.DataBind();
+            bc.Commont.initRadComboBox(ref rcb, name, id, dsc);
         }
         #endregion
 
         protected void btnPCK_Report_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path =
-                Context.Server.MapPath(
-                    "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/ProvisionTransfersPHIEUCHUYENKHOAN.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.B_PROVISIONTRANSFER_DC_PHIEUCHUYENKHOAN_REPORT(tbLCNo.Text.Trim(), UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("ProvisionTransfersPHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
+            bc.Reports.createFileDownload("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/ProvisionTransfersPHIEUCHUYENKHOAN.doc", bd.SQLData.B_PROVISIONTRANSFER_DC_PHIEUCHUYENKHOAN_REPORT(tbLCNo.Text.Trim(), UserInfo.Username),
+                "ProvisionTransfersPHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void rcbOrderedby_ItemDataBound(object sender, RadComboBoxItemEventArgs e)

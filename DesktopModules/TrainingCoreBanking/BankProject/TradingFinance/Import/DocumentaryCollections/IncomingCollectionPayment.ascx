@@ -27,7 +27,7 @@
             if (result) {
                 $("#<%=btnPHIEUNHAPNGOAIBANG.ClientID %>").click();
             }
-            radconfirm("Do you want to download PHIEU CHUYEN KHHOAN file?", confirmCallbackFunction_PhieuCK, 420, 150, null, 'Download');
+            radconfirm("Do you want to download PHIEU CHUYEN KHOAN file?", confirmCallbackFunction_PhieuCK, 420, 150, null, 'Download');
         }
         function confirmCallbackFunction_PhieuCK(result) {
             clickCalledAfterRadconfirm = false;
