@@ -2098,99 +2098,86 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             #endregion
 
             #region Tab Charges
-            if (dsDoc.Tables[3].Rows.Count > 0)
+            //
+            rcbChargeAcct.SelectedValue = string.Empty;
+            rcbChargeCcy.SelectedValue = string.Empty;
+            tbChargeAmt.Value = 0;
+            rcbPartyCharged.SelectedValue = "A";
+            rcbChargeStatus.SelectedValue = string.Empty;
+            lblTaxCode.Text = string.Empty;
+            lblTaxAmt.Text = string.Empty;
+            //
+            rcbChargeAcct2.SelectedValue = string.Empty;
+            rcbChargeCcy2.SelectedValue = string.Empty;
+            tbChargeAmt2.Value = 0;
+            rcbOmortCharges2.SelectedValue = string.Empty;
+            rcbChargeStatus2.SelectedValue = string.Empty;
+            lblTaxCode2.Text = string.Empty;
+            lblTaxAmt2.Text = string.Empty;
+            //
+            rcbChargeAcct3.SelectedValue = string.Empty;
+            rcbChargeCcy3.SelectedValue = string.Empty;
+            tbChargeAmt3.Value = 0;
+            rcbPartyCharged3.SelectedValue = "A";
+            rcbOmortCharges3.SelectedValue = string.Empty;
+            rcbChargeStatus3.SelectedValue = string.Empty;
+            lblTaxCode3.Text = string.Empty;
+            lblTaxAmt3.Text = string.Empty;
+            //Y/c cua n.vu : không tự động lấy giá trị ở tab charge của màn hình cua lan tu chinh truoc do
+            if (this.TabId != TabIssueLCAmend)
             {
-                var drow1 = dsDoc.Tables[3].Rows[0];
-                WaiveCharges = drow1["WaiveCharges"].ToString();
-
-                comboWaiveCharges.SelectedValue = WaiveCharges;
-
-                tbChargeRemarks.Text = drow1["ChargeRemarks"].ToString();
-                tbVatNo.Text = drow1["VATNo"].ToString();
-                
-
-                rcbChargeCcy.SelectedValue = drow1["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
+                if (dsDoc.Tables[3].Rows.Count > 0)
                 {
-                    LoadChargeAcct(ref rcbChargeAcct);
-                    rcbChargeAcct.SelectedValue = drow1["ChargeAcct"].ToString();    
+                    var drow1 = dsDoc.Tables[3].Rows[0];
+                    WaiveCharges = drow1["WaiveCharges"].ToString();
+                    comboWaiveCharges.SelectedValue = WaiveCharges;
+                    tbChargeRemarks.Text = drow1["ChargeRemarks"].ToString();
+                    tbVatNo.Text = drow1["VATNo"].ToString();
+                    rcbChargeCcy.SelectedValue = drow1["ChargeCcy"].ToString();
+                    if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
+                    {
+                        LoadChargeAcct(ref rcbChargeAcct);
+                        rcbChargeAcct.SelectedValue = drow1["ChargeAcct"].ToString();
+                    }
+                    tbChargeAmt.Value = (double?)drow1["ChargeAmt"];
+                    rcbPartyCharged.SelectedValue = drow1["PartyCharged"].ToString();
+                    rcbOmortCharge.SelectedValue = drow1["OmortCharges"].ToString();
+                    rcbChargeStatus.SelectedValue = drow1["ChargeStatus"].ToString();
+                    lblTaxCode.Text = drow1["TaxCode"].ToString();
+                    lblTaxAmt.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
                 }
-                
-                tbChargeAmt.Value = (double?) drow1["ChargeAmt"];
-                rcbPartyCharged.SelectedValue = drow1["PartyCharged"].ToString();
-                rcbOmortCharge.SelectedValue = drow1["OmortCharges"].ToString();
-                rcbChargeStatus.SelectedValue = drow1["ChargeStatus"].ToString();
-                lblTaxCode.Text = drow1["TaxCode"].ToString();
-                lblTaxAmt.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
-            }
-            else
-            {
-                rcbChargeAcct.SelectedValue = string.Empty;
-                rcbChargeCcy.SelectedValue = string.Empty;
-                tbChargeAmt.Value = 0;
-                rcbPartyCharged.SelectedValue = "A";
-                rcbChargeStatus.SelectedValue = string.Empty;
-                lblTaxCode.Text = string.Empty;
-                lblTaxAmt.Text = string.Empty;
-            }
-
-            if (dsDoc.Tables[4].Rows.Count > 0)
-            {
-                var drow1 = dsDoc.Tables[4].Rows[0];
-
-                rcbChargeCcy2.SelectedValue = drow1["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
+                if (dsDoc.Tables[4].Rows.Count > 0)
                 {
-                    LoadChargeAcct(ref rcbChargeAcct2);
-                    rcbChargeAcct2.SelectedValue = drow1["ChargeAcct"].ToString();    
+                    var drow1 = dsDoc.Tables[4].Rows[0];
+                    rcbChargeCcy2.SelectedValue = drow1["ChargeCcy"].ToString();
+                    if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
+                    {
+                        LoadChargeAcct(ref rcbChargeAcct2);
+                        rcbChargeAcct2.SelectedValue = drow1["ChargeAcct"].ToString();
+                    }
+                    tbChargeAmt2.Value = (double?)drow1["ChargeAmt"];
+                    rcbPartyCharged2.SelectedValue = drow1["PartyCharged"].ToString();
+                    rcbOmortCharges2.SelectedValue = drow1["OmortCharges"].ToString();
+                    rcbChargeStatus2.SelectedValue = drow1["ChargeStatus"].ToString();
+                    lblTaxCode2.Text = drow1["TaxCode"].ToString();
+                    lblTaxAmt2.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
                 }
-                
-                tbChargeAmt2.Value = (double?) drow1["ChargeAmt"];
-                rcbPartyCharged2.SelectedValue = drow1["PartyCharged"].ToString();
-                rcbOmortCharges2.SelectedValue = drow1["OmortCharges"].ToString();
-                rcbChargeStatus2.SelectedValue = drow1["ChargeStatus"].ToString();
-                lblTaxCode2.Text = drow1["TaxCode"].ToString();
-                lblTaxAmt2.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
-            }
-            else
-            {
-                rcbChargeAcct2.SelectedValue = string.Empty;
-                rcbChargeCcy2.SelectedValue = string.Empty;
-                tbChargeAmt2.Value = 0;
-                rcbOmortCharges2.SelectedValue = string.Empty;
-                rcbChargeStatus2.SelectedValue = string.Empty;
-                lblTaxCode2.Text = string.Empty;
-                lblTaxAmt2.Text = string.Empty;
-            }
-
-            if (dsDoc.Tables[5].Rows.Count > 0)
-            {
-                var drow1 = dsDoc.Tables[5].Rows[0];
-
-                rcbChargeCcy3.SelectedValue = drow1["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
+                if (dsDoc.Tables[5].Rows.Count > 0)
                 {
-                    LoadChargeAcct(ref rcbChargeAcct3);
-                    rcbChargeAcct3.SelectedValue = drow1["ChargeAcct"].ToString();    
+                    var drow1 = dsDoc.Tables[5].Rows[0];
+                    rcbChargeCcy3.SelectedValue = drow1["ChargeCcy"].ToString();
+                    if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
+                    {
+                        LoadChargeAcct(ref rcbChargeAcct3);
+                        rcbChargeAcct3.SelectedValue = drow1["ChargeAcct"].ToString();
+                    }
+                    tbChargeAmt3.Value = (double?)drow1["ChargeAmt"];
+                    rcbPartyCharged3.SelectedValue = drow1["PartyCharged"].ToString();
+                    rcbOmortCharges3.SelectedValue = drow1["OmortCharges"].ToString();
+                    rcbChargeStatus3.SelectedValue = drow1["ChargeStatus"].ToString();
+                    lblTaxCode3.Text = drow1["TaxCode"].ToString();
+                    lblTaxAmt3.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
                 }
-                
-                tbChargeAmt3.Value = (double?) drow1["ChargeAmt"];
-                rcbPartyCharged3.SelectedValue = drow1["PartyCharged"].ToString();
-                rcbOmortCharges3.SelectedValue = drow1["OmortCharges"].ToString();
-                rcbChargeStatus3.SelectedValue = drow1["ChargeStatus"].ToString();
-                lblTaxCode3.Text = drow1["TaxCode"].ToString();
-                lblTaxAmt3.Text = String.Format("{0:C}", drow1["TaxAmt"]).Replace("$", "");
-            }
-            else
-            {
-                rcbChargeAcct3.SelectedValue = string.Empty;
-                rcbChargeCcy3.SelectedValue = string.Empty;
-                tbChargeAmt3.Value = 0;
-                rcbPartyCharged3.SelectedValue = "A";
-                rcbOmortCharges3.SelectedValue = string.Empty;
-                rcbChargeStatus3.SelectedValue = string.Empty;
-                lblTaxCode3.Text = string.Empty;
-                lblTaxAmt3.Text = string.Empty;
             }
             #endregion
 
@@ -2633,7 +2620,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     {
                         lblError.Text = errorUn_AUT;
                         RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                         RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
 
@@ -2695,7 +2682,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     {
                         lblError.Text = errorUn_AUT;
                         RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                         RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                         RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
 

@@ -179,11 +179,11 @@
                 <tr>
                     <td class="MyLable">Nostro Acct</td>
                     <td class="MyContent">
-                        <telerik:radcombobox AutoPostBack="false"
+                        <telerik:radcombobox AutoPostBack="true"
                             OnItemDataBound="cboNostroAcct_ItemDataBound"
                             id="cboNostroAcct" runat="server"
                             markfirstmatch="True" width="300"
-                            allowcustomtext="false" OnClientSelectedIndexChanged="cboNostroAcct_OnClientSelectedIndexChanged">
+                            allowcustomtext="false" OnSelectedIndexChanged="cboNostroAcct_SelectIndexChange">
                             <ExpandAnimation Type="None" />
                             <CollapseAnimation Type="None" />                            
                         </telerik:radcombobox> <asp:Label ID="lblNostroAcctName" runat="server" /></td>
@@ -1497,10 +1497,6 @@
             else
                 objW.css("display", "");
         }
-        function cboNostroAcct_OnClientSelectedIndexChanged() {
-            var swiftCode = $find("<%=cboNostroAcct.ClientID%>").get_selectedItem().get_attributes().getAttribute("Code");
-            $find("<%=txtSenderCorrespondentNo.ClientID%>").set_value(swiftCode);
-        }
 
         function autoCompleteReceiverCorrespondent() {
             if ($find("<%=comboAccountWithInstitutionType.ClientID%>").get_selectedItem().get_value() == "D") {
@@ -1747,6 +1743,22 @@
                 <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondentAddr3" />                
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="cboNostroAcct">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="txtSenderCorrespondentNo" />
+                <telerik:AjaxUpdatedControl ControlID="lblSenderCorrespondentNoError" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderCorrespondentName" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderCorrespondentAddress1" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderCorrespondentAddress2" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderCorrespondentAddress3" />
+                
+                <telerik:AjaxUpdatedControl ControlID="tabCableCharge_cboChargeAcc" />
+                <telerik:AjaxUpdatedControl ControlID="tabPaymentCharge_cboChargeAcc" />
+                <telerik:AjaxUpdatedControl ControlID="tabHandlingCharge_cboChargeAcc" />
+                <telerik:AjaxUpdatedControl ControlID="tabDiscrepenciesCharge_cboChargeAcc" />
+                <telerik:AjaxUpdatedControl ControlID="tabOtherCharge_cboChargeAcc" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>
