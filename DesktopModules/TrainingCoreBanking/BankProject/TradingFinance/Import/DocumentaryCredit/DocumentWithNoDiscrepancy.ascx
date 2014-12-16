@@ -4,6 +4,7 @@
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+    <script type="text/javascript" src="DesktopModules/TrainingCoreBanking/BankProject/Scripts/Common.js"></script>
     <script type="text/javascript">        
         jQuery(function ($) {
             $('#tabs-demo').dnnTabs();
@@ -13,6 +14,13 @@
             var button = args.get_item();
             //
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Commit%>') {
+                <% if (TabId == TabDocsWithDiscrepancies || DocsType == TabDocsWithDiscrepancies) %>
+                <%{ %>
+                if (!MTIsValidInput('tabMT734', null)) {
+                    args.set_cancel(true);
+                    return;
+                }
+                <% }%>
             }
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Preview%>') {
                 window.location = '<%=EditUrl("preview_nodiscrepancy")%>&lst=4appr';

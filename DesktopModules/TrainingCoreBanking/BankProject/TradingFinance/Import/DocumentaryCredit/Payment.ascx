@@ -1420,6 +1420,7 @@
     </div>
 </div>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+    <script type="text/javascript" src="DesktopModules/TrainingCoreBanking/BankProject/Scripts/Common.js"></script>
     <script type="text/javascript">
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
@@ -1433,6 +1434,16 @@
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
                 args.set_cancel(true);
                 radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file ?", confirmCallbackFunction_PhieuNgoaiBang, 420, 150, null, 'Download');
+            }
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Commit%>') {
+                if (!MTIsValidInput('MT202', null)) {
+                    args.set_cancel(true);
+                    return;
+                }
+                if (!MTIsValidInput('MT756', null)) {
+                    args.set_cancel(true);
+                    return;
+                }
             }
         }
         function confirmCallbackFunction_PhieuNgoaiBang(result) {
