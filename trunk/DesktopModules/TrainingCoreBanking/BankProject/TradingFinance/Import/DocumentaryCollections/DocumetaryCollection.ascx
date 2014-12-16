@@ -2,6 +2,7 @@
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true" />
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+    <script type="text/javascript" src="DesktopModules/TrainingCoreBanking/BankProject/Scripts/Common.js"></script>
     <script type="text/javascript">
         var lastClickedItem = null;
         var clickCalledAfterRadconfirm = false;
@@ -33,17 +34,11 @@
                         return;
                     }
                 }
-                //
-                args.set_cancel(true);
-                <% if (TabId == 217) %>
-                <%{ %>
-                if (!MTIsValidInput('MT410', null)) return;
-                        <% }
-                   else if (TabId == 281) %>
-                        <%{%>
-                if (!MTIsValidInput('MT412', null)) return;
-                <% } %>
-                args.set_cancel(false);
+                //                
+                if (!MTIsValidInput('TabMT410', null)){ 
+                    args.set_cancel(true);
+                    return;
+                }
                 //
             }
             

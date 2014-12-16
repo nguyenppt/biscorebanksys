@@ -295,7 +295,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void btnPCK_Report_Click(object sender, EventArgs e)
         {
-            bc.Reports.createFileDownload("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/ProvisionTransfersPHIEUCHUYENKHOAN.doc", bd.SQLData.B_PROVISIONTRANSFER_DC_PHIEUCHUYENKHOAN_REPORT(tbLCNo.Text.Trim(), UserInfo.Username),
+            bc.Reports.createFileDownload(Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/ProvisionTransfersPHIEUCHUYENKHOAN.doc"), bd.SQLData.B_PROVISIONTRANSFER_DC_PHIEUCHUYENKHOAN_REPORT(tbLCNo.Text.Trim(), UserInfo.Username),
                 "ProvisionTransfersPHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
