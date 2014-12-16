@@ -754,7 +754,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable" style="width:185px;">14.1 Advise throught Option</td>
+                    <td class="MyLable" style="width:185px;">14.1 Advise through Option</td>
                     <td class="MyContent">
                         <telerik:RadComboBox
                             AutoPostBack="True"
@@ -773,14 +773,14 @@
             </table>
             <table cellpadding="0" cellspacing="0">            
                 <tr>
-                    <td class="MyLable" style="width:185px;">14.2 Advise throught Code</td>
+                    <td class="MyLable" style="width:185px;">14.2 Advise through Code</td>
                     <td class="MyContent"><telerik:RadTextBox ID="txtAdviseThruNo" runat="server" AutoPostBack="True" OnTextChanged="txtAdviseThruNo_OnTextChanged" /></td>
                     <td><asp:Label ID="lblAdviseThruMessage" runat="server" Text=""></asp:Label></td>
                 </tr>
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable" style="width:185px;">14.3 Advise throught Name</td>
+                    <td class="MyLable" style="width:185px;">14.3 Advise through Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbAdviseThruName" runat="server" Width="355" MaxLength="35" 
                             ClientEvents-OnValueChanged="tbAdviseThruName_OnClientSelectedIndexChanged"/>
@@ -788,7 +788,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">14.4 Advise throught Address</td>
+                    <td class="MyLable">14.4 Advise through Address</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbAdviseThruAddr1" runat="server" Width="355" MaxLength="35" 
                             ClientEvents-OnValueChanged="tbAdviseThruAddr1_OnClientSelectedIndexChanged"/>
