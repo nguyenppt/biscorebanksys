@@ -25,14 +25,26 @@
             if (button.get_commandName() == "save") {
                 var collectionTypeVal = $find('<%=comboCollectionType.ClientID %>').get_selectedItem().get_value();
                 var dteMaturityDate = $find('<%=dteMaturityDate.ClientID %>').get_selectedDate();
-                var txtTenor = $find('<%=txtTenor.ClientID %>').get_value();
-                
+                var txtTenor = $find('<%=txtTenor.ClientID %>').get_value();                
                 if (collectionTypeVal.indexOf('DA') != -1) {
                     if (!dteMaturityDate || !txtTenor) {
                         args.set_cancel(true);
                         radalert("Maturity Date/Tenor is required", 340, 150, 'Error');
+                        return;
                     }
                 }
+                //
+                args.set_cancel(true);
+                <% if (TabId == 217) %>
+                <%{ %>
+                if (!MTIsValidInput('MT410', null)) return;
+                        <% }
+                   else if (TabId == 281) %>
+                        <%{%>
+                if (!MTIsValidInput('MT412', null)) return;
+                <% } %>
+                args.set_cancel(false);
+                //
             }
             
             if (tabId == 217) {// Register Documetary Collection
