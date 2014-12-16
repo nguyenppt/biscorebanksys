@@ -196,9 +196,9 @@
                      </td>
                  </tr>
                  <tr>
-                     <td class="MyLable">Reference No:<span class="Required">(*)</span>
+                     <td class="MyLable">Loan Contract No:<span class="Required">(*)</span>
                          <asp:RequiredFieldValidator Runat="server" Display="None" ID="RequiredFieldValidator8"
-                     ControlToValidate="tbReferenceNo" ValidationGroup="Commit" InitialValue="" ErrorMessage="Reference No is required"
+                     ControlToValidate="tbReferenceNo" ValidationGroup="Commit" InitialValue="" ErrorMessage="Loan Contract is required"
                     ForeColor="Red"></asp:RequiredFieldValidator> 
                      </td>
                      <td class="MyContent">
