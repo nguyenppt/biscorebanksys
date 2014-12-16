@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using System.Data;
 using Telerik.Web.UI;
 using BankProject.DataProvider;
+using BankProject.DBRespository;
+using BankProject.Common;
 
 namespace BankProject.Views.TellerApplication
 {
@@ -33,6 +35,7 @@ namespace BankProject.Views.TellerApplication
             if (Request.QueryString["ID"] != null)
             {
                 Load_Contingent_Account(Request.QueryString["ID"].ToString());
+                LoadReferenceNo(Request.QueryString["ID"].ToString(), null);
                 LoadToolBar(false);
             }
             else
@@ -51,6 +54,28 @@ namespace BankProject.Views.TellerApplication
                 {
                     ShowMsgBox("Amount Value must be greater than 0 . Please check again !"); return;
                 }
+
+                NormalLoanRepository loadFacade = new NormalLoanRepository();
+
+                var loan = loadFacade.findExistingLoan(tbReferenceNo.Text, null, null).FirstOrDefault();
+
+                if (loan == null)
+                {
+                    ShowMsgBox("Loan Contract is not existed. Please check again !"); return;
+                }
+                else
+                {
+                    if (loan.LoanAmount > (loan.Tot_P_Pay_Amt == null ? 0 : loan.Tot_P_Pay_Amt) && rcbTransactionCode.SelectedValue.Equals("902")
+                        && (loan.CollateralID.Equals(tbID.Text.Trim())
+                            || loan.CollateralID_1.Equals(tbID.Text.Trim())
+                            || loan.CollateralID_2.Equals(tbID.Text.Trim())
+                            || loan.CollateralID_3.Equals(tbID.Text.Trim())))
+                    {
+                        ShowMsgBox("Can’t process because this collateral is still valid"); return;
+                    }
+                }
+
+
                 TriTT_Credit.B_CONTINGENT_ENTRY_Insert_Update(tbID.Text, tbContingentEntryID.Text, tbCustomerIDName_Cont.Text.Substring(0, 7), tbAddress_cont.Text, tbIDTaxCode.Text
                         , tbDateOfIssue.Text == "" ? "" : tbDateOfIssue.Text, rcbTransactionCode.SelectedValue, rcbTransactionCode.Text.Replace(rcbTransactionCode.SelectedValue + " - ", "")
                         , rcbDebitOrCredit.SelectedValue, rcbDebitOrCredit.Text.Replace(rcbDebitOrCredit.SelectedValue + " - ", ""), rcbCurrency.SelectedValue,
@@ -75,6 +100,23 @@ namespace BankProject.Views.TellerApplication
         {
             Load_Contingent_Account(tbID.Text.Trim());
         }
+
+        private void LoadReferenceNo(string CollateralID, string selectedValue)
+        {
+            //NormalLoanRepository facade = new NormalLoanRepository();
+            //var model = facade.findListOfLoanWithAppropriateCollateralID(CollateralID).ToList();
+            //Util.LoadData2RadCombo(rcbReferenceNo, model, "Code", "Code", "-Select a Loan Code-", true);
+
+
+            //if (!String.IsNullOrEmpty(selectedValue))
+            //{
+            //    rcbReferenceNo.SelectedValue = selectedValue;
+            //}
+
+
+            //rcbSubCategory.DataBind();
+        }
+
         protected void Load_Contingent_Account(string ContingentID)
         {
             string CustomerID = ContingentID.Substring(0, 7);
@@ -107,6 +149,7 @@ namespace BankProject.Views.TellerApplication
                     rcbDebitOrCredit.SelectedValue = dr["DCTypeCode"].ToString();
                     rcbCurrency.SelectedValue = dr["Currency"].ToString();
                     tbCollateralType.Text = dr["CollateralType_Code"].ToString();
+                    //LoadContingetnAcct(tbCollateralType.Text, rcbCurrency.SelectedValue);
                     LoadContingetnAcct(tbCollateralType.Text, rcbCurrency.SelectedValue);
 
                     tbAmount.Text = dr["Amount"].ToString();
