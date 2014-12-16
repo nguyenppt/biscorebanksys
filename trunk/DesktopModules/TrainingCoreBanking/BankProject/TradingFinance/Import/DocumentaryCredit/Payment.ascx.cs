@@ -455,7 +455,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         private void loadChargeAcc(string PartyCharged, string ChargeCurrency, ref RadComboBox cboChargeAcc)
         {
             if (PartyCharged.ToUpper().Equals("A") || PartyCharged.ToUpper().Equals("AC"))
+            {
                 bc.Commont.initRadComboBox(ref cboChargeAcc, "Display", "Id", bd.IssueLC.ImportLCPaymentChargeAcc(PartyCharged, txtCustomerID.Value, ChargeCurrency));
+                cboChargeAcc.Text = "";
+            }
             else
             {
                 RadComboBoxItem it = cboNostroAcct.Items[cboNostroAcct.SelectedIndex];
@@ -773,6 +776,34 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void tabOtherCharge_cboChargeCcy_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             loadChargeAcc(tabOtherCharge_cboPartyCharged.SelectedValue, tabOtherCharge_cboChargeCcy.SelectedValue, ref tabOtherCharge_cboChargeAcc);
+        }
+
+        protected void cboNostroAcct_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            var item = cboNostroAcct.SelectedItem;
+            if (item == null) return;
+            txtSenderCorrespondentNo.Text = item.Attributes["Code"];
+            txtSenderCorrespondentNo_OnTextChanged(null, null);
+            //
+            string PartyCharged = tabCableCharge_cboPartyCharged.SelectedValue.ToUpper();
+            if (PartyCharged.Equals("B") || PartyCharged.Equals("BC"))
+                loadChargeAcc(tabCableCharge_cboPartyCharged.SelectedValue, tabCableCharge_cboChargeCcy.SelectedValue, ref tabCableCharge_cboChargeAcc);
+            //
+            PartyCharged = tabPaymentCharge_cboPartyCharged.SelectedValue.ToUpper();
+            if (PartyCharged.Equals("B") || PartyCharged.Equals("BC"))
+                loadChargeAcc(tabPaymentCharge_cboPartyCharged.SelectedValue, tabPaymentCharge_cboChargeCcy.SelectedValue, ref tabPaymentCharge_cboChargeAcc);
+            //
+            PartyCharged = tabHandlingCharge_cboPartyCharged.SelectedValue.ToUpper();
+            if (PartyCharged.Equals("B") || PartyCharged.Equals("BC"))
+                loadChargeAcc(tabHandlingCharge_cboPartyCharged.SelectedValue, tabHandlingCharge_cboChargeCcy.SelectedValue, ref tabHandlingCharge_cboChargeAcc);
+            //
+            PartyCharged = tabDiscrepenciesCharge_cboPartyCharged.SelectedValue.ToUpper();
+            if (PartyCharged.Equals("B") || PartyCharged.Equals("BC"))
+                loadChargeAcc(tabDiscrepenciesCharge_cboPartyCharged.SelectedValue, tabDiscrepenciesCharge_cboChargeCcy.SelectedValue, ref tabDiscrepenciesCharge_cboChargeAcc);
+            //
+            PartyCharged = tabOtherCharge_cboPartyCharged.SelectedValue.ToUpper();
+            if (PartyCharged.Equals("B") || PartyCharged.Equals("BC"))
+                loadChargeAcc(tabOtherCharge_cboPartyCharged.SelectedValue, tabOtherCharge_cboChargeCcy.SelectedValue, ref tabOtherCharge_cboChargeAcc);
         }
     }
 }

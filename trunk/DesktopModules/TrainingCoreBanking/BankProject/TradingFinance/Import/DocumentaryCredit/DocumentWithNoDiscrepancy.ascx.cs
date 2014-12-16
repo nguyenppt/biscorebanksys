@@ -704,6 +704,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         case TabDocsAccept:
                             if (this.TabId == TabDocsAccept)
                             {
+                                txtAcceptDate.SelectedDate = DateTime.Now;
                                 string AcceptStatus = "";
                                 if (drDetail["AcceptStatus"] != DBNull.Value) AcceptStatus = drDetail["AcceptStatus"].ToString();
                                 /*if (AcceptStatus.Equals(bd.TransactionStatus.AUT))
@@ -737,8 +738,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             break;
                         case TabDocsAccept:
                             bc.Commont.SetTatusFormControls(this.Controls, false);
-                            comboDrawType.SelectedValue = "AC";
-                            txtAcceptDate.SelectedDate = DateTime.Now;
+                            comboDrawType.SelectedValue = "AC";                            
                             txtAcceptDate.Enabled = true;
                             txtAcceptRemarks.Enabled = true;
                             break;
