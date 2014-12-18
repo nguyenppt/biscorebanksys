@@ -559,25 +559,25 @@
             <tr>    
                 <td class="MyLable" style="width:170px;">50A.2 Ordering Customer Name</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtOrderingCustomer1" runat="server" Width="400"/>
+                    <telerik:RadTextBox ID="txtOrderingCustomer1" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable" >50A.3 Ordering Customer Address</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtOrderingCustomer2" runat="server" Width="400"/>
+                    <telerik:RadTextBox ID="txtOrderingCustomer2" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable" ></td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtOrderingCustomer3" runat="server" Width="400"/>
+                    <telerik:RadTextBox ID="txtOrderingCustomer3" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable" ></td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtOrderingCustomer4" runat="server" Width="400"/>
+                    <telerik:RadTextBox ID="txtOrderingCustomer4" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>
         </table>
@@ -585,7 +585,7 @@
             <tr>    
                 <td class="MyLable" style="width:170px;">52A. Ordering Institution</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtOrderingInstitution" runat="server" Width="400" />
+                    <telerik:RadTextBox ID="txtOrderingInstitution" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>
         </table>
@@ -603,7 +603,7 @@
             <tr>    
                 <td class="MyLable" style="width:200px;">54A.1 Receiver's Correspondent</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtReceiverCorrespondent" runat="server"/>
+                    <telerik:RadTextBox ID="txtReceiverCorrespondent" runat="server" MaxLength="35"/>
                     <%--<telerik:RadComboBox DropDownCssClass="KDDL"
                         AutoPostBack="true" Width="400" AppendDataBoundItems="True"
                     OnSelectedIndexChanged="comboReceiverCorrespondent_SelectIndexChange"
@@ -643,14 +643,14 @@
             <tr>    
                 <td class="MyLable" style="width:200px;">54A.2 Receiver Corr Bank Acct</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtReceiverCorrBankAct" runat="server"/>
+                    <telerik:RadTextBox ID="txtReceiverCorrBankAct" runat="server" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable">56A.1 Intermediary Institution Option</td>
                 <td class="MyContent">
                     <telerik:RadComboBox AutoPostBack="True" OnSelectedIndexChanged="comboIntermediaryType_OnSelectedIndexChanged"
-                        ID="comboIntermediaryType" Runat="server"
+                        ID="comboIntermediaryType" Runat="server" 
                         MarkFirstMatch="True"
                         AllowCustomText="false" >
                         <Items>
@@ -672,7 +672,7 @@
             <tr>    
                 <td class="MyLable" style="width:200px;">56A.3 Intermediary Institution Code</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtIntermediaryInstitutionNo" runat="server" 
+                    <telerik:RadTextBox ID="txtIntermediaryInstitutionNo" runat="server" MaxLength="34"
                         AutoPostBack="True" 
                         OnTextChanged="txtIntermediaryInstitutionNo_OnTextChanged" />
                 </td>
@@ -686,19 +686,19 @@
             <tr>    
                 <td class="MyLable" style="width:200px;">56A.4 Intermediary Name</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtIntermediaryInstruction1" runat="server" Width="400"/>
+                    <telerik:RadTextBox ID="txtIntermediaryInstruction1" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>
             <tr>    
                 <td class="MyLable" >56A.5 Intermediary Address</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtIntermediaryInstruction2" runat="server" Width="400"/>
+                    <telerik:RadTextBox ID="txtIntermediaryInstruction2" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>
             <tr>    
                 <td class="MyLable" >56A.6 Account at Intermediary Institution</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtIntermediaryBankAcct" runat="server"/>
+                    <telerik:RadTextBox ID="txtIntermediaryBankAcct" runat="server" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
@@ -727,7 +727,7 @@
             <tr>    
                 <td class="MyLable" style="width:200px;">57A.3 Account With Institution Code</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtAccountWithInstitutionNo" runat="server" 
+                    <telerik:RadTextBox ID="txtAccountWithInstitutionNo" runat="server" MaxLength="34"
                         AutoPostBack="True" 
                         OnTextChanged="txtAccountWithInstitutionNo_OnTextChanged" />
                 </td>
@@ -739,43 +739,43 @@
             <tr>    
                 <td class="MyLable" style="width:200px;">57A.4 Account With Institution<br />(name and address)</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtAccountWithBankAcct" runat="server" Width="400"/>
+                    <telerik:RadTextBox ID="txtAccountWithBankAcct" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable"></td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtAccountWithBankAcct2" runat="server" Width="400"/>
+                    <telerik:RadTextBox ID="txtAccountWithBankAcct2" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable">59A.1 Beneficiary Account</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtBeneficiaryCustomer1" runat="server" Width="400" />
+                    <telerik:RadTextBox ID="txtBeneficiaryCustomer1" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable">59A.2 Beneficiary Customer</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtBeneficiaryCustomer2" runat="server" Width="400" />
+                    <telerik:RadTextBox ID="txtBeneficiaryCustomer2" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable"> </td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtBeneficiaryCustomer3" runat="server" Width="400" />
+                    <telerik:RadTextBox ID="txtBeneficiaryCustomer3" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>           
             <tr>    
                 <td class="MyLable"></td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtBeneficiaryCustomer4" runat="server" Width="400" />
+                    <telerik:RadTextBox ID="txtBeneficiaryCustomer4" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
                 <td class="MyLable"></td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtBeneficiaryCustomer5" runat="server" Width="400" />
+                    <telerik:RadTextBox ID="txtBeneficiaryCustomer5" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>
         </table>
@@ -785,7 +785,7 @@
             <tr>    
                 <td class="MyLable">70. Remittance Information</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtRemittanceInformation" runat="server" Text="" Width="400" />
+                    <telerik:RadTextBox ID="txtRemittanceInformation" runat="server" Text="" Width="400" MaxLength="35"/>
                 </td>
             </tr>            
             <tr>    
