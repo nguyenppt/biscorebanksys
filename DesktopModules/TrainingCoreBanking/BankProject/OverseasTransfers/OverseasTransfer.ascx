@@ -498,7 +498,7 @@
         <fieldset>
             <table cellpadding="0" cellspacing="0">
                 <tr>    
-                    <td class="MyLable">20. Sender's Reference</td>
+                    <td class="MyLable" style="width:180px;">20. Sender's Reference</td>
                     <td class="MyContent">
                         <asp:Label ID="lblSenderReference" runat="server" />
                     </td>
@@ -542,7 +542,7 @@
         <fieldset>
         <table cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable" style="width:170px;">50A.1 Ordering Customer Account</td>
+                <td class="MyLable" style="width:200px;">50A.1 Ordering Customer Account</td>
                 <td class="MyContent">
                     <telerik:RadComboBox width="400"
                         AppendDataBoundItems="True"
@@ -557,7 +557,7 @@
         </table>        
         <table cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable" style="width:170px;">50A.2 Ordering Customer Name</td>
+                <td class="MyLable" style="width:200px;">50A.2 Ordering Customer Name</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtOrderingCustomer1" runat="server" Width="400" MaxLength="35"/>
                 </td>
@@ -580,10 +580,8 @@
                     <telerik:RadTextBox ID="txtOrderingCustomer4" runat="server" Width="400" MaxLength="35"/>
                 </td>
             </tr>
-        </table>
-        <table cellpadding="0" cellspacing="0"> 
             <tr>    
-                <td class="MyLable" style="width:170px;">52A. Ordering Institution</td>
+                <td class="MyLable">52A. Ordering Institution</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtOrderingInstitution" runat="server" Width="400" MaxLength="35"/>
                 </td>
@@ -593,7 +591,7 @@
     <fieldset>
         <table cellpadding="0" cellspacing="0"> 
             <tr>    
-                <td class="MyLable" style="width:200px;">53A. Sender's Correspondent</td>
+                <td class="MyLable" style="width:240px;">53A. Sender's Correspondent</td>
                 <td class="MyContent">
                     <asp:Label ID="lblSenderCorrespondent" runat="server" />
                 </td>
@@ -601,7 +599,7 @@
         </table>
         <table cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable" style="width:200px;">54A.1 Receiver's Correspondent</td>
+                <td class="MyLable" style="width:240px;">54A.1 Receiver's Correspondent</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtReceiverCorrespondent" runat="server" MaxLength="35"/>
                     <%--<telerik:RadComboBox DropDownCssClass="KDDL"
@@ -641,7 +639,7 @@
         </table>
         <table cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable" style="width:200px;">54A.2 Receiver Corr Bank Acct</td>
+                <td class="MyLable" style="width:240px;">54A.2 Receiver Corr Bank Acct</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtReceiverCorrBankAct" runat="server" MaxLength="35"/>
                 </td>
@@ -670,7 +668,7 @@
         </table>
         <table cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable" style="width:200px;">56A.3 Intermediary Institution Code</td>
+                <td class="MyLable" style="width:240px;">56A.3 Intermediary Institution Code</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtIntermediaryInstitutionNo" runat="server" MaxLength="34"
                         AutoPostBack="True" 
@@ -684,7 +682,7 @@
         </table>        
         <table cellpadding="0" cellspacing="0">
             <tr>    
-                <td class="MyLable" style="width:200px;">56A.4 Intermediary Name</td>
+                <td class="MyLable" style="width:240px;">56A.4 Intermediary Name</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtIntermediaryInstruction1" runat="server" Width="400" MaxLength="35"/>
                 </td>
@@ -725,7 +723,7 @@
         </table>
         <table cellpadding="0" cellspacing="0"> 
             <tr>    
-                <td class="MyLable" style="width:200px;">57A.3 Account With Institution Code</td>
+                <td class="MyLable" style="width:240px;">57A.3 Account With Institution Code</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtAccountWithInstitutionNo" runat="server" MaxLength="34"
                         AutoPostBack="True" 
@@ -737,7 +735,7 @@
         </table>
         <table cellpadding="0" cellspacing="0"> 
             <tr>    
-                <td class="MyLable" style="width:200px;">57A.4 Account With Institution<br />(name and address)</td>
+                <td class="MyLable" style="width:240px;">57A.4 Account With Institution<br />(name and address)</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtAccountWithBankAcct" runat="server" Width="400" MaxLength="35"/>
                 </td>
@@ -783,7 +781,7 @@
         <fieldset>
         <table cellpadding="0" cellspacing="0"> 
             <tr>    
-                <td class="MyLable">70. Remittance Information</td>
+                <td class="MyLable" style="width:170px;">70. Remittance Information</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtRemittanceInformation" runat="server" Text="" Width="400" MaxLength="35"/>
                 </td>
@@ -1136,8 +1134,8 @@
         </fieldset>
     </div>
 </div>
-<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" 
-    DefaultLoadingPanelID="AjaxLoadingPanel1" >
+<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" /></telerik:RadAjaxLoadingPanel>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1" >
     <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="comboCreditAccount">
             <UpdatedControls>
@@ -1308,7 +1306,9 @@
         
         <telerik:AjaxSetting AjaxControlID="comboAccountType">
             <UpdatedControls>
-                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionNo" />
+                <telerik:AjaxUpdatedControl ControlID="lblAccountWithInstitutionName" />
+                <telerik:AjaxUpdatedControl ControlID="txtPartyIdentifyForInsti" />
+                <telerik:AjaxUpdatedControl ControlID="txtAccountWithInstitutionNo" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithBankAcct" />
                 <telerik:AjaxUpdatedControl ControlID="txtAccountWithBankAcct2" />
             </UpdatedControls>
@@ -1316,7 +1316,9 @@
         
         <telerik:AjaxSetting AjaxControlID="comboIntermediaryType">
             <UpdatedControls>
-                 <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstitutionNo" />
+                <telerik:AjaxUpdatedControl ControlID="lblIntermediaryInstitutionName" />
+                <telerik:AjaxUpdatedControl ControlID="txtPartyIdentifyForInter" />
+                <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstitutionNo" />
                 <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstruction1" />
                 <telerik:AjaxUpdatedControl ControlID="txtIntermediaryInstruction2" />
             </UpdatedControls>

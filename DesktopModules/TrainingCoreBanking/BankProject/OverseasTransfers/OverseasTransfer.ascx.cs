@@ -80,6 +80,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             LoadCreditAccountByDebitCurrency();
 
             txtReceiverCorrespondent.Enabled = false;
+            comboIntermediaryType_OnSelectedIndexChanged(null, null);
+            comboAccountType_OnSelectedIndexChanged(null, null);
         }
         
         protected void comboTPKT_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -213,6 +215,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
         protected void btSearch_Click(object sender, EventArgs e)
         {
             LoadData();
+            comboIntermediaryType_OnSelectedIndexChanged(null, null);
+            comboAccountType_OnSelectedIndexChanged(null, null);
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -1260,16 +1264,23 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void SetRelation_AccountWithInstitution()
         {
+            lblAccountWithInstitutionName.Text = "";
             switch (comboAccountType.SelectedValue)
             {
                 case "A":
-                    txtAccountWithInstitutionNo.Enabled = true;
+                    txtPartyIdentifyForInsti.Enabled = true;
+                    txtAccountWithInstitutionNo.Enabled = true;                    
                     txtAccountWithBankAcct.Enabled = false;
+                    txtAccountWithBankAcct.Text = "";
                     txtAccountWithBankAcct2.Enabled = false;
+                    txtAccountWithBankAcct2.Text = "";
                     break;
                 case "B":
                 case "D":
+                    txtPartyIdentifyForInsti.Enabled = false;
+                    txtPartyIdentifyForInsti.Text = "";
                     txtAccountWithInstitutionNo.Enabled = false;
+                    txtAccountWithInstitutionNo.Text = "";
                     txtAccountWithBankAcct.Enabled = true;
                     txtAccountWithBankAcct2.Enabled = true;
                     break;
@@ -1288,16 +1299,23 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void SetRelation_IntermediaryInstruction()
         {
+            lblIntermediaryInstitutionName.Text = "";
             switch (comboIntermediaryType.SelectedValue)
             {
                 case "A":
-                    txtIntermediaryInstruction1.Enabled = true;
+                    txtPartyIdentifyForInter.Enabled = true;
+                    txtIntermediaryInstitutionNo.Enabled = true;                    
                     txtIntermediaryInstruction1.Enabled = false;
+                    txtIntermediaryInstruction1.Text = "";
                     txtIntermediaryInstruction2.Enabled = false;
+                    txtIntermediaryInstruction2.Text = "";
                     break;
                 case "B":
                 case "D":
-                    txtIntermediaryInstruction1.Enabled = false;
+                    txtPartyIdentifyForInter.Enabled = false;
+                    txtPartyIdentifyForInter.Text = "";
+                    txtIntermediaryInstitutionNo.Enabled = false;
+                    txtIntermediaryInstitutionNo.Text = "";
                     txtIntermediaryInstruction1.Enabled = true;
                     txtIntermediaryInstruction2.Enabled = true;
                     break;
