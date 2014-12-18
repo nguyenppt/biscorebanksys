@@ -21,7 +21,6 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-            rcbIsCreateMT103.SelectedValue = "1";
             SetRelation_IntermediaryBank();
             SetRelation_AccountWithInstitution();
             SetRelation_BeneficiaryBank();
@@ -312,7 +311,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                     comboPresentorCusNo.SelectedValue = string.Empty;
                     comboCountryCode.SelectedValue = string.Empty;
-                    rcbIsCreateMT103.SelectedValue = "1";
+                    rcbIsCreateMT103.SelectedValue = "0";
                 }
 
                 #endregion
