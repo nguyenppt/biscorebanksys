@@ -466,7 +466,7 @@
             <tr>
                 <td class="MyLable">21. Presenting Bank's Ref</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtPresentingBankRef" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="txtPresentingBankRef" runat="server" Width="355" MaxLength="16"/>
                 </td>
             </tr>
             
@@ -497,14 +497,14 @@
             <tr>
                 <td class="MyLable">57.A Account With Bank</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtAccountWithBank" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="txtAccountWithBank" runat="server" Width="355" MaxLength="35"/>
                 </td>
             </tr>
             
             <tr>
                 <td class="MyLable">72. Sender to Receiver Infomation</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="tbSendertoReceiverInfomation" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="tbSendertoReceiverInfomation" runat="server" Width="355" MaxLength="35"/>
                 </td>
             </tr>
             <tr>
