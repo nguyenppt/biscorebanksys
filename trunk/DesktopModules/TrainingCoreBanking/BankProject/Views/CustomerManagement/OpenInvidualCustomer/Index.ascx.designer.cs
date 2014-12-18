@@ -229,6 +229,15 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer 
         protected global::Telerik.Web.UI.RadComboBox cmbRecidence;
         
         /// <summary>
+        /// RequiredFieldValidator11 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator11;
+        
+        /// <summary>
         /// cmbDocType control.
         /// </summary>
         /// <remarks>
@@ -256,6 +265,15 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer 
         protected global::Telerik.Web.UI.RadTextBox txtDocID;
         
         /// <summary>
+        /// RequiredFieldValidator12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator12;
+        
+        /// <summary>
         /// txtDocIssuePlace control.
         /// </summary>
         /// <remarks>
@@ -263,6 +281,15 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer 
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtDocIssuePlace;
+        
+        /// <summary>
+        /// RequiredFieldValidator13 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator13;
         
         /// <summary>
         /// rdpDocIssueDate control.
@@ -373,24 +400,6 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer 
         protected global::Telerik.Web.UI.RadComboBox cmbIndustry;
         
         /// <summary>
-        /// cmbTarget control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbTarget;
-        
-        /// <summary>
-        /// cmbMaritalStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMaritalStatus;
-        
-        /// <summary>
         /// cmbAccountOfficer control.
         /// </summary>
         /// <remarks>
@@ -443,6 +452,15 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer 
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbTitle;
+        
+        /// <summary>
+        /// cmbMaritalStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbMaritalStatus;
         
         /// <summary>
         /// rdpContactDate control.
@@ -587,6 +605,15 @@ namespace BankProject.TellerApplication.CustomerManagement.OpenInvidualCustomer 
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtCustomerLiability;
+        
+        /// <summary>
+        /// cmbTarget control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbTarget;
         
         /// <summary>
         /// RadCodeBlock control.

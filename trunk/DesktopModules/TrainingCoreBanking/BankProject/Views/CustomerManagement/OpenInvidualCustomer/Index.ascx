@@ -320,7 +320,17 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Doc Type</td>
+                    <td class="MyLable">Doc Type
+                        <span class="Required">(*)</span>
+                           <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator11"
+                            ControlToValidate="cmbDocType"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="Doc Type is Required" ForeColor="Red">
+                        </asp:RequiredFieldValidator>
+                    </td>
                     <td class="MyContent" width="300">
                         <telerik:RadComboBox ID="cmbDocType"
                             MarkFirstMatch="True" 
@@ -353,7 +363,17 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Doc Issue Place</td>
+                    <td class="MyLable">Doc Issue Place
+                        <span class="Required">(*)</span>
+                           <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator12"
+                            ControlToValidate="txtDocIssuePlace"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="Doc Issue Place is Required" ForeColor="Red">
+                        </asp:RequiredFieldValidator>
+                    </td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDocIssuePlace" Width="250" runat="server" ValidationGroup="Group1" TabIndex="17" />
                     </td>
@@ -362,7 +382,17 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Doc Issue Date</td>
+                    <td class="MyLable">Doc Issue Date
+                        <span class="Required">(*)</span>
+                           <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator13"
+                            ControlToValidate="rdpDocIssueDate"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="Doc Issue Date is Required" ForeColor="Red">
+                        </asp:RequiredFieldValidator>
+                    </td>
                     <td class="MyContent" width="300">
                         <telerik:RadDatePicker ID="rdpDocIssueDate" runat="server" MinDate="1/1/1900" TabIndex="18"></telerik:RadDatePicker>
                     </td>
@@ -470,27 +500,9 @@
                 </ContentTemplate>
 </asp:UpdatePanel>
             <table>
-                <tr>
-                    <td class="MyLable">Target</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox ID="cmbTarget" HighlightTemplatedItems="true"
-                            MarkFirstMatch="True"
-                            AllowCustomText="false"
-                            TabIndex="24" Width="300" runat="server" ValidationGroup="Group1">
-                        </telerik:RadComboBox>
-                    </td>
-                </tr>
+               
 
-                <tr>
-                    <td class="MyLable">Marital Status</td>
-                    <td class="MyContent">
-                        <telerik:RadComboBox ID="cmbMaritalStatus" HighlightTemplatedItems="true"
-                            MarkFirstMatch="True"
-                            AllowCustomText="false"
-                            TabIndex="25" Width="300" runat="server" ValidationGroup="Group1">
-                        </telerik:RadComboBox>
-                    </td>
-                </tr>
+                
 
                 <tr>
                     <td class="MyLable">Account Officer</td>
@@ -565,6 +577,16 @@
                     </telerik:RadComboBox>
                 </td>
             </tr>
+            <tr>
+                    <td class="MyLable">Marital Status</td>
+                    <td class="MyContent">
+                        <telerik:RadComboBox ID="cmbMaritalStatus" HighlightTemplatedItems="true"
+                            MarkFirstMatch="True"
+                            AllowCustomText="false"
+                            TabIndex="25" Width="300" runat="server" ValidationGroup="Group1">
+                        </telerik:RadComboBox>
+                    </td>
+                </tr>
       </table>
 
           <table width="100%" cellpadding="0" cellspacing="0">
@@ -812,6 +834,16 @@
                     <telerik:radtextbox id="txtCustomerLiability" width="300" runat="server"></telerik:radtextbox>
                 </td>
              </tr>
+              <tr style="visibility:hidden;">
+                    <td class="MyLable">Target</td>
+                    <td class="MyContent">
+                        <telerik:RadComboBox ID="cmbTarget" HighlightTemplatedItems="true"
+                            MarkFirstMatch="True"
+                            AllowCustomText="false"
+                            TabIndex="24" Width="300" runat="server" ValidationGroup="Group1">
+                        </telerik:RadComboBox>
+                    </td>
+                </tr>
         </table>
     </div>
 </div>
