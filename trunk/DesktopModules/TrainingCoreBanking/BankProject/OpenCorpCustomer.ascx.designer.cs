@@ -184,6 +184,15 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadComboBox cmbRecidence;
         
         /// <summary>
+        /// RequiredFieldValidator3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        
+        /// <summary>
         /// cmbDocType control.
         /// </summary>
         /// <remarks>
@@ -220,6 +229,15 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadTextBox txtDocID;
         
         /// <summary>
+        /// RequiredFieldValidator9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator9;
+        
+        /// <summary>
         /// txtDocIssuePlace control.
         /// </summary>
         /// <remarks>
@@ -227,6 +245,15 @@ namespace BankProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtDocIssuePlace;
+        
+        /// <summary>
+        /// RequiredFieldValidator11 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator11;
         
         /// <summary>
         /// rdpDocIssueDate control.
@@ -409,15 +436,6 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadComboBox cmbIndustry;
         
         /// <summary>
-        /// cmbTarget control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbTarget;
-        
-        /// <summary>
         /// cmbAccountOfficer control.
         /// </summary>
         /// <remarks>
@@ -533,6 +551,15 @@ namespace BankProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtLegacyRef;
+        
+        /// <summary>
+        /// cmbTarget control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbTarget;
         
         /// <summary>
         /// btSearch control.
