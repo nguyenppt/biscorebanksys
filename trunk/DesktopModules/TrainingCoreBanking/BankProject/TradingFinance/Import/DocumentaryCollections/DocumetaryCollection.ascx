@@ -959,16 +959,16 @@
             </tr>
 
             <tr>
-                <td class="MyLable">Sending Bank's TRN</td>
+                <td class="MyLable">20. Sending Bank's TRN</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtSendingBankTRN" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="txtSendingBankTRN" runat="server" Width="355" MaxLength="16"/>
                 </td>
             </tr>
 
             <tr>
-                <td class="MyLable">Related Reference</td>
+                <td class="MyLable">21. Related Reference</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtRelatedReference" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="txtRelatedReference" runat="server" Width="355" MaxLength="16"/>
                 </td>
             </tr>
 
@@ -1001,23 +1001,23 @@
             </tr>
 
             <tr>
-                <td class="MyLable">Sender to Receiver Info</td>
+                <td class="MyLable">72. Sender to Receiver Information</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_1" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_1" runat="server" Width="355" MaxLength="35"/>
                 </td>
             </tr>
 
             <tr>
                 <td class="MyLable"></td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_2" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_2" runat="server" Width="355" MaxLength="35"/>
                 </td>
             </tr>
 
             <tr>
                 <td class="MyLable"></td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_3" runat="server" Width="355" />
+                    <telerik:RadTextBox ID="txtSenderToReceiverInfo_410_3" runat="server" Width="355" MaxLength="35"/>
                 </td>
             </tr>
         </table>
