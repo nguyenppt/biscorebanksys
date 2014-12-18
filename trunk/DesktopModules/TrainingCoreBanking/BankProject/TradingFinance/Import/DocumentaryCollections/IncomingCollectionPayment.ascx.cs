@@ -21,6 +21,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
+            rcbIsCreateMT103.SelectedValue = "1";
             SetRelation_IntermediaryBank();
             SetRelation_AccountWithInstitution();
             SetRelation_BeneficiaryBank();
