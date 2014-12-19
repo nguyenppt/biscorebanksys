@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using System.Data;
 using BankProject.DataProvider;
+using DotNetNuke.Entities.Tabs;
 
 namespace BankProject.Views.TellerApplication
 {
@@ -43,8 +44,23 @@ namespace BankProject.Views.TellerApplication
         }
         public string getUrlPreview(string id)
         {
+            TabController tCtlr = new TabController();
+            TabInfo tInfoP = tCtlr.GetTabByName("Contingent Entry", PortalId);
+            int tID = 392;
+            if (tInfoP != null)
+            {
+                int tpID = tInfoP.TabID;
+                TabInfo tInfo = tCtlr.GetTabByName("Input", PortalId, tpID);
+
+                if (tInfo != null)
+                {
+                    tID = tInfo.TabID;
+                }
+            }
+
             //return "Default.aspx?tabid=383" + "&ID=" + id;
-            return "Default.aspx?tabid=392" + "&ID=" + id;
+            //return "Default.aspx?tabid=392" + "&ID=" + id;
+            return "Default.aspx?tabid=" + tID + "&ID=" + id;
         }
         protected void LoadCurrencies()
         {
