@@ -80,7 +80,7 @@ namespace BankProject
                         Convert.ToDecimal( tbExeValue.Value.HasValue? tbExeValue.Value:0),
                         AllocatedAmt, rdpValueDate.SelectedDate, rdpExpiryDate.SelectedDate, rdpReviewDate.SelectedDate, UserInfo.Username.ToString(), Rate,
                         rcbGlobalLimitID2.SelectedValue);
-                    TriTT.B_CONTINGENT_ENTRY_Insert_Update(
+                    TriTT_Credit.B_CONTINGENT_ENTRY_Insert_Update(
                         CollInfoID, 
                         tbContingentEntryID.Text, 
                         tbCustomerIDName_Cont.Text.Substring(0, 7), 
@@ -97,7 +97,7 @@ namespace BankProject
                         , rdpValueDate.SelectedDate
                         , tbNarrative.Text
                         , UserInfo.Username.ToString()
-                        , rcbCollateralType.SelectedValue);
+                        , rcbCollateralType.SelectedValue, tbReferenceNo.Text.Trim());
                     Response.Redirect("Default.aspx?tabid=194");
                 }
                 else
