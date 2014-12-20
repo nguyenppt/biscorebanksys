@@ -182,7 +182,7 @@
                       <td class="MyLable">Deal Rate:</td>
                      <td class="MyContent">
                          <telerik:RadNumericTextBox ID="tbDealRate" runat="server" ValidationGroup="Group1" 
-                             NumberFormat-DecimalDigits="5" ></telerik:RadNumericTextBox>
+                             NumberFormat-DecimalDigits="2" ></telerik:RadNumericTextBox>
                          
                      </td>
                      
