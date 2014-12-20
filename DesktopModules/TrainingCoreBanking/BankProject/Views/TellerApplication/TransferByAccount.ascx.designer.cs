@@ -328,15 +328,6 @@ namespace BankProject.Views.TellerApplication {
         protected global::Telerik.Web.UI.RadTextBox tbBankName;
         
         /// <summary>
-        /// tbPayNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox tbPayNumber;
-        
-        /// <summary>
         /// RequiredFieldValidator5 control.
         /// </summary>
         /// <remarks>
@@ -425,6 +416,15 @@ namespace BankProject.Views.TellerApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNumericTextBox txtChargeVatAmt;
+        
+        /// <summary>
+        /// tbPayNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox tbPayNumber;
         
         /// <summary>
         /// hdfDisable control.

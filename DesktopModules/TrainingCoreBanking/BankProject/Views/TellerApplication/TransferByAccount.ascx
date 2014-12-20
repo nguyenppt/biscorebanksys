@@ -307,14 +307,7 @@
             <legend style="text-transform:uppercase; font-weight:bold;">OTHER Information</legend>
              
             <table width="100%" cellpadding="0" cellspacing="0">
-             <tr>
-                <td class="MyLable">Pay Number:</td>
-                <td class="MyContent" width="400">
-                    <telerik:RadNumericTextBox id="tbPayNumber" runat="server" />
-                </td>
-                <td class="MyLable"></td>
-                <td class="MyContent"></td>
-            </tr>
+             
                 <tr>
                 <td class="MyLable">Teller ID:<span class="Required">(*)</span>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server"  Display="None" ValidationGroup="Commit" 
@@ -394,6 +387,14 @@
                 <td class="MyContent">
                     <telerik:RadNumericTextBox ID="txtChargeVatAmt" runat="server" NumberFormat-DecimalDigits="0" ></telerik:RadNumericTextBox>
                 </td>
+            </tr>
+                <tr style="visibility:hidden;">
+                <td class="MyLable">Pay Number:</td>
+                <td class="MyContent" width="400">
+                    <telerik:RadNumericTextBox id="tbPayNumber" runat="server" />
+                </td>
+                <td class="MyLable"></td>
+                <td class="MyContent"></td>
             </tr>
                  </table>
 
