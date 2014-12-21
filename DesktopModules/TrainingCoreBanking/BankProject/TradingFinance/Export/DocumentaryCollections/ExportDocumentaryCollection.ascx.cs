@@ -786,7 +786,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 if (!String.IsNullOrEmpty(_exportDoc["DocsType"].ToString()))
                 {
-                    if (_exportDoc["DocsType"].ToString() == ScreenType.ToString())
+                    if (_exportDoc["DocsType"].ToString() == TabId.ToString())
                     {
                         if (Disable) // Authorizing
                         {
