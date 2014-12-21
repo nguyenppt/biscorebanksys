@@ -216,6 +216,10 @@
                 $("#<%=btnIncomingCollectionAcceptionVAT.ClientID %>").click();
             }
         }
+
+        function txtRemittingBankRef_OnClientSelectedIndexChanged(sender, eventArgs) {
+            $find('<%=txtRelatedReference.ClientID %>').set_value($find('<%=txtRemittingBankRef.ClientID %>').get_value());
+        }
         // Incoming Collection Acception ==================================================================================================
     </script>
 </telerik:RadCodeBlock>
@@ -436,7 +440,8 @@
                     <td class="MyLable">2.4 Remitting Bank Ref<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtRemittingBankRef" runat="server" Width="355"
-                            AutoPostBack="True" OnTextChanged="txtRemittingBankRef_OnTextChanged" />
+                            AutoPostBack="false" OnTextChanged="txtRemittingBankRef_OnTextChanged"
+                            ClientEvents-OnValueChanged="txtRemittingBankRef_OnClientSelectedIndexChanged" />
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator2"
@@ -1491,8 +1496,8 @@
     </div>
 
 </div>
-
-<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="AjaxLoadingPanel1">
+<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Default"><img src="icons/bank/ajax-loader-16x16.gif" /></telerik:RadAjaxLoadingPanel>
+<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
     <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="comboDraweeCusNo">
             <UpdatedControls>
