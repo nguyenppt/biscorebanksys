@@ -58,13 +58,11 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#CollectCharges">Collect Charges</a></li>
-       <!--  <li><a href="#Audit">Audit</a></li>
-        <li><a href="#FullView">Full View</a></li>  -->
+        <li><a href="#FullView">Full View</a></li>
     </ul>
-    <!--<div id="Audit"></div>
-    <div id="FullView"></div>  -->
+    <div id="FullView"></div>
     <div id="CollectCharges">
-        <table>
+        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Customer:</td>
                 <td class="MyContent">
@@ -73,7 +71,8 @@
                 <td class="MyContent"> 
                     <asp:Label ID="lblCustomerName" runat="server"></asp:Label>
                 </td>  
-                
+                 <td class="MyContent"> 
+                </td>  
             </tr>
         </table>
         <hr />
