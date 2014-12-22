@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
-using BankProject.DataProvider;
+using bd = BankProject.DataProvider;
+using bc = BankProject.Controls;
 using Telerik.Web.UI;
 
 namespace BankProject.TradingFinance.OverseasFundsTransfer
@@ -79,7 +80,6 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             SetChargeAcct();
             LoadCreditAccountByDebitCurrency();
 
-            txtReceiverCorrespondent.Enabled = false;
             comboIntermediaryType_OnSelectedIndexChanged(null, null);
             comboAccountType_OnSelectedIndexChanged(null, null);
         }
@@ -91,24 +91,18 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void comboCreditAccount_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            var dtSwiftCode = SQLData.B_BSWIFTCODE_GetAll().Tables[0];
-            var drow = dtSwiftCode.Select("AccountNo=" + comboCreditAccount.SelectedValue);
-            lblCreditAccount.Text = comboCreditAccount.SelectedItem.Attributes["Description"];
-            
-
-            if (drow.Length > 0)
+            lblSenderCorrespondent.Text = string.Empty;
+            lblCreditAccount.Text = string.Empty;
+            txtCreditCurrency.Text = string.Empty;
+            comboCurrency.SelectedValue = string.Empty;
+            //
+            var item = comboCreditAccount.SelectedItem;
+            if (item != null && !string.IsNullOrEmpty(item.Text))
             {
-                txtReceiverCorrespondent.Text = drow[0]["Code"].ToString();
-                //lblReceiverCorrespondentName.Text = lblCreditAccount.Text;
-                txtCreditCurrency.Text = drow[0]["Currency"].ToString();
-                comboCurrency.SelectedValue = drow[0]["Currency"].ToString();
-            }
-            else
-            {
-                txtReceiverCorrespondent.Text = string.Empty;
-                //lblReceiverCorrespondentName.Text = string.Empty;
-                txtCreditCurrency.Text = string.Empty;
-                comboCurrency.SelectedValue = string.Empty;
+                lblSenderCorrespondent.Text = item.Attributes["Code"].ToString();
+                lblCreditAccount.Text = item.Attributes["Description"].ToString();
+                txtCreditCurrency.Text = item.Attributes["Currency"].ToString();
+                comboCurrency.SelectedValue = txtCreditCurrency.Text;
             }
         }
 
@@ -144,12 +138,9 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void LoadCommoditySerByTransactionType()
         {
-            comboCommoditySer.Items.Clear();
-            comboCommoditySer.Items.Add(new RadComboBoxItem(""));
-            comboCommoditySer.DataTextField = "Name";
-            comboCommoditySer.DataValueField = "Id";
-            comboCommoditySer.DataSource = SQLData.B_BCOMMODITY_GetByTransactionType(comboTransactionType.SelectedItem.Text.Substring(0,3));
-            comboCommoditySer.DataBind();
+            var TransactionType = "";
+            if (comboTransactionType.SelectedItem != null && !string.IsNullOrEmpty(comboTransactionType.SelectedItem.Text)) TransactionType = comboTransactionType.SelectedItem.Text.Substring(0, 3);
+            bc.Commont.initRadComboBox(ref comboCommoditySer, "Name", "Id", bd.SQLData.B_BCOMMODITY_GetByTransactionType(TransactionType));
         }
         private string GetCommissionTypeByTransactionType(string p)
         {
@@ -195,13 +186,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
         
         protected void LoadCreditAccountByDebitCurrency()
         {
-            comboCreditAccount.Items.Clear();
-            comboCreditAccount.Items.Add(new RadComboBoxItem(""));
-            comboCreditAccount.AppendDataBoundItems = true;
-            comboCreditAccount.DataValueField = "AccountNo";
-            comboCreditAccount.DataTextField = "AccountNo";
-            comboCreditAccount.DataSource = SQLData.B_BSWIFTCODE_GetByCurrency(txtDeitCurrency.Text);
-            comboCreditAccount.DataBind();
+            bc.Commont.initRadComboBox(ref comboCreditAccount, "AccountNo", "AccountNo", bd.SQLData.B_BSWIFTCODE_GetByCurrency(txtDeitCurrency.Text));
         }
         
         protected void SetDebitCurrencyName()
@@ -283,71 +268,26 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void InitData()
         {
-            txtCode.Text = SQLData.B_BMACODE_GetNewID("OVERSEASTRANSFER", Refix_BMACODE());
-            var dataCustomer = DataTam.B_BCUSTOMERS_GetAll();
+            txtCode.Text = bd.SQLData.B_BMACODE_GetNewID("OVERSEASTRANSFER", Refix_BMACODE());
 
             dteCreditDate.SelectedDate = DateTime.Now;
             dteDebitDate.SelectedDate = DateTime.Now;
             dteProcessingDate.SelectedDate = DateTime.Now;
             dteValueDate.SelectedDate = DateTime.Now;
 
-            comboOtherBy.Items.Clear();
-            comboOtherBy.Items.Add(new RadComboBoxItem(""));
-            comboOtherBy.DataValueField = "CustomerID";
-            comboOtherBy.DataTextField = "CustomerID";
-            comboOtherBy.DataSource = dataCustomer;
-            comboOtherBy.DataBind();
-
-            var dsSwiftCode = SQLData.B_BSWIFTCODE_GetAll();
-
-            //comboReceiverCorrespondent.Items.Clear();
-            //comboReceiverCorrespondent.Items.Add(new RadComboBoxItem(""));
-            //comboReceiverCorrespondent.DataValueField = "Code";
-            //comboReceiverCorrespondent.DataTextField = "Code";
-            //comboReceiverCorrespondent.DataSource = dsSwiftCode;
-            //comboReceiverCorrespondent.DataBind();
+            bc.Commont.initRadComboBox(ref comboOtherBy, "CustomerID", "CustomerID", bd.DataTam.B_BCUSTOMERS_GetAll());
             
-            comboTransactionType.Items.Clear();
-            comboTransactionType.Items.Add(new RadComboBoxItem(""));
-            comboTransactionType.DataValueField = "Description";
-            comboTransactionType.DataTextField = "Id";
-            comboTransactionType.DataSource = SQLData.CreateGenerateDatas("TabAccountTransfer_TransactionType");
-            comboTransactionType.DataBind();
+            bc.Commont.initRadComboBox(ref comboTransactionType, "Id", "Description", bd.SQLData.CreateGenerateDatas("TabAccountTransfer_TransactionType"));
 
-            comboCountryCode.Items.Clear();
-            comboCountryCode.Items.Add(new RadComboBoxItem(""));
-            comboCountryCode.DataValueField = "TenTA";
-            comboCountryCode.DataTextField = "TenTA";
-            comboCountryCode.DataSource = SQLData.B_BCOUNTRY_GetAll();
-            comboCountryCode.DataBind();
+            bc.Commont.initRadComboBox(ref comboCountryCode, "TenTA", "TenTA", bd.SQLData.B_BCOUNTRY_GetAll());
 
-            var dsCurrency = SQLData.B_BCURRENCY_GetAll();
+            bc.Commont.initRadComboBox(ref comboCurrency, "Code", "Code", bd.SQLData.B_BCURRENCY_GetAll());
 
-            //comboCreditCurrency.Items.Clear();
-            //comboCreditCurrency.Items.Add(new RadComboBoxItem(""));
-            //comboCreditCurrency.DataValueField = "Code";
-            //comboCreditCurrency.DataTextField = "Code";
-            //comboCreditCurrency.DataSource = dsCurrency;
-            //comboCreditCurrency.DataBind();
-
-            comboCurrency.Items.Clear();
-            comboCurrency.Items.Add(new RadComboBoxItem(""));
-            comboCurrency.DataValueField = "Code";
-            comboCurrency.DataTextField = "Code";
-            comboCurrency.DataSource = dsCurrency;
-            comboCurrency.DataBind();
-
-            comboAccountOfficer.Items.Clear();
-            comboAccountOfficer.Items.Add(new RadComboBoxItem(""));
-            comboAccountOfficer.DataTextField = "Description";
-            comboAccountOfficer.DataValueField = "Code";
-            comboAccountOfficer.DataSource = SQLData.B_BACCOUNTOFFICER_GetAll();
-            comboAccountOfficer.DataBind();
+            bc.Commont.initRadComboBox(ref comboAccountOfficer, "Description", "Code", bd.SQLData.B_BACCOUNTOFFICER_GetAll());
 
             lblCommoditySerName.Text = comboCommoditySer.SelectedValue;
 
             SetDebitCurrencyName();
-            //lblCreditCurrency.Text = "USD";
             lbTransactionTypeName.Text = comboTransactionType.SelectedValue;
 
             GeneralVATNo();
@@ -391,7 +331,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                 CreditAmount = double.Parse(numCreditAmount.Value.ToString());
             }
 
-            SQLData.B_BOVERSEASTRANSFER_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_BOVERSEASTRANSFER_Insert(txtCode.Text.Trim()
                     , comboTransactionType.SelectedValue
                     , comboProductLine.SelectedValue
                     , comboCountryCode.SelectedValue
@@ -442,7 +382,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             {
                 ReceiverCharges = double.Parse(lblReceiverCharges.Text);
             }
-            SQLData.B_BOVERSEASTRANSFERMT103_Insert(txtCode.Text.Trim()
+            bd.SQLData.B_BOVERSEASTRANSFERMT103_Insert(txtCode.Text.Trim()
                 , ""
                 , lblSenderReference.Text
                 , ""
@@ -505,7 +445,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             {
                 TotalTaxAmount = double.Parse(lblTotalTaxAmount.Text);
             }
-            SQLData.B_BOVERSEASTRANSFERCHARGECOMMISSION_Insert(
+            bd.SQLData.B_BOVERSEASTRANSFERCHARGECOMMISSION_Insert(
                 txtCode.Text.Trim()
                 , comboChargeAcct.SelectedValue
                 , comboDisplayChargesCom.SelectedValue
@@ -530,7 +470,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
         }
         protected void LoadData()
         {
-            var dsOT = SQLData.B_BOVERSEASTRANSFER_GetByOverseasTransferCode(txtCode.Text.Trim());
+            var dsOT = bd.SQLData.B_BOVERSEASTRANSFER_GetByOverseasTransferCode(txtCode.Text.Trim());
 
             // truong hop Edit, thi` ko cho click Preview
             RadToolBar1.FindItemByValue("btReview").Enabled = true;
@@ -904,10 +844,10 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
         protected void Authorize()
         {
             // Update status
-            SQLData.B_BOVERSEASTRANSFER_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString());
+            bd.SQLData.B_BOVERSEASTRANSFER_UpdateStatus(txtCode.Text.Trim(), "AUT", UserId.ToString());
 
             // Generate Code
-            txtCode.Text = SQLData.B_BMACODE_GetNewID("OVERSEASTRANSFER", Refix_BMACODE());
+            txtCode.Text = bd.SQLData.B_BMACODE_GetNewID("OVERSEASTRANSFER", Refix_BMACODE());
 
             // Active control
             SetDisableByReview(true);
@@ -939,7 +879,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
         protected void Revert()
         {
             // Update status REV
-            SQLData.B_BOVERSEASTRANSFER_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString());
+            bd.SQLData.B_BOVERSEASTRANSFER_UpdateStatus(txtCode.Text.Trim(), "REV", UserId.ToString());
 
             // Active control
             SetDisableByReview(true);
@@ -951,7 +891,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void SetOtherByName()
         {
-            var dsCus = DataTam.B_BCUSTOMERS_GetbyID(comboOtherBy.SelectedItem.Text);
+            var dsCus = bd.DataTam.B_BCUSTOMERS_GetbyID(comboOtherBy.SelectedItem.Text);
             if (dsCus != null && dsCus.Tables.Count > 0 && dsCus.Tables[0].Rows.Count > 0)
             {
                 var drow = dsCus.Tables[0].Rows[0];
@@ -1018,7 +958,6 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
         {
             BankProject.Controls.Commont.SetTatusFormControls(this.Controls, flag);
             txtVATNo.Enabled = false;
-            txtReceiverCorrespondent.Enabled = false;
         }
 
         protected void numDebitAmount_OnTextChanged(object sender, EventArgs e)
@@ -1142,13 +1081,6 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                 case "":
                     break;
             }
-
-            //comboChargeAcct.Items.Clear();
-            //comboChargeAcct.Items.Add(new RadComboBoxItem(""));
-            //comboChargeAcct.DataValueField = "Id";
-            //comboChargeAcct.DataTextField = "Id";
-            //comboChargeAcct.DataSource = SQLData.B_BDRFROMACCOUNT_GetByName(comboOtherBy.SelectedItem != null ? comboOtherBy.SelectedItem.Attributes["CustomerName2"] : "");
-            //comboChargeAcct.DataBind();
         }
 
         protected void SetChargeAcct()
@@ -1268,7 +1200,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             switch (comboAccountType.SelectedValue)
             {
                 case "A":
-                    txtPartyIdentifyForInsti.Enabled = true;
+                    //txtPartyIdentifyForInsti.Enabled = true;
                     txtAccountWithInstitutionNo.Enabled = true;                    
                     txtAccountWithBankAcct.Enabled = false;
                     txtAccountWithBankAcct.Text = "";
@@ -1277,8 +1209,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                     break;
                 case "B":
                 case "D":
-                    txtPartyIdentifyForInsti.Enabled = false;
-                    txtPartyIdentifyForInsti.Text = "";
+                    //txtPartyIdentifyForInsti.Enabled = false;
+                    //txtPartyIdentifyForInsti.Text = "";
                     txtAccountWithInstitutionNo.Enabled = false;
                     txtAccountWithInstitutionNo.Text = "";
                     txtAccountWithBankAcct.Enabled = true;
@@ -1303,7 +1235,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             switch (comboIntermediaryType.SelectedValue)
             {
                 case "A":
-                    txtPartyIdentifyForInter.Enabled = true;
+                    //txtPartyIdentifyForInter.Enabled = true;
                     txtIntermediaryInstitutionNo.Enabled = true;                    
                     txtIntermediaryInstruction1.Enabled = false;
                     txtIntermediaryInstruction1.Text = "";
@@ -1312,8 +1244,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                     break;
                 case "B":
                 case "D":
-                    txtPartyIdentifyForInter.Enabled = false;
-                    txtPartyIdentifyForInter.Text = "";
+                    //txtPartyIdentifyForInter.Enabled = false;
+                    //txtPartyIdentifyForInter.Text = "";
                     txtIntermediaryInstitutionNo.Enabled = false;
                     txtIntermediaryInstitutionNo.Text = "";
                     txtIntermediaryInstruction1.Enabled = true;
@@ -1345,87 +1277,30 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             var row = e.Item.DataItem as DataRowView;
             e.Item.Attributes["Code"] = row["Code"].ToString();
             e.Item.Attributes["Description"] = row["Description"].ToString();
+            e.Item.Attributes["Currency"] = row["Currency"].ToString();
         }
 
         protected void btnMT103Report_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OverseasTransfer/OverseasTransferMT103.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.B_BOVERSEASTRANSFER_Report(txtCode.Text);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("OverseasTransferMT103_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+            bc.Reports.createFileDownload(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OverseasTransfer/OverseasTransferMT103.doc"),
+                bd.SQLData.B_BOVERSEASTRANSFER_Report(txtCode.Text), "OverseasTransferMT103_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void btnPhieuCKReport_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string pathMT400 = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OverseasTransfer/PHIEUCHUYENKHOAN.doc");
-            //Open the template document
-            Aspose.Words.Document docMT400 = new Aspose.Words.Document(pathMT400);
-
-            //Execute the mail merge.
-            DataSet dsMT400 = new DataSet();
-            dsMT400 = SQLData.B_BOVERSEASTRANSFER_PHIEUCHUYENKHOAN(txtCode.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            docMT400.MailMerge.ExecuteWithRegions(dsMT400); //moas mat thoi jan voi cuc gach nay woa 
-            docMT400.UpdateFields();
-            docMT400.UpdatePageLayout();
-            docMT400.UpdateTableLayout();
-
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            docMT400.Save("PHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
+            bc.Reports.createFileDownload(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OverseasTransfer/PHIEUCHUYENKHOAN.doc"),
+                bd.SQLData.B_BOVERSEASTRANSFER_PHIEUCHUYENKHOAN(txtCode.Text, UserInfo.Username), "PHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void LoadDebitAcctNo(string customerName)
         {
-            var dtAcc = SQLData.B_BDRFROMACCOUNT_GetByNameWithoutVND(customerName);
-            comboDebitAcctNo.Items.Clear();
-            comboDebitAcctNo.Items.Add(new RadComboBoxItem(""));
-            comboDebitAcctNo.DataValueField = "Id";
-            comboDebitAcctNo.DataTextField = "Display";
-            comboDebitAcctNo.DataSource = dtAcc;
-            comboDebitAcctNo.DataBind();
-
-            comboOrderingCustAcc.Items.Clear();
-            comboOrderingCustAcc.Items.Add(new RadComboBoxItem(""));
-            comboOrderingCustAcc.DataValueField = "Id";
-            comboOrderingCustAcc.DataTextField = "Display";
-            comboOrderingCustAcc.DataSource = dtAcc;//SQLData.B_BINTERNALBANKPAYMENTACCOUNT_GetAll();
-            comboOrderingCustAcc.DataBind();
-
-            comboChargeAcct.Items.Clear();
-            comboChargeAcct.Items.Add(new RadComboBoxItem(""));
-            comboChargeAcct.DataValueField = "Id";
-            comboChargeAcct.DataTextField = "Display";
-            comboChargeAcct.DataSource = dtAcc;//SQLData.B_BDRFROMACCOUNT_GetByName(comboOtherBy.SelectedItem != null ? comboOtherBy.SelectedItem.Attributes["CustomerName2"] : "");
-            comboChargeAcct.DataBind();
+            var dtAcc = bd.SQLData.B_BDRFROMACCOUNT_GetByNameWithoutVND(customerName);
+            bc.Commont.initRadComboBox(ref comboDebitAcctNo, "Display", "Id", dtAcc);
+            bc.Commont.initRadComboBox(ref comboOrderingCustAcc, "Display", "Id", dtAcc);
+            bc.Commont.initRadComboBox(ref comboChargeAcct, "Display", "Id", dtAcc);
 
             if (dtAcc != null && dtAcc.Rows.Count > 0)
             {
-                //comboDebitAcctNo.SelectedIndex = 0;
-
-                //txtDeitCurrency.Text = comboDebitAcctNo.SelectedItem.Attributes["Currency"];// dtAcc.Rows[0]["Currency"].ToString();
-                //comboCreditCurrency.SelectedValue = comboDebitAcctNo.SelectedItem.Attributes["Currency"];
-
-                //txtCommissionCurrency.Text = txtDeitCurrency.Text;
-                //txtChargeCurrency.Text = txtDeitCurrency.Text;
-
-                //comboOrderingCustAcc.SelectedValue = comboDebitAcctNo.SelectedValue;
-
                 SetChargeAccByDebitAcctNo();
             }
             else
@@ -1437,21 +1312,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void btnVATReport_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OverseasTransfer/OverseasTransferVAT.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.B_BOVERSEASTRANSFER_VAT_REPORT(txtCode.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("OverseasTransferVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
+            bc.Reports.createFileDownload(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OverseasTransfer/OverseasTransferVAT.doc"), 
+                bd.SQLData.B_BOVERSEASTRANSFER_VAT_REPORT(txtCode.Text, UserInfo.Username), "OverseasTransferVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
         }
         
         protected void txtIntermediaryInstitutionNo_OnTextChanged(object sender, EventArgs e)
@@ -1472,7 +1334,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected DataTable CheckExistBankSwiftCode(string bankSwiftCode)
         {
-            return SQLData.B_BBANKSWIFTCODE_GetByCode(bankSwiftCode);
+            return bd.SQLData.B_BBANKSWIFTCODE_GetByCode(bankSwiftCode);
         }
 
         protected void txtAccountWithInstitutionNo_OnTextChanged(object sender, EventArgs e)
@@ -1545,7 +1407,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void GeneralVATNo()
         {
-            txtVATNo.Text = Database.B_BMACODE_GetNewSoTT("VATNO").Tables[0].Rows[0]["SoTT"].ToString();
+            txtVATNo.Text = bd.Database.B_BMACODE_GetNewSoTT("VATNO").Tables[0].Rows[0]["SoTT"].ToString();
         }
 
         protected void comboDebitAcctNo_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
