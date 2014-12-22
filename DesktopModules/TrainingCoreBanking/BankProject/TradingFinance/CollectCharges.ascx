@@ -60,13 +60,13 @@
             </legend>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Charge Acct <span class="Required"> </span><asp:RequiredFieldValidator
+                    <td class="MyLable">Charge Acct <span class="Required">*</span><asp:RequiredFieldValidator
             runat="server" Display="None"
             ID="RequiredFieldValidator1"
-            ControlToValidate="txtCode"
+            ControlToValidate="txtChargeAcct"
             ValidationGroup="Commit"
             InitialValue=""
-            ErrorMessage="FT Number is required" ForeColor="Red">
+            ErrorMessage="Charge Acct is required" ForeColor="Red">
         </asp:RequiredFieldValidator></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtChargeAcct" Runat="server" AutoPostBack="True" OnTextChanged="txtChargeAcct_OnTextChanged" />
@@ -218,6 +218,18 @@
             if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
                 args.set_cancel(false);
                 radconfirm("Do you want to download VAT file ?", showReport1, 420, 150, null, 'Download');
+            }
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Commit%>') {
+                var ChargeAcct = $find('<%=txtChargeAcct.ClientID%>').get_value();
+                if (ChargeAcct == null || ChargeAcct == '') {
+                    return;
+                }
+                var s = $('#<%=lblChargeAcctName.ClientID%>').text();
+                if (s == null || s == '' || s == '<%=ChargeAcctMessage%>') {
+                    args.set_cancel(true);
+                    alert('<%=RequiredFieldValidator1.ErrorMessage%>');
+                    return;
+                }                
             }
         }
         function showReport1(result) {
