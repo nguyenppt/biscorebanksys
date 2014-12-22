@@ -82,7 +82,7 @@
 <div class="dnnForm" id="tabs-demo">
     <ul class="dnnAdminTabNav">
         <li><a href="#AccountTransfer" id="tabAccountTransfer">Account Transfer</a></li>
-        <li><a href="#MT103" id="tabMT103">MT 103 Detail</a></li>
+        <li><a href="#MT103" id="tabMT103">MT 103</a></li>
         <li><a href="#ChargeCommission" id="tabChargeCommission">Charge Commission</a></li>
     </ul>
     
@@ -602,37 +602,6 @@
                 <td class="MyLable" style="width:240px;">54A.1 Receiver's Correspondent</td>
                 <td class="MyContent">
                     <telerik:RadTextBox ID="txtReceiverCorrespondent" runat="server" MaxLength="35"/>
-                    <%--<telerik:RadComboBox DropDownCssClass="KDDL"
-                        AutoPostBack="true" Width="400" AppendDataBoundItems="True"
-                    OnSelectedIndexChanged="comboReceiverCorrespondent_SelectIndexChange"
-                        ID="comboReceiverCorrespondent" Runat="server" OnItemDataBound="commomSwiftCode_ItemDataBound"
-                        MarkFirstMatch="True"
-                        AllowCustomText="false" >
-                        <HeaderTemplate>
-                                <table cellpadding="0" cellspacing="0"> 
-                                  <tr> 
-                                     <td style="width:100px;"> 
-                                        Id
-                                     </td> 
-                                     <td> 
-                                        Description
-                                     </td>
-                                  </tr> 
-                               </table> 
-                           </HeaderTemplate>
-                            <ItemTemplate>
-                                    <table  cellpadding="0" cellspacing="0"> 
-                                      <tr> 
-                                         <td style="width:100px;"> 
-                                            <%# DataBinder.Eval(Container.DataItem, "Code")%> 
-                                         </td> 
-                                         <td> 
-                                            <%# DataBinder.Eval(Container.DataItem, "Description")%> 
-                                         </td>
-                                      </tr> 
-                                   </table> 
-                           </ItemTemplate>
-                    </telerik:RadComboBox>--%>
                 </td>
                 <td><asp:Label ID="lblReceiverCorrespondentName" runat="server" />
             </tr>
@@ -1139,9 +1108,8 @@
     <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="comboCreditAccount">
             <UpdatedControls>
-                 <telerik:AjaxUpdatedControl ControlID="lblCreditAccount" />
-                <telerik:AjaxUpdatedControl ControlID="txtReceiverCorrespondent" />
-                <telerik:AjaxUpdatedControl ControlID="lblReceiverCorrespondentName" />
+                <telerik:AjaxUpdatedControl ControlID="lblSenderCorrespondent" />
+                <telerik:AjaxUpdatedControl ControlID="lblCreditAccount" />
                 <telerik:AjaxUpdatedControl ControlID="txtCreditCurrency" />
                 <telerik:AjaxUpdatedControl ControlID="comboCurrency" />
             </UpdatedControls>
