@@ -17,6 +17,8 @@ namespace BankProject.TradingFinance
     public partial class CollectCharges : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         VietVictoryCoreBankingEntities db = new VietVictoryCoreBankingEntities();
+        protected string ChargeAcctMessage = "Can not find this acc.";
+        //
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
@@ -275,7 +277,7 @@ namespace BankProject.TradingFinance
             {
                 var cc = db.BDRFROMACCOUNTs.Where(p => p.Id.Equals(txtChargeAcct.Text)).FirstOrDefault();
                 if (cc == null)
-                    lblChargeAcctName.Text = "Can not find this acc.";
+                    lblChargeAcctName.Text = ChargeAcctMessage;
                 else
                 {
                     lblChargeCurrency.Text = cc.Currency;
