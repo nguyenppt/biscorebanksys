@@ -15,10 +15,10 @@
                 ToolTip="Revert" Value="btRevert" CommandName="revert">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-                ToolTip="Revert" Value="btSearch" CommandName="search">
+                ToolTip="Search" Value="btSearch" CommandName="search">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
+            ToolTip="Print" Value="btPrint" CommandName="print">
         </telerik:RadToolBarButton>
     </Items>
 </telerik:RadToolBar>
