@@ -1,42 +1,17 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ForeignExchangeTrade.ascx.cs" Inherits="BankProject.Views.TellerApplication.ForeignExchangeTrade" %>
-
-
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"> </telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit"  />
-
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
-<script type="text/javascript">
-    jQuery(function ($) {
-        $('#tabs-demo').dnnTabs();
-    });
-
-    function RadToolBar1_OnClientButtonClicking(sender, args) {
-        var button = args.get_item();
-
-        if (button.get_commandName() == "print") {
-            args.set_cancel(true);
-            radconfirm("Do you want to download file?", confirmCallbackFunctionVAT, 340, 150, null, 'Download');
-        }
-    }
-
-    function confirmCallbackFunctionVAT(result) {
-        if (result) {
-            $("#<%=btnReport.ClientID %>").click();
-            }
-        }
-
-</script>
 </telerik:RadCodeBlock>
-
 <div>
     <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
-       OnClientButtonClicking="RadToolBar1_OnClientButtonClicking"   OnButtonClick="RadToolBar1_ButtonClick">
+       OnClientButtonClicking="RadToolBar1_OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="Preview">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" PostBack="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
             ToolTip="Authorize" Value="btAuthorize" CommandName="authorize">
@@ -45,10 +20,10 @@
             ToolTip="Reverse" Value="btReverse" CommandName="reverse">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search">
+            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false">
         </telerik:RadToolBarButton>
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
+            ToolTip="Print" Value="btPrint" CommandName="print" PostBack="false">
         </telerik:RadToolBarButton>
     </Items>
 </telerik:RadToolBar>
@@ -56,7 +31,14 @@
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width: 200px; padding: 5px 0 5px 20px;">
-            <asp:TextBox ID="txtId" runat="server" Width="200" />
+            <asp:TextBox ID="txtId" runat="server" Width="200" /> <span class="Required">*</span><asp:RequiredFieldValidator
+            runat="server" Display="None"
+            ID="RequiredFieldValidator6"
+            ControlToValidate="txtId"
+            ValidationGroup="Commit"
+            InitialValue=""
+            ErrorMessage="FX Number is required" ForeColor="Red">
+        </asp:RequiredFieldValidator>
         </td>
     </tr>
 </table>
@@ -67,7 +49,14 @@
     <div id="ChristopherColumbus" class="dnnClear">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Transaction Type</td>
+                <td class="MyLable">Transaction Type <span class="Required">*</span><asp:RequiredFieldValidator
+            runat="server" Display="None"
+            ID="RequiredFieldValidator1"
+            ControlToValidate="rcbTransactionType"
+            ValidationGroup="Commit"
+            InitialValue=""
+            ErrorMessage="Transaction Type is required" ForeColor="Red">
+        </asp:RequiredFieldValidator></td>
                 <td class="MyContent">
                      <telerik:RadComboBox 
                         AutoPostBack="True" 
@@ -119,7 +108,14 @@
 
          <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Counterparty</td>
+                <td class="MyLable">Counterparty <span class="Required">*</span><asp:RequiredFieldValidator
+            runat="server" Display="None"
+            ID="RequiredFieldValidator2"
+            ControlToValidate="rcbCounterparty"
+            ValidationGroup="Commit"
+            InitialValue=""
+            ErrorMessage="Counterparty is required" ForeColor="Red">
+        </asp:RequiredFieldValidator></td>
                 <td class="MyContent">
                      <telerik:RadComboBox ID="rcbCounterparty"
                         Width="360"
@@ -200,8 +196,7 @@
                         ControlToValidate="rcbExchangeType"
                         ValidationGroup="Commit"
                         InitialValue=""
-                        ErrorMessage="Exchange Type is Required" ForeColor="Red">
-                    </asp:RequiredFieldValidator>
+                        ErrorMessage="Exchange Type is Required" ForeColor="Red"></asp:RequiredFieldValidator>
                 </td>
                 <td><asp:Label ID="lblExchangeType" runat="server" Text="Trading market"></asp:Label></td>
             </tr>
@@ -210,8 +205,13 @@
        
         <table width="100%" cellpadding="0" cellspacing="0">
              <tr>
-                <td class="MyLable">Buy Currency
-                    </td>
+                <td class="MyLable">Buy Currency <span class="Required">*</span><asp:RequiredFieldValidator
+            runat="server" Display="None"
+            ID="RequiredFieldValidator3"
+            ControlToValidate="rcbBuyCurrency"
+            ValidationGroup="Commit"
+            InitialValue=""
+            ErrorMessage="Buy Currency is required" ForeColor="Red"></asp:RequiredFieldValidator></td>
                 <td class="MyContent">
                     <telerik:RadComboBox AppendDataBoundItems="True"
                         ID="rcbBuyCurrency"
@@ -228,16 +228,28 @@
            
          <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Buy Amount </td>
+                <td class="MyLable">Buy Amount <span class="Required">*</span><asp:RequiredFieldValidator
+            runat="server" Display="None"
+            ID="RequiredFieldValidator4"
+            ControlToValidate="txtBuyAmount"
+            ValidationGroup="Commit"
+            InitialValue="0"
+            ErrorMessage="Buy Amount is required" ForeColor="Red"></asp:RequiredFieldValidator></td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtBuyAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="0"/>
+                    <telerik:RadNumericTextBox ID="txtBuyAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="2" Value="0" />
                 </td>
             </tr>
         </table>
          
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-               <td class="MyLable">Sell Currency</td>
+               <td class="MyLable">Sell Currency <span class="Required">*</span><asp:RequiredFieldValidator
+            runat="server" Display="None"
+            ID="RequiredFieldValidator5"
+            ControlToValidate="rcbSellCurrency"
+            ValidationGroup="Commit"
+            InitialValue=""
+            ErrorMessage="Sell Currency is required" ForeColor="Red"></asp:RequiredFieldValidator></td>
                 <td class="MyContent">
                     <telerik:RadComboBox ID="rcbSellCurrency"
                         MarkFirstMatch="True"
@@ -253,17 +265,20 @@
 
          <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="MyLable">Sell Amount</td>
+                <td class="MyLable">Sell Amount <span class="Required">*</span><asp:RequiredFieldValidator
+            runat="server" Display="None"
+            ID="RequiredFieldValidator7"
+            ControlToValidate="txtSellAmount"
+            ValidationGroup="Commit"
+            InitialValue="0"
+            ErrorMessage="Sell Amount is required" ForeColor="Red"></asp:RequiredFieldValidator></td>
                 <td class="MyContent">
                     <telerik:RadNumericTextBox ID="txtSellAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="2"
-                         ClientEvents-OnValueChanged="OnAmountValueChanged" />
+                         ClientEvents-OnValueChanged="OnAmountValueChanged" Value="0" />
                 </td>
             </tr>
         </table>
-           
-
-              <table width="100%" cellpadding="0" cellspacing="0">
-            
+        <table width="100%" cellpadding="0" cellspacing="0">            
             <tr>
                 <td class="MyLable">Rate</td>
                 <td class="MyContent">
@@ -275,8 +290,7 @@
             <tr>
                 <td class="MyLable">Customer Code</td>
                 <td class="MyContent" >
-                    <telerik:RadTextBox ID="txtCustomerCode" 
-                        runat="server"  />
+                    <telerik:RadTextBox ID="txtCustomerCode" runat="server"  />
                 </td>
             </tr>
         </table>    
@@ -491,41 +505,9 @@
 
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
 <script type="text/javascript">
-    $(document).ready(
-function () {
-        $('a.add').live('click',
-            function () {
-                $(this)
-                    .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                    .removeClass('add')
-                    .addClass('remove')
-                    ;
-                $(this)
-                    .closest('tr')
-                    .clone()
-                    .appendTo($(this).closest('table'));
-                $(this)
-                    .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                    .removeClass('remove')
-                    .addClass('add');
-            });
-        $('a.remove').live('click',
-            function () {
-                $(this)
-                    .closest('tr')
-                    .remove();
-            });
-        $('input:text').each(
-            function () {
-                var thisName = $(this).attr('name'),
-                    thisRrow = $(this)
-                                .closest('tr')
-                                .index();
-                $(this).attr('name', 'row' + thisRow + thisName);
-                $(this).attr('id', 'row' + thisRow + thisName);
-            });
-        
-});
+    jQuery(function ($) {
+        $('#tabs-demo').dnnTabs();
+    });
     function rcbExchangeType_OnClientSelectedIndexChanged() {
         var ExchangeType = $('#<%= rcbExchangeType.ClientID%>').val();
         var lblExchangeTypeElement = $('#<%= lblExchangeType.ClientID%>');
@@ -535,67 +517,55 @@ function () {
         }
     }
 
-    function ValidatorUpdateIsValid() {
-        //var i;
-        //for (i = 0; i < Page_Validators.length; i++) {
-        //    if (!Page_Validators[i].isvalid) {
-        //        Page_IsValid = false;
-        //        return;
-        //    }
-        //}
-        var ExchangeType = $('#<%= rcbExchangeType.ClientID%>').val();
-
-        Page_IsValid = ExchangeType != "";
-    }
-
-    function OnClientButtonClicking(sender, args) {
-        ValidatorUpdateIsValid();
+    function RadToolBar1_OnClientButtonClicking(sender, args) {
         var button = args.get_item();
-        var showmessage = false;//muon show thi bật lên
-        if (Page_IsValid) {
-            
-            if (showmessage && button.get_commandName() == "commit" && !clickCalledAfterRadconfirm) {
-                args.set_cancel(true);
-                lastClickedItem = args.get_item();
-                radconfirm("Credit Till Closing Balance", confirmCallbackFunction2);
-            }
-            if (showmessage && button.get_commandName() == "authorize" && !clickCalledAfterRadconfirm) {
-                radconfirm("Authorised Completed", confirmCallbackFunction2);
-            }
+        //
+        if (button.get_commandName() == '<%=BankProject.Controls.Commands.Preview%>') {
+            window.location = '<%=EditUrl("chitiet")%>&lst=4appr';
         }
-
-        if (button.get_commandName() == "Preview") {
-            window.location = "Default.aspx?tabid=267&ctl=chitiet&mid=811";
+        if (button.get_commandName() == '<%=BankProject.Controls.Commands.Search%>') {
+            window.location = '<%=EditUrl("chitiet")%>';
+        }
+        //
+        if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
+            args.set_cancel(true);
+            radconfirm("Do you want to download file?", confirmCallbackFunctionVAT, 340, 150, null, 'Download');
         }
     }
 
-        var lastClickedItem = null;
-        var clickCalledAfterRadprompt = false;
-        var clickCalledAfterRadconfirm = false;
-
-        function confirmCallbackFunction1(args) {
-            radconfirm("Unauthorised overdraft of USD on account 050001688331", confirmCallbackFunction2); //" + amtFCYDeposited + "
+    function confirmCallbackFunctionVAT(result) {
+        if (result) {
+            $("#<%=btnReport.ClientID %>").click();
         }
+    }
+
+    var lastClickedItem = null;
+    var clickCalledAfterRadprompt = false;
+    var clickCalledAfterRadconfirm = false;
+
+    function confirmCallbackFunction1(args) {
+        radconfirm("Unauthorised overdraft of USD on account 050001688331", confirmCallbackFunction2); //" + amtFCYDeposited + "
+    }
    
-        function confirmCallbackFunction2(args) {
-            clickCalledAfterRadconfirm = true;
-            lastClickedItem.click();
-            lastClickedItem = null;
-        }
+    function confirmCallbackFunction2(args) {
+        clickCalledAfterRadconfirm = true;
+        lastClickedItem.click();
+        lastClickedItem = null;
+    }
     
-        function OnAmountValueChanged() {
-            var SellAmountElement = $find("<%= txtSellAmount.ClientID%>");
-            var SellAmount = SellAmountElement.get_value();
+    function OnAmountValueChanged() {
+        var SellAmountElement = $find("<%= txtSellAmount.ClientID%>");
+        var SellAmount = SellAmountElement.get_value();
 
-            var BuyAmountFCYElement = $find("<%= txtBuyAmount.ClientID%>");
-            var DealRate = $find("<%= txtRate.ClientID%>").get_value();
-            if (SellAmount && DealRate) {
-                var ExchangeRate = CalculateDealRate();
-                var fcy = SellAmount * ExchangeRate;
-                BuyAmountFCYElement.set_value(fcy);
-            }
-
+        var BuyAmountFCYElement = $find("<%= txtBuyAmount.ClientID%>");
+        var DealRate = $find("<%= txtRate.ClientID%>").get_value();
+        if (SellAmount && DealRate) {
+            var ExchangeRate = CalculateDealRate();
+            var fcy = SellAmount * ExchangeRate;
+            BuyAmountFCYElement.set_value(fcy);
         }
+
+    }
 
     function CalculateDealRate() {
         var currencyBuyElement = $find("<%= rcbBuyCurrency.ClientID %>");

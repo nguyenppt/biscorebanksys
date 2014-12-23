@@ -1,5 +1,4 @@
 ﻿using System;
-using BankProject.DataProvider;
 using DotNetNuke.Entities.Modules;
 using Telerik.Web.UI;
 using System.Data;
@@ -18,7 +17,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btCommitData").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btPreview").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = isauthorise;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btReverse").Enabled = isauthorise;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
         }
@@ -30,25 +29,18 @@ namespace BankProject.Views.TellerApplication
             dvAudit.Visible = false;
             txtFTNo.Enabled = true;
             SetDefault(false);
-
-            DataSet dsc = DataTam.B_BCUSTOMERS_GetAll();
-            rcbCounterparty.Items.Clear();
-            rcbCounterparty.Items.Add(new RadComboBoxItem(""));
-            rcbCounterparty.DataSource = dsc;
-            rcbCounterparty.DataTextField = "CustomerName";
-            rcbCounterparty.DataValueField = "CustomerID";
-            rcbCounterparty.DataBind();
+            
+            bc.Commont.initRadComboBox(ref rcbCounterparty, "CustomerName", "CustomerID", bd.DataTam.B_BCUSTOMERS_GetAll());
 
             LoadAccountOfficer(null);
 
-            var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
-            bc.Commont.initRadComboBox(ref rcbBuyCurrency, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref rcbBuyCurrency, "Code", "Code", bd.SQLData.B_BCURRENCY_GetAll());
 
-            if (Request.QueryString["IsAuthorize"] != null)
+            if (Request.QueryString["lst"] != null)
             {
                 LoadToolBar(true);
                 
-                txtId.Text = Request.QueryString["LCCode"];
+                txtId.Text = Request.QueryString["tid"];
                 loaddataPreview();
 
                 //dvAudit.Visible = true;
@@ -75,99 +67,98 @@ namespace BankProject.Views.TellerApplication
         {
             var toolBarButton = e.Item as RadToolBarButton;
             string commandName = toolBarButton.CommandName;
-            if (commandName == "commit")
+            switch (commandName)
             {
+                case bc.Commands.Commit:
+                    if (CheckFTNo() == false)
+                    {
+                        string radalertscript = "<script language='javascript'>function f(){radalert('TF No. is not found', 400, 150 , 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
+                        return;
+                    }
 
-                if (CheckFTNo() == false)
-                {
-                    string radalertscript = "<script language='javascript'>function f(){radalert('TF No. is not found', 400, 150 , 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
-                    return;
-                } 
+                    if (CheckCustomerPayingAC() == false)
+                    {
+                        string radalertscript = "<script language='javascript'>function f(){radalert('Debit Account is not found.', 400, 150, 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
+                        return;
+                    }
 
-                if (CheckCustomerPayingAC() == false)
-                {
-                    string radalertscript = "<script language='javascript'>function f(){radalert('Debit Account is not found.', 400, 150, 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
-                    return;
-                }
+                    if (CheckCustomerReceivingAC() == false)
+                    {
+                        string radalertscript = "<script language='javascript'>function f(){radalert('Credit Account is not found.', 400, 150, 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
+                        return;
+                    }
 
-                if (CheckCustomerReceivingAC() == false)
-                {
-                    string radalertscript = "<script language='javascript'>function f(){radalert('Credit Account is not found.', 400, 150, 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
-                    return;
-                }
-                
 
-                double BuyAmount = 0;
-                if (txtBuyAmount.Value > 0)
-                {
-                    BuyAmount = Double.Parse(txtBuyAmount.Value.ToString());
-                }
-                double SellAmount = 0;
-                if (txtSellAmount.Value > 0)
-                {
-                    SellAmount = Double.Parse(txtSellAmount.Value.ToString());
-                }
-                double rate = 0;
-                if (txtRate.Value > 0)
-                {
-                    rate = Double.Parse(txtRate.Value.ToString());
-                }
+                    double BuyAmount = 0;
+                    if (txtBuyAmount.Value > 0)
+                    {
+                        BuyAmount = Double.Parse(txtBuyAmount.Value.ToString());
+                    }
+                    double SellAmount = 0;
+                    if (txtSellAmount.Value > 0)
+                    {
+                        SellAmount = Double.Parse(txtSellAmount.Value.ToString());
+                    }
+                    double rate = 0;
+                    if (txtRate.Value > 0)
+                    {
+                        rate = Double.Parse(txtRate.Value.ToString());
+                    }
 
-                SQLData.B_BFOREIGNEXCHANGE_Insert(txtId.Text.Trim()
-                    ,rcbTransactionType.SelectedValue
-                    ,txtFTNo.Text.Trim()
-                    , rcbDealType.SelectedValue
-                    , rcbCounterparty.SelectedValue
-                    , txtDealDate.SelectedDate.ToString()
-                    , txtValueDate.SelectedDate.ToString()
-                    , rcbExchangeType.SelectedValue
-                    , rcbBuyCurrency.SelectedValue
-                    , BuyAmount
-                    , rcbSellCurrency.SelectedValue
-                    , SellAmount
-                    , rate
-                    , txtCustomerReceivingAC.Text.Trim()
-                    , txtCustomerPayingAC.Text.Trim()
-                    , rcbAccountOfficer.SelectedValue
-                    , UserId
-                    , txtComment1.Text
-                    , txtComment2.Text
-                    , txtComment3.Text);
+                    bd.SQLData.B_BFOREIGNEXCHANGE_Insert(txtId.Text.Trim()
+                        , rcbTransactionType.SelectedValue
+                        , txtFTNo.Text.Trim()
+                        , rcbDealType.SelectedValue
+                        , rcbCounterparty.SelectedValue
+                        , txtDealDate.SelectedDate.ToString()
+                        , txtValueDate.SelectedDate.ToString()
+                        , rcbExchangeType.SelectedValue
+                        , rcbBuyCurrency.SelectedValue
+                        , BuyAmount
+                        , rcbSellCurrency.SelectedValue
+                        , SellAmount
+                        , rate
+                        , txtCustomerReceivingAC.Text.Trim()
+                        , txtCustomerPayingAC.Text.Trim()
+                        , rcbAccountOfficer.SelectedValue
+                        , UserId
+                        , txtComment1.Text
+                        , txtComment2.Text
+                        , txtComment3.Text);
 
-                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
-                SetDefault(false);
-            }
+                    BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                    SetDefault(false);
+                    break;
 
-            if (commandName == "Preview")
-            {
-                Response.Redirect(EditUrl("chitiet"));
-            }
+                case bc.Commands.Preview:
+                    Response.Redirect(EditUrl("chitiet"));
+                    break;
+                case bc.Commands.Authorize:
+                case bc.Commands.Reverse:
+                    int provitionTransferId = bd.SQLData.B_BFOREIGNEXCHANGE_ValidationLCNoExst_PROVISIONTRANSFER_DC(txtFTNo.Text.Trim());
 
-            if (commandName == "authorize" || commandName == "reverse")
-            {
-                int provitionTransferId = SQLData.B_BFOREIGNEXCHANGE_ValidationLCNoExst_PROVISIONTRANSFER_DC(txtFTNo.Text.Trim());
+                    if (txtFTNo.Text != "" && provitionTransferId <= 0)
+                    {
+                        ShowMsgBox("There is no Provision Transfer information. Please process function Provision Transfer");
+                        return;
+                    }
+                    // Update Status
+                    bd.SQLData.B_BFOREIGNEXCHANGE_UpdateStatus(commandName, txtId.Text.Trim(), UserId);
 
-                if (txtFTNo.Text !="" && provitionTransferId <= 0)
-                {
-                    ShowMsgBox("There is no Provision Transfer information. Please process function Provision Transfer");
-                    return;
-                }
-                // Update Status
-                SQLData.B_BFOREIGNEXCHANGE_UpdateStatus(commandName, txtId.Text.Trim(), UserId);
-
-                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
-                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                SetDefault(true);
-                LoadToolBar(false);
+                    BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                    SetDefault(true);
+                    LoadToolBar(false);
+                    break;
             }
         }
 
         void loaddataPreview()
         {
-                var dsF = SQLData.B_BFOREIGNEXCHANGE_GetByCode(txtId.Text.Trim());
+            var dsF = bd.SQLData.B_BFOREIGNEXCHANGE_GetByCode(txtId.Text.Trim());
 
                 if (dsF != null && dsF.Tables.Count > 0)
                 {
@@ -248,7 +239,7 @@ namespace BankProject.Views.TellerApplication
             code = CallFrom == "sellcurrency_change" ? rcbCounterparty.SelectedValue : txtCustomerReceivingAC.Text;
 
             lblCustomerReceivingACError.Text = "";
-            var dtCusRe = SQLData.B_BFOREIGNEXCHANGE_GetByCreditAccount(code, rcbSellCurrency.SelectedValue, customerName, CallFrom, rcbTransactionType.SelectedValue);
+            var dtCusRe = bd.SQLData.B_BFOREIGNEXCHANGE_GetByCreditAccount(code, rcbSellCurrency.SelectedValue, customerName, CallFrom, rcbTransactionType.SelectedValue);
             if (dtCusRe.Rows.Count <= 0)
             {
                 lblCustomerReceivingACError.Text = "Not found!";
@@ -266,7 +257,7 @@ namespace BankProject.Views.TellerApplication
             {
                 return true;
             }
-            var dtCusRec = SQLData.B_BFOREIGNEXCHANGE_GetByCreditAccount(txtCustomerReceivingAC.Text, rcbSellCurrency.SelectedValue, "", "text_chage", rcbTransactionType.SelectedValue);
+            var dtCusRec = bd.SQLData.B_BFOREIGNEXCHANGE_GetByCreditAccount(txtCustomerReceivingAC.Text, rcbSellCurrency.SelectedValue, "", "text_chage", rcbTransactionType.SelectedValue);
             return dtCusRec.Rows.Count > 0;
         }
 
@@ -277,7 +268,7 @@ namespace BankProject.Views.TellerApplication
                 return true;
             }
             //var dtCuspay = SQLData.B_BFOREIGNEXCHANGE_CheckCustomerPayingAC(txtCustomerPayingAC.Text.Trim(),rcbSellCurrency.SelectedValue,rcbCounterparty.SelectedItem.Attributes["CustomerName"]);
-            var dtCuspay = SQLData.B_BFOREIGNEXCHANGE_GetByDebitAccount(txtCustomerPayingAC.Text, rcbBuyCurrency.SelectedValue, "", "text_chage");
+            var dtCuspay = bd.SQLData.B_BFOREIGNEXCHANGE_GetByDebitAccount(txtCustomerPayingAC.Text, rcbBuyCurrency.SelectedValue, "", "text_chage");
             return dtCuspay.Rows.Count > 0;
         }
 
@@ -287,7 +278,7 @@ namespace BankProject.Views.TellerApplication
             {
                 return true;
             }
-            var dtFt = SQLData.B_BFOREIGNEXCHANGE_CheckFTNo(txtFTNo.Text.Trim(), rcbTransactionType.SelectedValue);
+            var dtFt = bd.SQLData.B_BFOREIGNEXCHANGE_CheckFTNo(txtFTNo.Text.Trim(), rcbTransactionType.SelectedValue);
             return dtFt.Rows.Count > 0;
             
         }
@@ -305,7 +296,7 @@ namespace BankProject.Views.TellerApplication
                 customerName = rcbCounterparty.SelectedItem.Attributes["CustomerName"];
             }
             lblCustomerPayingACError.Text = "";
-            var dtCusRe = SQLData.B_BFOREIGNEXCHANGE_GetByDebitAccount(txtCustomerPayingAC.Text, rcbBuyCurrency.SelectedValue, customerName, CallFrom);
+            var dtCusRe = bd.SQLData.B_BFOREIGNEXCHANGE_GetByDebitAccount(txtCustomerPayingAC.Text, rcbBuyCurrency.SelectedValue, customerName, CallFrom);
             if (dtCusRe.Rows.Count <= 0)
             {
                 lblCustomerPayingACError.Text = "Not found!";
@@ -346,7 +337,7 @@ namespace BankProject.Views.TellerApplication
         protected void txtFTNo_OnTextChanged(object sender, EventArgs e)
         {
             lblFTNoError.Text = "";
-            var dsCusRe = SQLData.B_PROVISIONTRANSFER_DC_GetByLCNo(txtFTNo.Text.Trim(), rcbTransactionType.SelectedValue);
+            var dsCusRe = bd.SQLData.B_PROVISIONTRANSFER_DC_GetByLCNo(txtFTNo.Text.Trim(), rcbTransactionType.SelectedValue);
             if (dsCusRe == null || dsCusRe.Tables[0].Rows.Count <= 0)
             {
                 lblFTNoError.Text = "Not found!";
@@ -381,7 +372,7 @@ namespace BankProject.Views.TellerApplication
 
         protected void GeneralCode()
         {
-            txtId.Text = SQLData.B_BMACODE_GetNewID("FOREIGNEXCHANGE", "FX");
+            txtId.Text = bd.SQLData.B_BMACODE_GetNewID("FOREIGNEXCHANGE", "FX");
         }
 
         protected void rcbSellCurrency_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -441,21 +432,8 @@ namespace BankProject.Views.TellerApplication
 
         protected void btnReport_Click(object sender, EventArgs e)
         {
-            Aspose.Words.License license = new Aspose.Words.License();
-            license.SetLicense("Aspose.Words.lic");
-
-            //Open template
-            string path = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/FX_VAT.doc");
-            //Open the template document
-            Aspose.Words.Document doc = new Aspose.Words.Document(path);
-            //Execute the mail merge.
-            DataSet ds = new DataSet();
-            ds = SQLData.B_BFOREIGNEXCHANGE_Report(txtId.Text, UserInfo.Username);
-
-            // Fill the fields in the document with user data.
-            doc.MailMerge.ExecuteWithRegions(ds); //moas mat thoi jan voi cuc gach nay woa 
-            // Send the document in Word format to the client browser with an option to save to disk or open inside the current browser.
-            doc.Save("FX_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+            bc.Reports.createFileDownload(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/FX_VAT.doc"),
+                bd.SQLData.B_BFOREIGNEXCHANGE_Report(txtId.Text, UserInfo.Username), "FX_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
     }
 }

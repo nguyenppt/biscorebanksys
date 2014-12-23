@@ -26,14 +26,14 @@
             ToolTip="Search" Value="btSearch" CommandName="search" postback="false" Enabled="true">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" postback="false" Enabled="false">
+            ToolTip="Print" Value="btPrint" CommandName="print" postback="false" Enabled="false">
         </telerik:RadToolBarButton>
     </Items>
-</telerik:radtoolbar>
+</telerik:RadToolBar>
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="width: 200px; padding: 5px 0 5px 20px;">
-            <asp:TextBox ID="txtCode" runat="server" Width="200" /><span class="Required"> </span><asp:RequiredFieldValidator
+            <asp:TextBox ID="txtCode" runat="server" Width="200" /> <span class="Required">*</span><asp:RequiredFieldValidator
             runat="server" Display="None"
             ID="RequiredFieldValidator6"
             ControlToValidate="txtCode"

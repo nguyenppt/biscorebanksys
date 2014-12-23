@@ -13,6 +13,33 @@ namespace BankProject.TradingFinance {
     public partial class CollectChargesList {
         
         /// <summary>
+        /// RadToolBar1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolBar RadToolBar1;
+        
+        /// <summary>
+        /// txtRefNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRefNo;
+        
+        /// <summary>
+        /// txtChargeAccount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtChargeAccount;
+        
+        /// <summary>
         /// radGridReview control.
         /// </summary>
         /// <remarks>
@@ -20,5 +47,14 @@ namespace BankProject.TradingFinance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid radGridReview;
+        
+        /// <summary>
+        /// RadCodeBlock1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCodeBlock RadCodeBlock1;
     }
 }
