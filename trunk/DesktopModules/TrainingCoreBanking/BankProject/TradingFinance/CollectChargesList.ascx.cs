@@ -14,9 +14,10 @@ namespace BankProject.TradingFinance
     public partial class CollectChargesList : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         VietVictoryCoreBankingEntities db = new VietVictoryCoreBankingEntities();
-        private string lstType = "";
+        protected string lstType = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack) return;
             lstType = Request.QueryString["lst"];
         }
 
@@ -26,7 +27,8 @@ namespace BankProject.TradingFinance
             string commandName = toolBarButton.CommandName;
             switch (commandName)
             {
-                case BankProject.Controls.Commands.Search:
+                case bc.Commands.Search:
+                    loadData();
                     radGridReview.Rebind();
                     break;
             }
@@ -34,15 +36,22 @@ namespace BankProject.TradingFinance
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (!IsPostBack)
-            {
-                string Status = bd.TransactionStatus.AUT;
-                if (lstType != null && lstType.ToLower().Equals("4appr"))
-                    Status = bd.TransactionStatus.UNA;
-                //
-                radGridReview.DataSource = db.B_CollectCharges.Where(p => p.Status.Equals(Status)).OrderByDescending(p => p.DateTimeCreate)
-                    .Select(q => new { q.TransCode, q.TotalChargeAmount, q.ChargeCurrency, q.Status }).ToList();
-            }
+            if (!IsPostBack && !string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr")) loadData();
+        }
+
+        private void loadData()
+        {
+            string Status = bd.TransactionStatus.AUT;
+            if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr"))
+                Status = bd.TransactionStatus.UNA;
+            string RefNo = txtRefNo.Text.Trim(), ChargeAccount = txtChargeAccount.Text.Trim();
+            //
+            radGridReview.DataSource = db.B_CollectCharges
+                .Where(p => p.Status.Equals(Status) &&
+                    (string.IsNullOrEmpty(RefNo) || p.TransCode.ToLower().Contains(RefNo)) &&
+                    (string.IsNullOrEmpty(ChargeAccount) || p.ChargeAcct.Contains(ChargeAccount)))
+                .OrderByDescending(p => p.DateTimeCreate)
+                .Select(q => new { q.TransCode, ChargeAccount = q.ChargeAcct, q.TotalChargeAmount, q.ChargeCurrency, q.Status }).ToList();            
         }
     }
 }
