@@ -1,31 +1,29 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OpenDepositAcctForTF.ascx.cs" Inherits="BankProject.OpenDepositAcctForTF" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
-<%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <script type="text/javascript">
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
     });
 </script>
-<telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" onbuttonclick="RadToolBar1_ButtonClick">
+<telerik:radtoolbar runat="server" id="RadToolBar1" enableroundedcorners="true" enableshadows="true" width="100%" 
+    OnClientButtonClicking="RadToolBar1_OnClientButtonClicking" onbuttonclick="RadToolBar1_ButtonClick">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-            ToolTip="Preview" Value="btPreview" CommandName="Preview">
+            ToolTip="Preview" Value="btPreview" CommandName="preview" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
-            ToolTip="Authorize" Value="btAuthorize" CommandName="authorize">
+            ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/reverse.png"
-            ToolTip="Reverse" Value="btReverse" CommandName="reverse">
+            ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search">
+            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false">
         </telerik:RadToolBarButton>
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print">
+            ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" Enabled="false">
         </telerik:RadToolBarButton>
     </Items>
 </telerik:radtoolbar>
@@ -44,8 +42,7 @@
         <li><a href="#ChristopherColumbus">Open Account</a></li>
     </ul>
     <div id="ChristopherColumbus" class="dnnClear">
-        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
-            ShowSummary="False" ValidationGroup="Commit" />
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="MyLable">Customer ID 
@@ -72,8 +69,7 @@
                                     <Items>
                                         <telerik:RadComboBoxItem Value="" Text="" />
                                     </Items>
-                                </telerik:radcombobox>
-                                <asp:Label ID="lblCustomerID" runat="server" /></td>
+                                </telerik:radcombobox></td>
                             <td><i>
                                 <asp:Label ID="lblCustomer" runat="server" /></i></td>
                         </tr>
@@ -125,17 +121,17 @@
             <tr>
                 <td class="MyLable">Account Name</td>
                 <td class="MyContent">
-                    <asp:TextBox ID="tbAccountName" runat="server" Width="300" /></td>
+                    <asp:TextBox ID="tbAccountName" runat="server" Width="350" /></td>
             </tr>
             <tr>
                 <td class="MyLable">Short Name</td>
                 <td class="MyContent">
-                    <asp:TextBox ID="tbShortName" runat="server" Width="300" /></td>
+                    <asp:TextBox ID="tbShortName" runat="server" Width="350" /></td>
             </tr>
             <tr>
                 <td class="MyLable">Account Mnemonic</td>
                 <td class="MyContent">
-                    <asp:TextBox ID="tbAccountMnemonic" runat="server" MaxLength="9" /></td>
+                    <asp:TextBox ID="tbAccountMnemonic" width="150" runat="server" MaxLength="9" /></td>
             </tr>
             <tr>
                 <td class="MyLable">Product Line</td>
@@ -152,7 +148,7 @@
             <tr>
                 <td class="MyLable">Notes</td>
                 <td class="MyContent">
-                    <asp:TextBox ID="tbNotes" runat="server" Width="300" /></td>
+                    <asp:TextBox ID="tbNotes" runat="server" Width="350" /></td>
             </tr>
         </table>
         <fieldset style="display:none;">
@@ -244,20 +240,8 @@
             </table>
         </fieldset>
     </div>
-
 </div>
-
-<telerik:radajaxmanager id="RadAjaxManager1" runat="server"
-    defaultloadingpanelid="AjaxLoadingPanel1">
-    <AjaxSettings>
-        <telerik:AjaxSetting AjaxControlID="rcbCustomerID">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="lblCustomer" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
-    </AjaxSettings>
-</telerik:radajaxmanager>
-<telerik:radcodeblock id="RadCodeBlock1" runat="server">
+<telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
     <script type="text/javascript">
         function FillMnemonic() {
             var tbAccountMnemonic = document.getElementById("<%=tbAccountMnemonic.ClientID%>");
@@ -269,9 +253,16 @@
             if (event.keyCode == 13) {
                 $("#<%=btSearch.ClientID %>").click();
             }
-      });
+        });
+        function RadToolBar1_OnClientButtonClicking(sender, args) {
+            var button = args.get_item();
+            //
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Search%>') {
+                window.location = '<%=EditUrl("list")%>';
+            }
+        }
     </script>
-</telerik:radcodeblock>
+</telerik:RadCodeBlock>
 <div style="visibility: hidden;">
     <asp:Button ID="btSearch" runat="server" OnClick="btSearch_Click" Text="Search" />
 </div>

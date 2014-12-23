@@ -67,15 +67,6 @@ namespace BankProject {
         protected global::Telerik.Web.UI.RadComboBox rcbCustomerID;
         
         /// <summary>
-        /// lblCustomerID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCustomerID;
-        
-        /// <summary>
         /// lblCustomer control.
         /// </summary>
         /// <remarks>
@@ -245,15 +236,6 @@ namespace BankProject {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAuditorCode;
-        
-        /// <summary>
-        /// RadAjaxManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
         
         /// <summary>
         /// RadCodeBlock1 control.
