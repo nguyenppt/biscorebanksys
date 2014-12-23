@@ -210,57 +210,21 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             var commandName = toolBarButton.CommandName;
             switch (commandName)
             {
-                case "save":
+                case bc.Commands.Commit:
                     SaveData();
-
                     Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
-
-                    //// Generate New Code
-                    //txtCode.Text = SQLData.B_BMACODE_GetNewID("OVERSEASTRANSFER", Refix_BMACODE());
-
-                    //// Reset form
-                    //LoadData();
-
-                    //// reset Account With Institution/ Beneficiary Customer
-                    //SetRelation_AccountWithInstitution();
-                    //SetRelation_IntermediaryInstruction();
-
-                    //dteCreditDate.SelectedDate = DateTime.Now;
-                    //dteDebitDate.SelectedDate = DateTime.Now;
-                    //dteProcessingDate.SelectedDate = DateTime.Now;
-                    //dteValueDate.SelectedDate = DateTime.Now;
-
-                    //GeneralVATNo();
-                    //comboDetailOfCharges.SelectedValue = "SHA";
-                    //SetChargeAcct();
-
-                    //txtCommissionCurrency.Text = string.Empty;
-                    //txtChargeCurrency.Text = string.Empty;
-                    //txtDeitCurrency.Text = string.Empty;
-                    ////VVTextBox1.SetTextDefault("");
-
-                    //LoadCreditAccountByDebitCurrency();
-                    //lblIntermediaryInstitutionNoError.Text = "";
-                    //lblAccountWithInstitutionNoError.Text = "";
-
-                    //Session["DataKey"] = txtCode.Text;
-
-                    //ResetControlAferAction();
                     break;
 
-                case "review" :
+                case bc.Commands.Preview:
                     Response.Redirect(EditUrl("otreview"));
                     break;
 
-                case "authorize":
+                case bc.Commands.Authorize:
                     Authorize();
-
                     Response.Redirect("Default.aspx?tabid=" + TabId.ToString());
-
-                    //ResetControlAferAction();
                     break;
 
-                case "revert":
+                case bc.Commands.Reverse:
                     Revert();
                     break;
             }

@@ -12,9 +12,12 @@
         
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             var button = args.get_item();
-            if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
+            if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>" && !clickCalledAfterRadconfirm) {
                 args.set_cancel(true);
                 radconfirm("Do you want to download MT103 file?", confirmCallbackFunction1, 340, 150, null, 'Download');
+            }
+            if (button.get_commandName() == '<%=BankProject.Controls.Commands.Preview%>') {
+                window.location = '<%=EditUrl("otreview")%>';
             }
         }
 
@@ -53,22 +56,22 @@
     OnButtonClick="RadToolBar1_ButtonClick" OnClientButtonClicking="RadToolBar1_OnClientButtonClicking">
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
-                ToolTip="Commit Data" Value="btSave" CommandName="save">
+                ToolTip="Commit Data" Value="btSave" CommandName="commit">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-                ToolTip="Preview" Value="btReview" CommandName="review">
+                ToolTip="Preview" Value="btReview" CommandName="preview" PostBack="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
                 ToolTip="Authorize" Value="btAuthorize" CommandName="authorize">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/reverse.png"
-                ToolTip="Revert" Value="btRevert" CommandName="revert">
+                ToolTip="Revert" Value="btRevert" CommandName="reverse">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search">
+            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png" 
-            ToolTip="Print Deal Slip" Value="btprint" CommandName="print">
+            ToolTip="Print" Value="btprint" CommandName="print">
         </telerik:RadToolBarButton>
     </Items>
 </telerik:RadToolBar>
@@ -1362,46 +1365,10 @@
 <div style="visibility:hidden;"><asp:Button ID="btnVAT" runat="server" OnClick="btnVATReport_Click" Text="Search" /></div>
 <asp:HiddenField ID="hf_AccountId" runat="server" />
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
-  <script type="text/javascript">
-      $(document).ready(
-          function () {
-              $('a.add').live('click',
-                  function () {
-                      $(this)
-                          .html('<img src="Icons/Sigma/Delete_16X16_Standard.png" />')
-                          .removeClass('add')
-                          .addClass('remove');
-                      $(this)
-                          .closest('tr')
-                          .clone()
-                          .appendTo($(this).closest('table'));
-                      $(this)
-                          .html('<img src="Icons/Sigma/Add_16X16_Standard.png" />')
-                          .removeClass('remove')
-                          .addClass('add');
-                  });
-              $('a.remove').live('click',
-                  function () {
-                      $(this)
-                          .closest('tr')
-                          .remove();
-                  });
-              $('input:text').each(
-                  function () {
-                      var thisName = $(this).attr('name'),
-                          thisRrow = $(this)
-                              .closest('tr')
-                              .index();
-                      $(this).attr('name', 'row' + thisRow + thisName);
-                      $(this).attr('id', 'row' + thisRow + thisName);
-                  });
-
-          });
-      
+  <script type="text/javascript">      
       $("#<%=txtCode.ClientID %>").keyup(function (event) {
-
           if (event.keyCode == 13) {
-              window.location.href = "Default.aspx?tabid=251&CodeID=" + $("#<%=txtCode.ClientID %>").val();
+              window.location.href = "Default.aspx?tabid=<%=this.TabId.ToString()%>&CodeID=" + $("#<%=txtCode.ClientID %>").val();
           }
       });
   </script>
