@@ -20,7 +20,7 @@
             ToolTip="Reverse" Value="btReverse" CommandName="reverse">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search" PostBack="false">
+            ToolTip="Search" Value="btSearch" CommandName="search" Enabled="false">
         </telerik:RadToolBarButton>
          <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
             ToolTip="Print" Value="btPrint" CommandName="print" PostBack="false">

@@ -16,9 +16,9 @@ namespace BankProject.Views.TellerApplication
         {
             RadToolBar1.FindItemByValue("btCommitData").Enabled = !isauthorise;
             RadToolBar1.FindItemByValue("btPreview").Enabled = !isauthorise;
-            RadToolBar1.FindItemByValue("btAuthorize").Enabled = isauthorise;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = !isauthorise;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = isauthorise;            
             RadToolBar1.FindItemByValue("btReverse").Enabled = isauthorise;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
         }
 
@@ -35,23 +35,16 @@ namespace BankProject.Views.TellerApplication
             LoadAccountOfficer(null);
 
             bc.Commont.initRadComboBox(ref rcbBuyCurrency, "Code", "Code", bd.SQLData.B_BCURRENCY_GetAll());
-
-            if (Request.QueryString["lst"] != null)
+            
+            txtId.Text = Request.QueryString["tid"];
+            if (!string.IsNullOrEmpty(txtId.Text.Trim()))
             {
-                LoadToolBar(true);
-                
-                txtId.Text = Request.QueryString["tid"];
-                loaddataPreview();
-
-                //dvAudit.Visible = true;
-                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
-
-                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                LoadData();                
             }
-            else 
+            else
             {
                 LoadToolBar(false);
-                //dvAudit.Visible = false;
+                BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
             }
         }
 
@@ -156,58 +149,70 @@ namespace BankProject.Views.TellerApplication
             }
         }
 
-        void loaddataPreview()
+        void LoadData()
         {
+            LoadToolBar(false);
             var dsF = bd.SQLData.B_BFOREIGNEXCHANGE_GetByCode(txtId.Text.Trim());
+            if (dsF == null || dsF.Tables.Count <= 0 || dsF.Tables[0].Rows.Count <= 0)
+            {
+                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                txtBuyAmount.Value = 0;
+                txtSellAmount.Value = 0;
+                txtRate.Value = 0;
+                return;
+            }
+            //
+            var drow = dsF.Tables[0].Rows[0];
 
-                if (dsF != null && dsF.Tables.Count > 0)
-                {
-                    if (dsF.Tables[0].Rows.Count > 0)
+            rcbTransactionType.SelectedValue = drow["TransactionType"].ToString();
+            SetRelation_TransactionType();
+
+            txtFTNo.Text = drow["FTNo"].ToString();
+            rcbDealType.SelectedValue = drow["DealType"].ToString();
+            rcbCounterparty.SelectedValue = drow["Counterparty"].ToString();
+
+            if (drow["DealDate"].ToString().IndexOf("1/1/1900") == -1)
+            {
+                txtValueDate.SelectedDate = DateTime.Parse(drow["DealDate"].ToString());
+            }
+            if (drow["ValueDate"].ToString().IndexOf("1/1/1900") == -1)
+            {
+                txtDealDate.SelectedDate = DateTime.Parse(drow["ValueDate"].ToString());
+            }
+
+            rcbExchangeType.SelectedValue = drow["ExchangeType"].ToString();
+            rcbBuyCurrency.SelectedValue = drow["BuyCurrency"].ToString();
+            txtBuyAmount.Value = double.Parse(drow["BuyAmount"].ToString());
+            rcbSellCurrency.SelectedValue = drow["SellCurrency"].ToString();
+            txtSellAmount.Value = double.Parse(drow["SellAmount"].ToString());
+            txtRate.Value = double.Parse(drow["Rate"].ToString());
+
+            txtCustomerReceivingAC.Text = drow["CustomerReceiving"].ToString();
+            txtCustomerPayingAC.Text = drow["CustomerPaying"].ToString();
+            rcbAccountOfficer.SelectedValue = drow["AccountOfficer"].ToString();
+
+            txtComment1.Text = drow["Comment1"].ToString();
+            txtComment2.Text = drow["Comment2"].ToString();
+            txtComment3.Text = drow["Comment3"].ToString();
+
+            string Status = drow["Status"].ToString();
+            switch (Status)
+            {
+                case bd.TransactionStatus.UNA:
+                    if (!string.IsNullOrEmpty(Request.QueryString["lst"]))
                     {
-                        var drow = dsF.Tables[0].Rows[0];
-
-                        rcbTransactionType.SelectedValue = drow["TransactionType"].ToString();
-                        SetRelation_TransactionType();
-
-                        txtFTNo.Text = drow["FTNo"].ToString();
-                        rcbDealType.SelectedValue = drow["DealType"].ToString();
-                        rcbCounterparty.SelectedValue = drow["Counterparty"].ToString();
-
-                        if (drow["DealDate"].ToString().IndexOf("1/1/1900") == -1)
-                        {
-                            txtValueDate.SelectedDate = DateTime.Parse(drow["DealDate"].ToString());
-                        }
-                        if (drow["ValueDate"].ToString().IndexOf("1/1/1900") == -1)
-                        {
-                            txtDealDate.SelectedDate = DateTime.Parse(drow["ValueDate"].ToString());
-                        }
-
-                        rcbExchangeType.SelectedValue = drow["ExchangeType"].ToString();
-                        rcbBuyCurrency.SelectedValue = drow["BuyCurrency"].ToString();
-                        txtBuyAmount.Value = double.Parse(drow["BuyAmount"].ToString());
-                        rcbSellCurrency.SelectedValue = drow["SellCurrency"].ToString();
-                        txtSellAmount.Value = double.Parse(drow["SellAmount"].ToString());
-                        txtRate.Value = double.Parse(drow["Rate"].ToString());
-
-                        txtCustomerReceivingAC.Text = drow["CustomerReceiving"].ToString();
-                        txtCustomerPayingAC.Text = drow["CustomerPaying"].ToString();
-                        rcbAccountOfficer.SelectedValue = drow["AccountOfficer"].ToString();
-
-                        txtComment1.Text = drow["Comment1"].ToString();
-                        txtComment2.Text = drow["Comment2"].ToString();
-                        txtComment3.Text = drow["Comment3"].ToString();
+                        //4appr
+                        LoadToolBar(true);
+                        BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
                     }
-                    else
-                    {
-                        BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
-                        txtBuyAmount.Value = 0;
-                        txtSellAmount.Value = 0;
-                        txtRate.Value = 0;
-                    }
-
-
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                }
+                    else BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                    break;
+                default:
+                    RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
+                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
+                    break;
+            }
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
         }
 
         private void LoadAccountOfficer(string selectedid)
@@ -367,7 +372,7 @@ namespace BankProject.Views.TellerApplication
 
         protected void btSearch_Click(object sender, EventArgs e)
         {
-            loaddataPreview();
+            LoadData();
         }
 
         protected void GeneralCode()

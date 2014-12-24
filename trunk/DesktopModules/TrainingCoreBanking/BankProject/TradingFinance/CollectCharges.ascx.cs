@@ -38,6 +38,7 @@ namespace BankProject.TradingFinance
                 divCmdChargeType.Visible = false;
                 divCmdChargeType1.Visible = false;
                 divCmdChargeType2.Visible = false;
+                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 if (!string.IsNullOrEmpty(Request.QueryString["lst"]))
                 {
                     if (cc.Status.Equals(bd.TransactionStatus.UNA))
@@ -47,8 +48,7 @@ namespace BankProject.TradingFinance
                         RadToolBar1.FindItemByValue("btPreview").Enabled = false;
                         RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                         RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                        RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;                        
+                        //RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                         return;
                     }
                 }
@@ -223,7 +223,7 @@ namespace BankProject.TradingFinance
             loadTransDetail(cc);
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
             if (cc.Status.Equals(bd.TransactionStatus.AUT))
             {
                 divCmdChargeType.Visible = false;
@@ -233,7 +233,7 @@ namespace BankProject.TradingFinance
                 bc.Commont.SetTatusFormControls(this.Controls, false);
                 RadToolBar1.FindItemByValue("btCommit").Enabled = false;
                 RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                //RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                 return;
             }
             //Cho phep edit
@@ -243,8 +243,7 @@ namespace BankProject.TradingFinance
             bc.Commont.SetTatusFormControls(this.Controls, true);
             RadToolBar1.FindItemByValue("btCommit").Enabled = true;
             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+            //RadToolBar1.FindItemByValue("btSearch").Enabled = true;
             DisableDefaultControl();
         }
 

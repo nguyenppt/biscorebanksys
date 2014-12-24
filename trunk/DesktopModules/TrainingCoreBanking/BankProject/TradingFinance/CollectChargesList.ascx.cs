@@ -17,8 +17,9 @@ namespace BankProject.TradingFinance
         protected string lstType = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack) return;
             lstType = Request.QueryString["lst"];
+            RadToolBar1.FindItemByValue("btSearch").Enabled = (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"));
+            if (IsPostBack) return;            
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
