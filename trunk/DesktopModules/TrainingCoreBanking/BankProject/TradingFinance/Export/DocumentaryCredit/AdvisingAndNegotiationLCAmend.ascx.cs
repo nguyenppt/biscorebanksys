@@ -16,16 +16,9 @@ using System.Globalization;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
-    public partial class AdvisingAndNegotiationLC : DotNetNuke.Entities.Modules.PortalModuleBase
+    public partial class AdvisingAndNegotiationLCAmend : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         VietVictoryCoreBankingEntities db = new VietVictoryCoreBankingEntities();
-        protected struct Tabs
-        {
-            public const int Register = 242;
-            public const int Confirm = 236;
-            public const int Cancel = 237;
-            public const int Close = 265;
-        }
         //
         private void setDefaultControls()
         {
@@ -43,19 +36,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             tbLCCode.Text = ds.Tables[0].Rows[0]["Code"].ToString();
             //
             var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
-            bc.Commont.initRadComboBox(ref rcbCurrency, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
         }
         protected void Page_Load(object sender, EventArgs e)
-        {            
+        {
             if (IsPostBack) return;
             setDefaultControls();
-            rcbAdvisingBankType_OnSelectedIndexChanged(null, null);
             rcbIssuingBankType_OnSelectedIndexChanged(null, null);
-            rcbAvailableWithType_OnSelectedIndexChanged(null, null);
-            rcbReimbBankType_OnSelectedIndexChanged(null, null);
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -73,49 +62,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
         }
 
-        protected void rcbAdvisingBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            bc.Commont.BankTypeChange(rcbAdvisingBankType.SelectedValue, ref lblAdvisingBankMessage, ref txtAdvisingBankNo, ref txtAdvisingBankName, ref txtAdvisingBankAddr1, ref txtAdvisingBankAddr2, ref txtAdvisingBankAddr3);
-        }
         protected void rcbIssuingBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             bc.Commont.BankTypeChange(rcbIssuingBankType.SelectedValue, ref lblIssuingBankMessage, ref txtIssuingBankNo, ref txtIssuingBankName, ref txtIssuingBankAddr1, ref txtIssuingBankAddr2, ref txtIssuingBankAddr3);
         }
-        protected void rcbAvailableWithType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            bc.Commont.BankTypeChange(rcbAvailableWithType.SelectedValue, ref lblAvailableWithMessage, ref txtAvailableWithNo, ref tbAvailableWithName, ref tbAvailableWithAddr1, ref tbAvailableWithAddr2, ref tbAvailableWithAddr3);
-        }
-        protected void rcbReimbBankType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            bc.Commont.BankTypeChange(rcbReimbBankType.SelectedValue, ref lblReimbBankMessage, ref txtReimbBankNo, ref tbReimbBankName, ref tbReimbBankAddr1, ref tbReimbBankAddr2, ref tbReimbBankAddr3);
-        }
 
-        protected void txtApplicantNo_TextChanged(object sender, EventArgs e)
-        {
-            lblApplicantMessage.Text = "";
-            txtApplicantName.Text = "";
-            tbApplicantAddr1.Text = "";
-            tbApplicantAddr2.Text = "";
-            tbApplicantAddr3.Text = "";
-            string ApplicantNo = txtApplicantNo.Text.Trim();//2100005 - CTY TNHH DVTM TRUONG GIANG
-            if (string.IsNullOrEmpty(ApplicantNo)) return;
-            //
-            var cus = db.BCUSTOMERS.Where(p => p.CustomerID.Equals(ApplicantNo)).FirstOrDefault();
-            if (cus == null)
-            {
-                lblApplicantMessage.Text = "Applicant not found !";
-                return;
-            }
-            txtApplicantName.Text = cus.CustomerName;
-            tbApplicantAddr1.Text = cus.Address;
-            tbApplicantAddr2.Text = cus.City;
-            tbApplicantAddr3.Text = cus.Country;
-        }
         //ABBKVNVX : AN BINH COMMERCIAL JOINT STOCK BANK
-        protected void txtAdvisingBankNo_TextChanged(object sender, EventArgs e)
-        {
-            bc.Commont.loadBankSwiftCodeInfo(txtAdvisingBankNo.Text, ref lblAdvisingBankMessage, ref txtAdvisingBankName, ref txtAdvisingBankAddr1, ref txtAdvisingBankAddr2, ref txtAdvisingBankAddr3);
-        }
         protected void txtIssuingBankNo_TextChanged(object sender, EventArgs e)
         {
             bc.Commont.loadBankSwiftCodeInfo(txtIssuingBankNo.Text, ref lblIssuingBankMessage, ref txtIssuingBankName, ref txtIssuingBankAddr1, ref txtIssuingBankAddr2, ref txtIssuingBankAddr3);
@@ -123,18 +75,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void txtBeneficiaryNo_TextChanged(object sender, EventArgs e)
         {
             bc.Commont.loadBankSwiftCodeInfo(txtBeneficiaryNo.Text, ref lblBeneficiaryMessage, ref txtBeneficiaryName, ref txtBeneficiaryAddr1, ref txtBeneficiaryAddr2, ref txtBeneficiaryAddr3);
-        }
-        protected void txtAvailableWithNo_TextChanged(object sender, EventArgs e)
-        {
-            bc.Commont.loadBankSwiftCodeInfo(txtAvailableWithNo.Text, ref lblAvailableWithMessage, ref tbAvailableWithName, ref tbAvailableWithAddr1, ref tbAvailableWithAddr2, ref tbAvailableWithAddr3);
-        }
-        protected void txtReimbBankNo_TextChanged(object sender, EventArgs e)
-        {
-            bc.Commont.loadBankSwiftCodeInfo(txtReimbBankNo.Text, ref lblReimbBankMessage, ref tbReimbBankName, ref tbReimbBankAddr1, ref tbReimbBankAddr2, ref tbReimbBankAddr3);
-        }
-        protected void txtAdviseThroughBankNo_TextChanged(object sender, EventArgs e)
-        {
-            bc.Commont.loadBankSwiftCodeInfo(txtAdviseThroughBankNo.Text, ref lblAdviseThroughBankMessage, ref txtAdviseThroughBankName, ref txtAdviseThroughBankAddr1, ref txtAdviseThroughBankAddr2, ref txtAdviseThroughBankAddr3);
         }
 
         protected void rcbWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -197,9 +137,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 switch (reportType)
                 {
                     case "ThuThongBao":
-                        reportTemplate = Context.Server.MapPath(reportTemplate + "BM_TTQT_LCXK_01A.doc");
-
-                        reportSaveName = "ThuThongBao" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/Export/";
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "BM_TTQT_LCXK_02A.doc");
+                        reportSaveName = "ThuThongBao2A" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        //
                         var query = db.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == tbLCCode.Text).FirstOrDefault();
                         var TBThuTinDung = new List<ThuThongBao>();
                         if (query != null)
