@@ -35,10 +35,10 @@ namespace BankProject.Views.TellerApplication
             LoadAccountOfficer(null);
 
             bc.Commont.initRadComboBox(ref rcbBuyCurrency, "Code", "Code", bd.SQLData.B_BCURRENCY_GetAll());
-            
-            txtId.Text = Request.QueryString["tid"];
-            if (!string.IsNullOrEmpty(txtId.Text.Trim()))
+                        
+            if (!string.IsNullOrEmpty(Request.QueryString["tid"]))
             {
+                txtId.Text = Request.QueryString["tid"];
                 LoadData();                
             }
             else
