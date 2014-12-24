@@ -205,5 +205,20 @@ namespace BankProject.Controls
                     txtDate.SelectedDate = Convert.ToDateTime(dbDate);
             }
         }
+        //
+        public static void BankTypeChange(string BankType, ref Label lblMessage, ref RadTextBox txtBankCode, ref RadTextBox txtBankName, ref RadTextBox txtBankAddr, ref RadTextBox txtBankCity, ref RadTextBox txtBankCountry)
+        {
+            lblMessage.Text = "";
+            txtBankCode.Enabled = BankType.Equals("A");
+            txtBankCode.Text = "";
+            txtBankName.Enabled = !BankType.Equals("A");
+            txtBankName.Text = "";
+            txtBankAddr.Enabled = !BankType.Equals("A");
+            txtBankAddr.Text = "";
+            txtBankCity.Enabled = !BankType.Equals("A");
+            txtBankCity.Text = "";
+            txtBankCountry.Enabled = !BankType.Equals("A");
+            txtBankCountry.Text = "";
+        }
     }
 }
