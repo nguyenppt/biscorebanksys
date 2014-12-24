@@ -46,7 +46,7 @@
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="50" HorizontalAlign="Right" />
                     <ItemTemplate>
-                        <a href='Default.aspx?tabid=<%=this.TabId.ToString()%>&tid=<%# Eval("RefNo").ToString() %>&lst=<%=Request.QueryString["lst"] %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" width="20" /> </a>
+                        <a href='Default.aspx?tabid=267&tid=<%# Eval("RefNo").ToString() %>&lst=<%=Request.QueryString["lst"] %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" width="20" /> </a>
                     </itemtemplate>
                 </telerik:GridTemplateColumn>
             </Columns>
