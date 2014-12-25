@@ -44,9 +44,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             RadToolBar2.FindItemByValue("btPrint").Enabled = flag;
         }
 
-        protected string geturlReview(string Id)
+        protected string geturlReview(string Id, string Status)
         {
-            return "Default.aspx?tabid=226" + "&CodeID=" + Id;
+            return "Default.aspx?tabid=226" + "&CodeID=" + Id + "&enquiry=true" + "&Status=" + Status;
         }
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)

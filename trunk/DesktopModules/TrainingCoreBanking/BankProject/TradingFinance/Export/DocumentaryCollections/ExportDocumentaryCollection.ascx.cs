@@ -58,7 +58,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             get { return Request.QueryString["CodeID"]; }
         }
-
+        private string StatusEnquiry
+        {
+            get { return Request.QueryString["Status"]; }
+        }
+        private bool Enqiry
+        {
+            get { return Request.QueryString["enquiry"] == "true"; }
+        }
         private bool Disable
         {
             get { return Request.QueryString["disable"] == "1"; }
@@ -150,7 +157,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             txtCode.Text = CodeId;
             LoadData(dsDoc);
         }
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
@@ -168,28 +175,53 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 case ExportDocumentaryScreenType.RegisterCc:
                 case ExportDocumentaryScreenType.Register:
                     LoadExportDoc();
-                    InitToolBarForRegister();
-
+                    if (Enqiry)
+                    {
+                        SetButtonForEnquiry();
+                    }
+                    else
+                    {
+                        InitToolBarForRegister();
+                    }
                     lblAmount_New.Visible = false;
                   
                     break;
                 case ExportDocumentaryScreenType.Amend:
                     LoadExportDocAmend();
-                    InitToolBarForAmend();
+                    if (Enqiry)
+                    {
+                        SetButtonForEnquiry();
+                    }
+                    else
+                    {
+                        InitToolBarForAmend();
+                    }
                     //tabCharges.Visible = false;
                     //Charges.Visible = false;
                     break;
                 case ExportDocumentaryScreenType.Cancel:
                     LoadExportDoc();
-                    InitToolBarForCancel();
-
+                    if (Enqiry)
+                    {
+                        SetButtonForEnquiry();
+                    }
+                    else
+                    {
+                        InitToolBarForCancel();
+                    }
                     lblAmount_New.Visible = false;
                     divDocumentaryCollectionCancel.Visible = true;
                     break;
                 case ExportDocumentaryScreenType.Acception:
                     LoadExportDoc();
-                    InitToolBarForAccept();
-
+                    if (Enqiry)
+                    {
+                        SetButtonForEnquiry();
+                    }
+                    else
+                    {
+                        InitToolBarForAccept();
+                    }
                     lblAmount_New.Visible = false;
                     divOutgoingCollectionAcception.Visible = true;
                     break;
@@ -335,7 +367,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
              * */
             #endregion
         }
-
+        protected void SetButtonForEnquiry()
+        {
+           
+                if (StatusEnquiry == "UNA")
+                {
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                    RadToolBar1.FindItemByValue("btRevert").Enabled = true;
+                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                }
+                else
+                {
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+                    RadToolBar1.FindItemByValue("btRevert").Enabled = false;
+                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                }
+            
+        }
         protected float ConvertStringToFloat(string num)
         {
             try

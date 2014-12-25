@@ -101,7 +101,7 @@
                 <telerik:GridTemplateColumn>
                     <ItemStyle Width="25" />
                     <ItemTemplate>
-                        <a href='<%# geturlReview(Eval("DocCollectCode").ToString()) %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" width="20" /> </a> 
+                        <a href='<%# geturlReview(Eval("DocCollectCode").ToString(),Eval("Status").ToString()) %>'><img src="Icons/bank/text_preview.png" alt="" title="" style="" width="20" /> </a> 
                     </itemtemplate>
                 </telerik:GridTemplateColumn>
             </Columns>
