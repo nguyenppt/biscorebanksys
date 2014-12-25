@@ -37,25 +37,6 @@
                 $("#<%=RadTabStrip5.ClientID %>").hide();
             }
         });
-
-        function RadToolBar1_OnClientButtonClicking(sender, args) {
-            var button = args.get_item();
-            if (button.get_commandName() == "save") {
-                var collectionTypeVal = $find('<%=comboCollectionType.ClientID %>').get_selectedItem().get_value();
-                var dteMaturityDate = $find('<%=dteMaturityDate.ClientID %>').get_selectedDate();
-                var txtTenor = $find('<%=txtTenor.ClientID %>').get_value();
-
-                if (collectionTypeVal.indexOf('DA') != -1) {
-                    if (!dteMaturityDate || !txtTenor) {
-                        args.set_cancel(true);
-                        radalert("Maturity Date/Tenor is required", 340, 150, 'Error');
-                    }
-                }
-            }
-        }
-
-        
-
     </script>
 </telerik:RadCodeBlock>
 
@@ -390,46 +371,7 @@
                 </tr>
             </table>
 
-            <table width="100%" cellpadding="0" cellspacing="0">
-                <tr style="display:none">
-                    <td class="MyLable">5 Nostro Cus No</td>
-                    <td style="width: 150px;" class="MyContent">
-                        <telerik:RadComboBox Width="400" DropDownCssClass="KDDL"
-                            AppendDataBoundItems="True" AutoPostBack="true"
-                            OnSelectedIndexChanged="comboNostroCusNo_SelectIndexChange"
-                            ID="comboNostroCusNo" runat="server" OnItemDataBound="commomSwiftCode_ItemDataBound"
-                            MarkFirstMatch="True" Height="150px"
-                            AllowCustomText="false">
-                            <ExpandAnimation Type="None" />
-                            <CollapseAnimation Type="None" />
-                            <HeaderTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">Id
-                                        </td>
-                                        <td>Description
-                                        </td>
-                                    </tr>
-                                </table>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 100px;">
-                                            <%# DataBinder.Eval(Container.DataItem, "SwiftCode")%> 
-                                        </td>
-                                        <td>
-                                            <%# DataBinder.Eval(Container.DataItem, "BankName")%> 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ItemTemplate>
-                        </telerik:RadComboBox>
-                    </td>
-                    <td>
-                        <asp:Label ID="lblNostroCusName" runat="server" Width="100%" /></td>
-                </tr>
-            </table>
+            
         </fieldset>
 
         <fieldset>
@@ -442,6 +384,7 @@
                     <td class="MyContent">
                         <telerik:RadComboBox
                             ID="comboCurrency" runat="server"
+                            OnSelectedIndexChanged="rcbCcy_OnSelectedIndexChanged"
                             MarkFirstMatch="True"
                             AllowCustomText="false">
                         </telerik:RadComboBox>
@@ -489,7 +432,9 @@
                 <tr>
                     <td class="MyLable">8 Maturity Date</td>
                     <td class="MyContent">
-                        <telerik:RadDatePicker ID="dteMaturityDate" runat="server" />
+                        <telerik:RadDatePicker ID="dteMaturityDate" runat="server">
+                            <ClientEvents OnDateSelected="OnDateSelected"></ClientEvents>
+                        </telerik:RadDatePicker>
                     </td>
                 </tr>
 
@@ -686,15 +631,27 @@
                 <tr>
                     <td class="MyLable">17 Other Docs</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="100%" Height="100" ID="txtOtherDocs" runat="server" TextMode="MultiLine" />
+                        <telerik:RadTextBox Width="355" Height="100" ID="txtOtherDocs" runat="server" TextMode="MultiLine" />
                     </td>
                 </tr>
-
-
                 <tr>
                     <td class="MyLable">18 Remarks</td>
                     <td class="MyContent">
                         <telerik:RadTextBox Width="355" ID="txtRemarks" runat="server" />
+                    </td>
+                </tr>
+            </table>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="MyLable">19 Account with Bank</td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox Width="355" ID="comboNostroCusNo" runat="server" AutoPostBack="True" OnTextChanged="comboNostroCusNo_OnSelectedIndexChanged" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">20 Acc Bank's Name</td>
+                    <td style="width: 150px;" class="MyContent">
+                        <asp:Label ID="lblNostroCusName" runat="server" Width="100%" />
                     </td>
                 </tr>
             </table>
@@ -771,8 +728,8 @@
                 </telerik:RadTab>
                 <telerik:RadTab Text="Other Charge">
                 </telerik:RadTab>
-                 <telerik:RadTab Text="Receive Charge">
-                </telerik:RadTab>
+                <%-- <telerik:RadTab Text="Receive Charge">
+                </telerik:RadTab>--%>
             </Tabs>
         </telerik:RadTabStrip>
         <telerik:RadTabStrip runat="server" ID="RadTabStrip14" SelectedIndex="0" MultiPageID="RadMultiPage1" Orientation="HorizontalTop">
@@ -1480,6 +1437,15 @@
                 <telerik:AjaxUpdatedControl ControlID="txtDrawerAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtDrawerAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="txtDrawerAddr3" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct4" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy2" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy3" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeCcy4" />
+
             </UpdatedControls>
         </telerik:AjaxSetting>
         
@@ -1488,6 +1454,8 @@
         <telerik:AjaxSetting AjaxControlID="comboNostroCusNo">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblNostroCusName" />
+                <telerik:AjaxUpdatedControl ControlID="Currency" />
+                
             </UpdatedControls>
         </telerik:AjaxSetting>
         
@@ -1532,13 +1500,14 @@
             <telerik:AjaxUpdatedControl ControlID="lblTaxCode4" />
         </UpdatedControls>
     </telerik:AjaxSetting>
-        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy">
+    
+    <telerik:AjaxSetting AjaxControlID="rcbChargeCcy">
         <UpdatedControls>
             <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
         </UpdatedControls>
     </telerik:AjaxSetting>
         
-        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
+    <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
         <UpdatedControls>
             <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
         </UpdatedControls>
@@ -1551,6 +1520,12 @@
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy4">
         <UpdatedControls>
             <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct4" />
+        </UpdatedControls>
+    </telerik:AjaxSetting>
+        
+   <telerik:AjaxSetting AjaxControlID="comboCurrency">
+        <UpdatedControls>
+            <telerik:AjaxUpdatedControl ControlID="lblNostroCusName" />
         </UpdatedControls>
     </telerik:AjaxSetting>
     </ajaxsettings>
@@ -1579,9 +1554,27 @@
             }
         });
 
+
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             
             var button = args.get_item();
+            //
+            if (button.get_commandName() == "save") {
+                if (<%=TabId%> != 227) {
+                    var collectionTypeVal = $find('<%=comboCollectionType.ClientID %>').get_selectedItem().get_value();
+                    var dteMaturityDate = $find('<%=dteMaturityDate.ClientID %>').get_selectedDate();
+                    var txtTenor = $find('<%=txtTenor.ClientID %>').get_value();
+
+                    if (collectionTypeVal.indexOf('DA') != -1) {
+                        if (!dteMaturityDate || !txtTenor) {
+                            args.set_cancel(true);
+                            radalert("Maturity Date/Tenor is required", 340, 150, 'Error');
+                            return false;
+                        }
+                    }
+                }
+            }
+            //
             if (tabId == 226 || tabId == 227) { // Register Documetary Collection
                 if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                     args.set_cancel(true);
@@ -1681,7 +1674,18 @@
             }
             
         }
-        
+        function OnDateSelected(sender,e)
+        {
+            var collectionTypeVal = $find('<%=comboCollectionType.ClientID %>').get_selectedItem().get_value();
+            var dteTracerDate = $find('<%=dteTracerDate.ClientID %>');
+            if (collectionTypeVal.indexOf('DA') != -1) {
+                if(e.get_newDate()!=null)
+                {
+                    dteTracerDate.set_selectedDate(e.get_newDate());
+                } 
+            
+            }
+        }
     </script>
 </telerik:RadCodeBlock>
 <div style="visibility:hidden;"><asp:Button ID="btnRegisterNhapNgoaiBang1" runat="server" OnClick="btnRegisterNhapNgoaiBang1_Click" Text="Search" /></div>
