@@ -150,53 +150,53 @@ namespace BankProject.Business
             //if (rateType != 2)//du no giam dan
             //{
 
-                getPaymentInputControl(ref periosDate, ref endDate, ref numberOfPerios, ref instalmant, ref instalmantEnd, ref fregV, normalLoanEntryM, replaymentTimes);
-                instalmentdDay = periosDate != null ? ((DateTime)periosDate).Day : 0;
-                ds.DtInfor.Rows[0][ds.Cl_freq] = fregV == 0 ? "Cuối kỳ" : fregV + " Tháng";
+            getPaymentInputControl(ref periosDate, ref endDate, ref numberOfPerios, ref instalmant, ref instalmantEnd, ref fregV, normalLoanEntryM, replaymentTimes);
+            instalmentdDay = periosDate != null ? ((DateTime)periosDate).Day : 0;
+            ds.DtInfor.Rows[0][ds.Cl_freq] = fregV == 0 ? "Cuối kỳ" : fregV + " Tháng";
 
-                DataRow dr;
-                for (int i = 0; i < numberOfPerios; i++)
-                {
-                    remainAmount = remainAmount - instalmant;
-                    remainAmountActual = remainAmountActual - instalmant;
-                    dr = ds.DtItems.NewRow();
-                    dr[ds.Cl_dueDate] = periosDate;
-                    dr[ds.Cl_principle] = instalmant;
-                    dr[ds.Cl_PrintOSPlan] = remainAmount;
-                    dr[ds.Cl_isInterestedRow] = false;
-                    dr[ds.Cl_isPeriodicAutomaticRow] = false;
-                    dr[ds.Cl_isPaymentRow] = true;
-                    dr[ds.Cl_isDisbursalRow] = false;
-                    dr[ds.Cl_PrintOs] = remainAmountActual;
-                    dr[ds.Cl_interestAmount] = 0;
-                    dr[ds.Cl_DisbursalAmount] = 0;
-                    ds.DtItems.Rows.Add(dr);
-                    periosDate = ((DateTime)periosDate).AddMonths(fregV);
-                    try
-                    {
-                        periosDate = new DateTime(((DateTime)periosDate).Year, ((DateTime)periosDate).Month, instalmentdDay);
-                    }
-                    catch
-                    {
-                    }
-                }
-
-                //remainAmount = remainAmount - instalmant;
-                //remainAmountActual = remainAmountActual - instalmant;
-                remainAmount = remainAmount - instalmantEnd;
-                remainAmountActual = remainAmountActual - instalmantEnd;
+            DataRow dr;
+            for (int i = 0; i < numberOfPerios; i++)
+            {
+                remainAmount = remainAmount - instalmant;
+                remainAmountActual = remainAmountActual - instalmant;
                 dr = ds.DtItems.NewRow();
-                dr[ds.Cl_dueDate] = endDate;
-                dr[ds.Cl_principle] = instalmantEnd;
+                dr[ds.Cl_dueDate] = periosDate;
+                dr[ds.Cl_principle] = instalmant;
                 dr[ds.Cl_PrintOSPlan] = remainAmount;
                 dr[ds.Cl_isInterestedRow] = false;
-                dr[ds.Cl_isDisbursalRow] = false;
                 dr[ds.Cl_isPeriodicAutomaticRow] = false;
                 dr[ds.Cl_isPaymentRow] = true;
+                dr[ds.Cl_isDisbursalRow] = false;
                 dr[ds.Cl_PrintOs] = remainAmountActual;
                 dr[ds.Cl_interestAmount] = 0;
                 dr[ds.Cl_DisbursalAmount] = 0;
                 ds.DtItems.Rows.Add(dr);
+                periosDate = ((DateTime)periosDate).AddMonths(fregV);
+                try
+                {
+                    periosDate = new DateTime(((DateTime)periosDate).Year, ((DateTime)periosDate).Month, instalmentdDay);
+                }
+                catch
+                {
+                }
+            }
+
+            //remainAmount = remainAmount - instalmant;
+            //remainAmountActual = remainAmountActual - instalmant;
+            remainAmount = remainAmount - instalmantEnd;
+            remainAmountActual = remainAmountActual - instalmantEnd;
+            dr = ds.DtItems.NewRow();
+            dr[ds.Cl_dueDate] = endDate;
+            dr[ds.Cl_principle] = instalmantEnd;
+            dr[ds.Cl_PrintOSPlan] = remainAmount;
+            dr[ds.Cl_isInterestedRow] = false;
+            dr[ds.Cl_isDisbursalRow] = false;
+            dr[ds.Cl_isPeriodicAutomaticRow] = false;
+            dr[ds.Cl_isPaymentRow] = true;
+            dr[ds.Cl_PrintOs] = remainAmountActual;
+            dr[ds.Cl_interestAmount] = 0;
+            dr[ds.Cl_DisbursalAmount] = 0;
+            ds.DtItems.Rows.Add(dr);
 
 
             //}
@@ -314,6 +314,8 @@ namespace BankProject.Business
             NewLoanControlRepository facade = new NewLoanControlRepository();
             BNewLoanControl it = facade.FindLoanControl(normalLoanEntryM.Code, replaymentTimes, "I+P").
                 Union(facade.FindLoanControl(normalLoanEntryM.Code, replaymentTimes, "I")).FirstOrDefault();//All get Priciple date
+            bool isNewInterest = false;
+            bool isNewInterestActive = false;
 
             if (it == null || String.IsNullOrEmpty(it.Freq))
             {
@@ -434,13 +436,16 @@ namespace BankProject.Business
             int durationsDay = 0;
 
             int periousIndex = 0;
-            DataRow removeRow = null;
             List<DataRow> removeL = new List<DataRow>();
             for (int i = 0; i < ds.DtItems.Rows.Count; i++)
             {
                 DataRow dr = ds.DtItems.Rows[i];
                 durationsDay = ((DateTime)dr[ds.Cl_dueDate.ColumnName]).Subtract(prevInterestDate).Days;
 
+                if (dr[ds.Cl_isInterestedRow.ColumnName] != null && (bool)dr[ds.Cl_isInterestedRow.ColumnName] && isNewInterest && isNewInterestActive)
+                {
+                    interestedValue = interestedValue2;
+                }
 
                 if (rateType.Equals("2"))//fix for initial
                 {
@@ -473,10 +478,18 @@ namespace BankProject.Business
 
                 if (dr[ds.Cl_isPeriodicAutomaticRow.ColumnName] != null && (bool)dr[ds.Cl_isPeriodicAutomaticRow.ColumnName])
                 {
-                    interestedValue = interestedValue2;
+                    isNewInterest = true;
+                    //interestedValue = interestedValue2;
                 }
 
-                if (!(bool)dr[ds.Cl_isInterestedRow.ColumnName]&& !(bool)dr[ds.Cl_isPaymentRow.ColumnName]
+                if (dr[ds.Cl_isInterestedRow.ColumnName] != null && (bool)dr[ds.Cl_isInterestedRow.ColumnName] && isNewInterest)
+                {
+                    isNewInterestActive = true;                   
+                }
+
+
+
+                if (!(bool)dr[ds.Cl_isInterestedRow.ColumnName] && !(bool)dr[ds.Cl_isPaymentRow.ColumnName]
                      && ((bool)dr[ds.Cl_isPeriodicAutomaticRow.ColumnName] || (bool)dr[ds.Cl_isDisbursalRow.ColumnName]))
                 {
                     removeL.Add(dr);
