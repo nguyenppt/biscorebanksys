@@ -1557,10 +1557,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void LoadDataForAmend(BEXPORT_DOCUMETARYCOLLECTION obj, List<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> lstCharge)
         {
-            if (obj != null)
+            try
             {
-                RadToolBar1.FindItemByValue("btReview").Enabled = false;
-                
+                if (obj != null)
+                {
+                    RadToolBar1.FindItemByValue("btReview").Enabled = false;
+
                     if (!String.IsNullOrEmpty(obj.OldAmount.ToString()))
                     {
                         AmountOld = double.Parse(obj.OldAmount.ToString());
@@ -1569,678 +1571,688 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     {
                         Amount = double.Parse(obj.Amount.ToString());
                     }
-                
-                
-                // DocumentaryCollectionCancel
-                if (!string.IsNullOrEmpty(obj.CancelDate.ToString()) && obj.CancelDate.ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteCancelDate.SelectedDate = DateTime.Parse(obj.CancelDate.ToString());
+
+
+                    // DocumentaryCollectionCancel
+                    if (!string.IsNullOrEmpty(obj.CancelDate.ToString()) && obj.CancelDate.ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteCancelDate.SelectedDate = DateTime.Parse(obj.CancelDate.ToString());
+                    }
+                    if (!string.IsNullOrEmpty(obj.ContingentExpiryDate.ToString()) && obj.ContingentExpiryDate.ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteContingentExpiryDate.SelectedDate = DateTime.Parse(obj.ContingentExpiryDate.ToString());
+                    }
+
+                    if (string.IsNullOrEmpty(obj.Cancel_Status))
+                    {
+                        dteCancelDate.SelectedDate = DateTime.Now;
+                        dteContingentExpiryDate.SelectedDate = DateTime.Now;
+                    }
+
+                    txtCancelRemark.Text = obj.CancelRemark;
+
+                    // Outgoing Document Acception
+                    if (!string.IsNullOrEmpty(obj.AcceptedDate.ToString()) && obj.AcceptedDate.ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dtAcceptDate.SelectedDate = DateTime.Parse(obj.AcceptedDate.ToString());
+                    }
+
+
+                    if (string.IsNullOrEmpty(obj.AcceptStatus))
+                    {
+                        dtAcceptDate.SelectedDate = DateTime.Now;
+                    }
+
+                    txtAcceptREmark.Text = obj.AcceptedRemarks;
+
+                    ///////////////////////////////////////
+                    // CC
+                    if (obj.CollectionType == "CC")
+                    {
+                        comboCollectionType.Items.Clear();
+                        comboCollectionType.DataValueField = "ID";
+                        comboCollectionType.DataTextField = "ID";
+                        comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
+                        comboCollectionType.DataBind();
+                        divCollectionType.Visible = false;
+                        divDocsCode.Visible = false;
+                        divDocsCode2.Visible = false;
+                        divDocsCode3.Visible = false;
+
+                    }
+                    // end cc
+                    comboCollectionType.SelectedValue = obj.CollectionType;
+                    lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
+
+                    comboAccountOfficer.SelectedValue = obj.Accountofficer;
+                    comboDrawerCusNo.SelectedValue = obj.DrawerCusNo;
+                    txtDrawerCusName.Text = obj.DrawerCusName;
+                    txtDrawerAddr1.Text = obj.DrawerAddr1;
+                    txtDrawerAddr2.Text = obj.DrawerAddr2;
+                    txtDrawerAddr3.Text = obj.DrawerAddr3;
+                    txtDrawerRefNo.Text = obj.DrawerRefNo;
+                    comboCollectingBankNo.Text = obj.CollectingBankNo;
+                    txtCollectingBankName.Text = obj.CollectingBankName;
+                    txtCollectingBankAddr1.Text = obj.CollectingBankAddr1;
+                    txtCollectingBankAddr2.Text = obj.CollectingBankAddr2;
+                    comboCollectingBankAcct.SelectedValue = obj.CollectingBankAcct;
+                    txtDraweeCusNo.Text = obj.DraweeCusNo;
+                    txtDraweeCusName.Text = obj.DraweeCusName;
+                    txtDraweeAddr1.Text = obj.DraweeAddr1;
+                    txtDraweeAddr2.Text = obj.DraweeAddr2;
+                    txtDraweeAddr3.Text = obj.DraweeAddr3;
+                    comboNostroCusNo.Text = obj.NostroCusNo;
+                    //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
+                    comboCurrency.SelectedValue = obj.Currency;
+                    numAmount.Value = Amount;
+                    lblAmount_New.Text = AmountOld.ToString("C");
+                    txtTenor.Text = obj.Tenor;
+                    numReminderDays.Text = obj.ReminderDays.ToString();
+
+                    comboCommodity.SelectedValue = obj.Commodity;
+                    //txtCommodityName.Text = comboCommodity.SelectedItem.Attributes["Name2;
+
+                    comboDocsCode1.SelectedValue = obj.DocsCode1;
+                    numNoOfOriginals1.Text = obj.NoOfOriginals1.ToString();
+                    numNoOfCopies1.Text = obj.NoOfCopies1.ToString();
+
+
+                    comboDocsCode2.SelectedValue = obj.DocsCode2;
+                    numNoOfOriginals2.Text = obj.NoOfOriginals2.ToString();
+                    numNoOfCopies2.Text = obj.NoOfCopies2.ToString();
+
+                    comboDocsCode3.SelectedValue = obj.DocsCode3;
+                    numNoOfOriginals3.Text = obj.NoOfOriginals3.ToString();
+                    numNoOfCopies3.Text = obj.NoOfCopies3.ToString();
+
+
+
+                    if ((!string.IsNullOrWhiteSpace(obj.NoOfOriginals2.ToString()) &&
+                         int.Parse(obj.NoOfOriginals2.ToString()) > 0) ||
+                        (!string.IsNullOrWhiteSpace(obj.NoOfCopies2.ToString()) &&
+                         int.Parse(obj.NoOfCopies2.ToString()) > 0))
+                    {
+                        divDocsCode2.Visible = true;
+                    }
+                    if ((!string.IsNullOrWhiteSpace(obj.NoOfOriginals3.ToString()) &&
+                         int.Parse(obj.NoOfOriginals3.ToString()) > 0) ||
+                        (!string.IsNullOrWhiteSpace(obj.NoOfCopies3.ToString()) &&
+                         int.Parse(obj.NoOfCopies3.ToString()) > 0))
+                    {
+                        divDocsCode3.Visible = true;
+                    }
+
+                    txtOtherDocs.Text = obj.OtherDocs;
+                    txtRemarks.Text = obj.Remarks;
+
+                    if (!string.IsNullOrEmpty(obj.DocsReceivedDate.ToString()) && obj.DocsReceivedDate.ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteDocsReceivedDate.SelectedDate = DateTime.Parse(obj.DocsReceivedDate.ToString());
+                    }
+                    if (!string.IsNullOrEmpty(obj.MaturityDate.ToString()) && obj.MaturityDate.ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteMaturityDate.SelectedDate = DateTime.Parse(obj.MaturityDate.ToString());
+                    }
+                    if (!string.IsNullOrEmpty(obj.TracerDate.ToString()) && obj.TracerDate.ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteTracerDate.SelectedDate = DateTime.Parse(obj.TracerDate.ToString());
+                    }
                 }
-                if (!string.IsNullOrEmpty(obj.ContingentExpiryDate.ToString()) && obj.ContingentExpiryDate.ToString().IndexOf("1/1/1900") == -1)
+                else
                 {
-                    dteContingentExpiryDate.SelectedDate = DateTime.Parse(obj.ContingentExpiryDate.ToString());
+                    comboCollectionType.SelectedValue = string.Empty;
+                    lblCollectionTypeName.Text = string.Empty;
+
+
+                    comboNostroCusNo.Text = string.Empty;
+                    txtDrawerCusName.Text = string.Empty;
+                    txtDrawerAddr1.Text = string.Empty;
+                    txtDrawerAddr2.Text = string.Empty;
+                    txtDrawerAddr3.Text = string.Empty;
+                    txtDrawerRefNo.Text = string.Empty;
+                    comboCollectingBankNo.Text = string.Empty;
+                    txtCollectingBankName.Text = string.Empty;
+                    txtCollectingBankAddr1.Text = string.Empty;
+                    txtCollectingBankAddr2.Text = string.Empty;
+                    comboCollectingBankAcct.SelectedValue = string.Empty;
+                    txtDraweeCusName.Text = string.Empty;
+                    txtDraweeAddr1.Text = string.Empty;
+                    txtDraweeAddr2.Text = string.Empty;
+                    txtDraweeAddr3.Text = string.Empty;
+                    comboNostroCusNo.Text = string.Empty;
+                    comboCurrency.SelectedValue = string.Empty;
+                    numAmount.Text = string.Empty;
+                    txtTenor.Text = "AT SIGHT";
+                    numReminderDays.Text = string.Empty;
+
+                    comboCommodity.SelectedValue = string.Empty;
+                    comboDocsCode1.SelectedValue = string.Empty;
+                    numNoOfOriginals1.Text = string.Empty;
+                    numNoOfCopies1.Text = string.Empty;
+
+                    comboDocsCode2.SelectedValue = string.Empty;
+                    numNoOfOriginals2.Text = string.Empty;
+                    numNoOfCopies2.Text = string.Empty;
+
+                    txtOtherDocs.Text = string.Empty;
+                    txtRemarks.Text = string.Empty;
+
+                    dteDocsReceivedDate.SelectedDate = null;
+                    dteMaturityDate.SelectedDate = null;
+                    dteTracerDate.SelectedDate = null;
+
+                    Cal_TracerDate(false);
                 }
-
-                if (string.IsNullOrEmpty(obj.Cancel_Status))
+                //khong load tab charge
+                foreach (var item in lstCharge)
                 {
-                    dteCancelDate.SelectedDate = DateTime.Now;
-                    dteContingentExpiryDate.SelectedDate = DateTime.Now;
-                }
+                    if (item.Chargecode == "EC.RECEIVE")
+                    {
+                        comboWaiveCharges.SelectedValue = item.WaiveCharges;
+                        rcbChargeAcct.SelectedValue = item.ChargeAcct;
+                        //tbChargePeriod.Text = item.ChargePeriod;
+                        rcbChargeCcy.SelectedValue = item.ChargeCcy;
+                        if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
+                        {
+                            LoadChargeAcct();
+                        }
+                        //tbExcheRate.Text = item.ExchRate;
+                        tbChargeAmt.Text = item.ChargeAmt.ToString();
+                        rcbPartyCharged.SelectedValue = item.PartyCharged;
+                        lblPartyCharged.Text = item.PartyCharged;
+                        rcbOmortCharge.SelectedValue = item.OmortCharges;
+                        rcbChargeStatus.SelectedValue = item.ChargeStatus;
+                        lblChargeStatus.Text = item.ChargeStatus;
 
-                txtCancelRemark.Text = obj.CancelRemark;
+                        tbChargeRemarks.Text = item.ChargeRemarks;
+                        tbVatNo.Text = item.VATNo;
+                        lblTaxCode.Text = item.TaxCode;
+                        //lblTaxCcy.Text = item.TaxCcy;
+                        lblTaxAmt.Text = item.TaxAmt;
+                        tbChargeCode.SelectedValue = item.Chargecode;
+                        ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
+                    }
+                    else if (item.Chargecode == "EC.COURIER")
+                    {
+                        rcbChargeAcct2.SelectedValue = item.ChargeAcct;
 
-                // Outgoing Document Acception
-                if (!string.IsNullOrEmpty(obj.AcceptedDate.ToString()) && obj.AcceptedDate.ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dtAcceptDate.SelectedDate = DateTime.Parse(obj.AcceptedDate.ToString());
-                }
+                        rcbChargeCcy2.SelectedValue = item.ChargeCcy;
+                        if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
+                        {
+                            LoadChargeAcct2();
+                        }
 
+                        tbChargeAmt2.Text = item.ChargeAmt.ToString();
+                        rcbPartyCharged2.SelectedValue = item.PartyCharged;
+                        lblPartyCharged2.Text = item.PartyCharged;
+                        rcbChargeStatus2.SelectedValue = item.ChargeStatus;
+                        lblChargeStatus2.Text = item.ChargeStatus;
 
-                if (string.IsNullOrEmpty(obj.AcceptStatus))
-                {
-                    dtAcceptDate.SelectedDate = DateTime.Now;
-                }
+                        lblTaxCode2.Text = item.TaxCode;
+                        lblTaxAmt2.Text = item.TaxAmt;
 
-                txtAcceptREmark.Text = obj.AcceptedRemarks;
+                        tbChargeCode2.SelectedValue = item.Chargecode;
+                        ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
+                    }
+                    else if (item.Chargecode == "EC.OTHER")
+                    {
+                        rcbChargeAcct3.SelectedValue = item.ChargeAcct;
 
-                ///////////////////////////////////////
-                // CC
-                if (obj.CollectionType == "CC")
-                {
-                    comboCollectionType.Items.Clear();
-                    comboCollectionType.DataValueField = "ID";
-                    comboCollectionType.DataTextField = "ID";
-                    comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
-                    comboCollectionType.DataBind();
-                    divCollectionType.Visible = false;
-                    divDocsCode.Visible = false;
-                    divDocsCode2.Visible = false;
-                    divDocsCode3.Visible = false;
+                        rcbChargeCcy3.SelectedValue = item.ChargeCcy;
+                        if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
+                        {
+                            LoadChargeAcct3();
+                        }
 
-                }
-                // end cc
-                comboCollectionType.SelectedValue = obj.CollectionType;
-                lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
+                        tbChargeAmt3.Text = item.ChargeAmt.ToString();
+                        rcbPartyCharged3.SelectedValue = item.PartyCharged;
+                        lblPartyCharged3.Text = item.PartyCharged;
+                        rcbChargeStatus3.SelectedValue = item.ChargeStatus;
+                        //lblChargeStatus3.Text = item.ChargeStatus;
 
-                comboAccountOfficer.SelectedValue = obj.Accountofficer;
-                comboDrawerCusNo.SelectedValue = obj.DrawerCusNo;
-                txtDrawerCusName.Text = obj.DrawerCusName;
-                txtDrawerAddr1.Text = obj.DrawerAddr1;
-                txtDrawerAddr2.Text = obj.DrawerAddr2;
-                txtDrawerAddr3.Text = obj.DrawerAddr3;
-                txtDrawerRefNo.Text = obj.DrawerRefNo;
-                comboCollectingBankNo.Text = obj.CollectingBankNo;
-                txtCollectingBankName.Text = obj.CollectingBankName;
-                txtCollectingBankAddr1.Text = obj.CollectingBankAddr1;
-                txtCollectingBankAddr2.Text = obj.CollectingBankAddr2;
-                comboCollectingBankAcct.SelectedValue = obj.CollectingBankAcct;
-                txtDraweeCusNo.Text = obj.DraweeCusNo;
-                txtDraweeCusName.Text = obj.DraweeCusName;
-                txtDraweeAddr1.Text = obj.DraweeAddr1;
-                txtDraweeAddr2.Text = obj.DraweeAddr2;
-                txtDraweeAddr3.Text = obj.DraweeAddr3;
-                comboNostroCusNo.Text = obj.NostroCusNo;
-                //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
-                comboCurrency.SelectedValue = obj.Currency;
-                numAmount.Value = Amount;
-                lblAmount_New.Text = AmountOld.ToString("C");
-                txtTenor.Text = obj.Tenor;
-                numReminderDays.Text = obj.ReminderDays.ToString();
+                        lblTaxCode3.Text = item.TaxCode;
+                        lblTaxAmt3.Text = item.TaxAmt;
 
-                comboCommodity.SelectedValue = obj.Commodity;
-                //txtCommodityName.Text = comboCommodity.SelectedItem.Attributes["Name2;
+                        tbChargeCode3.SelectedValue = item.Chargecode;
+                        ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
+                    }
+                    else if (item.Chargecode == "EC.AMEND")
+                    {
+                        rcbChargeAcct4.SelectedValue = item.ChargeAcct;
 
-                comboDocsCode1.SelectedValue = obj.DocsCode1;
-                numNoOfOriginals1.Text = obj.NoOfOriginals1.ToString();
-                numNoOfCopies1.Text = obj.NoOfCopies1.ToString();
+                        rcbChargeCcy4.SelectedValue = item.ChargeCcy;
+                        if (!string.IsNullOrEmpty(rcbChargeCcy4.SelectedValue))
+                        {
+                            LoadChargeAcct4();
+                        }
 
+                        tbChargeAmt4.Text = item.ChargeAmt.ToString();
+                        rcbPartyCharged4.SelectedValue = item.PartyCharged;
+                        lblPartyCharged4.Text = item.PartyCharged;
+                        rcbChargeStatus4.SelectedValue = item.ChargeStatus;
+                        //lblChargeStatus3.Text = item.ChargeStatus;
 
-                comboDocsCode2.SelectedValue = obj.DocsCode2;
-                numNoOfOriginals2.Text = obj.NoOfOriginals2.ToString();
-                numNoOfCopies2.Text = obj.NoOfCopies2.ToString();
+                        lblTaxCode4.Text = item.TaxCode;
+                        lblTaxAmt4.Text = item.TaxAmt;
 
-                comboDocsCode3.SelectedValue = obj.DocsCode3;
-                numNoOfOriginals3.Text = obj.NoOfOriginals3.ToString();
-                numNoOfCopies3.Text = obj.NoOfCopies3.ToString();
-
-
-
-                if ((!string.IsNullOrWhiteSpace(obj.NoOfOriginals2.ToString()) &&
-                     int.Parse(obj.NoOfOriginals2.ToString()) > 0) ||
-                    (!string.IsNullOrWhiteSpace(obj.NoOfCopies2.ToString()) &&
-                     int.Parse(obj.NoOfCopies2.ToString()) > 0))
-                {
-                    divDocsCode2.Visible = true;
-                }
-                if ((!string.IsNullOrWhiteSpace(obj.NoOfOriginals3.ToString()) &&
-                     int.Parse(obj.NoOfOriginals3.ToString()) > 0) ||
-                    (!string.IsNullOrWhiteSpace(obj.NoOfCopies3.ToString()) &&
-                     int.Parse(obj.NoOfCopies3.ToString()) > 0))
-                {
-                    divDocsCode3.Visible = true;
-                }
-
-                txtOtherDocs.Text = obj.OtherDocs;
-                txtRemarks.Text = obj.Remarks;
-
-                if (!string.IsNullOrEmpty(obj.DocsReceivedDate.ToString()) && obj.DocsReceivedDate.ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteDocsReceivedDate.SelectedDate = DateTime.Parse(obj.DocsReceivedDate.ToString());
-                }
-                if (!string.IsNullOrEmpty(obj.MaturityDate.ToString()) && obj.MaturityDate.ToString().IndexOf("1/1/1900") == -1)
-                
-                {
-                    dteMaturityDate.SelectedDate = DateTime.Parse(obj.MaturityDate.ToString());
-                }
-                if (!string.IsNullOrEmpty(obj.TracerDate.ToString()) && obj.TracerDate.ToString().IndexOf("1/1/1900") == -1)
-                
-                {
-                    dteTracerDate.SelectedDate = DateTime.Parse(obj.TracerDate.ToString());
+                        tbChargeCode4.SelectedValue = item.Chargecode;
+                        ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                comboCollectionType.SelectedValue = string.Empty;
-                lblCollectionTypeName.Text = string.Empty;
-
-
-                comboNostroCusNo.Text = string.Empty;
-                txtDrawerCusName.Text = string.Empty;
-                txtDrawerAddr1.Text = string.Empty;
-                txtDrawerAddr2.Text = string.Empty;
-                txtDrawerAddr3.Text = string.Empty;
-                txtDrawerRefNo.Text = string.Empty;
-                comboCollectingBankNo.Text = string.Empty;
-                txtCollectingBankName.Text = string.Empty;
-                txtCollectingBankAddr1.Text = string.Empty;
-                txtCollectingBankAddr2.Text = string.Empty;
-                comboCollectingBankAcct.SelectedValue = string.Empty;
-                txtDraweeCusName.Text = string.Empty;
-                txtDraweeAddr1.Text = string.Empty;
-                txtDraweeAddr2.Text = string.Empty;
-                txtDraweeAddr3.Text = string.Empty;
-                comboNostroCusNo.Text = string.Empty;
-                comboCurrency.SelectedValue = string.Empty;
-                numAmount.Text = string.Empty;
-                txtTenor.Text = "AT SIGHT";
-                numReminderDays.Text = string.Empty;
-
-                comboCommodity.SelectedValue = string.Empty;
-                comboDocsCode1.SelectedValue = string.Empty;
-                numNoOfOriginals1.Text = string.Empty;
-                numNoOfCopies1.Text = string.Empty;
-
-                comboDocsCode2.SelectedValue = string.Empty;
-                numNoOfOriginals2.Text = string.Empty;
-                numNoOfCopies2.Text = string.Empty;
-
-                txtOtherDocs.Text = string.Empty;
-                txtRemarks.Text = string.Empty;
-
-                dteDocsReceivedDate.SelectedDate = null;
-                dteMaturityDate.SelectedDate = null;
-                dteTracerDate.SelectedDate = null;
-
-                Cal_TracerDate(false);
-            }
-            //khong load tab charge
-            foreach (var item in lstCharge)
-            {
-                if (item.Chargecode == "EC.RECEIVE")
-                {
-                    comboWaiveCharges.SelectedValue = item.WaiveCharges;
-                    rcbChargeAcct.SelectedValue = item.ChargeAcct;
-                    //tbChargePeriod.Text = item.ChargePeriod;
-                    rcbChargeCcy.SelectedValue = item.ChargeCcy;
-                    if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
-                    {
-                        LoadChargeAcct();
-                    }
-                    //tbExcheRate.Text = item.ExchRate;
-                    tbChargeAmt.Text = item.ChargeAmt.ToString();
-                    rcbPartyCharged.SelectedValue = item.PartyCharged;
-                    lblPartyCharged.Text = item.PartyCharged;
-                    rcbOmortCharge.SelectedValue = item.OmortCharges;
-                    rcbChargeStatus.SelectedValue = item.ChargeStatus;
-                    lblChargeStatus.Text = item.ChargeStatus;
-
-                    tbChargeRemarks.Text = item.ChargeRemarks;
-                    tbVatNo.Text = item.VATNo;
-                    lblTaxCode.Text = item.TaxCode;
-                    //lblTaxCcy.Text = item.TaxCcy;
-                    lblTaxAmt.Text = item.TaxAmt;
-                    tbChargeCode.SelectedValue = item.Chargecode;
-                    ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
-                }
-                else if (item.Chargecode == "EC.COURIER")
-                {
-                    rcbChargeAcct2.SelectedValue = item.ChargeAcct;
-
-                    rcbChargeCcy2.SelectedValue = item.ChargeCcy;
-                    if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
-                    {
-                        LoadChargeAcct2();
-                    }
-
-                    tbChargeAmt2.Text = item.ChargeAmt.ToString();
-                    rcbPartyCharged2.SelectedValue = item.PartyCharged;
-                    lblPartyCharged2.Text = item.PartyCharged;
-                    rcbChargeStatus2.SelectedValue = item.ChargeStatus;
-                    lblChargeStatus2.Text = item.ChargeStatus;
-
-                    lblTaxCode2.Text = item.TaxCode;
-                    lblTaxAmt2.Text = item.TaxAmt;
-
-                    tbChargeCode2.SelectedValue = item.Chargecode;
-                    ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
-                }
-                else if (item.Chargecode == "EC.OTHER")
-                {
-                    rcbChargeAcct3.SelectedValue = item.ChargeAcct;
-
-                    rcbChargeCcy3.SelectedValue = item.ChargeCcy;
-                    if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
-                    {
-                        LoadChargeAcct3();
-                    }
-
-                    tbChargeAmt3.Text = item.ChargeAmt.ToString();
-                    rcbPartyCharged3.SelectedValue = item.PartyCharged;
-                    lblPartyCharged3.Text = item.PartyCharged;
-                    rcbChargeStatus3.SelectedValue = item.ChargeStatus;
-                    //lblChargeStatus3.Text = item.ChargeStatus;
-
-                    lblTaxCode3.Text = item.TaxCode;
-                    lblTaxAmt3.Text = item.TaxAmt;
-
-                    tbChargeCode3.SelectedValue = item.Chargecode;
-                    ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
-                }
-                else if (item.Chargecode == "EC.AMEND")
-                {
-                    rcbChargeAcct4.SelectedValue = item.ChargeAcct;
-
-                    rcbChargeCcy4.SelectedValue = item.ChargeCcy;
-                    if (!string.IsNullOrEmpty(rcbChargeCcy4.SelectedValue))
-                    {
-                        LoadChargeAcct4();
-                    }
-
-                    tbChargeAmt4.Text = item.ChargeAmt.ToString();
-                    rcbPartyCharged4.SelectedValue = item.PartyCharged;
-                    lblPartyCharged4.Text = item.PartyCharged;
-                    rcbChargeStatus4.SelectedValue = item.ChargeStatus;
-                    //lblChargeStatus3.Text = item.ChargeStatus;
-
-                    lblTaxCode4.Text = item.TaxCode;
-                    lblTaxAmt4.Text = item.TaxAmt;
-
-                    tbChargeCode4.SelectedValue = item.Chargecode;
-                    ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
-                }
+                throw ex;
             }
             //SetVisibilityByStatus(dsDoc);
         }
         protected void LoadData(DataSet dsDoc)
         {
-            if (dsDoc.Tables[0].Rows.Count > 0)
+            try
             {
-                RadToolBar1.FindItemByValue("btReview").Enabled = false;
-                var drow = dsDoc.Tables[0].Rows[0];
-                if (drow["Amend_Status"].ToString() == "AUT")
+                if (dsDoc.Tables[0].Rows.Count > 0)
                 {
-                    double.TryParse(drow["Amount"].ToString(), out Amount);
-                    double.TryParse(drow["AmountOld"].ToString(), out AmountOld);
+                    RadToolBar1.FindItemByValue("btReview").Enabled = false;
+                    var drow = dsDoc.Tables[0].Rows[0];
+                    if (drow["Amend_Status"].ToString() == "AUT")
+                    {
+                        double.TryParse(drow["Amount"].ToString(), out Amount);
+                        double.TryParse(drow["AmountOld"].ToString(), out AmountOld);
+                    }
+                    else
+                    {
+                        double.TryParse(drow["Amount"].ToString(), out Amount);
+                        double.TryParse(drow["OldAmount"].ToString(), out AmountOld);
+                    }
+
+                    // DocumentaryCollectionCancel
+                    if (!string.IsNullOrEmpty(drow["CancelDate"].ToString()) && drow["CancelDate"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteCancelDate.SelectedDate = DateTime.Parse(drow["CancelDate"].ToString());
+                    }
+
+
+                    if (!string.IsNullOrEmpty(drow["ContingentExpiryDate"].ToString()) && drow["ContingentExpiryDate"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteContingentExpiryDate.SelectedDate = DateTime.Parse(drow["ContingentExpiryDate"].ToString());
+                    }
+
+                    if (string.IsNullOrEmpty(drow["Cancel_Status"].ToString()))
+                    {
+                        dteCancelDate.SelectedDate = DateTime.Now;
+                        dteContingentExpiryDate.SelectedDate = DateTime.Now;
+                    }
+
+                    txtCancelRemark.Text = drow["CancelRemark"].ToString();
+
+                    // Outgoing Document Acception
+                    if (!string.IsNullOrEmpty(drow["AcceptedDate"].ToString()) && drow["AcceptedDate"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dtAcceptDate.SelectedDate = DateTime.Parse(drow["AcceptedDate"].ToString());
+                    }
+
+
+                    if (string.IsNullOrEmpty(drow["AcceptStatus"].ToString()))
+                    {
+                        dtAcceptDate.SelectedDate = DateTime.Now;
+                    }
+
+                    txtAcceptREmark.Text = drow["AcceptedRemarks"].ToString();
+
+                    ///////////////////////////////////////
+                    // CC
+                    if (drow["CollectionType"].ToString() == "CC")
+                    {
+                        comboCollectionType.Items.Clear();
+                        comboCollectionType.DataValueField = "ID";
+                        comboCollectionType.DataTextField = "ID";
+                        comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
+                        comboCollectionType.DataBind();
+                        divCollectionType.Visible = false;
+                        divDocsCode.Visible = false;
+                        divDocsCode2.Visible = false;
+                        divDocsCode3.Visible = false;
+
+                    }
+                    // end cc
+                    comboCollectionType.SelectedValue = drow["CollectionType"].ToString();
+                    lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
+
+                    comboAccountOfficer.SelectedValue = drow["Accountofficer"].ToString();
+                    comboDrawerCusNo.SelectedValue = drow["DrawerCusNo"].ToString();
+                    txtDrawerCusName.Text = drow["DrawerCusName"].ToString();
+                    txtDrawerAddr1.Text = drow["DrawerAddr1"].ToString();
+                    txtDrawerAddr2.Text = drow["DrawerAddr2"].ToString();
+                    txtDrawerAddr3.Text = drow["DrawerAddr3"].ToString();
+                    txtDrawerRefNo.Text = drow["DrawerRefNo"].ToString();
+                    comboCollectingBankNo.Text = drow["CollectingBankNo"].ToString();
+                    txtCollectingBankName.Text = drow["CollectingBankName"].ToString();
+                    txtCollectingBankAddr1.Text = drow["CollectingBankAddr1"].ToString();
+                    txtCollectingBankAddr2.Text = drow["CollectingBankAddr2"].ToString();
+                    comboCollectingBankAcct.SelectedValue = drow["CollectingBankAcct"].ToString();
+                    txtDraweeCusNo.Text = drow["DraweeCusNo"].ToString();
+                    txtDraweeCusName.Text = drow["DraweeCusName"].ToString();
+                    txtDraweeAddr1.Text = drow["DraweeAddr1"].ToString();
+                    txtDraweeAddr2.Text = drow["DraweeAddr2"].ToString();
+                    txtDraweeAddr3.Text = drow["DraweeAddr3"].ToString();
+                    comboNostroCusNo.Text = drow["NostroCusNo"].ToString();
+                    comboCurrency.SelectedValue = drow["Currency"].ToString();
+                    //
+                    var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency == comboCurrency.SelectedValue).FirstOrDefault();
+                    if (obj != null)
+                    {
+                        lblNostroCusName.Text = obj.Description;
+                    }
+                    //
+                    //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
+
+                    numAmount.Value = Amount;
+                    lblAmount_New.Text = AmountOld.ToString("C");
+                    txtTenor.Text = drow["Tenor"].ToString();
+                    numReminderDays.Text = drow["ReminderDays"].ToString();
+
+                    comboCommodity.SelectedValue = drow["Commodity"].ToString();
+                    //txtCommodityName.Text = comboCommodity.SelectedItem.Attributes["Name2"];
+
+                    comboDocsCode1.SelectedValue = drow["DocsCode1"].ToString();
+                    numNoOfOriginals1.Text = drow["NoOfOriginals1"].ToString();
+                    numNoOfCopies1.Text = drow["NoOfCopies1"].ToString();
+
+
+                    comboDocsCode2.SelectedValue = drow["DocsCode2"].ToString();
+                    numNoOfOriginals2.Text = drow["NoOfOriginals2"].ToString();
+                    numNoOfCopies2.Text = drow["NoOfCopies2"].ToString();
+
+                    comboDocsCode3.SelectedValue = drow["DocsCode3"].ToString();
+                    numNoOfOriginals3.Text = drow["NoOfOriginals3"].ToString();
+                    numNoOfCopies3.Text = drow["NoOfCopies3"].ToString();
+
+
+
+                    if ((!string.IsNullOrWhiteSpace(drow["NoOfOriginals2"].ToString()) &&
+                         int.Parse(drow["NoOfOriginals2"].ToString()) > 0) ||
+                        (!string.IsNullOrWhiteSpace(drow["NoOfCopies2"].ToString()) &&
+                         int.Parse(drow["NoOfCopies2"].ToString()) > 0))
+                    {
+                        divDocsCode2.Visible = true;
+                    }
+                    if ((!string.IsNullOrWhiteSpace(drow["NoOfOriginals3"].ToString()) &&
+                         int.Parse(drow["NoOfOriginals3"].ToString()) > 0) ||
+                        (!string.IsNullOrWhiteSpace(drow["NoOfCopies3"].ToString()) &&
+                         int.Parse(drow["NoOfCopies3"].ToString()) > 0))
+                    {
+                        divDocsCode3.Visible = true;
+                    }
+
+                    txtOtherDocs.Text = drow["OtherDocs"].ToString();
+                    txtRemarks.Text = drow["Remarks"].ToString();
+                    if (!string.IsNullOrEmpty(drow["DocsReceivedDate"].ToString()) && drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
+                    //if (drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteDocsReceivedDate.SelectedDate = DateTime.Parse(drow["DocsReceivedDate"].ToString());
+                    }
+                    if (!string.IsNullOrEmpty(drow["MaturityDate"].ToString()) && drow["MaturityDate"].ToString().IndexOf("1/1/1900") == -1)
+                    //if (drow["MaturityDate"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteMaturityDate.SelectedDate = DateTime.Parse(drow["MaturityDate"].ToString());
+                    }
+                    if (!string.IsNullOrEmpty(drow["TracerDate"].ToString()) && drow["TracerDate"].ToString().IndexOf("1/1/1900") == -1)
+                    //if (drow["TracerDate"].ToString().IndexOf("1/1/1900") == -1)
+                    {
+                        dteTracerDate.SelectedDate = DateTime.Parse(drow["TracerDate"].ToString());
+                    }
                 }
                 else
                 {
-                    double.TryParse(drow["Amount"].ToString(), out Amount);
-                    double.TryParse(drow["OldAmount"].ToString(), out AmountOld);
+                    comboCollectionType.SelectedValue = string.Empty;
+                    lblCollectionTypeName.Text = string.Empty;
+
+
+                    comboNostroCusNo.Text = string.Empty;
+                    txtDrawerCusName.Text = string.Empty;
+                    txtDrawerAddr1.Text = string.Empty;
+                    txtDrawerAddr2.Text = string.Empty;
+                    txtDrawerAddr3.Text = string.Empty;
+                    txtDrawerRefNo.Text = string.Empty;
+                    comboCollectingBankNo.Text = string.Empty;
+                    txtCollectingBankName.Text = string.Empty;
+                    txtCollectingBankAddr1.Text = string.Empty;
+                    txtCollectingBankAddr2.Text = string.Empty;
+                    comboCollectingBankAcct.SelectedValue = string.Empty;
+                    txtDraweeCusName.Text = string.Empty;
+                    txtDraweeAddr1.Text = string.Empty;
+                    txtDraweeAddr2.Text = string.Empty;
+                    txtDraweeAddr3.Text = string.Empty;
+                    comboNostroCusNo.Text = string.Empty;
+                    comboCurrency.SelectedValue = string.Empty;
+                    numAmount.Text = string.Empty;
+                    txtTenor.Text = "AT SIGHT";
+                    numReminderDays.Text = string.Empty;
+
+                    comboCommodity.SelectedValue = string.Empty;
+                    comboDocsCode1.SelectedValue = string.Empty;
+                    numNoOfOriginals1.Text = string.Empty;
+                    numNoOfCopies1.Text = string.Empty;
+
+                    comboDocsCode2.SelectedValue = string.Empty;
+                    numNoOfOriginals2.Text = string.Empty;
+                    numNoOfCopies2.Text = string.Empty;
+
+                    txtOtherDocs.Text = string.Empty;
+                    txtRemarks.Text = string.Empty;
+
+                    dteDocsReceivedDate.SelectedDate = null;
+                    dteMaturityDate.SelectedDate = null;
+                    dteTracerDate.SelectedDate = null;
+
+                    Cal_TracerDate(false);
                 }
 
-                // DocumentaryCollectionCancel
-                if (!string.IsNullOrEmpty(drow["CancelDate"].ToString()) && drow["CancelDate"].ToString().IndexOf("1/1/1900") == -1)
+
+                #region tab Charge
+                if (dsDoc.Tables[1].Rows.Count > 0)
                 {
-                    dteCancelDate.SelectedDate = DateTime.Parse(drow["CancelDate"].ToString());
-                }
-                
+                    var drow1 = dsDoc.Tables[1].Rows[0];
 
-                if (!string.IsNullOrEmpty(drow["ContingentExpiryDate"].ToString()) && drow["ContingentExpiryDate"].ToString().IndexOf("1/1/1900") == -1)
+                    comboWaiveCharges.SelectedValue = drow1["WaiveCharges"].ToString();
+                    rcbChargeAcct.SelectedValue = drow1["ChargeAcct"].ToString();
+
+                    //tbChargePeriod.Text = drow1["ChargePeriod"].ToString();
+                    rcbChargeCcy.SelectedValue = drow1["ChargeCcy"].ToString();
+                    if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
+                    {
+                        LoadChargeAcct();
+                    }
+
+                    //tbExcheRate.Text = drow1["ExchRate"].ToString();
+                    tbChargeAmt.Text = drow1["ChargeAmt"].ToString();
+                    rcbPartyCharged.SelectedValue = drow1["PartyCharged"].ToString();
+                    lblPartyCharged.Text = drow1["PartyCharged"].ToString();
+                    rcbOmortCharge.SelectedValue = drow1["OmortCharges"].ToString();
+                    rcbChargeStatus.SelectedValue = drow1["ChargeStatus"].ToString();
+                    lblChargeStatus.Text = drow1["ChargeStatus"].ToString();
+
+                    tbChargeRemarks.Text = drow1["ChargeRemarks"].ToString();
+                    tbVatNo.Text = drow1["VATNo"].ToString();
+                    lblTaxCode.Text = drow1["TaxCode"].ToString();
+                    //lblTaxCcy.Text = drow1["TaxCcy"].ToString();
+                    lblTaxAmt.Text = drow1["TaxAmt"].ToString();
+
+                    //tbChargeCode.SelectedValue = drow1["Chargecode"].ToString();
+
+                    ChargeAmount += ConvertStringToFloat(drow1["ChargeAmt"].ToString());
+
+                }
+                else
                 {
-                    dteContingentExpiryDate.SelectedDate = DateTime.Parse(drow["ContingentExpiryDate"].ToString());
+                    comboWaiveCharges.SelectedValue = "NO";
+                    rcbChargeAcct.SelectedValue = string.Empty;
+                    //tbChargePeriod.Text = "1";
+                    rcbChargeCcy.SelectedValue = string.Empty;
+                    //tbExcheRate.Text = string.Empty;
+                    tbChargeAmt.Text = string.Empty;
+                    rcbPartyCharged.SelectedValue = string.Empty;
+                    lblPartyCharged.Text = string.Empty;
+                    rcbOmortCharge.SelectedValue = string.Empty;
+                    rcbChargeStatus.SelectedValue = string.Empty;
+                    lblChargeStatus.Text = string.Empty;
+
+                    tbChargeRemarks.Text = string.Empty;
+                    tbVatNo.Text = string.Empty;
+                    lblTaxCode.Text = string.Empty;
+                    //lblTaxCcy.Text = string.Empty;
+                    lblTaxAmt.Text = string.Empty;
+
+                    //tbChargeCode.SelectedValue = string.Empty;
+
+                    //lblChargeAcct.Text = string.Empty;
+                    lblPartyCharged.Text = string.Empty;
+                    lblChargeStatus.Text = string.Empty;
                 }
 
-                if(string.IsNullOrEmpty(drow["Cancel_Status"].ToString()))
+                if (dsDoc.Tables[2].Rows.Count > 0)
                 {
-                    dteCancelDate.SelectedDate = DateTime.Now;
-                    dteContingentExpiryDate.SelectedDate = DateTime.Now;
+                    var drow2 = dsDoc.Tables[2].Rows[0];
+
+                    //divChargeInfo2.Visible = true;
+
+                    rcbChargeAcct2.SelectedValue = drow2["ChargeAcct"].ToString();
+
+                    rcbChargeCcy2.SelectedValue = drow2["ChargeCcy"].ToString();
+                    if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
+                    {
+                        LoadChargeAcct2();
+                    }
+
+                    tbChargeAmt2.Text = drow2["ChargeAmt"].ToString();
+                    rcbPartyCharged2.SelectedValue = drow2["PartyCharged"].ToString();
+                    lblPartyCharged2.Text = drow2["PartyCharged"].ToString();
+                    rcbChargeStatus2.SelectedValue = drow2["ChargeStatus"].ToString();
+                    lblChargeStatus2.Text = drow2["ChargeStatus"].ToString();
+
+                    lblTaxCode2.Text = drow2["TaxCode"].ToString();
+                    lblTaxAmt2.Text = drow2["TaxAmt"].ToString();
+
+                    //tbChargeCode2.SelectedValue = drow2["Chargecode"].ToString();
+                    ChargeAmount += ConvertStringToFloat(drow2["ChargeAmt"].ToString());
                 }
-
-                txtCancelRemark.Text = drow["CancelRemark"].ToString();
-
-                // Outgoing Document Acception
-                if (!string.IsNullOrEmpty(drow["AcceptedDate"].ToString()) && drow["AcceptedDate"].ToString().IndexOf("1/1/1900") == -1)
+                else
                 {
-                    dtAcceptDate.SelectedDate = DateTime.Parse(drow["AcceptedDate"].ToString());
+                    rcbChargeAcct2.SelectedValue = string.Empty;
+                    rcbChargeCcy2.SelectedValue = string.Empty;
+                    tbChargeAmt2.Text = string.Empty;
+                    rcbPartyCharged2.SelectedValue = string.Empty;
+                    lblPartyCharged2.Text = string.Empty;
+                    rcbChargeStatus2.SelectedValue = string.Empty;
+                    lblChargeStatus2.Text = string.Empty;
+
+                    lblTaxCode2.Text = string.Empty;
+                    lblTaxAmt2.Text = string.Empty;
+
+                    //tbChargeCode2.SelectedValue = string.Empty;
+
+                    //lblChargeAcct2.Text = string.Empty;
+                    lblPartyCharged2.Text = string.Empty;
+                    lblChargeStatus2.Text = string.Empty;
                 }
-
-
-                if (string.IsNullOrEmpty(drow["AcceptStatus"].ToString()))
+                if (dsDoc.Tables[3].Rows.Count > 0)
                 {
-                    dtAcceptDate.SelectedDate = DateTime.Now;
+                    var drow3 = dsDoc.Tables[3].Rows[0];
+
+                    //divChargeInfo2.Visible = true;
+
+                    rcbChargeAcct3.SelectedValue = drow3["ChargeAcct"].ToString();
+
+                    rcbChargeCcy3.SelectedValue = drow3["ChargeCcy"].ToString();
+                    if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
+                    {
+                        LoadChargeAcct3();
+                    }
+
+                    tbChargeAmt3.Text = drow3["ChargeAmt"].ToString();
+                    rcbPartyCharged3.SelectedValue = drow3["PartyCharged"].ToString();
+                    lblPartyCharged3.Text = drow3["PartyCharged"].ToString();
+                    rcbChargeStatus3.SelectedValue = drow3["ChargeStatus"].ToString();
+                    //lblChargeStatus3.Text = drow3["ChargeStatus"].ToString();
+
+                    lblTaxCode3.Text = drow3["TaxCode"].ToString();
+                    lblTaxAmt3.Text = drow3["TaxAmt"].ToString();
+
+                    //tbChargeCode3.SelectedValue = drow3["Chargecode"].ToString();
+                    ChargeAmount += ConvertStringToFloat(drow3["ChargeAmt"].ToString());
                 }
-
-                txtAcceptREmark.Text = drow["AcceptedRemarks"].ToString();
-
-                ///////////////////////////////////////
-                // CC
-                if (drow["CollectionType"].ToString() == "CC")
+                else
                 {
-                    comboCollectionType.Items.Clear();
-                    comboCollectionType.DataValueField = "ID";
-                    comboCollectionType.DataTextField = "ID";
-                    comboCollectionType.DataSource = bd.SQLData.CreateGenerateDatas("DocumetaryCleanCollection_TabMain_CollectionType");
-                    comboCollectionType.DataBind();
-                    divCollectionType.Visible = false;
-                    divDocsCode.Visible = false;
-                    divDocsCode2.Visible = false;
-                    divDocsCode3.Visible = false;
+                    rcbChargeAcct3.SelectedValue = string.Empty;
+                    rcbChargeCcy3.SelectedValue = string.Empty;
+                    tbChargeAmt3.Text = string.Empty;
+                    rcbPartyCharged3.SelectedValue = string.Empty;
+                    lblPartyCharged3.Text = string.Empty;
+                    rcbChargeStatus3.SelectedValue = string.Empty;
+                    //lblChargeStatus3.Text = string.Empty;
 
+                    lblTaxCode3.Text = string.Empty;
+                    lblTaxAmt3.Text = string.Empty;
+
+                    //tbChargeCode3.SelectedValue = string.Empty;
+
+                    //lblChargeAcct3.Text = string.Empty;
+                    lblPartyCharged3.Text = string.Empty;
+                    //lblChargeStatus3.Text = string.Empty;
                 }
-                // end cc
-                comboCollectionType.SelectedValue = drow["CollectionType"].ToString();
-                lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
-
-                comboAccountOfficer.SelectedValue = drow["Accountofficer"].ToString();
-                comboDrawerCusNo.SelectedValue = drow["DrawerCusNo"].ToString();
-                txtDrawerCusName.Text = drow["DrawerCusName"].ToString();
-                txtDrawerAddr1.Text = drow["DrawerAddr1"].ToString();
-                txtDrawerAddr2.Text = drow["DrawerAddr2"].ToString();
-                txtDrawerAddr3.Text = drow["DrawerAddr3"].ToString();
-                txtDrawerRefNo.Text = drow["DrawerRefNo"].ToString();
-                comboCollectingBankNo.Text = drow["CollectingBankNo"].ToString();
-                txtCollectingBankName.Text = drow["CollectingBankName"].ToString();
-                txtCollectingBankAddr1.Text = drow["CollectingBankAddr1"].ToString();
-                txtCollectingBankAddr2.Text = drow["CollectingBankAddr2"].ToString();
-                comboCollectingBankAcct.SelectedValue = drow["CollectingBankAcct"].ToString();
-                txtDraweeCusNo.Text = drow["DraweeCusNo"].ToString();
-                txtDraweeCusName.Text = drow["DraweeCusName"].ToString();
-                txtDraweeAddr1.Text = drow["DraweeAddr1"].ToString();
-                txtDraweeAddr2.Text = drow["DraweeAddr2"].ToString();
-                txtDraweeAddr3.Text = drow["DraweeAddr3"].ToString();
-                comboNostroCusNo.Text = drow["NostroCusNo"].ToString();
-                comboCurrency.SelectedValue = drow["Currency"].ToString();
-                //
-                var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency == comboCurrency.SelectedValue).FirstOrDefault();
-                if (obj != null)
+                if (dsDoc.Tables[4].Rows.Count > 0)
                 {
-                    lblNostroCusName.Text = obj.Description;
+                    var drow4 = dsDoc.Tables[4].Rows[0];
+
+                    //divChargeInfo2.Visible = true;
+
+                    rcbChargeAcct4.SelectedValue = drow4["ChargeAcct"].ToString();
+
+                    rcbChargeCcy4.SelectedValue = drow4["ChargeCcy"].ToString();
+                    if (!string.IsNullOrEmpty(rcbChargeCcy4.SelectedValue))
+                    {
+                        LoadChargeAcct4();
+                    }
+
+                    tbChargeAmt4.Text = drow4["ChargeAmt"].ToString();
+                    rcbPartyCharged4.SelectedValue = drow4["PartyCharged"].ToString();
+                    lblPartyCharged4.Text = drow4["PartyCharged"].ToString();
+                    rcbChargeStatus4.SelectedValue = drow4["ChargeStatus"].ToString();
+                    //lblChargeStatus4.Text = drow4["ChargeStatus"].ToString();
+
+                    lblTaxCode4.Text = drow4["TaxCode"].ToString();
+                    lblTaxAmt4.Text = drow4["TaxAmt"].ToString();
+
+                    //tbChargeCode4.SelectedValue = drow4["Chargecode"].ToString();
+                    ChargeAmount += ConvertStringToFloat(drow4["ChargeAmt"].ToString());
                 }
-                //
-                //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
-                
-                numAmount.Value = Amount;
-                lblAmount_New.Text = AmountOld.ToString("C");
-                txtTenor.Text = drow["Tenor"].ToString();
-                numReminderDays.Text = drow["ReminderDays"].ToString();
-
-                comboCommodity.SelectedValue = drow["Commodity"].ToString();
-                //txtCommodityName.Text = comboCommodity.SelectedItem.Attributes["Name2"];
-
-                comboDocsCode1.SelectedValue = drow["DocsCode1"].ToString();
-                numNoOfOriginals1.Text = drow["NoOfOriginals1"].ToString();
-                numNoOfCopies1.Text = drow["NoOfCopies1"].ToString();
-
-                
-                comboDocsCode2.SelectedValue = drow["DocsCode2"].ToString();
-                numNoOfOriginals2.Text = drow["NoOfOriginals2"].ToString();
-                numNoOfCopies2.Text = drow["NoOfCopies2"].ToString();
-
-                comboDocsCode3.SelectedValue = drow["DocsCode3"].ToString();
-                numNoOfOriginals3.Text = drow["NoOfOriginals3"].ToString();
-                numNoOfCopies3.Text = drow["NoOfCopies3"].ToString();
-
-               
-
-                if ((!string.IsNullOrWhiteSpace(drow["NoOfOriginals2"].ToString()) &&
-                     int.Parse(drow["NoOfOriginals2"].ToString()) > 0) ||
-                    (!string.IsNullOrWhiteSpace(drow["NoOfCopies2"].ToString()) &&
-                     int.Parse(drow["NoOfCopies2"].ToString()) > 0))
+                else
                 {
-                    divDocsCode2.Visible = true;
-                }
-                if ((!string.IsNullOrWhiteSpace(drow["NoOfOriginals3"].ToString()) &&
-                     int.Parse(drow["NoOfOriginals3"].ToString()) > 0) ||
-                    (!string.IsNullOrWhiteSpace(drow["NoOfCopies3"].ToString()) &&
-                     int.Parse(drow["NoOfCopies3"].ToString()) > 0))
-                {
-                    divDocsCode3.Visible = true;
-                }
+                    rcbChargeAcct4.SelectedValue = string.Empty;
+                    rcbChargeCcy4.SelectedValue = string.Empty;
+                    tbChargeAmt4.Text = string.Empty;
+                    rcbPartyCharged4.SelectedValue = string.Empty;
+                    lblPartyCharged4.Text = string.Empty;
+                    rcbChargeStatus4.SelectedValue = string.Empty;
+                    //lblChargeStatus4.Text = string.Empty;
 
-                txtOtherDocs.Text = drow["OtherDocs"].ToString();
-                txtRemarks.Text = drow["Remarks"].ToString();
-                if (!string.IsNullOrEmpty(drow["DocsReceivedDate"].ToString()) && drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
-                //if (drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteDocsReceivedDate.SelectedDate = DateTime.Parse(drow["DocsReceivedDate"].ToString());
+                    lblTaxCode4.Text = string.Empty;
+                    lblTaxAmt4.Text = string.Empty;
+
+                    //tbChargeCode4.SelectedValue = string.Empty;
+
+                    //lblChargeAcct4.Text = string.Empty;
+                    lblPartyCharged4.Text = string.Empty;
+                    //lblChargeStatus4.Text = string.Empty;
                 }
-                if (!string.IsNullOrEmpty(drow["MaturityDate"].ToString()) && drow["MaturityDate"].ToString().IndexOf("1/1/1900") == -1)
-                //if (drow["MaturityDate"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteMaturityDate.SelectedDate = DateTime.Parse(drow["MaturityDate"].ToString());
-                }
-                if (!string.IsNullOrEmpty(drow["TracerDate"].ToString()) && drow["TracerDate"].ToString().IndexOf("1/1/1900") == -1)
-                //if (drow["TracerDate"].ToString().IndexOf("1/1/1900") == -1)
-                {
-                    dteTracerDate.SelectedDate = DateTime.Parse(drow["TracerDate"].ToString());
-                }
+                #endregion
+
+                SetVisibilityByStatus(dsDoc);
             }
-            else
+            catch (Exception ex)
             {
-                comboCollectionType.SelectedValue = string.Empty;
-                lblCollectionTypeName.Text = string.Empty;
-
-                
-                comboNostroCusNo.Text = string.Empty;
-                txtDrawerCusName.Text = string.Empty;
-                txtDrawerAddr1.Text = string.Empty;
-                txtDrawerAddr2.Text = string.Empty;
-                txtDrawerAddr3.Text = string.Empty;
-                txtDrawerRefNo.Text = string.Empty;
-                comboCollectingBankNo.Text = string.Empty;
-                txtCollectingBankName.Text = string.Empty;
-                txtCollectingBankAddr1.Text = string.Empty;
-                txtCollectingBankAddr2.Text = string.Empty;
-                comboCollectingBankAcct.SelectedValue = string.Empty;
-                txtDraweeCusName.Text = string.Empty;
-                txtDraweeAddr1.Text = string.Empty;
-                txtDraweeAddr2.Text = string.Empty;
-                txtDraweeAddr3.Text = string.Empty;
-                comboNostroCusNo.Text = string.Empty;
-                comboCurrency.SelectedValue = string.Empty;
-                numAmount.Text = string.Empty;
-                txtTenor.Text = "AT SIGHT";
-                numReminderDays.Text = string.Empty;
-
-                comboCommodity.SelectedValue = string.Empty;
-                comboDocsCode1.SelectedValue = string.Empty;
-                numNoOfOriginals1.Text = string.Empty;
-                numNoOfCopies1.Text = string.Empty;
-
-                comboDocsCode2.SelectedValue = string.Empty;
-                numNoOfOriginals2.Text = string.Empty;
-                numNoOfCopies2.Text = string.Empty;
-
-                txtOtherDocs.Text = string.Empty;
-                txtRemarks.Text = string.Empty;
-                
-                dteDocsReceivedDate.SelectedDate = null;
-                dteMaturityDate.SelectedDate = null;
-                dteTracerDate.SelectedDate = null;
-
-                Cal_TracerDate(false);
+                throw ex;
             }
-            
-
-            #region tab Charge
-            if (dsDoc.Tables[1].Rows.Count > 0)
-            {
-                var drow1 = dsDoc.Tables[1].Rows[0];
-
-                comboWaiveCharges.SelectedValue = drow1["WaiveCharges"].ToString();
-                rcbChargeAcct.SelectedValue = drow1["ChargeAcct"].ToString();
-
-                //tbChargePeriod.Text = drow1["ChargePeriod"].ToString();
-                rcbChargeCcy.SelectedValue = drow1["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
-                {
-                    LoadChargeAcct();
-                }
-
-                //tbExcheRate.Text = drow1["ExchRate"].ToString();
-                tbChargeAmt.Text = drow1["ChargeAmt"].ToString();
-                rcbPartyCharged.SelectedValue = drow1["PartyCharged"].ToString();
-                lblPartyCharged.Text = drow1["PartyCharged"].ToString();
-                rcbOmortCharge.SelectedValue = drow1["OmortCharges"].ToString();
-                rcbChargeStatus.SelectedValue = drow1["ChargeStatus"].ToString();
-                lblChargeStatus.Text = drow1["ChargeStatus"].ToString();
-
-                tbChargeRemarks.Text = drow1["ChargeRemarks"].ToString();
-                tbVatNo.Text = drow1["VATNo"].ToString();
-                lblTaxCode.Text = drow1["TaxCode"].ToString();
-                //lblTaxCcy.Text = drow1["TaxCcy"].ToString();
-                lblTaxAmt.Text = drow1["TaxAmt"].ToString();
-
-                //tbChargeCode.SelectedValue = drow1["Chargecode"].ToString();
-
-                ChargeAmount += ConvertStringToFloat(drow1["ChargeAmt"].ToString());
-
-            }
-            else
-            {
-                comboWaiveCharges.SelectedValue = "NO";
-                rcbChargeAcct.SelectedValue = string.Empty;
-                //tbChargePeriod.Text = "1";
-                rcbChargeCcy.SelectedValue = string.Empty;
-                //tbExcheRate.Text = string.Empty;
-                tbChargeAmt.Text = string.Empty;
-                rcbPartyCharged.SelectedValue = string.Empty;
-                lblPartyCharged.Text = string.Empty;
-                rcbOmortCharge.SelectedValue = string.Empty;
-                rcbChargeStatus.SelectedValue = string.Empty;
-                lblChargeStatus.Text = string.Empty;
-
-                tbChargeRemarks.Text = string.Empty;
-                tbVatNo.Text = string.Empty;
-                lblTaxCode.Text = string.Empty;
-                //lblTaxCcy.Text = string.Empty;
-                lblTaxAmt.Text = string.Empty;
-
-                //tbChargeCode.SelectedValue = string.Empty;
-
-                //lblChargeAcct.Text = string.Empty;
-                lblPartyCharged.Text = string.Empty;
-                lblChargeStatus.Text = string.Empty;
-            }
-
-            if (dsDoc.Tables[2].Rows.Count > 0)
-            {
-                var drow2 = dsDoc.Tables[2].Rows[0];
-
-                //divChargeInfo2.Visible = true;
-
-                rcbChargeAcct2.SelectedValue = drow2["ChargeAcct"].ToString();
-
-                rcbChargeCcy2.SelectedValue = drow2["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
-                {
-                    LoadChargeAcct2();
-                }
-
-                tbChargeAmt2.Text = drow2["ChargeAmt"].ToString();
-                rcbPartyCharged2.SelectedValue = drow2["PartyCharged"].ToString();
-                lblPartyCharged2.Text = drow2["PartyCharged"].ToString();
-                rcbChargeStatus2.SelectedValue = drow2["ChargeStatus"].ToString();
-                lblChargeStatus2.Text = drow2["ChargeStatus"].ToString();
-
-                lblTaxCode2.Text = drow2["TaxCode"].ToString();
-                lblTaxAmt2.Text = drow2["TaxAmt"].ToString();
-
-                //tbChargeCode2.SelectedValue = drow2["Chargecode"].ToString();
-                ChargeAmount += ConvertStringToFloat(drow2["ChargeAmt"].ToString());
-            }
-            else
-            {
-                rcbChargeAcct2.SelectedValue = string.Empty;
-                rcbChargeCcy2.SelectedValue = string.Empty;
-                tbChargeAmt2.Text = string.Empty;
-                rcbPartyCharged2.SelectedValue = string.Empty;
-                lblPartyCharged2.Text = string.Empty;
-                rcbChargeStatus2.SelectedValue = string.Empty;
-                lblChargeStatus2.Text = string.Empty;
-
-                lblTaxCode2.Text = string.Empty;
-                lblTaxAmt2.Text = string.Empty;
-
-                //tbChargeCode2.SelectedValue = string.Empty;
-
-                //lblChargeAcct2.Text = string.Empty;
-                lblPartyCharged2.Text = string.Empty;
-                lblChargeStatus2.Text = string.Empty;
-            }
-            if (dsDoc.Tables[3].Rows.Count > 0)
-            {
-                var drow3 = dsDoc.Tables[3].Rows[0];
-
-                //divChargeInfo2.Visible = true;
-
-                rcbChargeAcct3.SelectedValue = drow3["ChargeAcct"].ToString();
-
-                rcbChargeCcy3.SelectedValue = drow3["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
-                {
-                    LoadChargeAcct3();
-                }
-
-                tbChargeAmt3.Text = drow3["ChargeAmt"].ToString();
-                rcbPartyCharged3.SelectedValue = drow3["PartyCharged"].ToString();
-                lblPartyCharged3.Text = drow3["PartyCharged"].ToString();
-                rcbChargeStatus3.SelectedValue = drow3["ChargeStatus"].ToString();
-                //lblChargeStatus3.Text = drow3["ChargeStatus"].ToString();
-
-                lblTaxCode3.Text = drow3["TaxCode"].ToString();
-                lblTaxAmt3.Text = drow3["TaxAmt"].ToString();
-
-                //tbChargeCode3.SelectedValue = drow3["Chargecode"].ToString();
-                ChargeAmount += ConvertStringToFloat(drow3["ChargeAmt"].ToString());
-            }
-            else
-            {
-                rcbChargeAcct3.SelectedValue = string.Empty;
-                rcbChargeCcy3.SelectedValue = string.Empty;
-                tbChargeAmt3.Text = string.Empty;
-                rcbPartyCharged3.SelectedValue = string.Empty;
-                lblPartyCharged3.Text = string.Empty;
-                rcbChargeStatus3.SelectedValue = string.Empty;
-                //lblChargeStatus3.Text = string.Empty;
-
-                lblTaxCode3.Text = string.Empty;
-                lblTaxAmt3.Text = string.Empty;
-
-                //tbChargeCode3.SelectedValue = string.Empty;
-
-                //lblChargeAcct3.Text = string.Empty;
-                lblPartyCharged3.Text = string.Empty;
-                //lblChargeStatus3.Text = string.Empty;
-            }
-            if (dsDoc.Tables[4].Rows.Count > 0)
-            {
-                var drow4 = dsDoc.Tables[4].Rows[0];
-
-                //divChargeInfo2.Visible = true;
-
-                rcbChargeAcct4.SelectedValue = drow4["ChargeAcct"].ToString();
-
-                rcbChargeCcy4.SelectedValue = drow4["ChargeCcy"].ToString();
-                if (!string.IsNullOrEmpty(rcbChargeCcy4.SelectedValue))
-                {
-                    LoadChargeAcct4();
-                }
-
-                tbChargeAmt4.Text = drow4["ChargeAmt"].ToString();
-                rcbPartyCharged4.SelectedValue = drow4["PartyCharged"].ToString();
-                lblPartyCharged4.Text = drow4["PartyCharged"].ToString();
-                rcbChargeStatus4.SelectedValue = drow4["ChargeStatus"].ToString();
-                //lblChargeStatus4.Text = drow4["ChargeStatus"].ToString();
-
-                lblTaxCode4.Text = drow4["TaxCode"].ToString();
-                lblTaxAmt4.Text = drow4["TaxAmt"].ToString();
-
-                //tbChargeCode4.SelectedValue = drow4["Chargecode"].ToString();
-                ChargeAmount += ConvertStringToFloat(drow4["ChargeAmt"].ToString());
-            }
-            else
-            {
-                rcbChargeAcct4.SelectedValue = string.Empty;
-                rcbChargeCcy4.SelectedValue = string.Empty;
-                tbChargeAmt4.Text = string.Empty;
-                rcbPartyCharged4.SelectedValue = string.Empty;
-                lblPartyCharged4.Text = string.Empty;
-                rcbChargeStatus4.SelectedValue = string.Empty;
-                //lblChargeStatus4.Text = string.Empty;
-
-                lblTaxCode4.Text = string.Empty;
-                lblTaxAmt4.Text = string.Empty;
-
-                //tbChargeCode4.SelectedValue = string.Empty;
-
-                //lblChargeAcct4.Text = string.Empty;
-                lblPartyCharged4.Text = string.Empty;
-                //lblChargeStatus4.Text = string.Empty;
-            }
-            #endregion
-
-            SetVisibilityByStatus(dsDoc);
         }
 
         protected void Authorize()
@@ -2595,6 +2607,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 if (obj != null)
                 {
                     lblNostroCusName.Text = obj.Description;
+                }
+                else
+                {
+                    lblNostroCusName.Text = "";
                 }
             }
         }

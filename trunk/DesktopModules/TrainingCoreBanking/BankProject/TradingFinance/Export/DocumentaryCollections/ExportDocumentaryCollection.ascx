@@ -384,6 +384,7 @@
                     <td class="MyContent">
                         <telerik:RadComboBox
                             ID="comboCurrency" runat="server"
+                            AutoPostBack="True"
                             OnSelectedIndexChanged="rcbCcy_OnSelectedIndexChanged"
                             MarkFirstMatch="True"
                             AllowCustomText="false">
@@ -1454,8 +1455,6 @@
         <telerik:AjaxSetting AjaxControlID="comboNostroCusNo">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblNostroCusName" />
-                <telerik:AjaxUpdatedControl ControlID="Currency" />
-                
             </UpdatedControls>
         </telerik:AjaxSetting>
         
