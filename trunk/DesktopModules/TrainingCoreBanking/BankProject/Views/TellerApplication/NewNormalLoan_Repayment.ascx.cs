@@ -70,12 +70,20 @@ namespace BankProject.Views.TellerApplication
             {
                 case "commit":
                     BindField2Data(ref normalLoanEntryM);
+                    if (isCurrentAmountEnoughtForRequestCash())
+                    {
 
-                    loanBusiness.Entity = normalLoanEntryM;
-                    loanBusiness.commitProcess(this.UserId);
-                    updateRepaymentAmount(normalLoanEntryM, (decimal)tbOutstandingAmount.Value);
+                        loanBusiness.Entity = normalLoanEntryM;
+                        loanBusiness.commitProcess(this.UserId);
+                        updateRepaymentAmount(normalLoanEntryM, (decimal)tbOutstandingAmount.Value);
 
-                    this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                        this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+
+                    }
+                    else
+                    {
+                        RadWindowManager1.RadAlert("The Debit account is overdraft. Please check the payment amount or does deposit cash into Debit account.", 340, 150, "Alert", null);
+                    }
 
                     break;
 
@@ -86,12 +94,21 @@ namespace BankProject.Views.TellerApplication
 
                 case "authorize":
                     BindField2Data(ref normalLoanEntryM);
-                    loanBusiness.Entity = normalLoanEntryM;
-                    updateRepaymentAmount(normalLoanEntryM, (decimal)tbOutstandingAmount.Value);
-                    loanBusiness.authorizeProcess(this.UserId);                   
-                    UpdateSchedulePaymentToDB();
-                    this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    if (isCurrentAmountEnoughtForRequestCash())
+                    {
+                        
 
+                        loanBusiness.Entity = normalLoanEntryM;
+                        updateRepaymentAmount(normalLoanEntryM, (decimal)tbOutstandingAmount.Value);
+                        loanBusiness.authorizeProcess(this.UserId);
+                        UpdateSchedulePaymentToDB();
+                        
+                        this.Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    }
+                    else
+                    {
+                        RadWindowManager1.RadAlert("The Debit account is overdraft. Please check the payment amount or does deposit cash into Debit account.", 340, 150, "Alert", null);
+                    }
                     break;
 
                 case "reverse":
@@ -532,6 +549,49 @@ namespace BankProject.Views.TellerApplication
 
 
             //Page.ClientScript.RegisterStartupScript(this.GetType(), "Dis", "LoadDrawdown();", true);
+        }
+
+        private void processDebitCashRepayment()
+        {
+            StoreProRepository facade = new StoreProRepository();
+            CashRepaymentRepository cashFacade = new CashRepaymentRepository();
+            if (normalLoanEntryM != null && !String.IsNullOrEmpty(normalLoanEntryM.CreditAccount))
+            {
+                var cashRepay = cashFacade.FindActiveCashRepayment(normalLoanEntryM.CreditAccount).FirstOrDefault();
+                if (cashRepay != null && cashRepay.AmountDeposited != null)
+                {
+                    facade.StoreProcessor().B_Normal_Loan_CashRepayment_Subtract_To_Account(normalLoanEntryM.CreditAccount, cashRepay.AmountDeposited, normalLoanEntryM.Code, this.UserId);
+                        
+                }
+            }
+        }
+
+        private bool isCurrentAmountEnoughtForRequestCash()
+        {
+            StoreProRepository facade = new StoreProRepository();
+            CashRepaymentRepository cashFacade = new CashRepaymentRepository();
+            decimal AccRemainAmount = 0;
+
+
+            if (normalLoanEntryM != null && !String.IsNullOrEmpty(normalLoanEntryM.CreditAccount))
+            {
+                var cashRepay = cashFacade.FindActiveCashRepayment(normalLoanEntryM.CreditAccount).FirstOrDefault();
+
+                AccRemainAmount = (decimal)facade.StoreProcessor().B_Normal_Loan_Account_GetCurrentAmount(normalLoanEntryM.CreditAccount).FirstOrDefault();
+
+                if (cashRepay != null && cashRepay.AmountDeposited != null)
+                {
+                    if (AccRemainAmount < cashRepay.AmountDeposited)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+            return true;
         }
 
         private void LoadRemainLoanAmount()
