@@ -337,24 +337,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtDraweeAddr3;
         
         /// <summary>
-        /// comboNostroCusNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboNostroCusNo;
-        
-        /// <summary>
-        /// lblNostroCusName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNostroCusName;
-        
-        /// <summary>
         /// comboCurrency control.
         /// </summary>
         /// <remarks>
@@ -677,6 +659,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtRemarks;
+        
+        /// <summary>
+        /// comboNostroCusNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox comboNostroCusNo;
+        
+        /// <summary>
+        /// lblNostroCusName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNostroCusName;
         
         /// <summary>
         /// comboWaiveCharges control.

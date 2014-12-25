@@ -412,12 +412,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             //comboCollectingBankNo.DataBind();
 
             // bind nostro cus no
-            comboNostroCusNo.Items.Clear();
-            comboNostroCusNo.Items.Add(new RadComboBoxItem(""));
-            comboNostroCusNo.DataValueField = "SwiftCode";
-            comboNostroCusNo.DataTextField = "BankName";
-            comboNostroCusNo.DataSource = dsSwiftCode;
-            comboNostroCusNo.DataBind();
+            //comboNostroCusNo.Items.Clear();
+            //comboNostroCusNo.Items.Add(new RadComboBoxItem(""));
+            //comboNostroCusNo.DataValueField = "SwiftCode";
+            //comboNostroCusNo.DataTextField = "BankName";
+            //comboNostroCusNo.DataSource = dsSwiftCode;
+            //comboNostroCusNo.DataBind();
 
             comboDocsCode1.Items.Clear();
             comboDocsCode1.Items.Add(new RadComboBoxItem(""));
@@ -1042,7 +1042,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         DraweeAddr1 = txtDraweeAddr1.Text.Trim(),
                                         DraweeAddr2 = txtDraweeAddr2.Text.Trim(),
                                         DraweeAddr3 = txtDraweeAddr3.Text.Trim(),
-                                        NostroCusNo = comboNostroCusNo.SelectedValue,
+                                        NostroCusNo = comboNostroCusNo.Text,
                                         Currency = comboCurrency.SelectedValue,
                                         Amount = numAmount.Value,
                                         DocsReceivedDate = dteDocsReceivedDate.SelectedDate,
@@ -1133,7 +1133,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                     chkAmend.DraweeAddr1 = txtDraweeAddr1.Text.Trim();
                                     chkAmend.DraweeAddr2 = txtDraweeAddr2.Text.Trim();
                                     chkAmend.DraweeAddr3 = txtDraweeAddr3.Text.Trim();
-                                    chkAmend.NostroCusNo = comboNostroCusNo.SelectedValue;
+                                    chkAmend.NostroCusNo = comboNostroCusNo.Text;
                                     chkAmend.Currency = comboCurrency.SelectedValue;
                                     chkAmend.Amount = numAmount.Value;
                                     chkAmend.DocsReceivedDate = dteDocsReceivedDate.SelectedDate;
@@ -1476,7 +1476,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                                               , txtDraweeAddr1.Text.Trim()
                                                               , txtDraweeAddr2.Text.Trim()
                                                               , txtDraweeAddr3.Text.Trim()
-                                                              , comboNostroCusNo.SelectedValue
+                                                              , comboNostroCusNo.Text
                                                               , comboCurrency.SelectedValue
                                                               , numAmount.Value.ToString()
                                                               , dteDocsReceivedDate.SelectedDate.ToString()
@@ -1539,14 +1539,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         rcbChargeStatus3.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode3.Text, ""
                         /*lblTaxCcy2.Text*/, lblTaxAmt3.Text, "", "", "3", TabId);
                 }
-                if (!string.IsNullOrWhiteSpace(tbChargeCode4.Text))
+                if (!string.IsNullOrWhiteSpace(tbChargeAmt4.Text))
                 {
                     bd.SQLData.B_BEXPORT_DOCUMETARYCOLLECTIONCHARGES_Insert(txtCode.Text.Trim(),
-                        comboWaiveCharges.SelectedValue, tbChargeCode4.SelectedValue, rcbChargeAcct4.SelectedValue, ""
+                         comboWaiveCharges.SelectedValue, tbChargeCode4.SelectedValue, rcbChargeAcct4.SelectedValue, ""
                         /*tbChargePeriod4.Text*/,
-                        rcbChargeCcy4.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt4.Text,
-                        rcbPartyCharged4.SelectedValue, rcbOmortCharge4.SelectedValue, "", "",
-                        rcbChargeStatus4.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode4.Text, ""
+                         rcbChargeCcy4.SelectedValue, "0" /*tbExcheRate2.Text*/, tbChargeAmt4.Text,
+                         rcbPartyCharged4.SelectedValue, rcbOmortCharge4.SelectedValue, "", "",
+                         rcbChargeStatus4.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode4.Text, ""
                         /*lblTaxCcy2.Text*/, lblTaxAmt4.Text, "", "", "4", TabId);
                 }
             }
@@ -1639,8 +1639,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDraweeAddr1.Text = obj.DraweeAddr1;
                 txtDraweeAddr2.Text = obj.DraweeAddr2;
                 txtDraweeAddr3.Text = obj.DraweeAddr3;
-                comboNostroCusNo.SelectedValue = obj.NostroCusNo;
-                lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
+                comboNostroCusNo.Text = obj.NostroCusNo;
+                //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
                 comboCurrency.SelectedValue = obj.Currency;
                 numAmount.Value = Amount;
                 lblAmount_New.Text = AmountOld.ToString("C");
@@ -1704,7 +1704,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblCollectionTypeName.Text = string.Empty;
 
 
-                comboNostroCusNo.SelectedValue = string.Empty;
+                comboNostroCusNo.Text = string.Empty;
                 txtDrawerCusName.Text = string.Empty;
                 txtDrawerAddr1.Text = string.Empty;
                 txtDrawerAddr2.Text = string.Empty;
@@ -1719,7 +1719,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDraweeAddr1.Text = string.Empty;
                 txtDraweeAddr2.Text = string.Empty;
                 txtDraweeAddr3.Text = string.Empty;
-                comboNostroCusNo.SelectedValue = string.Empty;
+                comboNostroCusNo.Text = string.Empty;
                 comboCurrency.SelectedValue = string.Empty;
                 numAmount.Text = string.Empty;
                 txtTenor.Text = "AT SIGHT";
@@ -1928,9 +1928,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDraweeAddr1.Text = drow["DraweeAddr1"].ToString();
                 txtDraweeAddr2.Text = drow["DraweeAddr2"].ToString();
                 txtDraweeAddr3.Text = drow["DraweeAddr3"].ToString();
-                comboNostroCusNo.SelectedValue = drow["NostroCusNo"].ToString();
-                lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
+                comboNostroCusNo.Text = drow["NostroCusNo"].ToString();
                 comboCurrency.SelectedValue = drow["Currency"].ToString();
+                //
+                var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency == comboCurrency.SelectedValue).FirstOrDefault();
+                if (obj != null)
+                {
+                    lblNostroCusName.Text = obj.Description;
+                }
+                //
+                //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
+                
                 numAmount.Value = Amount;
                 lblAmount_New.Text = AmountOld.ToString("C");
                 txtTenor.Text = drow["Tenor"].ToString();
@@ -1993,7 +2001,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblCollectionTypeName.Text = string.Empty;
 
                 
-                comboNostroCusNo.SelectedValue = string.Empty;
+                comboNostroCusNo.Text = string.Empty;
                 txtDrawerCusName.Text = string.Empty;
                 txtDrawerAddr1.Text = string.Empty;
                 txtDrawerAddr2.Text = string.Empty;
@@ -2008,7 +2016,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtDraweeAddr1.Text = string.Empty;
                 txtDraweeAddr2.Text = string.Empty;
                 txtDraweeAddr3.Text = string.Empty;
-                comboNostroCusNo.SelectedValue = string.Empty;
+                comboNostroCusNo.Text = string.Empty;
                 comboCurrency.SelectedValue = string.Empty;
                 numAmount.Text = string.Empty;
                 txtTenor.Text = "AT SIGHT";
@@ -2304,6 +2312,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             e.Item.Attributes["CustomerID"] = row["CustomerID"].ToString();
             e.Item.Attributes["CustomerName2"] = row["CustomerName2"].ToString();
         }
+        protected void comboNostroCusNo_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency==comboCurrency.SelectedValue).FirstOrDefault();
+            if (obj != null)
+            {
+                lblNostroCusName.Text = obj.Description;
+            }
+        }
         protected void comboCollectingBankNo_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             //txtCollectingBankName.Text = comboCollectingBankNo.SelectedItem.Attributes["BankName"];
@@ -2333,10 +2349,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             LoadChargeAcct3();
         }
 
-        protected void comboNostroCusNo_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
-        }
+        //protected void comboNostroCusNo_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        //{
+        //    lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
+        //}
 
         //protected void comboCommodity_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         //{
@@ -2571,6 +2587,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             e.Item.Attributes["Id"] = row["Id"].ToString();
             e.Item.Attributes["Name"] = row["Name"].ToString();
         }
+        protected void LoadNosTroAcc()
+        {
+            if (!String.IsNullOrEmpty(comboCurrency.SelectedValue) && !String.IsNullOrEmpty(comboNostroCusNo.Text))
+            {
+                var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency == comboCurrency.SelectedValue).FirstOrDefault();
+                if (obj != null)
+                {
+                    lblNostroCusName.Text = obj.Description;
+                }
+            }
+        }
         protected void LoadChargeAcct()
         {
             rcbChargeAcct.Items.Clear();
@@ -2729,6 +2756,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeCcy4.DataSource = dtSource;
             rcbChargeCcy4.DataBind();
         }
+        protected void rcbCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            LoadNosTroAcc();
+        }
+
         protected void rcbChargeCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadChargeAcct();
