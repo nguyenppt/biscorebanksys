@@ -1332,36 +1332,38 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         {
             lblRemittingBankNoError.Text = "";
             lblRemittingBankName.Text = "";
-            if (!string.IsNullOrEmpty(txtRemittingBankNo.Text.Trim()))
+            txtRemittingBankAddr1.Text = "";
+            txtRemittingBankAddr2.Text = "";
+            txtRemittingBankAddr3.Text = "";
+            if (string.IsNullOrEmpty(txtRemittingBankNo.Text.Trim())) return;
+            //
+            var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtRemittingBankNo.Text.Trim());
+            if (dtBSWIFTCODE == null || dtBSWIFTCODE.Rows.Count <= 0)
             {
-                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtRemittingBankNo.Text.Trim());
-                if (dtBSWIFTCODE.Rows.Count > 0)
+                DisabledTab410(false);
+                lblRemittingBankNoError.Text = "No found swiftcode";
+                return;
+            }
+            var dr = dtBSWIFTCODE.Rows[0];
+            lblRemittingBankName.Text = dr["BankName"].ToString();
+            //txtRemittingBankAddr1.Text = "";
+            txtRemittingBankAddr2.Text = dr["City"].ToString();
+            txtRemittingBankAddr3.Text = dr["Country"].ToString();
+            if (!string.IsNullOrEmpty(dr["RMA_Flag"].ToString()))
+            {
+                switch (TabId)
                 {
-                    lblRemittingBankName.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
-                    if (!string.IsNullOrEmpty(dtBSWIFTCODE.Rows[0]["RMA_Flag"].ToString()))
-                    {
-                        switch (TabId)
-                        {
-                            case 217: //Register Documetary Collection
-                            case 281: //Incoming Collection Amendments
-                                //divTM410.Visible = true;
-                                DisabledTab410(true);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        //divTM410.Visible = false;
-                        DisabledTab410(false);
-                    }
+                    case 217: //Register Documetary Collection
+                    case 281: //Incoming Collection Amendments
+                        //divTM410.Visible = true;
+                        DisabledTab410(true);
+                        break;
                 }
-                else
-                {
-                    //divTM410.Visible = false;
-                    DisabledTab410(false);
-                    lblRemittingBankName.Text = string.Empty;
-                    lblRemittingBankNoError.Text = "No found swiftcode";
-                }
+            }
+            else
+            {
+                //divTM410.Visible = false;
+                DisabledTab410(false);
             }
         }
 

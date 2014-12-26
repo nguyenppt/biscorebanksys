@@ -1577,6 +1577,12 @@
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_1" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_2" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_3" />
+
+                <telerik:AjaxUpdatedControl ControlID="lblRemittingBankNoError" />
+                <telerik:AjaxUpdatedControl ControlID="lblRemittingBankName" />
+                <telerik:AjaxUpdatedControl ControlID="txtRemittingBankAddr1" />
+                <telerik:AjaxUpdatedControl ControlID="txtRemittingBankAddr2" />
+                <telerik:AjaxUpdatedControl ControlID="txtRemittingBankAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
