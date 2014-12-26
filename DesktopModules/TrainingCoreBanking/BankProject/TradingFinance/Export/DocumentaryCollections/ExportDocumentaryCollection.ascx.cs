@@ -78,70 +78,84 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         //load phan thong tin amend
         private void LoadExportDocAmend()
         {
-            var Code = CodeId;
-            if (Code != null)
+            try
             {
-                //nhap vao khong co dau .
-                if (Code.IndexOf('.') == -1)
+                var Code = CodeId;
+                if (Code != null)
                 {
-                    var objAmend = new BEXPORT_DOCUMETARYCOLLECTION();
-                    var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => (x.DocCollectCode == Code)).ToList();
-                    if (lstDoc != null && lstDoc.Count > 0)
+                    //nhap vao khong co dau .
+                    if (Code.IndexOf('.') == -1)
                     {
+                        var objAmend = new BEXPORT_DOCUMETARYCOLLECTION();
+                        var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => (x.DocCollectCode == Code)).ToList();
+                        if (lstDoc != null && lstDoc.Count > 0)
+                        {
 
-                        objAmend = lstDoc.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES) && (x.Amend_Status == "UNA" || x.Amend_Status == "REV")).FirstOrDefault();
-                        if (objAmend != null)
-                        {
-                            var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == objAmend.DocCollectCode).ToList();
-                            LoadDataForAmend(objAmend, objCharge);
-                            txtCode.Text = objAmend.AmendNo;
-                            _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
-                            _exportCollection = objAmend;
-                        }
-                        else
-                        {
-                            //truong hop chua co
-                            var maxAmendId = lstDoc.Max(x => x.AmendId);
-                            if (maxAmendId == null)
+                            objAmend = lstDoc.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES) && (x.Amend_Status == "UNA" || x.Amend_Status == "REV")).FirstOrDefault();
+                            if (objAmend != null)
                             {
-                                maxAmendId = 1;
+                                var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == objAmend.DocCollectCode).ToList();
+                                LoadDataForAmend(objAmend, objCharge);
+                                txtCode.Text = objAmend.AmendNo;
+                                _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
+                                _exportCollection = objAmend;
                             }
                             else
                             {
-                                maxAmendId = maxAmendId + 1;
-                            }
-                            var code = CodeId;
-                            var ctnAmend = lstDoc.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
-                            if (ctnAmend != null)
-                            {
-                                _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
-                                _exportCollection = ctnAmend;
+                                //truong hop chua co
+                                var maxAmendId = lstDoc.Max(x => x.AmendId);
+                                if (maxAmendId == null)
+                                {
+                                    maxAmendId = 1;
+                                }
+                                else
+                                {
+                                    maxAmendId = maxAmendId + 1;
+                                }
+                                var code = CodeId;
+                                var ctnAmend = lstDoc.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+                                if (ctnAmend != null)
+                                {
+                                    _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
+                                    _exportCollection = ctnAmend;
 
-                                var objCharge = new List<BEXPORT_DOCUMETARYCOLLECTIONCHARGES>();
-                                LoadDataForAmend(ctnAmend, objCharge);
+                                    var objCharge = new List<BEXPORT_DOCUMETARYCOLLECTIONCHARGES>();
+                                    LoadDataForAmend(ctnAmend, objCharge);
+                                }
+                                RadToolBar1.FindItemByValue("btSave").Enabled = true;
+                                txtCode.Text = code + "." + maxAmendId;
+                                //
                             }
-                            RadToolBar1.FindItemByValue("btSave").Enabled = true;
-                            txtCode.Text = code + "." + maxAmendId;
-                            //
                         }
-                    }
-                }
-                else
-                {
-                    var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == Code).FirstOrDefault();
-                    if (lstDoc != null)
-                    {
-                        var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode&&x.AmendNo==Code).ToList();
-                        LoadDataForAmend(lstDoc, objCharge);
-                        txtCode.Text = lstDoc.AmendNo;
-                        _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
-                        _exportCollection = lstDoc;
                     }
                     else
                     {
-                        lblError.Text = "This Amend ID was not found";
+                        var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == Code).FirstOrDefault();
+                        if (lstDoc != null)
+                        {
+                            var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode && x.AmendNo == Code).ToList();
+                            LoadDataForAmend(lstDoc, objCharge);
+                            txtCode.Text = lstDoc.AmendNo;
+                            _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
+                            _exportCollection = lstDoc;
+                        }
+                        else
+                        {
+                            lblError.Text = "This Amend ID was not found";
+                        }
                     }
                 }
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEX)
+            {
+                Exception raise = dbEX;
+                foreach (var validationError in dbEX.EntityValidationErrors)
+                {
+                    string message = string.Format("{0}:{1}", validationError.Entry.Entity.ToString(), validationError.ValidationErrors);
+                    raise = new InvalidOperationException(message, raise);
+                }
+                lblError.Text = raise.Message;
+                throw raise;
             }
         }
         //
@@ -165,8 +179,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 SetDisableByReview(false);
             }
-
-
             InitDefaultData();
             //LoadExportDoc();
 
@@ -1888,9 +1900,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     }
                 }
             }
-            catch (Exception ex)
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEX)
             {
-                throw ex;
+                Exception raise = dbEX;
+                foreach (var validationError in dbEX.EntityValidationErrors)
+                {
+                    string message = string.Format("{0}:{1}", validationError.Entry.Entity.ToString(), validationError.ValidationErrors);
+                    raise = new InvalidOperationException(message, raise);
+                }
+                lblError.Text = raise.Message;
+                throw raise;
             }
             //SetVisibilityByStatus(dsDoc);
         }
