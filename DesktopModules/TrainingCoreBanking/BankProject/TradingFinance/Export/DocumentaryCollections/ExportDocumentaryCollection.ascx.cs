@@ -133,7 +133,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == Code).FirstOrDefault();
                         if (lstDoc != null)
                         {
-                            var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode && x.AmendNo == Code).ToList();
+                            var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode && x.TabId == TabId).ToList();
                             LoadDataForAmend(lstDoc, objCharge);
                             txtCode.Text = lstDoc.AmendNo;
                             _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
