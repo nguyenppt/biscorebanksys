@@ -133,7 +133,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         var lstDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.Where(x => x.AmendNo == Code).FirstOrDefault();
                         if (lstDoc != null)
                         {
-                            var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode && x.TabId == TabId).ToList();
+                            var objCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == lstDoc.DocCollectCode && x.AmendNo == Code).ToList();
                             LoadDataForAmend(lstDoc, objCharge);
                             txtCode.Text = lstDoc.AmendNo;
                             _exportCollection = new BEXPORT_DOCUMETARYCOLLECTION();
@@ -386,6 +386,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 {
                     RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                     RadToolBar1.FindItemByValue("btRevert").Enabled = true;
+                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                }
+                else if (StatusEnquiry == "REV")
+                {
+                    RadToolBar1.FindItemByValue("btSave").Enabled = true;
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+                    RadToolBar1.FindItemByValue("btRevert").Enabled = false;
                     RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 }
                 else
@@ -1256,7 +1263,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                 }
                                 //save phan Charge
                                 var name = findTypeAmend[0];
-                                var lstCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == name && x.AmendNo == Code).ToList();
+                                var lstCharge = _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Where(x => x.DocCollectCode == name && x.TabId == TabId).ToList();
                                 //truong hop da co -->update
                                 if (lstCharge != null && lstCharge.Count > 0)
                                 {
