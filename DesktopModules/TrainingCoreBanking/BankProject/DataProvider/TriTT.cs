@@ -872,6 +872,14 @@ namespace BankProject.DataProvider
         {
             return sqldata.ndkExecuteDataset("Print_Deal_theo_ID", RefID);
         }
+        public static DataSet Print_Credit_CardPayment_Cash(string RefID)
+        {
+            return sqldata.ndkExecuteDataset("Print_Credit_CardPayment_Cash", RefID);
+        }
+        public static DataSet Print_Credit_CardPayment_Transfer(string RefID)
+        {
+            return sqldata.ndkExecuteDataset("Print_Credit_CardPayment_Transfer", RefID);
+        }
         #endregion
         #region INWARD  PROCESS CREDIT ACCOUNT
         public static DataSet BINWARD_PROC_CRE_ACCT_Load_ClearingID()
