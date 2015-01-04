@@ -98,6 +98,10 @@ namespace BankProject.Views.TellerApplication
                     update_flag = 0;
                 }
             }
+            if (CommandName == "print")
+            {
+                Print_Deal_Slip();
+            }
         }
         protected void FirstLoad()
         {
@@ -138,6 +142,23 @@ namespace BankProject.Views.TellerApplication
                 }
             }
         }
+        protected void Print_Deal_Slip()
+        {
+            Aspose.Words.License license = new Aspose.Words.License();
+            license.SetLicense("Aspose.Words.lic");
+            //Open template
+            string docPath = Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/CollectCharge/credit_card_payment_transfer.doc");
+            //Open the template document
+            Aspose.Words.Document document = new Aspose.Words.Document(docPath);
+            //Execute the mail merge.
+            var ds = TriTT.Print_Credit_CardPayment_Transfer(txtID.Text);
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                ds.Tables[0].TableName = "Info";
+                document.MailMerge.ExecuteWithRegions(ds.Tables["Info"]);
+                document.Save("Credit_Card_Payment_Transfer" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInBrowser, Response);
+            }
+        }
         protected void LoadCurrency()
         {
             var Currency = TriTT.B_LoadCurrency("", "");
@@ -164,7 +185,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = !isauthorize;
             RadToolBar1.FindItemByValue("btReverse").Enabled = !isauthorize;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
         }
         protected void LoadToolBar_AllFalse()
         {
@@ -173,7 +194,7 @@ namespace BankProject.Views.TellerApplication
             RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
             RadToolBar1.FindItemByValue("btReverse").Enabled = false;
             RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
         }
         protected void ShowMsgBox(string contents, int width = 420, int hiegth = 150)
         {
