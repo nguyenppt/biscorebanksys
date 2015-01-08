@@ -10,7 +10,7 @@
 namespace BankProject.TradingFinance.Export.DocumentaryCredit {
     
     
-    public partial class EnquiryLC {
+    public partial class EnquiryLCAmend {
         
         /// <summary>
         /// RadToolBar1 control.
@@ -29,15 +29,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtRefNo;
-        
-        /// <summary>
-        /// txtApplicantName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtApplicantName;
         
         /// <summary>
         /// txtBeneficiaryID control.

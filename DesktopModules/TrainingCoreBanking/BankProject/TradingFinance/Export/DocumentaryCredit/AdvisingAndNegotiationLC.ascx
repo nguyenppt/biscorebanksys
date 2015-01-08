@@ -2,70 +2,67 @@
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+    <style>
+        .NoDisplay {display:none;
+        }
+    </style>
 <script type="text/javascript">
-    var tabId = '<%= TabId %>';
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
     });
-    function OnClientButtonClicking(sender, args) {
+    function RadToolBar1_OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
-            args.set_cancel(false);
-            radconfirm("Do you want to download Thu Thong Bao file ?", confirmCallbackFunction_ThuThongBao, 420, 150, null, 'Download');
+            //args.set_cancel(false);
+            radconfirm("Do you want to download 'Mau Bia Hs Lc' file ?", confirmCallbackFunction_MauBiaHsLc, 420, 150, null, 'Download');
         }
+        if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>" ||
+            button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
+            var url = 'Default.aspx?tabid=278&refid=<%= TabId %>';
+            if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
+                url += '&lst=4appr';
+            }
+            window.location.href = url;
+        }        
     }
-    function confirmCallbackFunction_ThuThongBao(result) {
+    function confirmCallbackFunction_MauBiaHsLc(result) {
         clickCalledAfterRadconfirm = false;
         if (result) {
-            $("#<%=btnReportThuThongBao.ClientID %>").click();
+            $("#<%=btnReportMauBiaHsLc.ClientID %>").click();
         }
-        setTimeout(function () {
-            radconfirm("Do you want to download Phieu Thu file?", confirmCallbackFunction_PhieuThu, 420, 150, null, 'Download');
-        }, 5000);
-
-            //radconfirm("Do you want to download Phieu Xuat Ngoai Bang file?", confirmCallbackFunction_PhieuXuatNgoaiBang, 420, 150, null, 'Download');
+        radconfirm("Do you want to download 'Mau Thong Bao Lc' file ?", confirmCallbackFunction_MauThongBaoLc, 420, 150, null, 'Download');
     }
-    function confirmCallbackFunction_PhieuThu(result)
-    {
+    function confirmCallbackFunction_MauThongBaoLc(result) {
         clickCalledAfterRadconfirm = false;
         if (result) {
-            $("#<%=btnReportPhieuThu.ClientID %>").click();
+            $("#<%=btnReportMauThongBaoLc.ClientID %>").click();
         }
     }
-    function confirmCallbackFunction_PhieuXuatNgoaiBang(result)
-    {
-        clickCalledAfterRadconfirm = false;
-        if (result)
-        {
-            $("#<%=btnReportPhieuXuatNgoaiBang.ClientID %>").click();
-        }
-    }
-    </script>
+</script>
 </telerik:RadCodeBlock>
-    <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%"
-        OnClientButtonClicking="OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
-        <Items>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
-                ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-                ToolTip="Preview" Value="btPreview" CommandName="preview" postback="false">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
-                ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/reverse.png"
-                ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-                ToolTip="Search" Value="btSearch" CommandName="search" postback="false">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-                ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" postback="false" Enabled="false">
-            </telerik:RadToolBarButton>
-        </Items>
-    </telerik:RadToolBar>
-
+<telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
+         OnClientButtonClicking="RadToolBar1_OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
+    <Items>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
+            ToolTip="Commit Data" Value="btCommit" CommandName="commit" Enabled="true">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
+            ToolTip="Preview" Value="btPreview" CommandName="preview" postback="false">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
+            ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/reverse.png"
+            ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
+            ToolTip="Search" Value="btSearch" CommandName="search" Enabled="false">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
+            ToolTip="Print" Value="btPrint" CommandName="print" postback="false" Enabled="false">
+        </telerik:RadToolBarButton>
+    </Items>
+</telerik:RadToolBar>
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="padding-left:20px; padding-top:5px; padding-bottom:5px;"><asp:TextBox ID="tbLCCode" runat="server" Width="200" /> <span class="Required">(*)</span>
@@ -76,12 +73,7 @@
                             ValidationGroup="Commit"
                             InitialValue=""
                             ErrorMessage="[LC Code] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator>&nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" /></td>
-    </tr>
-    <tr>
-        <td>
-            <asp:HiddenField ID="HiddenField1" runat="server" Value="0" /><asp:HiddenField ID="txtCustomerID" runat="server" Value="" /><asp:HiddenField ID="txtCustomerName" runat="server" Value="" />
-        </td>
+                        </asp:RequiredFieldValidator>&nbsp;<asp:Label ID="lblLCCodeMessage" runat="server" ForeColor="red" /></td>
     </tr>
 </table>
     <div class="dnnForm" id="tabs-demo">
@@ -90,13 +82,13 @@
             <li><a href="#Charges">Charges</a></li>
         </ul>
         <div id="Main" class="dnnClear">
-            <div runat="server" id="divAcceptLC" style="display:none;">
+            <div runat="server" id="divConfirmLC" style="display:none;">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td style="width:200px" class="MyLable">Generate Delivery?</td>
                         <td class="MyContent">  
                             <telerik:RadComboBox Width="200"
-                                ID="RadComboBoxGD" runat="server"
+                                ID="rcbGenerateDelivery" runat="server"
                                 MarkFirstMatch="True"
                                 AllowCustomText="false">
                                 <Items>
@@ -109,13 +101,13 @@
                     <tr>
                         <td class="MyLable">Date</td>
                         <td class="MyContent">  
-                            <telerik:RadDateInput ID="DateConfirm" Width="200px" runat="server" readonly="true" />
+                            <telerik:RadDateInput ID="txtDateConfirm" Width="200px" runat="server" readonly="true" />
                         </td>
                     </tr>
                     <tr>
                         <td class="MyLable">Confirmation Instr.</td>
                         <td class="MyContent">
-                            <telerik:RadComboBox ID="ComboConfirmInstr" runat="server"
+                            <telerik:RadComboBox ID="rcbConfirmInstr" runat="server"
                                 MarkFirstMatch="True" 
                                 AllowCustomText="false" width="200px">
                                 <ExpandAnimation Type="None" />
@@ -135,14 +127,14 @@
                     <tr>
                         <td class="MyLable">Cancel Date</td>
                         <td class="MyContent">
-                            <telerik:RadDatePicker ID="dteCancelDate" runat="server" />
+                            <telerik:RadDatePicker ID="txtCancelDate" runat="server" />
                         </td>
                     </tr>
 
                     <tr>
                         <td class="MyLable">Contingent Expiry Date</td>
                         <td class="MyContent">
-                            <telerik:RadDatePicker ID="dteContingentExpiryDate" runat="server" />
+                            <telerik:RadDatePicker ID="txtContingentExpiryDate" runat="server" />
                         </td>
                     </tr>
 
@@ -159,6 +151,23 @@
                     </tr>
                 </table>
             </div>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width: 250px" class="MyLable">20. Documentary Credit Number <span class="Required">(*)</span>
+                        <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator20"
+                            ControlToValidate="txtCustomerName"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="[Documentary Credit Number] is required" ForeColor="Red">
+                        </asp:RequiredFieldValidator><asp:TextBox ID="txtCustomerName" runat="server" CssClass="NoDisplay"></asp:TextBox>
+                    </td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtImportLCNo" runat="server" Width="195" AutoPostBack="true" OnTextChanged="txtImportLCNo_TextChanged" />
+                    </td>
+                    <td><asp:Label ID="lblImportLCNoMessage" runat="server" Text="" ForeColor="Red"></asp:Label></td>
+                </tr>
+            </table>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td style="width: 250px" class="MyLable">52A.1 Issuing Bank Type</td>
@@ -276,7 +285,7 @@
                     <td class="MyLable">40A. Form of Documentary Credit</td>
                     <td class="MyContent">
                         <telerik:RadComboBox Width="195"
-                            ID="comboFormOfDocumentaryCredit" runat="server"
+                            ID="rcbFormOfDocumentaryCredit" runat="server"
                             MarkFirstMatch="True"
                             AllowCustomText="false">
                             <Items>
@@ -367,30 +376,21 @@
             </table>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">50.1 Applicant No <span class="Required">(*)</span>
+                    <td style="width: 250px" class="MyLable">50.1 Applicant Name <span class="Required">(*)</span>
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
-                            ID="RequiredFieldValidator8"
-                            ControlToValidate="txtApplicantNo"
+                            ID="RequiredFieldValidator3"
+                            ControlToValidate="txtApplicantName"
                             ValidationGroup="Commit"
                             InitialValue=""
-                            ErrorMessage="[Applicant No] is required" ForeColor="Red">
+                            ErrorMessage="[Applicant Name] is required" ForeColor="Red">
                         </asp:RequiredFieldValidator></td>
-                    <td class="MyContent">
-                        <telerik:RadTextBox ID="txtApplicantNo" runat="server" Width="195" AutoPostBack="true" OnTextChanged="txtApplicantNo_TextChanged" />
-                    </td>
-                    <td><asp:Label ID="lblApplicantMessage" runat="server" Text="" ForeColor="Red"></asp:Label></td>
-                </tr>
-            </table>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <td style="width: 250px" class="MyLable">50.2 Applicant Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtApplicantName" runat="server" Width="355" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">50.3 Applicant Address</td>
+                    <td class="MyLable">50.2 Applicant Address</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbApplicantAddr1" runat="server" Width="355" />
                     </td>
@@ -588,10 +588,8 @@
                         </telerik:RadComboBox>
                     </td>
                 </tr>
-            </table>
-            <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">42C.1 Drafts At</td>
+                    <td class="MyLable">42C.1 Drafts At</td>
                     <td class="MyContent">
                         <telerik:RadTextBox runat="server" ID="txtDraftsAt1" Width="355" />
                 </tr>
@@ -599,6 +597,29 @@
                     <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox runat="server" ID="txtDraftsAt2" Width="355" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">42D. Tenor <span class="Required">(*)</span>
+                        <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator8"
+                            ControlToValidate="rcbTenor"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="[42D. Tenor] is required" ForeColor="Red">
+                        </asp:RequiredFieldValidator></td>
+                    <td class="MyContent">
+                        <telerik:RadComboBox Width="195"
+                            ID="rcbTenor" runat="server"
+                            MarkFirstMatch="True"
+                            AllowCustomText="false">
+                            <Items>
+                                <telerik:RadComboBoxItem Value="" Text="" />
+                                <telerik:RadComboBoxItem Value="SIGHT" Text="SIGHT" />
+                                <telerik:RadComboBoxItem Value="USANCE" Text="USANCE" />
+                            </Items>
+                        </telerik:RadComboBox>
                     </td>
                 </tr>
             </table>
@@ -656,7 +677,15 @@
             </table>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">43P. Partial Shipment</td>
+                    <td style="width: 250px" class="MyLable">43P. Partial Shipment <span class="Required">(*)</span>
+                        <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator18"
+                            ControlToValidate="rcbPartialShipment"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="[43P. Partial Shipment] is required" ForeColor="Red">
+                        </asp:RequiredFieldValidator></td>
                     <td class="MyContent">
                         <telerik:RadComboBox Width="195"
                             ID="rcbPartialShipment" runat="server"
@@ -698,7 +727,7 @@
                 <tr>
                     <td style="width:250px;" class="MyLable">44A. Place of taking in charge...</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPlaceoftakingincharge" runat="server" />
+                        <telerik:RadTextBox Width="355" ID="txtPlaceOfTakingInCharge" runat="server" />
                     </td>
                 </tr>
                 <tr>
@@ -706,13 +735,13 @@
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator14"
-                            ControlToValidate="tbPortofloading"
+                            ControlToValidate="txtPortOfLoading"
                             ValidationGroup="Commit"
                             InitialValue=""
                             ErrorMessage="[Port of loading] is required" ForeColor="Red">
                         </asp:RequiredFieldValidator></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPortofloading" runat="server" />
+                        <telerik:RadTextBox Width="355" ID="txtPortOfLoading" runat="server" />
                     </td>
                 </tr>
                 <tr>
@@ -720,19 +749,19 @@
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator13"
-                            ControlToValidate="tbPortofDischarge"
+                            ControlToValidate="txtPortOfDischarge"
                             ValidationGroup="Commit"
                             InitialValue=""
                             ErrorMessage="[Port of Discharge] is required" ForeColor="Red">
                         </asp:RequiredFieldValidator></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPortofDischarge" runat="server" />
+                        <telerik:RadTextBox Width="355" ID="txtPortOfDischarge" runat="server" />
                     </td>
                 </tr>                
                 <tr>
                     <td class="MyLable">44B. Place of final destination</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPlaceoffinalindistination" runat="server" />
+                        <telerik:RadTextBox Width="355" ID="txtPlaceOfFinalDestination" runat="server" />
                     </td>
                 </tr>
                 <tr>
@@ -740,13 +769,13 @@
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
                             ID="RequiredFieldValidator15"
-                            ControlToValidate="tbLatesDateofShipment"
+                            ControlToValidate="txtLatesDateOfShipment"
                             ValidationGroup="Commit"
                             InitialValue=""
                             ErrorMessage="[Latest Date of Shipment] is required" ForeColor="Red">
                         </asp:RequiredFieldValidator></td>
                     <td class="MyContent">
-                        <telerik:RadDatePicker runat="server" ID="tbLatesDateofShipment" Width="200" />
+                        <telerik:RadDatePicker runat="server" ID="txtLatesDateOfShipment" Width="200" />
                     </td>
                 </tr>
             </table>
@@ -802,6 +831,31 @@
                     <td class="MyContent" style="vertical-align: top;">
                         <telerik:RadTextBox ID="txtDescriptionOfGoodsServices" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox>
                     </td>
+                </tr>
+                <tr>
+                    <td class="MyLable">45A.1 Commodity <span class="Required">(*)</span>
+                        <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator19"
+                            ControlToValidate="rcbCommodity"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="Commodity is Required" ForeColor="Red">
+                        </asp:RequiredFieldValidator>
+                    </td>
+                    <td class="MyContent">
+                        <telerik:RadComboBox
+                            AutoPostBack="true"
+                            ID="rcbCommodity" runat="server"
+                            AppendDataBoundItems="True"
+                            MarkFirstMatch="True"
+                            AllowCustomText="false">
+                            <ExpandAnimation Type="None" />
+                            <CollapseAnimation Type="None" />
+                        </telerik:RadComboBox>
+                    </td>
+                    <td>
+                        <asp:Label ID="lblCommodity" runat="server" /></td>
                 </tr>
                 <tr>
                     <td style="vertical-align: top;" class="MyLable">46A. Docs required</td>
@@ -1069,7 +1123,7 @@
                                     <td class="MyLable">Amort Charges</td>
                                     <td class="MyContent">
                                         <telerik:RadComboBox
-                                            ID="rcbOmortCharge" runat="server"
+                                            ID="rcbAmortCharge" runat="server"
                                             MarkFirstMatch="True" 
                                             AllowCustomText="false">
                                             <ExpandAnimation Type="None" />
@@ -1178,7 +1232,7 @@
                                     <td class="MyLable">Amort Charges</td>
                                     <td class="MyContent">
                                         <telerik:RadComboBox
-                                            ID="rcbOmortCharge2" runat="server"
+                                            ID="rcbAmortCharge2" runat="server"
                                             MarkFirstMatch="True" 
                                             AllowCustomText="false">
                                             <ExpandAnimation Type="None" />
@@ -1288,7 +1342,7 @@
                                     <td class="MyLable">Amort Charges</td>
                                     <td class="MyContent">
                                         <telerik:RadComboBox
-                                            ID="rcbOmortCharge3" runat="server"
+                                            ID="rcbAmortCharge3" runat="server"
                                             MarkFirstMatch="True" 
                                             AllowCustomText="false">
                                             <ExpandAnimation Type="None" />
@@ -1337,14 +1391,13 @@
 </div>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
     <script type="text/javascript">
-        var tabId = '<%= TabId %>';
         $("#<%=tbLCCode.ClientID%>").keyup(function (event) {
             if (event.keyCode == 13) {
                 if ($("#<%=tbLCCode.ClientID %>").val() == "") {
                     alert("Please fill in the LCCode");
                 }
                 else {
-                    window.location.href = "Default.aspx?tabid=" + tabId + "&LCCode=" + $("#<%=tbLCCode.ClientID %>").val();
+                    window.location.href = "Default.aspx?tabid=<%= TabId %>&Code=" + $("#<%=tbLCCode.ClientID %>").val();
                 }
             }
         });
@@ -1428,15 +1481,6 @@
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-        <telerik:AjaxSetting AjaxControlID="txtApplicantNo">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="lblApplicantMessage" />
-                <telerik:AjaxUpdatedControl ControlID="txtApplicantName" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr1" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr2" />
-                <telerik:AjaxUpdatedControl ControlID="tbApplicantAddr3" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="txtBeneficiaryNo">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblBeneficiaryMessage" />
@@ -1491,11 +1535,16 @@
                 <telerik:AjaxUpdatedControl ControlID="txtIssuingBankAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="txtImportLCNo">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblImportLCNoMessage" />
+                <telerik:AjaxUpdatedControl ControlID="txtCustomerName" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <div style="visibility: hidden;">
-    <asp:Button ID="btnReportThuThongBao" runat="server" OnClick="btnReportThuThongBao_Click" Text="PhieuXuatNgoaiBang" />
-    <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="PhieuXuatNgoaiBang" />
-    <asp:Button ID="btnReportPhieuThu" runat="server" OnClick="btnReportPhieuThu_Click" Text="PhieuXuatNgoaiBang" />
+    <asp:Button ID="btnReportMauBiaHsLc" runat="server" OnClick="btnReportMauBiaHsLc_Click" />
+    <asp:Button ID="btnReportMauThongBaoLc" runat="server" OnClick="btnReportMauThongBaoLc_Click" />
 </div>
     
