@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EnquiryLC.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.EnquiryLC" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EnquiryLCAmend.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.EnquiryLCAmend" %>
 <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
          OnClientButtonClicking="RadToolBar1_OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
     <Items>
@@ -28,8 +28,8 @@
         <tr>
             <td style="width: 120px">REF No.</td>
             <td><telerik:RadTextBox ID="txtRefNo" runat="server" Width="200" /></td>
-            <td style="width: 120px; padding-left:5px;">Applicant Name</td>
-            <td><telerik:RadTextBox ID="txtApplicantName" runat="server" Width="200" /></td>
+            <td style="width: 120px; padding-left:5px;"></td>
+            <td></td>
         </tr>
         <tr>
             <td>Beneficiary ID</td>
@@ -50,9 +50,8 @@
             <Columns>
                 <telerik:GridBoundColumn HeaderText="Export LC Code" DataField="Code" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Ref No" DataField="ImportLCCode" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
-                <telerik:GridBoundColumn HeaderText="Applicant Name" DataField="ApplicantName" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
-                <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
-                <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
+                <telerik:GridBoundColumn HeaderText="Increase Amount" DataField="IncreaseAmount" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
+                <telerik:GridBoundColumn HeaderText="Decrease Amount" DataField="DecreaseAmount" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Beneficiary ID" DataField="BeneficiaryNo" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Beneficiary Name" DataField="BeneficiaryName" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Issue date" DataField="DateOfIssue" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />

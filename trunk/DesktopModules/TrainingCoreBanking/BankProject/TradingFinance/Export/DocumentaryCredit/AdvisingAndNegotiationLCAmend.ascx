@@ -2,67 +2,60 @@
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+<style>
+    .NoDisplay {display:none;
+    }
+</style>
 <script type="text/javascript">
-    var tabId = '<%= TabId %>';
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
     });
-    function OnClientButtonClicking(sender, args) {
+    function RadToolBar1_OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
-            args.set_cancel(false);
-            radconfirm("Do you want to download Thu Thong Bao file ?", confirmCallbackFunction_ThuThongBao, 420, 150, null, 'Download');
+            //args.set_cancel(false);
+            radconfirm("Do you want to download 'Mau Thong Bao Lc' file ?", confirmCallbackFunction_MauThongBaoLc, 420, 150, null, 'Download');
+        }
+        if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>" ||
+            button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
+            var url = '<%=EditUrl("list")%>';
+            if (button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
+                url += '&lst=4appr';
+            }
+            window.location = url;
         }
     }
-    function confirmCallbackFunction_ThuThongBao(result) {
+    function confirmCallbackFunction_MauThongBaoLc(result) {
         clickCalledAfterRadconfirm = false;
         if (result) {
-            $("#<%=btnReportThuThongBao.ClientID %>").click();
-        }
-        setTimeout(function () {
-            radconfirm("Do you want to download Phieu Thu file?", confirmCallbackFunction_PhieuThu, 420, 150, null, 'Download');
-        }, 5000);
-
-        //radconfirm("Do you want to download Phieu Xuat Ngoai Bang file?", confirmCallbackFunction_PhieuXuatNgoaiBang, 420, 150, null, 'Download');
-    }
-    function confirmCallbackFunction_PhieuThu(result) {
-        clickCalledAfterRadconfirm = false;
-        if (result) {
-            $("#<%=btnReportPhieuThu.ClientID %>").click();
-    }
-}
-function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
-    clickCalledAfterRadconfirm = false;
-    if (result) {
-        $("#<%=btnReportPhieuXuatNgoaiBang.ClientID %>").click();
+            $("#<%=btnReportMauThongBaoLc.ClientID %>").click();
         }
     }
-    </script>
+</script>
 </telerik:RadCodeBlock>
-    <telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%"
-        OnClientButtonClicking="OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
-        <Items>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
-                ToolTip="Commit Data" Value="btCommitData" CommandName="commit">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
-                ToolTip="Preview" Value="btPreview" CommandName="preview" postback="false">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
-                ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/reverse.png"
-                ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-                ToolTip="Search" Value="btSearch" CommandName="search" postback="false">
-            </telerik:RadToolBarButton>
-            <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
-                ToolTip="Print Deal Slip" Value="btPrint" CommandName="print" postback="false" Enabled="false">
-            </telerik:RadToolBarButton>
-        </Items>
-    </telerik:RadToolBar>
-
+<telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
+         OnClientButtonClicking="RadToolBar1_OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
+    <Items>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
+            ToolTip="Commit Data" Value="btCommit" CommandName="commit" Enabled="true">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
+            ToolTip="Preview" Value="btPreview" CommandName="preview" postback="false">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/authorize.png"
+            ToolTip="Authorize" Value="btAuthorize" CommandName="authorize" Enabled="false">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/reverse.png"
+            ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
+            ToolTip="Search" Value="btSearch" CommandName="search" postback="false">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
+            ToolTip="Print" Value="btPrint" CommandName="print" postback="false" Enabled="false">
+        </telerik:RadToolBarButton>
+    </Items>
+</telerik:RadToolBar>
 <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <td style="padding-left:20px; padding-top:5px; padding-bottom:5px;"><asp:TextBox ID="tbLCCode" runat="server" Width="200" /> <span class="Required">(*)</span>
@@ -73,12 +66,7 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
                             ValidationGroup="Commit"
                             InitialValue=""
                             ErrorMessage="[LC Code] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator>&nbsp;<asp:Label ID="lblError" runat="server" ForeColor="red" /></td>
-    </tr>
-    <tr>
-        <td>
-            <asp:HiddenField ID="HiddenField1" runat="server" Value="0" /><asp:HiddenField ID="txtCustomerID" runat="server" Value="" /><asp:HiddenField ID="txtCustomerName" runat="server" Value="" />
-        </td>
+                        </asp:RequiredFieldValidator>&nbsp;<asp:Label ID="lblLCCodeMessage" runat="server" ForeColor="red" /></td>
     </tr>
 </table>
     <div class="dnnForm" id="tabs-demo">
@@ -87,6 +75,23 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
             <li><a href="#Charges">Charges</a></li>
         </ul>
         <div id="Main" class="dnnClear">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width: 250px" class="MyLable">20. Documentary Credit Number <span class="Required">(*)</span>
+                        <asp:RequiredFieldValidator
+                            runat="server" Display="None"
+                            ID="RequiredFieldValidator20"
+                            ControlToValidate="txtCustomerName"
+                            ValidationGroup="Commit"
+                            InitialValue=""
+                            ErrorMessage="[Documentary Credit Number] is required" ForeColor="Red">
+                        </asp:RequiredFieldValidator><asp:TextBox ID="txtCustomerName" runat="server" CssClass="NoDisplay"></asp:TextBox>
+                    </td>
+                    <td class="MyContent"><telerik:RadTextBox ID="txtImportLCNo" runat="server" Width="195" AutoPostBack="true" OnTextChanged="txtImportLCNo_TextChanged" />
+                    </td>
+                    <td><asp:Label ID="lblImportLCNoMessage" runat="server" Text="" ForeColor="Red"></asp:Label></td>
+                </tr>
+            </table>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable" style="width: 250px">20.Sender's Reference</td>
@@ -200,7 +205,7 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
                             ErrorMessage="[Number of Amendment] is required" ForeColor="Red">
                         </asp:RequiredFieldValidator></td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox ID="txtNumberOfAmendment" Width="200" runat="server" />
+                        <telerik:RadNumericTextBox ID="txtNumberOfAmendment" Width="200" runat="server" NumberFormat-DecimalDigits="0" />
                     </td>
                 </tr>
             </table>
@@ -249,57 +254,25 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
             </table>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width:250px;" class="MyLable">31E.New Date of Expiry <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator6"
-                            ControlToValidate="txtNewDateOfExpiry"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="[New Date of Expiry] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator></td>
+                    <td style="width:250px;" class="MyLable">31E.New Date of Expiry</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="txtNewDateOfExpiry" Width="200" runat="server" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">32B.Increase of Documentary Credit Amount <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator7"
-                            ControlToValidate="txtIncreaseOfDocumentaryCreditAmount"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="[Increase of Documentary Credit Amount] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator></td>
+                    <td class="MyLable">32B.Increase of Documentary Credit Amount</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="txtIncreaseOfDocumentaryCreditAmount" Width="200" runat="server" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">33B.Decrease of Documentary Credit Amount <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator8"
-                            ControlToValidate="txtDecreaseOfDocumentaryCreditAmount"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="[Decrease of Documentary Credit Amount] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator></td>
+                    <td class="MyLable">33B.Decrease of Documentary Credit Amount</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="txtDecreaseOfDocumentaryCreditAmount" Width="200" runat="server" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">34B.New Documentary Credit Amount After Amendment <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator9"
-                            ControlToValidate="txtNewDocumentaryCreditAmountAfterAmendment"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="[New Documentary Credit Amount After Amendment] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator></td>
+                    <td class="MyLable">34B.New Documentary Credit Amount After Amendment</td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="txtNewDocumentaryCreditAmountAfterAmendment" Width="200" runat="server" />
                     </td>
@@ -307,15 +280,7 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
             </table>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">39A. Percentage Credit Amount Tolerance <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator10"
-                            ControlToValidate="txtPercentCreditAmountTolerance1"
-                            ValidationGroup="Commit"
-                            InitialValue="0"
-                            ErrorMessage="[Percentage Credit Amount Tolerance] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator></td>
+                    <td style="width: 250px" class="MyLable">39A. Percentage Credit Amount Tolerance</td>
                     <td class="MyContent" style="width: 150px">
                         <telerik:RadNumericTextBox Width="195" ID="txtPercentCreditAmountTolerance1" runat="server" Type="Percent" Value="0" MaxValue="100" />
                     </td>
@@ -327,55 +292,31 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
                 <tr>
                     <td style="width:250px;" class="MyLable">44A. Place of taking in charge...</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPlaceoftakingincharge" runat="server" />
+                        <telerik:RadTextBox Width="355" ID="txtPlaceOfTakingInCharge" runat="server" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">44E. Port of loading... <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator14"
-                            ControlToValidate="tbPortofloading"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="[Port of loading] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator></td>
+                    <td class="MyLable">44E. Port of loading... </td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPortofloading" runat="server" />
+                        <telerik:RadTextBox Width="355" ID="txtPortOfLoading" runat="server" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">44F. Port of Discharge... <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator13"
-                            ControlToValidate="tbPortofDischarge"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="[Port of Discharge] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator></td>
+                    <td class="MyLable">44F. Port of Discharge... </td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPortofDischarge" runat="server" />
+                        <telerik:RadTextBox Width="355" ID="txtPortOfDischarge" runat="server" />
                     </td>
                 </tr>                
                 <tr>
                     <td class="MyLable">44B. Place of final destination</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox Width="355" ID="tbPlaceoffinalindistination" runat="server" />
+                        <telerik:RadTextBox Width="355" ID="txtPlaceOfFinalDestination" runat="server" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">44C. Latest Date of Shipment <span class="Required">(*)</span>
-                        <asp:RequiredFieldValidator
-                            runat="server" Display="None"
-                            ID="RequiredFieldValidator15"
-                            ControlToValidate="tbLatesDateofShipment"
-                            ValidationGroup="Commit"
-                            InitialValue=""
-                            ErrorMessage="[Latest Date of Shipment] is required" ForeColor="Red">
-                        </asp:RequiredFieldValidator></td>
+                    <td class="MyLable">44C. Latest Date of Shipment</td>
                     <td class="MyContent">
-                        <telerik:RadDatePicker runat="server" ID="tbLatesDateofShipment" Width="200" />
+                        <telerik:RadDatePicker runat="server" ID="txtLatesDateOfShipment" Width="200" />
                     </td>
                 </tr>
                 <tr>
@@ -505,7 +446,7 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
                                     <td class="MyLable">Amort Charges</td>
                                     <td class="MyContent">
                                         <telerik:RadComboBox
-                                            ID="rcbOmortCharge" runat="server"
+                                            ID="rcbAmortCharge" runat="server"
                                             MarkFirstMatch="True" 
                                             AllowCustomText="false">
                                             <ExpandAnimation Type="None" />
@@ -614,7 +555,7 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
                                     <td class="MyLable">Amort Charges</td>
                                     <td class="MyContent">
                                         <telerik:RadComboBox
-                                            ID="rcbOmortCharge2" runat="server"
+                                            ID="rcbAmortCharge2" runat="server"
                                             MarkFirstMatch="True" 
                                             AllowCustomText="false">
                                             <ExpandAnimation Type="None" />
@@ -724,7 +665,7 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
                                     <td class="MyLable">Amort Charges</td>
                                     <td class="MyContent">
                                         <telerik:RadComboBox
-                                            ID="rcbOmortCharge3" runat="server"
+                                            ID="rcbAmortCharge3" runat="server"
                                             MarkFirstMatch="True" 
                                             AllowCustomText="false">
                                             <ExpandAnimation Type="None" />
@@ -773,14 +714,13 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
 </div>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
     <script type="text/javascript">
-        var tabId = '<%= TabId %>';
         $("#<%=tbLCCode.ClientID%>").keyup(function (event) {
             if (event.keyCode == 13) {
                 if ($("#<%=tbLCCode.ClientID %>").val() == "") {
                     alert("Please fill in the LCCode");
                 }
                 else {
-                    window.location.href = "Default.aspx?tabid=" + tabId + "&LCCode=" + $("#<%=tbLCCode.ClientID %>").val();
+                    window.location.href = "Default.aspx?tabid=<%= TabId %>&Code=" + $("#<%=tbLCCode.ClientID %>").val();
                 }
             }
         });
@@ -830,8 +770,5 @@ function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <div style="visibility: hidden;">
-    <asp:Button ID="btnReportThuThongBao" runat="server" OnClick="btnReportThuThongBao_Click" Text="PhieuXuatNgoaiBang" />
-    <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="PhieuXuatNgoaiBang" />
-    <asp:Button ID="btnReportPhieuThu" runat="server" OnClick="btnReportPhieuThu_Click" Text="PhieuXuatNgoaiBang" />
+    <asp:Button ID="btnReportMauThongBaoLc" runat="server" OnClick="btnReportMauThongBaoLc_Click" />
 </div>
-    
