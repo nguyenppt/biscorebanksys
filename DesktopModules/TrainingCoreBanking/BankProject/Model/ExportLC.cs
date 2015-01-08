@@ -11,9 +11,17 @@ namespace BankProject.Model
 {
     public class ExportLC : VietVictoryCoreBankingEntities
     {
-        public DbSet<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> BEXPORT_DOCUMETARYCOLLECTIONCHARGES { get; set; }
-        public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
-        public DbSet<BAdvisingAndNegotiationLCCharge> BAdvisingAndNegotiationLCCharges { get; set; }
+        public struct Actions
+        {
+            public const int Register = 242;
+            public const int Amend = 235;
+            public const int Confirm = 236;
+            public const int Cancel = 237;
+            public const int Close = 265;
+        }
+        //public DbSet<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> BEXPORT_DOCUMETARYCOLLECTIONCHARGES { get; set; }
+        //public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
+        //public DbSet<BAdvisingAndNegotiationLCCharge> BAdvisingAndNegotiationLCCharges { get; set; }
         public DbSet<BEXPORT_DOCUMENTPROCESSING> BEXPORT_DOCUMENTPROCESSINGs { get; set; }
         public DbSet<BEXPORT_DOCUMENTPROCESSINGCHARGE> BEXPORT_DOCUMENTPROCESSINGCHARGEs { get; set; }
         public DbSet<B_AddConfirmInfo> B_AddConfirmInfos { get; set; }
@@ -21,6 +29,58 @@ namespace BankProject.Model
         public DbSet<B_ExportLCPaymentCharge> B_ExportLCPaymentCharges { get; set; }
         public DbSet<B_ExportLCPaymentMT202> B_ExportLCPaymentMT202s { get; set; }
         public DbSet<B_ExportLCPaymentMT756> B_ExportLCPaymentMT756s { get; set; }
+        //
+        public BEXPORT_LC findExportLC(string Code)
+        {
+            Code = Code.Trim().ToUpper();
+            return BEXPORT_LC.Where(p => p.ExportLCCode.Equals(Code)).FirstOrDefault();
+        }
+        public BIMPORT_NORMAILLC findImportLC(string Code)
+        {
+            Code = Code.Trim().ToUpper();
+            return BIMPORT_NORMAILLC.Where(p => (p.NormalLCCode.Equals(Code) && (p.ActiveRecordFlag == null || p.ActiveRecordFlag.Equals("Yes")))).FirstOrDefault();
+        }
+        public BEXPORT_LC_AMEND findExportLCAmend(string Code)
+        {
+            //Lấy thông tin chi tiết của amend theo code hoặc lấy amend cuối cùng theo code
+            Code = Code.Trim().ToUpper();
+            if (Code.IndexOf(".") > 0)
+                return BEXPORT_LC_AMEND.Where(p => p.AmendNo.Trim().Equals(Code)).FirstOrDefault();
+            
+            return BEXPORT_LC_AMEND.Where(p => p.AmendNo.StartsWith(Code)).OrderByDescending(p => p.NumberOfAmendment).FirstOrDefault();
+        }
+    }
+    public class MauBiaHsLc
+    {
+        public string Ref { get; set; }
+        public string LCCode { get; set; }
+        public string DateOfIssue { get; set; }
+        public string Beneficiary { get; set; }
+        public string Applicant { get; set; }
+        public string IssuingBank { get; set; }
+        public string Tenor { get; set; }
+        public string AdvisingBank { get; set; }
+        public string Amount { get; set; }//Amount and Currency
+        public string LatestDateOfShipment { get; set; }
+        public string DateOfExpiry { get; set; }
+        public string Transhipment { get; set; }
+        public string PartialShipment { get; set; }
+        public string Commodity { get; set; }
+        public string PortOfLoading { get; set; }
+        public string PeriodForPresentation { get; set; }
+        public string PortOfDischarge { get; set; }         
+    }
+    public class MauThongBaoVaTuChinhLc
+    {
+        public string Ref { get; set; }
+        public string Beneficiary { get; set; }//Name & Address
+        public string LCCode { get; set; }
+        public string DateOfIssue { get; set; }
+        public string DateOfExpiry { get; set; }
+        public string IssuingBank { get; set; }
+        public string Amount { get; set; }//Amount and Currency
+        public string Applicant { get; set; }        
+        public string NumberOfAmendment { get; set; }
     }
     public class PhieuXuatNgoaiBang
     {
