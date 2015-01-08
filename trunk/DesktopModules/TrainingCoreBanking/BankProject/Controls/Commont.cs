@@ -8,6 +8,8 @@ namespace BankProject.Controls
 {
     public class Commont
     {
+        public const string breakLine = "\r\n";
+
         public static void SetTatusFormControls(ControlCollection ChildCtrls, bool enabel)
         {
             foreach (Control Ctrl in ChildCtrls)
