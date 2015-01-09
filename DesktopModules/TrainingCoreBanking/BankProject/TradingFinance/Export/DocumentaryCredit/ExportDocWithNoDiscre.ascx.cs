@@ -18,8 +18,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
     public partial class ExportDocWithNoDiscre : DotNetNuke.Entities.Modules.PortalModuleBase
     {
-        private readonly ExportLC entContext = new ExportLC();
-        private BEXPORT_DOCUMENTPROCESSING _exportDoc;
+        private readonly ExportLC dbEntities = new ExportLC();
         protected const int TabDocsWithNoDiscrepancies = 239;
         protected const int TabDocsWithDiscrepancies = 240;
         protected const int TabDocsReject = 241;
@@ -37,7 +36,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 return;
             
                 var tid = Request.QueryString["tid"].ToString();
-                var dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == tid).FirstOrDefault();
+                var dsDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == tid).FirstOrDefault();
                 if (TabId == TabDocsAmend)
                 {
                     var findTypeAmend = tid.Split('.');
@@ -45,10 +44,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         if (findTypeAmend.Length == 2)
                         {
-                            dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == tid && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+                            dsDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == tid && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
                         }
                         else {
-                            dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == tid).FirstOrDefault();
+                            dsDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == tid).FirstOrDefault();
                         }
                     }
                 }
@@ -59,7 +58,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
             
             var dsCharge = new List<BEXPORT_DOCUMENTPROCESSINGCHARGE>();
-            dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == dsDetail.PaymentId).ToList();
+            dsCharge = dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == dsDetail.PaymentId).ToList();
             //Hiển thị thông tin docs
             DocsType = Convert.ToInt32(dsDetail.DocumentType);
 
@@ -328,7 +327,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 orginalCode = txtCode.Text.Trim().Substring(0, 14);
             }
-            var dtCheck = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == orginalCode).FirstOrDefault();
+            var dtCheck = dbEntities.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == orginalCode).FirstOrDefault();
             if (dtCheck != null)
             {
                 if (numAmount.Value > double.Parse(dtCheck.Amount.ToString()))
@@ -427,7 +426,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     if (findTypeAmend.Length == 3)
                     {
                         //xet xem so TF nay co hay chua
-                        var chkAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
+                        var chkAmend = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
                         //neu chua co thi them moi, co roi thi update
                         //truong hop chua co--> se them moi
                         if (chkAmend == null)
@@ -441,7 +440,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             {
                                 //xet Amend truoc do
                                 AmendNo = findTypeAmend[0] + "." + findTypeAmend[1] + "." + AmendPreId;
-                                var objPreAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == AmendNo).FirstOrDefault();
+                                var objPreAmend = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == AmendNo).FirstOrDefault();
                                 if (objPreAmend != null)
                                 {
                                     objPreAmend.ActiveRecordFlag = YesNo.NO;
@@ -451,14 +450,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             else
                             {
                                 AmendNo = findTypeAmend[0] + "." + findTypeAmend[1];
-                                var objPreAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == AmendNo).FirstOrDefault();
+                                var objPreAmend = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == AmendNo).FirstOrDefault();
                                 if (objPreAmend != null)
                                 {
                                     objPreAmend.ActiveRecordFlag = YesNo.NO;
                                 }
                             }
                             //update
-                            entContext.SaveChanges();
+                            dbEntities.SaveChanges();
                             //them moi record hien tai
                             BEXPORT_DOCUMENTPROCESSING objInsertAmend = new BEXPORT_DOCUMENTPROCESSING
                             {
@@ -528,8 +527,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             {
                                 objInsertAmend.NoOfCopies3 = long.Parse(numNoOfCopies3.Text);
                             }
-                            entContext.BEXPORT_DOCUMENTPROCESSINGs.Add(objInsertAmend);
-                            entContext.SaveChanges();
+                            dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Add(objInsertAmend);
+                            dbEntities.SaveChanges();
                             //
                         }
                         else
@@ -601,7 +600,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 {
                                     chkAmend.NoOfCopies3 = long.Parse(numNoOfCopies3.Text);
                                 }
-                                entContext.SaveChanges();
+                                dbEntities.SaveChanges();
                         }
                     }
                 }
@@ -615,19 +614,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             var ds = new BEXPORT_DOCUMENTPROCESSING();
             var dr = new BEXPORT_DOCUMENTPROCESSING();
-            ds = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).FirstOrDefault();
+            ds = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).FirstOrDefault();
             if (ds == null)
             {
-                dr = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).FirstOrDefault();    
+                dr = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).FirstOrDefault();    
             }
-            var dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(x => x.LCCode == txtCode.Text).ToList();
+            var dsCharge = dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(x => x.LCCode == txtCode.Text).ToList();
             if (dsCharge != null && dsCharge.Count > 0)
             {
                 foreach (BEXPORT_DOCUMENTPROCESSINGCHARGE item in dsCharge)
                 {
-                    entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Remove(item);
+                    dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Remove(item);
                 }
-                entContext.SaveChanges();
+                dbEntities.SaveChanges();
             }
             if (ds == null && dr == null)
             {
@@ -704,8 +703,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 {
                     obj.Status = "UNA";
                 }
-                entContext.BEXPORT_DOCUMENTPROCESSINGs.Add(obj);
-                entContext.SaveChanges();
+                dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Add(obj);
+                dbEntities.SaveChanges();
                 if (divCharge.Visible && comboWaiveCharges.SelectedValue.Equals("YES"))
                 {
                     //save tab charge
@@ -738,8 +737,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         charge.ChargeAmt = double.Parse(tbChargeAmt.Text);
                     }
-                    entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge);
-                    entContext.SaveChanges();
+                    dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge);
+                    dbEntities.SaveChanges();
                     //
                     BEXPORT_DOCUMENTPROCESSINGCHARGE charge2 = new BEXPORT_DOCUMENTPROCESSINGCHARGE
                     {
@@ -770,8 +769,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         charge2.ChargeAmt = double.Parse(tbChargeAmt2.Text);
                     }
-                    entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge2);
-                    entContext.SaveChanges();
+                    dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge2);
+                    dbEntities.SaveChanges();
                     //
                     //kiem tra tab 
                     BEXPORT_DOCUMENTPROCESSINGCHARGE charge3 = new BEXPORT_DOCUMENTPROCESSINGCHARGE
@@ -803,9 +802,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         charge3.ChargeAmt = double.Parse(tbChargeAmt3.Text);
                     }
-                    entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge3);
+                    dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Add(charge3);
                     //
-                    entContext.SaveChanges();
+                    dbEntities.SaveChanges();
                 }
             }
             else
@@ -829,7 +828,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             ds.AcceptBy = UserId.ToString();
                             ds.AcceptDate = txtAcceptDate.SelectedDate;
                         }
-                        entContext.SaveChanges();
+                        dbEntities.SaveChanges();
                     }
                     else
                     {
@@ -895,7 +894,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             ds.AmendStatus = TransactionStatus.UNA;
                         }
 
-                        entContext.SaveChanges();
+                        dbEntities.SaveChanges();
                     }
                 }
                 else if (dr != null)
@@ -918,7 +917,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             dr.AcceptBy = UserId.ToString();
                             dr.AcceptDate = txtAcceptDate.SelectedDate;
                         }
-                        entContext.SaveChanges();
+                        dbEntities.SaveChanges();
                     }
                     else
                     {
@@ -980,7 +979,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             dr.AmendStatus = TransactionStatus.UNA;
 
                         }
-                        entContext.SaveChanges();
+                        dbEntities.SaveChanges();
                     }
                 }
             }
@@ -1060,7 +1059,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void UpdateStatus(string status)
         {
-            var obj = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == txtCode.Text).FirstOrDefault();
+            var obj = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == txtCode.Text).FirstOrDefault();
             if (TabId == TabDocsAmend)
             {
                 var findTypeAmend = txtCode.Text.Split('.');
@@ -1069,11 +1068,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     if (findTypeAmend.Length == 2)
                     {
                         var AmendNo = findTypeAmend[0] + "." + findTypeAmend[1];
-                        obj = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == AmendNo && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+                        obj = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == AmendNo && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
                     }
                     else
                     {
-                        obj = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
+                        obj = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
                     }
                 }
             }
@@ -1123,7 +1122,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                         break;
                 }
-                entContext.SaveChanges();
+                dbEntities.SaveChanges();
             }
         }
         private void setDocsCodeData(BEXPORT_DOCUMENTPROCESSING dsDetail, int stt, ref RadComboBox cboDocsCode, ref RadNumericTextBox txtNumOfOriginals, ref RadNumericTextBox txtNumofCopies, ref RadTextBox txtOtherDocs)
@@ -1438,11 +1437,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case TabDocsWithDiscrepancies:
                 case TabDocsWithNoDiscrepancies:
                     //fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
-                    var dsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text && dr.Status == "UNA"&&(dr.ActiveRecordFlag==null||dr.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();                    
+                    var dsDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text && dr.Status == "UNA"&&(dr.ActiveRecordFlag==null||dr.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();                    
                     var dsCharge = new List<BEXPORT_DOCUMENTPROCESSINGCHARGE>();
                     if (!String.IsNullOrEmpty(txtCode.Text) && txtCode.Text.LastIndexOf(".") > 0)
                     {
-                        var drDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
+                        var drDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text && (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES)).FirstOrDefault();
                         if (drDetail == null)
                         {
                             lblError.Text = "This Docs not found !";
@@ -1460,7 +1459,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         var namese = name[0];
                         if(name!=null)
                         {
-                            var lstOriginalBA = entContext.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == namese&&(x.ActiveRecordFlag==null||x.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();
+                            var lstOriginalBA = dbEntities.BAdvisingAndNegotiationLCs.Where(x => x.NormalLCCode == namese&&(x.ActiveRecordFlag==null||x.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();
                             if(lstOriginalBA!=null)
                             {
                                 txtCustomerName.Value = lstOriginalBA.BeneficiaryName;
@@ -1491,7 +1490,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                         if (drDetail.WaiveCharges == "YES")
                         {
-                            dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == drDetail.PaymentId).ToList();
+                            dsCharge = dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == drDetail.PaymentId).ToList();
                         }
                         loadDocsDetail(drDetail,dsCharge);
                         
@@ -1503,7 +1502,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             lblError.Text = "Previous docs is wating for approve!";
                             if (dsDetail.WaiveCharges == "YES")
                             {
-                                dsCharge = entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == dsDetail.PaymentId).ToList();
+                                dsCharge = dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs.Where(dr => dr.LCCode == dsDetail.PaymentId).ToList();
                             }
                             //bc.Commont.SetTatusFormControls(this.Controls, false);
                             //hien thi thong tin docs dang cho duyet
@@ -1512,7 +1511,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             //
                      }
                      //get data from advisingnegotiaton
-                     var lstOriginal=entContext.BAdvisingAndNegotiationLCs.Where(dr=>dr.NormalLCCode==txtCode.Text).FirstOrDefault();
+                     var lstOriginal=dbEntities.BAdvisingAndNegotiationLCs.Where(dr=>dr.NormalLCCode==txtCode.Text).FirstOrDefault();
                      if(lstOriginal==null)
                      {
                         lblError.Text="This LC was not found"; 
@@ -1552,7 +1551,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                      tbChargeCode2.Enabled = false;
                      tbChargeCode3.Enabled = false;
                     //sinh ra PaymentID
-                    var dsPayDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text).ToList();
+                    var dsPayDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.LCCode == txtCode.Text).ToList();
                     var maxId = dsPayDetail.Max(x => x.PaymentNo);
                     if (maxId == null)
                     {
@@ -1577,14 +1576,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case TabDocsReject:
                 case TabDocsAmend:
                 case TabDocsAccept:
-                    var chkdsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == txtCode.Text&&(dr.ActiveRecordFlag==null||dr.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();
+                    var chkdsDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == txtCode.Text&&(dr.ActiveRecordFlag==null||dr.ActiveRecordFlag==YesNo.YES)).FirstOrDefault();
                     if (this.TabId == TabDocsAmend)
                     {
                         var chkfindTypeAmend = txtCode.Text.Split('.');
                         if (chkfindTypeAmend != null && chkfindTypeAmend.Length > 0)
                         {
                             if (chkfindTypeAmend.Length == 3) {
-                                chkdsDetail = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
+                                chkdsDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
                             }
                         }
                     }
@@ -1661,7 +1660,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         else
                                         {
                                             var objAmend = new BEXPORT_DOCUMENTPROCESSING();
-                                            var chkAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).ToList();
+                                            var chkAmend = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.PaymentId == txtCode.Text).ToList();
                                             if (chkAmend != null && chkAmend.Count > 0)
                                             {
                                                 objAmend = chkAmend.Where(x => (x.ActiveRecordFlag == null || x.ActiveRecordFlag == YesNo.YES) && (x.AmendStatus == "UNA")).FirstOrDefault();
@@ -1720,7 +1719,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         else
                                         {
                                             var objAmend = new BEXPORT_DOCUMENTPROCESSING();
-                                            var chkAmend = entContext.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
+                                            var chkAmend = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(x => x.AmendNo == txtCode.Text).FirstOrDefault();
                                             if (chkAmend != null)
                                             {
                                                 loadDocsDetail(chkAmend, chkdsCharge);
@@ -1809,8 +1808,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         reportSaveName = "ThuThongBaoBoChungTu" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         //bind Data
                         var strnow = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
-                        var query = (from DC in entContext.BEXPORT_DOCUMENTPROCESSINGs
-                             join AD in entContext.BAdvisingAndNegotiationLCs on DC.LCCode equals AD.NormalLCCode
+                        var query = (from DC in dbEntities.BEXPORT_DOCUMENTPROCESSINGs
+                             join AD in dbEntities.BAdvisingAndNegotiationLCs on DC.LCCode equals AD.NormalLCCode
                              where DC.PaymentId==txtCode.Text
                              select new {DC,AD });
                         var lst = new List<CoverNhoThu>();
@@ -1857,9 +1856,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
                         reportTemplate = Context.Server.MapPath(reportTemplate + "Export_PhieuXuatNgoaiBang.doc");
                         reportSaveName = "PhieuXuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        var PNgoaiBang = (from BE in entContext.BEXPORT_DOCUMENTPROCESSINGs
-                                          join AD in entContext.BAdvisingAndNegotiationLCs on BE.LCCode equals AD.NormalLCCode
-                                          join CU in entContext.BCUSTOMERS on AD.BeneficiaryNo equals CU.CustomerID
+                        var PNgoaiBang = (from BE in dbEntities.BEXPORT_DOCUMENTPROCESSINGs
+                                          join AD in dbEntities.BAdvisingAndNegotiationLCs on BE.LCCode equals AD.NormalLCCode
+                                          join CU in dbEntities.BCUSTOMERS on AD.BeneficiaryNo equals CU.CustomerID
                                           where BE.PaymentId==txtCode.Text
                                           select new { BE,AD,CU});
                         var BNgoaiBang = new List<PhieuXuatNgoaiBang>();
@@ -1888,11 +1887,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     case 3:
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
                         reportSaveName = "PhieuThu" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        var queryPhieuThu = (from CHA in entContext.BEXPORT_DOCUMENTPROCESSINGCHARGEs
-                                             join BE in entContext.BEXPORT_DOCUMENTPROCESSINGs on CHA.LCCode equals BE.PaymentId
-                                             join AD in entContext.BAdvisingAndNegotiationLCs on BE.LCCode equals AD.NormalLCCode
-                                             join CU in entContext.BCUSTOMERS on AD.BeneficiaryNo equals CU.CustomerID
-                                             join BC in entContext.BCHARGECODEs on CHA.Chargecode equals BC.Code
+                        var queryPhieuThu = (from CHA in dbEntities.BEXPORT_DOCUMENTPROCESSINGCHARGEs
+                                             join BE in dbEntities.BEXPORT_DOCUMENTPROCESSINGs on CHA.LCCode equals BE.PaymentId
+                                             join AD in dbEntities.BAdvisingAndNegotiationLCs on BE.LCCode equals AD.NormalLCCode
+                                             join CU in dbEntities.BCUSTOMERS on AD.BeneficiaryNo equals CU.CustomerID
+                                             join BC in dbEntities.BCHARGECODEs on CHA.Chargecode equals BC.Code
                                              where CHA.LCCode == txtCode.Text
                                              select new { CHA, BE, AD, CU, BC });
                         var tbPhieuThu = new List<PhieuThu>();
