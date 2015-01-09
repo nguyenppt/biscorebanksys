@@ -25,18 +25,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private void setDefaultControls()
         {            
             rcbWaiveCharges_OnSelectedIndexChanged(null, null);
-            tbVatNo.Enabled = false;
-            rcbChargeCode.Enabled = false;
-            rcbChargeCode2.Enabled = false;
-            rcbChargeCode3.Enabled = false;
+            tbVatNo.Enabled = false;            
+            txtChargeCode1.Enabled = false;            
+            txtChargeCode2.Enabled = false;            
+            txtChargeCode3.Enabled = false;
             txtNumberOfAmendment.Enabled = false;
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            txtChargeCode1.Text = ExportLC.Charges.Amendment;
+            txtChargeCode2.Text = ExportLC.Charges.Courier;
+            txtChargeCode3.Text = ExportLC.Charges.Other;
             if (IsPostBack) return;
             //
             var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
-            bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", dsCurrency);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy1, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
             //
@@ -173,22 +176,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     if (ExLCAmend.WaiveCharges.Equals(bd.YesNo.NO))
                     {
                         BEXPORT_LC_CHARGES ExLCCharge;
-                        if (tbChargeAmt.Value.HasValue)
+                        if (tbChargeAmt1.Value.HasValue)
                         {
                             ExLCCharge = new BEXPORT_LC_CHARGES();
-                            saveCharge(rcbChargeCode, rcbChargeCcy, rcbChargeAcct, tbChargeAmt, rcbPartyCharged, rcbAmortCharge, rcbChargeStatus, lblTaxCode, lblTaxAmt, ref ExLCCharge);
+                            saveCharge(txtChargeCode1, rcbChargeCcy1, rcbChargeAcct1, tbChargeAmt1, rcbPartyCharged1, rcbAmortCharge1, rcbChargeStatus1, lblTaxCode1, lblTaxAmt1, ref ExLCCharge);
                             dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
                         }
                         if (tbChargeAmt2.Value.HasValue)
                         {
                             ExLCCharge = new BEXPORT_LC_CHARGES();
-                            saveCharge(rcbChargeCode2, rcbChargeCcy2, rcbChargeAcct2, tbChargeAmt2, rcbPartyCharged2, rcbAmortCharge2, rcbChargeStatus2, lblTaxCode2, lblTaxAmt2, ref ExLCCharge);
+                            saveCharge(txtChargeCode2, rcbChargeCcy2, rcbChargeAcct2, tbChargeAmt2, rcbPartyCharged2, rcbAmortCharge2, rcbChargeStatus2, lblTaxCode2, lblTaxAmt2, ref ExLCCharge);
                             dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
                         }
                         if (tbChargeAmt3.Value.HasValue)
                         {
                             ExLCCharge = new BEXPORT_LC_CHARGES();
-                            saveCharge(rcbChargeCode3, rcbChargeCcy3, rcbChargeAcct3, tbChargeAmt3, rcbPartyCharged3, rcbAmortCharge3, rcbChargeStatus3, lblTaxCode3, lblTaxAmt3, ref ExLCCharge);
+                            saveCharge(txtChargeCode3, rcbChargeCcy3, rcbChargeAcct3, tbChargeAmt3, rcbPartyCharged3, rcbAmortCharge3, rcbChargeStatus3, lblTaxCode3, lblTaxAmt3, ref ExLCCharge);
                             dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
                         }
                     }
@@ -284,10 +287,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLCAmend.ChargeRemarks = tbChargeRemarks.Text.Trim();
             ExLCAmend.VATNo = tbVatNo.Text.Trim();
         }
-        private void saveCharge(RadComboBox cbChargeCode, RadComboBox cbChargeCcy, RadComboBox cbChargeAcc, RadNumericTextBox txtChargeAmt, RadComboBox cbChargeParty, RadComboBox cbChargeAmort,
+        private void saveCharge(RadTextBox txtChargeCode, RadComboBox cbChargeCcy, RadComboBox cbChargeAcc, RadNumericTextBox txtChargeAmt, RadComboBox cbChargeParty, RadComboBox cbChargeAmort,
             RadComboBox cbChargeStatus, Label lblTaxCode, Label lblTaxAmt, ref BEXPORT_LC_CHARGES ExLCCharge)
         {
-            ExLCCharge.ChargeCode = cbChargeCode.SelectedValue;
+            ExLCCharge.ExportLCCode = tbLCCode.Text;
+            ExLCCharge.ChargeCode = txtChargeCode.Text;
             ExLCCharge.ChargeCcy = cbChargeCcy.SelectedValue;
             ExLCCharge.ChargeAcc = cbChargeAcc.SelectedValue;
             ExLCCharge.ChargeAmt = txtChargeAmt.Value;
@@ -400,22 +404,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 switch (ch.ChargeCode)
                 {
-                    case "ELC.ADVISE":
-                        loadCharge(ch, ref rcbChargeCode, ref rcbChargeCcy, ref rcbChargeAcct, ref tbChargeAmt, ref rcbPartyCharged, ref rcbAmortCharge, ref rcbChargeStatus, ref lblTaxCode, ref lblTaxAmt);
+                    case ExportLC.Charges.Amendment:
+                        loadCharge(ch, ref txtChargeCode1, ref rcbChargeCcy1, ref rcbChargeAcct1, ref tbChargeAmt1, ref rcbPartyCharged1, ref rcbAmortCharge1, ref rcbChargeStatus1, ref lblTaxCode1, ref lblTaxAmt1);
                         break;
-                    case "ELC.CONFIRM":
-                        loadCharge(ch, ref rcbChargeCode2, ref rcbChargeCcy2, ref rcbChargeAcct2, ref tbChargeAmt2, ref rcbPartyCharged2, ref rcbAmortCharge2, ref rcbChargeStatus2, ref lblTaxCode2, ref lblTaxAmt2);
+                    case ExportLC.Charges.Courier:
+                        loadCharge(ch, ref txtChargeCode2, ref rcbChargeCcy2, ref rcbChargeAcct2, ref tbChargeAmt2, ref rcbPartyCharged2, ref rcbAmortCharge2, ref rcbChargeStatus2, ref lblTaxCode2, ref lblTaxAmt2);
                         break;
-                    case "ELC.OTHER":
-                        loadCharge(ch, ref rcbChargeCode3, ref rcbChargeCcy3, ref rcbChargeAcct3, ref tbChargeAmt3, ref rcbPartyCharged3, ref rcbAmortCharge3, ref rcbChargeStatus3, ref lblTaxCode3, ref lblTaxAmt3);
+                    case ExportLC.Charges.Other:
+                        loadCharge(ch, ref txtChargeCode3, ref rcbChargeCcy3, ref rcbChargeAcct3, ref tbChargeAmt3, ref rcbPartyCharged3, ref rcbAmortCharge3, ref rcbChargeStatus3, ref lblTaxCode3, ref lblTaxAmt3);
                         break;
                 }
             }
         }
-        private void loadCharge(BEXPORT_LC_CHARGES ExLCCharge, ref RadComboBox cbChargeCode, ref RadComboBox cbChargeCcy, ref RadComboBox cbChargeAcc, ref RadNumericTextBox txtChargeAmt,
+        private void loadCharge(BEXPORT_LC_CHARGES ExLCCharge, ref RadTextBox txtChargeCode, ref RadComboBox cbChargeCcy, ref RadComboBox cbChargeAcc, ref RadNumericTextBox txtChargeAmt,
             ref RadComboBox cbChargeParty, ref RadComboBox cbChargeAmort, ref RadComboBox cbChargeStatus, ref Label lblTaxCode, ref Label lblTaxAmt)
         {
-            cbChargeCode.SelectedValue = ExLCCharge.ChargeCode;
+            txtChargeCode.Text = ExLCCharge.ChargeCode;
             cbChargeCcy.SelectedValue = ExLCCharge.ChargeCcy;
             cbChargeAcc.SelectedValue = ExLCCharge.ChargeAcc;
             txtChargeAmt.Value = ExLCCharge.ChargeAmt;
@@ -445,18 +449,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void rcbWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             string WaiveCharges = rcbWaiveCharges.SelectedValue;
-            divACCPTCHG.Visible = WaiveCharges.Equals("NO");
-            divCABLECHG.Visible = WaiveCharges.Equals("NO");
-            divPAYMENTCHG.Visible = WaiveCharges.Equals("NO");
+            RadTabStrip3.Visible = WaiveCharges.Equals(bd.YesNo.NO);
+            RadMultiPage1.Visible = WaiveCharges.Equals(bd.YesNo.NO);
         }
 
         protected void LoadChargeAcct(ref RadComboBox cboChargeAcct, string ChargeCcy)
         {
             bc.Commont.initRadComboBox(ref cboChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Text, ChargeCcy));
         }
-        protected void rcbChargeCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void rcbChargeCcy1_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct(ref rcbChargeAcct, rcbChargeCcy.SelectedValue);
+            LoadChargeAcct(ref rcbChargeAcct1, rcbChargeCcy1.SelectedValue);
         }
         protected void rcbChargeCcy2_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
@@ -509,7 +512,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         reportTemplate = Context.Server.MapPath(reportTemplate + "Mau Thong bao Tu chinh LC.doc");
                         reportSaveName = "ThuThongBao" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         //
-                        var dataThuThongBao = new MauThongBaoVaTuChinhLc()
+                        var dataThuThongBao = new Model.Reports.MauThongBaoVaTuChinhLc()
                         {
                             Ref = ExLCAmend.AmendNo,
                             Beneficiary = ExLCAmend.BeneficiaryName,
@@ -539,9 +542,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         if (!string.IsNullOrEmpty(ExLC.ApplicantAddr2)) dataThuThongBao.Applicant += ", " + ExLC.ApplicantAddr2;
                         if (!string.IsNullOrEmpty(ExLC.ApplicantAddr3)) dataThuThongBao.Applicant += ", " + ExLC.ApplicantAddr3;
                         //
-                        var lstData = new List<MauThongBaoVaTuChinhLc>();
+                        var lstData = new List<Model.Reports.MauThongBaoVaTuChinhLc>();
                         lstData.Add(dataThuThongBao);
-                        tbl1 = Utils.CreateDataTable<MauThongBaoVaTuChinhLc>(lstData);
+                        tbl1 = Utils.CreateDataTable<Model.Reports.MauThongBaoVaTuChinhLc>(lstData);
                         reportData.Tables.Add(tbl1);
                         break;
                 }
