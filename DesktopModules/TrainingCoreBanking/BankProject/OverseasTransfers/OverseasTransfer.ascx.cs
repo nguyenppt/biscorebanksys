@@ -1246,8 +1246,9 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void btnMT103Report_Click(object sender, EventArgs e)
         {
+            DataSet ds = bd.SQLData.B_BOVERSEASTRANSFER_Report(txtCode.Text);
             bc.Reports.createFileDownload(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OverseasTransfer/OverseasTransferMT103.doc"),
-                bd.SQLData.B_BOVERSEASTRANSFER_Report(txtCode.Text), "OverseasTransferMT103_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
+                ds, "OverseasTransferMT103_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", Aspose.Words.SaveFormat.Pdf, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void btnPhieuCKReport_Click(object sender, EventArgs e)
