@@ -281,7 +281,7 @@
                         Exchange Rate
                     </td>
                     <td class="MyContent">
-                        <telerik:RadNumericTextBox ID="numExchangeRate" runat="server" Value="1"/>
+                        <telerik:RadNumericTextBox ID="numExchangeRate" runat="server" />
                     </td>
                 </tr>
                  <tr>
