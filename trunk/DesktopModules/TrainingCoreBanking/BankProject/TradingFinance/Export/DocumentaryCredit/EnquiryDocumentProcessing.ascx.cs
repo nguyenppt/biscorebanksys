@@ -94,7 +94,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 case ExportLCDocProcessing.Actions.Amend:
                     radGridReview.DataSource = enquiry
                         .OrderByDescending(p => p.AmendDate)
-                        .Select(q => new { Code = q.DocCode, ImportLCCode = q.DocumentaryCreditNo, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryName, q.IssuingBankNo, Status = q.AmendStatus })
+                        .Select(q => new { Code = q.AmendNo, ImportLCCode = q.DocumentaryCreditNo, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryName, q.IssuingBankNo, Status = q.AmendStatus })
                         .ToList();
                     return;
                 default:// ExportLC.Actions.Register:

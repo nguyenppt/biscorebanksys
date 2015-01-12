@@ -27,52 +27,224 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtChargeCode2.Text = ExportLCDocProcessing.Charges.Courier;
             txtChargeCode3.Text = ExportLCDocProcessing.Charges.Other;
             if (IsPostBack) return;
+            //
+            RadToolBar1.FindItemByValue("btCommit").Enabled = false;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+            //
             setDefaultControls();
             //
-            if (!string.IsNullOrEmpty(Request.QueryString["code"]))
+            string lst = Request.QueryString["lst"];
+            tbLCCode.Text = Request.QueryString["code"];
+            if (!string.IsNullOrEmpty(tbLCCode.Text))
             {
-                //Code có dạng TFxxx hoặc TFxxx.No hoặc TFxxx.No.AmendNo
-                tbLCCode.Text = Request.QueryString["code"].Trim();
-                var ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
+                BEXPORT_LC_DOCS_PROCESSING ExLCDoc, ExLCDocAmend;
                 int i = tbLCCode.Text.IndexOf(".");
-                if (i < 0)//TFxxx
+                #region Amend
+                if (TabId == ExportLCDocProcessing.Actions.Amend)
                 {
-                    if (TabId != ExportLCDocProcessing.Actions.Register && TabId != ExportLCDocProcessing.Actions.Register1)
+                    //Code có dạng DocCode = TFxxx.No hoặc AmendCode = TFxxx.No.No
+                    if (i < 0)
                     {
                         lblLCCodeMessage.Text = "Invalid Code !";
                         return;
                     }
+                    #region Nếu chờ duyệt
+                    if (!string.IsNullOrEmpty(lst) && lst.Equals("4appr"))
+                    {
+                        //Nếu code là TFxxx.No -> báo lỗi
+                        if (tbLCCode.Text.IndexOf(".", i + 1) < 0)
+                        {
+                            lblLCCodeMessage.Text = "Invalid Code !";
+                            return;
+                        }
+                        //Load thông tin AmendCode
+                        ExLCDocAmend = dbEntities.findExportLCDoc(tbLCCode.Text);
+                        if (ExLCDocAmend == null)
+                        {
+                            lblLCCodeMessage.Text = "This Code not exists !";
+                            return;
+                        }
+                        loadLCDoc(ExLCDocAmend);
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        if (!string.IsNullOrEmpty(ExLCDocAmend.AmendStatus) && !ExLCDocAmend.AmendStatus.Equals(bd.TransactionStatus.UNA))
+                        {
+                            lblLCCodeMessage.Text = "This Code status invalid !";
+                            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            return;
+                        }
+                        //Cho phép duyệt
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        return;
+                    }
+                    #endregion
+                    //
+                    ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
+                    if (ExLCDoc == null)
+                    {
+                        lblLCCodeMessage.Text = "This Code not exists !";
+                        return;
+                    }
+                    #region Nếu Code là AmendCode = TFxxx.No.No
+                    if (tbLCCode.Text.IndexOf(".", i + 1) > 0)
+                    {
+                        loadLCDoc(ExLCDoc);
+                        if (ExLCDoc.AmendStatus.Equals(bd.TransactionStatus.AUT))
+                        {
+                            lblLCCodeMessage.Text = "This Code is authorized !";
+                            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            bc.Commont.SetTatusFormControls(this.Controls, false);
+                            return;
+                        }
+                        //Cho phép edit ?
+                        ExLCDocAmend = dbEntities.findExportLCDocLastestAmend(ExLCDoc.DocCode);
+                        if (!ExLCDoc.AmendNo.Equals(ExLCDocAmend.AmendNo))
+                        {
+                            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            bc.Commont.SetTatusFormControls(this.Controls, false);
+                            return;
+                        }
+                        //Cho phép edit
+                        RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                        RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                        return;
+                    }
+                    #endregion
+                    //Code là DocCode = TFxxx.No
+                    if (!ExLCDoc.Status.Equals(bd.TransactionStatus.AUT))
+                    {
+                        lblLCCodeMessage.Text = "This Code is not authorized !";
+                        return;
+                    }
+                    if (ExLCDoc.PaymentFull != null && ExLCDoc.PaymentFull.Value)
+                    {
+                        lblLCCodeMessage.Text = "This Code is PAYMENT FULL !";
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLCDoc.AmendStatus) && ExLCDoc.Status.Equals(bd.TransactionStatus.UNA))
+                    {
+                        lblLCCodeMessage.Text = "This Code is waiting for AMEND approve !";
+                        return;
+                    }
+                    if (!string.IsNullOrEmpty(ExLCDoc.RejectStatus))
+                    {
+                        if (ExLCDoc.RejectStatus.Equals(bd.TransactionStatus.UNA))
+                        {
+                            lblLCCodeMessage.Text = "This Code is waiting for REJECT approve !";
+                            return;
+                        }
+                        if (ExLCDoc.RejectStatus.Equals(bd.TransactionStatus.AUT))
+                        {
+                            lblLCCodeMessage.Text = "This Code is REJECTED !";
+                            return;
+                        }
+                    }
+                    ExLCDocAmend = dbEntities.findExportLCDocLastestAmend(tbLCCode.Text);
+                    if (ExLCDocAmend.AmendNo.Equals(tbLCCode.Text))
+                        tbLCCode.Text += ".1";
+                    else
+                    {
+                        string[] s = ExLCDocAmend.AmendNo.Split('.');
+                        tbLCCode.Text += "." + (Convert.ToInt32(s[2]) + 1);
+                    }
+                    loadLCDoc(ExLCDoc);
+                    //Cho phép amend
+                    RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                    RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                    return;
+                }
+                #endregion Amend
+                #region register, reject, accept
+                #region chờ duyệt
+                if (!string.IsNullOrEmpty(lst) && lst.Equals("4appr"))
+                {
+                    if (i < 0)
+                    {
+                        lblLCCodeMessage.Text = "Invalid Code !";
+                        return;
+                    }
+                    ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
+                    if (ExLCDoc == null)
+                    {
+                        lblLCCodeMessage.Text = "This Code not exists !";
+                        return;
+                    }
+                    loadLCDoc(ExLCDoc);
+                    bc.Commont.SetTatusFormControls(this.Controls, false);
+                    if (TabId == ExportLCDocProcessing.Actions.Accept)
+                    {
+                        if (!string.IsNullOrEmpty(ExLCDoc.AcceptStatus) && ExLCDoc.AcceptStatus.Equals(bd.TransactionStatus.UNA))
+                        {
+                            //Cho phép duyệt
+                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            return;
+                        }
+                        return;
+                    }
+                    if (TabId == ExportLCDocProcessing.Actions.Reject)
+                    {
+                        if (!string.IsNullOrEmpty(ExLCDoc.RejectStatus) && ExLCDoc.RejectStatus.Equals(bd.TransactionStatus.UNA))
+                        {
+                            //Cho phép duyệt
+                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            return;
+                        }
+                        return;
+                    }
+                    //register approve
+                    if (!string.IsNullOrEmpty(ExLCDoc.Status) && ExLCDoc.Status.Equals(bd.TransactionStatus.UNA))
+                    {
+                        //Cho phép duyệt
+                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                        return;
+                    }
+                    return;
+                }
+                #endregion
+                //
+                if (i < 0)//Export LC code
+                {
+                    if (TabId == ExportLCDocProcessing.Actions.Reject || TabId == ExportLCDocProcessing.Actions.Accept)
+                    {
+                        lblLCCodeMessage.Text = "Invalid Code !";
+                        return;
+                    }
+                    ExLCDoc = dbEntities.findExportLCLastestDoc(tbLCCode.Text);
+                    if (ExLCDoc != null)
+                    {
+                        if (ExLCDoc.Status.Equals(bd.TransactionStatus.UNA))
+                        {
+                            lblLCCodeMessage.Text = "This LCCode has doc waiting for approve !";
+                            return;
+                        }
+                    }
                     var ExLC = dbEntities.findExportLC(tbLCCode.Text);
                     if (ExLC == null)
                     {
-                        lblLCCodeMessage.Text = "Can not find this LC Code !";
+                        lblLCCodeMessage.Text = "This LCCode not exists !";
                         return;
                     }
-                    if (!ExLC.Status.Equals(bd.TransactionStatus.AUT))
-                    {
-                        lblLCCodeMessage.Text = "This LC Code not authorized !";
-                        return;
-                    }
-                    /*if (!string.IsNullOrEmpty(ExLC.AmendStatus) && ExLC.AmendStatus.Equals(bd.TransactionStatus.UNA))
-                    {
-                        lblLCCodeMessage.Text = "This LC Code is under amend !";
-                        return;
-                    }
-                    if (!string.IsNullOrEmpty(ExLC.CancelStatus) && !ExLC.CancelStatus.Equals(bd.TransactionStatus.REV))
-                    {
-                        lblLCCodeMessage.Text = "This LC Code is canceled !";
-                        return;
-                    }
-                    if (!string.IsNullOrEmpty(ExLC.ClosedStatus) && !ExLC.ClosedStatus.Equals(bd.TransactionStatus.REV))
-                    {
-                        lblLCCodeMessage.Text = "This LC Code is closed !";
-                        return;
-                    }
-                    if (ExLC.PaymentFull.HasValue && ExLC.PaymentFull.Value)
-                    {
-                        lblLCCodeMessage.Text = "This LC Code is PaymentFull !";
-                        return;
-                    }*/
+                    loadLC(ExLC);
+                    txtVATNo.Text = dbEntities.getVATNo();
                     if (ExLCDoc == null)
                         tbLCCode.Text += ".1";
                     else
@@ -80,109 +252,65 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         string[] s = ExLCDoc.DocCode.Split('.');
                         tbLCCode.Text += "." + (Convert.ToInt32(s[1]) + 1);
                     }
-                    loadLC(ExLC);
+                    //Cho phép thanh toán
                     RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                    RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                     return;
                 }
-                //                
-                i = tbLCCode.Text.IndexOf(".", i + 1);
-                if (i > 0)//AmendNo
+                //
+                ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
+                if (ExLCDoc == null)
                 {
-                    if (TabId != ExportLCDocProcessing.Actions.Amend)
-                    {
-                        lblLCCodeMessage.Text = "Invalid AmendNo !";
-                        return;
-                    }
-                    loadLCDoc(ExLCDoc);
-                    if (!string.IsNullOrEmpty(ExLCDoc.AmendStatus) && ExLCDoc.AmendStatus.Equals(bd.TransactionStatus.AUT))
-                    {
-                        lblLCCodeMessage.Text = "This doc already authorized !";
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                        bc.Commont.SetTatusFormControls(this.Controls, false);
-                        return;
-                    }
-                    if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && Request.QueryString["lst"].Equals("4appr"))
-                    {
-                        if (ExLCDoc.AmendStatus.Equals(bd.TransactionStatus.UNA))
-                        {
-                            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                            return;
-                        }
-                        lblLCCodeMessage.Text = "This doc already reversed !";
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                        bc.Commont.SetTatusFormControls(this.Controls, false);
-                        return;
-                    }
-                    RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                    lblLCCodeMessage.Text = "This Code not exists !";
                     return;
                 }
-                //TFxx.No
                 loadLCDoc(ExLCDoc);
-                if (TabId == ExportLCDocProcessing.Actions.Register || TabId == ExportLCDocProcessing.Actions.Register1)
+                if (TabId == ExportLCDocProcessing.Actions.Accept || TabId == ExportLCDocProcessing.Actions.Reject)
                 {
-                    if (ExLCDoc.Status.Equals(bd.TransactionStatus.AUT))
-                    {
-                        lblLCCodeMessage.Text = "This doc already authorized !";
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                    bc.Commont.SetTatusFormControls(this.Controls, false);
+                    if (!string.IsNullOrEmpty(ExLCDoc.ActiveRecordFlag) && !ExLCDoc.ActiveRecordFlag.Equals("Yes"))
+                    if (!ExLCDoc.Status.Equals(bd.TransactionStatus.AUT))
                         return;
-                    }
-                    if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && Request.QueryString["lst"].Equals("4appr"))
+                    if (TabId == ExportLCDocProcessing.Actions.Accept)
                     {
-                        if (ExLCDoc.Status.Equals(bd.TransactionStatus.UNA))
+                        if (string.IsNullOrEmpty(ExLCDoc.AcceptStatus) || !ExLCDoc.AcceptStatus.Equals(bd.TransactionStatus.AUT))
                         {
-                            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                            RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                            RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                            RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                            //Cho phép accept
+                            RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                             return;
                         }
-                        lblLCCodeMessage.Text = "This doc already reversed !";
-                        RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                        bc.Commont.SetTatusFormControls(this.Controls, false);
                         return;
                     }
-                    RadToolBar1.FindItemByValue("btCommit").Enabled = true;
-                    return;
+                    if (TabId == ExportLCDocProcessing.Actions.Reject)
+                    {
+                        if (string.IsNullOrEmpty(ExLCDoc.RejectStatus) || !ExLCDoc.RejectStatus.Equals(bd.TransactionStatus.AUT))
+                        {
+                            //Cho phép reject
+                            RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                            return;
+                        }
+                        return;
+                    }
                 }
                 if (!ExLCDoc.Status.Equals(bd.TransactionStatus.AUT))
                 {
-                    lblLCCodeMessage.Text = "This doc not authorize !";
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                    bc.Commont.SetTatusFormControls(this.Controls, false);
-                    return;
-                }
-                if (TabId == ExportLCDocProcessing.Actions.Amend)
-                {
-                    if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && Request.QueryString["lst"].Equals("4appr"))
-                    {
-                        lblLCCodeMessage.Text = "Invalid code !";
-                        bc.Commont.SetTatusFormControls(this.Controls, false);
-                        return;
-                    }
-                    if (!string.IsNullOrEmpty(ExLCDoc.AmendStatus) && ExLCDoc.AmendStatus.Equals(bd.TransactionStatus.UNA))
-                    {
-                        lblLCCodeMessage.Text = "This docs is waiting for amend authorize !";
-                        bc.Commont.SetTatusFormControls(this.Controls, false);
-                        return;
-                    }
-                    var ExLcDocAmend = dbEntities.findExportLCDocLastestAmend(tbLCCode.Text);
-                    if (tbLCCode.Text.Equals(ExLcDocAmend.AmendNo))
-                        tbLCCode.Text += ".1";
-                    else
-                    {
-                        string[] s = ExLCDoc.DocCode.Split('.');
-                        tbLCCode.Text += "." + (Convert.ToInt32(s[2]) + 1);
-                    }
+                    //Cho phép edit
                     RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                    RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                     return;
                 }
+                bc.Commont.SetTatusFormControls(this.Controls, false);
+                return;
+                #endregion register, reject, accept
             }
+            RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
         }
         private void setDefaultControls()
         {
@@ -212,10 +340,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtChargeCode2.Enabled = false;
             txtChargeCode3.Enabled = false;
             //
-            divAmountRegister.Visible = ((TabId == ExportLCDocProcessing.Actions.Register) || (TabId == ExportLCDocProcessing.Actions.Register1));
+            txtVATNo.Enabled = false;
+            //
+            divAmountRegister.Visible = (TabId != ExportLCDocProcessing.Actions.Amend);
             divAmountAmend.Visible = (TabId == ExportLCDocProcessing.Actions.Amend);
             //
-            divTenorRegister.Visible = ((TabId == ExportLCDocProcessing.Actions.Register) || (TabId == ExportLCDocProcessing.Actions.Register1));
+            divTenorRegister.Visible = (TabId != ExportLCDocProcessing.Actions.Amend);
             divTenorAmend.Visible = (TabId == ExportLCDocProcessing.Actions.Amend);
             //
             if (TabId == ExportLCDocProcessing.Actions.Amend)
@@ -258,6 +388,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         private void loadLCDoc(BEXPORT_LC_DOCS_PROCESSING ExLCDoc)
         {
+            if (TabId == ExportLCDocProcessing.Actions.Accept)
+            {
+            }
+            if (TabId == ExportLCDocProcessing.Actions.Reject)
+            {
+            }
             txtBeneficiaryName.Text = ExLCDoc.BeneficiaryName;
             txtBeneficiaryAddr1.Text = ExLCDoc.BeneficiaryAddr1;
             txtBeneficiaryAddr2.Text = ExLCDoc.BeneficiaryAddr2;
@@ -288,26 +424,42 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtDocumentaryCreditNo.Text = ExLCDoc.DocumentaryCreditNo;
             txtCommodity.Text = ExLCDoc.Commodity;
             rcbCurrency.SelectedValue = ExLCDoc.Currency;
-            txtAmount.Value = ExLCDoc.Amount;
-            txtDocumentReceivedDate.SelectedDate = ExLCDoc.DocumentReceivedDate;
-            txtProccessingDate.SelectedDate = ExLCDoc.ProccessingDate;
-            txtTenor.Text = ExLCDoc.Tenor;
-            txtInvoiceNo.Text = ExLCDoc.InvoiceNo;
-            //
-            if (!string.IsNullOrEmpty(ExLCDoc.DocsCode1))
+            if (TabId == ExportLCDocProcessing.Actions.Amend)
             {
-                loadLCDocsCode(ExLCDoc.DocsCode1, ExLCDoc.NoOfOriginals1, ExLCDoc.NoOfCopies1, ref rcbDocsCode1, ref txtNoOfOriginals1, ref txtNoOfCopies1);
-                if (!string.IsNullOrEmpty(ExLCDoc.DocsCode2))
+                if (!string.IsNullOrEmpty(Request.QueryString["lst"]) && Request.QueryString["lst"].Equals("4appr"))
                 {
-                    divDocs2.Attributes.CssStyle.Remove("Display");
-                    loadLCDocsCode(ExLCDoc.DocsCode2, ExLCDoc.NoOfOriginals2, ExLCDoc.NoOfCopies2, ref rcbDocsCode2, ref txtNoOfOriginals2, ref txtNoOfCopies2);
-                    if (!string.IsNullOrEmpty(ExLCDoc.DocsCode3))
-                    {
-                        divDocs3.Attributes.CssStyle.Remove("Display");
-                        loadLCDocsCode(ExLCDoc.DocsCode3, ExLCDoc.NoOfOriginals3, ExLCDoc.NoOfCopies3, ref rcbDocsCode3, ref txtNoOfOriginals3, ref txtNoOfCopies3);
-                    }
+                    var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal, true);
+                    txtOriginalAmount.Value = ExLCDocOld.Amount;
+                    txtNewAmount.Value = ExLCDoc.Amount;
+                    //
+                    txtOriginalTenor.Text = ExLCDocOld.Tenor;                    
+                    rcbNewTenor.SelectedValue = ExLCDoc.Tenor;
+                }
+                else
+                {
+                    txtOriginalAmount.Value = ExLCDoc.Amount;
+                    txtOriginalTenor.Text = ExLCDoc.Tenor;
                 }
             }
+            else
+            {
+                txtAmount.Value = ExLCDoc.Amount;
+                txtTenor.Text = ExLCDoc.Tenor;
+            }
+            txtDocumentReceivedDate.SelectedDate = ExLCDoc.DocumentReceivedDate;
+            txtProccessingDate.SelectedDate = ExLCDoc.ProccessingDate;            
+            txtInvoiceNo.Text = ExLCDoc.InvoiceNo;
+            //
+            loadLCDocsCode(ExLCDoc.DocsCode1, ExLCDoc.NoOfOriginals1, ExLCDoc.NoOfCopies1, ref rcbDocsCode1, ref txtNoOfOriginals1, ref txtNoOfCopies1);
+            loadLCDocsCode(ExLCDoc.DocsCode2, ExLCDoc.NoOfOriginals2, ExLCDoc.NoOfCopies2, ref rcbDocsCode2, ref txtNoOfOriginals2, ref txtNoOfCopies2);
+            loadLCDocsCode(ExLCDoc.DocsCode3, ExLCDoc.NoOfOriginals3, ExLCDoc.NoOfCopies3, ref rcbDocsCode3, ref txtNoOfOriginals3, ref txtNoOfCopies3);
+            if (!string.IsNullOrEmpty(ExLCDoc.DocsCode3))
+            {
+                divDocs2.Attributes.CssStyle.Remove("Display");
+                divDocs3.Attributes.CssStyle.Remove("Display");
+            }
+            else if (!string.IsNullOrEmpty(ExLCDoc.DocsCode2))
+                divDocs2.Attributes.CssStyle.Remove("Display");
             //
             txtRemark.Text = ExLCDoc.Remark;
             txtSettlementInstruction.Text = ExLCDoc.SettlementInstruction;
@@ -363,20 +515,30 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
         {
-            var ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
+            string docCode = tbLCCode.Text.Trim(), lcCode;            
+            var ExLCDoc = dbEntities.findExportLCDoc(docCode);
+            BEXPORT_LC ExLC;
             var toolBarButton = e.Item as RadToolBarButton;
             var commandName = toolBarButton.CommandName.ToLower();
             #region Register
             if (TabId == ExportLCDocProcessing.Actions.Register || TabId == ExportLCDocProcessing.Actions.Register1)
             {
+                lcCode = docCode.Substring(0, docCode.IndexOf("."));
+                ExLC = dbEntities.findExportLC(lcCode);
+                var ExLCAmount = ExLC.Amount - (ExLC.PaymentAmount.HasValue ? ExLC.PaymentAmount.Value : 0);
                 switch (commandName)
                 {
                     case bc.Commands.Commit:
+                        if (ExLCAmount < txtAmount.Value.Value)
+                        {
+                            lblLCCodeMessage.Text = "Doc Amount must less than or equal LC Amount";
+                            return;
+                        }
                         if (ExLCDoc == null)
                         {
                             ExLCDoc = new BEXPORT_LC_DOCS_PROCESSING();
-                            ExLCDoc.DocCode = tbLCCode.Text.Trim();
-                            ExLCDoc.AmendNo = tbLCCode.Text.Trim();
+                            ExLCDoc.DocCode = docCode;
+                            ExLCDoc.AmendNo = docCode;
                             ExLCDoc.ActiveRecordFlag = "Yes";
                             ExLCDoc.Status = bd.TransactionStatus.UNA;
                             ExLCDoc.CreateDate = DateTime.Now;
@@ -392,11 +554,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             ExLCDoc.UpdatedBy = this.UserInfo.Username;
                             saveLCDoc(ref ExLCDoc);
                             //Xoa di insert lai
-                            var ExLCCharge = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Trim().ToLower().Equals(tbLCCode.Text.Trim().ToLower())).FirstOrDefault();
-                            while (ExLCCharge != null)
+                            var ExLCDocCharge = dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Trim().ToLower().Equals(docCode.ToLower()));
+                            if (ExLCDocCharge != null)
                             {
-                                dbEntities.BEXPORT_LC_CHARGES.Remove(ExLCCharge);
-                                ExLCCharge = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Trim().ToLower().Equals(tbLCCode.Text.Trim().ToLower())).FirstOrDefault();
+                                foreach(BEXPORT_LC_DOCS_PROCESSING_CHARGES ch in ExLCDocCharge)
+                                    dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Remove(ch);
                             }
                         }
                         if (ExLCDoc.WaiveCharges.Equals(bd.YesNo.NO))
@@ -436,28 +598,36 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 ExLCDoc.AuthorizedBy = this.UserInfo.Username;
                                 ExLCDoc.AuthorizedDate = DateTime.Now;
                                 //
+                                if (ExLC.PaymentAmount.HasValue)
+                                    ExLC.PaymentAmount += ExLCDoc.Amount;
+                                else
+                                    ExLC.PaymentAmount = ExLCDoc.Amount;
+                                ExLC.PaymentFull = (ExLC.PaymentAmount == ExLC.Amount);
+                                //
                                 dbEntities.SaveChanges();
                                 Response.Redirect("Default.aspx?tabid=" + this.TabId);
-                                return;
                             }
-                            //
-                            ExLCDoc.Status = bd.TransactionStatus.REV;
-                            dbEntities.SaveChanges();
-                            Response.Redirect("Default.aspx?tabid=" + this.TabId + "&code=" + tbLCCode.Text);
+                            else
+                            {
+                                ExLCDoc.Status = bd.TransactionStatus.REV;
+                                dbEntities.SaveChanges();
+                                Response.Redirect("Default.aspx?tabid=" + this.TabId + "&code=" + tbLCCode.Text);
+                            }
                         }
                         break;
                 }
+                return;
             }
             #endregion Register
             #region Amend
             if (TabId == ExportLCDocProcessing.Actions.Amend)
             {
+                docCode = docCode.Substring(0, docCode.IndexOf(".", docCode.IndexOf(".") + 1));
                 switch (commandName)
                 {
                     case bc.Commands.Commit:
                         if (ExLCDoc == null)
                         {
-                            string docCode = tbLCCode.Text.Substring(0, tbLCCode.Text.LastIndexOf("."));
                             var ExLCDocOld = dbEntities.findExportLCDoc(docCode);
                             ExLCDocOld.ActiveRecordFlag = "No";
                             ExLCDoc = new BEXPORT_LC_DOCS_PROCESSING()
@@ -466,16 +636,29 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 AmendNoOriginal = ExLCDocOld.AmendNo,
                                 DocCode = docCode,
                                 ActiveRecordFlag = "Yes",
-                                Status = bd.TransactionStatus.UNA,
-                                CreateDate = DateTime.Now,
-                                CreateBy = this.UserInfo.Username,
+                                AmendStatus = bd.TransactionStatus.UNA,
+                                AmendDate = DateTime.Now,
+                                AmendBy = this.UserInfo.Username,
+                                PaymentFull = ExLCDocOld.PaymentFull,
+                                Status = ExLCDocOld.Status,
+                                CreateBy = ExLCDocOld.CreateBy,
+                                CreateDate = ExLCDocOld.CreateDate,
+                                UpdatedBy = ExLCDocOld.UpdatedBy,
+                                UpdateDate = ExLCDocOld.UpdateDate,
+                                AuthorizedBy = ExLCDocOld.AuthorizedBy,
+                                AuthorizedDate = ExLCDocOld.AuthorizedDate,
+                                RejectStatus = ExLCDocOld.RejectStatus,
+                                RejectDate = ExLCDocOld.RejectDate,
+                                AcceptStatus = ExLCDocOld.AcceptStatus,
+                                AcceptDate = ExLCDocOld.AcceptDate,
+                                PaymentAmount = ExLCDocOld.PaymentAmount
                             };
                             saveLCDoc(ref ExLCDoc);
                             dbEntities.BEXPORT_LC_DOCS_PROCESSING.Add(ExLCDoc);
                         }
                         else
                         {
-                            var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal);
+                            var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal, true);
                             ExLCDocOld.ActiveRecordFlag = "No";
                             //
                             ExLCDoc.AmendStatus = bd.TransactionStatus.UNA;
@@ -484,11 +667,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             ExLCDoc.UpdatedBy = this.UserInfo.Username;
                             saveLCDoc(ref ExLCDoc);
                             //Xoa di insert lai
-                            var ExLCCharge = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Trim().ToLower().Equals(tbLCCode.Text.Trim().ToLower())).FirstOrDefault();
-                            while (ExLCCharge != null)
+                            var ExLCDocCharge = dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Trim().ToLower().Equals(ExLCDoc.AmendNo.ToLower()));
+                            if (ExLCDocCharge != null)
                             {
-                                dbEntities.BEXPORT_LC_CHARGES.Remove(ExLCCharge);
-                                ExLCCharge = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Trim().ToLower().Equals(tbLCCode.Text.Trim().ToLower())).FirstOrDefault();
+                                foreach (BEXPORT_LC_DOCS_PROCESSING_CHARGES ch in ExLCDocCharge)
+                                    dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Remove(ch);
                             }
                         }
                         if (ExLCDoc.WaiveCharges.Equals(bd.YesNo.NO))
@@ -522,28 +705,86 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     case bc.Commands.Reverse:
                         if (ExLCDoc != null)
                         {
+                            var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal, true);
                             if (commandName.Equals(bc.Commands.Authorize))
                             {
+                                if (!ExLCDoc.Amount.HasValue) ExLCDoc.Amount = ExLCDocOld.Amount;
+                                if (!string.IsNullOrEmpty(ExLCDoc.Tenor)) ExLCDoc.Tenor = ExLCDocOld.Tenor;
                                 ExLCDoc.AmendStatus = bd.TransactionStatus.AUT;
                                 //
                                 dbEntities.SaveChanges();
                                 Response.Redirect("Default.aspx?tabid=" + this.TabId);
-                                return;
                             }
-                            //
-                            var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal);
-                            ExLCDocOld.ActiveRecordFlag = "Yes";
-                            //
-                            ExLCDoc.AmendStatus = bd.TransactionStatus.REV;
-                            ExLCDoc.ActiveRecordFlag = "No";
-                            //
-                            dbEntities.SaveChanges();
-                            Response.Redirect("Default.aspx?tabid=" + this.TabId + "&code=" + tbLCCode.Text);
+                            else
+                            {
+                                ExLCDocOld.ActiveRecordFlag = "Yes";
+                                //
+                                ExLCDoc.AmendStatus = bd.TransactionStatus.REV;
+                                ExLCDoc.ActiveRecordFlag = "No";
+                                //
+                                dbEntities.SaveChanges();
+                                Response.Redirect("Default.aspx?tabid=" + this.TabId + "&code=" + tbLCCode.Text);
+                            }
                         }
                         break;
                 }
+                return;
             }
             #endregion Amend
+            #region Accept, Reject
+            if (TabId == ExportLCDocProcessing.Actions.Reject || TabId == ExportLCDocProcessing.Actions.Accept)
+            {
+                switch (commandName)
+                {
+                    case bc.Commands.Commit:
+                        if (ExLCDoc != null)
+                        {
+                            if (TabId == ExportLCDocProcessing.Actions.Reject)
+                            {
+                                ExLCDoc.RejectStatus = bd.TransactionStatus.UNA;
+                                ExLCDoc.RejectDate = DateTime.Now;
+                            }
+                            else
+                            {
+                                ExLCDoc.AcceptStatus = bd.TransactionStatus.UNA;
+                                ExLCDoc.AcceptDate = DateTime.Now;
+                            }
+                            saveLCDoc(ref ExLCDoc);
+                            dbEntities.SaveChanges();
+                        }                        
+                        //
+                        Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                        break;
+                    case bc.Commands.Authorize:
+                    case bc.Commands.Reverse:
+                        if (ExLCDoc != null)
+                        {
+                            if (commandName.Equals(bc.Commands.Authorize))
+                            {
+                                if (TabId == ExportLCDocProcessing.Actions.Reject)
+                                    ExLCDoc.RejectStatus = bd.TransactionStatus.AUT;
+                                else
+                                    ExLCDoc.AcceptStatus = bd.TransactionStatus.AUT;
+                                //
+                                dbEntities.SaveChanges();
+                                Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                            }
+                            else
+                            {
+                                if (TabId == ExportLCDocProcessing.Actions.Reject)
+                                    ExLCDoc.RejectStatus = bd.TransactionStatus.REV;
+                                else
+                                    ExLCDoc.AcceptStatus = bd.TransactionStatus.REV;
+                                //
+                                dbEntities.SaveChanges();
+                                Response.Redirect("Default.aspx?tabid=" + this.TabId + "&code=" + tbLCCode.Text);
+                            }
+                        }
+                        break;
+                }
+                return;
+            }
+            #endregion Accept, Reject
         }
         private void saveLCDoc(ref BEXPORT_LC_DOCS_PROCESSING ExLCDoc)
         {
@@ -576,30 +817,50 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //
             ExLCDoc.DocumentaryCreditNo = txtDocumentaryCreditNo.Text;
             ExLCDoc.Commodity = txtCommodity.Text;
-            ExLCDoc.Currency = rcbCurrency.SelectedValue;
-            ExLCDoc.Amount = txtAmount.Value;
+            ExLCDoc.Currency = rcbCurrency.SelectedValue;            
             ExLCDoc.DocumentReceivedDate = txtDocumentReceivedDate.SelectedDate;
-            ExLCDoc.ProccessingDate = txtProccessingDate.SelectedDate;
-            ExLCDoc.Tenor = txtTenor.Text;
+            ExLCDoc.ProccessingDate = txtProccessingDate.SelectedDate;            
             ExLCDoc.InvoiceNo = txtInvoiceNo.Text;
+            if (TabId == ExportLCDocProcessing.Actions.Amend)
+            {
+                ExLCDoc.Amount = txtNewAmount.Value;
+                ExLCDoc.Tenor = rcbNewTenor.SelectedValue;
+            }
+            else
+            {
+                ExLCDoc.Amount = txtAmount.Value;
+                ExLCDoc.Tenor = txtTenor.Text;
+            }
             //
             ExLCDoc.DocsCode1 = rcbDocsCode1.SelectedValue;
             if (txtNoOfOriginals1.Value.HasValue)
                 ExLCDoc.NoOfOriginals1 = Convert.ToInt32(txtNoOfOriginals1.Value.Value);
+            else
+                ExLCDoc.NoOfOriginals1 = null;
             if (txtNoOfCopies1.Value.HasValue)
                 ExLCDoc.NoOfCopies1 = Convert.ToInt32(txtNoOfCopies1.Value.Value);
+            else
+                ExLCDoc.NoOfCopies1 = null;
             //
             ExLCDoc.DocsCode2 = rcbDocsCode2.SelectedValue;
             if (txtNoOfOriginals2.Value.HasValue)
                 ExLCDoc.NoOfOriginals2 = Convert.ToInt32(txtNoOfOriginals2.Value.Value);
+            else
+                ExLCDoc.NoOfOriginals2 = null;
             if (txtNoOfCopies2.Value.HasValue)
                 ExLCDoc.NoOfCopies2 = Convert.ToInt32(txtNoOfCopies2.Value.Value);
+            else
+                ExLCDoc.NoOfCopies2 = null;
             //
             ExLCDoc.DocsCode3 = rcbDocsCode3.SelectedValue;
             if (txtNoOfOriginals3.Value.HasValue)
                 ExLCDoc.NoOfOriginals3 = Convert.ToInt32(txtNoOfOriginals3.Value.Value);
+            else
+                ExLCDoc.NoOfOriginals3 = null;
             if (txtNoOfCopies3.Value.HasValue)
                 ExLCDoc.NoOfCopies3 = Convert.ToInt32(txtNoOfCopies3.Value.Value);
+            else
+                ExLCDoc.NoOfCopies3 = null;
             //
             ExLCDoc.Remark = txtRemark.Text;
             ExLCDoc.SettlementInstruction = txtSettlementInstruction.Text;
@@ -652,6 +913,117 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void rcbChargeCcy3_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadChargeAcct(ref rcbChargeAcct3, rcbChargeCcy3.SelectedValue);
+        }
+
+        protected void btnVAT_Click(object sender, EventArgs e)
+        {
+            showReport("VAT");
+        }
+        private void showReport(string reportType)
+        {
+            var ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
+            if (ExLCDoc == null)
+            {
+                lblLCCodeMessage.Text = "Can not find this Code.";
+                return;
+            }
+            //
+            string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/Export/DocumentProcessing/";
+            string reportSaveName = "";
+            DataSet reportData = new DataSet();
+            DataTable tbl1 = new DataTable();
+            Aspose.Words.SaveFormat saveFormat = Aspose.Words.SaveFormat.Doc;
+            Aspose.Words.SaveType saveType = Aspose.Words.SaveType.OpenInApplication;
+            try
+            {
+                switch (reportType)
+                {
+                    case "VAT":
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "VAT.doc");
+                        reportSaveName = "VAT" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        //
+                        var dataVAT = new Model.Reports.VAT()
+                        {
+                            UserName = ExLCDoc.CreateBy,
+                            VATNo = ExLCDoc.VATNo,
+                            TransCode = ExLCDoc.DocCode,
+                            //
+                            CustomerID = "",
+                            CustomerName = "",
+                            CustomerAddress = "",
+                            IdentityNo = "",
+                            //
+                            DebitAccount = "",
+                            ChargeRemarks = ExLCDoc.ChargeRemarks
+                        };
+                        //
+                        var ExLCDocCharges = dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Equals(tbLCCode.Text));
+                        if (ExLCDocCharges != null)
+                        {
+                            double TotalTaxAmount = 0, TotalChargeAmount = 0;
+                            foreach (BEXPORT_LC_DOCS_PROCESSING_CHARGES ch in ExLCDocCharges)
+                            {
+                                if (ch.ChargeAmt.HasValue && ch.ChargeAmt.Value != 0)
+                                {
+                                    if (string.IsNullOrEmpty(dataVAT.ChargeType1))
+                                    {
+                                        dataVAT.ChargeType1 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
+                                        dataVAT.ChargeAmount1 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
+                                        TotalChargeAmount += ch.ChargeAmt.Value;
+                                    }
+                                    else if (string.IsNullOrEmpty(dataVAT.ChargeType2))
+                                    {
+                                        dataVAT.ChargeType2 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
+                                        dataVAT.ChargeAmount2 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
+                                        TotalChargeAmount += ch.ChargeAmt.Value;
+                                    }
+                                    else if (string.IsNullOrEmpty(dataVAT.ChargeType3))
+                                    {
+                                        dataVAT.ChargeType3 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
+                                        dataVAT.ChargeAmount3 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
+                                        TotalChargeAmount += ch.ChargeAmt.Value;
+                                    }
+                                }
+                            }
+                            TotalChargeAmount += TotalTaxAmount;
+                            if (TotalChargeAmount != 0)
+                            {
+                                dataVAT.TotalChargeAmount = TotalChargeAmount + ExLCDoc.Currency;
+                                dataVAT.TotalChargeAmountWord = Utils.ReadNumber(ExLCDoc.Currency, TotalChargeAmount);
+                                if (TotalTaxAmount != 0)
+                                {
+                                    dataVAT.TotalTaxAmount = TotalTaxAmount + ExLCDoc.Currency + " PL90304";
+                                    dataVAT.TotalTaxText = "VAT";
+                                }
+                            }
+                        }
+                        //
+                        var lstData2 = new List<Model.Reports.VAT>();
+                        lstData2.Add(dataVAT);
+                        tbl1 = Utils.CreateDataTable<Model.Reports.VAT>(lstData2);
+                        reportData.Tables.Add(tbl1);
+                        break;
+                }
+                if (reportData != null)
+                {
+                    try
+                    {
+                        reportData.Tables[0].TableName = "Table1";
+                        bc.Reports.createFileDownload(reportTemplate, reportData, reportSaveName, saveFormat, saveType, Response);
+                    }
+                    catch (Exception err)
+                    {
+                        lblLCCodeMessage.Text = reportData.Tables[0].TableName + "#" + err.Message;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblLCCodeMessage.Text = ex.Message;
+            }
         }
     }
 }

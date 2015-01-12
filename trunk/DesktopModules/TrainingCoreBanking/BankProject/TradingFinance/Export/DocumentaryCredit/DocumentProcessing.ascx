@@ -17,8 +17,8 @@
     function RadToolBar1_OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
-            //args.set_cancel(false);
-            //radconfirm("Do you want to download 'Mau Bia Hs Lc' file ?", confirmCallbackFunction_MauBiaHsLc, 420, 150, null, 'Download');
+            if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO")
+                radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>" ||
             button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
@@ -27,6 +27,11 @@
                 url += '&lst=4appr';
             }
             window.location = url;
+        }
+    }
+    function confirmCallbackFunction_VAT(result) {
+        if (result) {
+            $("#<%=btnVAT.ClientID %>").click();
         }
     }
 </script>
@@ -47,7 +52,7 @@
             ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search" Enabled="true">
+            ToolTip="Search" Value="btSearch" CommandName="search" Enabled="true" postback="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
             ToolTip="Print" Value="btPrint" CommandName="print" postback="false" Enabled="false">
@@ -348,13 +353,13 @@
                     <tr>    
                         <td class="MyLable">13.1.2 No. of Originals</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtNoOfOriginals1" Runat="server" />
+                            <telerik:RadNumericTextBox ID="txtNoOfOriginals1" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
                     <tr>    
                         <td class="MyLable">13.1.3 No. of Copies</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtNoOfCopies1" Runat="server" />
+                            <telerik:RadNumericTextBox ID="txtNoOfCopies1" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
                 </table>
@@ -371,13 +376,13 @@
                     <tr>    
                         <td class="MyLable">13.2.2 No. of Originals</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtNoOfOriginals2" Runat="server" />
+                            <telerik:RadNumericTextBox ID="txtNoOfOriginals2" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
                     <tr>    
                         <td class="MyLable">13.2.3 No. of Copies</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtNoOfCopies2" Runat="server" />
+                            <telerik:RadNumericTextBox ID="txtNoOfCopies2" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>`
                 </table>
@@ -394,13 +399,13 @@
                     <tr>    
                         <td class="MyLable">13.3.2 No. of Originals</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtNoOfOriginals3" Runat="server" />
+                            <telerik:RadNumericTextBox ID="txtNoOfOriginals3" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
                     <tr>    
                         <td class="MyLable">13.3.3 No. of Copies</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtNoOfCopies3" Runat="server" />
+                            <telerik:RadNumericTextBox ID="txtNoOfCopies3" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
                 </table>
@@ -790,12 +795,14 @@
             var index = $(this).attr('index');
             if (index == "2") {
                 $('#<%=divDocs1.ClientID%> .addDocs').css('display', '');
+                $find("<%=rcbDocsCode2.ClientID%>").get_items().getItem(0).select();
                 $find("<%=txtNoOfOriginals2.ClientID%>").set_value();
                 $find("<%=txtNoOfCopies2.ClientID%>").set_value();
                 $('#<%=divDocs2.ClientID%>').css('display', 'none');
             }
             else if (index == "3") {
                 $('#<%=divDocs2.ClientID%> .addDocs').css('display', '');
+                $find("<%=rcbDocsCode3.ClientID%>").get_items().getItem(0).select();
                 $find("<%=txtNoOfOriginals3.ClientID%>").set_value();
                 $find("<%=txtNoOfCopies3.ClientID%>").set_value();
                 $('#<%=divDocs3.ClientID%>').css('display', 'none');
@@ -821,5 +828,23 @@
                 <telerik:AjaxUpdatedControl ControlID="RadMultiPage1" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy1">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct1" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnVAT" runat="server" OnClick="btnVAT_Click" />
+</div>
