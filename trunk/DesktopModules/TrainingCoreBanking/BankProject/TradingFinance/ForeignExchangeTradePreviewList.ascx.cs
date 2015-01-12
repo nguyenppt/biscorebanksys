@@ -49,7 +49,7 @@ namespace BankProject.Views.TellerApplication
             string RefNo = txtRefNo.Text.Trim(), TFNo = txtTFNo.Text.Trim();
             //
             radGridReview.DataSource = db.BFOREIGNEXCHANGEs
-                .Where(p => p.Status.Equals(Status) &&
+                .Where(p => //p.Status.Equals(Status) &&
                     (string.IsNullOrEmpty(RefNo) || p.Code.ToLower().Contains(RefNo)) &&
                     (string.IsNullOrEmpty(TFNo) || p.FTNo.Contains(TFNo)))
                 .OrderByDescending(p => p.CreateDate)

@@ -42,13 +42,14 @@ namespace BankProject.TradingFinance
 
         private void loadData()
         {
+            //p => p.Status.Equals(Status) &&
             string Status = bd.TransactionStatus.AUT;
             if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr"))
                 Status = bd.TransactionStatus.UNA;
             string RefNo = txtRefNo.Text.Trim(), ChargeAccount = txtChargeAccount.Text.Trim();
             //
             radGridReview.DataSource = db.B_CollectCharges
-                .Where(p => p.Status.Equals(Status) &&
+                .Where(p =>
                     (string.IsNullOrEmpty(RefNo) || p.TransCode.ToLower().Contains(RefNo)) &&
                     (string.IsNullOrEmpty(ChargeAccount) || p.ChargeAcct.Contains(ChargeAccount)))
                 .OrderByDescending(p => p.DateTimeCreate)
