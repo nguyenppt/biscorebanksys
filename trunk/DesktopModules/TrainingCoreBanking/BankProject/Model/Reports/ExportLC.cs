@@ -41,6 +41,36 @@ namespace BankProject.Model.Reports
         public string Applicant { get; set; }        
         public string NumberOfAmendment { get; set; }
     }
+    public class VAT
+    {
+        public string UserName { get; set; }
+        public string VATNo { get; set; }
+        public string TransCode { get; set; }
+        //
+        public string CustomerID { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerAddress { get; set; }
+        public string IdentityNo { get; set; }
+        //
+        public string DebitAccount { get; set; }        
+        public string ChargeRemarks { get; set; }
+        //
+        public string ChargeType1 { get; set; }
+        public string ChargeAmount1 { get; set; }
+
+        public string ChargeType2 { get; set; }
+        public string ChargeAmount2 { get; set; }
+
+        public string ChargeType3 { get; set; }
+        public string ChargeAmount3 { get; set; }
+        //
+        public string TotalTaxText { get; set; }
+        public string TotalTaxAmount { get; set; }
+        //
+        public string TotalChargeAmount { get; set; }
+        public string TotalChargeAmountWord { get; set; }
+    }
+    //
     public class PhieuXuatNgoaiBang
     {
         public int Day
