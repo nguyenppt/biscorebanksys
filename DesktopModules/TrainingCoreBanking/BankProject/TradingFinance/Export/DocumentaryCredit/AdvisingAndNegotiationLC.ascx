@@ -26,16 +26,21 @@
         }        
     }
     function confirmCallbackFunction_MauBiaHsLc(result) {
-        clickCalledAfterRadconfirm = false;
         if (result) {
             $("#<%=btnReportMauBiaHsLc.ClientID %>").click();
         }
         radconfirm("Do you want to download 'Mau Thong Bao Lc' file ?", confirmCallbackFunction_MauThongBaoLc, 420, 150, null, 'Download');
     }
     function confirmCallbackFunction_MauThongBaoLc(result) {
-        clickCalledAfterRadconfirm = false;
         if (result) {
             $("#<%=btnReportMauThongBaoLc.ClientID %>").click();
+        }
+        if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO")
+            radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
+    }
+    function confirmCallbackFunction_VAT(result) {
+        if (result) {
+            $("#<%=btnVAT.ClientID %>").click();
         }
     }
 </script>
@@ -45,6 +50,9 @@
     <Items>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
             ToolTip="Commit Data" Value="btCommit" CommandName="commit" Enabled="true">
+        </telerik:RadToolBarButton>
+        <telerik:RadToolBarButton ImageUrl="~/Icons/bank/hold.png"
+            ToolTip="Hold Data" Value="btHoldData" CommandName="hold" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/preview.png"
             ToolTip="Preview" Value="btPreview" CommandName="preview" postback="false">
@@ -161,13 +169,13 @@
                             <asp:RequiredFieldValidator
                                 runat="server" Display="None"
                                 ID="RequiredFieldValidator20"
-                                ControlToValidate="txtCustomerName"
+                                ControlToValidate="txtImportLCNo"
                                 ValidationGroup="Commit"
                                 InitialValue=""
                                 ErrorMessage="[Documentary Credit Number] is required" ForeColor="Red">
                             </asp:RequiredFieldValidator><asp:TextBox ID="txtCustomerName" runat="server" CssClass="NoDisplay"></asp:TextBox>
                         </td>
-                        <td class="MyContent"><telerik:RadTextBox ID="txtImportLCNo" runat="server" Width="195" AutoPostBack="true" OnTextChanged="txtImportLCNo_TextChanged" />
+                        <td class="MyContent"><telerik:RadTextBox ID="txtImportLCNo" runat="server" Width="195" AutoPostBack="false" OnTextChanged="txtImportLCNo_TextChanged" />
                         </td>
                         <td><asp:Label ID="lblImportLCNoMessage" runat="server" Text="" ForeColor="Red"></asp:Label></td>
                     </tr>
@@ -354,14 +362,14 @@
                             <asp:RequiredFieldValidator
                                 runat="server" Display="None"
                                 ID="RequiredFieldValidator7"
-                                ControlToValidate="rcbAvailableRule"
+                                ControlToValidate="rcbApplicableRule"
                                 ValidationGroup="Commit"
                                 InitialValue=""
                                 ErrorMessage="[Applicable Rule] is required" ForeColor="Red">
                             </asp:RequiredFieldValidator></td>
                         <td class="MyContent">
                             <telerik:RadComboBox Width="195"
-                                ID="rcbAvailableRule"
+                                ID="rcbApplicableRule"
                                 runat="server"
                                 MarkFirstMatch="True"
                                 AllowCustomText="false">
@@ -484,8 +492,9 @@
                                 AllowCustomText="false">
                             </telerik:RadComboBox>
                         </td>
+                        <td><telerik:RadNumericTextBox ID="txtAmount" runat="server" Value="0" Width="157" /></td>
                         <td>
-                            <telerik:RadNumericTextBox ID="txtAmount" runat="server" Value="0" Width="157" /></td>
+                            <asp:Label ID="lblPaymentAmount" runat="server" Text="" ForeColor="Red"></asp:Label></td>
                     </tr>
                     <tr>
                         <td style="width: 250px" class="MyLable">39A. Percentage Credit Amount Tolerance <span class="Required">(*)</span>
@@ -849,9 +858,7 @@
                         </td>
                         <td class="MyContent">
                             <telerik:RadComboBox
-                                AutoPostBack="true"
                                 ID="rcbCommodity" runat="server"
-                                AppendDataBoundItems="True"
                                 MarkFirstMatch="True"
                                 AllowCustomText="false">
                                 <ExpandAnimation Type="None" />
@@ -915,6 +922,8 @@
                         <td class="MyLable" style="width: 250px;">53.1 Reimb. Bank Type</td>
                         <td class="MyContent">
                             <telerik:RadComboBox Width="195"
+                                AutoPostBack="True"
+                                OnSelectedIndexChanged="rcbReimbBankType_OnSelectedIndexChanged"
                                 ID="rcbReimbBankType" runat="server"
                                 MarkFirstMatch="True"
                                 AllowCustomText="false">
@@ -1517,10 +1526,26 @@
                 <telerik:AjaxUpdatedControl ControlID="RadMultiPage1" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy1">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct1" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <div style="visibility: hidden;">
     <asp:Button ID="btnReportMauBiaHsLc" runat="server" OnClick="btnReportMauBiaHsLc_Click" />
     <asp:Button ID="btnReportMauThongBaoLc" runat="server" OnClick="btnReportMauThongBaoLc_Click" />
+    <asp:Button ID="btnVAT" runat="server" OnClick="btnVAT_Click" />
 </div>
     

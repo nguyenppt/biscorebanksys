@@ -12,6 +12,20 @@
     });
     function RadToolBar1_OnClientButtonClicking(sender, args) {
         var button = args.get_item();
+        if (button.get_commandName() == "<%=BankProject.Controls.Commands.Commit%>") {
+            var txtIncreaseOfDocCreditAmt = $find('<%=txtIncreaseOfDocumentaryCreditAmount.ClientID%>');
+            var txtDecreaseOfDocCreditAmt = $find('<%=txtDecreaseOfDocumentaryCreditAmount.ClientID%>');            
+            if ((txtIncreaseOfDocCreditAmt.get_value() == null || txtIncreaseOfDocCreditAmt.get_value() == 0)
+                && (txtDecreaseOfDocCreditAmt.get_value() == null || txtDecreaseOfDocCreditAmt.get_value() == 0)) {
+                args.set_cancel(true);
+                alert('Please, input "Increase of Documentary Credit Amount" or "Decrease of Documentary Credit Amount"');
+            }
+            if ((txtIncreaseOfDocCreditAmt.get_value() != null && txtIncreaseOfDocCreditAmt.get_value() != 0)
+                && (txtDecreaseOfDocCreditAmt.get_value() != null && txtDecreaseOfDocCreditAmt.get_value() != 0)) {
+                args.set_cancel(true);
+                alert('Please, just input "Increase of Documentary Credit Amount" or "Decrease of Documentary Credit Amount"');
+            }
+        }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
             //args.set_cancel(false);
             radconfirm("Do you want to download 'Mau Thong Bao Lc' file ?", confirmCallbackFunction_MauThongBaoLc, 420, 150, null, 'Download');
@@ -30,6 +44,35 @@
         if (result) {
             $("#<%=btnReportMauThongBaoLc.ClientID %>").click();
         }
+        if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO")
+            radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
+    }
+    function confirmCallbackFunction_VAT(result) {
+        if (result) {
+            $("#<%=btnVAT.ClientID %>").click();
+        }
+    }
+    //
+    function recalculateCreditAmount() {
+        var txtIncreaseOfDocCreditAmt = $find('<%=txtIncreaseOfDocumentaryCreditAmount.ClientID%>');
+        var txtDecreaseOfDocCreditAmt = $find('<%=txtDecreaseOfDocumentaryCreditAmount.ClientID%>');        
+        var IncrAmnt = 0, DecrAmt = 0;
+        if (txtIncreaseOfDocCreditAmt.get_value() != null) {
+            IncrAmnt = txtIncreaseOfDocCreditAmt.get_value();
+        }
+        if (txtDecreaseOfDocCreditAmt.get_value() != null) {
+            DecrAmt = txtDecreaseOfDocCreditAmt.get_value();
+        }
+        //
+        var txtDocCreditAmt = $('#<%=txtDocumentaryCreditAmount.ClientID%>');
+        var txtNewDocCreditAmt = $find('<%=txtNewDocumentaryCreditAmountAfterAmendment.ClientID%>');
+        txtNewDocCreditAmt.set_value((IncrAmnt - DecrAmt) + Number(txtDocCreditAmt.val()));
+    }
+    function txtIncreaseOfDocumentaryCreditAmount_OnValueChanged(sender, eventArgs) {
+        recalculateCreditAmount();
+    }
+    function txtDecreaseOfDocumentaryCreditAmount_OnValueChanged(sender, eventArgs) {
+        recalculateCreditAmount();
     }
 </script>
 </telerik:RadCodeBlock>
@@ -85,13 +128,13 @@
                             <asp:RequiredFieldValidator
                                 runat="server" Display="None"
                                 ID="RequiredFieldValidator20"
-                                ControlToValidate="txtCustomerName"
+                                ControlToValidate="txtImportLCNo"
                                 ValidationGroup="Commit"
                                 InitialValue=""
                                 ErrorMessage="[Documentary Credit Number] is required" ForeColor="Red">
                             </asp:RequiredFieldValidator><asp:TextBox ID="txtCustomerName" runat="server" CssClass="NoDisplay"></asp:TextBox>
                         </td>
-                        <td class="MyContent"><telerik:RadTextBox ID="txtImportLCNo" runat="server" Width="195" AutoPostBack="true" OnTextChanged="txtImportLCNo_TextChanged" />
+                        <td class="MyContent"><telerik:RadTextBox ID="txtImportLCNo" runat="server" Width="195" AutoPostBack="false" OnTextChanged="txtImportLCNo_TextChanged" />
                         </td>
                         <td><asp:Label ID="lblImportLCNoMessage" runat="server" Text="" ForeColor="Red"></asp:Label></td>
                     </tr>
@@ -207,9 +250,16 @@
                                 ValidationGroup="Commit"
                                 InitialValue=""
                                 ErrorMessage="[Number of Amendment] is required" ForeColor="Red">
+                            </asp:RequiredFieldValidator><asp:RequiredFieldValidator
+                                runat="server" Display="None"
+                                ID="RequiredFieldValidator6"
+                                ControlToValidate="txtNumberOfAmendment"
+                                ValidationGroup="Commit"
+                                InitialValue="0"
+                                ErrorMessage="[Number of Amendment] is required" ForeColor="Red">
                             </asp:RequiredFieldValidator></td>
                         <td class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtNumberOfAmendment" Width="200" runat="server" NumberFormat-DecimalDigits="0" />
+                            <telerik:RadNumericTextBox ID="txtNumberOfAmendment" Width="195" runat="server" NumberFormat-DecimalDigits="0" Value="1" />
                         </td>
                     </tr>
                 </table>
@@ -266,19 +316,20 @@
                     <tr>
                         <td class="MyLable">32B.Increase of Documentary Credit Amount</td>
                         <td class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtIncreaseOfDocumentaryCreditAmount" Width="200" runat="server" />
+                            <telerik:RadNumericTextBox ID="txtIncreaseOfDocumentaryCreditAmount" Width="195" runat="server" ClientEvents-OnValueChanged="txtIncreaseOfDocumentaryCreditAmount_OnValueChanged" />
                         </td>
                     </tr>
                     <tr>
                         <td class="MyLable">33B.Decrease of Documentary Credit Amount</td>
                         <td class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtDecreaseOfDocumentaryCreditAmount" Width="200" runat="server" />
+                            <telerik:RadNumericTextBox ID="txtDecreaseOfDocumentaryCreditAmount" Width="195" runat="server" ClientEvents-OnValueChanged="txtDecreaseOfDocumentaryCreditAmount_OnValueChanged" />
                         </td>
                     </tr>
                     <tr>
                         <td class="MyLable">34B.New Documentary Credit Amount After Amendment</td>
                         <td class="MyContent">
-                            <telerik:RadNumericTextBox ID="txtNewDocumentaryCreditAmountAfterAmendment" Width="200" runat="server" />
+                            <asp:HiddenField ID="txtDocumentaryCreditAmount" runat="server" Value="0" />
+                            <telerik:RadNumericTextBox ID="txtNewDocumentaryCreditAmountAfterAmendment" Width="195" runat="server" ReadOnly="true" />
                         </td>
                     </tr>
                 </table>
@@ -745,8 +796,24 @@
                 <telerik:AjaxUpdatedControl ControlID="RadMultiPage1" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy1">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct1" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbChargeCcy3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
 <div style="visibility: hidden;">
     <asp:Button ID="btnReportMauThongBaoLc" runat="server" OnClick="btnReportMauThongBaoLc_Click" />
+    <asp:Button ID="btnVAT" runat="server" OnClick="btnVAT_Click" />
 </div>

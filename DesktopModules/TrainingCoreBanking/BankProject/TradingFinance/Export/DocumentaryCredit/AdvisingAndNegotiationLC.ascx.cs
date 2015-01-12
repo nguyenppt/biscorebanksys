@@ -47,8 +47,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             txtChargeCode1.Text = ExportLC.Charges.Advising;
             txtChargeCode2.Text = ExportLC.Charges.Courier;
-            txtChargeCode3.Text = ExportLC.Charges.Other;
+            txtChargeCode3.Text = ExportLC.Charges.Other;            
+            //
             if (IsPostBack) return;
+            //
+            RadToolBar1.FindItemByValue("btCommit").Enabled = false;
+            RadToolBar1.FindItemByValue("btHoldData").Enabled = false;
+            RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+            RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+            RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+            RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+            RadToolBar1.FindItemByValue("btPrint").Enabled = false;
             //
             var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
             bc.Commont.initRadComboBox(ref rcbCurrency, "Code", "Code", dsCurrency);
@@ -60,13 +69,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //
             if (!string.IsNullOrEmpty(Request.QueryString["Code"]))
             {
-                RadToolBar1.FindItemByValue("btCommit").Enabled = false;
-                RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                RadToolBar1.FindItemByValue("btReverse").Enabled = false;
-                RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                RadToolBar1.FindItemByValue("btPrint").Enabled = false;
-                //
                 tbLCCode.Text = Request.QueryString["Code"];
                 var ExLC = dbEntities.findExportLC(tbLCCode.Text);
                 if (ExLC == null)
@@ -103,8 +105,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     else//cho phép edit
                     {
                         RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                        RadToolBar1.FindItemByValue("btHoldData").Enabled = true;
                         RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                        RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                     }
                 }
                 #endregion
@@ -276,11 +278,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 if (TabId == ExportLC.Actions.Register)
                 {
-                    var vatno = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
-                    tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
+                    RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                    RadToolBar1.FindItemByValue("btHoldData").Enabled = true;
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
                     //
-                    var ds = bd.DataTam.B_ISSURLC_GetNewID();
-                    tbLCCode.Text = ds.Tables[0].Rows[0]["Code"].ToString();
+                    tbVatNo.Text = dbEntities.getVATNo();
+                    tbLCCode.Text = dbEntities.getNewId();
                     //
                     rcbAdvisingBankType_OnSelectedIndexChanged(null, null);
                     rcbIssuingBankType_OnSelectedIndexChanged(null, null);
@@ -289,12 +292,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
                 else
                 {
-                    RadToolBar1.FindItemByValue("btCommit").Enabled = false;
                     RadToolBar1.FindItemByValue("btPreview").Enabled = true;
-                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
-                    RadToolBar1.FindItemByValue("btReverse").Enabled = false;
                     RadToolBar1.FindItemByValue("btSearch").Enabled = true;
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = false;
                 }
             }
             //
@@ -312,11 +311,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 switch (commandName)
                 {
                     case bc.Commands.Commit:
+                    case bc.Commands.Hold:
                         if (ExLC == null)
                         {
                             ExLC = new BEXPORT_LC();
                             ExLC.ExportLCCode = tbLCCode.Text.Trim();
-                            ExLC.Status = bd.TransactionStatus.UNA;
+                            ExLC.Status = (commandName.Equals(bc.Commands.Commit) ? bd.TransactionStatus.UNA : bd.TransactionStatus.HLD);
                             ExLC.CreateDate = DateTime.Now;
                             ExLC.CreateBy = this.UserInfo.Username;
                             saveLC(ref ExLC);
@@ -324,16 +324,18 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         }
                         else
                         {
-                            ExLC.Status = bd.TransactionStatus.UNA;
+                            ExLC.Status = (commandName.Equals(bc.Commands.Commit) ? bd.TransactionStatus.UNA : bd.TransactionStatus.HLD);
                             ExLC.UpdateDate = DateTime.Now;
                             ExLC.UpdatedBy = this.UserInfo.Username;
                             saveLC(ref ExLC);
                             //Xoa di insert lai
-                            var ExLCCharge = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Trim().ToLower().Equals(tbLCCode.Text.Trim().ToLower())).FirstOrDefault();
-                            while (ExLCCharge != null)
+                            var ExLCCharge = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Trim().ToLower().Equals(tbLCCode.Text.Trim().ToLower()));
+                            if (ExLCCharge != null)
                             {
-                                dbEntities.BEXPORT_LC_CHARGES.Remove(ExLCCharge);
-                                ExLCCharge = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Trim().ToLower().Equals(tbLCCode.Text.Trim().ToLower())).FirstOrDefault();
+                                foreach (BEXPORT_LC_CHARGES ch in ExLCCharge)
+                                {
+                                    dbEntities.BEXPORT_LC_CHARGES.Remove(ch);
+                                }
                             }
                         }
                         if (ExLC.WaiveCharges.Equals(bd.YesNo.NO))
@@ -361,7 +363,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         //
                         dbEntities.SaveChanges();
                         //
-                        Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                        Response.Redirect("Default.aspx?tabid=" + this.TabId + (commandName.Equals(bc.Commands.Commit) ? "" : "&code=" + tbLCCode.Text));
                         break;
                     case bc.Commands.Authorize:
                     case bc.Commands.Reverse:
@@ -491,9 +493,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLC.FormOfDocumentaryCredit = rcbFormOfDocumentaryCredit.SelectedValue.Trim();
             ExLC.DateOfIssue = txtDateOfIssue.SelectedDate;
             ExLC.DateOfExpiry = txtDateOfExpiry.SelectedDate;
-            ExLC.PlaceOfExpiry = txtPlaceOfExpiry.Text.Trim();
-            ExLC.ApplicableRule = rcbAvailableRule.SelectedValue.Trim();
+            ExLC.PlaceOfExpiry = txtPlaceOfExpiry.Text.Trim();            
             //
+            ExLC.ApplicableRule = rcbApplicableRule.SelectedValue.Trim();
             ExLC.ApplicantName = txtApplicantName.Text.Trim();
             ExLC.ApplicantAddr1 = tbApplicantAddr1.Text.Trim();
             ExLC.ApplicantAddr2 = tbApplicantAddr2.Text.Trim();
@@ -544,8 +546,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLC.ReimbBankNo = txtReimbBankNo.Text.Trim();
             ExLC.ReimbBankName = tbReimbBankName.Text.Trim();
             ExLC.ReimbBankAddr1 = tbReimbBankAddr1.Text.Trim();
-            ExLC.ReimbBankAddr2 = tbReimbBankAddr1.Text.Trim();
-            ExLC.ReimbBankAddr3 = tbReimbBankAddr1.Text.Trim();
+            ExLC.ReimbBankAddr2 = tbReimbBankAddr2.Text.Trim();
+            ExLC.ReimbBankAddr3 = tbReimbBankAddr3.Text.Trim();
             //
             ExLC.InstrToPaygAccptgNegotgBank = txtInstrToPaygAccptgNegotgBank.Text.Trim();
             //
@@ -617,9 +619,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             rcbFormOfDocumentaryCredit.SelectedValue = ExLC.FormOfDocumentaryCredit;
             txtDateOfIssue.SelectedDate = ExLC.DateOfIssue;
             txtDateOfExpiry.SelectedDate = ExLC.DateOfExpiry;
-            txtPlaceOfExpiry.Text = ExLC.PlaceOfExpiry;
-            rcbAvailableRule.SelectedValue = ExLC.ApplicableRule;
+            txtPlaceOfExpiry.Text = ExLC.PlaceOfExpiry;            
             //
+            rcbApplicableRule.SelectedValue = ExLC.ApplicableRule;
             txtApplicantName.Text = ExLC.ApplicantName;
             tbApplicantAddr1.Text = ExLC.ApplicantAddr1;
             tbApplicantAddr2.Text = ExLC.ApplicantAddr2;
@@ -633,6 +635,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //
             rcbCurrency.SelectedValue = ExLC.Currency;
             txtAmount.Value = ExLC.Amount;
+            if (ExLC.PaymentAmount.HasValue) lblPaymentAmount.Text = "Payment Amount : " + String.Format("{0:C}", ExLC.PaymentAmount.Value).Replace("$", "");
             txtPercentCreditAmountTolerance1.Value = ExLC.PercentageCreditAmountTolerance1;
             txtPercentCreditAmountTolerance2.Value = ExLC.PercentageCreditAmountTolerance2;
             rcbMaximumCreditAmount.SelectedValue = ExLC.MaximunCreditAmount;
@@ -671,7 +674,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (!string.IsNullOrEmpty(ExLC.DeferedPaymentDetails))
             {
                 string[] DeferedPaymentDetails = ExLC.DeferedPaymentDetails.Split(new string[] { bc.Commont.breakLine }, StringSplitOptions.None);
-                txtMixedPaymentDetails1.Text = DeferedPaymentDetails[0];
+                txtDeferredPaymentDetails1.Text = DeferedPaymentDetails[0];
                 if (DeferedPaymentDetails.Length > 1)
                 {
                     txtDeferredPaymentDetails2.Text = DeferedPaymentDetails[1];
@@ -727,8 +730,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtReimbBankNo.Text = ExLC.ReimbBankNo;
             tbReimbBankName.Text = ExLC.ReimbBankName;
             tbReimbBankAddr1.Text = ExLC.ReimbBankAddr1;
-            tbReimbBankAddr1.Text = ExLC.ReimbBankAddr2;
-            tbReimbBankAddr1.Text = ExLC.ReimbBankAddr3;
+            tbReimbBankAddr2.Text = ExLC.ReimbBankAddr2;
+            tbReimbBankAddr3.Text = ExLC.ReimbBankAddr3;
             //
             txtInstrToPaygAccptgNegotgBank.Text = ExLC.InstrToPaygAccptgNegotgBank;
             //
@@ -849,6 +852,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             LoadChargeAcct(ref rcbChargeAcct3, rcbChargeCcy3.SelectedValue);
         }
 
+        protected void btnVAT_Click(object sender, EventArgs e)
+        {
+            showReport("VAT");
+        }
         protected void btnReportMauBiaHsLc_Click(object sender, EventArgs e)
         {
             showReport("BiaHs");
@@ -953,6 +960,74 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         tbl1 = Utils.CreateDataTable<Model.Reports.MauBiaHsLc>(lstData1);
                         reportData.Tables.Add(tbl1);
                         break;
+                    case "VAT":
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "VAT.doc");
+                        reportSaveName = "VAT" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        //
+                        var dataVAT = new Model.Reports.VAT()
+                        {
+                            UserName = ExLC.CreateBy,
+                            VATNo = ExLC.VATNo,
+                            TransCode = ExLC.ExportLCCode,
+                            //
+                            CustomerID = "",
+                            CustomerName = "",
+                            CustomerAddress = "",
+                            IdentityNo = "",
+                            //
+                            DebitAccount = "",
+                            ChargeRemarks = ExLC.ChargeRemarks
+                        };
+                        //
+                        var ExLCCharges = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Equals(tbLCCode.Text));
+                        if (ExLCCharges != null)
+                        {
+                            double TotalTaxAmount = 0, TotalChargeAmount = 0;
+                            foreach (BEXPORT_LC_CHARGES ch in ExLCCharges)
+                            {
+                                if (ch.ChargeAmt.HasValue && ch.ChargeAmt.Value != 0)
+                                {
+                                    if (string.IsNullOrEmpty(dataVAT.ChargeType1))
+                                    {
+                                        dataVAT.ChargeType1 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
+                                        dataVAT.ChargeAmount1 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
+                                        TotalChargeAmount += ch.ChargeAmt.Value;
+                                    }
+                                    else if (string.IsNullOrEmpty(dataVAT.ChargeType2))
+                                    {
+                                        dataVAT.ChargeType2 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
+                                        dataVAT.ChargeAmount2 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
+                                        TotalChargeAmount += ch.ChargeAmt.Value;
+                                    }
+                                    else if (string.IsNullOrEmpty(dataVAT.ChargeType3))
+                                    {
+                                        dataVAT.ChargeType3 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
+                                        dataVAT.ChargeAmount3 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
+                                        TotalChargeAmount += ch.ChargeAmt.Value;
+                                    }
+                                }
+                            }
+                            TotalChargeAmount += TotalTaxAmount;
+                            if (TotalChargeAmount != 0)
+                            {
+                                dataVAT.TotalChargeAmount = TotalChargeAmount + ExLC.Currency;
+                                dataVAT.TotalChargeAmountWord = Utils.ReadNumber(ExLC.Currency, TotalChargeAmount);
+                                if (TotalTaxAmount != 0)
+                                {
+                                    dataVAT.TotalTaxAmount = TotalTaxAmount + ExLC.Currency + " PL90304";
+                                    dataVAT.TotalTaxText = "VAT";
+                                }
+                            }
+                        }
+                        //
+                        var lstData2 = new List<Model.Reports.VAT>();
+                        lstData2.Add(dataVAT);
+                        tbl1 = Utils.CreateDataTable<Model.Reports.VAT>(lstData2);
+                        reportData.Tables.Add(tbl1);
+                        break;
                 }
                 if (reportData != null)
                 {
@@ -975,7 +1050,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         protected void txtImportLCNo_TextChanged(object sender, EventArgs e)
         {
-            lblImportLCNoMessage.Text = "";
+            /*lblImportLCNoMessage.Text = "";
             txtCustomerName.Text = "";
             var lc = dbEntities.findImportLC(txtImportLCNo.Text);
             if (lc == null)
@@ -984,7 +1059,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 return;
             }
             txtCustomerName.Text = lc.ApplicantName;
-            lblImportLCNoMessage.Text = lc.ApplicantName;
+            lblImportLCNoMessage.Text = lc.ApplicantName;*/
         }
     }
 }
