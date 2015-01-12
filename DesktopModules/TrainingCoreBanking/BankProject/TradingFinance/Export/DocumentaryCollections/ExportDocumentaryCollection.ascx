@@ -649,7 +649,7 @@
                         <telerik:RadTextBox Width="355" ID="comboNostroCusNo" runat="server" AutoPostBack="True" OnTextChanged="comboNostroCusNo_OnSelectedIndexChanged" />
                     </td>
                 </tr>
-                <tr>
+                <tr style="visibility:hidden;">
                     <td class="MyLable">20 Acc Bank's Name</td>
                     <td style="width: 150px;" class="MyContent">
                         <asp:Label ID="lblNostroCusName" runat="server" Width="100%" />
@@ -1574,7 +1574,7 @@
                 }
             }
             //
-            if (tabId == 226 || tabId == 227) { // Register Documetary Collection
+            if (tabId == 226 || tabId == 227 || tabId == 377) { // Register Documetary Collection
                 if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                     args.set_cancel(true);
                     confirmCallbackRegisterCOVER(true);
