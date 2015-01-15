@@ -31,7 +31,7 @@
             <td ><asp:TextBox ID="txtRefNo" runat="server" Width="200"/></td>
         </tr>
         <tr>
-            <td style="width: 60px">LC No.</td>
+            <td style="width: 60px">LC/Coll. No.</td>
             <td><asp:TextBox ID="txtLCNo" runat="server" Width="200"/></td>
         </tr>
     </table>
@@ -40,7 +40,7 @@
     <MasterTableView>
         <Columns>
             <telerik:GridBoundColumn HeaderText="Referrence No" DataField="ReperenceNo" />
-            <telerik:GridBoundColumn HeaderText="LC No" DataField="LCNo" HeaderStyle-Width="200"  />
+            <telerik:GridBoundColumn HeaderText="LC/Coll No" DataField="LCNo" HeaderStyle-Width="200"  />
             <telerik:GridBoundColumn HeaderText="Type" DataField="TypeDescription" HeaderStyle-Width="160"  />
             <telerik:GridBoundColumn HeaderText="Currency" DataField="CreditCurrency" HeaderStyle-Width="120"  />
             <telerik:GridNumericColumn HeaderText="Credit Amount" DataField="CreditAmount" HeaderStyle-Width="120"  ItemStyle-HorizontalAlign="Right" NumericType="Number" DataFormatString="{0:#,##0.00}"  DecimalDigits="2">
