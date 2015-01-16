@@ -1204,6 +1204,11 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BDRFROMACCOUNT_GetByCurrency", name, currencyCode);
         }
 
+        public static DataSet B_BCRFROMACCOUNT_GetByCurrency_Name(string name, string currencyCode)
+        {
+            return sqldata.ndkExecuteDataset("B_BCRFROMACCOUNT_GetByCurrency_Name", name, currencyCode);
+        }
+
         public static DataTable B_BDRFROMACCOUNT_GetById(string Id)
         {
             return sqldata.ndkExecuteDataset("B_BDRFROMACCOUNT_GetById", Id).Tables[0];
