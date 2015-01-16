@@ -12,6 +12,7 @@ using DotNetNuke.Common.Utilities;
 using Telerik.Web.UI;
 using BankProject.DBContext;
 using bc = BankProject.Controls;
+using BankProject.DBRespository;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCollections
 {
@@ -1078,13 +1079,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void LoadCreditAccount()
         {
+            StoreProRepository facade = new StoreProRepository();
+
             comboCreditAcct.Items.Clear();
             comboCreditAcct.Items.Add(new RadComboBoxItem(""));
             comboCreditAcct.DataValueField = "Id";
             comboCreditAcct.DataTextField = "Id";
-            comboCreditAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, comboCreditCurrency.SelectedValue);
+            comboCreditAcct.DataSource = bd.SQLData.B_BCRFROMACCOUNT_GetByCurrency_Name(txtDrawerCusName.Text, comboCreditCurrency.SelectedValue);
+            //comboCreditAcct.DataSource = facade.StoreProcessor().B_BCRFROMACCOUNT_GetByCurrency_Name(txtDrawerCusName.Text, comboCreditCurrency.SelectedValue).ToList();
             comboCreditAcct.DataBind();
         }
+
         protected void commom_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             var row = e.Item.DataItem as DataRowView;

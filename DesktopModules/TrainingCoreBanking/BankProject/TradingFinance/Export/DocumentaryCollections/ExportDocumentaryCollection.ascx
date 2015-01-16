@@ -1574,12 +1574,20 @@
                 }
             }
             //
-            if (tabId == 226 || tabId == 227 || tabId == 377) { // Register Documetary Collection
+            if (tabId == 226 || tabId == 227) { // Register Documetary Collection
                 if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
                     args.set_cancel(true);
                     confirmCallbackRegisterCOVER(true);
                 }
             }
+            if (tabId == 377) {               
+                if (button.get_commandName() == "print" && !clickCalledAfterRadconfirm) {
+                    args.set_cancel(true);
+                    ConfirmDownloadAceptedVAT(true);
+                }
+            }
+
+            
             if (tabId == 229) { // Incoming Collection Amendments
                 if (button.get_commandName() == "print") {
                     args.set_cancel(true);
@@ -1652,6 +1660,16 @@
             }
             //radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file to Collecting Bank?", confirmCallbackRegisterXNB1, 420, 150, null, 'Download');
         }
+
+        function ConfirmDownloadAceptedVAT(result){
+            clickCalledAfterRadconfirm = false;
+            if (chargeAmt > 0) {
+                setTimeout(function(){
+                    radconfirm("Do you want to download VAT file?", confirmCallbackVATRegister, 400, 150, null, 'Download');
+                },1000);
+            }
+        }
+
         function confirmCallbackRegisterXNB1(result) {
             clickCalledAfterRadconfirm = false;
             if (result) {
