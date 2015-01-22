@@ -371,7 +371,7 @@ namespace BankProject.Views.TellerApplication
             if (!isAmendPage)
             {
 
-                var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount(normalLoanEntryM.LimitReference).First<decimal?>();
+                var limit = facade.StoreProcessor().B_Normal_Loan_Get_RemainLimitAmount_Exclude_LoanID(normalLoanEntryM.LimitReference, normalLoanEntryM.Code).First<decimal?>();
                 if (limit < normalLoanEntryM.LoanAmount)
                 {
                     RadWindowManager1.RadAlert("Loan amount cannot exceed " + limit, 340, 150, "Alert", null);
