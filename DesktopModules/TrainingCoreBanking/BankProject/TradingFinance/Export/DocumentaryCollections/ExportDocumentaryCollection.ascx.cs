@@ -426,7 +426,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             LoadDataSourceComboPartyCharged();
             LoadChargeCode();
-
+            GenerateVATNo();
 
             dteDocsReceivedDate.SelectedDate = DateTime.Now;
             dteTracerDate.SelectedDate = DateTime.Now.AddDays(30);
