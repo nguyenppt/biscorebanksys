@@ -245,7 +245,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.DrawingAmount = numDrawingAmount.Value;
                 outCoPayment.ExchRate = numExchangeRate.Value;
                 outCoPayment.IncreaseMental = 0;
-                outCoPayment.Currency = comboCurrency.SelectedValue;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
             }
             _entities.SaveChanges();
@@ -272,7 +271,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtIntermediaryAddress2.Text = mt910.IntermediaryAddress2;
                 txtIntermediaryAddress3.Text = mt910.IntermediaryAddress3;
                 txtSendMessage.Text = mt910.SendMessage;
-                cboNostroAcct.SelectedValue = mt910.NostroAccount;
+                //cboNostroAcct.SelectedValue = mt910.NostroAccount;
+                cbNostroAccount.SelectedValue = mt910.NostroAccount;
+                lblNostro.Text = cbNostroAccount.SelectedItem.Attributes["Code"] + " - " + cbNostroAccount.SelectedItem.Attributes["Description"];
             }
         }
         private void SaveMT910()
@@ -298,7 +299,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 mt910.IntermediaryAddress2 = txtIntermediaryAddress2.Text;
                 mt910.IntermediaryAddress3 = txtIntermediaryAddress3.Text;
                 mt910.SendMessage = txtSendMessage.Text;
-                mt910.NostroAccount = cboNostroAcct.SelectedValue;
+                //mt910.NostroAccount = cboNostroAcct.SelectedValue;
+                mt910.NostroAccount = cbNostroAccount.SelectedValue;
                 _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.Add(mt910);
             }
             else
@@ -317,6 +319,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 mt910.IntermediaryAddress1 = txtIntermediaryAddress1.Text;
                 mt910.IntermediaryAddress2 = txtIntermediaryAddress2.Text;
                 mt910.IntermediaryAddress3 = txtIntermediaryAddress3.Text;
+                mt910.NostroAccount = cbNostroAccount.SelectedValue;
                 mt910.SendMessage = txtSendMessage.Text;
             }
             _entities.SaveChanges();
@@ -414,11 +417,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboCreditCurrency.SelectedValue = outColPayment.Currency;
             LoadCreditAccount();
             comboCreditAcct.SelectedValue = outColPayment.CreditAccount;
+            loadNostroAccount();
             numExchangeRate.Value = outColPayment.ExchRate;
             txtPaymentRemarks1.Text = outColPayment.PaymentRemarks1;
             txtPaymentRemarks2.Text = outColPayment.PaymentRemarks2;
             LoadCharges();
-            bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(outColPayment.Currency)).ToList());
+            //bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(outColPayment.Currency)).ToList());
         }
         private void LoadData(string strtxtCode)
         {
@@ -805,6 +809,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
                 comboCreditCurrency.SelectedValue = expDoc.Currency;
                 comboCurrency.SelectedValue = expDoc.Currency;
+                loadNostroAccount();
                 numAmount.Value = expDoc.Amount;
                 txtTenor.Text = expDoc.Tenor;
                 numReminderDays.Text = (expDoc.ReminderDays??0).ToString();
@@ -843,7 +848,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 {
                     dteTracerDate.SelectedDate = expDoc.TracerDate.Value;
                 }
-                bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(expDoc.Currency)).ToList());//
+                //bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(expDoc.Currency)).ToList());//
                 //cboNostroAcct
                 #endregion
             }
@@ -986,6 +991,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboPaymentMethod.DataBind();
             lblPaymentMethod.Text = comboPaymentMethod.SelectedItem.Attributes["Description"];
 
+            
+
             //bind draw type
             comboDrawType.Items.Clear();
             comboDrawType.DataValueField = "ID";
@@ -1120,8 +1127,27 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void comboPaymentMethod_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            
             lblPaymentMethod.Text = comboPaymentMethod.SelectedItem.Attributes["Description"];
         }
+
+        protected void cbNostroAccount_DataBound(object sender, EventArgs e)
+        {
+            var combo = (RadComboBox)sender;
+            combo.Items.Insert(0, new RadComboBoxItem("", string.Empty));
+        }
+        protected void cbNostroAccount_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        {
+            var row = e.Item.DataItem as BSWIFTCODE;
+            e.Item.Attributes["Code"] = row.Code;
+            e.Item.Attributes["AccountNo"] = row.AccountNo;
+            e.Item.Attributes["Description"] = row.Description;
+        }
+        protected void cbNostroAccount_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            lblNostro.Text = cbNostroAccount.SelectedItem.Attributes["Code"] + " - " + cbNostroAccount.SelectedItem.Attributes["Description"];
+        }
+
         protected void comboCreditAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             DataRowView row = e.Item.DataItem as DataRowView;
@@ -1131,6 +1157,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void comboCreditCurrency_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadCreditAccount();
+            loadNostroAccount();
         }
 
         protected void comboWaiveCharges_OnSelectedIndexChanged(object sender,
@@ -1447,5 +1474,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             e.Item.Attributes["Description"] = row["Description"].ToString();
             e.Item.Attributes["Account"] = row["AccountNo"].ToString();
         }
+
+        private void loadNostroAccount(){
+            //Bind Nostro
+            SwiftCodeRepository facade = new SwiftCodeRepository();
+            String currency = comboCreditCurrency.SelectedValue;
+
+
+            cbNostroAccount.Items.Clear();
+            cbNostroAccount.DataValueField = "AccountNo";
+            cbNostroAccount.DataTextField = "AccountNo";
+            cbNostroAccount.DataSource = facade.FindSwiftCodeAssociateWithCurrency(currency).ToList();
+            cbNostroAccount.DataBind();
+            lblNostro.Text = "";
+        }
+        
     }
 }
