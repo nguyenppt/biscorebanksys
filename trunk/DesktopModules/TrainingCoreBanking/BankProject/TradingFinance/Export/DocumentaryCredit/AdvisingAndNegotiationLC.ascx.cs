@@ -66,6 +66,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
 
             bc.Commont.initRadComboBox(ref rcbCommodity, "Name", "ID", bd.SQLData.B_BCOMMODITY_GetByTransactionType("OTC"));
+            bc.Commont.initRadComboBox(ref rcbBeneficiaryNumber, "CustomerName", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
             //
             if (!string.IsNullOrEmpty(Request.QueryString["Code"]))
             {
@@ -501,7 +502,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLC.ApplicantAddr2 = tbApplicantAddr2.Text.Trim();
             ExLC.ApplicantAddr3 = tbApplicantAddr3.Text.Trim();
             //
-            ExLC.BeneficiaryNo = txtBeneficiaryNo.Text.Trim();
+            ExLC.BeneficiaryNo = rcbBeneficiaryNumber.SelectedValue;
             ExLC.BeneficiaryName = txtBeneficiaryName.Text.Trim();
             ExLC.BeneficiaryAddr1 = txtBeneficiaryAddr1.Text.Trim();
             ExLC.BeneficiaryAddr2 = txtBeneficiaryAddr2.Text.Trim();
@@ -627,7 +628,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             tbApplicantAddr2.Text = ExLC.ApplicantAddr2;
             tbApplicantAddr3.Text = ExLC.ApplicantAddr3;
             //
-            txtBeneficiaryNo.Text = ExLC.BeneficiaryNo;
+            rcbBeneficiaryNumber.SelectedValue = ExLC.BeneficiaryNo;
             txtBeneficiaryName.Text = ExLC.BeneficiaryName;
             txtBeneficiaryAddr1.Text = ExLC.BeneficiaryAddr1;
             txtBeneficiaryAddr2.Text = ExLC.BeneficiaryAddr2;
@@ -811,9 +812,27 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             bc.Commont.loadBankSwiftCodeInfo(txtIssuingBankNo.Text, ref lblIssuingBankMessage, ref txtIssuingBankName, ref txtIssuingBankAddr1, ref txtIssuingBankAddr2, ref txtIssuingBankAddr3);
         }
-        protected void txtBeneficiaryNo_TextChanged(object sender, EventArgs e)
+        protected void rcbBeneficiaryNumber_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bc.Commont.loadBankSwiftCodeInfo(txtBeneficiaryNo.Text, ref lblBeneficiaryMessage, ref txtBeneficiaryName, ref txtBeneficiaryAddr1, ref txtBeneficiaryAddr2, ref txtBeneficiaryAddr3);
+            lblBeneficiaryMessage.Text = "";
+            txtBeneficiaryName.Text = "";
+            txtBeneficiaryAddr1.Text = "";
+            txtBeneficiaryAddr2.Text = "";
+            txtBeneficiaryAddr3.Text = "";
+            if (!string.IsNullOrEmpty(rcbBeneficiaryNumber.SelectedValue))
+            {
+                var ds = bd.DataTam.B_BCUSTOMERS_GetbyID(rcbBeneficiaryNumber.SelectedValue);
+                if (ds == null || ds.Tables.Count <= 0)
+                {
+                    lblBeneficiaryMessage.Text = "Customer not found !";
+                    return;
+                }
+                DataRow dr = ds.Tables[0].Rows[0];
+                txtBeneficiaryName.Text = dr["CustomerName"].ToString();
+                txtBeneficiaryAddr1.Text = dr["Address"].ToString();
+                txtBeneficiaryAddr2.Text = dr["City"].ToString();
+                txtBeneficiaryAddr3.Text = dr["Country"].ToString();
+            }
         }
         protected void txtAvailableWithNo_TextChanged(object sender, EventArgs e)
         {
