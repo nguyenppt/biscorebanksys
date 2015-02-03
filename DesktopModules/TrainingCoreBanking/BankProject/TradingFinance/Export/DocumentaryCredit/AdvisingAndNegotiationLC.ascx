@@ -422,24 +422,34 @@
                 </table>
                 <table cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable" style="width: 250px">59.1 Beneficiary No</td>
-                        <td class="MyContent">
-                            <telerik:RadTextBox ID="txtBeneficiaryNo" runat="server" Width="195" AutoPostBack="true" OnTextChanged="txtBeneficiaryNo_TextChanged" />
+                        <td class="MyLable" style="width: 250px">59.1 Beneficiary Number <span class="Required">(*)</span>
+                            <asp:RequiredFieldValidator
+                                runat="server" Display="None"
+                                ID="RequiredFieldValidator2"
+                                ControlToValidate="rcbBeneficiaryNumber"
+                                ValidationGroup="Commit"
+                                InitialValue=""
+                                ErrorMessage="[Beneficiary Number] is required" ForeColor="Red">
+                            </asp:RequiredFieldValidator></td>
+                        <td class="MyContent"><telerik:RadComboBox
+                                AppendDataBoundItems="True"
+                                ID="rcbBeneficiaryNumber" runat="server"
+                                MarkFirstMatch="True"
+                                Width="355"
+                                Height="150"
+                                AllowCustomText="false"
+                            AutoPostBack="True"
+                                OnSelectedIndexChanged="rcbBeneficiaryNumber_OnSelectedIndexChanged">
+                                <ExpandAnimation Type="None" />
+                                <CollapseAnimation Type="None" />
+                            </telerik:RadComboBox>
                         </td>
                         <td><asp:Label ID="lblBeneficiaryMessage" runat="server" Text="" ForeColor="Red"></asp:Label></td>
                     </tr>
                 </table>
                 <table cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable" style="width: 250px">59.2 Beneficiary Name <span class="Required">(*)</span>
-                            <asp:RequiredFieldValidator
-                                runat="server" Display="None"
-                                ID="RequiredFieldValidator2"
-                                ControlToValidate="txtBeneficiaryName"
-                                ValidationGroup="Commit"
-                                InitialValue=""
-                                ErrorMessage="[Beneficiary Name] is required" ForeColor="Red">
-                            </asp:RequiredFieldValidator></td>
+                        <td class="MyLable" style="width: 250px">59.2 Beneficiary Name</td>
                         <td class="MyContent">
                             <telerik:RadTextBox ID="txtBeneficiaryName" runat="server" Width="355" />
                         </td>
@@ -1460,7 +1470,7 @@
                 <telerik:AjaxUpdatedControl ControlID="tbReimbBankAddr3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-        <telerik:AjaxSetting AjaxControlID="txtBeneficiaryNo">
+        <telerik:AjaxSetting AjaxControlID="rcbBeneficiaryNumber">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblBeneficiaryMessage" />
                 <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryName" />
