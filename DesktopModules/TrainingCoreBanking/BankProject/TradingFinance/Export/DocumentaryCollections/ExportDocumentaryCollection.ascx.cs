@@ -1709,6 +1709,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     txtDraweeAddr2.Text = obj.DraweeAddr2;
                     txtDraweeAddr3.Text = obj.DraweeAddr3;
                     comboNostroCusNo.Text = obj.NostroCusNo;
+                    loadNostroDes();
                     //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
                     comboCurrency.SelectedValue = obj.Currency;
                     numAmount.Value = Amount;
@@ -1787,6 +1788,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     txtDraweeAddr2.Text = string.Empty;
                     txtDraweeAddr3.Text = string.Empty;
                     comboNostroCusNo.Text = string.Empty;
+                    lblNostroCusName.Text = string.Empty;
                     comboCurrency.SelectedValue = string.Empty;
                     numAmount.Text = string.Empty;
                     txtTenor.Text = "AT SIGHT";
@@ -2012,11 +2014,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     comboNostroCusNo.Text = drow["NostroCusNo"].ToString();
                     comboCurrency.SelectedValue = drow["Currency"].ToString();
                     //
-                    var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency == comboCurrency.SelectedValue).FirstOrDefault();
-                    if (obj != null)
-                    {
-                        lblNostroCusName.Text = obj.Description;
-                    }
+                    //var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency == comboCurrency.SelectedValue).FirstOrDefault();
+                    loadNostroDes();
                     //
                     //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
 
@@ -2329,6 +2328,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             }
         }
 
+        private void loadNostroDes()
+        {
+            var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text).FirstOrDefault();
+            if (obj != null)
+            {
+                lblNostroCusName.Text = obj.Description;
+            }
+            else if (!comboNostroCusNo.Text.Equals(""))
+            {
+                lblNostroCusName.Text = "It's not Nostro account";
+            }
+            else
+            {
+                lblNostroCusName.Text = "";
+            }
+        }
+
         protected void Authorize()
         {
             if (TabId != 229)
@@ -2400,11 +2416,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void comboNostroCusNo_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency==comboCurrency.SelectedValue).FirstOrDefault();
-            if (obj != null)
-            {
-                lblNostroCusName.Text = obj.Description;
-            }
+            loadNostroDes();
         }
         protected void comboCollectingBankNo_OnSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2677,15 +2689,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             if (!String.IsNullOrEmpty(comboCurrency.SelectedValue) && !String.IsNullOrEmpty(comboNostroCusNo.Text))
             {
-                var obj = _entities.BSWIFTCODEs.Where(x => x.Code == comboNostroCusNo.Text && x.Currency == comboCurrency.SelectedValue).FirstOrDefault();
-                if (obj != null)
-                {
-                    lblNostroCusName.Text = obj.Description;
-                }
-                else
-                {
-                    lblNostroCusName.Text = "";
-                }
+                loadNostroDes();
             }
         }
         protected void LoadChargeAcct()
