@@ -76,6 +76,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::System.Web.UI.WebControls.Label lblLCCodeMessage;
         
         /// <summary>
+        /// lblLCReferenceNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLCReferenceNo;
+        
+        /// <summary>
+        /// txtBeneficiaryNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryNumber;
+        
+        /// <summary>
         /// txtBeneficiaryName control.
         /// </summary>
         /// <remarks>

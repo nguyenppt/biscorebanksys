@@ -43,6 +43,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 BEXPORT_LC_DOCS_PROCESSING ExLCDoc, ExLCDocAmend;
                 int i = tbLCCode.Text.IndexOf(".");
+                if (i > 0)
+                    lblLCReferenceNo.Text = tbLCCode.Text.Substring(0, i);
+                else
+                    lblLCReferenceNo.Text = tbLCCode.Text;
                 #region Amend
                 if (TabId == ExportLCDocProcessing.Actions.Amend)
                 {
@@ -314,6 +318,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         private void setDefaultControls()
         {
+            txtBeneficiaryNumber.Enabled = false;
             txtBeneficiaryName.Enabled = false;
             txtBeneficiaryAddr1.Enabled = false;
             txtBeneficiaryAddr2.Enabled = false;
@@ -364,6 +369,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         private void loadLC(BEXPORT_LC ExLC)
         {
+            txtBeneficiaryNumber.Text = ExLC.BeneficiaryNo;
             txtBeneficiaryName.Text = ExLC.BeneficiaryName;
             txtBeneficiaryAddr1.Text = ExLC.BeneficiaryAddr1;
             txtBeneficiaryAddr2.Text = ExLC.BeneficiaryAddr2;
@@ -394,6 +400,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (TabId == ExportLCDocProcessing.Actions.Reject)
             {
             }
+            txtBeneficiaryNumber.Text = ExLCDoc.BeneficiaryNo;
             txtBeneficiaryName.Text = ExLCDoc.BeneficiaryName;
             txtBeneficiaryAddr1.Text = ExLCDoc.BeneficiaryAddr1;
             txtBeneficiaryAddr2.Text = ExLCDoc.BeneficiaryAddr2;
@@ -788,6 +795,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         private void saveLCDoc(ref BEXPORT_LC_DOCS_PROCESSING ExLCDoc)
         {
+            ExLCDoc.BeneficiaryNo = txtBeneficiaryNumber.Text;
             ExLCDoc.BeneficiaryName = txtBeneficiaryName.Text;
             ExLCDoc.BeneficiaryAddr1 = txtBeneficiaryAddr1.Text;
             ExLCDoc.BeneficiaryAddr2 = txtBeneficiaryAddr2.Text;

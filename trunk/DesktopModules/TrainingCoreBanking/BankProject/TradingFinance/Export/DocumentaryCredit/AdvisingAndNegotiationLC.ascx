@@ -1,11 +1,11 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AdvisingAndNegotiationLC.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.AdvisingAndNegotiationLC" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AdvisingAndNegotiationLC.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.AdvNegLC" %>
 <telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
-<telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <style>
         .NoDisplay {display:none;
         }
     </style>
+<telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">    
 <script type="text/javascript">
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
@@ -1066,7 +1066,7 @@
                         <td class="MyContent">
                             <asp:TextBox ID="tbVatNo" runat="server" Enabled="false" Width="300" />
                         </td>
-                    </tr>
+                    </tr>                    
                 </table>
                 <telerik:RadTabStrip runat="server" ID="RadTabStrip3" SelectedIndex="0" MultiPageID="RadMultiPage1" Orientation="HorizontalTop">
                     <Tabs>
@@ -1080,7 +1080,7 @@
                 </telerik:RadTabStrip>
                 <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0" >
                     <telerik:RadPageView runat="server" ID="RadPageView1" >
-                        <div runat="server" ID="divCABLECHG">
+                        <div runat="server">
                             <table cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="MyLable">Charge code</td>
@@ -1093,13 +1093,15 @@
                                             ID="rcbChargeCcy1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy1_OnSelectedIndexChanged"
                                             MarkFirstMatch="True"
                                             AllowCustomText="false">
+                                            <ExpandAnimation Type="None" />
+                                            <CollapseAnimation Type="None" />
                                         </telerik:RadComboBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="MyLable">Charge Acct</td>
                                     <td class="MyContent">
-                                        <telerik:RadComboBox AppendDataBoundItems="True"
+                                        <telerik:RadComboBox 
                                                 ID="rcbChargeAcct1" runat="server"
                                                 MarkFirstMatch="True" width="300"
                                                 AllowCustomText="false">
@@ -1178,7 +1180,7 @@
                         </div>
                     </telerik:RadPageView>
                     <telerik:RadPageView runat="server" ID="RadPageView2" >
-                        <div runat="server" ID="divPAYMENTCHG">
+                        <div runat="server">
                             <table cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="MyLable">Charge code</td>
@@ -1191,13 +1193,15 @@
                                             ID="rcbChargeCcy2" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy2_OnSelectedIndexChanged"
                                             MarkFirstMatch="True"
                                             AllowCustomText="false">  
+                                            <ExpandAnimation Type="None" />
+                                            <CollapseAnimation Type="None" />
                                         </telerik:RadComboBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="MyLable">Charge Acct</td>
                                     <td class="MyContent">
-                                        <telerik:RadComboBox AppendDataBoundItems="True"
+                                        <telerik:RadComboBox 
                                             ID="rcbChargeAcct2" runat="server"
                                             MarkFirstMatch="True" width="300"
                                             AllowCustomText="false">
@@ -1276,7 +1280,7 @@
                         </div>
                     </telerik:RadPageView>
                     <telerik:RadPageView runat="server" ID="RadPageView3" >
-                        <div runat="server" ID="divACCPTCHG">
+                        <div runat="server">
 	                        <table cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="MyLable">Charge code</td>
@@ -1288,7 +1292,9 @@
                                         <telerik:RadComboBox
                                             ID="rcbChargeCcy3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy3_OnSelectedIndexChanged"
                                             MarkFirstMatch="True"
-                                            AllowCustomText="false">                                     
+                                            AllowCustomText="false"> 
+                                            <ExpandAnimation Type="None" />
+                                            <CollapseAnimation Type="None" />                                    
                                         </telerik:RadComboBox>
                                     </td>
                                 </tr>
@@ -1377,6 +1383,11 @@
                 </telerik:RadMultiPage>
             </fieldset>
         </div>
+</div>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnReportMauBiaHsLc" runat="server" OnClick="btnReportMauBiaHsLc_Click" />
+    <asp:Button ID="btnReportMauThongBaoLc" runat="server" OnClick="btnReportMauThongBaoLc_Click" />
+    <asp:Button ID="btnVAT" runat="server" OnClick="btnVAT_Click" />
 </div>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
     <script type="text/javascript">
@@ -1477,6 +1488,9 @@
                 <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr2" />
                 <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryAddr3" />
+                <%--<telerik:AjaxUpdatedControl ControlID="rcbChargeAcct1" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
+                <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />--%>
             </UpdatedControls>
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="txtAvailableWithNo">
@@ -1541,11 +1555,15 @@
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct1" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+    </AjaxSettings>
+    <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy2">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct2" />
             </UpdatedControls>
         </telerik:AjaxSetting>
+    </AjaxSettings>
+    <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy3">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
@@ -1553,9 +1571,4 @@
         </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
-<div style="visibility: hidden;">
-    <asp:Button ID="btnReportMauBiaHsLc" runat="server" OnClick="btnReportMauBiaHsLc_Click" />
-    <asp:Button ID="btnReportMauThongBaoLc" runat="server" OnClick="btnReportMauThongBaoLc_Click" />
-    <asp:Button ID="btnVAT" runat="server" OnClick="btnVAT_Click" />
-</div>
     
