@@ -156,7 +156,7 @@ namespace BankProject.Controls
         public static void initRadComboBox(ref RadComboBox cboList, string DataTextField, string DataValueField, object DataSource)
         {
             cboList.Items.Clear();
-
+            //
             cboList.DataTextField = DataTextField;
             cboList.DataValueField = DataValueField;
             cboList.DataSource = DataSource;
