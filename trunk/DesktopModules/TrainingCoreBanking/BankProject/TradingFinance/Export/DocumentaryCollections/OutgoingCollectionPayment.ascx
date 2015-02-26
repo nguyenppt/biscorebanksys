@@ -157,6 +157,20 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="MyLable">Country Code</td>
+                        <td class="MyContent">
+                            <telerik:radcombobox width="355" appenddatabounditems="True"
+                                id="comboCountryCode" runat="server"
+                                autopostback="False"
+                                onselectedindexchanged="comboCountryCode_OnSelectedIndexChanged"
+                                markfirstmatch="True"
+                                allowcustomtext="false">
+                        </telerik:radcombobox>
+                        </td>
+                        <td>
+                            <asp:Label ID="lblCountryCodeName" runat="server" />
+                    </tr>
+                    <tr>
                         <td class="MyLable">Amount Credited
                         </td>
                         <td class="MyContent">
@@ -1088,6 +1102,10 @@
                 </telerik:RadTab>
                 <telerik:RadTab Text="Payment Charge">
                 </telerik:RadTab>
+                <telerik:RadTab Text="Overseas Plus Charge">
+                </telerik:RadTab>
+                <telerik:RadTab Text="Overseas Minus Charge">
+                </telerik:RadTab>
             </Tabs>
         </telerik:radtabstrip>
             <telerik:radmultipage runat="server" id="RadMultiPage1" selectedindex="0">
@@ -1758,6 +1776,340 @@
                     </table>
                 </div>
             </telerik:RadPageView>
+
+            <telerik:RadPageView runat="server" ID="RadPageView5" >
+                <div runat="server" ID="divOverseasPlusCharge">
+	                <table width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="MyLable">Charge code</td>
+                            <td class="MyContent">
+                                <telerik:RadComboBox 
+                                    ID="tbChargeCode5" runat="server"
+                                    MarkFirstMatch="True" 
+                                    AllowCustomText="false">
+                                    <ExpandAnimation Type="None" />
+                                    <CollapseAnimation Type="None" />
+                                </telerik:RadComboBox>
+                                
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="MyLable">Charge Currency</td>
+                            <td class="MyContent">
+                                <telerik:RadComboBox
+                                    ID="rcbChargeCcy5" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy5_OnSelectedIndexChanged"
+                                    MarkFirstMatch="True" Width="150"
+                                    AllowCustomText="false">
+                                    <ExpandAnimation Type="None" />
+                                    <CollapseAnimation Type="None" />
+                                    <Items>
+                                        <telerik:RadComboBoxItem Value="" Text="" />
+                                        <telerik:RadComboBoxItem Value="USD" Text="USD" />
+                                        <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
+                                        <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
+                                        <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
+                                        <telerik:RadComboBoxItem Value="VND" Text="VND" />
+                                    </Items>
+                                </telerik:RadComboBox>
+                            </td>
+                            </tr>
+                          <tr>
+                            <td class="MyLable">Charge Acct</td>
+                            <td class="MyContent">
+                                <telerik:RadComboBox DropDownCssClass="KDDL"
+                                    AppendDataBoundItems="True"
+                                    OnItemDataBound="rcbChargeAcct5_ItemDataBound"
+                                    ID="rcbChargeAcct5" runat="server"
+                                    MarkFirstMatch="True" Width="355"
+                                    AllowCustomText="false">
+                                    <ExpandAnimation Type="None" />
+                                    <CollapseAnimation Type="None" />
+                                    <HeaderTemplate>
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="width: 100px;">Id
+                                                </td>
+                                                <td>Name
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="width: 100px;">
+                                                    <%# DataBinder.Eval(Container.DataItem, "Id")%> 
+                                                </td>
+                                                <td>
+                                                    <%# DataBinder.Eval(Container.DataItem, "Name")%> 
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ItemTemplate>
+                                </telerik:RadComboBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="MyLable">Charge Amt</td>
+                            <td class="MyContent">
+                                <telerik:RadNumericTextBox IncrementSettings-InterceptArrowKeys="true" 
+                                    IncrementSettings-InterceptMouseWheel="true" runat="server" 
+                                    ID="tbChargeAmt5" AutoPostBack="true"
+                                    OnTextChanged="tbChargeAmt5_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="MyLable">Party Charged</td>
+                            <td class="MyContent" >
+                                <telerik:RadComboBox 
+                                    AutoPostBack="True"
+                                    OnSelectedIndexChanged="rcbPartyCharged5_SelectIndexChange"
+                                    OnItemDataBound="rcbPartyCharged5_ItemDataBound"
+                                    ID="rcbPartyCharged5" runat="server"
+                                    MarkFirstMatch="True" 
+                                    AllowCustomText="false">
+                                    <ExpandAnimation Type="None" />
+                                    <CollapseAnimation Type="None" />
+                                </telerik:RadComboBox>
+                                <asp:Label ID="lblPartyCharged5" runat="server" />
+                            </td>
+       
+                        </tr>
+                        <tr>
+                            <td class="MyLable">Amort Charges</td>
+                            <td class="MyContent">
+                                <telerik:RadComboBox
+                                    ID="rcbOmortCharge5" runat="server"
+                                    MarkFirstMatch="True" 
+                                    AllowCustomText="false">
+                                    <ExpandAnimation Type="None" />
+                                    <CollapseAnimation Type="None" />
+                                    <Items>
+                                        <telerik:RadComboBoxItem Value="NO" Text="NO" />
+                                        <telerik:RadComboBoxItem Value="YES" Text="YES" />
+                                    </Items>
+                                </telerik:RadComboBox>
+                            </td>
+                        </tr>
+                        <tr>
+                                <td class="MyLable">Amt. In Local CCY</td>
+                                <td class="MyContent"></td>
+                            </tr>
+                            <tr>
+                                <td class="MyLable">Amt DR from Acct</td>
+                                <td class="MyContent"></td>
+                            </tr>
+                        
+                        <tr>
+                                <td class="MyLable">Charge Status</td>
+                                <td class="MyContent">
+                                    <telerik:RadComboBox AutoPostBack="true"
+                                        ID="rcbChargeStatus5" runat="server"
+                                        MarkFirstMatch="True" Width="150"
+                                        AllowCustomText="false">
+                                        <ExpandAnimation Type="None" />
+                                        <CollapseAnimation Type="None" />
+                                        <Items>
+                                            <telerik:RadComboBoxItem Value="CHARGE COLECTED" Text="CHARGE COLECTED" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </td>
+                                <td style="display: none;">
+                                   </td>
+                            </tr>
+
+
+                        
+                        <tr style="border-top: 1px solid #CCC;">
+                            <td class="MyLable">Tax Code</td>
+                            <td class="MyContent">
+                                <asp:Label ID="lblTaxCode5" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="MyLable">Tax Amt</td>
+                            <td class="MyContent">
+                                <asp:Label ID="lblTaxAmt5" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                                <td class="MyLable">Tax in LCCY Amt</td>
+                                <td class="MyContent"></td>
+                            </tr>
+                            <tr>
+                                <td class="MyLable">Tax Date</td>
+                                <td class="MyContent"></td>
+                            </tr>
+                    </table>
+                </div>
+            </telerik:RadPageView>
+
+            <telerik:RadPageView runat="server" ID="RadPageView6" >
+                <div runat="server" ID="divOverseasminusCharge">
+	                <table width="100%" cellpadding="0" cellspacing="0">
+		                <tr>
+			                <td class="MyLable">Charge code</td>
+			                <td class="MyContent">
+				                <telerik:RadComboBox 
+					                ID="tbChargeCode6" runat="server"
+					                MarkFirstMatch="True" 
+					                AllowCustomText="false">
+					                <ExpandAnimation Type="None" />
+					                <CollapseAnimation Type="None" />
+				                </telerik:RadComboBox>
+				
+			                </td>
+		                </tr>
+		                 <tr>
+				                <td class="MyLable">Charge Currency</td>
+				                <td class="MyContent">
+					                <telerik:RadComboBox
+						                ID="rcbChargeCcy6" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rcbChargeCcy6_OnSelectedIndexChanged"
+						                MarkFirstMatch="True" Width="150"
+						                AllowCustomText="false">
+						                <ExpandAnimation Type="None" />
+						                <CollapseAnimation Type="None" />
+						                <Items>
+							                <telerik:RadComboBoxItem Value="" Text="" />
+							                <telerik:RadComboBoxItem Value="USD" Text="USD" />
+							                <telerik:RadComboBoxItem Value="EUR" Text="EUR" />
+							                <telerik:RadComboBoxItem Value="GBP" Text="GBP" />
+							                <telerik:RadComboBoxItem Value="JPY" Text="JPY" />
+							                <telerik:RadComboBoxItem Value="VND" Text="VND" />
+						                </Items>
+					                </telerik:RadComboBox>
+				                </td>
+			                </tr>
+		                  <tr>
+			                <td class="MyLable">Charge Acct</td>
+			                <td class="MyContent">
+				                <telerik:RadComboBox DropDownCssClass="KDDL"
+					                AppendDataBoundItems="True"
+					                OnItemDataBound="rcbChargeAcct6_ItemDataBound"
+					                ID="rcbChargeAcct6" runat="server"
+					                MarkFirstMatch="True" Width="355"
+					                AllowCustomText="false">
+					                <ExpandAnimation Type="None" />
+					                <CollapseAnimation Type="None" />
+					                <HeaderTemplate>
+						                <table cellpadding="0" cellspacing="0">
+							                <tr>
+								                <td style="width: 100px;">Id
+								                </td>
+								                <td>Name
+								                </td>
+							                </tr>
+						                </table>
+					                </HeaderTemplate>
+					                <ItemTemplate>
+						                <table cellpadding="0" cellspacing="0">
+							                <tr>
+								                <td style="width: 100px;">
+									                <%# DataBinder.Eval(Container.DataItem, "Id")%> 
+								                </td>
+								                <td>
+									                <%# DataBinder.Eval(Container.DataItem, "Name")%> 
+								                </td>
+							                </tr>
+						                </table>
+					                </ItemTemplate>
+				                </telerik:RadComboBox>
+			                </td>
+		                </tr>
+		                <tr>
+			                <td class="MyLable">Charge Amt</td>
+			                <td class="MyContent">
+				                <telerik:RadNumericTextBox IncrementSettings-InterceptArrowKeys="true" 
+					                IncrementSettings-InterceptMouseWheel="true" runat="server" 
+					                ID="tbChargeAmt6" AutoPostBack="true"
+					                OnTextChanged="tbChargeAmt6_TextChanged" />
+			                </td>
+		                </tr>
+		                <tr>
+			                <td class="MyLable">Party Charged</td>
+			                <td class="MyContent" >
+				                <telerik:RadComboBox 
+					                AutoPostBack="True"
+					                OnSelectedIndexChanged="rcbPartyCharged6_SelectIndexChange"
+					                OnItemDataBound="rcbPartyCharged6_ItemDataBound"
+					                ID="rcbPartyCharged6" runat="server"
+					                MarkFirstMatch="True" 
+					                AllowCustomText="false">
+					                <ExpandAnimation Type="None" />
+					                <CollapseAnimation Type="None" />
+				                </telerik:RadComboBox>
+				                <asp:Label ID="lblPartyCharged6" runat="server" />
+			                </td>
+
+		                </tr>
+		                <tr>
+			                <td class="MyLable">Amort Charges</td>
+			                <td class="MyContent">
+				                <telerik:RadComboBox
+					                ID="rcbOmortCharge6" runat="server"
+					                MarkFirstMatch="True" 
+					                AllowCustomText="false">
+					                <ExpandAnimation Type="None" />
+					                <CollapseAnimation Type="None" />
+					                <Items>
+						                <telerik:RadComboBoxItem Value="NO" Text="NO" />
+						                <telerik:RadComboBoxItem Value="YES" Text="YES" />
+					                </Items>
+				                </telerik:RadComboBox>
+			                </td>
+		                </tr>
+		                <tr>
+				                <td class="MyLable">Amt. In Local CCY</td>
+				                <td class="MyContent"></td>
+			                </tr>
+			                <tr>
+				                <td class="MyLable">Amt DR from Acct</td>
+				                <td class="MyContent"></td>
+			                </tr>
+		
+		                <tr>
+				                <td class="MyLable">Charge Status</td>
+				                <td class="MyContent">
+					                <telerik:RadComboBox AutoPostBack="true"
+						                ID="rcbChargeStatus6" runat="server"
+						                MarkFirstMatch="True" Width="150"
+						                AllowCustomText="false">
+						                <ExpandAnimation Type="None" />
+						                <CollapseAnimation Type="None" />
+						                <Items>
+							                <telerik:RadComboBoxItem Value="CHARGE COLECTED" Text="CHARGE COLECTED" />
+						                </Items>
+					                </telerik:RadComboBox>
+				                </td>
+				                <td style="display: none;">
+				                   </td>
+			                </tr>
+
+
+		
+		                <tr style="border-top: 1px solid #CCC;">
+			                <td class="MyLable">Tax Code</td>
+			                <td class="MyContent">
+				                <asp:Label ID="lblTaxCode6" runat="server" />
+			                </td>
+		                </tr>
+		                <tr>
+			                <td class="MyLable">Tax Amt</td>
+			                <td class="MyContent">
+				                <asp:Label ID="lblTaxAmt6" runat="server" />
+			                </td>
+		                </tr>
+		                <tr>
+				                <td class="MyLable">Tax in LCCY Amt</td>
+				                <td class="MyContent"></td>
+			                </tr>
+			                <tr>
+				                <td class="MyLable">Tax Date</td>
+				                <td class="MyContent"></td>
+			                </tr>
+	                </table>
+                 </div>
+            </telerik:RadPageView>
         </telerik:radmultipage>
         </fieldset>
     </div>
@@ -1829,6 +2181,18 @@
             <telerik:AjaxUpdatedControl ControlID="lblTaxCode4" />
         </UpdatedControls>
     </telerik:AjaxSetting>
+         <telerik:AjaxSetting AjaxControlID="tbChargeAmt5">
+        <UpdatedControls>
+            <telerik:AjaxUpdatedControl ControlID="lblTaxAmt5" />
+            <telerik:AjaxUpdatedControl ControlID="lblTaxCode5" />
+        </UpdatedControls>
+    </telerik:AjaxSetting>
+         <telerik:AjaxSetting AjaxControlID="tbChargeAmt6">
+        <UpdatedControls>
+            <telerik:AjaxUpdatedControl ControlID="lblTaxAmt6" />
+            <telerik:AjaxUpdatedControl ControlID="lblTaxCode6" />
+        </UpdatedControls>
+    </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy">
         <UpdatedControls>
             <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct" />
@@ -1848,6 +2212,16 @@
          <telerik:AjaxSetting AjaxControlID="rcbChargeCcy4">
         <UpdatedControls>
             <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct4" />
+        </UpdatedControls>
+    </telerik:AjaxSetting>
+         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy5">
+        <UpdatedControls>
+            <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct5" />
+        </UpdatedControls>
+    </telerik:AjaxSetting>
+         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy6">
+        <UpdatedControls>
+            <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct6" />
         </UpdatedControls>
     </telerik:AjaxSetting>
     </ajaxsettings>
