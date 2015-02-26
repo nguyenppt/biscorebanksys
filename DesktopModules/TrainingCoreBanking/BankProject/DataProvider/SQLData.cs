@@ -214,6 +214,11 @@ namespace BankProject.DataProvider
 
                 case "PartyCharged":
                     drow = dtTemp.NewRow();
+                    drow["Description"] = "Openner";
+                    drow["Id"] = "A";
+                    dtTemp.Rows.Add(drow);
+
+                    drow = dtTemp.NewRow();
                     drow["Description"] = "Beneficiary";
                     drow["Id"] = "B";
                     dtTemp.Rows.Add(drow);
@@ -222,6 +227,17 @@ namespace BankProject.DataProvider
                     drow["Description"] = "Correspondent Charges for the Openner";
                     drow["Id"] = "AC";
                     dtTemp.Rows.Add(drow);
+
+                    drow = dtTemp.NewRow();
+                    drow["Description"] = "";
+                    drow["Id"] = "BB";
+                    dtTemp.Rows.Add(drow);
+
+                    drow = dtTemp.NewRow();
+                    drow["Description"] = "Correspondent Charges for the Beneficiary";
+                    drow["Id"] = "BC";
+                    dtTemp.Rows.Add(drow);
+
                     break;
 
                 case "PartyCharged_IssueLC":
