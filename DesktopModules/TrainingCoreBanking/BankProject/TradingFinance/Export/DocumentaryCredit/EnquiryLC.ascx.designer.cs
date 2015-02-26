@@ -40,13 +40,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadTextBox txtApplicantName;
         
         /// <summary>
-        /// txtBeneficiaryID control.
+        /// rcbBeneficiaryNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtBeneficiaryID;
+        protected global::Telerik.Web.UI.RadComboBox rcbBeneficiaryNumber;
         
         /// <summary>
         /// txtBeneficiaryName control.
@@ -74,6 +74,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtIssuingBank;
+        
+        /// <summary>
+        /// txtDocumentaryCreditNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtDocumentaryCreditNumber;
         
         /// <summary>
         /// radGridReview control.

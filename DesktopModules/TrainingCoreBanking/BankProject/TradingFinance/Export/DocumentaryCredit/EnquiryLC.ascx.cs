@@ -29,6 +29,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 refId = ExportLC.Actions.Register;
             RadToolBar1.FindItemByValue("btSearch").Enabled = (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"));
             if (IsPostBack) return;
+            bc.Commont.initRadComboBox(ref rcbBeneficiaryNumber, "CustomerName", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -75,17 +76,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
                         
             if (!string.IsNullOrEmpty(txtRefNo.Text))
-                enquiry = enquiry.Where(p => p.ImportLCCode.Equals(txtRefNo.Text));
+                enquiry = enquiry.Where(p => p.ExportLCCode.Equals(txtRefNo.Text));
             if (!string.IsNullOrEmpty(txtApplicantName.Text))
                 enquiry = enquiry.Where(p => p.ApplicantName.Contains(txtApplicantName.Text));
-            if (!string.IsNullOrEmpty(txtBeneficiaryID.Text))
-                enquiry = enquiry.Where(p => p.BeneficiaryNo.Equals(txtBeneficiaryID.Text));
+            if (rcbBeneficiaryNumber.SelectedIndex >= 0)
+                enquiry = enquiry.Where(p => p.BeneficiaryNo.Equals(rcbBeneficiaryNumber.SelectedValue));
             if (!string.IsNullOrEmpty(txtBeneficiaryName.Text))
                 enquiry = enquiry.Where(p => p.BeneficiaryName.Contains(txtBeneficiaryName.Text));
             if (txtIssueDate.SelectedDate.HasValue)
                 enquiry = enquiry.Where(p => p.DateOfIssue.Equals(txtIssueDate.SelectedDate));
             if (!string.IsNullOrEmpty(txtIssuingBank.Text))
                 enquiry = enquiry.Where(p => p.IssuingBankNo.Equals(txtIssuingBank.Text));
+            if (!string.IsNullOrEmpty(txtDocumentaryCreditNumber.Text))
+                enquiry = enquiry.Where(p => p.ImportLCCode.Equals(txtDocumentaryCreditNumber.Text));
             switch (refId)
             {
                 case ExportLC.Actions.Confirm:

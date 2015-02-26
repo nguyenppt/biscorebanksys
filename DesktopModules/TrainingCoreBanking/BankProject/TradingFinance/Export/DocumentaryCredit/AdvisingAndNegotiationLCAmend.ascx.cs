@@ -49,6 +49,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref rcbChargeCcy1, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
+
+            bc.Commont.initRadComboBox(ref rcbBeneficiaryNumber, "CustomerName", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
             //
             if (!string.IsNullOrEmpty(Request.QueryString["Code"]))
             {
@@ -262,7 +264,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLCAmend.DateOfAmendment = txtDateOfAmendment.SelectedDate;
             ExLCAmend.NumberOfAmendment = Convert.ToInt32(txtNumberOfAmendment.Value);
             //
-            ExLCAmend.BeneficiaryNo = txtBeneficiaryNo.Text.Trim();
+            ExLCAmend.BeneficiaryNo = rcbBeneficiaryNumber.SelectedValue.Trim();
             ExLCAmend.BeneficiaryName = txtBeneficiaryName.Text.Trim();
             ExLCAmend.BeneficiaryAddr1 = txtBeneficiaryAddr1.Text.Trim();
             ExLCAmend.BeneficiaryAddr2 = txtBeneficiaryAddr2.Text.Trim();
@@ -325,7 +327,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //txtDateOfAmendment.SelectedDate = DateTime.Now;
             //txtNumberOfAmendment.Value = 1;
             //
-            txtBeneficiaryNo.Text = ExLC.BeneficiaryNo;
+            rcbBeneficiaryNumber.SelectedValue = ExLC.BeneficiaryNo;
             txtBeneficiaryName.Text = ExLC.BeneficiaryName;
             txtBeneficiaryAddr1.Text = ExLC.BeneficiaryAddr1;
             txtBeneficiaryAddr2.Text = ExLC.BeneficiaryAddr2;
@@ -368,7 +370,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtDateOfAmendment.SelectedDate = ExLCAmend.DateOfAmendment;
             txtNumberOfAmendment.Value = ExLCAmend.NumberOfAmendment;
             //
-            txtBeneficiaryNo.Text = ExLCAmend.BeneficiaryNo;
+            rcbBeneficiaryNumber.SelectedValue = ExLCAmend.BeneficiaryNo;
             txtBeneficiaryName.Text = ExLCAmend.BeneficiaryName;
             txtBeneficiaryAddr1.Text = ExLCAmend.BeneficiaryAddr1;
             txtBeneficiaryAddr2.Text = ExLCAmend.BeneficiaryAddr2;
@@ -441,9 +443,30 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             bc.Commont.loadBankSwiftCodeInfo(txtIssuingBankNo.Text, ref lblIssuingBankMessage, ref txtIssuingBankName, ref txtIssuingBankAddr1, ref txtIssuingBankAddr2, ref txtIssuingBankAddr3);
         }
-        protected void txtBeneficiaryNo_TextChanged(object sender, EventArgs e)
+        protected void rcbBeneficiaryNumber_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            bc.Commont.loadBankSwiftCodeInfo(txtBeneficiaryNo.Text, ref lblBeneficiaryMessage, ref txtBeneficiaryName, ref txtBeneficiaryAddr1, ref txtBeneficiaryAddr2, ref txtBeneficiaryAddr3);
+            lblBeneficiaryMessage.Text = "";
+            txtBeneficiaryName.Text = "";
+            txtBeneficiaryAddr1.Text = "";
+            txtBeneficiaryAddr2.Text = "";
+            txtBeneficiaryAddr3.Text = "";
+            if (!string.IsNullOrEmpty(rcbBeneficiaryNumber.SelectedValue))
+            {
+                var ds = bd.DataTam.B_BCUSTOMERS_GetbyID(rcbBeneficiaryNumber.SelectedValue);
+                if (ds == null || ds.Tables.Count <= 0)
+                {
+                    lblBeneficiaryMessage.Text = "Customer not found !";
+                    return;
+                }
+                DataRow dr = ds.Tables[0].Rows[0];
+                txtBeneficiaryName.Text = dr["CustomerName"].ToString();
+                txtBeneficiaryAddr1.Text = dr["Address"].ToString();
+                txtBeneficiaryAddr2.Text = dr["City"].ToString();
+                txtBeneficiaryAddr3.Text = dr["Country"].ToString();
+            }
+            LoadChargeAcct(ref rcbChargeAcct1, rcbChargeCcy1.SelectedValue);
+            LoadChargeAcct(ref rcbChargeAcct2, rcbChargeCcy2.SelectedValue);
+            LoadChargeAcct(ref rcbChargeAcct3, rcbChargeCcy3.SelectedValue);
         }
 
         protected void rcbWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -453,9 +476,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             RadMultiPage1.Visible = WaiveCharges.Equals(bd.YesNo.NO);
         }
 
-        protected void LoadChargeAcct(ref RadComboBox cboChargeAcct, string ChargeCcy)
+        private void LoadChargeAcct(ref RadComboBox cboChargeAcct, string ChargeCcy)
         {
-            bc.Commont.initRadComboBox(ref cboChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Text, ChargeCcy));
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtBeneficiaryName.Text, ChargeCcy));
         }
         protected void rcbChargeCcy1_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {

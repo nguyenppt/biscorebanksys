@@ -18,7 +18,7 @@ using System.Data.Entity.Validation;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
-    public partial class AdvisingAndNegotiationLC : DotNetNuke.Entities.Modules.PortalModuleBase
+    public partial class AdvNegLC : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         private ExportLC dbEntities = new ExportLC();
         //
@@ -47,7 +47,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             txtChargeCode1.Text = ExportLC.Charges.Advising;
             txtChargeCode2.Text = ExportLC.Charges.Courier;
-            txtChargeCode3.Text = ExportLC.Charges.Other;            
+            txtChargeCode3.Text = ExportLC.Charges.Other;
             //
             if (IsPostBack) return;
             //
@@ -833,6 +833,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 txtBeneficiaryAddr2.Text = dr["City"].ToString();
                 txtBeneficiaryAddr3.Text = dr["Country"].ToString();
             }
+            LoadChargeAcct(ref rcbChargeAcct1, rcbChargeCcy1.SelectedValue);
+            LoadChargeAcct(ref rcbChargeAcct2, rcbChargeCcy2.SelectedValue);
+            LoadChargeAcct(ref rcbChargeAcct3, rcbChargeCcy3.SelectedValue);
         }
         protected void txtAvailableWithNo_TextChanged(object sender, EventArgs e)
         {
@@ -854,9 +857,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             RadMultiPage1.Visible = WaiveCharges.Equals(bd.YesNo.NO);
         }
 
-        protected void LoadChargeAcct(ref RadComboBox cboChargeAcct, string ChargeCcy)
+        private void LoadChargeAcct(ref RadComboBox cboChargeAcct, string ChargeCcy)
         {
-            bc.Commont.initRadComboBox(ref cboChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Text, ChargeCcy));
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtBeneficiaryName.Text, ChargeCcy));
         }
         protected void rcbChargeCcy1_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {

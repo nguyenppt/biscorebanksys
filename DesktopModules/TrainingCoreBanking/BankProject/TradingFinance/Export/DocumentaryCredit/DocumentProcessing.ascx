@@ -86,6 +86,18 @@
                 </legend>
                 <table cellpadding="0" cellspacing="0">
                     <tr>
+                        <td class="MyLable" style="width: 170px">1.LC reference no </td>
+                        <td class="MyContent">
+                            <asp:Label ID="lblLCReferenceNo" runat="server" Text=""></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="MyLable" style="width: 170px">59.1 Beneficiary Number </td>
+                        <td class="MyContent">
+                            <telerik:RadTextBox ID="txtBeneficiaryNumber" runat="server" Width="355" />
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="MyLable" style="width: 170px">59.2 Beneficiary Name </td>
                         <td class="MyContent">
                             <telerik:RadTextBox ID="txtBeneficiaryName" runat="server" Width="355" />

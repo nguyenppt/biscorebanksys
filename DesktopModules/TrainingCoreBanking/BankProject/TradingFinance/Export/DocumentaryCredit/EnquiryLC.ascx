@@ -26,22 +26,37 @@
     <%if (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr")){ %>
     <table cellpadding="0" cellspacing="0" style="margin-bottom:10px">
         <tr>
-            <td style="width: 120px">REF No.</td>
+            <td style="width: 170px">REF No.</td>
             <td><telerik:RadTextBox ID="txtRefNo" runat="server" Width="200" /></td>
             <td style="width: 120px; padding-left:5px;">Applicant Name</td>
             <td><telerik:RadTextBox ID="txtApplicantName" runat="server" Width="200" /></td>
         </tr>
         <tr>
             <td>Beneficiary ID</td>
-            <td style="padding-top:5px;"><telerik:RadTextBox ID="txtBeneficiaryID" runat="server" Width="200" /></td>
-            <td style="padding-left:5px;">Beneficiary Name</td>
-            <td style="padding-top:5px;"><telerik:RadTextBox ID="txtBeneficiaryName" runat="server" Width="200" /></td>
+            <td style="padding-top:5px;" colspan="3"><telerik:RadComboBox
+                                AppendDataBoundItems="True"
+                                ID="rcbBeneficiaryNumber" runat="server"
+                                MarkFirstMatch="True"
+                                Width="525"
+                                Height="150"
+                                AllowCustomText="false">
+                                <ExpandAnimation Type="None" />
+                                <CollapseAnimation Type="None" />
+                            </telerik:RadComboBox></td>
+            <!--<td style="padding-left:5px;">Beneficiary Name</td>
+            <td style="padding-top:5px;"><telerik:RadTextBox ID="txtBeneficiaryName" runat="server" Width="200" /></td>-->
         </tr>
         <tr>
             <td>Issue date</td>
-            <td style="padding-top:5px;"><telerik:RadDatePicker ID="txtIssueDate" runat="server" /></td>
+            <td style="padding-top:5px;"><telerik:RadDatePicker ID="txtIssueDate" runat="server" Width="200" /></td>
             <td style="padding-left:5px;">Issuing Bank</td>
             <td style="padding-top:5px;"><telerik:RadTextBox ID="txtIssuingBank" runat="server" Width="200" /></td>
+        </tr>
+        <tr>
+            <td>Documentary Credit Number</td>
+            <td style="padding-top:5px;"><telerik:RadTextBox ID="txtDocumentaryCreditNumber" runat="server" Width="200" /></td>
+            <td style="width: 120px; padding-left:5px;"></td>
+            <td></td>
         </tr>
     </table>
     <%} %>
