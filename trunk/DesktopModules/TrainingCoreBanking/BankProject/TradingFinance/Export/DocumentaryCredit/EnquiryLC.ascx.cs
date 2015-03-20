@@ -79,7 +79,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 enquiry = enquiry.Where(p => p.ExportLCCode.Equals(txtRefNo.Text));
             if (!string.IsNullOrEmpty(txtApplicantName.Text))
                 enquiry = enquiry.Where(p => p.ApplicantName.Contains(txtApplicantName.Text));
-            if (rcbBeneficiaryNumber.SelectedIndex >= 0)
+            if (rcbBeneficiaryNumber.SelectedIndex > 0)
                 enquiry = enquiry.Where(p => p.BeneficiaryNo.Equals(rcbBeneficiaryNumber.SelectedValue));
             if (!string.IsNullOrEmpty(txtBeneficiaryName.Text))
                 enquiry = enquiry.Where(p => p.BeneficiaryName.Contains(txtBeneficiaryName.Text));
