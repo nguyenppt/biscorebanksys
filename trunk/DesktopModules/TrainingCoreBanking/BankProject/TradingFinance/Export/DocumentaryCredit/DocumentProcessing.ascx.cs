@@ -336,7 +336,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtIssuingBankAddr3.Enabled = false;
             //
             txtDocumentaryCreditNo.Enabled = false;
-            txtCommodity.Enabled = false;
+            txtCommodityName.Enabled = false;
             txtOriginalAmount.Enabled = false;
             txtTenor.Enabled = false;
             txtOriginalTenor.Enabled = false;
@@ -367,6 +367,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref rcbDocsCode2, "Description", "Id", tblList);
             bc.Commont.initRadComboBox(ref rcbDocsCode3, "Description", "Id", tblList);
         }
+        private string getCommodityName(string code)
+        {
+            var c = dbEntities.BCOMMODITies.FirstOrDefault(p => p.ID.Equals(code));
+            if (c == null) return "";
+
+            return c.Name;
+        }
         private void loadLC(BEXPORT_LC ExLC)
         {
             txtBeneficiaryNumber.Text = ExLC.BeneficiaryNo;
@@ -387,7 +394,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtIssuingBankAddr3.Text = ExLC.IssuingBankAddr3;
             //
             txtDocumentaryCreditNo.Text = ExLC.ImportLCCode;
-            txtCommodity.Text = ExLC.Commodity;
+            txtCommodity.Value = ExLC.Commodity;
+            txtCommodityName.Text = getCommodityName(ExLC.Commodity);
             rcbCurrency.SelectedValue = ExLC.Currency;
             txtAmount.Value = ExLC.Amount;
             txtTenor.Text = ExLC.Tenor;
@@ -429,7 +437,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtReceivingBankAddr3.Text = ExLCDoc.ReceivingBankAddr3;
             //
             txtDocumentaryCreditNo.Text = ExLCDoc.DocumentaryCreditNo;
-            txtCommodity.Text = ExLCDoc.Commodity;
+            txtCommodity.Value = ExLCDoc.Commodity;
+            txtCommodityName.Text = getCommodityName(ExLCDoc.Commodity);
             rcbCurrency.SelectedValue = ExLCDoc.Currency;
             if (TabId == ExportLCDocProcessing.Actions.Amend)
             {
@@ -457,9 +466,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtProccessingDate.SelectedDate = ExLCDoc.ProccessingDate;            
             txtInvoiceNo.Text = ExLCDoc.InvoiceNo;
             //
-            loadLCDocsCode(ExLCDoc.DocsCode1, ExLCDoc.NoOfOriginals1, ExLCDoc.NoOfCopies1, ref rcbDocsCode1, ref txtNoOfOriginals1, ref txtNoOfCopies1);
-            loadLCDocsCode(ExLCDoc.DocsCode2, ExLCDoc.NoOfOriginals2, ExLCDoc.NoOfCopies2, ref rcbDocsCode2, ref txtNoOfOriginals2, ref txtNoOfCopies2);
-            loadLCDocsCode(ExLCDoc.DocsCode3, ExLCDoc.NoOfOriginals3, ExLCDoc.NoOfCopies3, ref rcbDocsCode3, ref txtNoOfOriginals3, ref txtNoOfCopies3);
+            loadLCDocsCode(ExLCDoc.DocsCode1, ExLCDoc.NoOfOriginals1, ExLCDoc.NoOfCopies1, ExLCDoc.OtherDocs1, ref rcbDocsCode1, ref txtNoOfOriginals1, ref txtNoOfCopies1, ref txtOtherDocs1);
+            loadLCDocsCode(ExLCDoc.DocsCode2, ExLCDoc.NoOfOriginals2, ExLCDoc.NoOfCopies2, ExLCDoc.OtherDocs2, ref rcbDocsCode2, ref txtNoOfOriginals2, ref txtNoOfCopies2, ref txtOtherDocs2);
+            loadLCDocsCode(ExLCDoc.DocsCode3, ExLCDoc.NoOfOriginals3, ExLCDoc.NoOfCopies3, ExLCDoc.OtherDocs3, ref rcbDocsCode3, ref txtNoOfOriginals3, ref txtNoOfCopies3, ref txtOtherDocs3);
             if (!string.IsNullOrEmpty(ExLCDoc.DocsCode3))
             {
                 divDocs2.Attributes.CssStyle.Remove("Display");
@@ -477,11 +486,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtVATNo.Text = ExLCDoc.VATNo;
             if (ExLCDoc.WaiveCharges.Equals(bd.YesNo.NO)) loadCharges();
         }
-        private void loadLCDocsCode(string DocsCode, int? NoOfOriginals, int? NoOfCopies, ref RadComboBox rcbDocsCode, ref RadNumericTextBox txtNoOfOriginals, ref RadNumericTextBox txtNoOfCopies)
+        private void loadLCDocsCode(string DocsCode, int? NoOfOriginals, int? NoOfCopies, string OtherDocs,
+            ref RadComboBox rcbDocsCode, ref RadNumericTextBox txtNoOfOriginals, ref RadNumericTextBox txtNoOfCopies, ref RadTextBox txtOtherDocs)
         {
             rcbDocsCode.SelectedValue = DocsCode;
             txtNoOfOriginals.Value = NoOfOriginals;
             txtNoOfCopies.Value = NoOfCopies;
+            txtOtherDocs.Text = OtherDocs;
         }
         private void loadCharges()
         {
@@ -824,7 +835,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLCDoc.ReceivingBankAddr3 = txtReceivingBankAddr3.Text;
             //
             ExLCDoc.DocumentaryCreditNo = txtDocumentaryCreditNo.Text;
-            ExLCDoc.Commodity = txtCommodity.Text;
+            ExLCDoc.Commodity = txtCommodity.Value;
             ExLCDoc.Currency = rcbCurrency.SelectedValue;            
             ExLCDoc.DocumentReceivedDate = txtDocumentReceivedDate.SelectedDate;
             ExLCDoc.ProccessingDate = txtProccessingDate.SelectedDate;            
@@ -849,6 +860,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 ExLCDoc.NoOfCopies1 = Convert.ToInt32(txtNoOfCopies1.Value.Value);
             else
                 ExLCDoc.NoOfCopies1 = null;
+            ExLCDoc.OtherDocs1 = txtOtherDocs1.Text;
             //
             ExLCDoc.DocsCode2 = rcbDocsCode2.SelectedValue;
             if (txtNoOfOriginals2.Value.HasValue)
@@ -859,6 +871,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 ExLCDoc.NoOfCopies2 = Convert.ToInt32(txtNoOfCopies2.Value.Value);
             else
                 ExLCDoc.NoOfCopies2 = null;
+            ExLCDoc.OtherDocs2 = txtOtherDocs2.Text;
             //
             ExLCDoc.DocsCode3 = rcbDocsCode3.SelectedValue;
             if (txtNoOfOriginals3.Value.HasValue)
@@ -869,6 +882,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 ExLCDoc.NoOfCopies3 = Convert.ToInt32(txtNoOfCopies3.Value.Value);
             else
                 ExLCDoc.NoOfCopies3 = null;
+            ExLCDoc.OtherDocs3 = txtOtherDocs3.Text;
             //
             ExLCDoc.Remark = txtRemark.Text;
             ExLCDoc.SettlementInstruction = txtSettlementInstruction.Text;
@@ -908,7 +922,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         protected void LoadChargeAcct(ref RadComboBox cboChargeAcct, string ChargeCcy)
         {
-            //bc.Commont.initRadComboBox(ref cboChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtCustomerName.Text, ChargeCcy));
+            bc.Commont.initRadComboBox(ref cboChargeAcct, "Display", "Id", bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtBeneficiaryName.Text, ChargeCcy));
         }
         protected void rcbChargeCcy1_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {

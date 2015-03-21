@@ -259,7 +259,7 @@
                     <tr>
                         <td class="MyLable">6. Commodity
                         </td>
-                        <td class="MyContent"><telerik:RadTextBox ID="txtCommodity" runat="server" /></td>
+                        <td class="MyContent"><asp:HiddenField ID="txtCommodity" runat="server" /><telerik:RadTextBox ID="txtCommodityName" runat="server" /></td>
                     </tr>
                     <tr>
                         <td class="MyLable">7. Currency</td>
@@ -374,6 +374,12 @@
                             <telerik:RadNumericTextBox ID="txtNoOfCopies1" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
+                    <tr>    
+                        <td class="MyLable">13.1.4 Other Docs</td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs1" Runat="server" Width="355" />
+                        </td>
+                    </tr>
                 </table>
                 <table cellpadding="0" cellspacing="0" id="divDocs2" runat="server" style="display:none;">
                     <tr>    
@@ -396,7 +402,13 @@
                         <td style="width: 150px" class="MyContent">
                             <telerik:RadNumericTextBox ID="txtNoOfCopies2" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
-                    </tr>`
+                    </tr>
+                    <tr>    
+                        <td class="MyLable">13.2.4 Other Docs</td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs2" Runat="server" Width="355" />
+                        </td>
+                    </tr>
                 </table>
                 <table cellpadding="0" cellspacing="0" id="divDocs3" runat="server" style="display:none;">
                     <tr>    
@@ -420,15 +432,21 @@
                             <telerik:RadNumericTextBox ID="txtNoOfCopies3" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
+                    <tr>    
+                        <td class="MyLable">13.3.4 Other Docs</td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs3" Runat="server" Width="355" />
+                        </td>
+                    </tr>
                 </table>
                 <table cellpadding="0" cellspacing="0">
                     <tr>    
                         <td class="MyLable">14. Remark</td>
-                        <td class="MyContent"><telerik:RadTextBox ID="txtRemark" runat="server" Width="355" /></td>
+                        <td class="MyContent"><telerik:RadTextBox ID="txtRemark" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox></td>
                     </tr>
                     <tr>    
                         <td class="MyLable">15. Settlement Instruction </td>
-                        <td class="MyContent"><telerik:RadTextBox ID="txtSettlementInstruction" runat="server" Width="355" /></td>
+                        <td class="MyContent"><telerik:RadTextBox ID="txtSettlementInstruction" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox></td>
                     </tr>
                 </table>
             </fieldset>
@@ -785,6 +803,16 @@
                 else {
                     window.location.href = "Default.aspx?tabid=<%= TabId %>&Code=" + $("#<%=tbLCCode.ClientID %>").val();
                 }
+            }
+        });
+        $("#<%=txtRemark.ClientID %>").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#<%=txtRemark.ClientID %>").val($("#<%=txtRemark %>").val() + '\n');
+            }
+        });
+        $("#<%=txtSettlementInstruction.ClientID %>").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#<%=txtSettlementInstruction.ClientID %>").val($("#<%=txtSettlementInstruction %>").val() + '\n');
             }
         });
         //

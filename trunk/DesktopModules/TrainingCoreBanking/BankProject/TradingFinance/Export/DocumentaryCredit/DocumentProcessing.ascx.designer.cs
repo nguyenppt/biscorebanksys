@@ -325,7 +325,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtCommodity;
+        protected global::System.Web.UI.WebControls.HiddenField txtCommodity;
+        
+        /// <summary>
+        /// txtCommodityName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtCommodityName;
         
         /// <summary>
         /// rcbCurrency control.
@@ -499,6 +508,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadNumericTextBox txtNoOfCopies1;
         
         /// <summary>
+        /// txtOtherDocs1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtOtherDocs1;
+        
+        /// <summary>
         /// divDocs2 control.
         /// </summary>
         /// <remarks>
@@ -544,6 +562,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadNumericTextBox txtNoOfCopies2;
         
         /// <summary>
+        /// txtOtherDocs2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtOtherDocs2;
+        
+        /// <summary>
         /// divDocs3 control.
         /// </summary>
         /// <remarks>
@@ -587,6 +614,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNumericTextBox txtNoOfCopies3;
+        
+        /// <summary>
+        /// txtOtherDocs3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtOtherDocs3;
         
         /// <summary>
         /// txtRemark control.

@@ -165,6 +165,25 @@
                 </div>
                 <table cellpadding="0" cellspacing="0">
                     <tr>
+                        <td style="width: 250px" class="MyLable">Receiving L/C via</td>
+                        <td class="MyContent">
+                            <telerik:RadComboBox Width="195"
+                                AutoPostBack="false"
+                                ID="rcbReceivingLCVia" runat="server"
+                                MarkFirstMatch="True"
+                                AllowCustomText="false">
+                                <Items>
+                                    <telerik:RadComboBoxItem Value="" Text="" />
+                                    <telerik:RadComboBoxItem Value="SWIFT" Text="SWIFT" />
+                                    <telerik:RadComboBoxItem Value="TELEX" Text="TELEX" />
+                                    <telerik:RadComboBoxItem Value="MAIL" Text="MAIL" />
+                                </Items>
+                            </telerik:RadComboBox>
+                        </td>
+                    </tr>
+                </table>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
                         <td style="width: 250px" class="MyLable">20. Documentary Credit Number <span class="Required">(*)</span>
                             <asp:RequiredFieldValidator
                                 runat="server" Display="None"
@@ -513,7 +532,6 @@
                                 ID="RequiredFieldValidator9"
                                 ControlToValidate="txtPercentCreditAmountTolerance1"
                                 ValidationGroup="Commit"
-                                InitialValue="0"
                                 ErrorMessage="[Percentage Credit Amount Tolerance] is required" ForeColor="Red">
                             </asp:RequiredFieldValidator></td>
                         <td class="MyContent" style="width: 150px">
