@@ -475,6 +475,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         private void saveLC(ref BEXPORT_LC ExLC)
         {
+            ExLC.ReceivingLCVia = rcbReceivingLCVia.SelectedValue.Trim();
             ExLC.ImportLCCode = txtImportLCNo.Text.Trim();
             //
             ExLC.IssuingBankType = rcbIssuingBankType.SelectedValue.Trim();
@@ -598,6 +599,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     break;
             }
             //
+            rcbReceivingLCVia.SelectedValue = ExLC.ReceivingLCVia;
             txtImportLCNo.Text = ExLC.ImportLCCode;
             txtImportLCNo_TextChanged(null, null);
             //
