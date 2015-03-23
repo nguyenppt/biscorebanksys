@@ -6,257 +6,144 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
 using System.Linq;
+using bd = BankProject.DataProvider;
 
-namespace BankProject.Model.Reports
+namespace BankProject.Model
 {
-    public class MauBiaHsLc
+    public class ExportLC : VietVictoryCoreBankingEntities
     {
-        public string Ref { get; set; }
-        public string LCCode { get; set; }
-        public string DateOfIssue { get; set; }
-        public string Beneficiary { get; set; }
-        public string Applicant { get; set; }
-        public string IssuingBank { get; set; }
-        public string Tenor { get; set; }
-        public string AdvisingBank { get; set; }
-        public string Amount { get; set; }//Amount and Currency
-        public string LatestDateOfShipment { get; set; }
-        public string DateOfExpiry { get; set; }
-        public string Transhipment { get; set; }
-        public string PartialShipment { get; set; }
-        public string Commodity { get; set; }
-        public string PortOfLoading { get; set; }
-        public string PeriodForPresentation { get; set; }
-        public string PortOfDischarge { get; set; }         
-    }
-    public class MauThongBaoVaTuChinhLc
-    {
-        public string Ref { get; set; }
-        public string Beneficiary { get; set; }//Name & Address
-        public string LCCode { get; set; }
-        public string DateOfIssue { get; set; }
-        public string DateOfExpiry { get; set; }
-        public string IssuingBank { get; set; }
-        public string Amount { get; set; }//Amount and Currency
-        public string Applicant { get; set; }        
-        public string NumberOfAmendment { get; set; }
-    }
-    public class VAT
-    {
-        public string UserName { get; set; }
-        public string VATNo { get; set; }
-        public string TransCode { get; set; }
+        public struct Actions
+        {
+            public const int Register = 242;
+            public const int Amend = 235;
+            public const int Confirm = 236;
+            public const int Cancel = 237;
+            public const int Close = 265;
+        }
+        public struct Charges
+        {
+            public const string Amendment = "ELC.ADAMEND";
+            public const string Advising = "ELC.ADVISE";
+            public const string Courier = "ELC.COURIER";
+            public const string Other = "ELC.OTHER";
+        }
+        //public DbSet<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> BEXPORT_DOCUMETARYCOLLECTIONCHARGES { get; set; }
+        //public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
+        //public DbSet<BAdvisingAndNegotiationLCCharge> BAdvisingAndNegotiationLCCharges { get; set; }
+        //public DbSet<BEXPORT_DOCUMENTPROCESSING> BEXPORT_DOCUMENTPROCESSINGs { get; set; }
+        //public DbSet<BEXPORT_DOCUMENTPROCESSINGCHARGE> BEXPORT_DOCUMENTPROCESSINGCHARGEs { get; set; }
+        //public DbSet<B_AddConfirmInfo> B_AddConfirmInfos { get; set; }
+        //public DbSet<B_ExportLCPayment> B_ExportLCPayments { get; set; }
+        //public DbSet<B_ExportLCPaymentCharge> B_ExportLCPaymentCharges { get; set; }
+        //public DbSet<B_ExportLCPaymentMT202> B_ExportLCPaymentMT202s { get; set; }
+       // public DbSet<B_ExportLCPaymentMT756> B_ExportLCPaymentMT756s { get; set; }
         //
-        public string CustomerID { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerAddress { get; set; }
-        public string IdentityNo { get; set; }
+        public BEXPORT_LC findExportLC(string Code)
+        {
+            Code = Code.Trim().ToUpper();
+            return BEXPORT_LC.Where(p => p.ExportLCCode.Equals(Code)).FirstOrDefault();
+        }
+        public BIMPORT_NORMAILLC findImportLC(string Code)
+        {
+            Code = Code.Trim().ToUpper();
+            return BIMPORT_NORMAILLC.Where(p => (p.NormalLCCode.Equals(Code) && (p.ActiveRecordFlag == null || p.ActiveRecordFlag.Equals("Yes")))).FirstOrDefault();
+        }
+        public BEXPORT_LC_AMEND findExportLCAmend(string Code)
+        {
+            Code = Code.Trim().ToUpper();
+            return BEXPORT_LC_AMEND.Where(p => p.AmendNo.Trim().Equals(Code)).FirstOrDefault();
+        }
         //
-        public string DebitAccount { get; set; }        
-        public string ChargeRemarks { get; set; }
-        //
-        public string ChargeType1 { get; set; }
-        public string ChargeAmount1 { get; set; }
+        public string getChargeTypeInfo(string ChargeType, int infoType)
+        {
+            var cc = BCHARGECODEs.Where(p => p.Code.Equals(ChargeType)).FirstOrDefault();
+            if (cc == null) return "";
+            switch (infoType)
+            {
+                case 1:
+                    return cc.Name_VN;
+                case 2:
+                    return cc.PLAccount;
+            }
 
-        public string ChargeType2 { get; set; }
-        public string ChargeAmount2 { get; set; }
+            return "";
+        }
+        //
+        public string getVATNo()
+        {
+            var dataVAT = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
+            if (dataVAT != null && dataVAT.Tables.Count > 0)
+                return dataVAT.Tables[0].Rows[0]["SoTT"].ToString();
 
-        public string ChargeType3 { get; set; }
-        public string ChargeAmount3 { get; set; }
+            return null;
+        }
         //
-        public string TotalTaxText { get; set; }
-        public string TotalTaxAmount { get; set; }
-        //
-        public string TotalChargeAmount { get; set; }
-        public string TotalChargeAmountWord { get; set; }
+        public string getNewId()
+        {
+            var dataIDs = bd.DataTam.B_ISSURLC_GetNewID();
+            if (dataIDs != null && dataIDs.Tables.Count > 0)
+                return dataIDs.Tables[0].Rows[0]["Code"].ToString();
+
+            return null;
+        }
     }
     //
-    public class PhieuXuatNgoaiBang
+    public class ExportLCDocProcessing : ExportLC
     {
-        public int Day
+        public new struct Actions
         {
-            get {
-                return (DateTime.Now).Day;
-            }
+            public const int Register = 239;
+            public const int Register1 = 240;
+            public const int Amend = 376;
+            public const int Reject = 241;
+            public const int Accept = 244;
         }
-        public int Month
+        public new struct Charges
         {
-            get {
-                return (DateTime.Now).Month;
-            }
+            public const string Service = "EC.AMEND";
+            public const string Commission = "EC.CABLE";
+            public const string Courier = "EC.COURIER";
+            public const string Other = "EC.OTHER";
         }
-        public int Year
+        //
+        public BEXPORT_LC_DOCS_PROCESSING findExportLCDoc(string Code)
         {
-            get {
-                return (DateTime.Now).Month;
-            }
+            return findExportLCDoc(Code, null);
         }
-        public string NormalLCCode { get; set; }
-        public string CurrentUserLogin { get; set; }
-        public string ApplicantName { get; set; }
-        public string IdentityNo { get; set; }
-        public string ApplicantAddr1 { get; set; }
-        public string ApplicantAddr2 { get; set; }
-        public string ApplicantAddr3 { get; set; }
-        public double Amount { get; set; }
-        public string Currency { get; set; }
-        //public string NormalLCCode { get; set; }
-        public string S_Amount
+        public BEXPORT_LC_DOCS_PROCESSING findExportLCDoc(string Code, bool? isAmendNo)
         {
-            get {
-                return Utils.CurrencyFormat(Amount, Currency);
-            }
+            int i = Code.IndexOf(".");
+            if (Code.LastIndexOf(".") != i || (isAmendNo.HasValue && isAmendNo.Value))
+                return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.AmendNo.Equals(Code)).FirstOrDefault();
+
+            return BEXPORT_LC_DOCS_PROCESSING.Where(p => (p.DocCode.Equals(Code) && p.ActiveRecordFlag.Equals("Yes"))).FirstOrDefault();
         }
-        public string SoTienVietBangChu
+        public BEXPORT_LC_DOCS_PROCESSING findExportLCDocLastestAmend(string DocCode)
         {
-            get {
-                return Utils.ReadNumber(Currency, Amount);
-            }
+            return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.Equals(DocCode)).OrderByDescending(p => p.AmendNo).FirstOrDefault();
+        }
+        public BEXPORT_LC_DOCS_PROCESSING findExportLCLastestDoc(string LCCode)
+        {
+            return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.StartsWith(LCCode)).OrderByDescending(p => p.DocCode).FirstOrDefault();
         }
     }
-    public class CoverNhoThu
+    //
+    public class ExportLCDocSettlement : ExportLCDocProcessing
     {
-        public string CurrentDate { get; set; }
-        public string CollectionNo { get; set; }
-        public string BeneficiaryNo { get; set; }
-        public string BeneficiaryName { get; set; }
-        public string BeneficiaryAddress { get; set; }
-        public string ApplicantNo { get; set; }
-        public string ApplicantName { get; set; }
-        public string ApplicantAddress { get; set; }
-        public string LCCode { get; set; }
-        public string DraweeNo { get; set; }
-        public string DraweeName { get; set; }
-        public string DateExpirity { get; set; }
-        public double DocAmount1 { get; set; }
-        public string DocCurrency1 { get; set; }
-        public string S_DocAmount1
+        //
+        public BEXPORT_LC_DOCS_SETTLEMENT findExportLCDocSettlement(string PaymentCode)
         {
-            get {
-                return Utils.CurrencyFormat(DocAmount1, DocCurrency1);
-            }
+            return BEXPORT_LC_DOCS_SETTLEMENT.Where(p => p.PaymentCode.Equals(PaymentCode)).FirstOrDefault();
         }
-        public string AdCurrency { get; set; }
-        public double TotalAmount { get; set; }
-        public string S_TotalAmount {
-            get {
-                return Utils.CurrencyFormat(TotalAmount, AdCurrency);
-            }
-        }
-        public string DocsCode1 { get; set; }
-        public string DocsCode2 { get; set; }
-        public string DocsCode3 { get; set; }
-        public string OtherDocs1 { get; set; }
-        public string OtherDocs2{ get; set; }
-        public string OtherDocs3 { get; set; }
-    }
-    public class ThuThongBao
-    {
-        public string Date { get; set; }
-        public string BeneficiaryNo { get; set; }
-        public string BeneficiaryName { get; set; }
-        public string BeneficiaryAddress { get; set; }
-        public string NormalLCCode { get; set; }
-        public string ReceivingBank { get; set; }
-        public string DateIssue { get; set; }
-        public string DateExpiry { get; set; }
-        public double Amount { get; set; }
-        public string ApplicantNo { get; set; }
-        public string Currency { get; set; }
-        public string ApplicantName { get; set; }
-        public string ApplicantAddress { get; set; }
-        public string S_Amount {
-            get {
-                return Utils.CurrencyFormat(Amount, Currency);
-            }
-        }
-    }
-    public class PhieuThu
-    {
-        public string VATNo { get; set; }
-        public string CustomerName { get; set; }
-        public string DocCollectCode { get; set; }
-        public string CustomerAddress { get; set; }
-        public string UserNameLogin { get; set; }
-        public string IdentityNo { get; set; }
-        public string ChargeAcct { get; set; }
-        public string CustomerID { get; set; }
-        public string Remarks { get; set; }
-        public string Cot9_1Name { get; set; }
-        public string Cot9_2Name { get; set; }
-        public string Cot9_3Name { get; set; }
-        public double Amount1 { get; set; }//so tien cho tab charge 1
-        public double Amount2 { get; set; }// so tien cho tab charge 2
-        public double Amount3 { get; set; }//so tien cho tab charge 3
-        public string Currency1 { get; set; }//loai tien cho tab charge 1
-        public string Currency2 { get; set; }//loai tien cho tab charge 2
-        public string Currency3 { get; set; }//loai tien cho tab charge 3
-        public string MCurrency { get; set; }//loai tien cho so TF
-        public string S_Amount1 {
-            get {
-                return Utils.CurrencyFormat(Amount1, Currency1);
-            }
-        }
-        public string S_Amount2
+        //
+        public BEXPORT_LC_DOCS_SETTLEMENT findExportLCDocSettlementUNA(string DocCode)
         {
-            get
-            {
-                return Utils.CurrencyFormat(Amount2, Currency2);
-            }
+            return BEXPORT_LC_DOCS_SETTLEMENT.Where(p => (p.DocsCode.Equals(DocCode) && p.Status.Equals(bd.TransactionStatus.UNA))).FirstOrDefault();
         }
-        public string S_Amount3
+        //
+        public BEXPORT_LC_DOCS_SETTLEMENT findExportLCDocSettlementLastest(string DocCode)
         {
-            get
-            {
-                return Utils.CurrencyFormat(Amount3, Currency3);
-            }
-        }
-        public string PL1 { get; set; }//PL cho tabcharge 1
-        public string PL2 { get; set; }//PL cho tabcharge 2
-        public string PL3 { get; set; }//PL cho tabcharge 3
-        public string Cot9_1
-        {
-            get {
-                return S_Amount1 + " " + Currency1 + " " + PL1 + " C";
-            }
-        }
-        public string Cot9_2
-        {
-            get
-            {
-                return S_Amount2 + " " + Currency2 + " " + PL2 + " C";
-            }
-        }
-        public string Cot9_3
-        {
-            get
-            {
-                return S_Amount3 + " " + Currency3 + " " + PL3 + " C";
-            }
-        }
-        public double VAT
-        {
-            get {
-                return (Amount1 + Amount2 + Amount3) * 10 / 100;
-            }
-        }
-        public double TienThanhToan
-        {
-            get {
-                return Amount1 + Amount2 + Amount3+VAT;
-            }
-        }
-        public string TongSoTienThanhToan
-        {
-            get {
-                return Utils.CurrencyFormat(TienThanhToan, MCurrency);
-            }
-        }
-        public string SoTienVietBangChu
-        {
-            get {
-                return Utils.ReadNumber(MCurrency, TienThanhToan);
-            }
+            return BEXPORT_LC_DOCS_SETTLEMENT.Where(p => p.DocsCode.Equals(DocCode)).OrderByDescending(p => p.PaymentCode).FirstOrDefault();
         }
     }
 }
