@@ -127,4 +127,23 @@ namespace BankProject.Model
             return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.StartsWith(LCCode)).OrderByDescending(p => p.DocCode).FirstOrDefault();
         }
     }
+    //
+    public class ExportLCDocSettlement : ExportLCDocProcessing
+    {
+        //
+        public BEXPORT_LC_DOCS_SETTLEMENT findExportLCDocSettlement(string PaymentCode)
+        {
+            return BEXPORT_LC_DOCS_SETTLEMENT.Where(p => p.PaymentCode.Equals(PaymentCode)).FirstOrDefault();
+        }
+        //
+        public BEXPORT_LC_DOCS_SETTLEMENT findExportLCDocSettlementUNA(string DocCode)
+        {
+            return BEXPORT_LC_DOCS_SETTLEMENT.Where(p => (p.DocsCode.Equals(DocCode) && p.Status.Equals(bd.TransactionStatus.UNA))).FirstOrDefault();
+        }
+        //
+        public BEXPORT_LC_DOCS_SETTLEMENT findExportLCDocSettlementLastest(string DocCode)
+        {
+            return BEXPORT_LC_DOCS_SETTLEMENT.Where(p => p.DocsCode.Equals(DocCode)).OrderByDescending(p => p.PaymentCode).FirstOrDefault();
+        }
+    }
 }
