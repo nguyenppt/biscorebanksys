@@ -904,6 +904,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         //
                         var dataThuThongBao = new Model.Reports.MauThongBaoVaTuChinhLc()
                         {
+                            DateCreate = (ExLC.CreateDate.HasValue ? ExLC.CreateDate.Value.ToString("dd/MM/yyyy") : ""),
                             Ref = ExLC.ExportLCCode,
                             Beneficiary = ExLC.BeneficiaryName,
                             LCCode = ExLC.ImportLCCode,
@@ -954,6 +955,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             PeriodForPresentation = ExLC.PeriodForPresentation,
                             PortOfDischarge = ExLC.PortOfDischarge
                         };
+                        if (!string.IsNullOrEmpty(ExLC.Commodity))
+                        {
+                            var bc = dbEntities.BCOMMODITies.FirstOrDefault(p => p.ID.Equals(ExLC.Commodity));
+                            if (bc != null) dataBiaHs.Commodity = bc.Name;
+                        }
+
                         if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr1)) dataBiaHs.Beneficiary += ", " + ExLC.BeneficiaryAddr1;
                         if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr2)) dataBiaHs.Beneficiary += ", " + ExLC.BeneficiaryAddr2;
                         if (!string.IsNullOrEmpty(ExLC.BeneficiaryAddr3)) dataBiaHs.Beneficiary += ", " + ExLC.BeneficiaryAddr3;

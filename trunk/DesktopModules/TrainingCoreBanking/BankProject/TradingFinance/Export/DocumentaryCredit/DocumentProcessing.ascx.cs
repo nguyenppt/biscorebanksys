@@ -23,7 +23,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private ExportLCDocProcessing dbEntities = new ExportLCDocProcessing();
         protected void Page_Load(object sender, EventArgs e)
         {
-            txtChargeCode1.Text = (TabId == ExportLCDocProcessing.Actions.Amend ? ExportLCDocProcessing.Charges.Service : ExportLCDocProcessing.Charges.Commission);
+            txtChargeCode1.Text = (TabId == ExportLCDocProcessing.Actions.Amend ? ExportLCDocProcessing.Charges.Service : "ELCHANDLE");
             txtChargeCode2.Text = ExportLCDocProcessing.Charges.Courier;
             txtChargeCode3.Text = ExportLCDocProcessing.Charges.Other;
             if (IsPostBack) return;

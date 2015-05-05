@@ -375,9 +375,9 @@
                         </td>
                     </tr>
                     <tr>    
-                        <td class="MyLable">13.1.4 Other Docs</td>
+                        <td class="MyLable" style="vertical-align:top;">13.1.4 Other Docs</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadTextBox ID="txtOtherDocs1" Runat="server" Width="355" />
+                            <telerik:RadTextBox ID="txtOtherDocs1" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox>
                         </td>
                     </tr>
                 </table>
@@ -404,9 +404,9 @@
                         </td>
                     </tr>
                     <tr>    
-                        <td class="MyLable">13.2.4 Other Docs</td>
+                        <td class="MyLable" style="vertical-align:top;">13.2.4 Other Docs</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadTextBox ID="txtOtherDocs2" Runat="server" Width="355" />
+                            <telerik:RadTextBox ID="txtOtherDocs2" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox>
                         </td>
                     </tr>
                 </table>
@@ -433,19 +433,19 @@
                         </td>
                     </tr>
                     <tr>    
-                        <td class="MyLable">13.3.4 Other Docs</td>
+                        <td class="MyLable" style="vertical-align:top;">13.3.4 Other Docs</td>
                         <td style="width: 150px" class="MyContent">
-                            <telerik:RadTextBox ID="txtOtherDocs3" Runat="server" Width="355" />
+                            <telerik:RadTextBox ID="txtOtherDocs3" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox>
                         </td>
                     </tr>
                 </table>
                 <table cellpadding="0" cellspacing="0">
                     <tr>    
-                        <td class="MyLable">14. Remark</td>
+                        <td class="MyLable" style="vertical-align:top;">14. Remark</td>
                         <td class="MyContent"><telerik:RadTextBox ID="txtRemark" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox></td>
                     </tr>
                     <tr>    
-                        <td class="MyLable">15. Settlement Instruction </td>
+                        <td class="MyLable" style="vertical-align:top;">15. Settlement Instruction </td>
                         <td class="MyContent"><telerik:RadTextBox ID="txtSettlementInstruction" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox></td>
                     </tr>
                 </table>
@@ -807,12 +807,27 @@
         });
         $("#<%=txtRemark.ClientID %>").keyup(function (event) {
             if (event.keyCode == 13) {
-                $("#<%=txtRemark.ClientID %>").val($("#<%=txtRemark %>").val() + '\n');
+                $("#<%=txtRemark.ClientID %>").val($("#<%=txtRemark.ClientID %>").val() + '\n');
             }
         });
         $("#<%=txtSettlementInstruction.ClientID %>").keyup(function (event) {
             if (event.keyCode == 13) {
-                $("#<%=txtSettlementInstruction.ClientID %>").val($("#<%=txtSettlementInstruction %>").val() + '\n');
+                $("#<%=txtSettlementInstruction.ClientID %>").val($("#<%=txtSettlementInstruction.ClientID %>").val() + '\n');
+            }
+        });
+        $("#<%=txtOtherDocs1.ClientID %>").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#<%=txtOtherDocs1.ClientID %>").val($("#<%=txtOtherDocs1.ClientID %>").val() + '\n');
+            }
+        });
+        $("#<%=txtOtherDocs2.ClientID %>").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#<%=txtOtherDocs2.ClientID %>").val($("#<%=txtOtherDocs2.ClientID %>").val() + '\n');
+            }
+        });
+        $("#<%=txtOtherDocs3.ClientID %>").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#<%=txtOtherDocs3.ClientID %>").val($("#<%=txtOtherDocs3.ClientID %>").val() + '\n');
             }
         });
         //
