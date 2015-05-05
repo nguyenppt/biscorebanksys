@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EnquiryLC.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.EnquiryLC" %>
-<telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" 
-         OnClientButtonClicking="RadToolBar1_OnClientButtonClicking" OnButtonClick="RadToolBar1_ButtonClick">
+<telerik:RadToolBar runat="server" ID="RadToolBar1" EnableRoundedCorners="true" EnableShadows="true" Width="100%" OnButtonClick="RadToolBar1_ButtonClick">
     <Items>
             <telerik:RadToolBarButton ImageUrl="~/Icons/bank/commit.png" ValidationGroup="Commit"
                 ToolTip="Commit Data" Value="btCommitData" CommandName="commit" Enabled="false">
@@ -22,8 +21,10 @@
             </telerik:RadToolBarButton>
         </Items>
 </telerik:RadToolBar>
-<div style="padding:10px;">
-    <%if (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr")){ %>
+<%var display = "display:none;";
+  if (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"))
+  {display = "";}%>
+<div style="padding:10px;<%=display%>">
     <table cellpadding="0" cellspacing="0" style="margin-bottom:10px">
         <tr>
             <td style="width: 170px">REF No.</td>
@@ -43,8 +44,6 @@
                                 <ExpandAnimation Type="None" />
                                 <CollapseAnimation Type="None" />
                             </telerik:RadComboBox></td>
-            <!--<td style="padding-left:5px;">Beneficiary Name</td>
-            <td style="padding-top:5px;"><telerik:RadTextBox ID="txtBeneficiaryName" runat="server" Width="200" /></td>-->
         </tr>
         <tr>
             <td>Issue date</td>
@@ -59,18 +58,17 @@
             <td></td>
         </tr>
     </table>
-    <%} %>
     <telerik:RadGrid runat="server" AutoGenerateColumns="False" ID="radGridReview" AllowPaging="True" OnNeedDataSource="radGridReview_OnNeedDataSource">
         <MasterTableView>
             <Columns>
-                <telerik:GridBoundColumn HeaderText="Export LC Code" DataField="Code" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
-                <telerik:GridBoundColumn HeaderText="Ref No" DataField="ImportLCCode" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
+                <telerik:GridBoundColumn HeaderText="Ref No" DataField="Code" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
+                <telerik:GridBoundColumn HeaderText="LC No" DataField="ImportLCCode" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Applicant Name" DataField="ApplicantName" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
                 <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Beneficiary ID" DataField="BeneficiaryNo" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Beneficiary Name" DataField="BeneficiaryName" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
-                <telerik:GridBoundColumn HeaderText="Issue date" DataField="DateOfIssue" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
+                <telerik:GridBoundColumn HeaderText="Issue date" DataFormatString="{0:dd-MM-yyyy}" DataField="DateOfIssue" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
                 <telerik:GridBoundColumn HeaderText="Issuing Bank" DataField="IssuingBankNo" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" />
                 <telerik:GridTemplateColumn>
@@ -83,9 +81,3 @@
         </MasterTableView>
     </telerik:RadGrid>
 </div>
-<telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
-    <script type="text/javascript">
-        function RadToolBar1_OnClientButtonClicking(sender, args) {
-        }
-    </script>
-</telerik:RadCodeBlock>

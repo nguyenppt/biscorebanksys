@@ -52,27 +52,28 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         private void loadData()
         {
-            IQueryable<BEXPORT_LC> enquiry = dbEntities.BEXPORT_LC.AsQueryable();
+            string status = bd.TransactionStatus.AUT;
             if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr"))
+                status = bd.TransactionStatus.UNA;
+            //
+            IQueryable<BEXPORT_LC> enquiry = dbEntities.BEXPORT_LC.AsQueryable();            
+            switch (refId)
             {
-                switch (refId)
-                {
-                    case ExportLC.Actions.Confirm:
-                        enquiry = enquiry.Where(p => p.ConfirmStatus.Equals(bd.TransactionStatus.UNA));
-                        break;
-                    case ExportLC.Actions.Cancel:
-                        enquiry = enquiry.Where(p => p.CancelStatus.Equals(bd.TransactionStatus.UNA));
-                        break;
-                    case ExportLC.Actions.Close:
-                        enquiry = enquiry.Where(p => p.ClosedStatus.Equals(bd.TransactionStatus.UNA));
-                        break;
-                    case ExportLC.Actions.Amend:
-                        enquiry = enquiry.Where(p => p.AmendStatus.Equals(bd.TransactionStatus.UNA));
-                        break;
-                    default:// ExportLC.Actions.Register:
-                        enquiry = enquiry.Where(p => p.Status.Equals(bd.TransactionStatus.UNA));
-                        break;
-                }
+                case ExportLC.Actions.Confirm:
+                    enquiry = enquiry.Where(p => p.ConfirmStatus.Equals(status));
+                    break;
+                case ExportLC.Actions.Cancel:
+                    enquiry = enquiry.Where(p => p.CancelStatus.Equals(status));
+                    break;
+                case ExportLC.Actions.Close:
+                    enquiry = enquiry.Where(p => p.ClosedStatus.Equals(status));
+                    break;
+                case ExportLC.Actions.Amend:
+                    enquiry = enquiry.Where(p => p.AmendStatus.Equals(status));
+                    break;
+                default:// ExportLC.Actions.Register:
+                    enquiry = enquiry.Where(p => p.Status.Equals(status));
+                    break;
             }
                         
             if (!string.IsNullOrEmpty(txtRefNo.Text))
@@ -81,10 +82,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 enquiry = enquiry.Where(p => p.ApplicantName.Contains(txtApplicantName.Text));
             if (rcbBeneficiaryNumber.SelectedIndex > 0)
                 enquiry = enquiry.Where(p => p.BeneficiaryNo.Equals(rcbBeneficiaryNumber.SelectedValue));
-            if (!string.IsNullOrEmpty(txtBeneficiaryName.Text))
-                enquiry = enquiry.Where(p => p.BeneficiaryName.Contains(txtBeneficiaryName.Text));
             if (txtIssueDate.SelectedDate.HasValue)
-                enquiry = enquiry.Where(p => p.DateOfIssue.Equals(txtIssueDate.SelectedDate));
+                enquiry = enquiry.Where(p => p.DateOfIssue.Value.Equals(txtIssueDate.SelectedDate.Value));
             if (!string.IsNullOrEmpty(txtIssuingBank.Text))
                 enquiry = enquiry.Where(p => p.IssuingBankNo.Equals(txtIssuingBank.Text));
             if (!string.IsNullOrEmpty(txtDocumentaryCreditNumber.Text))

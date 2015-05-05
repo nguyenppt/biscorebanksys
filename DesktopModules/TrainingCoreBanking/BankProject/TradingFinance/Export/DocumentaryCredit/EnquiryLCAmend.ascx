@@ -22,8 +22,10 @@
             </telerik:RadToolBarButton>
         </Items>
 </telerik:RadToolBar>
-<div style="padding:10px;">
-    <%if (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr")){ %>
+<%var display = "display:none;";
+  if (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"))
+  {display = "";}%>
+<div style="padding:10px;<%=display%>">
     <table cellpadding="0" cellspacing="0" style="margin-bottom:10px">
         <tr>
             <td style="width: 120px">REF No.</td>
@@ -39,22 +41,21 @@
         </tr>
         <tr>
             <td>Issue date</td>
-            <td style="padding-top:5px;"><telerik:RadDatePicker ID="txtIssueDate" runat="server" /></td>
+            <td style="padding-top:5px;"><telerik:RadDatePicker ID="txtIssueDate" runat="server" Width="200" /></td>
             <td style="padding-left:5px;">Issuing Bank</td>
             <td style="padding-top:5px;"><telerik:RadTextBox ID="txtIssuingBank" runat="server" Width="200" /></td>
         </tr>
     </table>
-    <%} %>
     <telerik:RadGrid runat="server" AutoGenerateColumns="False" ID="radGridReview" AllowPaging="True" OnNeedDataSource="radGridReview_OnNeedDataSource">
         <MasterTableView>
             <Columns>
-                <telerik:GridBoundColumn HeaderText="Export LC Code" DataField="Code" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
-                <telerik:GridBoundColumn HeaderText="Ref No" DataField="ImportLCCode" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
+                <telerik:GridBoundColumn HeaderText="Ref No" DataField="Code" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
+                <telerik:GridBoundColumn HeaderText="LC No" DataField="ImportLCCode" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Increase Amount" DataField="IncreaseAmount" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
                 <telerik:GridBoundColumn HeaderText="Decrease Amount" DataField="DecreaseAmount" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Beneficiary ID" DataField="BeneficiaryNo" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Beneficiary Name" DataField="BeneficiaryName" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
-                <telerik:GridBoundColumn HeaderText="Issue date" DataField="DateOfIssue" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
+                <telerik:GridBoundColumn HeaderText="Issue date" DataFormatString="{0:dd-MM-yyyy}" DataField="DateOfIssue" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
                 <telerik:GridBoundColumn HeaderText="Issuing Bank" DataField="IssuingBankNo" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Status" DataField="Status" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" />
                 <telerik:GridTemplateColumn>

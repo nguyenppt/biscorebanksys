@@ -541,6 +541,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         //
                         var dataThuThongBao = new Model.Reports.MauThongBaoVaTuChinhLc()
                         {
+                            DateCreate = (ExLC.CreateDate.HasValue ? ExLC.CreateDate.Value.ToString("dd/MM/yyyy") : ""),
                             Ref = ExLCAmend.AmendNo,
                             Beneficiary = ExLCAmend.BeneficiaryName,
                             LCCode = ExLCAmend.SenderReference,

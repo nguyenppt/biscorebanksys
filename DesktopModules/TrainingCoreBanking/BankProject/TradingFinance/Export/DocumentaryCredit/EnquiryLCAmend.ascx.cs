@@ -51,19 +51,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         private void loadData()
         {
-            IQueryable<BEXPORT_LC_AMEND> enquiry = dbEntities.BEXPORT_LC_AMEND.AsQueryable();
+            string status = bd.TransactionStatus.AUT;
             if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr"))
+                status = bd.TransactionStatus.UNA;
+            //
+            IQueryable<BEXPORT_LC_AMEND> enquiry = dbEntities.BEXPORT_LC_AMEND.AsQueryable();
+            switch (refId)
             {
-                switch (refId)
-                {
-                    case ExportLC.Actions.Amend:
-                        enquiry = enquiry.Where(p => p.AmendStatus.Equals(bd.TransactionStatus.UNA));
-                        break;
-                }
+                case ExportLC.Actions.Amend:
+                    enquiry = enquiry.Where(p => p.AmendStatus.Equals(status));
+                    break;
             }
 
             if (!string.IsNullOrEmpty(txtRefNo.Text))
-                enquiry = enquiry.Where(p => p.ImportLCCode.Equals(txtRefNo.Text));
+                enquiry = enquiry.Where(p => p.AmendNo.Equals(txtRefNo.Text));
             if (!string.IsNullOrEmpty(txtBeneficiaryID.Text))
                 enquiry = enquiry.Where(p => p.BeneficiaryNo.Equals(txtBeneficiaryID.Text));
             if (!string.IsNullOrEmpty(txtBeneficiaryName.Text))
