@@ -31,6 +31,7 @@ namespace BankProject.Model.Reports
     }
     public class MauThongBaoVaTuChinhLc
     {
+        public string DateCreate { get; set; }
         public string Ref { get; set; }
         public string Beneficiary { get; set; }//Name & Address
         public string LCCode { get; set; }
