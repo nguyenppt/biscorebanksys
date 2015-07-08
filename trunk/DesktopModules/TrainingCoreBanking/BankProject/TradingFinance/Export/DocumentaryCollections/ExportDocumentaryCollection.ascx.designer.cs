@@ -337,6 +337,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtDraweeAddr3;
         
         /// <summary>
+        /// txtDraweeAddr4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtDraweeAddr4;
+        
+        /// <summary>
         /// comboCurrency control.
         /// </summary>
         /// <remarks>

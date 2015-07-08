@@ -90,7 +90,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Draw Type
+                    <td class="MyLable">1.1 Draw Type
                     </td>
                     <td style="width: 150px;" class="MyContent">
                         <telerik:radcombobox width="355" dropdowncssclass="KDDL" appenddatabounditems="True"
@@ -134,14 +134,14 @@
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tbody>
                     <tr>
-                        <td class="MyLable">Value Date
+                        <td class="MyLable">1.2 Value Date
                         </td>
                         <td class="MyContent">
                             <telerik:raddatepicker id="dtValueDate" runat="server" />
                         </td>
                     </tr>
                     <tr>
-                        <td class="MyLable">Drawing Amount
+                        <td class="MyLable">1.3 Drawing Amount
                         </td>
                         <td class="MyContent">
                             <telerik:radnumerictextbox id="numDrawingAmount" runat="server" value="0" />
@@ -157,7 +157,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="MyLable">Country Code</td>
+                        <td class="MyLable">1.4 Country Code</td>
                         <td class="MyContent">
                             <telerik:radcombobox width="355" appenddatabounditems="True"
                                 id="comboCountryCode" runat="server"
@@ -171,7 +171,7 @@
                             <asp:Label ID="lblCountryCodeName" runat="server" />
                     </tr>
                     <tr>
-                        <td class="MyLable">Amount Credited
+                        <td class="MyLable">1.5 Amount Credited
                         </td>
                         <td class="MyContent">
                             <asp:Label ID="lblCreditAmount" runat="server" />
@@ -181,7 +181,7 @@
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Payment Method
+                    <td class="MyLable">1.6 Payment Method
                     </td>
                     <td style="width: 150px;" class="MyContent">
                         <telerik:radcombobox width="355" dropdowncssclass="KDDL" appenddatabounditems="True"
@@ -224,7 +224,7 @@
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Credit Currency<span class="Required"> (*)</span></td>
+                    <td class="MyLable">1.7 Credit Currency<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:radcombobox
                             id="comboCreditCurrency" runat="server"
@@ -253,7 +253,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Nostro Account
+                    <td class="MyLable">1.8 Nostro Account
                     </td>
                     <td style="width: 150px;" class="MyContent">
                         <telerik:radcombobox width="355" dropdowncssclass="KDDL" appenddatabounditems="True"
@@ -297,7 +297,7 @@
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Credit Acct</td>
+                    <td class="MyLable">1.9 Credit Acct</td>
                     <td class="MyContent">
                         <telerik:radcombobox dropdowncssclass="KDDL"
                             appenddatabounditems="True"
@@ -333,21 +333,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Exchange Rate
+                    <td class="MyLable">1.10 Exchange Rate
                     </td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="numExchangeRate" runat="server" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Payment Remarks</td>
+                    <td class="MyLable">1.11 Payment Remarks</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtPaymentRemarks1" runat="server" width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">Payment Remarks</td>
+                    <td class="MyLable">1.12 Payment Remarks</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtPaymentRemarks2" runat="server" width="355" />
                     </td>
@@ -364,7 +364,7 @@
             <div id="divCollectionType" runat="server">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable">1 Collection Type<span class="Required"> (*)</span></td>
+                        <td class="MyLable">2.1 Collection Type<span class="Required"> (*)</span></td>
                         <td style="width: 150px" class="MyContent">
                             <telerik:radcombobox width="355" dropdowncssclass="KDDL" appenddatabounditems="True"
                                 id="comboCollectionType" runat="server"
@@ -413,7 +413,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">2.1 Drawer Cus No.</td>
+                    <td class="MyLable">2.2 Drawer Cus No.</td>
                     <td class="MyContent">
                         <telerik:radcombobox width="355" dropdowncssclass="KDDL"
                             appenddatabounditems="True" autopostback="true"
@@ -451,7 +451,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">2.2 Drawer Cus Name</td>
+                    <td class="MyLable">2.3 Drawer Cus Name</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtDrawerCusName" runat="server" width="355" enabled="false" />
                     </td>
@@ -460,7 +460,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">2.3 Drawer Addr.</td>
+                    <td class="MyLable">2.4 Drawer Addr.</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtDrawerAddr1" runat="server" width="355" enabled="false" />
                     </td>
@@ -617,7 +617,7 @@
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr style="display: none">
-                    <td class="MyLable">5 Nostro Cus No</td>
+                    <td class="MyLable">4.4 Nostro Cus No</td>
                     <td style="width: 150px;" class="MyContent">
                         <telerik:radcombobox width="400" dropdowncssclasscombocommodity="KDDL"
                             appenddatabounditems="True" autopostback="true"
@@ -662,7 +662,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">6 Currency<span class="Required"> (*)</span></td>
+                    <td class="MyLable">5 Currency<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:radcombobox
                             id="comboCurrency" runat="server"
@@ -690,7 +690,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">7 Amount<span class="Required"> (*)</span></td>
+                    <td class="MyLable">6 Amount<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="numAmount" runat="server" enabled="false" />
                         <asp:RequiredFieldValidator
@@ -704,21 +704,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">8 Docs Received Date</td>
+                    <td class="MyLable">7 Docs Received Date</td>
                     <td class="MyContent">
                         <telerik:raddatepicker id="dteDocsReceivedDate" runat="server" autopostback="True" enabled="false" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">9 Maturity Date</td>
+                    <td class="MyLable">8 Maturity Date</td>
                     <td class="MyContent">
                         <telerik:raddatepicker id="dteMaturityDate" runat="server" enabled="false" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="MyLable">10 Tenor</td>
+                    <td class="MyLable">9 Tenor</td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtTenor" runat="server" text="AT SIGHT" enabled="false" />
                     </td>
@@ -736,7 +736,7 @@
 
 
                 <tr>
-                    <td class="MyLable">11 Tracer Date</td>
+                    <td class="MyLable">10 Tracer Date</td>
                     <td class="MyContent">
                         <telerik:raddatepicker id="dteTracerDate" runat="server" enabled="false" />
                     </td>
@@ -751,7 +751,7 @@
                     </tr>
                 </div>
                 <tr style="display: none;">
-                    <td class="MyLable">12 Reminder Days</td>
+                    <td class="MyLable">11 Reminder Days</td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="numReminderDays" runat="server" maxvalue="999" enabled="false">
                             <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -844,7 +844,7 @@
             <div runat="server" id="divDocsCode2">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable">14.1 Docs Code</td>
+                        <td class="MyLable">14.1.1 Docs Code</td>
                         <td class="MyContent">
                             <telerik:radcombobox width="355"
                                 appenddatabounditems="True"
@@ -858,7 +858,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">14.2 No. of Originals</td>
+                        <td class="MyLable">14.2.1 No. of Originals</td>
                         <td class="MyContent">
                             <telerik:radnumerictextbox id="numNoOfOriginals2" runat="server" maxvalue="999" maxlength="3" enabled="false">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -867,7 +867,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">14.3 No. of Copies</td>
+                        <td class="MyLable">14.3.1 No. of Copies</td>
                         <td class="MyContent">
                             <telerik:radnumerictextbox id="numNoOfCopies2" runat="server" maxvalue="999" maxlength="3" enabled="false">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -879,7 +879,7 @@
             <div runat="server" id="divDocsCode3">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable">14.1 Docs Code</td>
+                        <td class="MyLable">14.1.2 Docs Code</td>
                         <td class="MyContent">
                             <telerik:radcombobox width="355"
                                 appenddatabounditems="True"
@@ -893,7 +893,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">14.2 No. of Originals</td>
+                        <td class="MyLable">14.2.2 No. of Originals</td>
                         <td class="MyContent">
                             <telerik:radnumerictextbox id="numNoOfOriginals3" runat="server" maxvalue="999" maxlength="3" enabled="false">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
@@ -902,7 +902,7 @@
                     </tr>
 
                     <tr>
-                        <td class="MyLable">14.3 No. of Copies</td>
+                        <td class="MyLable">14.3.2 No. of Copies</td>
                         <td class="MyContent">
                             <telerik:radnumerictextbox id="numNoOfCopies3" runat="server" maxvalue="999" maxlength="3" enabled="false">
                                 <NumberFormat GroupSeparator="" DecimalDigits="0" />
