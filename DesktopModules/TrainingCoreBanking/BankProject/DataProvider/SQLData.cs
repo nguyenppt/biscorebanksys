@@ -830,6 +830,29 @@ namespace BankProject.DataProvider
                                        , SenderToReceiverInfo3);
         }
 
+        public static void B_BDOCUMETARYCOLLECTIONMT412_Insert(string DocCollectCode
+                                                               , string GeneralMT412_1
+                                                               , string GeneralMT412_2
+                                                               , string SendingBankTRN
+                                                               , string RelatedReference
+                                                               , string Currency
+                                                               , string Amount
+            , string SenderToReceiverInfo1
+            , string SenderToReceiverInfo2
+            , string SenderToReceiverInfo3)
+        {
+            sqldata.ndkExecuteNonQuery("B_BDOCUMETARYCOLLECTIONMT412_Insert", DocCollectCode
+                                       , GeneralMT412_1
+                                       , GeneralMT412_2
+                                       , SendingBankTRN
+                                       , RelatedReference
+                                       , Currency
+                                       , Amount
+                                       , SenderToReceiverInfo1
+                                       , SenderToReceiverInfo2
+                                       , SenderToReceiverInfo3);
+        }
+
         public static DataSet B_BDOCUMETARYCOLLECTION_Report(string code)
         {
             return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTION_Report", code);
@@ -1139,6 +1162,9 @@ namespace BankProject.DataProvider
                                                                  , string NoOfCopies3
                                                                  , string OtherDocs
                                                                  , string Remarks
+                                                                , string Remarks1
+                                                                , string Remarks2
+                                                                , string Remarks3
                                                                  , string CurrentUserId
                                                                  , string CollectionType
                                                                  , string CancelDate
@@ -1190,6 +1216,9 @@ namespace BankProject.DataProvider
                                        , NoOfCopies3
                                        , OtherDocs
                                        , Remarks
+                                       , Remarks1
+                                       , Remarks2
+                                       , Remarks3
                                        , CurrentUserId
                                        , CollectionType
                                        , CancelDate
@@ -1316,6 +1345,11 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTIONMT410_Report", Code);
         }
 
+        public static DataSet B_BDOCUMETARYCOLLECTIONMT412_Report(string Code)
+        {
+            return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTIONMT412_Report", Code);
+        }
+
         public static DataSet B_BDOCUMETARYCOLLECTION_VAT_Report(string code, string currentuserlogin, int ViewType)
         {
             return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTION_VAT_Report", code,
@@ -1359,6 +1393,11 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_INCOMINGCOLLECTIONAMENDMENT_MT410_Report", Code);
         }
 
+        public static DataSet B_INCOMINGCOLLECTIONAMENDMENT_MT412_Report(string Code)
+        {
+            return sqldata.ndkExecuteDataset("B_INCOMINGCOLLECTIONAMENDMENT_MT412_Report", Code);
+        }
+
         public static DataSet B_BCUSTOMERS_GetCompany()
         {
             return sqldata.ndkExecuteDataset("B_BCUSTOMERS_GetCompany");
@@ -1383,6 +1422,11 @@ namespace BankProject.DataProvider
         public static DataSet B_INCOMINGCOLLECTIONACCEPTION_MT410_Report(string Code)
         {
             return sqldata.ndkExecuteDataset("B_INCOMINGCOLLECTIONACCEPTION_MT410_Report", Code);
+        }
+
+        public static DataSet B_INCOMINGCOLLECTIONACCEPTION_MT412_Report(string Code)
+        {
+            return sqldata.ndkExecuteDataset("B_INCOMINGCOLLECTIONACCEPTION_MT412_Report", Code);
         }
 
         public static DataSet B_INCOMINGCOLLECTIONACCEPTION_VAT_REPORT(string code, string currentuserlogin,
