@@ -1141,6 +1141,7 @@ namespace BankProject.DataProvider
                                                                  , string DraweeAddr1
                                                                  , string DraweeAddr2
                                                                  , string DraweeAddr3
+                                                                 , string DraweeAddr4
                                                                  , string NostroCusNo
                                                                  , string Currency
                                                                  , string Amount
@@ -1195,6 +1196,7 @@ namespace BankProject.DataProvider
                                        , DraweeAddr1
                                        , DraweeAddr2
                                        , DraweeAddr3
+                                       , DraweeAddr4
                                        , NostroCusNo
                                        , Currency
                                        , Amount
