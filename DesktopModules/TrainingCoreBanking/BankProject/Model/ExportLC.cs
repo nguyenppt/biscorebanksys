@@ -27,16 +27,16 @@ namespace BankProject.Model
             public const string Courier = "ELC.COURIER";
             public const string Other = "ELC.OTHER";
         }
-        //public DbSet<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> BEXPORT_DOCUMETARYCOLLECTIONCHARGES { get; set; }
-        //public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
-        //public DbSet<BAdvisingAndNegotiationLCCharge> BAdvisingAndNegotiationLCCharges { get; set; }
-        //public DbSet<BEXPORT_DOCUMENTPROCESSING> BEXPORT_DOCUMENTPROCESSINGs { get; set; }
-        //public DbSet<BEXPORT_DOCUMENTPROCESSINGCHARGE> BEXPORT_DOCUMENTPROCESSINGCHARGEs { get; set; }
-        //public DbSet<B_AddConfirmInfo> B_AddConfirmInfos { get; set; }
-        //public DbSet<B_ExportLCPayment> B_ExportLCPayments { get; set; }
-        //public DbSet<B_ExportLCPaymentCharge> B_ExportLCPaymentCharges { get; set; }
-        //public DbSet<B_ExportLCPaymentMT202> B_ExportLCPaymentMT202s { get; set; }
-       // public DbSet<B_ExportLCPaymentMT756> B_ExportLCPaymentMT756s { get; set; }
+        public DbSet<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> BEXPORT_DOCUMETARYCOLLECTIONCHARGES { get; set; }
+        public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
+        public DbSet<BAdvisingAndNegotiationLCCharge> BAdvisingAndNegotiationLCCharges { get; set; }
+        public DbSet<BEXPORT_DOCUMENTPROCESSING> BEXPORT_DOCUMENTPROCESSINGs { get; set; }
+        public DbSet<BEXPORT_DOCUMENTPROCESSINGCHARGE> BEXPORT_DOCUMENTPROCESSINGCHARGEs { get; set; }
+        public DbSet<B_AddConfirmInfo> B_AddConfirmInfos { get; set; }
+        public DbSet<B_ExportLCPayment> B_ExportLCPayments { get; set; }
+        public DbSet<B_ExportLCPaymentCharge> B_ExportLCPaymentCharges { get; set; }
+        public DbSet<B_ExportLCPaymentMT202> B_ExportLCPaymentMT202s { get; set; }
+        public DbSet<B_ExportLCPaymentMT756> B_ExportLCPaymentMT756s { get; set; }
         //
         public BEXPORT_LC findExportLC(string Code)
         {
@@ -101,7 +101,7 @@ namespace BankProject.Model
         public new struct Charges
         {
             public const string Service = "EC.AMEND";
-            public const string Commission = "EC.CABLE";
+            public const string Commission = "EC.HANDLE";
             public const string Courier = "EC.COURIER";
             public const string Other = "EC.OTHER";
         }
