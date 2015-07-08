@@ -25,9 +25,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         public double B4_AUT_Amount = 0;
         public double ChargeAmount = 0;
         public string CreateMT410 = string.Empty;
+        public bool isMT412Active = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (TabId == 281) // Incoming Collection Acception
+            {
+                isMT412Active = true;
+            }
             if (IsPostBack) return;
             //this.TabId
             // Register Documetary Collection => tabid=217
@@ -133,11 +138,12 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             {
                 txtCode.Text = Request.QueryString["CodeID"];
                 txtCode.Focus();
-                
+                isMT412Active = true;
                 LoadData(ref dataRow);
                 SetDisableByReview(false);
                 txtCode.Enabled = true;
                 tbChargeRemarks.Enabled = true;
+                
 
                 // tab MT410
                 if (string.IsNullOrEmpty(Request.QueryString["disable"]))
@@ -914,7 +920,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             #endregion
 
             #region tab MT410
-            if (dsDoc.Tables[3].Rows.Count > 0)
+            if (dsDoc.Tables[3].Rows.Count > 0 && !isMT412Active)
             {
                 var drowMT410 = dsDoc.Tables[3].Rows[0];
 
@@ -932,6 +938,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtSenderToReceiverInfo_410_2.Text = drowMT410["SenderToReceiverInfo2"].ToString();
                 txtSenderToReceiverInfo_410_3.Text = drowMT410["SenderToReceiverInfo3"].ToString();
             }
+            else if (dsDoc.Tables[4].Rows.Count > 0 && isMT412Active)//MT412
+            {
+                var drowMT412 = dsDoc.Tables[4].Rows[0];
+
+                comboCreateMT410.SelectedValue = drowMT412["GeneralMT412_1"].ToString();
+                CreateMT410 = drowMT412["GeneralMT412_1"].ToString();
+                SetRelation_CreateMT410();
+
+                txtGeneralMT410_2.Text = drowMT412["GeneralMT412_2"].ToString();
+                txtSendingBankTRN.Text = drowMT412["SendingBankTRN"].ToString();
+                txtRelatedReference.Text = drowMT412["RelatedReference"].ToString();
+                comboCurrency_TabMT410.SelectedValue = drowMT412["Currency"].ToString();
+                numAmount_TabMT410.Text = drowMT412["Amount"].ToString();
+
+                txtSenderToReceiverInfo_410_1.Text = drowMT412["SenderToReceiverInfo1"].ToString();
+                txtSenderToReceiverInfo_410_2.Text = drowMT412["SenderToReceiverInfo2"].ToString();
+                txtSenderToReceiverInfo_410_3.Text = drowMT412["SenderToReceiverInfo3"].ToString();
+            }
             else
             {
                 comboCreateMT410.SelectedValue = string.Empty;
@@ -939,7 +963,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                 txtGeneralMT410_2.Text = string.Empty;
                 txtSendingBankTRN.Text = string.Empty;
-                txtRelatedReference.Text = string.Empty;
+                txtRelatedReference.Text = txtRemittingBankRef.Text;
                 comboCurrency_TabMT410.SelectedValue = string.Empty;
                 numAmount_TabMT410.Text = string.Empty;
 
@@ -1040,7 +1064,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 rcbChargeStatus2.SelectedValue, tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode2.Text,
                 lblTaxCcy2.Text, lblTaxAmt2.Text, "", "", "2", TabId);
 
-            bd.SQLData.B_BDOCUMETARYCOLLECTIONMT410_Insert(txtCode.Text.Trim(),
+
+            if (isMT412Active)
+            {
+                bd.SQLData.B_BDOCUMETARYCOLLECTIONMT412_Insert(txtCode.Text.Trim(),
                 comboCreateMT410.SelectedValue.Trim(),
                 txtGeneralMT410_2.Text.Trim(),
                 txtSendingBankTRN.Text.Trim(),
@@ -1051,6 +1078,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtSenderToReceiverInfo_410_2.Text,
                 txtSenderToReceiverInfo_410_3.Text
                 );
+            }
+            else
+            {
+                bd.SQLData.B_BDOCUMETARYCOLLECTIONMT410_Insert(txtCode.Text.Trim(),
+                comboCreateMT410.SelectedValue.Trim(),
+                txtGeneralMT410_2.Text.Trim(),
+                txtSendingBankTRN.Text.Trim(),
+                txtRelatedReference.Text.Trim(),
+                comboCurrency_TabMT410.SelectedValue,
+                numAmount_TabMT410.Text,
+                txtSenderToReceiverInfo_410_1.Text,
+                txtSenderToReceiverInfo_410_2.Text,
+                txtSenderToReceiverInfo_410_3.Text
+                );
+            }
+            
         }
 
         protected void btAddDocsCode_Click(object sender, ImageClickEventArgs e)
@@ -1475,7 +1518,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     case 1://
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionMT410.doc");
                         reportSaveName = "RegisterDocumentaryCollectionMT410" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
-                        reportData = bd.SQLData.B_BDOCUMETARYCOLLECTIONMT410_Report(txtCode.Text);
+                        if (isMT412Active)
+                        {
+                            reportData = bd.SQLData.B_BDOCUMETARYCOLLECTIONMT412_Report(txtCode.Text);
+                        }
+                        else
+                        {
+                            reportData = bd.SQLData.B_BDOCUMETARYCOLLECTIONMT410_Report(txtCode.Text);
+                        }
+
                         saveFormat = Aspose.Words.SaveFormat.Pdf;
                         break;
                     case 2://
@@ -1506,7 +1557,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     case 7://
                         reportTemplate = Context.Server.MapPath(reportTemplate + "IncomingCollectionAmendmentsMT410.doc");
                         reportSaveName = "IncomingCollectionAmendmentsMT410" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
-                        reportData = bd.SQLData.B_INCOMINGCOLLECTIONAMENDMENT_MT410_Report(txtCode.Text);
+                        if (isMT412Active)
+                        {
+                            reportData = bd.SQLData.B_INCOMINGCOLLECTIONAMENDMENT_MT412_Report(txtCode.Text);
+                        }
+                        else
+                        {
+                            reportData = bd.SQLData.B_INCOMINGCOLLECTIONAMENDMENT_MT410_Report(txtCode.Text);
+                        }
                         saveFormat = Aspose.Words.SaveFormat.Pdf;
                         break;
                     case 8://
@@ -1522,7 +1580,14 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     case 10://
                         reportTemplate = Context.Server.MapPath(reportTemplate + "IncomingCollectionAcceptionMT412.doc");
                         reportSaveName = "IncomingCollectionAcceptionMT412" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
-                        reportData = bd.SQLData.B_INCOMINGCOLLECTIONACCEPTION_MT410_Report(txtCode.Text);
+                        if (isMT412Active)
+                        {
+                            reportData = bd.SQLData.B_INCOMINGCOLLECTIONACCEPTION_MT412_Report(txtCode.Text);
+                        }
+                        else
+                        {
+                            reportData = bd.SQLData.B_INCOMINGCOLLECTIONACCEPTION_MT410_Report(txtCode.Text);
+                        }
                         saveFormat = Aspose.Words.SaveFormat.Pdf;
                         break;
                     case 11://
