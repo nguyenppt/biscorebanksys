@@ -1103,12 +1103,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         CollectingBankName = txtCollectingBankName.Text.Trim(),
                                         CollectingBankAddr1 = txtCollectingBankAddr1.Text.Trim(),
                                         CollectingBankAddr2 = txtCollectingBankAddr2.Text.Trim(),
+                                        CollectingBankAddr3 = txtCollectingBankAddr3.Text.Trim(),
                                         CollectingBankAcct = comboCollectingBankAcct.SelectedValue,
                                         DraweeCusNo = txtDraweeCusNo.Text.Trim(),
                                         DraweeCusName = txtDraweeCusName.Text.Trim(),
                                         DraweeAddr1 = txtDraweeAddr1.Text.Trim(),
                                         DraweeAddr2 = txtDraweeAddr2.Text.Trim(),
                                         DraweeAddr3 = txtDraweeAddr3.Text.Trim(),
+                                        DraweeAddr4 = txtDraweeAddr4.Text.Trim(),
                                         NostroCusNo = comboNostroCusNo.Text,
                                         Currency = comboCurrency.SelectedValue,
                                         Amount = numAmount.Value,
@@ -1197,12 +1199,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                     chkAmend.CollectingBankName = txtCollectingBankName.Text.Trim();
                                     chkAmend.CollectingBankAddr1 = txtCollectingBankAddr1.Text.Trim();
                                     chkAmend.CollectingBankAddr2 = txtCollectingBankAddr2.Text.Trim();
+                                    chkAmend.CollectingBankAddr3 = txtCollectingBankAddr3.Text.Trim();
                                     chkAmend.CollectingBankAcct = comboCollectingBankAcct.SelectedValue;
                                     chkAmend.DraweeCusNo = txtDraweeCusNo.Text.Trim();
                                     chkAmend.DraweeCusName = txtDraweeCusName.Text.Trim();
                                     chkAmend.DraweeAddr1 = txtDraweeAddr1.Text.Trim();
                                     chkAmend.DraweeAddr2 = txtDraweeAddr2.Text.Trim();
                                     chkAmend.DraweeAddr3 = txtDraweeAddr3.Text.Trim();
+                                    chkAmend.DraweeAddr4 = txtDraweeAddr4.Text.Trim();
                                     chkAmend.NostroCusNo = comboNostroCusNo.Text;
                                     chkAmend.Currency = comboCurrency.SelectedValue;
                                     chkAmend.Amount = numAmount.Value;
@@ -1542,13 +1546,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                                               , txtCollectingBankName.Text.Trim()
                                                               , txtCollectingBankAddr1.Text.Trim(),
                                                               txtCollectingBankAddr2.Text.Trim()
-                                                              , ""
+                                                              , txtCollectingBankAddr3.Text.Trim()
                                                               , comboCollectingBankAcct.SelectedValue
                                                               , txtDraweeCusNo.Text
                                                               , txtDraweeCusName.Text.Trim()
                                                               , txtDraweeAddr1.Text.Trim()
                                                               , txtDraweeAddr2.Text.Trim()
                                                               , txtDraweeAddr3.Text.Trim()
+                                                              , txtDraweeAddr4.Text.Trim()
                                                               , comboNostroCusNo.Text
                                                               , comboCurrency.SelectedValue
                                                               , numAmount.Value.ToString()
@@ -1717,6 +1722,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     txtDraweeAddr1.Text = obj.DraweeAddr1;
                     txtDraweeAddr2.Text = obj.DraweeAddr2;
                     txtDraweeAddr3.Text = obj.DraweeAddr3;
+                    txtDraweeAddr4.Text = obj.DraweeAddr4;
                     comboNostroCusNo.Text = obj.NostroCusNo;
                     loadNostroDes();
                     //lblNostroCusName.Text = comboNostroCusNo.SelectedItem.Attributes["Description"];
@@ -1799,6 +1805,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     txtDraweeAddr1.Text = string.Empty;
                     txtDraweeAddr2.Text = string.Empty;
                     txtDraweeAddr3.Text = string.Empty;
+                    txtDraweeAddr4.Text = string.Empty;
                     comboNostroCusNo.Text = string.Empty;
                     lblNostroCusName.Text = string.Empty;
                     comboCurrency.SelectedValue = string.Empty;
@@ -2026,6 +2033,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     txtDraweeAddr1.Text = drow["DraweeAddr1"].ToString();
                     txtDraweeAddr2.Text = drow["DraweeAddr2"].ToString();
                     txtDraweeAddr3.Text = drow["DraweeAddr3"].ToString();
+                    txtDraweeAddr4.Text = drow["DraweeAddr4"].ToString();
                     comboNostroCusNo.Text = drow["NostroCusNo"].ToString();
                     comboCurrency.SelectedValue = drow["Currency"].ToString();
                     //
@@ -2109,11 +2117,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     txtCollectingBankName.Text = string.Empty;
                     txtCollectingBankAddr1.Text = string.Empty;
                     txtCollectingBankAddr2.Text = string.Empty;
+                    txtCollectingBankAddr3.Text = string.Empty;
                     comboCollectingBankAcct.SelectedValue = string.Empty;
                     txtDraweeCusName.Text = string.Empty;
                     txtDraweeAddr1.Text = string.Empty;
                     txtDraweeAddr2.Text = string.Empty;
                     txtDraweeAddr3.Text = string.Empty;
+                    txtDraweeAddr4.Text = string.Empty;
                     comboNostroCusNo.Text = string.Empty;
                     comboCurrency.SelectedValue = string.Empty;
                     numAmount.Text = string.Empty;

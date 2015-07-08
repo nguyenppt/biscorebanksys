@@ -301,7 +301,7 @@
                         <telerik:RadTextBox ID="txtCollectingBankAddr2" runat="server" Width="355" />
                     </td>
                 </tr>
-                <tr style="display:none">
+                <tr class="MyLable">
                     <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtCollectingBankAddr3" runat="server" Width="355" />
@@ -367,6 +367,13 @@
                     <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtDraweeAddr3" runat="server" Width="355" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox ID="txtDraweeAddr4" runat="server" Width="355" />
                     </td>
                 </tr>
             </table>
