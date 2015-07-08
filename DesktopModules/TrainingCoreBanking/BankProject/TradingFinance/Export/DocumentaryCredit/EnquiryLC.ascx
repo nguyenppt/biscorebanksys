@@ -47,7 +47,11 @@
         </tr>
         <tr>
             <td>Issue date</td>
-            <td style="padding-top:5px;"><telerik:RadDatePicker ID="txtIssueDate" runat="server" Width="200" /></td>
+            <td style="padding-top:5px;">
+                <telerik:RadDatePicker ID="txtIssueDate" runat="server" Width="95" />
+                To  
+                <telerik:RadDatePicker ID="txtIssueDateTo" runat="server" Width="95" />
+            </td>
             <td style="padding-left:5px;">Issuing Bank</td>
             <td style="padding-top:5px;"><telerik:RadTextBox ID="txtIssuingBank" runat="server" Width="200" /></td>
         </tr>

@@ -13,6 +13,7 @@ using System.Data.Objects;
 using BankProject.Helper;
 using BankProject.Model;
 using System.Reflection;
+using BankProject.Model.Reports;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
@@ -91,7 +92,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                                 break;
                             default:
-                                lblError.Text = "Wrong status (" + _exportDoc.Status + ")";
+                                lblError.Text = "Wrong status (" + DocsStatus + ")";
                                 break;
                         }
                         return;

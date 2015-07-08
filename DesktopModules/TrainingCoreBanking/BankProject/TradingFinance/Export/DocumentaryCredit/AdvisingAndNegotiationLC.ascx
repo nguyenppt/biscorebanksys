@@ -184,6 +184,15 @@
                 </table>
                 <table cellpadding="0" cellspacing="0">
                     <tr>
+                        <td style="width: 250px" class="MyLable">Created Date
+                            </td>
+                        <td class="MyContent">
+                            <telerik:RadDatePicker ID="txtCreatedDate" Width="200" runat="server" Enabled="false" />
+                        </td>
+                    </tr>
+                </table>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
                         <td style="width: 250px" class="MyLable">20. Documentary Credit Number <span class="Required">(*)</span>
                             <asp:RequiredFieldValidator
                                 runat="server" Display="None"
@@ -508,8 +517,8 @@
                                 ID="RequiredFieldValidator11"
                                 ControlToValidate="txtAmount"
                                 ValidationGroup="Commit"
-                                InitialValue="0"
-                                ErrorMessage="[Amount] is required" ForeColor="Red">
+                                InitialValue=""
+                                ErrorMessage="[32B. Currency Code, Amount]" ForeColor="Red">
                             </asp:RequiredFieldValidator>
                         </td>
                         <td>
@@ -521,7 +530,7 @@
                                 AllowCustomText="false">
                             </telerik:RadComboBox>
                         </td>
-                        <td><telerik:RadNumericTextBox ID="txtAmount" runat="server" Value="0" Width="157" /></td>
+                        <td><telerik:RadNumericTextBox ID="txtAmount" runat="server"  Width="157" /></td>
                         <td>
                             <asp:Label ID="lblPaymentAmount" runat="server" Text="" ForeColor="Red"></asp:Label></td>
                     </tr>
@@ -1146,6 +1155,8 @@
                                             <Items>
                                                 <telerik:RadComboBoxItem Value="B" Text="B" />
                                                 <telerik:RadComboBoxItem Value="AC" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="A" Text="A" />
+                                                <telerik:RadComboBoxItem Value="BC" Text="BC" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>

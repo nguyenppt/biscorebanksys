@@ -15,16 +15,16 @@
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Commit%>") {
             var txtIncreaseOfDocCreditAmt = $find('<%=txtIncreaseOfDocumentaryCreditAmount.ClientID%>');
             var txtDecreaseOfDocCreditAmt = $find('<%=txtDecreaseOfDocumentaryCreditAmount.ClientID%>');            
-            if ((txtIncreaseOfDocCreditAmt.get_value() == null || txtIncreaseOfDocCreditAmt.get_value() == 0)
-                && (txtDecreaseOfDocCreditAmt.get_value() == null || txtDecreaseOfDocCreditAmt.get_value() == 0)) {
-                args.set_cancel(true);
-                alert('Please, input "Increase of Documentary Credit Amount" or "Decrease of Documentary Credit Amount"');
-            }
-            if ((txtIncreaseOfDocCreditAmt.get_value() != null && txtIncreaseOfDocCreditAmt.get_value() != 0)
-                && (txtDecreaseOfDocCreditAmt.get_value() != null && txtDecreaseOfDocCreditAmt.get_value() != 0)) {
-                args.set_cancel(true);
-                alert('Please, just input "Increase of Documentary Credit Amount" or "Decrease of Documentary Credit Amount"');
-            }
+            //if ((txtIncreaseOfDocCreditAmt.get_value() == null || txtIncreaseOfDocCreditAmt.get_value() == 0)
+            //    && (txtDecreaseOfDocCreditAmt.get_value() == null || txtDecreaseOfDocCreditAmt.get_value() == 0)) {
+            //    args.set_cancel(true);
+            //    alert('Please, input "Increase of Documentary Credit Amount" or "Decrease of Documentary Credit Amount"');
+            //}
+            //if ((txtIncreaseOfDocCreditAmt.get_value() != null && txtIncreaseOfDocCreditAmt.get_value() != 0)
+            //    && (txtDecreaseOfDocCreditAmt.get_value() != null && txtDecreaseOfDocCreditAmt.get_value() != 0)) {
+            //    args.set_cancel(true);
+            //    alert('Please, just input "Increase of Documentary Credit Amount" or "Decrease of Documentary Credit Amount"');
+            //}
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
             //args.set_cancel(false);
@@ -494,6 +494,8 @@
                                             <Items>
                                                 <telerik:RadComboBoxItem Value="B" Text="B" />
                                                 <telerik:RadComboBoxItem Value="AC" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="A" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="BC" Text="AC" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>
