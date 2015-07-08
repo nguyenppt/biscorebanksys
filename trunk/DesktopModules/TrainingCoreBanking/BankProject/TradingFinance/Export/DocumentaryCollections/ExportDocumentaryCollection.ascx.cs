@@ -1122,6 +1122,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         DocsCode3 = comboDocsCode3.SelectedValue,
                                         OtherDocs = txtOtherDocs.Text.Trim(),
                                         Remarks = txtRemarks.Text.Trim(),
+                                        Remarks1 = txtRemarks1.Text.Trim(),
+                                        Remarks2 = txtRemarks2.Text.Trim(),
+                                        Remarks3 = txtRemarks3.Text.Trim(),
                                         CreateBy = UserId.ToString(),
                                         CollectionType = comboCollectionType.SelectedValue,
                                         CancelDate = dteCancelDate.SelectedDate,
@@ -1213,6 +1216,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                     chkAmend.DocsCode3 = comboDocsCode3.SelectedValue;
                                     chkAmend.OtherDocs = txtOtherDocs.Text.Trim();
                                     chkAmend.Remarks = txtRemarks.Text.Trim();
+                                    chkAmend.Remarks1 = txtRemarks1.Text.Trim();
+                                    chkAmend.Remarks2 = txtRemarks2.Text.Trim();
+                                    chkAmend.Remarks3 = txtRemarks3.Text.Trim();
                                     chkAmend.CreateBy = UserId.ToString();
                                     chkAmend.CollectionType = comboCollectionType.SelectedValue;
                                     chkAmend.CancelDate = dteCancelDate.SelectedDate;
@@ -1564,6 +1570,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                                               , numNoOfCopies3.Value.ToString()
                                                               , txtOtherDocs.Text.Trim()
                                                               , txtRemarks.Text.Trim()
+                                                              , txtRemarks1.Text.Trim()
+                                                              , txtRemarks2.Text.Trim()
+                                                              , txtRemarks3.Text.Trim()
                                                               , UserId.ToString()
                                                               , comboCollectionType.SelectedValue
                                                               , dteCancelDate.SelectedDate.ToString()
@@ -1752,6 +1761,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     txtOtherDocs.Text = obj.OtherDocs;
                     txtRemarks.Text = obj.Remarks;
+                    txtRemarks1.Text = obj.Remarks1;
+                    txtRemarks2.Text = obj.Remarks2;
+                    txtRemarks3.Text = obj.Remarks3;
 
                     if (!string.IsNullOrEmpty(obj.DocsReceivedDate.ToString()) && obj.DocsReceivedDate.ToString().IndexOf("1/1/1900") == -1)
                     {
@@ -1805,6 +1817,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     txtOtherDocs.Text = string.Empty;
                     txtRemarks.Text = string.Empty;
+                    txtRemarks1.Text = string.Empty;
+                    txtRemarks2.Text = string.Empty;
+                    txtRemarks3.Text = string.Empty;
 
                     dteDocsReceivedDate.SelectedDate = null;
                     dteMaturityDate.SelectedDate = null;
@@ -2059,6 +2074,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     txtOtherDocs.Text = drow["OtherDocs"].ToString();
                     txtRemarks.Text = drow["Remarks"].ToString();
+                    txtRemarks1.Text = drow["Remarks1"].ToString();
+                    txtRemarks2.Text = drow["Remarks2"].ToString();
+                    txtRemarks3.Text = drow["Remarks3"].ToString();
                     if (!string.IsNullOrEmpty(drow["DocsReceivedDate"].ToString()) && drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
                     //if (drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
                     {
@@ -2113,6 +2131,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     txtOtherDocs.Text = string.Empty;
                     txtRemarks.Text = string.Empty;
+                    txtRemarks1.Text = string.Empty;
+                    txtRemarks2.Text = string.Empty;
+                    txtRemarks3.Text = string.Empty;
 
                     dteDocsReceivedDate.SelectedDate = null;
                     dteMaturityDate.SelectedDate = null;

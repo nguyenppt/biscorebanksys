@@ -641,6 +641,24 @@
                         <telerik:RadTextBox Width="355" ID="txtRemarks" runat="server" />
                     </td>
                 </tr>
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox Width="355" ID="txtRemarks1" runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox Width="355" ID="txtRemarks2" runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="MyLable"></td>
+                    <td class="MyContent">
+                        <telerik:RadTextBox Width="355" ID="txtRemarks3" runat="server" />
+                    </td>
+                </tr>
             </table>
             <table cellpadding="0" cellspacing="0">
                 <tr>
