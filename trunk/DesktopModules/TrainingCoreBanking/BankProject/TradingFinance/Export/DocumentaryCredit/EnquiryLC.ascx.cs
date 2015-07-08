@@ -47,7 +47,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (!IsPostBack && !string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr")) loadData();
+            if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr")) 
+                loadData();
         }
 
         private void loadData()
@@ -83,7 +84,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (rcbBeneficiaryNumber.SelectedIndex > 0)
                 enquiry = enquiry.Where(p => p.BeneficiaryNo.Equals(rcbBeneficiaryNumber.SelectedValue));
             if (txtIssueDate.SelectedDate.HasValue)
-                enquiry = enquiry.Where(p => p.DateOfIssue.Value.Equals(txtIssueDate.SelectedDate.Value));
+                enquiry = enquiry.Where(p => p.DateOfIssue.Value >= txtIssueDate.SelectedDate.Value);
+            if (txtIssueDateTo.SelectedDate.HasValue)
+                enquiry = enquiry.Where(p => p.DateOfIssue.Value <= txtIssueDateTo.SelectedDate.Value);
             if (!string.IsNullOrEmpty(txtIssuingBank.Text))
                 enquiry = enquiry.Where(p => p.IssuingBankNo.Equals(txtIssuingBank.Text));
             if (!string.IsNullOrEmpty(txtDocumentaryCreditNumber.Text))
@@ -109,10 +112,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         .ToList();
                     return;
                 default:// ExportLC.Actions.Register:
-                    radGridReview.DataSource = enquiry
+                    var data = enquiry
                         .OrderByDescending(p => p.CreateDate)
                         .Select(q => new { Code = q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.Status })
                         .ToList();
+                    radGridReview.DataSource = data;
                     return;
             }
         }

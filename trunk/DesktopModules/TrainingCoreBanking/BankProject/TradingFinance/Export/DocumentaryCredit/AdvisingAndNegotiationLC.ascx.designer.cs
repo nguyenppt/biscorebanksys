@@ -157,6 +157,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadComboBox rcbReceivingLCVia;
         
         /// <summary>
+        /// txtCreatedDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtCreatedDate;
+        
+        /// <summary>
         /// RequiredFieldValidator20 control.
         /// </summary>
         /// <remarks>

@@ -43,7 +43,7 @@
         <MasterTableView>
             <Columns>
                 <telerik:GridBoundColumn HeaderText="Doc Code" DataField="Code" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
-                <telerik:GridBoundColumn HeaderText="Ref No" DataField="ImportLCCode" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
+                <telerik:GridBoundColumn HeaderText="LC No" DataField="ImportLCCode" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Applicant Name" DataField="ApplicantName" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />
                 <telerik:GridBoundColumn HeaderText="Amount" DataField="Amount" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
                 <telerik:GridBoundColumn HeaderText="Currency" DataField="Currency" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" />

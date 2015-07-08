@@ -23,7 +23,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private ExportLCDocProcessing dbEntities = new ExportLCDocProcessing();
         protected void Page_Load(object sender, EventArgs e)
         {
-            txtChargeCode1.Text = (TabId == ExportLCDocProcessing.Actions.Amend ? ExportLCDocProcessing.Charges.Service : "ELCHANDLE");
+            txtChargeCode1.Text = (TabId == ExportLCDocProcessing.Actions.Amend ? ExportLCDocProcessing.Charges.Service : ExportLCDocProcessing.Charges.Commission);
             txtChargeCode2.Text = ExportLCDocProcessing.Charges.Courier;
             txtChargeCode3.Text = ExportLCDocProcessing.Charges.Other;
             if (IsPostBack) return;
@@ -463,12 +463,28 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 txtTenor.Text = ExLCDoc.Tenor;
             }
             txtDocumentReceivedDate.SelectedDate = ExLCDoc.DocumentReceivedDate;
-            txtProccessingDate.SelectedDate = ExLCDoc.ProccessingDate;            
+            txtProccessingDate.SelectedDate = ExLCDoc.ProccessingDate;
+            txtAcceptanceDate.SelectedDate = ExLCDoc.AcceptanceDate;
+            txtMaturityDate.SelectedDate = ExLCDoc.MaturityDate;
             txtInvoiceNo.Text = ExLCDoc.InvoiceNo;
             //
-            loadLCDocsCode(ExLCDoc.DocsCode1, ExLCDoc.NoOfOriginals1, ExLCDoc.NoOfCopies1, ExLCDoc.OtherDocs1, ref rcbDocsCode1, ref txtNoOfOriginals1, ref txtNoOfCopies1, ref txtOtherDocs1);
-            loadLCDocsCode(ExLCDoc.DocsCode2, ExLCDoc.NoOfOriginals2, ExLCDoc.NoOfCopies2, ExLCDoc.OtherDocs2, ref rcbDocsCode2, ref txtNoOfOriginals2, ref txtNoOfCopies2, ref txtOtherDocs2);
-            loadLCDocsCode(ExLCDoc.DocsCode3, ExLCDoc.NoOfOriginals3, ExLCDoc.NoOfCopies3, ExLCDoc.OtherDocs3, ref rcbDocsCode3, ref txtNoOfOriginals3, ref txtNoOfCopies3, ref txtOtherDocs3);
+            loadLCDocsCode(ExLCDoc.DocsCode1, ExLCDoc.NoOfOriginals1, ExLCDoc.NoOfCopies1, ExLCDoc.OtherDocs1, ref rcbDocsCode1, ref txtNoOfOriginals1, ref txtNoOfCopies1);
+            loadLCDocsCode(ExLCDoc.DocsCode2, ExLCDoc.NoOfOriginals2, ExLCDoc.NoOfCopies2, ExLCDoc.OtherDocs2, ref rcbDocsCode2, ref txtNoOfOriginals2, ref txtNoOfCopies2);
+            loadLCDocsCode(ExLCDoc.DocsCode3, ExLCDoc.NoOfOriginals3, ExLCDoc.NoOfCopies3, ExLCDoc.OtherDocs3, ref rcbDocsCode3, ref txtNoOfOriginals3, ref txtNoOfCopies3);
+
+            txtOtherDocs1.Text = ExLCDoc.OtherDocs1;
+            txtOtherDocs2.Text = ExLCDoc.OtherDocs2;
+            txtOtherDocs3.Text = ExLCDoc.OtherDocs3;
+            txtOtherDocs4.Text = ExLCDoc.OtherDocs4;
+            txtOtherDocs5.Text = ExLCDoc.OtherDocs5;
+            txtOtherDocs6.Text = ExLCDoc.OtherDocs6;
+            txtOtherDocs7.Text = ExLCDoc.OtherDocs7;
+            txtOtherDocs8.Text = ExLCDoc.OtherDocs8;
+            txtOtherDocs9.Text = ExLCDoc.OtherDocs9;
+            txtOtherDocs10.Text = ExLCDoc.OtherDocs10;
+
+
+
             if (!string.IsNullOrEmpty(ExLCDoc.DocsCode3))
             {
                 divDocs2.Attributes.CssStyle.Remove("Display");
@@ -487,12 +503,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (ExLCDoc.WaiveCharges.Equals(bd.YesNo.NO)) loadCharges();
         }
         private void loadLCDocsCode(string DocsCode, int? NoOfOriginals, int? NoOfCopies, string OtherDocs,
-            ref RadComboBox rcbDocsCode, ref RadNumericTextBox txtNoOfOriginals, ref RadNumericTextBox txtNoOfCopies, ref RadTextBox txtOtherDocs)
+            ref RadComboBox rcbDocsCode, ref RadNumericTextBox txtNoOfOriginals, ref RadNumericTextBox txtNoOfCopies/*, ref RadTextBox txtOtherDocs*/)
         {
             rcbDocsCode.SelectedValue = DocsCode;
             txtNoOfOriginals.Value = NoOfOriginals;
             txtNoOfCopies.Value = NoOfCopies;
-            txtOtherDocs.Text = OtherDocs;
+            //txtOtherDocs.Text = OtherDocs;
         }
         private void loadCharges()
         {
@@ -521,6 +537,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             txtChargeCode.Text = ExLCCharge.ChargeCode;
             cbChargeCcy.SelectedValue = ExLCCharge.ChargeCcy;
+            LoadChargeAcct(ref cbChargeAcc, cbChargeCcy.SelectedValue);
             cbChargeAcc.SelectedValue = ExLCCharge.ChargeAcc;
             txtChargeAmt.Value = ExLCCharge.ChargeAmt;
             cbChargeParty.SelectedValue = ExLCCharge.PartyCharged;
@@ -838,7 +855,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLCDoc.Commodity = txtCommodity.Value;
             ExLCDoc.Currency = rcbCurrency.SelectedValue;            
             ExLCDoc.DocumentReceivedDate = txtDocumentReceivedDate.SelectedDate;
-            ExLCDoc.ProccessingDate = txtProccessingDate.SelectedDate;            
+            ExLCDoc.ProccessingDate = txtProccessingDate.SelectedDate;
+            ExLCDoc.AcceptanceDate = txtAcceptanceDate.SelectedDate;
+            ExLCDoc.MaturityDate = txtMaturityDate.SelectedDate;
             ExLCDoc.InvoiceNo = txtInvoiceNo.Text;
             if (TabId == ExportLCDocProcessing.Actions.Amend)
             {
@@ -884,6 +903,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 ExLCDoc.NoOfCopies3 = null;
             ExLCDoc.OtherDocs3 = txtOtherDocs3.Text;
             //
+
+            ExLCDoc.OtherDocs4 = txtOtherDocs4.Text;
+            ExLCDoc.OtherDocs5 = txtOtherDocs5.Text;
+            ExLCDoc.OtherDocs6 = txtOtherDocs6.Text;
+            ExLCDoc.OtherDocs7 = txtOtherDocs7.Text;
+            ExLCDoc.OtherDocs8 = txtOtherDocs9.Text;
+            ExLCDoc.OtherDocs9 = txtOtherDocs9.Text;
+            ExLCDoc.OtherDocs10 = txtOtherDocs10.Text;
+
             ExLCDoc.Remark = txtRemark.Text;
             ExLCDoc.SettlementInstruction = txtSettlementInstruction.Text;
             //

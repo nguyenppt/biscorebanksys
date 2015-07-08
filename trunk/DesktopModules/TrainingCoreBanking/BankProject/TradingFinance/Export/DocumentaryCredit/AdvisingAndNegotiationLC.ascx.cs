@@ -267,6 +267,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
             else
             {
+                txtCreatedDate.SelectedDate = DateTime.Now;
                 if (TabId == ExportLC.Actions.Register)
                 {
                     RadToolBar1.FindItemByValue("btCommit").Enabled = true;
@@ -590,6 +591,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     break;
             }
             //
+            txtCreatedDate.SelectedDate = ExLC.CreateDate;
             rcbReceivingLCVia.SelectedValue = ExLC.ReceivingLCVia;
             txtImportLCNo.Text = ExLC.ImportLCCode;
             txtImportLCNo_TextChanged(null, null);

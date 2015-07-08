@@ -77,7 +77,7 @@
             <li><a href="#Parties">Parties</a></li>
             <li><a href="#Details">Details</a></li>
             <li><a href="#OtherInformation">Other Information</a></li>
-            <li><a href="#Charges">Charges</a></li>
+            <li><a  id="tabCharge"  href="#Charges">Charges</a></li>
         </ul>
         <div id="Parties" class="dnnClear">
             <fieldset>
@@ -311,20 +311,32 @@
                             <telerik:RadDatePicker runat="server" ID="txtProccessingDate" Width="160" />
                         </td>
                     </tr>
+                    <tr>
+                        <td class="MyLable">11. Acceptance Date</td>
+                        <td class="MyContent">
+                            <telerik:RadDatePicker runat="server" ID="txtAcceptanceDate" Width="160" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="MyLable">12. Maturity Date</td>
+                        <td class="MyContent">
+                            <telerik:RadDatePicker runat="server" ID="txtMaturityDate" Width="160" />
+                        </td>
+                    </tr>
                 </table>
                 <table cellpadding="0" cellspacing="0" id="divTenorRegister" runat="server">
                     <tr>
-                        <td class="MyLable" style="width: 170px">11. Tenor</td>
+                        <td class="MyLable" style="width: 170px">13. Tenor</td>
                         <td class="MyContent"><telerik:RadTextBox ID="txtTenor" runat="server" /></td>
                     </tr>
                 </table>
                 <table cellpadding="0" cellspacing="0" id="divTenorAmend" runat="server">
                     <tr>
-                        <td class="MyLable" style="width: 170px">11.1 Original Tenor</td>
+                        <td class="MyLable" style="width: 170px">13.1 Original Tenor</td>
                         <td class="MyContent"><telerik:RadTextBox ID="txtOriginalTenor" runat="server" /></td>
                     </tr>
                     <tr>
-                        <td class="MyLable">11.2 New Tenor</td>
+                        <td class="MyLable">13.2 New Tenor</td>
                         <td class="MyContent"><telerik:RadComboBox
                                 ID="rcbNewTenor" runat="server"
                                 MarkFirstMatch="True"
@@ -339,7 +351,7 @@
                 </table>
                 <table cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="MyLable" style="width: 170px">12. Invoice No</td>
+                        <td class="MyLable" style="width: 170px">14. Invoice No</td>
                         <td class="MyContent">
                             <telerik:RadTextBox ID="txtInvoiceNo" runat="server" />
                         </td>
@@ -374,12 +386,7 @@
                             <telerik:RadNumericTextBox ID="txtNoOfCopies1" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
-                    <tr>    
-                        <td class="MyLable" style="vertical-align:top;">13.1.4 Other Docs</td>
-                        <td style="width: 150px" class="MyContent">
-                            <telerik:RadTextBox ID="txtOtherDocs1" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox>
-                        </td>
-                    </tr>
+                    
                 </table>
                 <table cellpadding="0" cellspacing="0" id="divDocs2" runat="server" style="display:none;">
                     <tr>    
@@ -403,12 +410,12 @@
                             <telerik:RadNumericTextBox ID="txtNoOfCopies2" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
-                    <tr>    
+                    <%--<tr>    
                         <td class="MyLable" style="vertical-align:top;">13.2.4 Other Docs</td>
                         <td style="width: 150px" class="MyContent">
                             <telerik:RadTextBox ID="txtOtherDocs2" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox>
                         </td>
-                    </tr>
+                    </tr>--%>
                 </table>
                 <table cellpadding="0" cellspacing="0" id="divDocs3" runat="server" style="display:none;">
                     <tr>    
@@ -432,20 +439,80 @@
                             <telerik:RadNumericTextBox ID="txtNoOfCopies3" Runat="server" NumberFormat-DecimalDigits="0" />
                         </td>
                     </tr>
-                    <tr>    
+                    <%--<tr>    
                         <td class="MyLable" style="vertical-align:top;">13.3.4 Other Docs</td>
                         <td style="width: 150px" class="MyContent">
                             <telerik:RadTextBox ID="txtOtherDocs3" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox>
                         </td>
-                    </tr>
+                    </tr>--%>
                 </table>
                 <table cellpadding="0" cellspacing="0">
                     <tr>    
-                        <td class="MyLable" style="vertical-align:top;">14. Remark</td>
+                        <td class="MyLable" style="vertical-align:top;">14. Other Docs</td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs1" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs2" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                     <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs3" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                     <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs4" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                     <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs5" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                     <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs6" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                     <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs7" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                     <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs8" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                     <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs9" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                     <tr>    
+                        <td class="MyLable" style="vertical-align:top;"></td>
+                        <td style="width: 150px" class="MyContent">
+                            <telerik:RadTextBox ID="txtOtherDocs10" runat="server"  Width="355"></telerik:RadTextBox>
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td class="MyLable" style="vertical-align:top;">15. Remark</td>
                         <td class="MyContent"><telerik:RadTextBox ID="txtRemark" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox></td>
                     </tr>
                     <tr>    
-                        <td class="MyLable" style="vertical-align:top;">15. Settlement Instruction </td>
+                        <td class="MyLable" style="vertical-align:top;">16. Settlement Instruction </td>
                         <td class="MyContent"><telerik:RadTextBox ID="txtSettlementInstruction" runat="server" TextMode="MultiLine" Height="100" Width="355"></telerik:RadTextBox></td>
                     </tr>
                 </table>
@@ -541,6 +608,8 @@
                                             <Items>
                                                 <telerik:RadComboBoxItem Value="B" Text="B" />
                                                 <telerik:RadComboBoxItem Value="AC" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="A" Text="A" />
+                                                <telerik:RadComboBoxItem Value="BC" Text="BC" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>
@@ -795,15 +864,29 @@
     </div>
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
     <script type="text/javascript">
+        $(function(){
+            
+            if(<%= TabId %> == 244)//Hide tabCharge when page is Acept
+            {
+                Charges.style.display = 'none';
+                tabCharge.style.display = 'none';
+            }else{
+                Charges.style.display = 'block';
+                tabCharge.style.display = 'block';
+            }
+        });
+
+        
+
         $("#<%=tbLCCode.ClientID%>").keyup(function (event) {
             if (event.keyCode == 13) {
                 if ($("#<%=tbLCCode.ClientID %>").val() == "") {
                     alert("Please fill in the LCCode");
-                }
-                else {
+        }
+        else {
                     window.location.href = "Default.aspx?tabid=<%= TabId %>&Code=" + $("#<%=tbLCCode.ClientID %>").val();
-                }
-            }
+        }
+        }
         });
         $("#<%=txtRemark.ClientID %>").keyup(function (event) {
             if (event.keyCode == 13) {
@@ -820,17 +903,7 @@
                 $("#<%=txtOtherDocs1.ClientID %>").val($("#<%=txtOtherDocs1.ClientID %>").val() + '\n');
             }
         });
-        $("#<%=txtOtherDocs2.ClientID %>").keyup(function (event) {
-            if (event.keyCode == 13) {
-                $("#<%=txtOtherDocs2.ClientID %>").val($("#<%=txtOtherDocs2.ClientID %>").val() + '\n');
-            }
-        });
-        $("#<%=txtOtherDocs3.ClientID %>").keyup(function (event) {
-            if (event.keyCode == 13) {
-                $("#<%=txtOtherDocs3.ClientID %>").val($("#<%=txtOtherDocs3.ClientID %>").val() + '\n');
-            }
-        });
-        //
+        
         $('a.addDocs').click(function () {
             var index = $(this).attr('index');
             if (index == "1") {
