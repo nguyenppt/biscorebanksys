@@ -661,6 +661,33 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtRemarks;
         
         /// <summary>
+        /// txtRemarks1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtRemarks1;
+        
+        /// <summary>
+        /// txtRemarks2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtRemarks2;
+        
+        /// <summary>
+        /// txtRemarks3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtRemarks3;
+        
+        /// <summary>
         /// comboNostroCusNo control.
         /// </summary>
         /// <remarks>
