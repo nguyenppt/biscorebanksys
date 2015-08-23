@@ -35,5 +35,10 @@ namespace BankProject.DBContext
         public Nullable<System.DateTime> Process_Date { get; set; }
         public Nullable<long> CreateBy { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public int ID { get; set; }
+        public long PeriodRepaid { get; set; }
+        public decimal Interest { get; set; }
+        public int ProcessedDays { get; set; }
+        public decimal InterestedAmountPerday { get; set; }
     }
 }

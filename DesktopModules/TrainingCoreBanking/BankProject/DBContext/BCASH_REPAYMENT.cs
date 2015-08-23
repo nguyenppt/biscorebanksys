@@ -35,5 +35,7 @@ namespace BankProject.DBContext
         public Nullable<decimal> PrintLnNoOfPS { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ActiveFlag { get; set; }
+        public int RepaidLoanFlag { get; set; }
+        public int ID_KEY { get; set; }
     }
 }

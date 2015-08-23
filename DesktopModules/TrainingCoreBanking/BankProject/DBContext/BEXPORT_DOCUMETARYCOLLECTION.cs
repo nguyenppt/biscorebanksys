@@ -80,5 +80,17 @@ namespace BankProject.DBContext
         public Nullable<int> AcceptedBy { get; set; }
         public Nullable<System.DateTime> AcceptedByDate { get; set; }
         public string AcceptStatus { get; set; }
+        public string Accountofficer { get; set; }
+        public string AmendNo { get; set; }
+        public string ActiveRecordFlag { get; set; }
+        public Nullable<double> OldAmount { get; set; }
+        public Nullable<System.DateTime> OldDocsReceivedDate { get; set; }
+        public Nullable<int> AmendId { get; set; }
+        public string RefAmendNo { get; set; }
+        public string DocsType { get; set; }
+        public string Remarks1 { get; set; }
+        public string Remarks2 { get; set; }
+        public string Remarks3 { get; set; }
+        public string DraweeAddr4 { get; set; }
     }
 }

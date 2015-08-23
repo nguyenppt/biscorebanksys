@@ -40,6 +40,11 @@ namespace BankProject.DBContext
         public string SenderToReceiverInformation2 { get; set; }
         public string SenderToReceiverInformation3 { get; set; }
         public string SenderToReceiverInformation4 { get; set; }
-        public string Narrative { get; set; }
+        public string Narrative1 { get; set; }
+        public string Narrative2 { get; set; }
+        public string Narrative3 { get; set; }
+        public string Narrative4 { get; set; }
+        public string Narrative5 { get; set; }
+        public string Narrative6 { get; set; }
     }
 }

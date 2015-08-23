@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BankProject.Entity
 {
-    public partial class BCOUNTRY_LOCAL
+    public partial class BCOUNTRY
     {
         public override string ToString()
         {

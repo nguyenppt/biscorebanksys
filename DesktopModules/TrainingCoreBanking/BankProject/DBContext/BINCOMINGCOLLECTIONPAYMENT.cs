@@ -45,5 +45,6 @@ namespace BankProject.DBContext
         public Nullable<double> IncreaseMental { get; set; }
         public Nullable<int> PaymentFullFlag { get; set; }
         public Nullable<double> IncreaseMentalB4Aut { get; set; }
+        public int SelectedTypeMT { get; set; }
     }
 }

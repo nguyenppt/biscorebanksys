@@ -60,5 +60,7 @@ namespace BankProject.DBContext
         public string OrderingCustAccAddr1 { get; set; }
         public string OrderingCustAccAddr2 { get; set; }
         public string OrderingCustAccAddr3 { get; set; }
+        public string PartyIdentifyForInter { get; set; }
+        public string PartyIdentifyForInsti { get; set; }
     }
 }

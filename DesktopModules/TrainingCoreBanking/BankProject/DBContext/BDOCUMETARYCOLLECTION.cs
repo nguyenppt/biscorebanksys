@@ -83,5 +83,9 @@ namespace BankProject.DBContext
         public Nullable<long> PaymentNo { get; set; }
         public string PaymentId { get; set; }
         public string DraftNo { get; set; }
+        public string AmendNo { get; set; }
+        public string ActiveRecordFlag { get; set; }
+        public Nullable<double> OldAmount { get; set; }
+        public string RefAmendNo { get; set; }
     }
 }

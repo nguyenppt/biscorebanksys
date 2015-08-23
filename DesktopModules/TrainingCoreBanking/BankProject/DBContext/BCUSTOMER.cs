@@ -25,5 +25,6 @@ namespace BankProject.DBContext
         public Nullable<System.DateTime> IssueDate { get; set; }
         public string IssuePlace { get; set; }
         public string Telephone { get; set; }
+        public decimal ImportLimitAmt { get; set; }
     }
 }

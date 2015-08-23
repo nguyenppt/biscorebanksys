@@ -23,5 +23,6 @@ namespace BankProject.DBContext
         public Nullable<double> No { get; set; }
         public string Freq { get; set; }
         public string Code { get; set; }
+        public int PeriodRepaid { get; set; }
     }
 }

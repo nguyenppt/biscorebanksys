@@ -71,6 +71,7 @@
       <HintPath>..\..\..\..\..\..\fpt\source\Quang Ninh\ThongKe\Deploy\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Data.Linq" />
@@ -113,9 +114,22 @@
     <Content Include="bin\System.Web.Mvc.dll" />
     <Content Include="bin\Telerik.Web.UI.dll" />
     <Content Include="Controls\DynamicControls.ascx" />
+    <Content Include="Controls\MultiNarrative.ascx" />
+    <Content Include="Controls\MultiTextBox.ascx" />
     <Content Include="Controls\PaymentMethodControl.ascx" />
+    <Content Include="FTTeller\InwardEnquiry.ascx" />
+    <Content Include="FTTeller\OutwardTransferByCash_Enquiry.ascx" />
+    <Content Include="Helper\CURRENCY_LIST.xml" />
     <Content Include="InputCollateralInformation_Enquiry.ascx" />
     <Content Include="OpenCustomerAccountList.ascx" />
+    <Content Include="OpenDepositAcctForTFList.ascx" />
+    <Content Include="OverseasTransfers\Enquiry.ascx" />
+    <Content Include="OverseasTransfers\OverseasTransfer.ascx" />
+    <Content Include="Scripts\Common.js" />
+    <Content Include="SessionManagment\Default.ascx" />
+    <Content Include="SessionManagment\EditAccountPeriod.ascx" />
+    <Content Include="SessionManagment\SessionHistory.ascx" />
+    <Content Include="SessionManagment\ShiftManage.ascx" />
     <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentFrequency.ascx" />
     <Content Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\SalaryPaymentEnquiry.ascx" />
     <Content Include="TellerApplication\AccountManagement\SavingsAC\Close\ListReviewDiscounted.ascx" />
@@ -178,7 +192,8 @@
     <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\Periodic.ascx" />
     <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicInput.ascx" />
     <Content Include="TellerApplication\AccountManagement\SavingsAC\Open\PeriodicNewDeposit.ascx" />
-    <Content Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx" />
+    <Content Include="TradingFinance\CollectCharges.ascx" />
+    <Content Include="TradingFinance\CollectChargesList.ascx" />
     <Content Include="TradingFinance\Export\AdvisingAndNegotiationLC.ascx" />
     <Content Include="Amendment.ascx" />
     <Content Include="bin\Microsoft.ApplicationBlocks.Data.dll" />
@@ -189,7 +204,6 @@
     <Content Include="OpenCorpCustomer.ascx" />
     <Content Include="OpenCustomerAccount.ascx" />
     <Content Include="OpenDepositAcctForTF.ascx" />
-    <Content Include="OverseasTransfer.ascx" />
     <Content Include="OverseasTransfers\ListReview.ascx" />
     <Content Include="PhayHanhLC.ascx" />
     <Content Include="TradingFinance\Export\AdvisingReviewList.ascx" />
@@ -203,6 +217,12 @@
     <Content Include="TradingFinance\Export\DocumentaryCollections\OutgoingCollectionPayment.ascx" />
     <Content Include="TradingFinance\Export\DocumentaryCollections\ReviewExport_DocumentCollection.ascx" />
     <Content Include="TradingFinance\Export\DocumentaryCollections\ReviewOutgoingCollectionPayment.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLC.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLCAmend.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\DocumentProcessing.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\EnquiryDocumentProcessing.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\EnquiryLC.ascx" />
+    <Content Include="TradingFinance\Export\DocumentaryCredit\EnquiryLCAmend.ascx" />
     <Content Include="TradingFinance\ForeignExchangeTrade.ascx" />
     <Content Include="TradingFinance\ForeignExchangeTradePreviewList.ascx" />
     <Content Include="TradingFinance\Import\DocumentaryCollections\DocumentaryCollectionCancel.ascx" />
@@ -234,9 +254,11 @@
     <Content Include="Views\TellerApplication\AmendLoanContract.ascx" />
     <Content Include="Views\TellerApplication\AmendLoanContract_Item.ascx" />
     <Content Include="Views\TellerApplication\AmendLoanContract_PL.ascx" />
+    <Content Include="Views\TellerApplication\BTransList.ascx" />
     <Content Include="Views\TellerApplication\CalculatedInterestedAmountManual.ascx" />
     <Content Include="Views\TellerApplication\CashDepositePreviewList.ascx" />
     <Content Include="Views\TellerApplication\CashRepayment.ascx" />
+    <Content Include="Views\TellerApplication\CashRepayment_Enquiry.ascx" />
     <Content Include="Views\TellerApplication\CashRepayment_PL.ascx" />
     <Content Include="Views\TellerApplication\CashWithdrawalPreviewList.ascx" />
     <Content Include="Views\TellerApplication\BlockAccount.ascx" />
@@ -271,9 +293,11 @@
     <Content Include="Views\TellerApplication\CollectCharges.ascx" />
     <Content Include="Views\TellerApplication\CollectChargesByCashPreviewList.ascx" />
     <Content Include="Views\TellerApplication\CollectChargesPreviewList.ascx" />
+    <Content Include="Views\TellerApplication\CollectCharges_Enquiry.ascx" />
     <Content Include="Views\TellerApplication\CollectionForCreditCardPayment.ascx" />
     <Content Include="Views\TellerApplication\CollectChargesByCash.ascx" />
     <Content Include="Views\TellerApplication\CollectionForCreditCardPayment_PL.ascx" />
+    <Content Include="Views\TellerApplication\CollectionForCreditCard_Enquiry.ascx" />
     <Content Include="Views\TellerApplication\DefineCustomerLimitSub.ascx" />
     <Content Include="Views\TellerApplication\DefineCustomerLimit_Enquiry.ascx" />
     <Content Include="Views\TellerApplication\EnquiryAccount.ascx" />
@@ -282,10 +306,13 @@
     <Content Include="Views\TellerApplication\DCTransaction.ascx" />
     <Content Include="Views\TellerApplication\DefineCustomerLimit_PL.ascx" />
     <Content Include="Views\TellerApplication\InputCollateralRight_Enquiry.ascx" />
+    <Content Include="Views\TellerApplication\InterestedRateAutomatic.ascx" />
     <Content Include="Views\TellerApplication\LoanAccountList.ascx" />
+    <Content Include="Views\TellerApplication\LoanPaymentManualCalc.ascx" />
     <Content Include="Views\TellerApplication\NewNomarlLoan_FullView.ascx" />
     <Content Include="Views\TellerApplication\NewNormalLoan.ascx" />
     <Content Include="Views\TellerApplication\NewNormalLoanEnquiry.ascx" />
+    <Content Include="Views\TellerApplication\NewNormalLoan_Repayment.ascx" />
     <Content Include="Views\TellerApplication\OpenLoanWorkingAccount_PL.ascx" />
     <Content Include="Views\TellerApplication\OpenLoanWorkingAcct_Enquiry.ascx" />
     <Content Include="Views\TellerApplication\OpenNonRevolingCoomContr_PL.ascx" />
@@ -303,6 +330,7 @@
     <Content Include="Views\TellerApplication\OpenLoanWorkingAccount.ascx" />
     <Content Include="Views\TellerApplication\OpenNonRevolingCoomContr.ascx" />
     <Content Include="Views\TellerApplication\OpenRevolvingCommContract.ascx" />
+    <Content Include="Views\TellerApplication\RateExchange.ascx" />
     <Content Include="Views\TellerApplication\ReviewCloseAccountList.ascx" />
     <Content Include="Views\TellerApplication\TransferByAccount.ascx" />
     <Content Include="Views\TellerApplication\TransferByAccount_PL.ascx" />
@@ -315,6 +343,7 @@
     <Content Include="Views\TellerApplication\UnBlockAccountListEmpty.ascx" />
     <Content Include="Views\TellerApplication\UnBlockAccountPreviewList.ascx" />
     <Content Include="Views\TellerApplication\ChequeTransferDrawnOnUs_PL.ascx" />
+    <Content Include="Views\TellerApplication\UnBlockAcct_Enquiry.ascx" />
     <Content Include="Views\TellerApplication\WebUserControl2.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -327,8 +356,11 @@
   <ItemGroup>
     <Compile Include="Business\ICommonBusiness.cs" />
     <Compile Include="Business\INewNormalLoanBusiness.cs" />
+    <Compile Include="Business\LoanContractScheduleDS.cs" />
     <Compile Include="Business\NewNormalLoanAmendBusiness.cs" />
     <Compile Include="Business\NewNormalLoanBusiness.cs" />
+    <Compile Include="Business\NewNormalLoanRepaymentBusiness.cs" />
+    <Compile Include="Business\NormalLoanBaseBusiness.cs" />
     <Compile Include="Common\CommonHeplers.cs" />
     <Compile Include="Common\Util.cs" />
     <Compile Include="Controls\ComboBoxItem.cs" />
@@ -341,6 +373,20 @@
     <Compile Include="Controls\DynamicControls.ascx.designer.cs">
       <DependentUpon>DynamicControls.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MultiNarrative.ascx.cs">
+      <DependentUpon>MultiNarrative.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\MultiNarrative.ascx.designer.cs">
+      <DependentUpon>MultiNarrative.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MultiTextBox.ascx.cs">
+      <DependentUpon>MultiTextBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\MultiTextBox.ascx.designer.cs">
+      <DependentUpon>MultiTextBox.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PaymentMethodControl.ascx.cs">
       <DependentUpon>PaymentMethodControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -348,6 +394,7 @@
     <Compile Include="Controls\PaymentMethodControl.ascx.designer.cs">
       <DependentUpon>PaymentMethodControl.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Reports.cs" />
     <Compile Include="Controls\ThongTinChiNhanh.ascx.cs">
       <DependentUpon>ThongTinChiNhanh.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -400,6 +447,8 @@
     <Compile Include="DataProvider\ThanhLP.cs" />
     <Compile Include="DataProvider\TransactionStatus.cs" />
     <Compile Include="DataProvider\TriTT.cs" />
+    <Compile Include="DataProvider\TriTT_Credit.cs" />
+    <Compile Include="DataProvider\YesNo.cs" />
     <Compile Include="DBContext\BACCOUNT.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
@@ -407,6 +456,12 @@
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BADVISINGANDNEGOTIATION.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BAdvisingAndNegotiationLC.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BAdvisingAndNegotiationLCCharge.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BADVISINGANDNEGOTIATION_CHARGES.cs">
@@ -431,6 +486,9 @@
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCASHWITHRAWAL.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BCASH_REPAYMENT.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCATEGORY.cs">
@@ -473,6 +531,9 @@
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOLLECTCHARGESFROMACCOUNT.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BCOLLECTION_FOR_CRE_CARD_PAYM.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BCOMMITMENT_CONTRACT.cs">
@@ -538,6 +599,15 @@
     <Compile Include="DBContext\BENQUIRYCHECK.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\BEXPORTCOLLECTIONPAYMENT.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_DOCUMENTPROCESSING.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_DOCUMENTPROCESSINGCHARGE.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\BEXPORT_DOCUMETARYCOLLECTION.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
@@ -547,7 +617,28 @@
     <Compile Include="DBContext\BEXPORT_DOCUMETARYCOLLECTION_BK_27082014.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\BEXPORT_LC.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\BEXPORT_LC_ADV_NEGO.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_AMEND.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_CHARGES.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_DOCS_PROCESSING.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_DOCS_PROCESSING_CHARGES.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_DOCS_SETTLEMENT.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BEXPORT_LC_DOCS_SETTLEMENT_CHARGES.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BFOREIGNEXCHANGE.cs">
@@ -587,6 +678,9 @@
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTCHARGE.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTMT103.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BINCOMINGCOLLECTIONPAYMENTMT202.cs">
@@ -634,6 +728,12 @@
     <Compile Include="DBContext\BLOANGROUP.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\BLOANINTEREST_KEY.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BLOANINTEREST_KEY_HISTORY.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\BLOANPURPOSE.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
@@ -650,6 +750,9 @@
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BNEWNORMALLOAN.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\BNEWNORMALLOAN_REPAYMENT.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\BOPENACCOUNT.cs">
@@ -745,7 +848,16 @@
     <Compile Include="DBContext\BTRANSFERWITHDRAWAL.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\BTRANSFER_4_CRE_CARD_PAYMENT.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\B_AccountForBuyingTC.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_AddConfirmInfo.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_BATCH_MAINTENANCE.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_BRPODCATEGORY_GetAll_IdOver200_Result.cs">
@@ -757,6 +869,12 @@
     <Compile Include="DBContext\B_CashWithrawalForBuyingTC.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\B_CheckBatchRunning.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_CollectCharges.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\B_COUNTRY.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
@@ -766,10 +884,28 @@
     <Compile Include="DBContext\B_DEBUG.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\B_Denomination.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\B_ExchangeBanknotesManyDeno.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_ExchangeRates.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ExchangeRates_History.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ExportLCPayment.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ExportLCPaymentCharge.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ExportLCPaymentMT202.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ExportLCPaymentMT756.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_ForeignExchange.cs">
@@ -779,6 +915,33 @@
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_ImportLCPaymentCharge.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ImportLCPaymentMT202.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_ImportLCPaymentMT756.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_LOAN_CREDIT_SCORING.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_LOAN_DISBURSAL_SCHEDULE.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_LOAN_PROCESS_PAYMENT.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_LOAN_TRANSACTION_HISTORY.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_NORMALLOAN_PAYMENT_SCHEDULE.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_Normal_Loan_Get_Productline_Info_Result.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\B_Normal_Loan_Process_DisbursalRepaymentCheck_Result.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\B_SellTravellersCheque.cs">
@@ -796,23 +959,65 @@
     <Compile Include="DBContext\sysdiagram.cs">
       <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\V_LC_ChargeDetail.cs">
+      <DependentUpon>BISolutionsVVCBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBPartialEntity\BCUSTOMER_INFO.cs" />
+    <Compile Include="DBPartialEntity\BNewLoanControl.cs" />
     <Compile Include="DBRespository\AccountOfficerRepository.cs" />
     <Compile Include="DBRespository\BaseRepository.cs" />
     <Compile Include="DBRespository\BCustomerRepository.cs" />
     <Compile Include="DBRespository\BInterestTermRepository.cs" />
+    <Compile Include="DBRespository\CashRepaymentRepository.cs" />
+    <Compile Include="DBRespository\CollateralContingentEntryRespository.cs" />
+    <Compile Include="DBRespository\CollateralInformationRepository.cs" />
     <Compile Include="DBRespository\CollorateRightRepository.cs" />
+    <Compile Include="DBRespository\CountryRepository.cs" />
+    <Compile Include="DBRespository\CurrencyRepository.cs" />
     <Compile Include="DBRespository\CustomerLimitSubRepository.cs" />
     <Compile Include="DBRespository\DBContextBase.cs" />
+    <Compile Include="DBRespository\ExchangeRatesRepository.cs" />
     <Compile Include="DBRespository\InterestedRateRespository.cs" />
     <Compile Include="DBRespository\IOpenAccountRepository.cs" />
     <Compile Include="DBRespository\IRepositoryDB.cs" />
+    <Compile Include="DBRespository\LoanCreditScoringRepository.cs" />
+    <Compile Include="DBRespository\LoanDisbursalScheduleRespository.cs" />
     <Compile Include="DBRespository\LoanGroupRepository.cs" />
     <Compile Include="DBRespository\LoanPurposeRepository.cs" />
     <Compile Include="DBRespository\NewLoanControlRepository.cs" />
+    <Compile Include="DBRespository\NewLoanInterestedKeyRepository.cs" />
+    <Compile Include="DBRespository\NormalLoanPaymentSchedule.cs" />
+    <Compile Include="DBRespository\NormalLoanRepaymentRepository.cs" />
     <Compile Include="DBRespository\NormalLoanRepository.cs" />
     <Compile Include="DBRespository\OpenAccountRepository.cs" />
+    <Compile Include="DBRespository\ProduceLineRepository.cs" />
     <Compile Include="DBRespository\ProductCategoryRepository.cs" />
     <Compile Include="DBRespository\StoreProRepository.cs" />
+    <Compile Include="DBRespository\SwiftCodeRepository.cs" />
+    <Compile Include="Entity\Administration\AccountPeriod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Administration\AccountSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Administration\SessionHistory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Administration\SessionManagment.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Administration\SessionStatus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Administration\Shift.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Administration\WorkingDay.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Administration\WorkingDayExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Entity\Category.cs" />
     <Compile Include="Entity\AccountOpen.cs" />
     <Compile Include="Entity\InternalBankAccount.cs" />
@@ -834,6 +1039,13 @@
     <Compile Include="Entity\TriTT_Saving\SavingAccount.cs" />
     <Compile Include="Entity\TriTT_Saving\SavingAccount_SQL.cs" />
     <Compile Include="Entity\WorkingBankAccount.cs" />
+    <Compile Include="FTTeller\InwardEnquiry.ascx.cs">
+      <DependentUpon>InwardEnquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FTTeller\InwardEnquiry.ascx.designer.cs">
+      <DependentUpon>InwardEnquiry.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FTTeller\InwardProcessCreditAcc_PL.ascx.cs">
       <DependentUpon>InwardProcessCreditAcc_PL.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -862,6 +1074,13 @@
     <Compile Include="FTTeller\InwardCashWithdraw.ascx.designer.cs">
       <DependentUpon>InwardCashWithdraw.ascx</DependentUpon>
     </Compile>
+    <Compile Include="FTTeller\OutwardTransferByCash_Enquiry.ascx.cs">
+      <DependentUpon>OutwardTransferByCash_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FTTeller\OutwardTransferByCash_Enquiry.ascx.designer.cs">
+      <DependentUpon>OutwardTransferByCash_Enquiry.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FTTeller\OutwardTransferByCash_PL.ascx.cs">
       <DependentUpon>OutwardTransferByCash_PL.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -876,6 +1095,9 @@
     <Compile Include="FTTeller\OutwardTransferByCash.ascx.designer.cs">
       <DependentUpon>OutwardTransferByCash.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CurrencyList.cs" />
+    <Compile Include="Helper\Utils.cs" />
+    <Compile Include="HttpModules\SessionManagmentModule.cs" />
     <Compile Include="InputCollateralInformation.ascx.cs">
       <DependentUpon>InputCollateralInformation.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -897,6 +1119,9 @@
     <Compile Include="InputCollateralInformation_PL.ascx.designer.cs">
       <DependentUpon>InputCollateralInformation_PL.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Model\CollectCharges.cs" />
+    <Compile Include="Model\ExportLC.cs" />
+    <Compile Include="Model\Reports\ExportLC.cs" />
     <Compile Include="NormalCLControls\ProvisionTransfer.ascx.cs">
       <DependentUpon>ProvisionTransfer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -911,8 +1136,65 @@
     <Compile Include="OpenCustomerAccountList.ascx.designer.cs">
       <DependentUpon>OpenCustomerAccountList.ascx</DependentUpon>
     </Compile>
+    <Compile Include="OpenDepositAcctForTFList.ascx.cs">
+      <DependentUpon>OpenDepositAcctForTFList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenDepositAcctForTFList.ascx.designer.cs">
+      <DependentUpon>OpenDepositAcctForTFList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OverseasTransfers\Enquiry.ascx.cs">
+      <DependentUpon>Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OverseasTransfers\Enquiry.ascx.designer.cs">
+      <DependentUpon>Enquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OverseasTransfers\OverseasTransfer.ascx.cs">
+      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OverseasTransfers\OverseasTransfer.ascx.designer.cs">
+      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\BankProjectBootstrapper.cs" />
+    <Compile Include="Repository\AccountPeriodRepository.cs" />
     <Compile Include="Repository\BlockedAccountRepository.cs" />
+    <Compile Include="Repository\IAccountPeriodRepository.cs" />
+    <Compile Include="Repository\IShiftRepository.cs" />
+    <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Repository\SessionHistoryRepository.cs" />
+    <Compile Include="Repository\ShiftRepository.cs" />
     <Compile Include="Repository\TargetRepositoryCorp.cs" />
+    <Compile Include="SessionManagment\Default.ascx.cs">
+      <DependentUpon>Default.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SessionManagment\Default.ascx.designer.cs">
+      <DependentUpon>Default.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManagment\EditAccountPeriod.ascx.cs">
+      <DependentUpon>EditAccountPeriod.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SessionManagment\EditAccountPeriod.ascx.designer.cs">
+      <DependentUpon>EditAccountPeriod.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManagment\SessionHistory.ascx.cs">
+      <DependentUpon>SessionHistory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SessionManagment\SessionHistory.ascx.designer.cs">
+      <DependentUpon>SessionHistory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManagment\ShiftManage.ascx.cs">
+      <DependentUpon>ShiftManage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SessionManagment\ShiftManage.ascx.designer.cs">
+      <DependentUpon>ShiftManage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManagment\ToolbarExtensions.cs" />
     <Compile Include="TellerApplication\AccountManagement\CurrentNonTermSavingAC\SalaryPayment\PaymentFrequency.ascx.cs">
       <DependentUpon>PaymentFrequency.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1235,12 +1517,19 @@
     <Compile Include="TellerApplication\SignatureManagement\Preview.ascx.designer.cs">
       <DependentUpon>Preview.ascx</DependentUpon>
     </Compile>
-    <Compile Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx.cs">
-      <DependentUpon>EnquiryOverseasFundsTransfer.ascx</DependentUpon>
+    <Compile Include="TradingFinance\CollectCharges.ascx.cs">
+      <DependentUpon>CollectCharges.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TradingFinance\EnquiryOverseasFundsTransfer.ascx.designer.cs">
-      <DependentUpon>EnquiryOverseasFundsTransfer.ascx</DependentUpon>
+    <Compile Include="TradingFinance\CollectCharges.ascx.designer.cs">
+      <DependentUpon>CollectCharges.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\CollectChargesList.ascx.cs">
+      <DependentUpon>CollectChargesList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\CollectChargesList.ascx.designer.cs">
+      <DependentUpon>CollectChargesList.ascx</DependentUpon>
     </Compile>
     <Compile Include="TradingFinance\Export\AdvisingAndNegotiationLC.ascx.cs">
       <DependentUpon>AdvisingAndNegotiationLC.ascx</DependentUpon>
@@ -1330,13 +1619,6 @@
     </Compile>
     <Compile Include="OpenDepositAcctForTF.ascx.designer.cs">
       <DependentUpon>OpenDepositAcctForTF.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="OverseasTransfer.ascx.cs">
-      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OverseasTransfer.ascx.designer.cs">
-      <DependentUpon>OverseasTransfer.ascx</DependentUpon>
     </Compile>
     <Compile Include="OverseasTransfers\ListReview.ascx.cs">
       <DependentUpon>ListReview.ascx</DependentUpon>
@@ -1444,6 +1726,48 @@
     </Compile>
     <Compile Include="TradingFinance\Export\DocumentaryCollections\ReviewOutgoingCollectionPayment.ascx.designer.cs">
       <DependentUpon>ReviewOutgoingCollectionPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLC.ascx.cs">
+      <DependentUpon>AdvisingAndNegotiationLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLC.ascx.designer.cs">
+      <DependentUpon>AdvisingAndNegotiationLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLCAmend.ascx.cs">
+      <DependentUpon>AdvisingAndNegotiationLCAmend.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\AdvisingAndNegotiationLCAmend.ascx.designer.cs">
+      <DependentUpon>AdvisingAndNegotiationLCAmend.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\DocumentProcessing.ascx.cs">
+      <DependentUpon>DocumentProcessing.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\DocumentProcessing.ascx.designer.cs">
+      <DependentUpon>DocumentProcessing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryDocumentProcessing.ascx.cs">
+      <DependentUpon>EnquiryDocumentProcessing.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryDocumentProcessing.ascx.designer.cs">
+      <DependentUpon>EnquiryDocumentProcessing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryLC.ascx.cs">
+      <DependentUpon>EnquiryLC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryLC.ascx.designer.cs">
+      <DependentUpon>EnquiryLC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryLCAmend.ascx.cs">
+      <DependentUpon>EnquiryLCAmend.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradingFinance\Export\DocumentaryCredit\EnquiryLCAmend.ascx.designer.cs">
+      <DependentUpon>EnquiryLCAmend.ascx</DependentUpon>
     </Compile>
     <Compile Include="TradingFinance\ForeignExchangeTrade.ascx.cs">
       <DependentUpon>ForeignExchangeTrade.ascx</DependentUpon>
@@ -1663,6 +1987,13 @@
     <Compile Include="Views\TellerApplication\AmendLoanContract_PL.ascx.designer.cs">
       <DependentUpon>AmendLoanContract_PL.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\TellerApplication\BTransList.ascx.cs">
+      <DependentUpon>BTransList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\BTransList.ascx.designer.cs">
+      <DependentUpon>BTransList.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\TellerApplication\CalculatedInterestedAmountManual.ascx.cs">
       <DependentUpon>CalculatedInterestedAmountManual.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1683,6 +2014,13 @@
     </Compile>
     <Compile Include="Views\TellerApplication\CashRepayment.ascx.designer.cs">
       <DependentUpon>CashRepayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashRepayment_Enquiry.ascx.cs">
+      <DependentUpon>CashRepayment_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CashRepayment_Enquiry.ascx.designer.cs">
+      <DependentUpon>CashRepayment_Enquiry.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\TellerApplication\CashRepayment_PL.ascx.cs">
       <DependentUpon>CashRepayment_PL.ascx</DependentUpon>
@@ -1922,6 +2260,13 @@
     <Compile Include="Views\TellerApplication\CollectChargesPreviewList.ascx.designer.cs">
       <DependentUpon>CollectChargesPreviewList.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\TellerApplication\CollectCharges_Enquiry.ascx.cs">
+      <DependentUpon>CollectCharges_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectCharges_Enquiry.ascx.designer.cs">
+      <DependentUpon>CollectCharges_Enquiry.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\TellerApplication\CollectionForCreditCardPayment.ascx.cs">
       <DependentUpon>CollectionForCreditCardPayment.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1942,6 +2287,13 @@
     </Compile>
     <Compile Include="Views\TellerApplication\CollectionForCreditCardPayment_PL.ascx.designer.cs">
       <DependentUpon>CollectionForCreditCardPayment_PL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectionForCreditCard_Enquiry.ascx.cs">
+      <DependentUpon>CollectionForCreditCard_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\CollectionForCreditCard_Enquiry.ascx.designer.cs">
+      <DependentUpon>CollectionForCreditCard_Enquiry.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\TellerApplication\DefineCustomerLimitSub.ascx.cs">
       <DependentUpon>DefineCustomerLimitSub.ascx</DependentUpon>
@@ -1999,12 +2351,26 @@
     <Compile Include="Views\TellerApplication\InputCollateralRight_Enquiry.ascx.designer.cs">
       <DependentUpon>InputCollateralRight_Enquiry.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\TellerApplication\InterestedRateAutomatic.ascx.cs">
+      <DependentUpon>InterestedRateAutomatic.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\InterestedRateAutomatic.ascx.designer.cs">
+      <DependentUpon>InterestedRateAutomatic.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\TellerApplication\LoanAccountList.ascx.cs">
       <DependentUpon>LoanAccountList.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Views\TellerApplication\LoanAccountList.ascx.designer.cs">
       <DependentUpon>LoanAccountList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\LoanPaymentManualCalc.ascx.cs">
+      <DependentUpon>LoanPaymentManualCalc.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\LoanPaymentManualCalc.ascx.designer.cs">
+      <DependentUpon>LoanPaymentManualCalc.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\TellerApplication\NewNomarlLoan_FullView.ascx.cs">
       <DependentUpon>NewNomarlLoan_FullView.ascx</DependentUpon>
@@ -2026,6 +2392,13 @@
     </Compile>
     <Compile Include="Views\TellerApplication\NewNormalLoanEnquiry.ascx.designer.cs">
       <DependentUpon>NewNormalLoanEnquiry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TellerApplication\NewNormalLoan_Repayment.ascx.cs">
+      <DependentUpon>NewNormalLoan_Repayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\NewNormalLoan_Repayment.ascx.designer.cs">
+      <DependentUpon>NewNormalLoan_Repayment.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\TellerApplication\OpenLoanWorkingAccount_PL.ascx.cs">
       <DependentUpon>OpenLoanWorkingAccount_PL.ascx</DependentUpon>
@@ -2146,6 +2519,13 @@
     <Compile Include="Views\TellerApplication\OpenRevolvingCommContract.ascx.designer.cs">
       <DependentUpon>OpenRevolvingCommContract.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\TellerApplication\RateExchange.ascx.cs">
+      <DependentUpon>RateExchange.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\RateExchange.ascx.designer.cs">
+      <DependentUpon>RateExchange.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\TellerApplication\ReviewCloseAccountList.ascx.cs">
       <DependentUpon>ReviewCloseAccountList.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2230,6 +2610,13 @@
     <Compile Include="Views\TellerApplication\ChequeTransferDrawnOnUs_PL.ascx.designer.cs">
       <DependentUpon>ChequeTransferDrawnOnUs_PL.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAcct_Enquiry.ascx.cs">
+      <DependentUpon>UnBlockAcct_Enquiry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\TellerApplication\UnBlockAcct_Enquiry.ascx.designer.cs">
+      <DependentUpon>UnBlockAcct_Enquiry.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\TellerApplication\WebUserControl2.ascx.cs">
       <DependentUpon>WebUserControl2.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2263,6 +2650,7 @@
       <DependentUpon>BISolutionsVVCBModel.edmx</DependentUpon>
       <LastGenOutput>BISolutionsVVCBModel.cs</LastGenOutput>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Entity\BankProjectModels.dbml.layout">
       <DependentUpon>BankProjectModels.dbml</DependentUpon>
     </None>
@@ -2319,6 +2707,55 @@
     <Content Include="Report\Template\DocumentaryCollection\Export\DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc" />
     <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG.doc" />
     <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\RegisterDocumentaryCollectionVAT.doc" />
+    <Content Include="Report\Template\NormalLC\Settlement\PhieuChuyenKhoan.doc" />
+    <Content Include="Report\Template\NormalLC\Settlement\PhieuXuatNgoaiBang.doc" />
+    <Content Include="Report\Template\NormalLC\Settlement\VAT.doc" />
+    <Content Include="Report\Template\NormalLC\Settlement\VATb.doc" />
+    <Content Include="Report\Template\LoanContract\LichTraLai.docx" />
+    <Content Include="Report\Template\LoanContract\LichTraLai_bck.docx" />
+    <Content Include="Report\Template\LoanContract\LichTraVon.docx" />
+    <Content Include="Report\Template\LoanContract\LichTraNoHopDongVay.docx" />
+    <Content Include="Report\Template\NormalLC\DocumentaryCredit\DocumentMT734.doc" />
+    <Content Include="Report\Template\NormalLC\DocumentaryCredit\VAT.doc" />
+    <Content Include="Report\Template\NormalLC\Settlement\MT756.doc" />
+    <Content Include="Report\Template\NormalLC\Settlement\MT202.doc" />
+    <Content Include="Report\Template\NormalLC\AmendLC_MT707.doc" />
+    <Content Include="Report\Template\NormalLC\AmendLC_MT747.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\COVER NHO THU XK.doc" />
+    <Content Include="Report\Template\FX_VAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentMT202 - Copy.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\PaymentPhieuChuyenKhoan.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\Export\PaymentVAT.doc" />
+    <Content Include="Report\Template\DocumentaryCollection\IncomingCollectionPaymentMT103.doc" />
+    <Content Include="Report\Template\Export\AmendLC_VAT.doc" />
+    <Content Include="Report\Template\Export\BM_TTQT_LCXK_01A.doc" />
+    <Content Include="Report\Template\Export\BM_TTQT_LCXK_02A.doc" />
+    <Content Include="Report\Template\Export\Export_PhieuXuatNgoaiBang.doc" />
+    <Content Include="Report\Template\Export\RegisterDocumentaryCollectionVAT.doc" />
+    <Content Include="Report\Template\Export\ThuThongBaoBoChungTu.doc" />
+    <Content Include="Report\Template\OutWardTransactions\cheque_withdrawl.doc" />
+    <Content Include="Report\Template\OutWardTransactions\transfer_by_account_dien_CITAD.doc" />
+    <Content Include="Report\Template\OutWardTransactions\transfer_by_account_dien_CMND.doc" />
+    <Content Include="Report\Template\OutWardTransactions\transfer_by_cash_dien_CITAD.doc" />
+    <Content Include="Report\Template\OutWardTransactions\transfer_by_cash_dien_CMND.doc" />
+    <Content Include="Report\Template\OutWardTransactions\transfer_withdrawl.doc" />
+    <Content Include="Report\Template\CollectCharge\CollectChargeVAT1.doc" />
+    <Content Include="Report\Template\AccountTransaction\CashDeposit_3.docx" />
+    <Content Include="Report\Template\CollectCharges\MT103.doc" />
+    <Content Include="Report\Template\CollectCharges\PhieuChuyenKhoan.doc" />
+    <Content Include="Report\Template\CollectCharges\VAT.doc" />
+    <Content Include="Report\Template\Export\8. BM - TTQT.LCXK.08_THU GOI CHUNG TU %28LC CHO PHEP DOI TIEN BANG THU NHPH, BCT HOP LE%29%281%29.doc" />
+    <Content Include="Report\Template\NormalLC\DocumentaryCredit\PHIEUNHAPNGOAIBANG.doc" />
+    <Content Include="Report\Template\NormalLC\DocumentaryCredit\PHIEUXUATNGOAIBANG.doc" />
+    <Content Include="Report\Template\LoanContract\LichTraNoHopDongVayRepayment.docx" />
+    <Content Include="Report\Template\AccountTransaction\process_cash_withdrawl.doc" />
+    <Content Include="Report\Template\Export\Mau Bia hs lc.doc" />
+    <Content Include="Report\Template\Export\Mau Thong bao LC.doc" />
+    <Content Include="Report\Template\Export\Mau Thong bao Tu chinh LC.doc" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

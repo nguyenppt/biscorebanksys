@@ -20,7 +20,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2014 23:14:45</publishTime>
     </File>
     <File Include="bin/BankProject.dll">
-      <publishTime>09/09/2014 23:18:19</publishTime>
+      <publishTime>07/08/2015 11:49:49</publishTime>
     </File>
     <File Include="bin/ClientDependency.Core.dll">
       <publishTime>07/10/2014 23:14:45</publishTime>
@@ -49,6 +49,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/DotNetNuke.WebUtility.dll">
       <publishTime>07/10/2014 23:14:45</publishTime>
     </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>10/13/2014 13:11:39</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>09/15/2014 14:44:36</publishTime>
+    </File>
     <File Include="bin/Microsoft.ApplicationBlocks.Data.dll">
       <publishTime>07/10/2014 23:15:44</publishTime>
     </File>
@@ -64,8 +70,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="CancelLC.ascx">
       <publishTime>07/10/2014 23:16:07</publishTime>
     </File>
+    <File Include="ClassDiagram1.cd">
+      <publishTime>09/29/2014 14:13:19</publishTime>
+    </File>
     <File Include="Controls/DynamicControls.ascx">
       <publishTime>07/25/2014 22:01:20</publishTime>
+    </File>
+    <File Include="Controls/MultiNarrative.ascx">
+      <publishTime>09/30/2014 22:56:04</publishTime>
+    </File>
+    <File Include="Controls/MultiTextBox.ascx">
+      <publishTime>10/11/2014 17:26:16</publishTime>
     </File>
     <File Include="Controls/PaymentMethodControl.ascx">
       <publishTime>07/18/2014 20:13:04</publishTime>
@@ -88,32 +103,53 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Controls/VVTextBox.ascx">
       <publishTime>07/10/2014 23:16:15</publishTime>
     </File>
+    <File Include="DataProvider/PhatModel.edmx.diagram">
+      <publishTime>09/17/2014 23:23:30</publishTime>
+    </File>
+    <File Include="DBContext/BISolutionsVVCBModel.Context.tt">
+      <publishTime>09/18/2014 10:22:59</publishTime>
+    </File>
+    <File Include="DBContext/BISolutionsVVCBModel.edmx.diagram">
+      <publishTime>07/08/2015 11:42:37</publishTime>
+    </File>
+    <File Include="DBContext/BISolutionsVVCBModel.tt">
+      <publishTime>09/18/2014 10:23:02</publishTime>
+    </File>
     <File Include="Entity/BankProjectModels.dbml">
-      <publishTime>09/06/2014 22:40:16</publishTime>
+      <publishTime>11/03/2014 13:05:01</publishTime>
     </File>
     <File Include="FTTeller/InwardCashWithdraw.ascx">
-      <publishTime>08/08/2014 01:32:18</publishTime>
+      <publishTime>12/08/2014 08:58:25</publishTime>
     </File>
     <File Include="FTTeller/InwardCashWithdraw_PL.ascx">
-      <publishTime>07/31/2014 21:41:32</publishTime>
+      <publishTime>10/27/2014 21:17:52</publishTime>
+    </File>
+    <File Include="FTTeller/InwardEnquiry.ascx">
+      <publishTime>10/28/2014 11:31:47</publishTime>
     </File>
     <File Include="FTTeller/InwardProcessCreditAcc.ascx">
-      <publishTime>08/08/2014 01:32:18</publishTime>
+      <publishTime>11/19/2014 11:32:20</publishTime>
     </File>
     <File Include="FTTeller/InwardProcessCreditAcc_PL.ascx">
-      <publishTime>08/03/2014 21:13:09</publishTime>
+      <publishTime>10/29/2014 20:33:41</publishTime>
     </File>
     <File Include="FTTeller/OutwardTransferByCash.ascx">
-      <publishTime>08/08/2014 01:32:18</publishTime>
+      <publishTime>11/17/2014 20:31:11</publishTime>
+    </File>
+    <File Include="FTTeller/OutwardTransferByCash_Enquiry.ascx">
+      <publishTime>10/29/2014 20:33:41</publishTime>
     </File>
     <File Include="FTTeller/OutwardTransferByCash_PL.ascx">
-      <publishTime>07/28/2014 22:43:54</publishTime>
+      <publishTime>10/21/2014 01:44:36</publishTime>
+    </File>
+    <File Include="Helper/CURRENCY_LIST.xml">
+      <publishTime>10/07/2014 09:11:07</publishTime>
     </File>
     <File Include="HomeRedirect.ascx">
       <publishTime>07/10/2014 23:16:17</publishTime>
     </File>
     <File Include="InputCollateralInformation.ascx">
-      <publishTime>08/29/2014 23:49:39</publishTime>
+      <publishTime>12/10/2014 17:29:53</publishTime>
     </File>
     <File Include="InputCollateralInformation_Enquiry.ascx">
       <publishTime>08/22/2014 20:32:09</publishTime>
@@ -134,151 +170,274 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2014 23:50:13</publishTime>
     </File>
     <File Include="OpenCorpCustomer.ascx">
-      <publishTime>08/10/2014 20:26:32</publishTime>
+      <publishTime>12/18/2014 23:04:11</publishTime>
     </File>
     <File Include="OpenCustomerAccount.ascx">
-      <publishTime>09/03/2014 23:26:35</publishTime>
+      <publishTime>11/24/2014 15:42:11</publishTime>
     </File>
     <File Include="OpenCustomerAccountList.ascx">
       <publishTime>08/06/2014 14:12:01</publishTime>
     </File>
     <File Include="OpenDepositAcctForTF.ascx">
-      <publishTime>07/16/2014 20:11:43</publishTime>
+      <publishTime>12/24/2014 13:40:13</publishTime>
+    </File>
+    <File Include="OpenDepositAcctForTFList.ascx">
+      <publishTime>12/24/2014 13:40:13</publishTime>
     </File>
     <File Include="OverseasTransfer.ascx">
-      <publishTime>08/30/2014 22:42:14</publishTime>
+      <publishTime>12/08/2014 17:25:22</publishTime>
+    </File>
+    <File Include="OverseasTransfers/Enquiry.ascx">
+      <publishTime>12/23/2014 21:50:31</publishTime>
     </File>
     <File Include="OverseasTransfers/ListReview.ascx">
-      <publishTime>07/16/2014 20:11:41</publishTime>
+      <publishTime>12/15/2014 13:22:00</publishTime>
+    </File>
+    <File Include="OverseasTransfers/OverseasTransfer.ascx">
+      <publishTime>12/23/2014 21:50:31</publishTime>
     </File>
     <File Include="PhayHanhLC.ascx">
       <publishTime>07/16/2014 20:11:43</publishTime>
     </File>
     <File Include="Report/Template/AccountTransaction/CashDeposit.docx">
-      <publishTime>09/04/2014 00:44:20</publishTime>
+      <publishTime>01/09/2015 14:48:15</publishTime>
+    </File>
+    <File Include="Report/Template/AccountTransaction/CashDeposit_3.docx">
+      <publishTime>01/09/2015 14:50:46</publishTime>
     </File>
     <File Include="Report/Template/AccountTransaction/CashWithdrawal.docx">
-      <publishTime>08/24/2014 00:20:42</publishTime>
+      <publishTime>01/09/2015 14:23:03</publishTime>
+    </File>
+    <File Include="Report/Template/AccountTransaction/process_cash_withdrawl.doc">
+      <publishTime>01/09/2015 14:23:15</publishTime>
     </File>
     <File Include="Report/Template/CollectCharge/CollectChargeVAT.doc">
-      <publishTime>08/24/2014 12:25:06</publishTime>
+      <publishTime>07/06/2015 13:22:22</publishTime>
+    </File>
+    <File Include="Report/Template/CollectCharge/CollectChargeVAT1.doc">
+      <publishTime>07/06/2015 13:22:22</publishTime>
+    </File>
+    <File Include="Report/Template/CollectCharges/MT103.doc">
+      <publishTime>12/11/2014 15:01:02</publishTime>
+    </File>
+    <File Include="Report/Template/CollectCharges/PhieuChuyenKhoan.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/CollectCharges/VAT.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc">
-      <publishTime>08/30/2014 20:08:20</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/DocumentaryCollectionCancelVAT.doc">
-      <publishTime>08/28/2014 22:43:13</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/COVER NHO THU XK.doc">
+      <publishTime>07/06/2015 13:22:26</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/Export/DocumentaryCollectionCancelPHIEUXUATNGOAIBANG.doc">
-      <publishTime>09/03/2014 10:41:20</publishTime>
+      <publishTime>07/06/2015 13:22:26</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/PaymentPhieuChuyenKhoan.doc">
+      <publishTime>07/06/2015 13:22:26</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/PaymentVAT.doc">
+      <publishTime>07/06/2015 13:22:26</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG1.doc">
+      <publishTime>07/06/2015 13:22:26</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUNHAPNGOAIBANG2.doc">
+      <publishTime>07/06/2015 13:22:26</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCleanCollectionPHIEUXUATNGOAIBANG1.doc">
+      <publishTime>07/06/2015 13:22:26</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG1.doc">
-      <publishTime>09/02/2014 16:27:53</publishTime>
+      <publishTime>07/06/2015 13:22:26</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG2.doc">
-      <publishTime>09/02/2014 16:41:24</publishTime>
+      <publishTime>07/06/2015 13:22:26</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionPHIEUXUATNGOAIBANG1.doc">
-      <publishTime>09/03/2014 19:37:31</publishTime>
+      <publishTime>07/06/2015 13:22:26</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollectionVAT.doc">
+      <publishTime>07/06/2015 13:22:26</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollection_Amend_PHIEUNHAPNGOAIBANG.doc">
-      <publishTime>09/02/2014 15:40:46</publishTime>
+      <publishTime>07/06/2015 13:22:26</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/Export/RegisterDocumentaryCollection_Amend_PHIEUXUATNGOAIBANG.doc">
-      <publishTime>09/04/2014 20:48:01</publishTime>
+      <publishTime>07/06/2015 13:22:26</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/HOADONVAT - Copy.doc">
-      <publishTime>07/22/2014 01:20:00</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/HOADONVAT.doc">
-      <publishTime>07/22/2014 01:20:00</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAcceptionMT412.doc">
-      <publishTime>08/18/2014 00:54:58</publishTime>
+      <publishTime>12/11/2014 15:10:44</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAcceptionPHIEUNHAPNGOAIBANG.doc">
-      <publishTime>08/14/2014 23:18:13</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAcceptionVAT.doc">
-      <publishTime>08/28/2014 22:42:10</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAmendmentsMT410.doc">
-      <publishTime>08/14/2014 22:43:10</publishTime>
+      <publishTime>12/11/2014 15:10:41</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAmendmentsPHIEUNHAPNGOAIBANG.doc">
-      <publishTime>08/14/2014 23:17:37</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAmendmentsPHIEUXUATNGOAIBANG.doc">
-      <publishTime>08/24/2014 18:08:40</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionAmendmentsVAT.doc">
-      <publishTime>08/30/2014 20:00:13</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT103.doc">
+      <publishTime>12/16/2014 14:37:50</publishTime>
+    </File>
+    <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT202 - Copy.doc">
+      <publishTime>12/08/2014 17:57:29</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT202.doc">
-      <publishTime>08/14/2014 22:43:10</publishTime>
+      <publishTime>12/11/2014 15:10:33</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentMT400.doc">
-      <publishTime>08/14/2014 22:43:10</publishTime>
+      <publishTime>12/11/2014 15:10:29</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentPHIEUCHUYENKHOAN.doc">
-      <publishTime>08/14/2014 23:17:13</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentPHIEUNHAPNGOAIBANG.doc">
-      <publishTime>08/30/2014 20:09:30</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentPHIEUXUATNGOAIBANG.doc">
-      <publishTime>08/31/2014 00:01:05</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentVAT_B.doc">
-      <publishTime>09/01/2014 21:25:04</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/IncomingCollectionPaymentVAT_B.docx">
       <publishTime>07/26/2014 16:12:51</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/RegisterDocumentaryCollection.doc">
-      <publishTime>08/14/2014 22:43:10</publishTime>
+      <publishTime>09/23/2014 09:18:19</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/RegisterDocumentaryCollectionMT410.doc">
-      <publishTime>08/14/2014 22:43:10</publishTime>
+      <publishTime>12/12/2014 21:26:52</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/RegisterDocumentaryCollectionPHIEUNHAPNGOAIBANG.doc">
-      <publishTime>08/14/2014 23:33:41</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
     </File>
     <File Include="Report/Template/DocumentaryCollection/RegisterDocumentaryCollectionVAT.doc">
-      <publishTime>08/28/2014 22:42:48</publishTime>
+      <publishTime>07/06/2015 13:22:27</publishTime>
+    </File>
+    <File Include="Report/Template/Export/8. BM - TTQT.LCXK.08_THU GOI CHUNG TU %28LC CHO PHEP DOI TIEN BANG THU NHPH, BCT HOP LE%29%281%29.doc">
+      <publishTime>11/07/2014 08:56:58</publishTime>
+    </File>
+    <File Include="Report/Template/Export/AmendLC_VAT.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/Export/BM_TTQT_LCXK_01A.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/Export/BM_TTQT_LCXK_02A.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/Export/Export_PhieuXuatNgoaiBang.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/Export/Mau Bia hs lc.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/Export/Mau Thong bao LC.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/Export/Mau Thong bao Tu chinh LC.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/Export/RegisterDocumentaryCollectionVAT.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/Export/ThuThongBaoBoChungTu.doc">
+      <publishTime>07/06/2015 13:22:24</publishTime>
+    </File>
+    <File Include="Report/Template/FX_VAT.doc">
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/IssueFreeFormatMessage.doc">
-      <publishTime>08/27/2014 13:05:38</publishTime>
+      <publishTime>12/11/2014 23:25:02</publishTime>
+    </File>
+    <File Include="Report/Template/LoanContract/LichTraLai.docx">
+      <publishTime>01/09/2015 15:57:17</publishTime>
+    </File>
+    <File Include="Report/Template/LoanContract/LichTraLai_bck.docx">
+      <publishTime>01/09/2015 15:57:11</publishTime>
+    </File>
+    <File Include="Report/Template/LoanContract/LichTraNoHopDongVay.docx">
+      <publishTime>01/09/2015 15:56:47</publishTime>
+    </File>
+    <File Include="Report/Template/LoanContract/LichTraNoHopDongVayRepayment.docx">
+      <publishTime>01/09/2015 15:56:57</publishTime>
+    </File>
+    <File Include="Report/Template/LoanContract/LichTraVon.docx">
+      <publishTime>01/09/2015 15:57:05</publishTime>
+    </File>
+    <File Include="Report/Template/LoanContract/LoanContractDealSlip.docx">
+      <publishTime>09/25/2014 22:27:22</publishTime>
     </File>
     <File Include="Report/Template/MainAccount/OpenAccount.docx">
-      <publishTime>08/24/2014 13:05:20</publishTime>
+      <publishTime>01/09/2015 15:57:28</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/AmendLC_MT707.doc">
+      <publishTime>01/15/2015 17:28:44</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/AmendLC_MT747.doc">
+      <publishTime>01/15/2015 17:23:55</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/AmendLC_PHIEUNHAPNGOAIBANG.doc">
-      <publishTime>08/28/2014 01:01:53</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/AmendLC_PHIEUXUATNGOAIBANG.doc">
-      <publishTime>09/02/2014 15:40:47</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/AmendLC_VAT.doc">
-      <publishTime>09/01/2014 21:25:04</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/CancelLC_PHIEUXUATNGOAIBANG.doc">
-      <publishTime>09/02/2014 15:40:47</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/CancelLC_VAT.doc">
-      <publishTime>09/02/2014 15:40:47</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/DocumentaryCredit/DocumentMT734.doc">
+      <publishTime>12/11/2014 23:21:20</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/DocumentaryCredit/PHIEUNHAPNGOAIBANG.doc">
+      <publishTime>01/09/2015 15:59:17</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/DocumentaryCredit/PHIEUXUATNGOAIBANG.doc">
+      <publishTime>01/09/2015 15:59:23</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/DocumentaryCredit/VAT.doc">
+      <publishTime>01/09/2015 15:59:31</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/IssueLC_MT700.doc">
-      <publishTime>09/03/2014 22:59:18</publishTime>
+      <publishTime>12/21/2014 14:08:53</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/IssueLC_MT740.doc">
-      <publishTime>08/30/2014 20:17:51</publishTime>
+      <publishTime>01/15/2015 17:19:51</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/IssueLC_PHIEUNHAPNGOAIBANG.doc">
-      <publishTime>08/28/2014 00:52:48</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/IssueLC_VAT.doc">
-      <publishTime>09/02/2014 15:40:47</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/NormalLC/MT700.doc">
       <publishTime>07/13/2014 18:01:31</publishTime>
@@ -286,23 +445,74 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Report/Template/NormalLC/NormalLC.doc">
       <publishTime>07/10/2014 23:16:17</publishTime>
     </File>
+    <File Include="Report/Template/NormalLC/Settlement/MT202.doc">
+      <publishTime>12/16/2014 14:37:50</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/Settlement/MT756.doc">
+      <publishTime>12/16/2014 14:37:50</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/Settlement/PhieuChuyenKhoan.doc">
+      <publishTime>01/09/2015 15:59:48</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/Settlement/PhieuXuatNgoaiBang.doc">
+      <publishTime>01/09/2015 15:59:55</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/Settlement/VAT.doc">
+      <publishTime>01/09/2015 16:00:00</publishTime>
+    </File>
+    <File Include="Report/Template/NormalLC/Settlement/VATb.doc">
+      <publishTime>01/09/2015 16:00:06</publishTime>
+    </File>
+    <File Include="Report/Template/OutWardTransactions/cheque_withdrawl.doc">
+      <publishTime>01/09/2015 16:00:23</publishTime>
+    </File>
+    <File Include="Report/Template/OutWardTransactions/transfer_by_account_dien_CITAD.doc">
+      <publishTime>01/09/2015 16:00:31</publishTime>
+    </File>
+    <File Include="Report/Template/OutWardTransactions/transfer_by_account_dien_CMND.doc">
+      <publishTime>01/09/2015 16:00:53</publishTime>
+    </File>
+    <File Include="Report/Template/OutWardTransactions/transfer_by_cash_dien_CITAD.doc">
+      <publishTime>01/09/2015 16:01:05</publishTime>
+    </File>
+    <File Include="Report/Template/OutWardTransactions/transfer_by_cash_dien_CMND.doc">
+      <publishTime>01/09/2015 16:01:13</publishTime>
+    </File>
+    <File Include="Report/Template/OutWardTransactions/transfer_withdrawl.doc">
+      <publishTime>01/09/2015 16:01:20</publishTime>
+    </File>
     <File Include="Report/Template/OverseasTransfer/OverseasTransfer.doc">
       <publishTime>07/10/2014 23:16:17</publishTime>
     </File>
     <File Include="Report/Template/OverseasTransfer/OverseasTransferMT103.doc">
-      <publishTime>08/30/2014 01:43:45</publishTime>
+      <publishTime>01/12/2015 21:06:36</publishTime>
     </File>
     <File Include="Report/Template/OverseasTransfer/OverseasTransferVAT.doc">
-      <publishTime>08/30/2014 23:08:25</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/OverseasTransfer/PHIEUCHUYENKHOAN.doc">
-      <publishTime>08/30/2014 23:05:05</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/ProvisionTransfersPHIEUCHUYENKHOAN.doc">
-      <publishTime>08/30/2014 23:57:00</publishTime>
+      <publishTime>07/06/2015 13:22:28</publishTime>
     </File>
     <File Include="Report/Template/SavingAcc/SavingAccount.docx">
-      <publishTime>08/19/2014 11:15:05</publishTime>
+      <publishTime>01/09/2015 16:01:51</publishTime>
+    </File>
+    <File Include="Scripts/Common.js">
+      <publishTime>12/12/2014 21:26:52</publishTime>
+    </File>
+    <File Include="SessionManagment/Default.ascx">
+      <publishTime>10/22/2014 15:59:26</publishTime>
+    </File>
+    <File Include="SessionManagment/EditAccountPeriod.ascx">
+      <publishTime>10/22/2014 15:59:26</publishTime>
+    </File>
+    <File Include="SessionManagment/SessionHistory.ascx">
+      <publishTime>10/14/2014 06:50:11</publishTime>
+    </File>
+    <File Include="SessionManagment/ShiftManage.ascx">
+      <publishTime>10/14/2014 06:50:11</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/BlockAccount.ascx">
       <publishTime>07/10/2014 23:16:20</publishTime>
@@ -326,7 +536,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2014 21:47:16</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/PaymentFrequency.ascx">
-      <publishTime>08/23/2014 10:43:45</publishTime>
+      <publishTime>10/23/2014 23:15:24</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/PaymentList.ascx">
       <publishTime>08/22/2014 20:40:15</publishTime>
@@ -335,7 +545,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2014 10:43:45</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/CurrentNonTermSavingAC/SalaryPayment/SalaryPaymentEnquiry.ascx">
-      <publishTime>08/23/2014 10:43:45</publishTime>
+      <publishTime>09/11/2014 10:24:25</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/SavingsAC/Close/DiscountedClose.ascx">
       <publishTime>08/17/2014 15:03:49</publishTime>
@@ -392,7 +602,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 10:22:21</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/SavingsAC/Open/Arrear.ascx">
-      <publishTime>08/19/2014 13:12:37</publishTime>
+      <publishTime>11/03/2014 08:44:59</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/SavingsAC/Open/ArrearInput.ascx">
       <publishTime>07/10/2014 23:16:20</publishTime>
@@ -401,7 +611,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/31/2014 21:41:32</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/SavingsAC/Open/Discounted.ascx">
-      <publishTime>09/09/2014 10:22:21</publishTime>
+      <publishTime>11/03/2014 08:44:59</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/SavingsAC/Open/ListDiscounted.ascx">
       <publishTime>08/19/2014 13:12:37</publishTime>
@@ -410,7 +620,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/04/2014 12:01:53</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/SavingsAC/Open/Periodic.ascx">
-      <publishTime>08/17/2014 15:03:49</publishTime>
+      <publishTime>11/03/2014 08:44:59</publishTime>
     </File>
     <File Include="TellerApplication/AccountManagement/SavingsAC/Open/PeriodicInput.ascx">
       <publishTime>07/31/2014 21:41:32</publishTime>
@@ -418,17 +628,50 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="TellerApplication/AccountManagement/SavingsAC/Open/PeriodicNewDeposit.ascx">
       <publishTime>07/28/2014 23:17:43</publishTime>
     </File>
+    <File Include="TellerApplication/ForeignExchange/BuyTravellersCheque.ascx">
+      <publishTime>09/21/2014 12:57:29</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/CashWithdrawalsBuying.ascx">
+      <publishTime>09/24/2014 20:24:37</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/CashWithdrawalsBuyingPreviewList.ascx">
+      <publishTime>09/19/2014 15:52:57</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/Enquiry.ascx">
+      <publishTime>09/21/2014 12:57:29</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/ExchangeBanknotesManyDeno.ascx">
+      <publishTime>09/30/2014 22:56:04</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/ExchangeBanknotesManyDeno_PL.ascx">
+      <publishTime>09/19/2014 15:52:57</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/ForeignExchange.ascx">
+      <publishTime>10/16/2014 08:59:54</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/ForeignExchangePreviewList.ascx">
+      <publishTime>09/19/2014 15:52:57</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/SellTravellersCheque.ascx">
+      <publishTime>09/24/2014 20:24:37</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/SellTravellersChequeList.ascx">
+      <publishTime>09/19/2014 15:52:57</publishTime>
+    </File>
+    <File Include="TellerApplication/ForeignExchange/WUXoomPayment.ascx">
+      <publishTime>09/21/2014 12:57:29</publishTime>
+    </File>
     <File Include="TellerApplication/SignatureManagement/Amend.ascx">
-      <publishTime>09/09/2014 10:22:21</publishTime>
+      <publishTime>09/17/2014 10:07:31</publishTime>
     </File>
     <File Include="TellerApplication/SignatureManagement/Capture.ascx">
-      <publishTime>09/09/2014 10:22:21</publishTime>
+      <publishTime>09/17/2014 12:44:43</publishTime>
     </File>
     <File Include="TellerApplication/SignatureManagement/Enquiry.ascx">
-      <publishTime>09/09/2014 10:22:21</publishTime>
+      <publishTime>09/15/2014 08:24:02</publishTime>
     </File>
     <File Include="TellerApplication/SignatureManagement/Preview.ascx">
-      <publishTime>09/09/2014 10:22:21</publishTime>
+      <publishTime>09/15/2014 08:24:02</publishTime>
     </File>
     <File Include="test.ascx">
       <publishTime>07/10/2014 23:16:24</publishTime>
@@ -439,8 +682,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="TradingFinance/BasicTools.xml">
       <publishTime>08/27/2014 13:05:38</publishTime>
     </File>
+    <File Include="TradingFinance/CollectCharges.ascx">
+      <publishTime>12/24/2014 13:40:13</publishTime>
+    </File>
+    <File Include="TradingFinance/CollectChargesList.ascx">
+      <publishTime>12/24/2014 13:40:13</publishTime>
+    </File>
     <File Include="TradingFinance/EnquiryOverseasFundsTransfer.ascx">
-      <publishTime>08/27/2014 13:05:38</publishTime>
+      <publishTime>09/17/2014 09:34:32</publishTime>
     </File>
     <File Include="TradingFinance/Export/AdvisingAmendmentList.ascx">
       <publishTime>07/10/2014 23:16:20</publishTime>
@@ -452,46 +701,85 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2014 23:16:20</publishTime>
     </File>
     <File Include="TradingFinance/Export/DocumentaryCollections/ExportDocumentaryCollection.ascx">
-      <publishTime>09/06/2014 00:33:14</publishTime>
+      <publishTime>07/08/2015 11:33:32</publishTime>
     </File>
     <File Include="TradingFinance/Export/DocumentaryCollections/ExportEnquiryDocumentaryCollection.ascx">
-      <publishTime>09/03/2014 19:37:31</publishTime>
+      <publishTime>12/25/2014 17:15:35</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCollections/OutgoingCollectionPayment.ascx">
+      <publishTime>07/08/2015 11:33:32</publishTime>
     </File>
     <File Include="TradingFinance/Export/DocumentaryCollections/ReviewExport_DocumentCollection.ascx">
       <publishTime>07/19/2014 00:20:50</publishTime>
     </File>
+    <File Include="TradingFinance/Export/DocumentaryCollections/ReviewOutgoingCollectionPayment.ascx">
+      <publishTime>09/11/2014 21:13:46</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/AdvisingAndNegotiationLC.ascx">
+      <publishTime>07/06/2015 13:22:28</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/AdvisingAndNegotiationLCAmend.ascx">
+      <publishTime>07/06/2015 13:22:28</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/AdvisingReviewList.ascx">
+      <publishTime>10/02/2014 15:07:56</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/DocumentProcessing.ascx">
+      <publishTime>07/06/2015 13:22:28</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/EnquiryDocumentProcessing.ascx">
+      <publishTime>07/06/2015 13:22:28</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/EnquiryLC.ascx">
+      <publishTime>07/06/2015 13:22:28</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/EnquiryLCAmend.ascx">
+      <publishTime>05/05/2015 15:19:33</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/ExportDocWithNoDiscre.ascx">
+      <publishTime>11/29/2014 09:56:13</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/ExportPayment.ascx">
+      <publishTime>11/29/2014 09:56:13</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/ListCreditExportProcessing.ascx">
+      <publishTime>10/16/2014 09:02:46</publishTime>
+    </File>
+    <File Include="TradingFinance/Export/DocumentaryCredit/ListExportPayment.ascx">
+      <publishTime>10/29/2014 12:00:13</publishTime>
+    </File>
     <File Include="TradingFinance/ForeignExchangeTrade.ascx">
-      <publishTime>08/22/2014 23:49:17</publishTime>
+      <publishTime>12/24/2014 13:40:13</publishTime>
     </File>
     <File Include="TradingFinance/ForeignExchangeTradePreviewList.ascx">
-      <publishTime>08/02/2014 00:06:44</publishTime>
+      <publishTime>12/24/2014 13:40:13</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/DocumentaryCollectionCancel.ascx">
       <publishTime>07/19/2014 00:20:52</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/DocumetaryCollection.ascx">
-      <publishTime>08/18/2014 22:07:13</publishTime>
+      <publishTime>12/26/2014 09:08:25</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/EnquiryDocumentaryCollection.ascx">
-      <publishTime>08/05/2014 00:15:17</publishTime>
+      <publishTime>12/16/2014 17:14:53</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/IncomingCollectionAmendment.ascx">
       <publishTime>07/19/2014 00:20:52</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/IncomingCollectionPayment.ascx">
-      <publishTime>08/22/2014 23:49:17</publishTime>
+      <publishTime>12/18/2014 15:58:42</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/ProvisionTransfer_DC.ascx">
-      <publishTime>08/30/2014 23:51:45</publishTime>
+      <publishTime>12/16/2014 14:37:50</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/ProvisionTransfer_DC_PL.ascx">
-      <publishTime>08/08/2014 23:29:29</publishTime>
+      <publishTime>01/15/2015 10:22:36</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/ReviewList.ascx">
       <publishTime>08/05/2014 00:15:17</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/ReviewListByAmendment.ascx">
-      <publishTime>08/05/2014 00:15:17</publishTime>
+      <publishTime>12/04/2014 18:02:25</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCollections/ReviewListByCancelAmendment.ascx">
       <publishTime>08/18/2014 00:54:58</publishTime>
@@ -503,16 +791,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2014 23:16:22</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCredit/DocumentWithNoDiscrepancy.ascx">
-      <publishTime>08/28/2014 01:16:20</publishTime>
+      <publishTime>12/18/2014 14:22:53</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCredit/EnquiryIssueLC.ascx">
-      <publishTime>08/20/2014 09:42:40</publishTime>
+      <publishTime>10/17/2014 22:34:29</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCredit/IssueLC.ascx">
-      <publishTime>09/03/2014 22:59:18</publishTime>
+      <publishTime>12/18/2014 14:19:21</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCredit/LCEdit.ascx">
       <publishTime>07/25/2014 21:19:12</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/Payment.ascx">
+      <publishTime>12/18/2014 14:43:16</publishTime>
+    </File>
+    <File Include="TradingFinance/Import/DocumentaryCredit/PaymentList.ascx">
+      <publishTime>09/16/2014 09:19:34</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCredit/PreviewAmendLC.ascx">
       <publishTime>08/18/2014 00:54:58</publishTime>
@@ -524,10 +818,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/17/2014 15:03:51</publishTime>
     </File>
     <File Include="TradingFinance/Import/DocumentaryCredit/Preview_DocumentProcessing.ascx">
-      <publishTime>08/28/2014 01:16:20</publishTime>
+      <publishTime>12/08/2014 09:26:02</publishTime>
     </File>
     <File Include="TradingFinance/IssueFreeFormatMessage.ascx">
-      <publishTime>08/27/2014 13:05:38</publishTime>
+      <publishTime>10/14/2014 21:24:30</publishTime>
     </File>
     <File Include="TradingFinance/PreviewIssueFreeFormatMessage.ascx">
       <publishTime>08/07/2014 01:43:42</publishTime>
@@ -536,7 +830,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/10/2014 20:26:32</publishTime>
     </File>
     <File Include="Views/CustomerManagement/OpenInvidualCustomer/Index.ascx">
-      <publishTime>08/09/2014 17:32:50</publishTime>
+      <publishTime>12/18/2014 23:12:09</publishTime>
     </File>
     <File Include="Views/CustomerManagement/OpenInvidualCustomer/Index_ListReview.ascx">
       <publishTime>08/08/2014 23:29:29</publishTime>
@@ -545,19 +839,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/04/2014 22:53:50</publishTime>
     </File>
     <File Include="Views/TellerApplication/AmendLoanContract_Item.ascx">
-      <publishTime>08/04/2014 22:53:50</publishTime>
+      <publishTime>09/17/2014 10:16:29</publishTime>
     </File>
     <File Include="Views/TellerApplication/AmendLoanContract_PL.ascx">
       <publishTime>08/04/2014 22:53:50</publishTime>
     </File>
     <File Include="Views/TellerApplication/BlockAccount.ascx">
-      <publishTime>08/17/2014 15:03:51</publishTime>
+      <publishTime>10/03/2014 09:44:59</publishTime>
     </File>
     <File Include="Views/TellerApplication/BlockAccountList.ascx">
       <publishTime>08/17/2014 15:03:51</publishTime>
     </File>
+    <File Include="Views/TellerApplication/BTransList.ascx">
+      <publishTime>11/19/2014 11:32:20</publishTime>
+    </File>
     <File Include="Views/TellerApplication/BuyTravellersCheque.ascx">
-      <publishTime>07/25/2014 21:15:05</publishTime>
+      <publishTime>09/18/2014 15:52:29</publishTime>
     </File>
     <File Include="Views/TellerApplication/CalculatedInterestedAmountManual.ascx">
       <publishTime>08/19/2014 13:12:37</publishTime>
@@ -569,28 +866,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2014 23:15:56</publishTime>
     </File>
     <File Include="Views/TellerApplication/CashDepositePreviewList.ascx">
-      <publishTime>08/17/2014 15:03:51</publishTime>
+      <publishTime>11/21/2014 11:14:12</publishTime>
     </File>
     <File Include="Views/TellerApplication/CashDeposits.ascx">
-      <publishTime>08/29/2014 20:51:03</publishTime>
+      <publishTime>09/18/2014 15:52:29</publishTime>
     </File>
     <File Include="Views/TellerApplication/CashRepayment.ascx">
-      <publishTime>07/25/2014 21:15:05</publishTime>
+      <publishTime>11/15/2014 10:06:40</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CashRepayment_Enquiry.ascx">
+      <publishTime>09/30/2014 22:27:31</publishTime>
     </File>
     <File Include="Views/TellerApplication/CashRepayment_PL.ascx">
-      <publishTime>07/25/2014 21:15:05</publishTime>
+      <publishTime>09/24/2014 13:22:33</publishTime>
     </File>
     <File Include="Views/TellerApplication/CashWithdrawal.ascx">
-      <publishTime>08/30/2014 10:57:46</publishTime>
+      <publishTime>09/18/2014 15:52:29</publishTime>
     </File>
     <File Include="Views/TellerApplication/CashWithdrawalPreviewList.ascx">
-      <publishTime>08/17/2014 15:03:51</publishTime>
+      <publishTime>11/21/2014 11:14:12</publishTime>
     </File>
     <File Include="Views/TellerApplication/CashWithdrawalsBuying.ascx">
-      <publishTime>09/06/2014 22:54:42</publishTime>
+      <publishTime>09/17/2014 10:07:31</publishTime>
     </File>
     <File Include="Views/TellerApplication/CashWithdrawalsBuyingPreviewList.ascx">
-      <publishTime>07/13/2014 17:58:57</publishTime>
+      <publishTime>09/17/2014 10:07:31</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeCancleStop.ascx">
       <publishTime>09/08/2014 14:20:33</publishTime>
@@ -602,7 +902,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2014 14:20:33</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeIssue.ascx">
-      <publishTime>08/29/2014 23:49:39</publishTime>
+      <publishTime>09/12/2014 14:56:33</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeIssueCollectCharges.ascx">
       <publishTime>07/10/2014 23:15:50</publishTime>
@@ -635,73 +935,79 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2014 14:20:33</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeTransferDrawnOnUs.ascx">
-      <publishTime>09/03/2014 19:58:11</publishTime>
+      <publishTime>10/23/2014 08:48:56</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeTransferDrawnOnUs_PL.ascx">
-      <publishTime>09/03/2014 19:58:11</publishTime>
+      <publishTime>09/12/2014 14:56:33</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeTransfer_Enquiry.ascx">
-      <publishTime>09/03/2014 19:58:11</publishTime>
+      <publishTime>09/12/2014 14:56:33</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeWithDrawal_Enquiry.ascx">
-      <publishTime>08/29/2014 23:49:39</publishTime>
+      <publishTime>09/12/2014 14:56:33</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeWithrawalDrawOnUs.ascx">
-      <publishTime>09/08/2014 14:20:33</publishTime>
+      <publishTime>10/23/2014 08:48:56</publishTime>
     </File>
     <File Include="Views/TellerApplication/ChequeWithrawalDrawOnUs_PL.ascx">
-      <publishTime>08/29/2014 23:49:39</publishTime>
+      <publishTime>09/12/2014 14:56:33</publishTime>
     </File>
     <File Include="Views/TellerApplication/CloseAccount.ascx">
-      <publishTime>08/20/2014 09:42:39</publishTime>
+      <publishTime>10/10/2014 14:58:58</publishTime>
     </File>
     <File Include="Views/TellerApplication/CloseAccountList.ascx">
-      <publishTime>08/17/2014 15:03:51</publishTime>
+      <publishTime>10/03/2014 09:44:59</publishTime>
     </File>
     <File Include="Views/TellerApplication/CollateralContingentEntry.ascx">
-      <publishTime>07/16/2014 00:14:24</publishTime>
+      <publishTime>12/20/2014 23:29:27</publishTime>
     </File>
     <File Include="Views/TellerApplication/CollateralContingentEntry_PL.ascx">
-      <publishTime>07/13/2014 17:58:57</publishTime>
+      <publishTime>11/15/2014 10:06:40</publishTime>
     </File>
     <File Include="Views/TellerApplication/CollectCharges.ascx">
-      <publishTime>08/30/2014 10:57:46</publishTime>
+      <publishTime>12/21/2014 14:12:57</publishTime>
     </File>
     <File Include="Views/TellerApplication/CollectChargesByCash.ascx">
-      <publishTime>08/23/2014 10:43:44</publishTime>
+      <publishTime>10/09/2014 15:28:35</publishTime>
     </File>
     <File Include="Views/TellerApplication/CollectChargesByCashPreviewList.ascx">
-      <publishTime>08/24/2014 12:25:06</publishTime>
+      <publishTime>10/09/2014 15:28:35</publishTime>
     </File>
     <File Include="Views/TellerApplication/CollectChargesPreviewList.ascx">
-      <publishTime>08/24/2014 12:25:06</publishTime>
+      <publishTime>10/03/2014 12:11:00</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollectCharges_Enquiry.ascx">
+      <publishTime>10/09/2014 15:28:35</publishTime>
     </File>
     <File Include="Views/TellerApplication/CollectionForCreditCardPayment.ascx">
-      <publishTime>08/02/2014 21:41:21</publishTime>
+      <publishTime>11/08/2014 22:33:09</publishTime>
     </File>
     <File Include="Views/TellerApplication/CollectionForCreditCardPayment_PL.ascx">
-      <publishTime>07/13/2014 17:58:57</publishTime>
+      <publishTime>09/27/2014 09:47:53</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/CollectionForCreditCard_Enquiry.ascx">
+      <publishTime>09/27/2014 09:47:53</publishTime>
     </File>
     <File Include="Views/TellerApplication/DCTransaction.ascx">
       <publishTime>07/16/2014 00:14:24</publishTime>
     </File>
     <File Include="Views/TellerApplication/DefineCustomerLimit.ascx">
-      <publishTime>09/08/2014 14:20:33</publishTime>
+      <publishTime>12/08/2014 09:46:14</publishTime>
     </File>
     <File Include="Views/TellerApplication/DefineCustomerLimitSub.ascx">
-      <publishTime>09/08/2014 14:20:33</publishTime>
+      <publishTime>12/08/2014 09:46:14</publishTime>
     </File>
     <File Include="Views/TellerApplication/DefineCustomerLimit_Enquiry.ascx">
-      <publishTime>08/29/2014 23:49:39</publishTime>
+      <publishTime>11/08/2014 23:00:13</publishTime>
     </File>
     <File Include="Views/TellerApplication/DefineCustomerLimit_PL.ascx">
-      <publishTime>07/13/2014 17:58:57</publishTime>
+      <publishTime>09/12/2014 15:37:16</publishTime>
     </File>
     <File Include="Views/TellerApplication/EnquiryAccount.ascx">
-      <publishTime>09/07/2014 23:15:09</publishTime>
+      <publishTime>10/23/2014 23:15:24</publishTime>
     </File>
     <File Include="Views/TellerApplication/EnquiryAccountTransaction.ascx">
-      <publishTime>08/19/2014 13:12:37</publishTime>
+      <publishTime>11/21/2014 11:14:12</publishTime>
     </File>
     <File Include="Views/TellerApplication/EnquiryCheque.ascx">
       <publishTime>07/28/2014 00:26:26</publishTime>
@@ -730,29 +1036,38 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/TellerApplication/InputCollateralRight_Enquiry.ascx">
       <publishTime>08/22/2014 10:25:03</publishTime>
     </File>
+    <File Include="Views/TellerApplication/InterestedRateAutomatic.ascx">
+      <publishTime>01/10/2015 14:47:01</publishTime>
+    </File>
     <File Include="Views/TellerApplication/LoanAccountList.ascx">
-      <publishTime>08/29/2014 20:51:03</publishTime>
+      <publishTime>09/23/2014 08:52:19</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/LoanPaymentManualCalc.ascx">
+      <publishTime>10/14/2014 18:50:20</publishTime>
     </File>
     <File Include="Views/TellerApplication/NewNomarlLoan_FullView.ascx">
-      <publishTime>07/13/2014 16:37:44</publishTime>
+      <publishTime>09/17/2014 10:16:29</publishTime>
     </File>
     <File Include="Views/TellerApplication/NewNormalLoan.ascx">
-      <publishTime>08/29/2014 20:51:03</publishTime>
+      <publishTime>12/02/2014 09:16:52</publishTime>
     </File>
     <File Include="Views/TellerApplication/NewNormalLoanEnquiry.ascx">
-      <publishTime>08/29/2014 20:51:03</publishTime>
+      <publishTime>09/30/2014 23:04:43</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/NewNormalLoan_Repayment.ascx">
+      <publishTime>12/02/2014 21:06:19</publishTime>
     </File>
     <File Include="Views/TellerApplication/OpenIndividualCreditAcc.ascx">
       <publishTime>07/27/2014 16:04:49</publishTime>
     </File>
     <File Include="Views/TellerApplication/OpenLoanWorkingAccount.ascx">
-      <publishTime>08/17/2014 15:03:51</publishTime>
+      <publishTime>11/08/2014 23:00:13</publishTime>
     </File>
     <File Include="Views/TellerApplication/OpenLoanWorkingAccount_PL.ascx">
-      <publishTime>08/12/2014 21:47:27</publishTime>
+      <publishTime>09/12/2014 15:37:16</publishTime>
     </File>
     <File Include="Views/TellerApplication/OpenLoanWorkingAcct_Enquiry.ascx">
-      <publishTime>08/13/2014 14:58:37</publishTime>
+      <publishTime>09/12/2014 15:37:16</publishTime>
     </File>
     <File Include="Views/TellerApplication/OpenNonRevolingCoomContr.ascx">
       <publishTime>07/19/2014 00:20:26</publishTime>
@@ -778,32 +1093,38 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/TellerApplication/PastDueLoanRepayment_Search.ascx">
       <publishTime>07/31/2014 00:56:38</publishTime>
     </File>
+    <File Include="Views/TellerApplication/RateExchange.ascx">
+      <publishTime>01/10/2015 14:47:01</publishTime>
+    </File>
     <File Include="Views/TellerApplication/ReviewCloseAccountList.ascx">
       <publishTime>08/15/2014 11:10:53</publishTime>
     </File>
     <File Include="Views/TellerApplication/SellTravellersCheque.ascx">
-      <publishTime>09/09/2014 23:07:41</publishTime>
+      <publishTime>09/17/2014 10:07:31</publishTime>
+    </File>
+    <File Include="Views/TellerApplication/SellTravellersChequeList.ascx">
+      <publishTime>09/17/2014 10:07:31</publishTime>
     </File>
     <File Include="Views/TellerApplication/TransferByAccount.ascx">
-      <publishTime>08/08/2014 01:32:17</publishTime>
+      <publishTime>12/20/2014 23:01:56</publishTime>
     </File>
     <File Include="Views/TellerApplication/TransferByAccount_PL.ascx">
-      <publishTime>08/02/2014 01:19:37</publishTime>
+      <publishTime>10/29/2014 20:33:43</publishTime>
     </File>
     <File Include="Views/TellerApplication/TransferForCreditCardPayment.ascx">
-      <publishTime>08/02/2014 19:26:22</publishTime>
+      <publishTime>10/21/2014 01:44:36</publishTime>
     </File>
     <File Include="Views/TellerApplication/TransferForCreditCardPayment_PL.ascx">
-      <publishTime>07/13/2014 17:58:57</publishTime>
+      <publishTime>09/27/2014 09:47:53</publishTime>
     </File>
     <File Include="Views/TellerApplication/TransferWithdrawal.ascx">
-      <publishTime>08/30/2014 10:57:46</publishTime>
+      <publishTime>11/29/2014 10:05:06</publishTime>
     </File>
     <File Include="Views/TellerApplication/TransferWithdrawalPreviewList.ascx">
-      <publishTime>08/17/2014 15:03:51</publishTime>
+      <publishTime>11/21/2014 11:14:12</publishTime>
     </File>
     <File Include="Views/TellerApplication/UnBlockAccount.ascx">
-      <publishTime>08/17/2014 15:03:51</publishTime>
+      <publishTime>10/03/2014 09:44:59</publishTime>
     </File>
     <File Include="Views/TellerApplication/UnBlockAccountList.ascx">
       <publishTime>07/10/2014 23:15:55</publishTime>
@@ -814,6 +1135,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/TellerApplication/UnBlockAccountPreviewList.ascx">
       <publishTime>08/17/2014 15:03:51</publishTime>
     </File>
+    <File Include="Views/TellerApplication/UnBlockAcct_Enquiry.ascx">
+      <publishTime>10/03/2014 09:44:59</publishTime>
+    </File>
     <File Include="Views/TellerApplication/WebUserControl2.ascx">
       <publishTime>07/21/2014 22:05:52</publishTime>
     </File>
@@ -821,7 +1145,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/27/2014 16:04:49</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/09/2014 23:18:20</publishTime>
+      <publishTime>07/08/2015 11:49:50</publishTime>
     </File>
   </ItemGroup>
 </Project>

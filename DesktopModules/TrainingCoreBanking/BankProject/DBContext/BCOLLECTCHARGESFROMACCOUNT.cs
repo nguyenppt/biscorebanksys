@@ -41,5 +41,7 @@ namespace BankProject.DBContext
         public string CustomerID { get; set; }
         public string CustomerName { get; set; }
         public string Currency { get; set; }
+        public Nullable<decimal> OldBalance { get; set; }
+        public Nullable<decimal> NewBalance { get; set; }
     }
 }

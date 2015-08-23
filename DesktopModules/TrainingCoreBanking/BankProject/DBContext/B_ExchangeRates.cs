@@ -16,5 +16,6 @@ namespace BankProject.DBContext
     {
         public string Currency { get; set; }
         public decimal Rate { get; set; }
+        public int Id { get; set; }
     }
 }

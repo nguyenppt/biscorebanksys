@@ -97,5 +97,9 @@ namespace BankProject.DBContext
         public string CloseGenerateDelivery { get; set; }
         public string CloseExternalReference { get; set; }
         public string CloseRemark { get; set; }
+        public string AmendNo { get; set; }
+        public string ActiveRecordFlag { get; set; }
+        public Nullable<double> OldAmount { get; set; }
+        public string RefAmendNo { get; set; }
     }
 }

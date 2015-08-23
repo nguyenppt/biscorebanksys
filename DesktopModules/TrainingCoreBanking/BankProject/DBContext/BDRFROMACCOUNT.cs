@@ -18,5 +18,6 @@ namespace BankProject.DBContext
         public string Name { get; set; }
         public string Currency { get; set; }
         public Nullable<decimal> Amount { get; set; }
+        public string CustomerID { get; set; }
     }
 }

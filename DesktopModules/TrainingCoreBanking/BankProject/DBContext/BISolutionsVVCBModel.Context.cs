@@ -35,7 +35,6 @@ namespace BankProject.DBContext
         public DbSet<B_CashWithrawalForBuyingTC> B_CashWithrawalForBuyingTC { get; set; }
         public DbSet<B_CustomerSignature> B_CustomerSignature { get; set; }
         public DbSet<B_DEBUG> B_DEBUG { get; set; }
-        public DbSet<B_ExchangeRates> B_ExchangeRates { get; set; }
         public DbSet<B_ImportLCPayment> B_ImportLCPayment { get; set; }
         public DbSet<B_ImportLCPaymentCharge> B_ImportLCPaymentCharge { get; set; }
         public DbSet<B_SellTravellersCheque> B_SellTravellersCheque { get; set; }
@@ -74,7 +73,6 @@ namespace BankProject.DBContext
         public DbSet<BCUSTOMER_LIMIT_SUB> BCUSTOMER_LIMIT_SUB { get; set; }
         public DbSet<BCUSTOMER> BCUSTOMERS { get; set; }
         public DbSet<BDEPOSITACCT> BDEPOSITACCTS { get; set; }
-        public DbSet<BDOCUMETARYCOLLECTION> BDOCUMETARYCOLLECTIONs { get; set; }
         public DbSet<BDOCUMETARYCOLLECTIONCHARGE> BDOCUMETARYCOLLECTIONCHARGES { get; set; }
         public DbSet<BDOCUMETARYCOLLECTIONMT410> BDOCUMETARYCOLLECTIONMT410 { get; set; }
         public DbSet<BDRAWTYPE> BDRAWTYPEs { get; set; }
@@ -83,7 +81,6 @@ namespace BankProject.DBContext
         public DbSet<BDYNAMICDATA> BDYNAMICDATAs { get; set; }
         public DbSet<BENCOM> BENCOMs { get; set; }
         public DbSet<BENQUIRYCHECK> BENQUIRYCHECKs { get; set; }
-        public DbSet<BEXPORT_DOCUMETARYCOLLECTION> BEXPORT_DOCUMETARYCOLLECTION { get; set; }
         public DbSet<BEXPORT_LC_ADV_NEGO> BEXPORT_LC_ADV_NEGO { get; set; }
         public DbSet<BFOREIGNEXCHANGE> BFOREIGNEXCHANGEs { get; set; }
         public DbSet<BFREETEXTMESSAGE> BFREETEXTMESSAGEs { get; set; }
@@ -95,7 +92,6 @@ namespace BankProject.DBContext
         public DbSet<BIMPORT_NORMAILLC_MT700> BIMPORT_NORMAILLC_MT700 { get; set; }
         public DbSet<BIMPORT_NORMAILLC_MT707> BIMPORT_NORMAILLC_MT707 { get; set; }
         public DbSet<BIMPORT_NORMAILLC_MT740> BIMPORT_NORMAILLC_MT740 { get; set; }
-        public DbSet<BIMPORT_NORMAILLC_MT747> BIMPORT_NORMAILLC_MT747 { get; set; }
         public DbSet<BINCOMINGCOLLECTIONPAYMENT> BINCOMINGCOLLECTIONPAYMENTs { get; set; }
         public DbSet<BINCOMINGCOLLECTIONPAYMENTCHARGE> BINCOMINGCOLLECTIONPAYMENTCHARGES { get; set; }
         public DbSet<BINCOMINGCOLLECTIONPAYMENTMT202> BINCOMINGCOLLECTIONPAYMENTMT202 { get; set; }
@@ -113,7 +109,6 @@ namespace BankProject.DBContext
         public DbSet<BMACODE> BMACODEs { get; set; }
         public DbSet<BMENUTOP> BMENUTOPs { get; set; }
         public DbSet<BNewLoanControl> BNewLoanControls { get; set; }
-        public DbSet<BNEWNORMALLOAN> BNEWNORMALLOANs { get; set; }
         public DbSet<BOPENACCOUNT> BOPENACCOUNTs { get; set; }
         public DbSet<BOPENACCOUNT_COPY> BOPENACCOUNT_COPY { get; set; }
         public DbSet<BOPENACCOUNT_INTEREST> BOPENACCOUNT_INTEREST { get; set; }
@@ -121,7 +116,6 @@ namespace BankProject.DBContext
         public DbSet<BOUTGOINGCOLLECTIONPAYMENTCHARGE> BOUTGOINGCOLLECTIONPAYMENTCHARGES { get; set; }
         public DbSet<BOUTGOINGCOLLECTIONPAYMENTMT910> BOUTGOINGCOLLECTIONPAYMENTMT910 { get; set; }
         public DbSet<BOVERSEASTRANSFER> BOVERSEASTRANSFERs { get; set; }
-        public DbSet<BOVERSEASTRANSFERCHARGECOMMISSION> BOVERSEASTRANSFERCHARGECOMMISSIONs { get; set; }
         public DbSet<BOVERSEASTRANSFERMT103> BOVERSEASTRANSFERMT103 { get; set; }
         public DbSet<BPaymentFrequenceControl> BPaymentFrequenceControls { get; set; }
         public DbSet<BPAYMENTMETHOD> BPAYMENTMETHODs { get; set; }
@@ -152,18 +146,50 @@ namespace BankProject.DBContext
         public DbSet<B_ExchangeBanknotesManyDeno> B_ExchangeBanknotesManyDeno { get; set; }
         public DbSet<BCATEGORY_COPY> BCATEGORY_COPY { get; set; }
         public DbSet<BPRODUCTLINE_COPY> BPRODUCTLINE_COPY { get; set; }
-        public DbSet<BCASH_REPAYMENT> BCASH_REPAYMENT { get; set; }
-        public DbSet<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> BEXPORT_DOCUMETARYCOLLECTIONCHARGES { get; set; }
         public DbSet<B_Denomination> B_Denomination { get; set; }
         public DbSet<BCOLLECTION_FOR_CRE_CARD_PAYM> BCOLLECTION_FOR_CRE_CARD_PAYM { get; set; }
         public DbSet<BTRANSFER_4_CRE_CARD_PAYMENT> BTRANSFER_4_CRE_CARD_PAYMENT { get; set; }
         public DbSet<BLOANINTEREST_KEY> BLOANINTEREST_KEY { get; set; }
-        public DbSet<B_LOAN_PROCESS_PAYMENT> B_LOAN_PROCESS_PAYMENT { get; set; }
-        public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
         public DbSet<BAdvisingAndNegotiationLCCharge> BAdvisingAndNegotiationLCCharges { get; set; }
-        public DbSet<B_NORMALLOAN_PAYMENT_SCHEDULE> B_NORMALLOAN_PAYMENT_SCHEDULE { get; set; }
         public DbSet<B_ImportLCPaymentMT202> B_ImportLCPaymentMT202 { get; set; }
         public DbSet<B_ImportLCPaymentMT756> B_ImportLCPaymentMT756 { get; set; }
+        public DbSet<B_LOAN_CREDIT_SCORING> B_LOAN_CREDIT_SCORING { get; set; }
+        public DbSet<BNEWNORMALLOAN> BNEWNORMALLOANs { get; set; }
+        public DbSet<B_AddConfirmInfo> B_AddConfirmInfo { get; set; }
+        public DbSet<BEXPORT_DOCUMENTPROCESSING> BEXPORT_DOCUMENTPROCESSING { get; set; }
+        public DbSet<BEXPORT_DOCUMENTPROCESSINGCHARGE> BEXPORT_DOCUMENTPROCESSINGCHARGE { get; set; }
+        public DbSet<BIMPORT_NORMAILLC_MT747> BIMPORT_NORMAILLC_MT747 { get; set; }
+        public DbSet<B_ExportLCPayment> B_ExportLCPayment { get; set; }
+        public DbSet<B_ExportLCPaymentCharge> B_ExportLCPaymentCharge { get; set; }
+        public DbSet<B_ExportLCPaymentMT202> B_ExportLCPaymentMT202 { get; set; }
+        public DbSet<B_ExportLCPaymentMT756> B_ExportLCPaymentMT756 { get; set; }
+        public DbSet<B_LOAN_DISBURSAL_SCHEDULE> B_LOAN_DISBURSAL_SCHEDULE { get; set; }
+        public DbSet<B_BATCH_MAINTENANCE> B_BATCH_MAINTENANCE { get; set; }
+        public DbSet<B_CheckBatchRunning> B_CheckBatchRunning { get; set; }
+        public DbSet<BEXPORTCOLLECTIONPAYMENT> BEXPORTCOLLECTIONPAYMENTs { get; set; }
+        public DbSet<BINCOMINGCOLLECTIONPAYMENTMT103> BINCOMINGCOLLECTIONPAYMENTMT103 { get; set; }
+        public DbSet<B_LOAN_PROCESS_PAYMENT> B_LOAN_PROCESS_PAYMENT { get; set; }
+        public DbSet<B_NORMALLOAN_PAYMENT_SCHEDULE> B_NORMALLOAN_PAYMENT_SCHEDULE { get; set; }
+        public DbSet<BCASH_REPAYMENT> BCASH_REPAYMENT { get; set; }
+        public DbSet<BNEWNORMALLOAN_REPAYMENT> BNEWNORMALLOAN_REPAYMENT { get; set; }
+        public DbSet<V_LC_ChargeDetail> V_LC_ChargeDetail { get; set; }
+        public DbSet<BDOCUMETARYCOLLECTION> BDOCUMETARYCOLLECTIONs { get; set; }
+        public DbSet<B_CollectCharges> B_CollectCharges { get; set; }
+        public DbSet<BOVERSEASTRANSFERCHARGECOMMISSION> BOVERSEASTRANSFERCHARGECOMMISSIONs { get; set; }
+        public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
+        public DbSet<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> BEXPORT_DOCUMETARYCOLLECTIONCHARGES { get; set; }
+        public DbSet<BEXPORT_LC_AMEND> BEXPORT_LC_AMEND { get; set; }
+        public DbSet<BEXPORT_LC_CHARGES> BEXPORT_LC_CHARGES { get; set; }
+        public DbSet<B_ExchangeRates> B_ExchangeRates { get; set; }
+        public DbSet<BEXPORT_LC_DOCS_PROCESSING_CHARGES> BEXPORT_LC_DOCS_PROCESSING_CHARGES { get; set; }
+        public DbSet<B_ExchangeRates_History> B_ExchangeRates_History { get; set; }
+        public DbSet<B_LOAN_TRANSACTION_HISTORY> B_LOAN_TRANSACTION_HISTORY { get; set; }
+        public DbSet<BLOANINTEREST_KEY_HISTORY> BLOANINTEREST_KEY_HISTORY { get; set; }
+        public DbSet<BEXPORT_LC> BEXPORT_LC { get; set; }
+        public DbSet<BEXPORT_LC_DOCS_PROCESSING> BEXPORT_LC_DOCS_PROCESSING { get; set; }
+        public DbSet<BEXPORT_LC_DOCS_SETTLEMENT> BEXPORT_LC_DOCS_SETTLEMENT { get; set; }
+        public DbSet<BEXPORT_LC_DOCS_SETTLEMENT_CHARGES> BEXPORT_LC_DOCS_SETTLEMENT_CHARGES { get; set; }
+        public DbSet<BEXPORT_DOCUMETARYCOLLECTION> BEXPORT_DOCUMETARYCOLLECTION { get; set; }
     
         public virtual ObjectResult<string> B_BMACODE_GetNewID(string maCode, string refix, string flat)
         {
@@ -198,6 +224,184 @@ namespace BankProject.DBContext
                 new ObjectParameter("Currency", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BOPENACCOUNT_LOANACCOUNT_GetByCode_Result>("BOPENACCOUNT_LOANACCOUNT_GetByCode", customerIDParameter, currencyParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> B_Normal_Loan_Get_RemainLimitAmount(string limitReferenceCode)
+        {
+            var limitReferenceCodeParameter = limitReferenceCode != null ?
+                new ObjectParameter("LimitReferenceCode", limitReferenceCode) :
+                new ObjectParameter("LimitReferenceCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("B_Normal_Loan_Get_RemainLimitAmount", limitReferenceCodeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<System.DateTime>> B_Normal_Loan_Get_OfferedUntilDate(string limitReferenceCode)
+        {
+            var limitReferenceCodeParameter = limitReferenceCode != null ?
+                new ObjectParameter("LimitReferenceCode", limitReferenceCode) :
+                new ObjectParameter("LimitReferenceCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.DateTime>>("B_Normal_Loan_Get_OfferedUntilDate", limitReferenceCodeParameter);
+        }
+    
+        public virtual ObjectResult<B_Normal_Loan_Get_Productline_Info_Result> B_Normal_Loan_Get_Productline_Info(string limitReferenceCode)
+        {
+            var limitReferenceCodeParameter = limitReferenceCode != null ?
+                new ObjectParameter("LimitReferenceCode", limitReferenceCode) :
+                new ObjectParameter("LimitReferenceCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<B_Normal_Loan_Get_Productline_Info_Result>("B_Normal_Loan_Get_Productline_Info", limitReferenceCodeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> B_LOAN_DISBURSAL_SCHEDULE_Get_Total_LoanAmount(string referCode)
+        {
+            var referCodeParameter = referCode != null ?
+                new ObjectParameter("ReferCode", referCode) :
+                new ObjectParameter("ReferCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("B_LOAN_DISBURSAL_SCHEDULE_Get_Total_LoanAmount", referCodeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> B_Normal_Loan_Process_Payment(Nullable<System.DateTime> endDateProcess)
+        {
+            var endDateProcessParameter = endDateProcess.HasValue ?
+                new ObjectParameter("EndDateProcess", endDateProcess) :
+                new ObjectParameter("EndDateProcess", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("B_Normal_Loan_Process_Payment", endDateProcessParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> B_Normal_Loan_GetRemainLoanAmount(string referCode)
+        {
+            var referCodeParameter = referCode != null ?
+                new ObjectParameter("ReferCode", referCode) :
+                new ObjectParameter("ReferCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("B_Normal_Loan_GetRemainLoanAmount", referCodeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> B_Normal_Loan_Process_Payment_AmendAuthorizeProcess(string referCode, Nullable<int> repaymentPerios)
+        {
+            var referCodeParameter = referCode != null ?
+                new ObjectParameter("ReferCode", referCode) :
+                new ObjectParameter("ReferCode", typeof(string));
+    
+            var repaymentPeriosParameter = repaymentPerios.HasValue ?
+                new ObjectParameter("RepaymentPerios", repaymentPerios) :
+                new ObjectParameter("RepaymentPerios", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("B_Normal_Loan_Process_Payment_AmendAuthorizeProcess", referCodeParameter, repaymentPeriosParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> B_Normal_Loan_Process_Payment_ClearUnusedSchedule(string referCode, Nullable<int> repaymentPerios)
+        {
+            var referCodeParameter = referCode != null ?
+                new ObjectParameter("ReferCode", referCode) :
+                new ObjectParameter("ReferCode", typeof(string));
+    
+            var repaymentPeriosParameter = repaymentPerios.HasValue ?
+                new ObjectParameter("RepaymentPerios", repaymentPerios) :
+                new ObjectParameter("RepaymentPerios", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("B_Normal_Loan_Process_Payment_ClearUnusedSchedule", referCodeParameter, repaymentPeriosParameter);
+        }
+    
+        public virtual ObjectResult<B_Normal_Loan_Process_DisbursalRepaymentCheck_Result> B_Normal_Loan_Process_DisbursalRepaymentCheck(string referCode)
+        {
+            var referCodeParameter = referCode != null ?
+                new ObjectParameter("ReferCode", referCode) :
+                new ObjectParameter("ReferCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<B_Normal_Loan_Process_DisbursalRepaymentCheck_Result>("B_Normal_Loan_Process_DisbursalRepaymentCheck", referCodeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> B_Normal_Loan_Account_GetCurrentAmount(string accountID)
+        {
+            var accountIDParameter = accountID != null ?
+                new ObjectParameter("AccountID", accountID) :
+                new ObjectParameter("AccountID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("B_Normal_Loan_Account_GetCurrentAmount", accountIDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> B_Normal_Loan_CashRepayment_Subtract_To_Account(string accountID, Nullable<decimal> subtractAmount, string referCode, Nullable<int> userID)
+        {
+            var accountIDParameter = accountID != null ?
+                new ObjectParameter("AccountID", accountID) :
+                new ObjectParameter("AccountID", typeof(string));
+    
+            var subtractAmountParameter = subtractAmount.HasValue ?
+                new ObjectParameter("SubtractAmount", subtractAmount) :
+                new ObjectParameter("SubtractAmount", typeof(decimal));
+    
+            var referCodeParameter = referCode != null ?
+                new ObjectParameter("ReferCode", referCode) :
+                new ObjectParameter("ReferCode", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("B_Normal_Loan_CashRepayment_Subtract_To_Account", accountIDParameter, subtractAmountParameter, referCodeParameter, userIDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> B_ExchangeRate_history_process(string currency, Nullable<decimal> rate, Nullable<int> userId, Nullable<int> type)
+        {
+            var currencyParameter = currency != null ?
+                new ObjectParameter("Currency", currency) :
+                new ObjectParameter("Currency", typeof(string));
+    
+            var rateParameter = rate.HasValue ?
+                new ObjectParameter("Rate", rate) :
+                new ObjectParameter("Rate", typeof(decimal));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("B_ExchangeRate_history_process", currencyParameter, rateParameter, userIdParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> B_LoanInterested_Key_history_process(Nullable<long> monthLoanRateNo, Nullable<decimal> vND_InterestRate, Nullable<decimal> uSD_InterestRate, Nullable<int> userId, Nullable<int> type)
+        {
+            var monthLoanRateNoParameter = monthLoanRateNo.HasValue ?
+                new ObjectParameter("MonthLoanRateNo", monthLoanRateNo) :
+                new ObjectParameter("MonthLoanRateNo", typeof(long));
+    
+            var vND_InterestRateParameter = vND_InterestRate.HasValue ?
+                new ObjectParameter("VND_InterestRate", vND_InterestRate) :
+                new ObjectParameter("VND_InterestRate", typeof(decimal));
+    
+            var uSD_InterestRateParameter = uSD_InterestRate.HasValue ?
+                new ObjectParameter("USD_InterestRate", uSD_InterestRate) :
+                new ObjectParameter("USD_InterestRate", typeof(decimal));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("B_LoanInterested_Key_history_process", monthLoanRateNoParameter, vND_InterestRateParameter, uSD_InterestRateParameter, userIdParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> B_Normal_Loan_Get_RemainLimitAmount_Exclude_LoanID(string limitReferenceCode, string code)
+        {
+            var limitReferenceCodeParameter = limitReferenceCode != null ?
+                new ObjectParameter("LimitReferenceCode", limitReferenceCode) :
+                new ObjectParameter("LimitReferenceCode", typeof(string));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("Code", code) :
+                new ObjectParameter("Code", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("B_Normal_Loan_Get_RemainLimitAmount_Exclude_LoanID", limitReferenceCodeParameter, codeParameter);
         }
     }
 }

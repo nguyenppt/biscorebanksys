@@ -36,5 +36,12 @@ namespace BankProject.DBContext
         public string TaxinLCCYAmt { get; set; }
         public string TaxDate { get; set; }
         public string Rowchages { get; set; }
+        public Nullable<int> TabId { get; set; }
+        public string AmendNo { get; set; }
+        public string ActiveRecordFlag { get; set; }
+        public Nullable<double> OldAmount { get; set; }
+        public Nullable<System.DateTime> OldDocsReceivedDate { get; set; }
+        public Nullable<int> AmendId { get; set; }
+        public string RefAmendNo { get; set; }
     }
 }

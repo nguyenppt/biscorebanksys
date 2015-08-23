@@ -23,7 +23,7 @@ namespace BankProject.DBContext
         public Nullable<System.DateTime> Drawdown { get; set; }
         public string InterestKey { get; set; }
         public string Freq { get; set; }
-        public Nullable<long> Interest { get; set; }
+        public Nullable<decimal> Interest { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> DueDate { get; set; }
         public Nullable<decimal> PrincipalAmount { get; set; }
@@ -34,5 +34,14 @@ namespace BankProject.DBContext
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<long> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public Nullable<decimal> AmountOfCapitalPaid { get; set; }
+        public Nullable<decimal> OutstandingLoanAmount { get; set; }
+        public Nullable<decimal> InterestedAmount { get; set; }
+        public Nullable<decimal> OverdueCapitalAmount { get; set; }
+        public Nullable<decimal> OverdueInterestAmount { get; set; }
+        public Nullable<decimal> PaidAmount { get; set; }
+        public Nullable<decimal> PaidInterestAmount { get; set; }
+        public int ID { get; set; }
+        public long PeriodRepaid { get; set; }
     }
 }

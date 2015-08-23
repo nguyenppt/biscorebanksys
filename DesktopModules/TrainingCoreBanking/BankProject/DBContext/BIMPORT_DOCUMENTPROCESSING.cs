@@ -80,5 +80,11 @@ namespace BankProject.DBContext
         public string ChargeRemarks { get; set; }
         public string VATNo { get; set; }
         public string AcceptRemarts { get; set; }
+        public Nullable<double> FullDocsAmount { get; set; }
+        public string AmendNo { get; set; }
+        public string ActiveRecordFlag { get; set; }
+        public Nullable<double> OldAmount { get; set; }
+        public Nullable<System.DateTime> OldDocsReceivedDate { get; set; }
+        public string RefAmendNo { get; set; }
     }
 }

@@ -31,5 +31,6 @@ namespace BankProject.DBContext
         public string IntermediaryAddress2 { get; set; }
         public string IntermediaryAddress3 { get; set; }
         public string SendMessage { get; set; }
+        public string NostroAccount { get; set; }
     }
 }

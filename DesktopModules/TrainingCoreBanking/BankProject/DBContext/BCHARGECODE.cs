@@ -40,5 +40,7 @@ namespace BankProject.DBContext
         public string DocWithDisc { get; set; }
         public string DocWithNoDisc { get; set; }
         public string RejectedDoc { get; set; }
+        public string AmendEC { get; set; }
+        public string AcceptEC { get; set; }
     }
 }

@@ -34,5 +34,7 @@ namespace BankProject.DBContext
         public string ActiveFlag { get; set; }
         public string DCTypeCode { get; set; }
         public string DCTypeName { get; set; }
+        public string CollateralType_Code { get; set; }
+        public string ReferenceID { get; set; }
     }
 }

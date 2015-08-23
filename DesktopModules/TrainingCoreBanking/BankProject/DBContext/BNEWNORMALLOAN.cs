@@ -54,7 +54,7 @@ namespace BankProject.DBContext
         public string IntRepAccount { get; set; }
         public string ChrgRepAccount { get; set; }
         public Nullable<decimal> ExpectedLoss { get; set; }
-        public Nullable<decimal> LossGivenDef { get; set; }
+        public string LossGivenDef { get; set; }
         public string CustomerRemarks { get; set; }
         public string AccountOfficer { get; set; }
         public string AccountOfficerName { get; set; }
@@ -82,5 +82,13 @@ namespace BankProject.DBContext
         public Nullable<decimal> Tot_I_Pay_Amt { get; set; }
         public Nullable<decimal> Tot_P_Pastdue_Amt { get; set; }
         public Nullable<decimal> Tot_I_Pastdue_Amt { get; set; }
+        public Nullable<long> RepaidBy { get; set; }
+        public Nullable<System.DateTime> Repaid_UpdatedDate { get; set; }
+        public Nullable<long> Repaid_AuthorizedBy { get; set; }
+        public Nullable<System.DateTime> Repaid_AuthorizedDate { get; set; }
+        public string Repaid_Status { get; set; }
+        public Nullable<decimal> LoanAmount_Actual { get; set; }
+        public int RepaymentTimes { get; set; }
+        public decimal LoanAmountRemain { get; set; }
     }
 }

@@ -38,5 +38,8 @@ namespace BankProject.DBContext
         public string UpdatedBy { get; set; }
         public string AuthorizedBy { get; set; }
         public Nullable<System.DateTime> AuthorizedDate { get; set; }
+        public string Comment1 { get; set; }
+        public string Comment2 { get; set; }
+        public string Comment3 { get; set; }
     }
 }
