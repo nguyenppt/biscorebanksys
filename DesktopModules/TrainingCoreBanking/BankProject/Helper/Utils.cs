@@ -114,6 +114,14 @@ namespace BankProject.Helper
             return rCharRead.Trim();
 
         }
+        
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Sep 12, 2015    Hien Nguyen       Fix bug convert sai so le cua USD
+         */
         public static string ReadNumber(string mant, double number)
         {
             const string charRead = "khôngmột**hai**ba***bốn**năm**sáu**bảy**tám**chín*";
@@ -164,6 +172,18 @@ namespace BankProject.Helper
                     var soNguyen = (long)Math.Floor(numberR);
                     var strNguyen = soNguyen.ToString(CultureInfo.InvariantCulture);
                     var soLe = Math.Round(numberR - soNguyen, 4);
+
+                    //Fix bug "DIEN GIAI PHIEU VAT TRONG MA HINH THU PHI COLLECT CHARGE BI SAI"
+                    /*
+                    *Doi voi USD, so le phai duoc nhan 100 truoc khi
+                    *dua vao cong thuc chuyen sang so doc boi vi 1USD = 100cent
+                    *vi du: 0.5 USD thi so le la 50 cent
+                    */
+                    if (mant == "USD")
+                    {
+                        soLe = soLe * 100;
+                    }
+
                     var strLe = soLe.ToString(CultureInfo.InvariantCulture).Replace("0.", "");
 
                     var I = 0;
