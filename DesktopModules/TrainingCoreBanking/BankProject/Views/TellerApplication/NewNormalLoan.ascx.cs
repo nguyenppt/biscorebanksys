@@ -286,11 +286,20 @@ namespace BankProject.Views.TellerApplication
             RadDatePicker DrawdownDate = (lvLoanDisbursalSchedule.EditItem.FindControl("DrawdownDateTextBox")) as RadDatePicker;
             Label lbID = (lvLoanDisbursalSchedule.EditItem.FindControl("lbID")) as Label;
 
+
             B_LOAN_DISBURSAL_SCHEDULE item = new B_LOAN_DISBURSAL_SCHEDULE();
             item.DisbursalDate = date.SelectedDate;
             item.DisbursalAmount = String.IsNullOrEmpty(amountAction.Text) ? 0 : Double.Parse(amountAction.Text);
             item.DrawdownDate = DrawdownDate.SelectedDate;
             item.Code = tbNewNormalLoan.Text;
+
+
+            if (item.DrawdownDate != null && item.DrawdownDate > DateTime.Now)
+            {
+                RadWindowManager1.RadAlert("Drawdown Date cannot be after current date!", 340, 150, "Alert", null);
+                return;
+            }
+
             LoanDisbursalScheduleRespository facade = new LoanDisbursalScheduleRespository();
             item.ID = Int32.Parse(lbID.Text);
             B_LOAN_DISBURSAL_SCHEDULE exits = facade.GetById(item.ID);
@@ -336,6 +345,13 @@ namespace BankProject.Views.TellerApplication
             item.DisbursalAmount = String.IsNullOrEmpty(amountAction.Text) ? 0 : Double.Parse(amountAction.Text);
             item.DrawdownDate = DrawdownDate.SelectedDate;
             item.Code = tbNewNormalLoan.Text;
+
+            if (item.DrawdownDate != null && item.DrawdownDate > DateTime.Now)
+            {
+                RadWindowManager1.RadAlert("Drawdown Date cannot be after current date!", 340, 150, "Alert", null);
+                return;
+            }
+
             LoanDisbursalScheduleRespository facade = new LoanDisbursalScheduleRespository();
             facade.Add(item);
             facade.Commit();
@@ -850,7 +866,7 @@ namespace BankProject.Views.TellerApplication
             normalLoanEntry.CollateralID_2 = rcbCollateralID2.SelectedValue;
             normalLoanEntry.CollateralID_3 = rcbCollateralID3.SelectedValue;
             normalLoanEntry.DefineSch = rcbDefineSch.SelectedValue;
-            normalLoanEntry.AmountAlloc = rtbAmountAlloc.Value.HasValue ? (decimal)rtbAmountAlloc.Value.Value : 0;
+            normalLoanEntry.AmountAlloc =  rtbAmountAlloc.Text != "" ? decimal.Parse(rtbAmountAlloc.Text) : 0;
             normalLoanEntry.IntPayMethod = lblIntPayMethod.Text;
             normalLoanEntry.InterestRate = (decimal?)tbInterestRate.Value;
             normalLoanEntry.PrinRepAccount = rcbPrinRepAccount.SelectedValue;
@@ -900,7 +916,7 @@ namespace BankProject.Views.TellerApplication
             rcbSecured.SelectedValue = normalLoanEntry.Secured;
             tbExpectedLoss.Value = (double?)normalLoanEntry.ExpectedLoss;
             tbLossGiven.Text = normalLoanEntry.LossGivenDef;
-            rtbAmountAlloc.Value = (double?)normalLoanEntry.AmountAlloc;
+            rtbAmountAlloc.Text =  normalLoanEntry.AmountAlloc != null ? ((decimal)normalLoanEntry.AmountAlloc).ToString("#,##") : null;
             lbLoanStatus.Text = normalLoanEntry.LoanStatus;
             lbTotalInterestAmt.Text = "" + normalLoanEntry.TotalInterestAmt;
             lbPDStatus.Text = normalLoanEntry.PDStatus;

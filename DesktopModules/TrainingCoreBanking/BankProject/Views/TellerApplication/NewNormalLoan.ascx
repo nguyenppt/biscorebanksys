@@ -596,9 +596,12 @@
                 <tr id="amountAllocID">
                     <td class="MyLable">Collateral Amount</td>
                     <td class="MyContent">
-                        <telerik:radnumerictextbox id="rtbAmountAlloc" runat="server" validationgroup="Group1">
-                            <ClientEvents OnBlur="SetNumber" OnFocus="ClearCommas" />
-                        </telerik:radnumerictextbox>
+                        <%--<telerik:radnumerictextbox id="rtbAmountAlloc" runat="server" validationgroup="Group1">
+                            <ClientEvents OnBlur="SetNumberCommon" OnFocus="ClearCommas" />
+                        </telerik:radnumerictextbox>--%>
+                        <telerik:radtextbox id="rtbAmountAlloc" runat="server" validationgroup="Group1">
+                                 <ClientEvents OnBlur="SetNumberCommon" OnFocus="ClearCommas" />
+                        </telerik:radtextbox>
                     </td>
                 </tr>
                 <tr style="display:none">
@@ -1273,10 +1276,59 @@
             sender.set_value(addCommas(number));
 
         }
+
         //var num = sender.get_value();
         document.getElementById("<%= hfLoanAmount.ClientID %>").value = number;
         $find("<%= tbApprovedAmt.ClientID %>").set_value(sender.get_value());
     }
+
+    function SetNumberCommon(sender, args) {
+        //sender.set_value(sender.get_value().toUpperCase());
+        var number;
+        var m = sender.get_value().substring(sender.get_value().length - 1);
+        if (isNaN(m)) {
+            var val = sender.get_value().substring(0, sender.get_value().length - 1).split(".");
+            switch (m.toUpperCase()) {
+
+                case "T":
+                    var n1 = val[0] * 1000;
+                    var n2 = 0;
+                    if (val[1] != null)
+                        n2 = (val[1] / GenerateZero(val[1])) * 1000;
+                    number = n1 + n2;
+                    sender.set_value(addCommas(number));
+                    break;
+                case "M":
+                    var n1 = val[0] * 1000000;
+                    var n2 = 0;
+                    if (val[1] != null)
+                        n2 = (val[1] / GenerateZero(val[1])) * 1000000;
+                    number = n1 + n2;
+                    sender.set_value(addCommas(number));
+                    break;
+                case "B":
+                    var n1 = val[0] * 1000000000;
+                    var n2 = 0;
+                    if (val[1] != null)
+                        n2 = (val[1] / GenerateZero(val[1])) * 1000000000;
+                    number = n1 + n2;
+                    sender.set_value(addCommas(number));
+                    break;
+                default:
+                    alert("Character is not valid. Please use T, M and B character");
+                    sender.focus();
+                    return false;
+                    break;
+            }
+        } else {
+            console.log("is number" + m);
+            number = sender.get_value();
+            sender.set_value(addCommas(number));
+
+        }
+
+    }
+
     function clickFullTab() {
         document.getElementById("linkFull").style.display = "";
         $('#tabs-demo').tabs({ selected: 2 });
