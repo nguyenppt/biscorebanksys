@@ -244,10 +244,10 @@ namespace BankProject.DataProvider
         #region B_DEFINE_CUSTOMER_LIMIT
         public static void B_CUSTOMER_LIMIT_Insert_Update(string MainLimitID, string CustomerID, string CommitmentType, string CurrencyCode, string CountryCode, string CountryName
             , DateTime? ApprovedDate, DateTime? OfferedUntil, DateTime? ExpiryDate, DateTime? Proposaldate, DateTime? AvailableDate, decimal? InternalLimitAmt
-            , decimal? AdvisedAmt, decimal? OriginalLimit, string Note, string Mode, decimal? MaxTotal, string ApprovedUser)
+            , decimal? AdvisedAmt, decimal? OriginalLimit, string Note, string Mode, decimal? MaxTotal, string ApprovedUser, decimal? MaxSecured, decimal? MaxUnsecured)
         {
              sqldata.ndkExecuteNonQuery("B_CUSTOMER_LIMIT_Insert_Update", MainLimitID, CustomerID, CommitmentType, CurrencyCode, CountryCode, CountryName
-            , ApprovedDate, OfferedUntil, ExpiryDate, Proposaldate, AvailableDate, InternalLimitAmt, AdvisedAmt, OriginalLimit, Note, Mode, MaxTotal, ApprovedUser);
+            , ApprovedDate, OfferedUntil, ExpiryDate, Proposaldate, AvailableDate, InternalLimitAmt, AdvisedAmt, OriginalLimit, Note, Mode, MaxTotal, ApprovedUser, MaxSecured, MaxUnsecured);
         }
         public static string B_CUSTOMER_LIMIT_Check_CustomerID(string CustomerID)
         {
@@ -279,12 +279,13 @@ namespace BankProject.DataProvider
             , string CollateralTypeName, string CollateralCode, string CollateralName, string CollReqdAmt, string CollReqdPct, string UptoPeriod, string PeriodAmt
             , string PeriodPct, decimal MaxSecured, decimal MaxUnSecured, decimal MaxTotal, string OtherSecured, string CollateralRight, string AmtSecured
             , string Onlinelimit, string AvailableAmt, string TotalOutstand, string ApprovedUser, string MainComtType, double? InternalLimitAmt, double? AdvisedAmt
-            ,string ProductID , string ProductName)
+            , string ProductID, string ProductName, DateTime? ApproveDate, DateTime? OfferedUnti, DateTime? ExpiryDate, DateTime? ProposalDate, DateTime? AvailableDate)
         {
             sqldata.ndkExecuteNonQuery("B_CUSTOMER_LIMIT_SUB_Insert_Update",MainLimitID, SubLimitID, CustomerID, SubCommitmentType, STTSub, mode, CollateralTypeCode
                                         , CollateralTypeName, CollateralCode, CollateralName, CollReqdAmt, CollReqdPct, UptoPeriod, PeriodAmt
                                         , PeriodPct, MaxSecured, MaxUnSecured, MaxTotal, OtherSecured, CollateralRight, AmtSecured
-                                        , Onlinelimit, AvailableAmt, TotalOutstand, ApprovedUser, MainComtType, InternalLimitAmt, AdvisedAmt, ProductID, ProductName);
+                                        , Onlinelimit, AvailableAmt, TotalOutstand, ApprovedUser, MainComtType, InternalLimitAmt, AdvisedAmt, ProductID, ProductName
+                                        , ApproveDate, OfferedUnti, ExpiryDate, ProposalDate, AvailableDate);
         }
         public static DataSet B_CUSTOMER_LIMIT_SUB_check_SubLimitID(string SubLimitID)
         {
@@ -871,14 +872,6 @@ namespace BankProject.DataProvider
         public static DataSet Print_Deal_theo_ID(string RefID)
         {
             return sqldata.ndkExecuteDataset("Print_Deal_theo_ID", RefID);
-        }
-        public static DataSet Print_Credit_CardPayment_Cash(string RefID)
-        {
-            return sqldata.ndkExecuteDataset("Print_Credit_CardPayment_Cash", RefID);
-        }
-        public static DataSet Print_Credit_CardPayment_Transfer(string RefID)
-        {
-            return sqldata.ndkExecuteDataset("Print_Credit_CardPayment_Transfer", RefID);
         }
         #endregion
         #region INWARD  PROCESS CREDIT ACCOUNT
