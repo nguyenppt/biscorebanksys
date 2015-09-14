@@ -1586,6 +1586,17 @@
             </UpdatedControls>
         </telerik:AjaxSetting>
 
+        <telerik:AjaxSetting AjaxControlID="comboCreateMT410">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="txtSendingBankTRN" />
+                <telerik:AjaxUpdatedControl ControlID="txtRelatedReference" />
+                <telerik:AjaxUpdatedControl ControlID="comboCurrency_TabMT410" />
+                <telerik:AjaxUpdatedControl ControlID="numAmount_TabMT410" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_1" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_2" />
+                <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>
 
