@@ -541,7 +541,7 @@ namespace BankProject.Views.TellerApplication {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox rtbAmountAlloc;
+        protected global::Telerik.Web.UI.RadTextBox rtbAmountAlloc;
         
         /// <summary>
         /// rcbCountryRisk control.
