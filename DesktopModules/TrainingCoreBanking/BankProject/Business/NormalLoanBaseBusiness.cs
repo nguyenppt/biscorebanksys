@@ -43,6 +43,7 @@ namespace BankProject.Business
             drInfor[dsOut.Cl_loadAmountRepayment] = getCurrentLoanAmount(normalLoanEntryM, replaymentTimes);
             drInfor[dsOut.Cl_interestKey] = "";
             drInfor[dsOut.Cl_interest] = 0;
+            drInfor[dsOut.Cl_valueDate] = normalLoanEntryM.ValueDate;
             dsOut.DtInfor.Rows.Add(drInfor);
 
             bool isDisbursal = normalLoanEntryM.Drawdown == null ? true : false;
@@ -56,6 +57,15 @@ namespace BankProject.Business
             }
             //Process interest
             InterestProcess(ref dsOut, normalLoanEntryM, replaymentTimes, disbursalDate);
+
+
+            DataRow rowD = dsOut.DateReport.NewRow();
+
+            DateTime today = normalLoanEntryM.ValueDate == null ? DateTime.Today : (DateTime)normalLoanEntryM.ValueDate;
+            rowD["day"] = today.ToString("dd");
+            rowD["month"] = today.ToString("MM");
+            rowD["year"] = today.ToString("yyyy");
+            dsOut.DateReport.Rows.Add(rowD);
 
             return dsOut;
         }
@@ -514,6 +524,17 @@ namespace BankProject.Business
             }
         }
 
+
+        /// <summary>
+        /// Vi du: 
+        ///- 2 Thang dau  Lai suat 5%
+        ///- Tu thang thu 3  Lai suat Tiet Kiem 13T + Bien do 2%
+        /// </summary>
+        /// <param name="ds"></param>
+        /// <param name="normalLoanEntryM"></param>
+        /// <param name="startDrawdownDate"></param>
+        /// <param name="replaymentTimes"></param>
+        /// <param name="newInterestKey"></param>
         private void PeriodicProcess(ref LoanContractScheduleDS ds, BNEWNORMALLOAN normalLoanEntryM, DateTime startDrawdownDate, int replaymentTimes, ref decimal newInterestKey)
         {
             if (normalLoanEntryM == null || String.IsNullOrEmpty(normalLoanEntryM.Code))
@@ -532,18 +553,25 @@ namespace BankProject.Business
             NewLoanInterestedKeyRepository facade = new NewLoanInterestedKeyRepository();
             BLOANINTEREST_KEY interestKey = null;
 
-            if (it != null && !String.IsNullOrEmpty(it.Freq))
+            //Only process if user define AC
+            if (it == null || it.Date == null)
             {
-                interestKey = facade.GetInterestKey(int.Parse(it.Freq)).FirstOrDefault();
+                return;
             }
-            else
-            {
+
+
+            //if (it != null && !String.IsNullOrEmpty(it.Freq))
+            //{
+            //    interestKey = facade.GetInterestKey(int.Parse(it.Freq)).FirstOrDefault();
+            //}
+            //else
+            //{
                 if (String.IsNullOrEmpty(normalLoanEntryM.InterestKey))
                 {
                     return;
                 }
                 interestKey = facade.GetInterestKey(int.Parse(normalLoanEntryM.InterestKey)).FirstOrDefault();
-            }
+            //}
 
 
 
@@ -567,7 +595,10 @@ namespace BankProject.Business
 
 
 
-                DateTime newrateDate = startDrawdownDate.AddMonths((int)(interestKey.MonthLoanRateNo));
+                //DateTime newrateDate = startDrawdownDate.AddMonths((int)(interestKey.MonthLoanRateNo));
+                //Start date is defined date in AC
+                DateTime newrateDate = (DateTime)it.Date;
+
                 DataRow dr = findInstallmantRow(newrateDate, ds);
                 if (dr == null)
                 {

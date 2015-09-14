@@ -52,6 +52,13 @@ namespace BankProject.Business
             set { cl_custID = value; }
         }
 
+        DataColumn cl_valueDate = new DataColumn("ValueDate", Type.GetType("System.DateTime"));
+
+        public DataColumn Cl_valueDate
+        {
+            get { return cl_valueDate; }
+            set { cl_valueDate = value; }
+        }
 
         DataColumn cl_loadAmount = new DataColumn("LoanAmount", Type.GetType("System.Decimal"));
 
@@ -204,6 +211,7 @@ namespace BankProject.Business
             dtInfor.Columns.Add(cl_interestKey);
             dtInfor.Columns.Add(cl_freq);
             dtInfor.Columns.Add(cl_interest);
+            dtInfor.Columns.Add(cl_valueDate);
 
             dtItems.Columns.Add(cl_perious);
             dtItems.Columns.Add(cl_dueDate);
@@ -222,12 +230,7 @@ namespace BankProject.Business
             dateReport.Columns.Add("day");
             dateReport.Columns.Add("month");
             dateReport.Columns.Add("year");
-            var rowD = dateReport.NewRow();
-            DateTime today = DateTime.Today;
-            rowD["day"] = today.ToString("dd");
-            rowD["month"] = today.ToString("MM");
-            rowD["year"] = today.ToString("yyyy");
-            dateReport.Rows.Add(rowD);
+            
 
 
         }
