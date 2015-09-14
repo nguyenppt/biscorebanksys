@@ -158,7 +158,8 @@ namespace BankProject.Views.TellerApplication
                                 TriTT.B_CUSTOMER_LIMIT_Insert_Update(LimitID, CustomerID, HanMucCha, rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.Text.Replace(rcbCountry.SelectedValue + " - ", "")
                                 , RdpApprovedDate.SelectedDate, RdpOfferedUnit.SelectedDate, rdpExpiryDate.SelectedDate, RdpProposalDate.SelectedDate, RdpAvailableDate.SelectedDate
                                 , tbIntLimitAmt.Text != "" ? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")) : 0, tbAdvisedAmt.Text != "" ? Convert.ToDecimal(tbAdvisedAmt.Text.Replace(",", "")) : 0, 0,
-                                tbNote.Text, rcbFandA.SelectedValue, tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, UserInfo.Username.ToString());
+                                tbNote.Text, rcbFandA.SelectedValue, tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, UserInfo.Username.ToString(), tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0
+                                , tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0);
                                 Response.Redirect("Default.aspx?tabid=359");
                             }
                             else { ShowMsgBox("Customer ID is not exists, Please check again !"); return; }
@@ -193,6 +194,45 @@ namespace BankProject.Views.TellerApplication
                             DataSet ds = TriTT.B_CUSTOMER_LIMIT_SUB_Check_Available_Amt(CustomerID, HanMucCon, CustomerID+"."+HanMucCha,LimitID );
                             DataSet ds1 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_InternalLimitAmt(CustomerID + "." + HanMucCha);
                             double InternalLimitAmt_Global = Convert.ToDouble(ds1.Tables[0].Rows[0]["InternalLimitAmt"].ToString());
+
+                            bool flagProductValidate = true;
+
+                            var globalApprovedDate = ds1.Tables[0].Rows[0]["ApprovedDate"];
+                            var globalOfferedUntil = ds1.Tables[0].Rows[0]["OfferedUntil"];
+                            var globalExpiryDate = ds1.Tables[0].Rows[0]["ExpiryDate"];
+                            var globalProposalDate = ds1.Tables[0].Rows[0]["ProposalDate"];
+                            var globalAvailabledate = ds1.Tables[0].Rows[0]["Availabledate"];
+
+                            if (globalApprovedDate != null && flagProductValidate)
+                            {
+                                flagProductValidate = CompareDateDate1VSDate2(DateTime.Parse(globalApprovedDate.ToString()), RdpApprovedDate.SelectedDate);
+                            }
+                            else if (globalOfferedUntil != null && flagProductValidate)
+                            {
+                                flagProductValidate = CompareDateDate1VSDate2(DateTime.Parse(globalOfferedUntil.ToString()), RdpOfferedUnit.SelectedDate);
+                            }
+                            else if (globalExpiryDate != null && flagProductValidate)
+                            {
+                                flagProductValidate = CompareDateDate1VSDate2(DateTime.Parse(globalExpiryDate.ToString()), rdpExpiryDate.SelectedDate);
+                            }
+                            else if (globalProposalDate != null && flagProductValidate)
+                            {
+                                flagProductValidate = CompareDateDate1VSDate2(DateTime.Parse(globalProposalDate.ToString()), RdpProposalDate.SelectedDate);
+                            }
+                            else if (globalAvailabledate != null && flagProductValidate)
+                            {
+                                flagProductValidate = CompareDateDate1VSDate2(DateTime.Parse(globalAvailabledate.ToString()), RdpAvailableDate.SelectedDate);
+                            }
+
+
+                            if (!flagProductValidate)
+                            {
+                                ShowMsgBox("The approved date, offered until, expiry date, proposal date and available date of this product cannot can not exceed Global date."); 
+                                return;
+                            }
+
+
+
                             double Sum_Product_InternalAmt = Convert.ToDouble((ds.Tables[0].Rows.Count == 0 ? "0" : ds.Tables[0].Rows[0]["Sum_Product_InternalAmt"].ToString()));
                             if (Sum_Product_InternalAmt + Convert.ToDouble(tbIntLimitAmt.Text.Replace(",", "")) > InternalLimitAmt_Global)
                             {
@@ -206,7 +246,8 @@ namespace BankProject.Views.TellerApplication
                             tbMaxTotal.Text != "" ? Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, lblOtherSecured.Text, lblCollateralRight.Text
                             , lblCollateralAmt.Text, lblOnlineLimit.Text, lblAvailableAmt.Text, lblTotalOutstand.Text, UserInfo.Username.ToString(), HanMucCha,
                             tbIntLimitAmt.Text != "" ? Convert.ToDouble(tbIntLimitAmt.Text.Replace(",", "")) : 0, tbAdvisedAmt.Text != "" ? Convert.ToDouble(tbAdvisedAmt.Text.Replace(",", "")) : 0
-                            ,rcbProduct.SelectedValue,rcbProduct.SelectedValue!=""? rcbProduct.Text.Replace(rcbProduct.SelectedValue+" - ",""):"");
+                            ,rcbProduct.SelectedValue,rcbProduct.SelectedValue!=""? rcbProduct.Text.Replace(rcbProduct.SelectedValue+" - ",""):""
+                            , RdpApprovedDate.SelectedDate, RdpOfferedUnit.SelectedDate, rdpExpiryDate.SelectedDate, RdpProposalDate.SelectedDate, RdpAvailableDate.SelectedDate);
                             Response.Redirect("Default.aspx?tabid=361");
                             
                             //else { ShowMsgBox("this Sub Commitment Limit exists, create another  !"); }
@@ -249,6 +290,21 @@ namespace BankProject.Views.TellerApplication
                     break;
             }
         }
+
+        private bool CompareDateDate1VSDate2(DateTime globalApprovedDate, DateTime? date2)
+        {
+            if (date2 == null)
+                return true;
+
+            if (globalApprovedDate < date2)
+            {
+                return false; ;
+            }
+
+            return true; 
+        }
+
+        
         protected void btSearch_Click1(object sender, EventArgs e)
         {
             string LimitID = tbLimitID.Text;
@@ -325,6 +381,10 @@ namespace BankProject.Views.TellerApplication
             Load_MainLimit_DataToReview(CustomerID + "." + KieuHanMuc); //Load data cho phan Han muc cha
             tbLimitID.Text = SubLimitID;
 
+            tbCustomerID.Text = CustomerID;
+            LoadCustomerName(tbCustomerID.Text);
+            rcbGlobalLimit.SelectedValue = HanMucCon;
+
             ExchangeRatesRepository exchangeFacade = new ExchangeRatesRepository();
             var exchangeRate = exchangeFacade.GetRate("USD").FirstOrDefault();
             if (exchangeRate != null)
@@ -367,6 +427,51 @@ namespace BankProject.Views.TellerApplication
                 tbIntLimitAmt.Text = ds1.Tables[0].Rows[0]["InternalLimitAmt"].ToString();
                 lblOtherSecured.Text = ds1.Tables[0].Rows[0]["OtherSecured"].ToString();
                 lblCollateralRight.Text = ds1.Tables[0].Rows[0]["CollateralRight"].ToString();
+
+                if (ds1.Tables[0].Rows[0]["ApprovedDate"].ToString() != "")
+                {
+                    RdpApprovedDate.SelectedDate = DateTime.Parse(ds1.Tables[0].Rows[0]["ApprovedDate"].ToString());
+                }
+                //else
+                //{
+                //    RdpApprovedDate.SelectedDate = null;
+                //}
+                if (ds1.Tables[0].Rows[0]["OfferedUntil"].ToString() != "")
+                {
+                    RdpOfferedUnit.SelectedDate = DateTime.Parse(ds1.Tables[0].Rows[0]["OfferedUntil"].ToString());
+                }
+                //else
+                //{
+                //    RdpOfferedUnit.SelectedDate = null;
+                //}
+
+                if (ds1.Tables[0].Rows[0]["ExpiryDate"].ToString() != "")
+                {
+                    rdpExpiryDate.SelectedDate = DateTime.Parse(ds1.Tables[0].Rows[0]["ExpiryDate"].ToString());
+                }
+                //else
+                //{
+                //    rdpExpiryDate.SelectedDate = null;
+                //}
+
+                if (ds1.Tables[0].Rows[0]["ProposalDate"].ToString() != "")
+                {
+                    RdpProposalDate.SelectedDate = DateTime.Parse(ds1.Tables[0].Rows[0]["ProposalDate"].ToString());
+                }
+                //else
+                //{
+                //    RdpProposalDate.SelectedDate = null;
+                //}
+
+                if (ds1.Tables[0].Rows[0]["Availabledate"].ToString() != "")
+                {
+                    RdpAvailableDate.SelectedDate = DateTime.Parse(ds1.Tables[0].Rows[0]["Availabledate"].ToString());
+                }
+                //else
+                //{
+                //    RdpAvailableDate.SelectedDate = null;
+                //}
+
                 //lblOnlineLimit.Text = ds1.Tables[0].Rows[0]["Onlinelimit"].ToString();
                 //lblAvailableAmt.Text = ds1.Tables[0].Rows[0]["AvailableAmt"].ToString();
                 //lblTotalOutstand.Text = ds1.Tables[0].Rows[0]["TotalOutstand"].ToString();
@@ -383,18 +488,18 @@ namespace BankProject.Views.TellerApplication
 
                 decimal amtVND = 0;
                 decimal amtUSD = 0;
-                DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0,7), "VND","AvailableAmt");
+                DataSet ds3 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0, 7), "VND", "AvailableAmt");
                 if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
                 {
 
-                    decimal.TryParse(ds3.Tables[0].Rows[0]["Avaiable_Amt"].ToString(),out amtVND);
+                    decimal.TryParse(ds3.Tables[0].Rows[0]["Avaiable_Amt"].ToString(), out amtVND);
                 }
                 DataSet ds31 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0, 7), "USD", "AvailableAmt");
                 if (ds3.Tables != null && ds3.Tables.Count > 0 && ds3.Tables[0].Rows.Count > 0)
                 {
 
-                    decimal.TryParse(ds31.Tables[0].Rows[0]["Avaiable_Amt"].ToString(),out amtUSD);
-                    amtUSD = amtUSD  * rateusd;
+                    decimal.TryParse(ds31.Tables[0].Rows[0]["Avaiable_Amt"].ToString(), out amtUSD);
+                    amtUSD = amtUSD * rateusd;
                 }
                 lblAvailableAmt.Text = (amtUSD + amtVND).ToString("#,##.00");
 
@@ -408,16 +513,17 @@ namespace BankProject.Views.TellerApplication
                 DataSet ds41 = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_AvailableAmt(SubLimitID.Substring(0, 7), "USD", "OutstandingAmt");
                 if (ds4.Tables != null && ds4.Tables.Count > 0 && ds4.Tables[0].Rows.Count > 0)
                 {
-                    decimal.TryParse(ds41.Tables[0].Rows[0]["Outstanding_Loan_Amt"].ToString(),out outUSD);
+                    decimal.TryParse(ds41.Tables[0].Rows[0]["Outstanding_Loan_Amt"].ToString(), out outUSD);
                     outUSD = outUSD * rateusd;
                 }
 
                 lblTotalOutstand.Text = (outVND + outUSD).ToString("#,##.00");
 
 
-                lblOnlineLimit.Text = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit(SubLimitID.Substring(0,7));//load theo yeu cau cua nghiep vu 
+                lblOnlineLimit.Text = TriTT.B_CUSTOMER_LIMIT_SUB_Load_them_data_TotalLimit(SubLimitID.Substring(0, 7));//load theo yeu cau cua nghiep vu 
                 lblExchangeRate.Text = rateusd.ToString("#,###.##");
             }
+
 
         }
         protected void tbCustomerID_TextChanged(object sender, EventArgs e)
@@ -477,22 +583,27 @@ namespace BankProject.Views.TellerApplication
                 if (ds.Tables[0].Rows[0]["ApprovedDate"].ToString() != "")
                 {
                     RdpApprovedDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["ApprovedDate"].ToString());
+                    RdpApprovedDate.MaxDate = DateTime.Parse(ds.Tables[0].Rows[0]["ApprovedDate"].ToString());
                 }
                 if (ds.Tables[0].Rows[0]["OfferedUntil"].ToString() != "")
                 {
                     RdpOfferedUnit.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["OfferedUntil"].ToString());
+                    RdpOfferedUnit.MaxDate = DateTime.Parse(ds.Tables[0].Rows[0]["OfferedUntil"].ToString());
                 }
                 if (ds.Tables[0].Rows[0]["ExpiryDate"].ToString() != "")
                 {
                     rdpExpiryDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["ExpiryDate"].ToString());
+                    rdpExpiryDate.MaxDate = DateTime.Parse(ds.Tables[0].Rows[0]["ExpiryDate"].ToString());
                 }
                 if (ds.Tables[0].Rows[0]["ProposalDate"].ToString() != "")
                 {
                     RdpProposalDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["ProposalDate"].ToString());
+                    RdpProposalDate.MaxDate = DateTime.Parse(ds.Tables[0].Rows[0]["ProposalDate"].ToString());
                 }
                 if (ds.Tables[0].Rows[0]["Availabledate"].ToString() != "")
                 {
                     RdpAvailableDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["Availabledate"].ToString());
+                    RdpAvailableDate.MaxDate = DateTime.Parse(ds.Tables[0].Rows[0]["Availabledate"].ToString());
                 }
                 //tbIntLimitAmt.Text = ds.Tables[0].Rows[0]["InternalLimitAmt"].ToString(); modified 4/10/2014
                 //tbAdvisedAmt.Text = ds.Tables[0].Rows[0]["AdvisedAmt"].ToString();
@@ -517,6 +628,14 @@ namespace BankProject.Views.TellerApplication
                 rcbCollateral.Enabled = rcbCollateralType.Enabled = rcbFandA.Enabled = false;
             }
         }
-       
+
+        protected void rcbGlobalLimit_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            if (tbCustomerID.Text != "" && rcbGlobalLimit.SelectedValue != "")
+            {
+                //if (rcbGlobalLimit.SelectedValue != "" && tbCustomerID.Text != "")
+                //    Load_MainLimit_ForLimitDetail(tbLimitID.Text.Trim());
+            }
+        }
     }
 }

@@ -72,7 +72,8 @@ namespace BankProject.Views.TellerApplication
                             TriTT.B_CUSTOMER_LIMIT_Insert_Update(LimitID, CustomerID, HanMucCha, rcbCurrency.SelectedValue, rcbCountry.SelectedValue, rcbCountry.Text.Replace(rcbCountry.SelectedValue + " - ", "")
                                 , RdpApprovedDate.SelectedDate, RdpOfferedUnit.SelectedDate, rdpExpiryDate.SelectedDate, RdpProposalDate.SelectedDate, RdpAvailableDate.SelectedDate
                                 ,tbIntLimitAmt.Text!=""? Convert.ToDecimal(tbIntLimitAmt.Text.Replace(",", "")):0, tbAdvisedAmt.Text!=""? Convert.ToDecimal(tbAdvisedAmt.Text.Replace(",", "")):0,0 ,
-                                tbNote.Text, rcbFandA.SelectedValue,tbMaxTotal.Text !=""?  Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, UserInfo.Username.ToString());
+                                tbNote.Text, rcbFandA.SelectedValue,tbMaxTotal.Text !=""?  Convert.ToDecimal(tbMaxTotal.Text.Replace(",", "")) : 0, UserInfo.Username.ToString()
+                                , tbMaxSecured.Text != "" ? Convert.ToDecimal(tbMaxSecured.Text.Replace(",", "")) : 0, tbMaxUnsecured.Text != "" ? Convert.ToDecimal(tbMaxUnsecured.Text.Replace(",", "")) : 0);
                             Response.Redirect("Default.aspx?tabid=192");
                         }
                         else { ShowMsgBox("Customer ID is not exists, Please check again !"); return; }
@@ -149,6 +150,8 @@ namespace BankProject.Views.TellerApplication
                 tbNote.Text = ds.Tables[0].Rows[0]["Note"].ToString();
                 rcbFandA.SelectedValue = ds.Tables[0].Rows[0]["Mode"].ToString();
                 tbMaxTotal.Text = ds.Tables[0].Rows[0]["MaxTotal"].ToString();
+                tbMaxSecured.Text = ds.Tables[0].Rows[0]["MaxUnSecured"].ToString();
+                tbMaxUnsecured.Text = ds.Tables[0].Rows[0]["MaxSecured"].ToString();
             }
         }
         protected void Load_SubLimit_DataToReview(string SubLimitID)
@@ -318,6 +321,9 @@ namespace BankProject.Views.TellerApplication
                 tbNote.Text = ds.Tables[0].Rows[0]["Note"].ToString();
                 rcbFandA.SelectedValue = ds.Tables[0].Rows[0]["Mode"].ToString();
                 tbMaxTotal.Text = ds.Tables[0].Rows[0]["MaxTotal"].ToString();
+                //Add 16 July 2015 for bug 52  Hien thi gia tri cho 2 field Maximum Secured va Maximum UnSecured
+                tbMaxSecured.Text = ds.Tables[0].Rows[0]["MaxSecured"].ToString();
+                tbMaxUnsecured.Text = ds.Tables[0].Rows[0]["MaxUnSecured"].ToString();
                 is_New_edit_hanMucCha = true;// cho phep enable form va disable collateral type
             }
             else // han muc cha chua co o DB, tao moi, khong disable form

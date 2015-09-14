@@ -66,7 +66,7 @@
             <td class="MyLable" style="padding:5px 0 5px 17px;"><b>Product Limit :</b></td>
             <td class="MyContent" style="padding:5px 0 5px 5px;">
                 <telerik:RadCombobox id="rcbGlobalLimit" runat="server" MarkFirstMatch="true" AlllowCustomtext="false" AppendDataboundItems="true" 
-                  width="40%"  OnClientSelectedIndexChanged="setID"  >
+                  width="40%"  OnClientSelectedIndexChanged="setID"  OnSelectedIndexChanged="rcbGlobalLimit_OnSelectedIndexChanged">
                             <CollapseAnimation Type="None" />
                             <ExpandAnimation Type="None" />
                                 <Items>                     
