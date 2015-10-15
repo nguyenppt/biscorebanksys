@@ -392,6 +392,7 @@ namespace BankProject.TradingFinance
                         {
                             VAT.TotalChargeAmountText = VAT.TotalChargeAmount.Value + VAT.ChargeCurrency;
                             VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, VAT.TotalChargeAmount.Value);
+                            VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, 38.5);
                         }
                         var cc3 = db.BDRFROMACCOUNTs.Where(p => p.Id.Equals(cc2.ChargeAcct)).FirstOrDefault();
                         if (cc3 != null)
