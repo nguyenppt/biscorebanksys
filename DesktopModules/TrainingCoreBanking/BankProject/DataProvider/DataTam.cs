@@ -302,33 +302,7 @@ namespace BankProject.DataProvider
                 return null;
             }
         }
-        public static DataSet BCATEGORY_GetAll_2()
-        {
-            DataSet dsInfo = new DataSet();
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConnectionString()))
-                {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand("BCATEGORY_GetAll_2", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    //cmd.Parameters.AddWithValue("@CVID", cvid);
-                    SqlDataAdapter adapt = new SqlDataAdapter(cmd);
-                    adapt.Fill(dsInfo);
-
-                    cmd.Dispose();
-                    conn.Close();
-
-                    return dsInfo;
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.WriteLine(ex);
-                return null;
-            }
-        }
-        public static DataSet B_BLCTYPES_GetAll()
+        public static DataSet B_BLCTYPES_GetAll(String type)
         {
             DataSet dsInfo = new DataSet();
             try
@@ -338,6 +312,7 @@ namespace BankProject.DataProvider
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("B_BLCTYPES_GetAll", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Type", type);
                     //cmd.Parameters.AddWithValue("@CVID", cvid);
                     SqlDataAdapter adapt = new SqlDataAdapter(cmd);
                     adapt.Fill(dsInfo);
