@@ -58,7 +58,7 @@ namespace BankProject
             rcbLCType.Items.Add(new RadComboBoxItem(""));
             rcbLCType.DataTextField = "LCTYPE";
             rcbLCType.DataValueField = "LCTYPE"; 
-            rcbLCType.DataSource = DataProvider.DataTam.B_BLCTYPES_GetAll();
+            rcbLCType.DataSource = DataProvider.DataTam.B_BLCTYPES_GetAll("Export");
             rcbLCType.DataBind();
 
             rcbCommodity.Items.Clear();
