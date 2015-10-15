@@ -61,6 +61,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
             bc.Commont.initRadComboBox(ref rcbCommodity, "Name", "ID", bd.SQLData.B_BCOMMODITY_GetByTransactionType("OTC"));
             bc.Commont.initRadComboBox(ref rcbBeneficiaryNumber, "CustomerName", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
+            bc.Commont.initRadComboBox(ref rcbLCType, "LCTYPE", "LCTYPE", bd.DataTam.B_BLCTYPES_GetAll("Export"));
             //
             if (!string.IsNullOrEmpty(Request.QueryString["Code"]))
             {
@@ -469,6 +470,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             ExLC.ReceivingLCVia = rcbReceivingLCVia.SelectedValue.Trim();
             ExLC.ImportLCCode = txtImportLCNo.Text.Trim();
+            ExLC.LCType = rcbLCType.SelectedValue;
             //
             ExLC.IssuingBankType = rcbIssuingBankType.SelectedValue.Trim();
             ExLC.IssuingBankNo = txtIssuingBankNo.Text.Trim();
@@ -1084,6 +1086,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
             txtCustomerName.Text = lc.ApplicantName;
             lblImportLCNoMessage.Text = lc.ApplicantName;*/
+        }
+
+        protected void rcbLCType_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+        {
+            var row = e.Item.DataItem as DataRowView;
+            e.Item.Attributes["LCTYPE"] = row["LCTYPE"].ToString();
+            e.Item.Attributes["Description"] = row["Description"].ToString();
+            e.Item.Attributes["Category"] = row["Category"].ToString();
+        }
+
+        protected void rcbLCType_SelectIndexChange(object sender, EventArgs e)
+        {
+            lblLCType.Text = rcbLCType.SelectedItem.Attributes["Description"].ToString();
         }
     }
 }

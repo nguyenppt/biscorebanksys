@@ -191,6 +191,65 @@
                         </td>
                     </tr>
                 </table>
+                
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="MyLable" style="width: 250px">LC Type <span class="Required">(*)</span>
+                            <asp:RequiredFieldValidator
+                                runat="server" Display="None"
+                                ID="RequiredFieldValidator21"
+                                ControlToValidate="rcbLCType"
+                                ValidationGroup="Commit"
+                                InitialValue=""
+                                ErrorMessage="LC Type is Required" ForeColor="Red">
+                            </asp:RequiredFieldValidator>
+                        </td>
+                        <td class="MyContent" style="width: 200px;">
+                            <telerik:RadComboBox
+                                AppendDataBoundItems="True"
+                                DropDownCssClass="KDDL"
+                                ID="rcbLCType" runat="server" Width="355"
+                                MarkFirstMatch="True"
+                                OnItemDataBound="rcbLCType_ItemDataBound"
+                                AutoPostBack="true"
+                                OnSelectedIndexChanged="rcbLCType_SelectIndexChange"
+                                AllowCustomText="false">
+                                <ExpandAnimation Type="None" />
+                                <CollapseAnimation Type="None" />
+                                <HeaderTemplate>
+                                    <table style="width: 305px" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td style="width: 60px;">LC Type 
+                                            </td>
+                                            <td style="width: 200px;">Description
+                                            </td>
+                                            <td>Category
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <table style="width: 305px" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td style="width: 60px;">
+                                                <%# DataBinder.Eval(Container.DataItem, "LCTYPE")%> 
+                                            </td>
+                                            <td style="width: 200px;">
+                                                <%# DataBinder.Eval(Container.DataItem, "Description")%> 
+                                            </td>
+                                            <td>
+                                                <%# DataBinder.Eval(Container.DataItem, "Category")%> 
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </ItemTemplate>
+                            </telerik:RadComboBox>
+                        </td>
+                        <td>
+                            <asp:Label ID="lblLCType" runat="server" /></td>
+                    </tr>
+                </table>
+
                 <table cellpadding="0" cellspacing="0">
                     <tr>
                         <td style="width: 250px" class="MyLable">20. Documentary Credit Number <span class="Required">(*)</span>
