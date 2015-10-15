@@ -1679,11 +1679,8 @@
             if (result) {
                 $("#<%=btnRegisterNhapNgoaiBang1.ClientID %>").click();
             }
-            if (chargeAmt > 0) {
-                setTimeout(function(){
-                    radconfirm("Do you want to download VAT file?", confirmCallbackVATRegister, 400, 150, null, 'Download');
-                },4000);
-            }
+         
+            radconfirm("Do you want to download VAT file?", confirmCallbackVATRegister, 400, 150, null, 'Download');
             //radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file to Collecting Bank?", confirmCallbackRegisterXNB1, 420, 150, null, 'Download');
         }
 
@@ -1691,7 +1688,7 @@
             clickCalledAfterRadconfirm = false;
             if (chargeAmt > 0) {
                 setTimeout(function(){
-                    radconfirm("Do you want to download VAT file?", confirmCallbackVATRegister, 400, 150, null, 'Download');
+                    radconfirm("Do you want to download VAT file?", confirmCallbackVATAccept, 400, 150, null, 'Download');
                 },1000);
             }
         }
@@ -1705,11 +1702,20 @@
                 radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file from Collecting Bank?", confirmCallbackRegisterNNB2, 420, 150, null, 'Download');
             },4000);
         }
+
+        //Fixed for bug 61 _ Accept and Register will not use same VAT template
         function confirmCallbackVATRegister(result) {
+            if (result) {
+                $("#<%=btnRegisterVATReport.ClientID %>").click();
+            }
+        }
+
+        function confirmCallbackVATAccept(result) {
             if (result) {
                 $("#<%=btnVATReport.ClientID %>").click();
             }
         }
+
         function confirmCallbackRegisterNNB2(result) {
             clickCalledAfterRadconfirm = false;
             if (result) {
@@ -1738,4 +1744,5 @@
 <div style="visibility:hidden;"><asp:Button ID="btnAmendNhapNgoaiBang" runat="server" OnClick="btnAmendNhapNgoaiBang_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnCancelPHIEUXUATNGOAIBANG" runat="server" OnClick="btnCancelPHIEUXUATNGOAIBANG_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnVATReport" runat="server" OnClick="btnVATReport_Click" Text="Search" /></div>
+<div style="visibility:hidden;"><asp:Button ID="btnRegisterVATReport" runat="server" OnClick="btnRegisterVATReport_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnCOVERReport" runat="server" OnClick="btnCOVERReport_Click" Text="Search" /></div>

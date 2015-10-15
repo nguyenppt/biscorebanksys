@@ -2929,6 +2929,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         }
 
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 07, 2015    Hien Nguyen       Fix bug 61 _ register and accept not use same VAT
+         */
         private void showReport(int reportType)
         {
             string reportTemplate = "~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/DocumentaryCollection/Export/";
@@ -2988,6 +2995,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_COVER_Report(txtCode.Text, UserInfo.Username);
                         reportData.Tables[0].TableName = "Table1";
                         break;
+
+                    //Fixed bug 61 start
+                    case 9://VAT of "register" fucntion
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterVAT.doc");
+                        saveName = "RegisterVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Register_Report(txtCode.Text, UserInfo.Username);
+                        break;
                 }
                 if (reportData != null)
                 {
@@ -3034,9 +3048,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             showReport(7);
         }
+
         protected void btnCOVERReport_Click(object sender, EventArgs e)
         {
             showReport(8);
+        }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            Oct 07, 2015    Hien Nguyen       Fix bug 61 _ register and accept not use same VAT
+         */
+        protected void btnRegisterVATReport_Click(object sender, EventArgs e)
+        {
+            showReport(9);
         }
     }
 }

@@ -148,6 +148,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             }
             return 0;
         }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Sep 12, 2015    Hien Nguyen       Fix bug 66 _ remove Exchange Rate
+         */
         protected void Authorize()
         {
 
@@ -159,7 +167,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 var drFromAccount = _entities.BDRFROMACCOUNTs.FirstOrDefault(q => q.Id == comboCreditAcct.SelectedValue);
                 if (drFromAccount != null)
                 {
-                    drFromAccount.Amount = drFromAccount.Amount + (decimal)(numExchangeRate.Value ?? 0) * (decimal)(numDrawingAmount.Value ?? 0);
+                    drFromAccount.Amount = drFromAccount.Amount; /*+ (decimal)(numExchangeRate.Value ?? 0) * (decimal)(numDrawingAmount.Value ?? 0);*/ //fixed bug 66
                 }
                 if (numDrawingAmount.Value == doc.Amount - double.Parse(lblCreditAmount.Text))
                 {
@@ -199,6 +207,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             }
             return true;
         }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Sep 12, 2015    Hien Nguyen       Fix bug 65 _ remove Payment Method 
+         * 0.3            Sep 12, 2015    Hien Nguyen       Fix bug 66 _ remove Exchange Rate 
+         */
         private void SavePayment()
         {
 
@@ -214,7 +231,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.AmtCredited = double.Parse(lblCreditAmount.Text);
                 outCoPayment.Status = "UNA";
                 outCoPayment.CreateBy = UserId.ToString();
-                outCoPayment.PaymentMethod = comboPaymentMethod.SelectedValue;
+                //outCoPayment.PaymentMethod = comboPaymentMethod.SelectedValue; //fixed bug 65
                 outCoPayment.PaymentRemarks1 = txtPaymentRemarks1.Text;
                 outCoPayment.PaymentRemarks2 = txtPaymentRemarks2.Text;
                 outCoPayment.CollectionPaymentCode = txtCode.Text.Substring(0, 14);
@@ -222,7 +239,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.Currency = comboCreditCurrency.SelectedValue;
                 outCoPayment.DrawType = comboDrawType.SelectedValue;
                 outCoPayment.DrawingAmount = numDrawingAmount.Value;
-                outCoPayment.ExchRate = numExchangeRate.Value;
+                //outCoPayment.ExchRate = numExchangeRate.Value; //fixed bug 66
                 outCoPayment.IncreaseMental = 0;
                 outCoPayment.Currency = comboCurrency.SelectedValue;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
@@ -236,7 +253,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.ValueDate = dtValueDate.SelectedDate;
                 outCoPayment.AmtCredited = double.Parse(lblCreditAmount.Text);
                 outCoPayment.UpdatedBy = UserId.ToString();
-                outCoPayment.PaymentMethod = comboPaymentMethod.SelectedValue;
+                //outCoPayment.PaymentMethod = comboPaymentMethod.SelectedValue; //fixed bug 65
                 outCoPayment.PaymentRemarks1 = txtPaymentRemarks1.Text;
                 outCoPayment.PaymentRemarks2 = txtPaymentRemarks2.Text;
                 outCoPayment.CollectionPaymentCode = txtCode.Text.Substring(0, 14);
@@ -245,7 +262,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.DrawType = comboDrawType.SelectedValue;
                 outCoPayment.DrawingAmount = numDrawingAmount.Value;
                 outCoPayment.CountryCode = comboCountryCode.SelectedValue;
-                outCoPayment.ExchRate = numExchangeRate.Value;
+                //outCoPayment.ExchRate = numExchangeRate.Value; //fixed bug 66
                 outCoPayment.IncreaseMental = 0;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
             }
@@ -253,6 +270,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             SaveCharges();
         }
 
+        /*
+        * Method Revision History:
+        * Version        Date            Author            Comment
+        * ----------------------------------------------------------
+        * 0.1            NA
+        * 0.2            Sep 12, 2015    Hien Nguyen       Fix bug 46 _ remove nostro Account 
+        */
         private void LoadMT910()
         {
             var mt910 = _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.FirstOrDefault(q => q.PaymentId == CodeId);
@@ -262,7 +286,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtRelatedRef.Text = mt910.RelatedReference;
                 txtAccountIndentification.Text = mt910.AccountIndentification;
                 dtValueDateMt910.SelectedDate = mt910.ValueDate;
-                comboCurrencyMt910.SelectedValue = mt910.Currency;
+                //fixed bug 46 get value of currency from tab Main
+                comboCurrencyMt910.SelectedValue = comboCurrency.SelectedValue;
                 numAmountMt910.Value = (double)(mt910.Amount??0);
                 txtOrderingInstitutionName.Text = mt910.OrderingInstitutionName;
                 txtOrderingInstitutionAddress1.Text = mt910.OrderingInstitutionAddress1;
@@ -274,10 +299,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtIntermediaryAddress3.Text = mt910.IntermediaryAddress3;
                 txtSendMessage.Text = mt910.SendMessage;
                 //cboNostroAcct.SelectedValue = mt910.NostroAccount;
-                cbNostroAccount.SelectedValue = mt910.NostroAccount;
-                lblNostro.Text = cbNostroAccount.SelectedItem.Attributes["Code"] + " - " + cbNostroAccount.SelectedItem.Attributes["Description"];
+                //Fixed bug 46
+                //cbNostroAccount.SelectedValue = mt910.NostroAccount;
+                //lblNostro.Text = cbNostroAccount.SelectedItem.Attributes["Code"] + " - " + cbNostroAccount.SelectedItem.Attributes["Description"];
             }
         }
+
+        /*
+        * Method Revision History:
+        * Version        Date            Author            Comment
+        * ----------------------------------------------------------
+        * 0.1            NA
+        * 0.2            Sep 12, 2015    Hien Nguyen       Fix bug 46 _ remove Nostro Account
+        */
         private void SaveMT910()
         {
             var mt910 = _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.FirstOrDefault(q => q.PaymentId == txtCode.Text);
@@ -302,7 +336,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 mt910.IntermediaryAddress3 = txtIntermediaryAddress3.Text;
                 mt910.SendMessage = txtSendMessage.Text;
                 //mt910.NostroAccount = cboNostroAcct.SelectedValue;
-                mt910.NostroAccount = cbNostroAccount.SelectedValue;
+                //mt910.NostroAccount = cbNostroAccount.SelectedValue;  //fixed bug 46
                 _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.Add(mt910);
             }
             else
@@ -321,7 +355,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 mt910.IntermediaryAddress1 = txtIntermediaryAddress1.Text;
                 mt910.IntermediaryAddress2 = txtIntermediaryAddress2.Text;
                 mt910.IntermediaryAddress3 = txtIntermediaryAddress3.Text;
-                mt910.NostroAccount = cbNostroAccount.SelectedValue;
+                //mt910.NostroAccount = cbNostroAccount.SelectedValue; //fixed bug 46
                 mt910.SendMessage = txtSendMessage.Text;
             }
             _entities.SaveChanges();
@@ -406,38 +440,59 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     tbChargeAmt4.Text, rcbPartyCharged4.SelectedValue,
                     rcbOmortCharge4.SelectedValue, rcbChargeStatus4.SelectedValue,
                     tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode4.Text, lblTaxAmt4.Text, "4");
-            } if (!string.IsNullOrWhiteSpace(tbChargeAmt5.Text))
-            {
-                UpsertCharge(comboWaiveCharges.SelectedValue, tbChargeCode5.SelectedValue,
-                    rcbChargeAcct5.SelectedValue, rcbChargeCcy5.SelectedValue,
-                    tbChargeAmt5.Text, rcbPartyCharged5.SelectedValue,
-                    rcbOmortCharge5.SelectedValue, rcbChargeStatus5.SelectedValue,
-                    tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode5.Text, lblTaxAmt5.Text, "5");
-            }
-            if (!string.IsNullOrWhiteSpace(tbChargeAmt6.Text))
-            {
-                UpsertCharge(comboWaiveCharges.SelectedValue, tbChargeCode6.SelectedValue,
-                    rcbChargeAcct6.SelectedValue, rcbChargeCcy6.SelectedValue,
-                    tbChargeAmt6.Text, rcbPartyCharged6.SelectedValue,
-                    rcbOmortCharge6.SelectedValue, rcbChargeStatus6.SelectedValue,
-                    tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode6.Text, lblTaxAmt4.Text, "6");
-            }
+            } 
 
+            //Comment code to fix bug 47 start
+            //if (!string.IsNullOrWhiteSpace(tbChargeAmt5.Text))
+            //{
+            //    UpsertCharge(comboWaiveCharges.SelectedValue, tbChargeCode5.SelectedValue,
+            //        rcbChargeAcct5.SelectedValue, rcbChargeCcy5.SelectedValue,
+            //        tbChargeAmt5.Text, rcbPartyCharged5.SelectedValue,
+            //        rcbOmortCharge5.SelectedValue, rcbChargeStatus5.SelectedValue,
+            //        tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode5.Text, lblTaxAmt5.Text, "5");
+            //}
+            //if (!string.IsNullOrWhiteSpace(tbChargeAmt6.Text))
+            //{
+            //    UpsertCharge(comboWaiveCharges.SelectedValue, tbChargeCode6.SelectedValue,
+            //        rcbChargeAcct6.SelectedValue, rcbChargeCcy6.SelectedValue,
+            //        tbChargeAmt6.Text, rcbPartyCharged6.SelectedValue,
+            //        rcbOmortCharge6.SelectedValue, rcbChargeStatus6.SelectedValue,
+            //        tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode6.Text, lblTaxAmt4.Text, "6");
+            //}
+            //comment code to fix bug 47 ends
         }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 03, 2015    Hien Nguyen       Fix bug 65 _ remove Payment Method 
+         * 0.3            Oct 03, 2015    Hien Nguyen       Fix bug 66 _ remove Exchange Rate 
+         */
         void LoadPaymentDetail(BOUTGOINGCOLLECTIONPAYMENT outColPayment)
         {
-            comboDrawType.SelectedValue = outColPayment.DrawType;
+            var exportDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == outColPayment.CollectionPaymentCode);
+            if (exportDoc.CollectionType.Equals("DP"))
+            {
+                comboDrawType.SelectedValue = "SP";
+            }
+            else
+            {
+                comboDrawType.SelectedValue = "MA";
+            }
+            //comboDrawType.SelectedValue = outColPayment.DrawType;
             lblDrawType.Text = comboDrawType.SelectedItem.Attributes["Description"];
             dtValueDate.SelectedDate = outColPayment.ValueDate;
             numDrawingAmount.Value = outColPayment.DrawingAmount;
             comboCountryCode.SelectedValue = outColPayment.CountryCode;
             lblCreditAmount.Text = (outColPayment.AmtCredited??0).ToString("#,##0.00");
-            comboPaymentMethod.SelectedValue = outColPayment.PaymentMethod;
+            //comboPaymentMethod.SelectedValue = outColPayment.PaymentMethod; //fixed bug 65
             comboCreditCurrency.SelectedValue = outColPayment.Currency;
             LoadCreditAccount();
             comboCreditAcct.SelectedValue = outColPayment.CreditAccount;
             loadNostroAccount();
-            numExchangeRate.Value = outColPayment.ExchRate;
+            //numExchangeRate.Value = outColPayment.ExchRate; //fixed bug 66
             txtPaymentRemarks1.Text = outColPayment.PaymentRemarks1;
             txtPaymentRemarks2.Text = outColPayment.PaymentRemarks2;
             LoadCharges();
@@ -604,6 +659,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             var lstCharges =
                 _entities.BOUTGOINGCOLLECTIONPAYMENTCHARGES.Where(q => q.CollectionPaymentCode == txtCode.Text);
             #region tab Charge
+
+            
+
             if (lstCharges.Any(q=>q.Rowchages == "1"))
             {
                 var charge = lstCharges.FirstOrDefault(q => q.Rowchages == "1");
@@ -643,6 +701,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //tbExcheRate.Text = string.Empty;
                 tbChargeAmt.Text = string.Empty;
                 rcbPartyCharged.SelectedValue = "A";
+                
                 lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
                 rcbOmortCharge.SelectedValue = string.Empty;
                 rcbChargeStatus.SelectedValue = string.Empty;
@@ -793,6 +852,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblPartyCharged4.Text = string.Empty;
                 //lblChargeStatus4.Text = string.Empty;
             }
+            //comment code to fix bug 47 start
+            /*
             if (lstCharges.Any(q => q.Rowchages == "5"))
             {
                 var charge = lstCharges.FirstOrDefault(q => q.Rowchages == "5");
@@ -882,6 +943,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblPartyCharged6.Text = string.Empty;
                 //lblChargeStatus6.Text = string.Empty;
             }
+            */
+            //comment code to fix bug 47 end
+
             #endregion
         }
         protected void LoadExpDoc(BEXPORT_DOCUMETARYCOLLECTION expDoc)
@@ -1046,7 +1110,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged4.SelectedValue = "A";
             lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
 
-
+            //comment code to fix bug 47 start
+            /*
             rcbPartyCharged5.Items.Clear();
             rcbPartyCharged5.DataValueField = "Id";
             rcbPartyCharged5.DataTextField = "Id";
@@ -1063,6 +1128,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged6.DataBind();
             rcbPartyCharged6.SelectedValue = "BB";
             lblPartyCharged6.Text = rcbPartyCharged6.SelectedItem.Attributes["Description"];
+            */
+            //comment code to fix bug 47 ends
         }
         protected void LoadChargeCode()
         {
@@ -1096,6 +1163,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             tbChargeCode4.DataSource = datasource;
             tbChargeCode4.DataBind();
 
+            //comment code to fix bug 47 start
+            /*
             tbChargeCode5.Items.Clear();
             tbChargeCode5.Items.Add(new RadComboBoxItem(""));
             tbChargeCode5.DataValueField = "Code";
@@ -1109,7 +1178,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             tbChargeCode6.DataTextField = "Code";
             tbChargeCode6.DataSource = datasource;
             tbChargeCode6.DataBind();
+             */
+            //comment code to fix bug 47 end
         }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 03, 2015    Hien Nguyen       Fix bug 65 _ remove Payment Method 
+         */
         protected void InitDefaultData()
         {
             foreach (RadToolBarItem item in mainToolbar.Items)
@@ -1127,14 +1206,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             divDocsCode2.Visible = false;
             divDocsCode3.Visible = false;
 
+            //fixed bug 65 start
             // bind payment method
-            comboPaymentMethod.Items.Clear();
-            comboPaymentMethod.DataValueField = "Code";
-            comboPaymentMethod.DataTextField = "Description";
-            comboPaymentMethod.DataSource = _entities.BPAYMENTMETHODs.ToList();
-            comboPaymentMethod.DataBind();
-            lblPaymentMethod.Text = comboPaymentMethod.SelectedItem.Attributes["Description"];
-
+            //comboPaymentMethod.Items.Clear();
+            //comboPaymentMethod.DataValueField = "Code";
+            //comboPaymentMethod.DataTextField = "Description";
+            //comboPaymentMethod.DataSource = _entities.BPAYMENTMETHODs.ToList();
+            //comboPaymentMethod.DataBind();
+            //lblPaymentMethod.Text = comboPaymentMethod.SelectedItem.Attributes["Description"];
+            //fixed bug 65 ends
             
 
             //bind draw type
@@ -1215,10 +1295,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             tbChargeCode3.Enabled = false;
             tbChargeCode4.SelectedValue = "EC.PAYMENT";
             tbChargeCode4.Enabled = false;
-            tbChargeCode5.SelectedValue = "EC.OVERSEASPLUS";
-            tbChargeCode5.Enabled = false;
-            tbChargeCode6.SelectedValue = "EC.OVERSEASMINUS";
-            tbChargeCode6.Enabled = false;
+
+            //comment code to fix bug 47
+            //tbChargeCode5.SelectedValue = "EC.OVERSEASPLUS";
+            //tbChargeCode5.Enabled = false;
+            //tbChargeCode6.SelectedValue = "EC.OVERSEASMINUS";
+            //tbChargeCode6.Enabled = false;
+
+            rcbPartyCharged.Enabled = false;
+            rcbPartyCharged2.Enabled = false;
+            rcbPartyCharged3.Enabled = false;
+            rcbPartyCharged4.Enabled = false;
+
+            //coment code to fix bug 47
+            //rcbPartyCharged5.Enabled = false;
+            //rcbPartyCharged6.Enabled = false;
+
+            //rcbChargeAcct5.Enabled = false;
+            //rcbChargeAcct6.Enabled = false;
 
             var curList = _entities.BCURRENCies.ToList();
             bc.Commont.initRadComboBox(ref comboCreditCurrency, "Code", "Code", curList);
@@ -1267,17 +1361,33 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             lblDrawType.Text = comboDrawType.SelectedItem.Attributes["Description"];
         }
-        protected void comboPaymentMethod_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 03, 2015    Hien Nguyen       Fix bug 65 _ remove Payment Method 
+         */
+        /*protected void comboPaymentMethod_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             var row = e.Item.DataItem as BPAYMENTMETHOD;
             e.Item.Attributes["Code"] = row.Code;
             e.Item.Attributes["Description"] = row.Description;
-        }
-        protected void comboPaymentMethod_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        }*/
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 03, 2015    Hien Nguyen       Fix bug 65 _ remove Payment Method 
+         */
+       /* protected void comboPaymentMethod_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             
             lblPaymentMethod.Text = comboPaymentMethod.SelectedItem.Attributes["Description"];
-        }
+        }*/
 
         protected void cbNostroAccount_DataBound(object sender, EventArgs e)
         {
@@ -1359,6 +1469,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
             CalcTax4();
         }
+
+        //coment code to fix bug 47 start
+        /*
         protected void rcbPartyCharged5_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             lblPartyCharged5.Text = rcbPartyCharged5.SelectedItem.Attributes["Description"];
@@ -1369,6 +1482,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             lblPartyCharged5.Text = rcbPartyCharged6.SelectedItem.Attributes["Description"];
             CalcTax6();
         }
+         * */
+        //coment code to fix bug 47 end
+
         protected void rcbChargeStatus2_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             lblChargeStatus2.Text = rcbChargeStatus2.SelectedValue.ToString();
@@ -1395,12 +1511,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void rcbChargeCcy5_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct5();
+            //LoadChargeAcct5();
         }
 
         protected void rcbChargeCcy6_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            LoadChargeAcct6();
+            //LoadChargeAcct6();
         }
 
         protected void rcbChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -1460,6 +1576,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             CalcTax4();
         }
+        
+        //comment code to fix bug 47 start
+        /*
         protected void tbChargeAmt5_TextChanged(object sender, EventArgs e)
         {
             CalcTax5();
@@ -1468,7 +1587,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             CalcTax6();
         }
-
+        */
+        //comment code to fix bug 47 end
+ 
         protected void rcbPartyCharged_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
             var row = e.Item.DataItem as DataRowView;
@@ -1575,6 +1696,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblTaxCode4.Text = "";
             }
         }
+
+        //comment code to fix bug 47 start
+        /*
         protected void CalcTax5()
         {
 
@@ -1609,6 +1733,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 lblTaxCode6.Text = "";
             }
         }
+        */
+        //comment code to fix bug 47 end
+
         protected void LoadChargeAcct()
         {
             rcbChargeAcct.Items.Clear();
@@ -1648,6 +1775,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct4.DataBind();
         }
 
+        //Comment code to fix bug 47 start
+        /*
         protected void LoadChargeAcct5()
         {
             rcbChargeAcct5.Items.Clear();
@@ -1667,6 +1796,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbChargeAcct6.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(comboDrawerCusNo.SelectedItem != null ? comboDrawerCusNo.SelectedItem.Attributes["CustomerName2"] : "XXXXX", rcbChargeCcy6.SelectedValue);
             rcbChargeAcct6.DataBind();
         }
+        */
+        //comment code to fix bug 47 end
 
         protected void GenerateVatNo()
         {
@@ -1700,6 +1831,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         reportTemplate = Context.Server.MapPath(reportTemplate + "PaymentVAT.doc");
                         reportSaveName = "VAT" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         break;
+                    case 3://Phieu xaut ngoai bang
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "PaymentPHIEUXUATNGOAIBANG.doc");
+                        reportSaveName = "PhieuXuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        break;
                 }
                 if (reportData != null)
                 {
@@ -1728,13 +1863,32 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             showReport(2);
         }
 
+
+        /*
+        * Method Revision History:
+        * Version        Date            Author            Comment
+        * ----------------------------------------------------------
+        * 0.1            Sep 30, 2015    Hien Nguyen       Fix bug 50 _ report phieu xuat ngoai bang
+        */
+        protected void btnReportPhieuXuatNgoaiBang_Click(object sender, EventArgs e)
+        {
+            showReport(3);
+        }
+
+        /*
+        * Method Revision History:
+        * Version        Date            Author            Comment
+        * ----------------------------------------------------------
+        * 0.1            NA
+        * 0.2            Sep 30, 2015    Hien Nguyen       Fix bug 46 _ remove Nostro Account field
+        */
         protected void cboNostroAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
-            var row = e.Item.DataItem as DataRowView;
-            if (row == null) return;
-            e.Item.Attributes["Code"] = row["Code"].ToString();
-            e.Item.Attributes["Description"] = row["Description"].ToString();
-            e.Item.Attributes["Account"] = row["AccountNo"].ToString();
+            //var row = e.Item.DataItem as DataRowView;
+            //if (row == null) return;
+            //e.Item.Attributes["Code"] = row["Code"].ToString();
+            //e.Item.Attributes["Description"] = row["Description"].ToString();
+            //e.Item.Attributes["Account"] = row["AccountNo"].ToString();
         }
 
         private void loadNostroAccount(){

@@ -43,6 +43,15 @@
             if (result) {
                 $("#<%=btnReportVATb.ClientID %>").click();
             }
+            radconfirm("Do you want to download PHIEU XUAT NGOAI BANG ?", confirmCallbackFunction_PhieuXuatNgoaiBang, 420, 150, null, 'Download');
+        }
+
+        
+        function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
+            clickCalledAfterRadconfirm = false;
+            if(result) {
+                $("#<%=btnReportPhieuXuatNgoaiBang.ClientID %>").click();
+            }
         }
     </script>
 </telerik:radcodeblock>
@@ -179,7 +188,9 @@
                     </tr>
                 </tbody>
             </table>
-            <table width="100%" cellpadding="0" cellspacing="0">
+
+            <%-- Hien Nguyen _ comment code to fix bug 65 start --%>
+            <%--<table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">1.6 Payment Method
                     </td>
@@ -221,7 +232,9 @@
                     </td>
                 </tr>
 
-            </table>
+            </table>--%>
+            <%-- Hien Nguyen _ comment code to fix bug 65 ends --%>
+
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="MyLable">1.7 Credit Currency<span class="Required"> (*)</span></td>
@@ -332,13 +345,17 @@
                                 </telerik:radcombobox>
                     </td>
                 </tr>
-                <tr>
+
+                <%-- Hien Nguyen fixed bug 66 start --%>
+              <%--  <tr>
                     <td class="MyLable">1.10 Exchange Rate
                     </td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="numExchangeRate" runat="server" />
                     </td>
-                </tr>
+                </tr>--%>
+                <%-- Hien Nguyen fixed bug 66 ends --%>
+
                 <tr>
                     <td class="MyLable">1.11 Payment Remarks</td>
                     <td class="MyContent">
@@ -347,7 +364,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">1.12 Payment Remarks</td>
+                    <td class="MyLable"></td>
                     <td class="MyContent">
                         <telerik:radtextbox id="txtPaymentRemarks2" runat="server" width="355" />
                     </td>
@@ -936,24 +953,25 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Transaction Reference Number</td>
+                    <td class="MyLable">20. Transaction Reference Number</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtTransactionRefNumber" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Related Reference</td>
+                    <td class="MyLable">21. Related Reference</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtRelatedRef" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Account Indentification</td>
+                    <td class="MyLable">25. Account Indentification</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtAccountIndentification" runat="server" Width="300" />
                     </td>
                 </tr>
-                <tr>
+                <%-- remove Nostro Acct to fix bug 46 --%>
+               <%-- <tr>
                     <td class="MyLable">Nostro Acct</td>
                     <td class="MyContent">
                         <telerik:radcombobox autopostback="false"
@@ -965,20 +983,21 @@
                             <CollapseAnimation Type="None" />                            
                         </telerik:radcombobox>
                         <asp:Label ID="lblNostroAcctName" runat="server" /></td>
-                </tr>
+                </tr>--%>
                 <tr>
-                    <td class="MyLable">Value Date</td>
+                    <td class="MyLable">32A. Value Date</td>
                     <td class="MyContent">
                         <telerik:raddatepicker id="dtValueDateMt910" runat="server" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Currency</td>
+                    <td class="MyLable">32A. Currency</td>
                     <td class="MyContent">
                         <telerik:radcombobox
                             id="comboCurrencyMt910" runat="server"
                             markfirstmatch="True" width="150"
-                            allowcustomtext="false">
+                            allowcustomtext="false"
+                            Enabled ="false">
                                         <ExpandAnimation Type="None" />
                                         <CollapseAnimation Type="None" />
                                         <Items>
@@ -993,61 +1012,61 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Amount</td>
+                    <td class="MyLable">32A. Amount</td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="numAmountMt910" runat="server" value="0" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Ordering Institution Name</td>
+                    <td class="MyLable">52A. Ordering Institution Name</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtOrderingInstitutionName" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Ordering Institution Address 1</td>
+                    <td class="MyLable" style="padding-left:30px;">Address 1</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtOrderingInstitutionAddress1" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Ordering Institution Address 2</td>
+                    <td class="MyLable" style="padding-left:30px;">Address 2</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtOrderingInstitutionAddress2" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Ordering Institution Address 3</td>
+                    <td class="MyLable" style="padding-left:30px;">Address 3</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtOrderingInstitutionAddress3" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Intermediary Name</td>
+                    <td class="MyLable">56A. Intermediary Name</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtIntermediaryName" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Intermediary Address 1</td>
+                    <td class="MyLable" style="padding-left:30px;">Address 1</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtIntermediaryAddress1" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Intermediary Address 2</td>
+                    <td class="MyLable" style="padding-left:30px;">Address 2</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtIntermediaryAddress2" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Intermediary Address 3</td>
+                    <td class="MyLable" style="padding-left:30px;">Address 3</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtIntermediaryAddress3" runat="server" Width="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Sender to Receiver Information</td>
+                    <td class="MyLable">72. Sender to Receiver Information</td>
                     <td class="MyContent">
                         <asp:TextBox ID="txtSendMessage" runat="server" Width="500" TextMode="MultiLine" />
                     </td>
@@ -1102,10 +1121,11 @@
                 </telerik:RadTab>
                 <telerik:RadTab Text="Payment Charge">
                 </telerik:RadTab>
-                <telerik:RadTab Text="Overseas Plus Charge">
+                <%-- hide to fix bug 47 --%>
+                <%--<telerik:RadTab Text="Overseas Plus Charge">
                 </telerik:RadTab>
                 <telerik:RadTab Text="Overseas Minus Charge">
-                </telerik:RadTab>
+                </telerik:RadTab>--%>
             </Tabs>
         </telerik:radtabstrip>
             <telerik:radmultipage runat="server" id="RadMultiPage1" selectedindex="0">
@@ -1777,7 +1797,8 @@
                 </div>
             </telerik:RadPageView>
 
-            <telerik:RadPageView runat="server" ID="RadPageView5" >
+            <%-- Hide tabs to fix bug 47 start --%>
+            <%--<telerik:RadPageView runat="server" ID="RadPageView5" >
                 <div runat="server" ID="divOverseasPlusCharge">
 	                <table width="100%" cellpadding="0" cellspacing="0">
                         <tr>
@@ -1861,7 +1882,7 @@
                         <tr>
                             <td class="MyLable">Party Charged</td>
                             <td class="MyContent" >
-                                <telerik:RadComboBox 
+                                <telerik:RadComboBox
                                     AutoPostBack="True"
                                     OnSelectedIndexChanged="rcbPartyCharged5_SelectIndexChange"
                                     OnItemDataBound="rcbPartyCharged5_ItemDataBound"
@@ -2109,7 +2130,8 @@
 			                </tr>
 	                </table>
                  </div>
-            </telerik:RadPageView>
+            </telerik:RadPageView>--%>
+            <%-- Hide tab to fix bug 47 end --%>
         </telerik:radmultipage>
         </fieldset>
     </div>
@@ -2136,11 +2158,15 @@
                 <telerik:AjaxUpdatedControl ControlID="lblDrawType" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-         <telerik:AjaxSetting AjaxControlID="comboPaymentMethod">
+
+        <%-- Hien Nguyen fixed bug 65 start --%>
+         <%--<telerik:AjaxSetting AjaxControlID="comboPaymentMethod">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblPaymentMethod" />
             </UpdatedControls>
-        </telerik:AjaxSetting>
+        </telerik:AjaxSetting>--%>
+        <%-- Hien Nguyen fixed bug 65 ends --%>
+
         <telerik:AjaxSetting AjaxControlID="comboCreditCurrency">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="comboCreditAcct" />
@@ -2244,4 +2270,7 @@
 </div>
 <div style="visibility: hidden;">
     <asp:Button ID="btnReportVATb" runat="server" OnClick="btnReportVATb_Click" Text="VATb" />
+</div>
+<div style="visibility: hidden;">
+    <asp:Button ID="btnReportPhieuXuatNgoaiBang" runat="server" OnClick="btnReportPhieuXuatNgoaiBang_Click" Text="PhieuXuatNgoaiBang" />
 </div>
