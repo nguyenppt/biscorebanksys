@@ -25,7 +25,7 @@ namespace BankProject
             comboLCType.Items.Clear();
             comboLCType.DataTextField = "LCTYPE";
             comboLCType.DataValueField = "LCTYPE";
-            comboLCType.DataSource = DataProvider.DataTam.B_BLCTYPES_GetAll();
+            comboLCType.DataSource = DataProvider.DataTam.B_BLCTYPES_GetAll("Import");
             comboLCType.DataBind();
             //var result = dtB_BOperation.Select("Code = " + comboOperation.SelectedValue);
             //if (result.Length > 0)
