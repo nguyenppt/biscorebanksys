@@ -1246,6 +1246,17 @@ namespace BankProject.DataProvider
                                        authorizedBy, screenType);
         }
 
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            Oct 07, 2015    Hien Nguyen       Fix bug 80 
+         */
+        public static DataSet B_BDRFROMACCOUNT_GetByCusIDAndCurrency(string name, string currencyCode)
+        {
+            return sqldata.ndkExecuteDataset("B_BDRFROMACCOUNT_GetByCusIDAndCurrency", name, currencyCode);
+        }
+
         public static DataSet B_BDRFROMACCOUNT_GetByCurrency(string name, string currencyCode)
         {
             return sqldata.ndkExecuteDataset("B_BDRFROMACCOUNT_GetByCurrency", name, currencyCode);
