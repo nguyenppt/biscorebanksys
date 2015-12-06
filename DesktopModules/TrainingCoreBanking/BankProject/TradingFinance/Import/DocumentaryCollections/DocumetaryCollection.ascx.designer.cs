@@ -724,6 +724,15 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadTextBox txtRelatedReference;
         
         /// <summary>
+        /// dteMaturityDateMT412 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dteMaturityDateMT412;
+        
+        /// <summary>
         /// comboCurrency_TabMT410 control.
         /// </summary>
         /// <remarks>

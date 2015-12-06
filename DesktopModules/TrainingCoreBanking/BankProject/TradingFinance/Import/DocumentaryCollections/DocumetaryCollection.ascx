@@ -977,6 +977,14 @@
                 </td>
             </tr>
 
+             <tr>
+                <td class="MyLable">32. Maturity Date</td>
+                <td class="MyContent">
+                    <telerik:RadDatePicker ID="dteMaturityDateMT412" runat="server" AutoPostBack="True"
+                        OnSelectedDateChanged="dteMaturityDateMT412_SelectedDateChanged" />
+                </td>
+            </tr>
+
             <tr>
                 <td class="MyLable">Currency Code</td>
                 <td class="MyContent">
@@ -1560,6 +1568,12 @@
             </UpdatedControls>
         </telerik:AjaxSetting>
 
+        <telerik:AjaxSetting AjaxControlID="dteMaturityDateMT412">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="dteMaturityDate" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
         <telerik:AjaxSetting AjaxControlID="numAmount">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="numAmount_TabMT410" />
@@ -1595,6 +1609,7 @@
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_1" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_2" />
                 <telerik:AjaxUpdatedControl ControlID="txtSenderToReceiverInfo_410_3" />
+                <telerik:AjaxUpdatedControl ControlID="dteMaturityDateMT412" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>

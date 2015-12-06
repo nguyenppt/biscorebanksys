@@ -157,6 +157,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     txtSenderToReceiverInfo_410_1.Enabled = true;
                     txtSenderToReceiverInfo_410_2.Enabled = true;
                     txtSenderToReceiverInfo_410_3.Enabled = true;
+                    dteMaturityDateMT412.Enabled = true;
                     //txtSenderToReceiverInfo.SetEnable(true);
                 }
                 
@@ -557,6 +558,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             }
         }
 
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 22, 2015    Hien Nguyen       Fix bug 80, 81
+         */
         protected void LoadData(ref DataRow drowDocColl)
         {
             // neu FT = null thì ko get data
@@ -920,7 +928,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             #endregion
 
             #region tab MT410
-            if (dsDoc.Tables[3].Rows.Count > 0 && !isMT412Active)
+            if (dsDoc.Tables[3].Rows.Count > 0 && isMT412Active)
             {
                 var drowMT410 = dsDoc.Tables[3].Rows[0];
 
@@ -937,6 +945,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtSenderToReceiverInfo_410_1.Text = drowMT410["SenderToReceiverInfo1"].ToString();
                 txtSenderToReceiverInfo_410_2.Text = drowMT410["SenderToReceiverInfo2"].ToString();
                 txtSenderToReceiverInfo_410_3.Text = drowMT410["SenderToReceiverInfo3"].ToString();
+
+                dteMaturityDateMT412.SelectedDate = dteMaturityDate.SelectedDate;
             }
             else if (dsDoc.Tables[4].Rows.Count > 0 && isMT412Active)//MT412
             {
@@ -1341,6 +1351,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             SetRelation_CreateMT410();
         }
 
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 22, 2015    Hien Nguyen       Fix bug 80
+         */
         protected void SetRelation_CreateMT410()
         {
             if (comboCreateMT410.SelectedValue.ToLower() == "yes")
@@ -1349,6 +1366,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRelatedReference.Enabled = true;
                 comboCurrency_TabMT410.Enabled = true;
                 numAmount_TabMT410.Enabled = true;
+                dteMaturityDateMT412.Enabled = true;
                 //txtSenderToReceiverInfo.SetEnable(true);
             }
             else
@@ -1357,6 +1375,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRelatedReference.Enabled = false;
                 comboCurrency_TabMT410.Enabled = false;
                 numAmount_TabMT410.Enabled = false;
+                dteMaturityDateMT412.Enabled = false;
                 //txtSenderToReceiverInfo.SetEnable(false);
             }
         }
@@ -1976,6 +1995,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             return true;
         }
 
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 22, 2015    Hien Nguyen       Fix bug 80
+         */
         protected void DisabledTab410(bool flag)
         {
             comboCreateMT410.Enabled = flag;
@@ -1987,6 +2013,18 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             txtSenderToReceiverInfo_410_1.Enabled = flag;
             txtSenderToReceiverInfo_410_2.Enabled = flag;
             txtSenderToReceiverInfo_410_3.Enabled = flag;
+            dteMaturityDateMT412.Enabled = flag;
+        }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.21           Oct 22, 2015    Hien Nguyen       Fix bug 80
+         */
+        protected void dteMaturityDateMT412_SelectedDateChanged(object sender, EventArgs e)
+        {
+            dteMaturityDate.SelectedDate = ((SelectedDateChangedEventArgs)e).NewDate;
         }
     }
 }
