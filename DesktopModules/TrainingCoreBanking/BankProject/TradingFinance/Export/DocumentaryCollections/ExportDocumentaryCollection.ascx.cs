@@ -2723,42 +2723,72 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 loadNostroDes();
             }
         }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 07, 2015    Hien Nguyen       Fix bug 83
+         */
         protected void LoadChargeAcct()
         {
             rcbChargeAcct.Items.Clear();
             rcbChargeAcct.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct.DataValueField = "Id";
             rcbChargeAcct.DataTextField = "Id";
-            rcbChargeAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, rcbChargeCcy.SelectedValue);
+            rcbChargeAcct.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCusIDAndCurrency(comboDrawerCusNo.SelectedValue, rcbChargeCcy.SelectedValue);
             rcbChargeAcct.DataBind();
         }
 
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 07, 2015    Hien Nguyen       Fix bug 83
+         */
         protected void LoadChargeAcct2()
         {
             rcbChargeAcct2.Items.Clear();
             rcbChargeAcct2.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct2.DataValueField = "Id";
             rcbChargeAcct2.DataTextField = "Id";
-            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, rcbChargeCcy2.SelectedValue);
+            rcbChargeAcct2.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCusIDAndCurrency(comboDrawerCusNo.SelectedValue, rcbChargeCcy2.SelectedValue);
             rcbChargeAcct2.DataBind();
         }
 
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 07, 2015    Hien Nguyen       Fix bug 83
+         */
         protected void LoadChargeAcct3()
         {
             rcbChargeAcct3.Items.Clear();
             rcbChargeAcct3.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct3.DataValueField = "Id";
             rcbChargeAcct3.DataTextField = "Id";
-            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, rcbChargeCcy3.SelectedValue);
+            rcbChargeAcct3.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCusIDAndCurrency(comboDrawerCusNo.SelectedValue, rcbChargeCcy3.SelectedValue);
             rcbChargeAcct3.DataBind();
         }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 07, 2015    Hien Nguyen       Fix bug 83
+         */
         protected void LoadChargeAcct4()
         {
             rcbChargeAcct4.Items.Clear();
             rcbChargeAcct4.Items.Add(new RadComboBoxItem(""));
             rcbChargeAcct4.DataValueField = "Id";
             rcbChargeAcct4.DataTextField = "Id";
-            rcbChargeAcct4.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCurrency(txtDrawerCusName.Text, rcbChargeCcy4.SelectedValue);
+            rcbChargeAcct4.DataSource = bd.SQLData.B_BDRFROMACCOUNT_GetByCusIDAndCurrency(comboDrawerCusNo.SelectedValue, rcbChargeCcy4.SelectedValue);
             rcbChargeAcct4.DataBind();
         }
 

@@ -271,11 +271,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
 
         /*
-        * Method Revision History:
-        * Version        Date            Author            Comment
-        * ----------------------------------------------------------
-        * 0.1            NA
-        * 0.2            Sep 12, 2015    Hien Nguyen       Fix bug 46 _ remove nostro Account 
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Sep 12, 2015    Hien Nguyen       Fix bug 46 _ remove nostro Account 
+         * 0.3            Oct 22, 2015    Hien Nguyen       Fixed bug 86
         */
         private void LoadMT910()
         {
@@ -287,7 +288,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtAccountIndentification.Text = mt910.AccountIndentification;
                 dtValueDateMt910.SelectedDate = mt910.ValueDate;
                 //fixed bug 46 get value of currency from tab Main
-                comboCurrencyMt910.SelectedValue = comboCurrency.SelectedValue;
+                comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
                 numAmountMt910.Value = (double)(mt910.Amount??0);
                 txtOrderingInstitutionName.Text = mt910.OrderingInstitutionName;
                 txtOrderingInstitutionAddress1.Text = mt910.OrderingInstitutionAddress1;
@@ -1412,10 +1413,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             e.Item.Attributes["Id"] = row["Id"].ToString();
             e.Item.Attributes["Name"] = row["Name"].ToString();
         }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            NA
+         * 0.2            Oct 07, 2015    Hien Nguyen       Fix bug 86
+         */
         protected void comboCreditCurrency_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadCreditAccount();
             loadNostroAccount();
+            comboCurrencyMt910.SelectedValue = e.Value; //fixed bug 86
         }
 
         protected void comboWaiveCharges_OnSelectedIndexChanged(object sender,
@@ -1909,6 +1919,5 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             //lblCountryCodeName.Text = comboCountryCode.SelectedValue;
         }
-        
     }
 }
