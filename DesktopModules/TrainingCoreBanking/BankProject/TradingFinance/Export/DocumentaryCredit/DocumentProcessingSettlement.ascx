@@ -2172,6 +2172,7 @@
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="comboCreditAcct" />
                 <telerik:AjaxUpdatedControl ControlID="cbNostroAccount" />
+                <telerik:AjaxUpdatedControl ControlID="comboCurrencyMt910" />
             </UpdatedControls>
         </telerik:AjaxSetting>
            <telerik:AjaxSetting AjaxControlID="comboWaiveCharges">
