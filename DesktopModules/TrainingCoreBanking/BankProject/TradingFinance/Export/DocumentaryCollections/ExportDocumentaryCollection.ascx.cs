@@ -381,25 +381,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void SetButtonForEnquiry()
         {
-           
+                RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 if (StatusEnquiry == "UNA")
                 {
-                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
                     RadToolBar1.FindItemByValue("btRevert").Enabled = true;
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
+                    
                 }
                 else if (StatusEnquiry == "REV")
                 {
                     RadToolBar1.FindItemByValue("btSave").Enabled = true;
-                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
                     RadToolBar1.FindItemByValue("btRevert").Enabled = false;
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 }
                 else
                 {
-                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
                     RadToolBar1.FindItemByValue("btRevert").Enabled = false;
-                    RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 }
             
         }
@@ -1850,7 +1845,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         //tbExcheRate.Text = item.ExchRate;
                         tbChargeAmt.Text = item.ChargeAmt.ToString();
                         rcbPartyCharged.SelectedValue = item.PartyCharged;
-                        lblPartyCharged.Text = item.PartyCharged;
                         rcbOmortCharge.SelectedValue = item.OmortCharges;
                         rcbChargeStatus.SelectedValue = item.ChargeStatus;
                         lblChargeStatus.Text = item.ChargeStatus;
@@ -1875,7 +1869,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                         tbChargeAmt2.Text = item.ChargeAmt.ToString();
                         rcbPartyCharged2.SelectedValue = item.PartyCharged;
-                        lblPartyCharged2.Text = item.PartyCharged;
                         rcbChargeStatus2.SelectedValue = item.ChargeStatus;
                         lblChargeStatus2.Text = item.ChargeStatus;
 
@@ -2171,7 +2164,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     //tbExcheRate.Text = drow1["ExchRate"].ToString();
                     tbChargeAmt.Text = drow1["ChargeAmt"].ToString();
                     rcbPartyCharged.SelectedValue = drow1["PartyCharged"].ToString();
-                    lblPartyCharged.Text = drow1["PartyCharged"].ToString();
                     rcbOmortCharge.SelectedValue = drow1["OmortCharges"].ToString();
                     rcbChargeStatus.SelectedValue = drow1["ChargeStatus"].ToString();
                     lblChargeStatus.Text = drow1["ChargeStatus"].ToString();
@@ -2196,7 +2188,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     //tbExcheRate.Text = string.Empty;
                     tbChargeAmt.Text = string.Empty;
                     rcbPartyCharged.SelectedValue = string.Empty;
-                    lblPartyCharged.Text = string.Empty;
                     rcbOmortCharge.SelectedValue = string.Empty;
                     rcbChargeStatus.SelectedValue = string.Empty;
                     lblChargeStatus.Text = string.Empty;
@@ -2210,7 +2201,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     //tbChargeCode.SelectedValue = string.Empty;
 
                     //lblChargeAcct.Text = string.Empty;
-                    lblPartyCharged.Text = string.Empty;
                     lblChargeStatus.Text = string.Empty;
                 }
 
@@ -2230,7 +2220,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     tbChargeAmt2.Text = drow2["ChargeAmt"].ToString();
                     rcbPartyCharged2.SelectedValue = drow2["PartyCharged"].ToString();
-                    lblPartyCharged2.Text = drow2["PartyCharged"].ToString();
                     rcbChargeStatus2.SelectedValue = drow2["ChargeStatus"].ToString();
                     lblChargeStatus2.Text = drow2["ChargeStatus"].ToString();
 
@@ -2246,7 +2235,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     rcbChargeCcy2.SelectedValue = string.Empty;
                     tbChargeAmt2.Text = string.Empty;
                     rcbPartyCharged2.SelectedValue = string.Empty;
-                    lblPartyCharged2.Text = string.Empty;
                     rcbChargeStatus2.SelectedValue = string.Empty;
                     lblChargeStatus2.Text = string.Empty;
 
@@ -2256,7 +2244,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     //tbChargeCode2.SelectedValue = string.Empty;
 
                     //lblChargeAcct2.Text = string.Empty;
-                    lblPartyCharged2.Text = string.Empty;
                     lblChargeStatus2.Text = string.Empty;
                 }
                 if (dsDoc.Tables[3].Rows.Count > 0)
@@ -2614,7 +2601,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void rcbPartyCharged_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             //lblPartyCharged.Text = rcbPartyCharged.SelectedValue;
-            lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
+            //lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
             CalcTax();
         }
 
@@ -2631,7 +2618,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void rcbPartyCharged2_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
+            //lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
             CalcTax2();
         }
         protected void rcbPartyCharged3_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -2859,21 +2846,18 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged.DataTextField = "Id";
             rcbPartyCharged.DataSource = dtSource;
             rcbPartyCharged.DataBind();
-            lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged2.Items.Clear();
             rcbPartyCharged2.DataValueField = "Id";
             rcbPartyCharged2.DataTextField = "Id";
             rcbPartyCharged2.DataSource = dtSource;
             rcbPartyCharged2.DataBind();
-            lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged3.Items.Clear();
             rcbPartyCharged3.DataValueField = "Id";
             rcbPartyCharged3.DataTextField = "Id";
             rcbPartyCharged3.DataSource = dtSource;
             rcbPartyCharged3.DataBind();
-            lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged4.Items.Clear();
             rcbPartyCharged4.DataValueField = "Id";
@@ -3016,7 +3000,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     case 7://VAT
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
                         saveName = "RegisterDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username);
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username, comboCurrency.SelectedValue);
                         //reportData.Tables[0].TableName = "Table1";
                         break;
                     case 8://COVER

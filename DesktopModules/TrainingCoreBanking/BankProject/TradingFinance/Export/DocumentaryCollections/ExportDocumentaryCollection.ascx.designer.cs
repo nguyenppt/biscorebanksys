@@ -850,15 +850,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         protected global::Telerik.Web.UI.RadComboBox rcbPartyCharged;
         
         /// <summary>
-        /// lblPartyCharged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPartyCharged;
-        
-        /// <summary>
         /// rcbOmortCharge control.
         /// </summary>
         /// <remarks>
@@ -965,15 +956,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbPartyCharged2;
-        
-        /// <summary>
-        /// lblPartyCharged2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPartyCharged2;
         
         /// <summary>
         /// rcbOmortCharge2 control.

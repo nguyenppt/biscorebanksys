@@ -858,7 +858,6 @@
                                     <ExpandAnimation Type="None" />
                                     <CollapseAnimation Type="None" />
                                 </telerik:RadComboBox>
-                                <asp:Label ID="lblPartyCharged" runat="server" />
                             </td>
                             <td>
                                 </td>
@@ -1017,7 +1016,6 @@
                                     <ExpandAnimation Type="None" />
                                     <CollapseAnimation Type="None" />
                                 </telerik:RadComboBox>
-                                <asp:Label ID="lblPartyCharged2" runat="server" />
                             </td>
               
                         </tr>
@@ -1579,6 +1577,11 @@
             }
         });
 
+        $("#<%=txtOtherDocs.ClientID %>").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#<%=txtOtherDocs.ClientID %>").val($("#<%=txtOtherDocs.ClientID %>").val() + '\n');
+            }
+        });
 
         function RadToolBar1_OnClientButtonClicking(sender, args) {
             
