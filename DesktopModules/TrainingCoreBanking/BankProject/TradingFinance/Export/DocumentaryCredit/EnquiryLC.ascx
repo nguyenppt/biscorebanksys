@@ -21,7 +21,7 @@
             </telerik:RadToolBarButton>
         </Items>
 </telerik:RadToolBar>
-<%var display = "display:none;";
+<%var display = "";
   if (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"))
   {display = "";}%>
 <div style="padding:10px;<%=display%>">

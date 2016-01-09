@@ -598,6 +598,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtImportLCNo.Text = ExLC.ImportLCCode;
             txtImportLCNo_TextChanged(null, null);
             //
+
+            rcbLCType.SelectedValue = ExLC.LCType;
             rcbIssuingBankType.SelectedValue = ExLC.IssuingBankType;
             rcbIssuingBankType_OnSelectedIndexChanged(null, null);
             txtIssuingBankNo.Text = ExLC.IssuingBankNo;
@@ -773,6 +775,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             txtChargeCode.Text = ExLCCharge.ChargeCode;
             cbChargeCcy.SelectedValue = ExLCCharge.ChargeCcy;
+            LoadChargeAcct(ref cbChargeAcc, cbChargeCcy.SelectedValue);
             cbChargeAcc.SelectedValue = ExLCCharge.ChargeAcc;
             txtChargeAmt.Value = ExLCCharge.ChargeAmt;
             cbChargeParty.SelectedValue = ExLCCharge.PartyCharged;
@@ -886,6 +889,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private void showReport(string reportType)
         {
             var ExLC = dbEntities.findExportLC(tbLCCode.Text);
+            var BCustomer = dbEntities.BCUSTOMERS.Find(ExLC.BeneficiaryNo);
             if (ExLC == null)
             {
                 lblLCCodeMessage.Text = "Can not find this LC.";
@@ -996,12 +1000,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             VATNo = ExLC.VATNo,
                             TransCode = ExLC.ExportLCCode,
                             //
-                            CustomerID = "",
-                            CustomerName = "",
-                            CustomerAddress = "",
-                            IdentityNo = "",
+                            CustomerID = ExLC.BeneficiaryNo,
+                            CustomerName = ExLC.BeneficiaryName,
+                            CustomerAddress = ExLC.BeneficiaryAddr1 + " " + ExLC.BeneficiaryAddr2 + " " + ExLC.BeneficiaryAddr3,
+                            IdentityNo = null == BCustomer ? "" : BCustomer.IdentityNo,
                             //
-                            DebitAccount = "",
+                            DebitAccount = null == BCustomer ? "" : BCustomer.BankAccount,
                             ChargeRemarks = ExLC.ChargeRemarks
                         };
                         //
@@ -1048,6 +1052,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 }
                             }
                         }
+
                         //
                         var lstData2 = new List<Model.Reports.VAT>();
                         lstData2.Add(dataVAT);

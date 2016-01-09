@@ -1212,9 +1212,9 @@
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
                                             <Items>
-                                                <telerik:RadComboBoxItem Value="B" Text="B" />
-                                                <telerik:RadComboBoxItem Value="AC" Text="AC" />
                                                 <telerik:RadComboBoxItem Value="A" Text="A" />
+                                                <telerik:RadComboBoxItem Value="AC" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="B" Text="B" />
                                                 <telerik:RadComboBoxItem Value="BC" Text="BC" />
                                             </Items>
                                         </telerik:RadComboBox>
@@ -1314,8 +1314,10 @@
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
                                             <Items>
-                                                <telerik:RadComboBoxItem Value="B" Text="B" />
+                                                <telerik:RadComboBoxItem Value="A" Text="A" />
                                                 <telerik:RadComboBoxItem Value="AC" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="B" Text="B" />
+                                                <telerik:RadComboBoxItem Value="BC" Text="BC" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>
@@ -1415,8 +1417,10 @@
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
                                             <Items>
-                                                <telerik:RadComboBoxItem Value="B" Text="B" />
+                                                <telerik:RadComboBoxItem Value="A" Text="A" />
                                                 <telerik:RadComboBoxItem Value="AC" Text="AC" />
+                                                <telerik:RadComboBoxItem Value="B" Text="B" />
+                                                <telerik:RadComboBoxItem Value="BC" Text="BC" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>

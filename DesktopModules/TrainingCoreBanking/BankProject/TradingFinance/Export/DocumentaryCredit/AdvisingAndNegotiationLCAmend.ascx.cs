@@ -518,6 +518,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private void showReport(string reportType)
         {
             var ExLCAmend = dbEntities.findExportLCAmend(tbLCCode.Text);
+            var BCustomer = dbEntities.BCUSTOMERS.Find(ExLCAmend.BeneficiaryNo);
             if (ExLCAmend == null)
             {
                 lblLCCodeMessage.Text = "Can not find this LC amend.";
@@ -586,12 +587,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             VATNo = ExLCAmend.VATNo,
                             TransCode = ExLCAmend.ImportLCCode,
                             //
-                            CustomerID = "",
-                            CustomerName = "",
-                            CustomerAddress = "",
-                            IdentityNo = "",
+                            CustomerID = ExLCAmend.BeneficiaryNo,
+                            CustomerName = ExLCAmend.BeneficiaryName,
+                            CustomerAddress = ExLCAmend.BeneficiaryAddr1 + " " + ExLCAmend.BeneficiaryAddr2 + " " + ExLCAmend.BeneficiaryAddr3,
+                            
+                            IdentityNo = null == BCustomer ? "" : BCustomer.IdentityNo,
                             //
-                            DebitAccount = "",
+                            DebitAccount = null == BCustomer ? "" : BCustomer.BankAccount,
                             ChargeRemarks = ExLCAmend.ChargeRemarks
                         };
                         //

@@ -340,6 +340,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtOriginalAmount.Enabled = false;
             txtTenor.Enabled = false;
             txtOriginalTenor.Enabled = false;
+            txtInvoiceNo.Enabled = false;
             //
             txtChargeCode1.Enabled = false;
             txtChargeCode2.Enabled = false;
@@ -972,6 +973,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private void showReport(string reportType)
         {
             var ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
+            var BCustomer = dbEntities.BCUSTOMERS.Find(ExLCDoc.BeneficiaryNo);
             if (ExLCDoc == null)
             {
                 lblLCCodeMessage.Text = "Can not find this Code.";
@@ -998,12 +1000,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             VATNo = ExLCDoc.VATNo,
                             TransCode = ExLCDoc.DocCode,
                             //
-                            CustomerID = "",
-                            CustomerName = "",
-                            CustomerAddress = "",
-                            IdentityNo = "",
+                            CustomerID = ExLCDoc.BeneficiaryNo,
+                            CustomerName = ExLCDoc.BeneficiaryName,
+                            CustomerAddress = ExLCDoc.BeneficiaryAddr1 + " " + ExLCDoc.BeneficiaryAddr2 + " " + ExLCDoc.BeneficiaryAddr3,
+                            IdentityNo = null == BCustomer ? "" : BCustomer.IdentityNo,
                             //
-                            DebitAccount = "",
+                            DebitAccount = null == BCustomer ? "" : BCustomer.BankAccount,
                             ChargeRemarks = ExLCDoc.ChargeRemarks
                         };
                         //
