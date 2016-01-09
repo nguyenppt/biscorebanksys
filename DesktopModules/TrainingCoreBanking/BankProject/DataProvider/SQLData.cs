@@ -228,10 +228,10 @@ namespace BankProject.DataProvider
                     drow["Id"] = "AC";
                     dtTemp.Rows.Add(drow);
 
-                    drow = dtTemp.NewRow();
-                    drow["Description"] = "";
-                    drow["Id"] = "BB";
-                    dtTemp.Rows.Add(drow);
+                    //drow = dtTemp.NewRow();
+                    //drow["Description"] = "";
+                    //drow["Id"] = "BB";
+                    //dtTemp.Rows.Add(drow);
 
                     drow = dtTemp.NewRow();
                     drow["Description"] = "Correspondent Charges for the Beneficiary";
@@ -1368,10 +1368,10 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTION_VAT_Report", code,
                                              currentuserlogin, ViewType);
         }
-        public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(string code, string currentuserlogin)
+        public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(string code, string currentuserlogin, string currency)
         {
             return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report", code,
-                                             currentuserlogin);
+                                             currentuserlogin, currency);
         }
 
         public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Register_Report(string code, string currentuserlogin)
