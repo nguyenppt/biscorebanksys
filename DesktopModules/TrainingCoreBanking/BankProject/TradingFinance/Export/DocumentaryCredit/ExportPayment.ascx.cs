@@ -52,6 +52,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref comboCurrency, "Code", "Code", tblList);
             bc.Commont.initRadComboBox(ref comboCurrency_MT400, "Code", "Code", tblList);
 
+            //remove "GOLD" from list of currency
+            bc.Commont.removeCurrencyItem(comboCurrency, "GOLD");
+            bc.Commont.removeCurrencyItem(comboCurrency_MT400, "GOLD");
+
             //Party Charged
             tblList = createTableList();
             addData2TableList(ref tblList, "A");

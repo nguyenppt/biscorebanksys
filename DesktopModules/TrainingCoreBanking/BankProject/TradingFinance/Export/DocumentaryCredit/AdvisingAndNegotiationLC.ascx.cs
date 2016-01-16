@@ -59,6 +59,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
 
+            //remove "GOLD" from list of currency
+            bc.Commont.removeCurrencyItem(rcbCurrency, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy1, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy2, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy3, "GOLD");
+
             bc.Commont.initRadComboBox(ref rcbCommodity, "Name", "ID", bd.SQLData.B_BCOMMODITY_GetByTransactionType("OTC"));
             bc.Commont.initRadComboBox(ref rcbBeneficiaryNumber, "CustomerName", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
             bc.Commont.initRadComboBox(ref rcbLCType, "LCTYPE", "LCTYPE", bd.DataTam.B_BLCTYPES_GetAll("Export"));

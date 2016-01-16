@@ -1355,6 +1355,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref comboCurrency, "Code", "Code", curList);
             bc.Commont.initRadComboBox(ref comboCurrencyMt910, "Code", "Code", curList);
 
+            //remove "GOLD" from list of currency
+            bc.Commont.removeCurrencyItem(comboCreditCurrency, "GOLD");
+            bc.Commont.removeCurrencyItem(comboCurrency, "GOLD");
+            bc.Commont.removeCurrencyItem(comboCurrencyMt910, "GOLD");
+
             #region MT910
 
             dtValueDateMt910.SelectedDate = DateTime.Now.Date;            

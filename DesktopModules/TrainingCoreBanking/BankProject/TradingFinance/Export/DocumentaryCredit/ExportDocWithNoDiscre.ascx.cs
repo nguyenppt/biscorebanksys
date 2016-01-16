@@ -256,6 +256,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", tblList);
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", tblList);
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", tblList);
+
+            //remove "GOLD" from list of currency
+            bc.Commont.removeCurrencyItem(rcbChargeCcy, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy2, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy3, "GOLD");
+
             tblList = bd.SQLData.B_BCHARGECODE_GetByViewType(92);
             bc.Commont.initRadComboBox(ref tbChargeCode, "Code", "Code", tblList);
             tbChargeCode.SelectedValue = "ILC.CABLE";

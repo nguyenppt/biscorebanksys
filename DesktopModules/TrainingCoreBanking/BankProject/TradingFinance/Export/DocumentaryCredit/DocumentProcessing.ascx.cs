@@ -362,6 +362,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             bc.Commont.initRadComboBox(ref rcbChargeCcy1, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
+
+            //remove "GOLD" from list of currency
+            bc.Commont.removeCurrencyItem(rcbCurrency, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy1, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy2, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy3, "GOLD");
             //
             var tblList = bd.SQLData.CreateGenerateDatas("DocumetaryCollection_TabMain_DocsCode");
             bc.Commont.initRadComboBox(ref rcbDocsCode1, "Description", "Id", tblList);
