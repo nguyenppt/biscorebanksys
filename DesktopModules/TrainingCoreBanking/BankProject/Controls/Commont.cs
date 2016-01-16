@@ -166,6 +166,23 @@ namespace BankProject.Controls
                 cboList.Items.Insert(0, new RadComboBoxItem(""));
             }
         }
+
+        /*
+        * Method Revision History:
+        * Version        Date            Author            Comment
+        * ----------------------------------------------------------
+        * 0.1            Jan 15, 2015    Hien Nguyen       init code
+        */
+        public static void removeCurrencyItem(RadComboBox comboBox, string removedItem)
+        {
+            //remove "GOLD" from list of currency
+            int index = comboBox.Items.FindItemIndexByValue(removedItem, true);
+            if (index != -1)
+            {
+                comboBox.Items.Remove(index);
+            }
+        }
+
         //
         public static DataRow loadBankSwiftCodeInfo(string bankCode, ref Label lblMessage, ref RadTextBox txtBankName)
         {
