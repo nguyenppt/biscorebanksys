@@ -1113,13 +1113,13 @@
             </table>
             <telerik:radtabstrip runat="server" id="RadTabStrip3" selectedindex="0" multipageid="RadMultiPage1" orientation="HorizontalTop">
             <Tabs>
-                <telerik:RadTab Text="Receive Charge">
+                <telerik:RadTab Text="Payment Charge">
                 </telerik:RadTab>
-                <telerik:RadTab Text="Courier Charge ">
+                <telerik:RadTab Text="Cable Charge ">
+                </telerik:RadTab>
+                <telerik:RadTab Text="Handling Charge">
                 </telerik:RadTab>
                 <telerik:RadTab Text="Other Charge">
-                </telerik:RadTab>
-                <telerik:RadTab Text="Payment Charge">
                 </telerik:RadTab>
                 <%-- hide to fix bug 47 --%>
                 <%--<telerik:RadTab Text="Overseas Plus Charge">

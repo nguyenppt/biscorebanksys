@@ -244,6 +244,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 outCoPayment.Currency = comboCurrency.SelectedValue;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
                 outCoPayment.CountryCode = comboCountryCode.SelectedValue;
+                outCoPayment.PresentorCusNo = cbNostroAccount.SelectedValue;
                 _entities.BOUTGOINGCOLLECTIONPAYMENTs.Add(outCoPayment);
             }
             else
@@ -265,6 +266,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //outCoPayment.ExchRate = numExchangeRate.Value; //fixed bug 66
                 outCoPayment.IncreaseMental = 0;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
+                outCoPayment.PresentorCusNo = cbNostroAccount.SelectedValue;
             }
             _entities.SaveChanges();
             SaveCharges();
@@ -416,7 +418,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 UpsertCharge(comboWaiveCharges.SelectedValue, tbChargeCode.SelectedValue, rcbChargeAcct.SelectedValue,rcbChargeCcy.SelectedValue,
                     tbChargeAmt.Text,rcbPartyCharged.SelectedValue,rcbOmortCharge.SelectedValue,rcbChargeStatus.SelectedValue,
-                    tbChargeRemarks.Text,tbVatNo.Text,lblTaxCode.Text,lblTaxAmt.Text, "1");
+                    tbChargeRemarks.Text,tbVatNo.Text,lblTaxCode.Text,lblTaxAmt.Text, "4");
             }
             if (!string.IsNullOrWhiteSpace(tbChargeAmt2.Text))
             {
@@ -440,7 +442,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     rcbChargeAcct4.SelectedValue, rcbChargeCcy4.SelectedValue,
                     tbChargeAmt4.Text, rcbPartyCharged4.SelectedValue,
                     rcbOmortCharge4.SelectedValue, rcbChargeStatus4.SelectedValue,
-                    tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode4.Text, lblTaxAmt4.Text, "4");
+                    tbChargeRemarks.Text, tbVatNo.Text, lblTaxCode4.Text, lblTaxAmt4.Text, "1");
             } 
 
             //Comment code to fix bug 47 start
@@ -493,6 +495,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             LoadCreditAccount();
             comboCreditAcct.SelectedValue = outColPayment.CreditAccount;
             loadNostroAccount();
+            cbNostroAccount.SelectedValue = outColPayment.PresentorCusNo;
             //numExchangeRate.Value = outColPayment.ExchRate; //fixed bug 66
             txtPaymentRemarks1.Text = outColPayment.PaymentRemarks1;
             txtPaymentRemarks2.Text = outColPayment.PaymentRemarks2;
@@ -565,7 +568,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 lblCreditAmount.Text = GetAmountCredited(CodeId).ToString("#,##0.00");
 
-                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId);
+                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId & q.ActiveRecordFlag == "YES");
                 if (expDoc == null)
                 {
                     lblError.Text = "Document does not exists";
@@ -607,7 +610,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     txtCode.Text = CodeId;
                     var expDocCode = CodeId.Substring(0, 14);
                     lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
-                    var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode);
+                    var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode & q.ActiveRecordFlag == "YES");
                     if (expDoc == null)
                     {
                         lblError.Text = "Document does not exists";
@@ -663,9 +666,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
             
 
-            if (lstCharges.Any(q=>q.Rowchages == "1"))
+            if (lstCharges.Any(q=>q.Rowchages == "4"))
             {
-                var charge = lstCharges.FirstOrDefault(q => q.Rowchages == "1");
+                var charge = lstCharges.FirstOrDefault(q => q.Rowchages == "4");
 
                 comboWaiveCharges.SelectedValue = charge.WaiveCharges;
                 rcbChargeAcct.SelectedValue = charge.ChargeAcct;
@@ -680,13 +683,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //tbExcheRate.Text = drow1["ExchRate"].ToString();
                 tbChargeAmt.Text = charge.ChargeAmt;
                 rcbPartyCharged.SelectedValue = charge.PartyCharged;
-                lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
+                //lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
                 rcbOmortCharge.SelectedValue = charge.OmortCharges;
                 rcbChargeStatus.SelectedValue = charge.ChargeStatus;
                 lblChargeStatus.Text = charge.ChargeStatus;
 
                 tbChargeRemarks.Text = charge.ChargeRemarks;
-                tbVatNo.Text = charge.VATNo;
+                //tbVatNo.Text = charge.VATNo; //VAT No is harded code
                 lblTaxCode.Text = charge.TaxCode;
                 //lblTaxCcy.Text = drow1["TaxCcy"].ToString();
                 lblTaxAmt.Text = charge.TaxAmt;
@@ -703,13 +706,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 tbChargeAmt.Text = string.Empty;
                 rcbPartyCharged.SelectedValue = "A";
                 
-                lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
+                //lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
                 rcbOmortCharge.SelectedValue = string.Empty;
                 rcbChargeStatus.SelectedValue = string.Empty;
                 lblChargeStatus.Text = string.Empty;
 
                 tbChargeRemarks.Text = string.Empty;
-                tbVatNo.Text = string.Empty;
+                tbVatNo.Text = "154";
                 lblTaxCode.Text = string.Empty;
                 //lblTaxCcy.Text = string.Empty;
                 lblTaxAmt.Text = string.Empty;
@@ -717,7 +720,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //tbChargeCode.SelectedValue = string.Empty;
 
                 //lblChargeAcct.Text = string.Empty;
-                lblPartyCharged.Text = string.Empty;
+                //lblPartyCharged.Text = string.Empty;
                 lblChargeStatus.Text = string.Empty;
             }
 
@@ -737,7 +740,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                 tbChargeAmt2.Text = charge.ChargeAmt;
                 rcbPartyCharged2.SelectedValue = charge.PartyCharged;
-                lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
+                //lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
                 rcbChargeStatus2.SelectedValue = charge.ChargeStatus;
                 lblChargeStatus2.Text = charge.ChargeStatus;
 
@@ -752,7 +755,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeCcy2.SelectedValue = string.Empty;
                 tbChargeAmt2.Text = string.Empty;
                 rcbPartyCharged2.SelectedValue = "A";
-                lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
+                //lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
                 rcbChargeStatus2.SelectedValue = string.Empty;
                 lblChargeStatus2.Text = string.Empty;
 
@@ -762,7 +765,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //tbChargeCode2.SelectedValue = string.Empty;
 
                 //lblChargeAcct2.Text = string.Empty;
-                lblPartyCharged2.Text = string.Empty;
+                //lblPartyCharged2.Text = string.Empty;
                 lblChargeStatus2.Text = string.Empty;
             }
             if (lstCharges.Any(q => q.Rowchages == "3"))
@@ -781,7 +784,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                 tbChargeAmt3.Text = charge.ChargeAmt;
                 rcbPartyCharged3.SelectedValue = charge.PartyCharged;
-                lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
+                //lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
                 rcbChargeStatus3.SelectedValue = charge.ChargeStatus;
                 //lblChargeStatus3.Text = charge.ChargeStatus;
 
@@ -796,7 +799,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeCcy3.SelectedValue = string.Empty;
                 tbChargeAmt3.Text = string.Empty;
                 rcbPartyCharged3.SelectedValue = "A";
-                lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
+                //lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
                 rcbChargeStatus3.SelectedValue = string.Empty;
                 //lblChargeStatus3.Text = string.Empty;
 
@@ -806,12 +809,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //tbChargeCode3.SelectedValue = string.Empty;
 
                 //lblChargeAcct3.Text = string.Empty;
-                lblPartyCharged3.Text = string.Empty;
+                //lblPartyCharged3.Text = string.Empty;
                 //lblChargeStatus3.Text = string.Empty;
             }
-            if (lstCharges.Any(q => q.Rowchages == "4"))
+            if (lstCharges.Any(q => q.Rowchages == "1")) //1 is "Other Tab"
             {
-                var charge = lstCharges.FirstOrDefault(q => q.Rowchages == "4");
+                var charge = lstCharges.FirstOrDefault(q => q.Rowchages == "1");
 
                 //divChargeInfo4.Visible = true;
 
@@ -825,7 +828,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                 tbChargeAmt4.Text = charge.ChargeAmt;
                 rcbPartyCharged4.SelectedValue = charge.PartyCharged;
-                lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
+                //lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
                 rcbChargeStatus4.SelectedValue = charge.ChargeStatus;
                 //lblChargeStatus4.Text = charge.ChargeStatus;
 
@@ -840,7 +843,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeCcy4.SelectedValue = string.Empty;
                 tbChargeAmt4.Text = string.Empty;
                 rcbPartyCharged4.SelectedValue = "A";
-                lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
+                //lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
                 rcbChargeStatus4.SelectedValue = string.Empty;
                 //lblChargeStatus4.Text = string.Empty;
 
@@ -850,7 +853,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //tbChargeCode4.SelectedValue = string.Empty;
 
                 //lblChargeAcct4.Text = string.Empty;
-                lblPartyCharged4.Text = string.Empty;
+                //lblPartyCharged4.Text = string.Empty;
                 //lblChargeStatus4.Text = string.Empty;
             }
             //comment code to fix bug 47 start
@@ -1085,7 +1088,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged.DataSource = dtSource;
             rcbPartyCharged.DataBind();
             rcbPartyCharged.SelectedValue = "A";
-            lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
+            //lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged2.Items.Clear();
             rcbPartyCharged2.DataValueField = "Id";
@@ -1093,7 +1096,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged2.DataSource = dtSource;
             rcbPartyCharged2.DataBind();
             rcbPartyCharged2.SelectedValue = "A";
-            lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
+            //lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged3.Items.Clear();
             rcbPartyCharged3.DataValueField = "Id";
@@ -1101,7 +1104,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged3.DataSource = dtSource;
             rcbPartyCharged3.DataBind();
             rcbPartyCharged3.SelectedValue = "A";
-            lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
+            //lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged4.Items.Clear();
             rcbPartyCharged4.DataValueField = "Id";
@@ -1109,7 +1112,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged4.DataSource = dtSource;
             rcbPartyCharged4.DataBind();
             rcbPartyCharged4.SelectedValue = "A";
-            lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
+            //lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
 
             //comment code to fix bug 47 start
             /*
@@ -1288,13 +1291,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             comboCommodity.DataSource = bd.DataTam.B_BCOMMODITY_GetAll();
             comboCommodity.DataBind();
 
-            tbChargeCode.SelectedValue = "EC.RECEIVE";
+            tbChargeCode.SelectedValue = "EC.PAYMENT";
             tbChargeCode.Enabled = false;
             tbChargeCode2.SelectedValue = "EC.COURIER";
             tbChargeCode2.Enabled = false;
-            tbChargeCode3.SelectedValue = "EC.OTHER";
+            tbChargeCode3.SelectedValue = "EC.HANDLING";
             tbChargeCode3.Enabled = false;
-            tbChargeCode4.SelectedValue = "EC.PAYMENT";
+            tbChargeCode4.SelectedValue = "EC.OTHER";
             tbChargeCode4.Enabled = false;
 
             //comment code to fix bug 47
@@ -1319,6 +1322,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             bc.Commont.initRadComboBox(ref comboCreditCurrency, "Code", "Code", curList);
             bc.Commont.initRadComboBox(ref comboCurrency, "Code", "Code", curList);
             bc.Commont.initRadComboBox(ref comboCurrencyMt910, "Code", "Code", curList);
+
+            bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", curList);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", curList);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", curList);
+            bc.Commont.initRadComboBox(ref rcbChargeCcy4, "Code", "Code", curList);
+
+            //remove "GOLD" from currency List
+            bc.Commont.removeCurrencyItem(comboCreditCurrency, "GOLD");
+            bc.Commont.removeCurrencyItem(comboCurrency, "GOLD");
+            bc.Commont.removeCurrencyItem(comboCurrencyMt910, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy2, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy3, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy4, "GOLD");
+
+            tbVatNo.Text = "154"; //harded code fixed VAT no
 
             #region MT910
 
@@ -1449,7 +1468,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void rcbPartyCharged_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             //lblPartyCharged.Text = rcbPartyCharged.SelectedValue;
-            lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
+            //lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
             CalcTax();
         }
 
@@ -1460,23 +1479,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
         protected void rcbChargeAcct2_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-             lblPartyCharged2.Text = rcbPartyCharged2.SelectedValue;
+             //lblPartyCharged2.Text = rcbPartyCharged2.SelectedValue;
 
         }
 
         protected void rcbPartyCharged2_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
+            //lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
             CalcTax2();
         }
         protected void rcbPartyCharged3_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
+            //lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
             CalcTax3();
         }
         protected void rcbPartyCharged4_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
+            //lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
             CalcTax4();
         }
 
@@ -1813,6 +1832,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             var vatno = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
             tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
+            tbVatNo.Text = "154"; //hard code fixed VAT no
         }
         protected void comboDrawerCusNo_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
@@ -1906,7 +1926,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             SwiftCodeRepository facade = new SwiftCodeRepository();
             String currency = comboCreditCurrency.SelectedValue;
 
-
+            
             cbNostroAccount.Items.Clear();
             cbNostroAccount.DataValueField = "AccountNo";
             cbNostroAccount.DataTextField = "AccountNo";
