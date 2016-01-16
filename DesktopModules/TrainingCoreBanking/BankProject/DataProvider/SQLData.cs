@@ -1368,15 +1368,27 @@ namespace BankProject.DataProvider
             return sqldata.ndkExecuteDataset("B_BDOCUMETARYCOLLECTION_VAT_Report", code,
                                              currentuserlogin, ViewType);
         }
-        public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(string code, string currentuserlogin, string currency)
+        public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(string code, string currentuserlogin, string currency, int tabId)
         {
             return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report", code,
-                                             currentuserlogin, currency);
+                                             currentuserlogin, currency, tabId);
         }
 
         public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Register_Report(string code, string currentuserlogin)
         {
             return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Register_Report", code,
+                                             currentuserlogin);
+        }
+
+        public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report(string code, string currentuserlogin)
+        {
+            return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report", code,
+                                             currentuserlogin);
+        }
+
+        public static DataSet P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report(string code, string currentuserlogin)
+        {
+            return sqldata.ndkExecuteDataset("P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report", code,
                                              currentuserlogin);
         }
 
