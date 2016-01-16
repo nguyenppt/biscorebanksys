@@ -524,7 +524,26 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", tblList);
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", tblList);
             bc.Commont.initRadComboBox(ref rcbChargeCcy4, "Code", "Code", tblList);
+
+            //remove "GOLD" from currency List
+            bc.Commont.removeCurrencyItem(comboCurrency, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy2, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy3, "GOLD");
+            bc.Commont.removeCurrencyItem(rcbChargeCcy4, "GOLD");
+
             if (TabId == 229)
+            {
+                tbChargeCode.SelectedValue = "EC.AMEND";
+                tbChargeCode.Enabled = false;
+                tbChargeCode2.SelectedValue = "EC.CABLE";
+                tbChargeCode2.Enabled = false;
+                tbChargeCode3.SelectedValue = "EC.COURIER";
+                tbChargeCode3.Enabled = false;
+                tbChargeCode4.SelectedValue = "EC.OTHER";
+                tbChargeCode4.Enabled = false;
+            }
+            else if (TabId == 226)
             {
                 tbChargeCode.SelectedValue = "EC.RECEIVE";
                 tbChargeCode.Enabled = false;
@@ -532,8 +551,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 tbChargeCode2.Enabled = false;
                 tbChargeCode3.SelectedValue = "EC.OTHER";
                 tbChargeCode3.Enabled = false;
-                tbChargeCode4.SelectedValue = "EC.AMEND";
-                tbChargeCode4.Enabled = false;
             }
             else if (TabId == 230)
             {
@@ -659,7 +676,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             comboWaiveCharges.Enabled = true;
             tbChargeRemarks.Enabled = true;
-            tbVatNo.Enabled = true;
+            //tbVatNo.Enabled = true;
 
 
             rcbChargeCcy.Enabled = true;
@@ -1122,6 +1139,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         Remarks1 = txtRemarks1.Text.Trim(),
                                         Remarks2 = txtRemarks2.Text.Trim(),
                                         Remarks3 = txtRemarks3.Text.Trim(),
+                                        CreateDate = DateTime.Now,
                                         CreateBy = UserId.ToString(),
                                         CollectionType = comboCollectionType.SelectedValue,
                                         CancelDate = dteCancelDate.SelectedDate,
@@ -1218,7 +1236,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                     chkAmend.Remarks1 = txtRemarks1.Text.Trim();
                                     chkAmend.Remarks2 = txtRemarks2.Text.Trim();
                                     chkAmend.Remarks3 = txtRemarks3.Text.Trim();
-                                    chkAmend.CreateBy = UserId.ToString();
+                                    chkAmend.UpdatedBy = UserId.ToString();
+                                    chkAmend.UpdatedDate = DateTime.Now;
                                     chkAmend.CollectionType = comboCollectionType.SelectedValue;
                                     chkAmend.CancelDate = dteCancelDate.SelectedDate;
                                     chkAmend.ContingentExpiryDate = dteContingentExpiryDate.SelectedDate;
@@ -1272,10 +1291,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                 //truong hop da co -->update
                                 if (lstCharge != null && lstCharge.Count > 0)
                                 {
+                                    String[] chargeCode = { "EC.AMEND", "EC.CABLE", "EC.COURIER", "EC.OTHER" };
+                                    var listChargeCode = chargeCode.ToList();
                                     foreach (var item in lstCharge)
                                     {
                                         if (item.Chargecode == "EC.AMEND")
                                         {
+                                            listChargeCode.Remove(item.Chargecode);
                                             item.DocCollectCode = findTypeAmend[0];
                                             item.WaiveCharges = comboWaiveCharges.SelectedValue;
                                             item.Chargecode = tbChargeCode.SelectedValue;
@@ -1302,6 +1324,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         }
                                         else if (item.Chargecode == "EC.CABLE")
                                         {
+                                            listChargeCode.Remove(item.Chargecode);
                                             item.DocCollectCode = findTypeAmend[0];
                                             item.WaiveCharges = comboWaiveCharges.SelectedValue;
                                             item.Chargecode = tbChargeCode2.SelectedValue;
@@ -1328,6 +1351,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         }
                                         else if (item.Chargecode == "EC.COURIER")
                                         {
+                                            listChargeCode.Remove(item.Chargecode);
                                             item.DocCollectCode = findTypeAmend[0];
                                             item.WaiveCharges = comboWaiveCharges.SelectedValue;
                                             item.Chargecode = tbChargeCode3.SelectedValue;
@@ -1354,6 +1378,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         }
                                         else if (item.Chargecode == "EC.OTHER")
                                         {
+                                            listChargeCode.Remove(item.Chargecode);
                                             item.DocCollectCode = findTypeAmend[0];
                                             item.WaiveCharges = comboWaiveCharges.SelectedValue;
                                             item.Chargecode = tbChargeCode4.SelectedValue;
@@ -1375,140 +1400,38 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                                         }
                                         _entities.SaveChanges();
                                     }
+
+                                    //in case new charge code is added to existing item, add it to DB
+                                    if (listChargeCode.Count > 0)
+                                    {
+                                        foreach (String item in listChargeCode)
+                                        {
+                                            var objCharge = addNewChagre(item, Code, findTypeAmend);
+                                            _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                            _entities.SaveChanges();
+                                        }
+                                    }
                                 }
+                                
                                 else
                                 {
-                                    //chua co them moi
-                                    var objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
-                                    if (!String.IsNullOrWhiteSpace(tbChargeAmt.Text))
-                                    {
-                                        objCharge.DocCollectCode = findTypeAmend[0];
-                                        objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
-                                        objCharge.Chargecode = tbChargeCode.SelectedValue;
-                                        objCharge.ChargeAcct = rcbChargeAcct.SelectedValue;
-                                        objCharge.ChargeCcy = rcbChargeCcy.SelectedValue;
-                                        if (!String.IsNullOrEmpty(tbChargeAmt.Value.ToString()))
-                                        {
-                                            objCharge.ChargeAmt = decimal.Parse(tbChargeAmt.Value.ToString());
-                                        }
-                                        objCharge.PartyCharged = rcbPartyCharged.SelectedValue;
-                                        objCharge.OmortCharges = rcbOmortCharge.SelectedValue;
-                                        objCharge.ChargeStatus = rcbChargeStatus.SelectedValue;
-                                        objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
-                                        objCharge.VATNo = tbVatNo.Text;
-                                        objCharge.TaxCode = lblTaxCode.Text;
-                                        objCharge.TaxAmt = lblTaxAmt.Text;
-                                        objCharge.Rowchages = "1";
-                                        objCharge.TabId = TabId;
-                                        objCharge.AmendNo = Code;
-                                        //item.AmendNo = Code;
-                                        if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
-                                        {
-                                            objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
-                                        }
-                                        _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
-                                        _entities.SaveChanges();
-                                        //
-                                    }
-                                    
-                                    objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
-                                    if (!String.IsNullOrWhiteSpace(tbChargeAmt2.Text))
-                                    {
-                                        objCharge.DocCollectCode = findTypeAmend[0];
-                                        objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
-                                        objCharge.Chargecode = tbChargeCode2.SelectedValue;
-                                        objCharge.ChargeAcct = rcbChargeAcct2.SelectedValue;
-                                        objCharge.ChargeCcy = rcbChargeCcy2.SelectedValue;
-                                        if (!String.IsNullOrEmpty(tbChargeAmt2.Value.ToString()))
-                                        {
-                                            objCharge.ChargeAmt = decimal.Parse(tbChargeAmt2.Value.ToString());
-                                        }
-                                        objCharge.PartyCharged = rcbPartyCharged2.SelectedValue;
-                                        objCharge.OmortCharges = rcbOmortCharge2.SelectedValue;
-                                        objCharge.ChargeStatus = rcbChargeStatus2.SelectedValue;
-                                        objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
-                                        objCharge.VATNo = tbVatNo.Text;
-                                        objCharge.TaxCode = lblTaxCode2.Text;
-                                        objCharge.TaxAmt = lblTaxAmt2.Text;
-                                        objCharge.Rowchages = "2";
-                                        objCharge.TabId = TabId;
-                                        objCharge.AmendNo = Code;
-                                        if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
-                                        {
-                                            objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
-                                        }
-                                        _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
-                                        _entities.SaveChanges();
-                                    }
-                                    //
-                                    
-                                    //
-                                    objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
-                                    if (!String.IsNullOrWhiteSpace(tbChargeAmt3.Text))
-                                    {
-                                        objCharge.DocCollectCode = findTypeAmend[0];
-                                        objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
-                                        objCharge.Chargecode = tbChargeCode3.SelectedValue;
-                                        objCharge.ChargeAcct = rcbChargeAcct3.SelectedValue;
-                                        objCharge.ChargeCcy = rcbChargeCcy3.SelectedValue;
-                                        if (!String.IsNullOrEmpty(tbChargeAmt3.Value.ToString()))
-                                        {
-                                            objCharge.ChargeAmt = decimal.Parse(tbChargeAmt3.Value.ToString());
-                                        }
-                                        objCharge.PartyCharged = rcbPartyCharged3.SelectedValue;
-                                        objCharge.OmortCharges = rcbOmortCharge3.SelectedValue;
-                                        objCharge.ChargeStatus = rcbChargeStatus3.SelectedValue;
-                                        objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
-                                        objCharge.VATNo = tbVatNo.Text;
-                                        objCharge.TaxCode = lblTaxCode3.Text;
-                                        objCharge.TaxAmt = lblTaxAmt3.Text;
-                                        objCharge.Rowchages = "3";
-                                        objCharge.TabId = TabId;
-                                        objCharge.AmendNo = Code;
-                                        if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
-                                        {
-                                            objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
-                                        }
-                                        //
-                                        _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
-                                        _entities.SaveChanges();
-                                    }
-                                    //
-                                    objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
-                                    if (!String.IsNullOrWhiteSpace(tbChargeAmt4.Text))
-                                    {
-                                        objCharge.DocCollectCode = findTypeAmend[0];
-                                        objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
-                                        objCharge.Chargecode = tbChargeCode4.SelectedValue;
-                                        objCharge.ChargeAcct = rcbChargeAcct4.SelectedValue;
-                                        objCharge.ChargeCcy = rcbChargeCcy4.SelectedValue;
-                                        if (!String.IsNullOrEmpty(tbChargeAmt4.Value.ToString()))
-                                        {
-                                            objCharge.ChargeAmt = decimal.Parse(tbChargeAmt4.Value.ToString());
-                                        }
-                                        objCharge.PartyCharged = rcbPartyCharged4.SelectedValue;
-                                        objCharge.OmortCharges = rcbOmortCharge4.SelectedValue;
-                                        objCharge.ChargeStatus = rcbChargeStatus4.SelectedValue;
-                                        objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
-                                        objCharge.VATNo = tbVatNo.Text;
-                                        objCharge.TaxCode = lblTaxCode4.Text;
-                                        objCharge.TaxAmt = lblTaxAmt4.Text;
-                                        objCharge.Rowchages = "4";
-                                        objCharge.TabId = TabId;
-                                        objCharge.AmendNo = Code;
-                                        if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
-                                        {
-                                            objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
-                                        }
-                                        //
-                                        _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
-                                        _entities.SaveChanges();
-                                    }
+
+                                    var objCharge = addNewChagre("EC.AMEND", Code, findTypeAmend);
+                                    _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                    _entities.SaveChanges();
+
+                                    objCharge = addNewChagre("EC.CABLE", Code, findTypeAmend);
+                                    _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                    _entities.SaveChanges();
+
+                                    objCharge = addNewChagre("EC.COURIER", Code, findTypeAmend);
+                                    _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                    _entities.SaveChanges();
+
+                                    objCharge = addNewChagre("EC.OTHER", Code, findTypeAmend);
+                                    _entities.BEXPORT_DOCUMETARYCOLLECTIONCHARGES.Add(objCharge);
+                                    _entities.SaveChanges();
                                 }
-                                
-
-                                
-
                             }
                         }
                     }
@@ -1525,6 +1448,124 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 throw raise;
             }
         }
+
+        private BEXPORT_DOCUMETARYCOLLECTIONCHARGES addNewChagre(string Chargecode, string Code, String[] findTypeAmend)
+        {
+            //chua co them moi
+            var objCharge = new BEXPORT_DOCUMETARYCOLLECTIONCHARGES();
+            if (Chargecode == "EC.AMEND" && !String.IsNullOrWhiteSpace(tbChargeAmt.Text))
+            {
+                objCharge.DocCollectCode = findTypeAmend[0];
+                objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
+                objCharge.Chargecode = tbChargeCode.SelectedValue;
+                objCharge.ChargeAcct = rcbChargeAcct.SelectedValue;
+                objCharge.ChargeCcy = rcbChargeCcy.SelectedValue;
+                if (!String.IsNullOrEmpty(tbChargeAmt.Value.ToString()))
+                {
+                    objCharge.ChargeAmt = decimal.Parse(tbChargeAmt.Value.ToString());
+                }
+                objCharge.PartyCharged = rcbPartyCharged.SelectedValue;
+                objCharge.OmortCharges = rcbOmortCharge.SelectedValue;
+                objCharge.ChargeStatus = rcbChargeStatus.SelectedValue;
+                objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                objCharge.VATNo = tbVatNo.Text;
+                objCharge.TaxCode = lblTaxCode.Text;
+                objCharge.TaxAmt = lblTaxAmt.Text;
+                objCharge.Rowchages = "1";
+                objCharge.TabId = TabId;
+                objCharge.AmendNo = Code;
+                //item.AmendNo = Code;
+                if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                {
+                    objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
+                }
+            }
+
+            if (Chargecode=="EC.CABLE" && !String.IsNullOrWhiteSpace(tbChargeAmt2.Text))
+            {
+                objCharge.DocCollectCode = findTypeAmend[0];
+                objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
+                objCharge.Chargecode = tbChargeCode2.SelectedValue;
+                objCharge.ChargeAcct = rcbChargeAcct2.SelectedValue;
+                objCharge.ChargeCcy = rcbChargeCcy2.SelectedValue;
+                if (!String.IsNullOrEmpty(tbChargeAmt2.Value.ToString()))
+                {
+                    objCharge.ChargeAmt = decimal.Parse(tbChargeAmt2.Value.ToString());
+                }
+                objCharge.PartyCharged = rcbPartyCharged2.SelectedValue;
+                objCharge.OmortCharges = rcbOmortCharge2.SelectedValue;
+                objCharge.ChargeStatus = rcbChargeStatus2.SelectedValue;
+                objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                objCharge.VATNo = tbVatNo.Text;
+                objCharge.TaxCode = lblTaxCode2.Text;
+                objCharge.TaxAmt = lblTaxAmt2.Text;
+                objCharge.Rowchages = "2";
+                objCharge.TabId = TabId;
+                objCharge.AmendNo = Code;
+                if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                {
+                    objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
+                }
+            }
+
+            if (Chargecode=="EC.COURIER" && !String.IsNullOrWhiteSpace(tbChargeAmt3.Text))
+            {
+                objCharge.DocCollectCode = findTypeAmend[0];
+                objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
+                objCharge.Chargecode = tbChargeCode3.SelectedValue;
+                objCharge.ChargeAcct = rcbChargeAcct3.SelectedValue;
+                objCharge.ChargeCcy = rcbChargeCcy3.SelectedValue;
+                if (!String.IsNullOrEmpty(tbChargeAmt3.Value.ToString()))
+                {
+                    objCharge.ChargeAmt = decimal.Parse(tbChargeAmt3.Value.ToString());
+                }
+                objCharge.PartyCharged = rcbPartyCharged3.SelectedValue;
+                objCharge.OmortCharges = rcbOmortCharge3.SelectedValue;
+                objCharge.ChargeStatus = rcbChargeStatus3.SelectedValue;
+                objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                objCharge.VATNo = tbVatNo.Text;
+                objCharge.TaxCode = lblTaxCode3.Text;
+                objCharge.TaxAmt = lblTaxAmt3.Text;
+                objCharge.Rowchages = "3";
+                objCharge.TabId = TabId;
+                objCharge.AmendNo = Code;
+                if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                {
+                    objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
+                }
+    
+            }
+
+            if (Chargecode=="EC.OTHER" && !String.IsNullOrWhiteSpace(tbChargeAmt4.Text))
+            {
+                objCharge.DocCollectCode = findTypeAmend[0];
+                objCharge.WaiveCharges = comboWaiveCharges.SelectedValue;
+                objCharge.Chargecode = tbChargeCode4.SelectedValue;
+                objCharge.ChargeAcct = rcbChargeAcct4.SelectedValue;
+                objCharge.ChargeCcy = rcbChargeCcy4.SelectedValue;
+                if (!String.IsNullOrEmpty(tbChargeAmt4.Value.ToString()))
+                {
+                    objCharge.ChargeAmt = decimal.Parse(tbChargeAmt4.Value.ToString());
+                }
+                objCharge.PartyCharged = rcbPartyCharged4.SelectedValue;
+                objCharge.OmortCharges = rcbOmortCharge4.SelectedValue;
+                objCharge.ChargeStatus = rcbChargeStatus4.SelectedValue;
+                objCharge.ChargeRemarks = tbChargeRemarks.Text.Trim();
+                objCharge.VATNo = tbVatNo.Text;
+                objCharge.TaxCode = lblTaxCode4.Text;
+                objCharge.TaxAmt = lblTaxAmt4.Text;
+                objCharge.Rowchages = "4";
+                objCharge.TabId = TabId;
+                objCharge.AmendNo = Code;
+                if (!String.IsNullOrEmpty(findTypeAmend[1].ToString()))
+                {
+                    objCharge.AmendId = int.Parse(findTypeAmend[1].ToString());
+                }
+            }
+
+            return objCharge;
+        }
+
         protected void SaveData()
         {
             try
@@ -1648,6 +1689,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         Amount = double.Parse(obj.Amount.ToString());
                     }
 
+                    /*
+                     * If this is first time Amend data, old amount will be 0
+                     * In that case, show old amount as original amount
+                     */
+                    if (0 == AmountOld)
+                    {
+                        AmountOld = Amount;
+                    }
 
                     // DocumentaryCollectionCancel
                     if (!string.IsNullOrEmpty(obj.CancelDate.ToString()) && obj.CancelDate.ToString().IndexOf("1/1/1900") == -1)
@@ -1832,7 +1881,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //khong load tab charge
                 foreach (var item in lstCharge)
                 {
-                    if (item.Chargecode == "EC.RECEIVE")
+                    if (item.Chargecode == "EC.AMEND")
                     {
                         comboWaiveCharges.SelectedValue = item.WaiveCharges;
                         rcbChargeAcct.SelectedValue = item.ChargeAcct;
@@ -1857,7 +1906,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         tbChargeCode.SelectedValue = item.Chargecode;
                         ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
                     }
-                    else if (item.Chargecode == "EC.COURIER")
+                    else if (item.Chargecode == "EC.CABLE")
                     {
                         rcbChargeAcct2.SelectedValue = item.ChargeAcct;
 
@@ -1878,7 +1927,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         tbChargeCode2.SelectedValue = item.Chargecode;
                         ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
                     }
-                    else if (item.Chargecode == "EC.OTHER")
+                    else if (item.Chargecode == "EC.COURIER")
                     {
                         rcbChargeAcct3.SelectedValue = item.ChargeAcct;
 
@@ -1890,7 +1939,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                         tbChargeAmt3.Text = item.ChargeAmt.ToString();
                         rcbPartyCharged3.SelectedValue = item.PartyCharged;
-                        lblPartyCharged3.Text = item.PartyCharged;
+                        //lblPartyCharged3.Text = item.PartyCharged;
                         rcbChargeStatus3.SelectedValue = item.ChargeStatus;
                         //lblChargeStatus3.Text = item.ChargeStatus;
 
@@ -1900,7 +1949,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         tbChargeCode3.SelectedValue = item.Chargecode;
                         ChargeAmount += ConvertStringToFloat(item.ChargeAmt.ToString());
                     }
-                    else if (item.Chargecode == "EC.AMEND")
+                    else if (item.Chargecode == "EC.OTHER")
                     {
                         rcbChargeAcct4.SelectedValue = item.ChargeAcct;
 
@@ -1912,7 +1961,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                         tbChargeAmt4.Text = item.ChargeAmt.ToString();
                         rcbPartyCharged4.SelectedValue = item.PartyCharged;
-                        lblPartyCharged4.Text = item.PartyCharged;
+                        //lblPartyCharged4.Text = item.PartyCharged;
                         rcbChargeStatus4.SelectedValue = item.ChargeStatus;
                         //lblChargeStatus3.Text = item.ChargeStatus;
 
@@ -2262,7 +2311,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     tbChargeAmt3.Text = drow3["ChargeAmt"].ToString();
                     rcbPartyCharged3.SelectedValue = drow3["PartyCharged"].ToString();
-                    lblPartyCharged3.Text = drow3["PartyCharged"].ToString();
+                    //lblPartyCharged3.Text = drow3["PartyCharged"].ToString();
                     rcbChargeStatus3.SelectedValue = drow3["ChargeStatus"].ToString();
                     //lblChargeStatus3.Text = drow3["ChargeStatus"].ToString();
 
@@ -2278,7 +2327,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     rcbChargeCcy3.SelectedValue = string.Empty;
                     tbChargeAmt3.Text = string.Empty;
                     rcbPartyCharged3.SelectedValue = string.Empty;
-                    lblPartyCharged3.Text = string.Empty;
+                    //lblPartyCharged3.Text = string.Empty;
                     rcbChargeStatus3.SelectedValue = string.Empty;
                     //lblChargeStatus3.Text = string.Empty;
 
@@ -2288,7 +2337,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     //tbChargeCode3.SelectedValue = string.Empty;
 
                     //lblChargeAcct3.Text = string.Empty;
-                    lblPartyCharged3.Text = string.Empty;
+                    //lblPartyCharged3.Text = string.Empty;
                     //lblChargeStatus3.Text = string.Empty;
                 }
                 if (dsDoc.Tables[4].Rows.Count > 0)
@@ -2307,7 +2356,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     tbChargeAmt4.Text = drow4["ChargeAmt"].ToString();
                     rcbPartyCharged4.SelectedValue = drow4["PartyCharged"].ToString();
-                    lblPartyCharged4.Text = drow4["PartyCharged"].ToString();
+                    //lblPartyCharged4.Text = drow4["PartyCharged"].ToString();
                     rcbChargeStatus4.SelectedValue = drow4["ChargeStatus"].ToString();
                     //lblChargeStatus4.Text = drow4["ChargeStatus"].ToString();
 
@@ -2323,7 +2372,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     rcbChargeCcy4.SelectedValue = string.Empty;
                     tbChargeAmt4.Text = string.Empty;
                     rcbPartyCharged4.SelectedValue = string.Empty;
-                    lblPartyCharged4.Text = string.Empty;
+                    //lblPartyCharged4.Text = string.Empty;
                     rcbChargeStatus4.SelectedValue = string.Empty;
                     //lblChargeStatus4.Text = string.Empty;
 
@@ -2333,7 +2382,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     //tbChargeCode4.SelectedValue = string.Empty;
 
                     //lblChargeAcct4.Text = string.Empty;
-                    lblPartyCharged4.Text = string.Empty;
+                    //lblPartyCharged4.Text = string.Empty;
                     //lblChargeStatus4.Text = string.Empty;
                 }
                 #endregion
@@ -2623,12 +2672,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         }
         protected void rcbPartyCharged3_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
+            //lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
             CalcTax3();
         }
         protected void rcbPartyCharged4_SelectIndexChange(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            lblPartyCharged4.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
+            //lblPartyCharged4.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
             CalcTax4();
         }
 
@@ -2642,6 +2691,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             var vatno = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
             tbVatNo.Text = vatno.Tables[0].Rows[0]["SoTT"].ToString();
+            
+            tbVatNo.Text = "154"; //hard code fixed VAT no
         }
 
         protected void GenerateFTCode()
@@ -2864,7 +2915,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged4.DataTextField = "Id";
             rcbPartyCharged4.DataSource = dtSource;
             rcbPartyCharged4.DataBind();
-            lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
+            //lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
         }
 
         protected void LoadDataSourceComboChargeCcy()
@@ -3000,7 +3051,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     case 7://VAT
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
                         saveName = "RegisterDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username, comboCurrency.SelectedValue);
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username, comboCurrency.SelectedValue, TabId);
                         //reportData.Tables[0].TableName = "Table1";
                         break;
                     case 8://COVER
@@ -3015,6 +3066,18 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterVAT.doc");
                         saveName = "RegisterVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Register_Report(txtCode.Text, UserInfo.Username);
+                        break;
+
+                    case 10://VAT of "Amend" fucntion
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "AmendVAT.doc");
+                        saveName = "RegisterVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report(txtCode.Text, UserInfo.Username);
+                        break;
+
+                    case 11://VAT of "Cancel" fucntion
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterVAT.doc");
+                        saveName = "RegisterVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report(txtCode.Text, UserInfo.Username);
                         break;
                 }
                 if (reportData != null)
@@ -3077,6 +3140,28 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void btnRegisterVATReport_Click(object sender, EventArgs e)
         {
             showReport(9);
+        }
+
+        /*
+          * Method Revision History:
+          * Version        Date            Author            Comment
+          * ----------------------------------------------------------
+          * 0.1            Jan 15, 2015    Hien Nguyen       init code
+          */
+        protected void btnAmendVATReport_Click(object sender, EventArgs e)
+        {
+            showReport(10);
+        }
+
+        /*
+         * Method Revision History:
+         * Version        Date            Author            Comment
+         * ----------------------------------------------------------
+         * 0.1            Jan 15, 2015    Hien Nguyen       init code
+         */
+        protected void btnCancelVATReport_Click(object sender, EventArgs e)
+        {
+            showReport(11);
         }
     }
 }

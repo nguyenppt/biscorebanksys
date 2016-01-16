@@ -408,7 +408,7 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">6 Amount<span class="Required"> (*)</span></td>
+                    <td class="MyLable">6 New Amount<span class="Required"> (*)</span></td>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="numAmount" runat="server" />
                         <asp:RequiredFieldValidator
@@ -423,7 +423,7 @@
                 </tr>
                 <div runat="server" id="divAmount">
                     <tr>
-                        <td class="MyLable">Amount Old</td>
+                        <td class="MyLable">Old Amount</td>
                         <td class="MyContent">
                             <asp:Label ID="lblAmount_New" runat="server" ForeColor="#0091E1" />
                         </td>
@@ -727,7 +727,7 @@
         <telerik:RadTabStrip runat="server" ID="RadTabStrip3" SelectedIndex="0" MultiPageID="RadMultiPage1" Orientation="HorizontalTop">
             
             <Tabs>
-                <telerik:RadTab Text="Receive Charge">
+                <telerik:RadTab Text="Cable Charge">
                 </telerik:RadTab>
                 <telerik:RadTab Text="Courier Charge ">
                 </telerik:RadTab>
@@ -762,13 +762,13 @@
         <telerik:RadTabStrip runat="server" ID="RadTabStrip14" SelectedIndex="0" MultiPageID="RadMultiPage1" Orientation="HorizontalTop">
             
             <Tabs>
-                <telerik:RadTab Text="Receive Charge">
+                <telerik:RadTab Text="Amend Charge">
+                </telerik:RadTab>
+                <telerik:RadTab Text="Cable Charge">
                 </telerik:RadTab>
                 <telerik:RadTab Text="Courier Charge ">
                 </telerik:RadTab>
                 <telerik:RadTab Text="Other Charge">
-                </telerik:RadTab>
-                <telerik:RadTab Text="Amend Charge">
                 </telerik:RadTab>
             </Tabs>
         </telerik:RadTabStrip>
@@ -1636,6 +1636,8 @@
             if (result) {
                 $("#<%=btnCancelPHIEUXUATNGOAIBANG.ClientID %>").click();
             }
+
+            radconfirm("Do you want to download VAT file?", confirmCallbackVATCancel, 400, 150, null, 'Download');
         }
         function showPhieuNhap_Xuat() {
             //args.set_cancel(true);
@@ -1657,6 +1659,7 @@
             if (result) {
                 $("#<%=btnAmendNhapNgoaiBang.ClientID %>").click();
             }
+            radconfirm("Do you want to download VAT file?", confirmCallbackVATAmend, 400, 150, null, 'Download');
         }
 
         function confirmCallbackFunction_XuatNgoaiBang_Amendments(result) {
@@ -1665,7 +1668,7 @@
             if (result) {
                 $("#<%=btnAmendXuatNgoaiBang.ClientID %>").click();
             }
-
+            radconfirm("Do you want to download VAT file?", confirmCallbackVATAmend, 400, 150, null, 'Download');
         }
 
         function confirmCallbackRegisterCOVER(result) {
@@ -1719,6 +1722,18 @@
             }
         }
 
+        function confirmCallbackVATCancel(result) {
+            if (result) {
+                $("#<%=btnCancelVATReport.ClientID %>").click();
+            }
+        }
+
+        function confirmCallbackVATAmend(result) {
+            if (result) {
+                $("#<%=btnAmendVATReport.ClientID %>").click();
+            }
+        }
+
         function confirmCallbackRegisterNNB2(result) {
             clickCalledAfterRadconfirm = false;
             if (result) {
@@ -1748,4 +1763,6 @@
 <div style="visibility:hidden;"><asp:Button ID="btnCancelPHIEUXUATNGOAIBANG" runat="server" OnClick="btnCancelPHIEUXUATNGOAIBANG_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnVATReport" runat="server" OnClick="btnVATReport_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnRegisterVATReport" runat="server" OnClick="btnRegisterVATReport_Click" Text="Search" /></div>
+<div style="visibility:hidden;"><asp:Button ID="btnAmendVATReport" runat="server" OnClick="btnAmendVATReport_Click" Text="Search" /></div>
+<div style="visibility:hidden;"><asp:Button ID="btnCancelVATReport" runat="server" OnClick="btnCancelVATReport_Click" Text="Search" /></div>
 <div style="visibility:hidden;"><asp:Button ID="btnCOVERReport" runat="server" OnClick="btnCOVERReport_Click" Text="Search" /></div>
