@@ -24,6 +24,7 @@ namespace BankProject.Model
         {
             public const string Amendment = "ELC.ADAMEND";
             public const string Advising = "ELC.ADVISE";
+            public const string Cancel = "ELC.CANCEL";
             public const string Courier = "ELC.COURIER";
             public const string Other = "ELC.OTHER";
         }
@@ -100,10 +101,10 @@ namespace BankProject.Model
         }
         public new struct Charges
         {
-            public const string Service = "EC.AMEND";
-            public const string Commission = "EC.HANDLE";
-            public const string Courier = "EC.COURIER";
-            public const string Other = "EC.OTHER";
+            public const string Service = "ELC.AMEND";
+            public const string Commission = "ELC.HANDLE";
+            public const string Courier = "ELC.COURIER";
+            public const string Other = "ELC.OTHER";
         }
         //
         public BEXPORT_LC_DOCS_PROCESSING findExportLCDoc(string Code)
