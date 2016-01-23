@@ -9,12 +9,29 @@
 <script type="text/javascript">
     jQuery(function ($) {
         $('#tabs-demo').dnnTabs();
+        if (<%=TabId%> == 237)
+        {
+            $("#<%=RadTabStrip3.ClientID %>").hide();
+            $("#<%=RadTabStrip1.ClientID %>").show();
+        }
+        else
+        {
+            $("#<%=RadTabStrip3.ClientID %>").show();
+            $("#<%=RadTabStrip1.ClientID %>").hide();
+        }
     });
     function RadToolBar1_OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
             //args.set_cancel(false);
-            radconfirm("Do you want to download 'Mau Bia Hs Lc' file ?", confirmCallbackFunction_MauBiaHsLc, 420, 150, null, 'Download');
+            if(<%=TabId%> == 237)
+            {
+                radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
+            }
+            else
+            {
+                radconfirm("Do you want to download 'Mau Bia Hs Lc' file ?", confirmCallbackFunction_MauBiaHsLc, 420, 150, null, 'Download');
+            }
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>" ||
             button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
@@ -64,7 +81,7 @@
             ToolTip="Reverse" Value="btReverse" CommandName="reverse" Enabled="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/search.png"
-            ToolTip="Search" Value="btSearch" CommandName="search" Enabled="false">
+            ToolTip="Search" Value="btSearch" CommandName="search" Enabled="false" postback="false">
         </telerik:RadToolBarButton>
         <telerik:RadToolBarButton ImageUrl="~/Icons/bank/print.png"
             ToolTip="Print" Value="btPrint" CommandName="print" postback="false" Enabled="false">
@@ -1164,6 +1181,16 @@
                         </telerik:RadTab>
                     </Tabs>
                 </telerik:RadTabStrip>
+                <telerik:RadTabStrip runat="server" ID="RadTabStrip1" SelectedIndex="0" MultiPageID="RadMultiPage1" Orientation="HorizontalTop">
+                    <Tabs>
+                        <telerik:RadTab Text="Cancel Charge">
+                        </telerik:RadTab>
+                        <telerik:RadTab Text="Courier Charge ">
+                        </telerik:RadTab>
+                        <telerik:RadTab Text="Other Charge">
+                        </telerik:RadTab>
+                    </Tabs>
+                </telerik:RadTabStrip>
                 <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0" >
                     <telerik:RadPageView runat="server" ID="RadPageView1" >
                         <div runat="server">
@@ -1199,7 +1226,9 @@
                                 <tr>
                                     <td class="MyLable">Charge Amt</td>
                                     <td class="MyContent">
-                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt1" />
+                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt1" 
+                                            AutoPostBack="true"
+                                            OnTextChanged="tbChargeAmt1_TextChanged" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -1301,7 +1330,9 @@
                                 <tr>
                                     <td class="MyLable">Charge Amt</td>
                                     <td class="MyContent">
-                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt2" />
+                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt2" 
+                                             AutoPostBack="true"
+                                            OnTextChanged="tbChargeAmt2_TextChanged"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1403,7 +1434,9 @@
                                 <tr>
                                     <td class="MyLable">Charge Amt</td>
                                     <td class="MyContent">
-                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt3" />
+                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt3" 
+                                             AutoPostBack="true"
+                                            OnTextChanged="tbChargeAmt3_TextChanged"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1639,12 +1672,31 @@
         <telerik:AjaxSetting AjaxControlID="rcbWaiveCharges">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="RadTabStrip3" />
+                <telerik:AjaxUpdatedControl ControlID="RadTabStrip1" />
                 <telerik:AjaxUpdatedControl ControlID="RadMultiPage1" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy1">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct1" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt1">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt1" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode1" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt2" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt3" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>

@@ -340,7 +340,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtOriginalAmount.Enabled = false;
             txtTenor.Enabled = false;
             txtOriginalTenor.Enabled = false;
-            txtInvoiceNo.Enabled = false;
             //
             txtChargeCode1.Enabled = false;
             txtChargeCode2.Enabled = false;
@@ -1064,6 +1063,30 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         tbl1 = Utils.CreateDataTable<Model.Reports.VAT>(lstData2);
                         reportData.Tables.Add(tbl1);
                         break;
+
+                    case "XuatNgoaiBang":
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "XuatNgoaiBang.doc");
+                        reportSaveName = "XuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+
+
+                        var dataXuatNgoaiBang = new Model.Reports.PhieuXuatNgoaiBang()
+                        {                            
+                            NormalLCCode = ExLCDoc.DocCode,
+                            CurrentUserLogin = ExLCDoc.CreateBy,
+                            ApplicantName = ExLCDoc.ApplicantName,
+                            IdentityNo = BCustomer.IdentityNo,
+                            ApplicantAddr1 = ExLCDoc.ApplicantAddr1,
+                            ApplicantAddr2 = ExLCDoc.ApplicantAddr2,
+                            ApplicantAddr3 = ExLCDoc.ApplicantAddr3,
+                            Amount = ExLCDoc.Amount.Value,
+                            Currency = ExLCDoc.Currency
+                        };
+
+                        var lstData = new List<Model.Reports.PhieuXuatNgoaiBang>();
+                        lstData.Add(dataXuatNgoaiBang);
+                        tbl1 = Utils.CreateDataTable<Model.Reports.PhieuXuatNgoaiBang>(lstData);
+                        reportData.Tables.Add(tbl1);
+                        break;
                 }
                 if (reportData != null)
                 {
@@ -1081,6 +1104,57 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             catch (Exception ex)
             {
                 lblLCCodeMessage.Text = ex.Message;
+            }
+        }
+
+         protected void tbChargeAmt1_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt1.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt1.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt1.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode1.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt1.Text = "";
+                lblTaxCode1.Text = "";
+            }
+        }
+
+        protected void tbChargeAmt2_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt2.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt2.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt2.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode2.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt2.Text = "";
+                lblTaxCode2.Text = "";
+            }
+        }
+
+        protected void tbChargeAmt3_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt3.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt3.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt3.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode3.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt3.Text = "";
+                lblTaxCode3.Text = "";
             }
         }
     }

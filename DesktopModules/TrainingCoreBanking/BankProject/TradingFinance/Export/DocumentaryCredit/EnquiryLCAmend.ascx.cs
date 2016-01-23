@@ -27,7 +27,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 refId = Convert.ToInt32(Request.QueryString["refid"]);
             else
                 refId = ExportLC.Actions.Amend;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"));
+            //RadToolBar1.FindItemByValue("btSearch").Enabled = (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"));
+            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
             if (IsPostBack) return;
         }
 
@@ -51,7 +52,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         private void loadData()
         {
-            string status = bd.TransactionStatus.AUT;
+            string status = "";
             if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr"))
                 status = bd.TransactionStatus.UNA;
             //
@@ -59,18 +60,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             switch (refId)
             {
                 case ExportLC.Actions.Amend:
-                    enquiry = enquiry.Where(p => p.AmendStatus.Equals(status));
+                    if (!status.IsEmpty())
+                    {
+                        enquiry = enquiry.Where(p => p.AmendStatus.Equals(status));
+                    }
                     break;
             }
 
             if (!string.IsNullOrEmpty(txtRefNo.Text))
-                enquiry = enquiry.Where(p => p.AmendNo.Equals(txtRefNo.Text));
+                enquiry = enquiry.Where(p => p.AmendNo.Contains(txtRefNo.Text));
             if (!string.IsNullOrEmpty(txtBeneficiaryID.Text))
                 enquiry = enquiry.Where(p => p.BeneficiaryNo.Equals(txtBeneficiaryID.Text));
             if (!string.IsNullOrEmpty(txtBeneficiaryName.Text))
                 enquiry = enquiry.Where(p => p.BeneficiaryName.Contains(txtBeneficiaryName.Text));
             if (txtIssueDate.SelectedDate.HasValue)
-                enquiry = enquiry.Where(p => p.DateOfIssue.Equals(txtIssueDate.SelectedDate));
+                enquiry = enquiry.Where(p => DateTime.Compare((DateTime)p.DateOfIssue, (DateTime)txtIssueDate.SelectedDate) == 0);
             if (!string.IsNullOrEmpty(txtIssuingBank.Text))
                 enquiry = enquiry.Where(p => p.IssuingBankNo.Equals(txtIssuingBank.Text));
             switch (refId)

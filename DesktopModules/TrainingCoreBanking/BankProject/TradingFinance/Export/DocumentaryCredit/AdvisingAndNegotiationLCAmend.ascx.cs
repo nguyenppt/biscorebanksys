@@ -428,6 +428,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             txtChargeCode.Text = ExLCCharge.ChargeCode;
             cbChargeCcy.SelectedValue = ExLCCharge.ChargeCcy;
+            LoadChargeAcct(ref cbChargeAcc, cbChargeCcy.SelectedValue);
             cbChargeAcc.SelectedValue = ExLCCharge.ChargeAcc;
             txtChargeAmt.Value = ExLCCharge.ChargeAmt;
             cbChargeParty.SelectedValue = ExLCCharge.PartyCharged;
@@ -547,22 +548,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         //
                         var dataThuThongBao = new Model.Reports.MauThongBaoVaTuChinhLc()
                         {
-                            DateCreate = (ExLC.CreateDate.HasValue ? ExLC.CreateDate.Value.ToString("dd/MM/yyyy") : ""),
+                            DateCreate = (ExLCAmend.AmendDate.HasValue ? ExLCAmend.AmendDate.Value.ToString("dd/MM/yyyy") : ""),
                             Ref = ExLCAmend.AmendNo,
                             Beneficiary = ExLCAmend.BeneficiaryName,
-                            LCCode = ExLCAmend.SenderReference,
+                            LCCode = ExLCAmend.ImportLCCode,
                             DateOfIssue = (ExLCAmend.DateOfIssue.HasValue ? ExLCAmend.DateOfIssue.Value.ToString("dd/MM/yyyy") : ""),
                             DateOfExpiry = (ExLC.DateOfExpiry.HasValue ? ExLC.DateOfExpiry.Value.ToString("dd/MM/yyyy") : ""),
                             IssuingBank = ExLCAmend.IssuingBankName,
                             Applicant = ExLC.ApplicantName,
                             NumberOfAmendment = ExLCAmend.NumberOfAmendment.ToString()
                         };
-                        if (ExLCAmend.IncreaseOfDocumentaryCreditAmount.HasValue || ExLCAmend.DecreaseOfDocumentaryCreditAmount.HasValue)
+                        if (ExLCAmend.NewDocumentaryCreditAmountAfterAmendment.HasValue)
                         {
-                            if (ExLCAmend.IncreaseOfDocumentaryCreditAmount.HasValue)
-                                dataThuThongBao.Amount = ExLCAmend.IncreaseOfDocumentaryCreditAmount.Value + " " + ExLC.Currency;
-                            else
-                                dataThuThongBao.Amount = ExLCAmend.DecreaseOfDocumentaryCreditAmount.Value + " " + ExLC.Currency;
+                            dataThuThongBao.Amount = ExLCAmend.NewDocumentaryCreditAmountAfterAmendment.Value + " " + ExLC.Currency;
+                        }
+                        else
+                        {
+                            dataThuThongBao.Amount = ExLC.Amount.Value + " " + ExLC.Currency;
                         }
 
                         if (!string.IsNullOrEmpty(ExLCAmend.BeneficiaryAddr1)) dataThuThongBao.Beneficiary += ", " + ExLCAmend.BeneficiaryAddr1;
@@ -606,6 +608,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         if (ExLCCharges != null)
                         {
                             double TotalTaxAmount = 0, TotalChargeAmount = 0;
+                            String currency = "";
                             foreach (BEXPORT_LC_CHARGES ch in ExLCCharges)
                             {
                                 if (ch.ChargeAmt.HasValue && ch.ChargeAmt.Value != 0)
@@ -616,6 +619,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount1 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        currency = ch.ChargeCcy;
                                     }
                                     else if (string.IsNullOrEmpty(dataVAT.ChargeType2))
                                     {
@@ -623,6 +627,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount2 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        if (currency.IsEmpty())
+                                        {
+                                            currency = ch.ChargeCcy;
+                                        }
                                     }
                                     else if (string.IsNullOrEmpty(dataVAT.ChargeType3))
                                     {
@@ -630,17 +638,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount3 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        if (currency.IsEmpty())
+                                        {
+                                            currency = ch.ChargeCcy;
+                                        }
                                     }
                                 }
                             }
                             TotalChargeAmount += TotalTaxAmount;
                             if (TotalChargeAmount != 0)
                             {
-                                dataVAT.TotalChargeAmount = TotalChargeAmount + ExLC.Currency;
-                                dataVAT.TotalChargeAmountWord = Utils.ReadNumber(ExLC.Currency, TotalChargeAmount);
+                                dataVAT.TotalChargeAmount = TotalChargeAmount + currency;
+                                dataVAT.TotalChargeAmountWord = Utils.ReadNumber(currency, TotalChargeAmount);
                                 if (TotalTaxAmount != 0)
                                 {
-                                    dataVAT.TotalTaxAmount = TotalTaxAmount + ExLC.Currency + " PL90304";
+                                    dataVAT.TotalTaxAmount = TotalTaxAmount + currency + " PL90304";
                                     dataVAT.TotalTaxText = "VAT";
                                 }
                             }
@@ -668,6 +680,57 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             catch (Exception ex)
             {
                 lblLCCodeMessage.Text = ex.Message;
+            }
+        }
+
+        protected void tbChargeAmt1_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt1.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt1.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt1.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode1.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt1.Text = "";
+                lblTaxCode1.Text = "";
+            }
+        }
+
+        protected void tbChargeAmt2_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt2.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt2.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt2.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode2.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt2.Text = "";
+                lblTaxCode2.Text = "";
+            }
+        }
+
+        protected void tbChargeAmt3_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt3.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt3.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt3.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode3.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt3.Text = "";
+                lblTaxCode3.Text = "";
             }
         }
     }

@@ -26,8 +26,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (!string.IsNullOrEmpty(Request.QueryString["refid"]))
                 refId = Convert.ToInt32(Request.QueryString["refid"]);
             else
+            {
                 refId = ExportLC.Actions.Register;
-            RadToolBar1.FindItemByValue("btSearch").Enabled = (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"));
+            }
+            //RadToolBar1.FindItemByValue("btSearch").Enabled = (string.IsNullOrEmpty(lstType) || !lstType.ToLower().Equals("4appr"));
+            RadToolBar1.FindItemByValue("btSearch").Enabled = true;
             if (IsPostBack) return;
             bc.Commont.initRadComboBox(ref rcbBeneficiaryNumber, "CustomerName", "CustomerID", bd.SQLData.B_BCUSTOMERS_OnlyBusiness());
         }
@@ -53,7 +56,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         private void loadData()
         {
-            string status = bd.TransactionStatus.AUT;
+            string status = "";
             if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr"))
                 status = bd.TransactionStatus.UNA;
             //
@@ -73,7 +76,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     enquiry = enquiry.Where(p => p.AmendStatus.Equals(status));
                     break;
                 default:// ExportLC.Actions.Register:
-                    enquiry = enquiry.Where(p => p.Status.Equals(status));
+                    if (status.IsEmpty())
+                    {
+                        enquiry = enquiry.Where(p => p.Status.Equals(bd.TransactionStatus.AUT) 
+                                                    || p.Status.Equals(bd.TransactionStatus.UNA) 
+                                                    || p.Status.Equals(bd.TransactionStatus.REV));
+                    }
+                    else
+                    {
+                        enquiry = enquiry.Where(p => p.Status.Equals(status));
+                    }
                     break;
             }
                         

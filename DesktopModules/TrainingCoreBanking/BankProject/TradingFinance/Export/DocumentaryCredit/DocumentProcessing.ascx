@@ -593,7 +593,9 @@
                                 <tr>
                                     <td class="MyLable">Charge Amt</td>
                                     <td class="MyContent">
-                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt1" />
+                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt1" 
+                                            AutoPostBack="true"
+                                            OnTextChanged="tbChargeAmt1_TextChanged"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -693,7 +695,9 @@
                                 <tr>
                                     <td class="MyLable">Charge Amt</td>
                                     <td class="MyContent">
-                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt2" />
+                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt2" 
+                                            AutoPostBack="true"
+                                            OnTextChanged="tbChargeAmt2_TextChanged"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -793,7 +797,9 @@
                                 <tr>
                                     <td class="MyLable">Charge Amt</td>
                                     <td class="MyContent">
-                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt3" />
+                                        <telerik:RadNumericTextBox runat="server" ID="tbChargeAmt3" 
+                                            AutoPostBack="true"
+                                            OnTextChanged="tbChargeAmt3_TextChanged"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -973,6 +979,24 @@
         <telerik:AjaxSetting AjaxControlID="rcbChargeCcy3">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt1">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt1" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode1" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt2">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt2" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode2" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="tbChargeAmt3">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="lblTaxAmt3" />
+                <telerik:AjaxUpdatedControl ControlID="lblTaxCode3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>

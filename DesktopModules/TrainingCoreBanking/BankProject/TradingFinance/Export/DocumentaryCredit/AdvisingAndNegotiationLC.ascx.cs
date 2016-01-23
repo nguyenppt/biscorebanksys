@@ -39,7 +39,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            txtChargeCode1.Text = ExportLC.Charges.Advising;
+            if (TabId == ExportLC.Actions.Cancel)
+            {
+                txtChargeCode1.Text = ExportLC.Charges.Cancel;
+            }
+            else
+            {
+                txtChargeCode1.Text = ExportLC.Charges.Advising;
+            }
             txtChargeCode2.Text = ExportLC.Charges.Courier;
             txtChargeCode3.Text = ExportLC.Charges.Other;
             //
@@ -84,6 +91,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 #region Register
                 if (TabId == ExportLC.Actions.Register)
                 {
+                    if (ExLC.CancelStatus != null)
+                    {
+                        lblLCCodeMessage.Text = "This LC is canceled !";
+                        bc.Commont.SetTatusFormControls(this.Controls, false);
+                        return;
+                    }
                     if (ExLC.Status.Equals(bd.TransactionStatus.AUT))
                     {
                         lblLCCodeMessage.Text = "This LC is authorized !";
@@ -220,6 +233,33 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         txtContingentExpiryDate.Enabled = true;
                         txtCancelRemark.Enabled = true;
                         txtImportLCNo.Enabled = true;
+
+                        rcbWaiveCharges.Enabled = true;
+                        tbChargeRemarks.Enabled = true;
+
+                        txtChargeCode1.Enabled = true;
+                        rcbChargeCcy1.Enabled = true;
+                        rcbChargeAcct1.Enabled = true;
+                        tbChargeAmt1.Enabled = true;
+                        rcbPartyCharged1.Enabled = true;
+                        rcbAmortCharge1.Enabled = true;
+                        rcbChargeStatus1.Enabled = true;
+
+                        txtChargeCode2.Enabled = true;
+                        rcbChargeCcy2.Enabled = true;
+                        rcbChargeAcct2.Enabled = true;
+                        tbChargeAmt2.Enabled = true;
+                        rcbPartyCharged2.Enabled = true;
+                        rcbAmortCharge2.Enabled = true;
+                        rcbChargeStatus2.Enabled = true;
+
+                        txtChargeCode3.Enabled = true;
+                        rcbChargeCcy3.Enabled = true;
+                        rcbChargeAcct3.Enabled = true;
+                        tbChargeAmt3.Enabled = true;
+                        rcbPartyCharged3.Enabled = true;
+                        rcbAmortCharge3.Enabled = true;
+                        rcbChargeStatus3.Enabled = true;
                     }
                 }
                 #endregion
@@ -337,28 +377,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 }
                             }
                         }
-                        if (ExLC.WaiveCharges.Equals(bd.YesNo.NO))
-                        {
-                            BEXPORT_LC_CHARGES ExLCCharge;
-                            if (tbChargeAmt1.Value.HasValue)
-                            {
-                                ExLCCharge = new BEXPORT_LC_CHARGES();
-                                saveCharge(txtChargeCode1, rcbChargeCcy1, rcbChargeAcct1, tbChargeAmt1, rcbPartyCharged1, rcbAmortCharge1, rcbChargeStatus1, lblTaxCode1, lblTaxAmt1, ref ExLCCharge);
-                                dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
-                            }
-                            if (tbChargeAmt2.Value.HasValue)
-                            {
-                                ExLCCharge = new BEXPORT_LC_CHARGES();
-                                saveCharge(txtChargeCode2, rcbChargeCcy2, rcbChargeAcct2, tbChargeAmt2, rcbPartyCharged2, rcbAmortCharge2, rcbChargeStatus2, lblTaxCode2, lblTaxAmt2, ref ExLCCharge);
-                                dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
-                            }
-                            if (tbChargeAmt3.Value.HasValue)
-                            {
-                                ExLCCharge = new BEXPORT_LC_CHARGES();
-                                saveCharge(txtChargeCode3, rcbChargeCcy3, rcbChargeAcct3, tbChargeAmt3, rcbPartyCharged3, rcbAmortCharge3, rcbChargeStatus3, lblTaxCode3, lblTaxAmt3, ref ExLCCharge);
-                                dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
-                            }
-                        }
+                        saveDataCharge(ExLC);
                         //
                         dbEntities.SaveChanges();
                         //
@@ -403,6 +422,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             ExLC.CancelContingentExpiryDate = txtContingentExpiryDate.SelectedDate;
                             ExLC.CancelRemark = txtCancelRemark.Text;
                             ExLC.ImportLCCode = txtImportLCNo.Text;
+
+                            ExLC.WaiveCharges = rcbWaiveCharges.SelectedValue;
+
+                            saveDataCharge(ExLC);
                             //
                             dbEntities.SaveChanges();
                         }                        
@@ -577,6 +600,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLCCharge.AmortCharge = cbChargeAmort.SelectedValue;
             ExLCCharge.ChargeStatus = cbChargeStatus.SelectedValue;
             ExLCCharge.TaxCode = lblTaxCode.Text;
+            ExLCCharge.TabId = TabId;
             if (!string.IsNullOrEmpty(lblTaxAmt.Text))
                 ExLCCharge.TaxAmt = Convert.ToDouble(lblTaxAmt.Text);
         }
@@ -757,7 +781,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         private void loadCharges()
         {
-            var lstCharges = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Equals(tbLCCode.Text));
+            int cancelTab = ExportLC.Actions.Cancel;
+            var lstCharges = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Equals(tbLCCode.Text) && p.TabId != cancelTab);
+            if (TabId == cancelTab)
+            {
+                lstCharges = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Equals(tbLCCode.Text) && p.TabId == ExportLC.Actions.Cancel);
+            }
+                
             if (lstCharges == null || lstCharges.Count() <= 0) return;
             //
             foreach (BEXPORT_LC_CHARGES ch in lstCharges)
@@ -765,6 +795,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 switch(ch.ChargeCode)
                 {
                     case ExportLC.Charges.Advising:
+                    case ExportLC.Charges.Cancel:
                         loadCharge(ch, ref txtChargeCode1, ref rcbChargeCcy1, ref rcbChargeAcct1, ref tbChargeAmt1, ref rcbPartyCharged1, ref rcbAmortCharge1, ref rcbChargeStatus1, ref lblTaxCode1, ref lblTaxAmt1);
                         break;
                     case ExportLC.Charges.Courier:
@@ -859,7 +890,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void rcbWaiveCharges_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             string WaiveCharges = rcbWaiveCharges.SelectedValue;
-            RadTabStrip3.Visible = WaiveCharges.Equals(bd.YesNo.NO);
+            if (TabId != ExportLC.Actions.Cancel)
+            {
+                RadTabStrip3.Visible = WaiveCharges.Equals(bd.YesNo.NO);
+            }
+            else
+            {
+                RadTabStrip1.Visible = WaiveCharges.Equals(bd.YesNo.NO);
+            }
             RadMultiPage1.Visible = WaiveCharges.Equals(bd.YesNo.NO);
         }
 
@@ -1019,6 +1057,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         if (ExLCCharges != null)
                         {
                             double TotalTaxAmount = 0, TotalChargeAmount = 0;
+                            String currency = "";
                             foreach (BEXPORT_LC_CHARGES ch in ExLCCharges)
                             {
                                 if (ch.ChargeAmt.HasValue && ch.ChargeAmt.Value != 0)
@@ -1029,6 +1068,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount1 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        currency = ch.ChargeCcy;
                                     }
                                     else if (string.IsNullOrEmpty(dataVAT.ChargeType2))
                                     {
@@ -1036,6 +1076,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount2 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        if (currency.IsEmpty())
+                                        {
+                                            currency = ch.ChargeCcy;
+                                        }
                                     }
                                     else if (string.IsNullOrEmpty(dataVAT.ChargeType3))
                                     {
@@ -1043,17 +1087,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount3 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        if (currency.IsEmpty())
+                                        {
+                                            currency = ch.ChargeCcy;
+                                        }
                                     }
                                 }
                             }
                             TotalChargeAmount += TotalTaxAmount;
                             if (TotalChargeAmount != 0)
                             {
-                                dataVAT.TotalChargeAmount = TotalChargeAmount + ExLC.Currency;
-                                dataVAT.TotalChargeAmountWord = Utils.ReadNumber(ExLC.Currency, TotalChargeAmount);
+                                dataVAT.TotalChargeAmount = TotalChargeAmount + currency;
+                                dataVAT.TotalChargeAmountWord = Utils.ReadNumber(currency, TotalChargeAmount);
                                 if (TotalTaxAmount != 0)
                                 {
-                                    dataVAT.TotalTaxAmount = TotalTaxAmount + ExLC.Currency + " PL90304";
+                                    dataVAT.TotalTaxAmount = TotalTaxAmount + currency + " PL90304";
                                     dataVAT.TotalTaxText = "VAT";
                                 }
                             }
@@ -1111,5 +1159,83 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             lblLCType.Text = rcbLCType.SelectedItem.Attributes["Description"].ToString();
         }
+
+        protected void tbChargeAmt1_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt1.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt1.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt1.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode1.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt1.Text = "";
+                lblTaxCode1.Text = "";
+            }
+        }
+
+        protected void tbChargeAmt2_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt2.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt2.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt2.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode2.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt2.Text = "";
+                lblTaxCode2.Text = "";
+            }
+        }
+
+        protected void tbChargeAmt3_TextChanged(object sender, EventArgs e)
+        {
+            double sotien = 0;
+            if (tbChargeAmt3.Value > 0)
+            {
+                sotien = double.Parse(tbChargeAmt3.Value.ToString());
+                sotien = sotien * 0.1;
+                lblTaxAmt3.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxCode3.Text = "81      10% VAT on Charge";
+            }
+            else
+            {
+                lblTaxAmt3.Text = "";
+                lblTaxCode3.Text = "";
+            }
+        }
+
+        private void saveDataCharge(BEXPORT_LC ExLC)
+        {
+            if (ExLC.WaiveCharges.Equals(bd.YesNo.NO))
+            {
+                BEXPORT_LC_CHARGES ExLCCharge;
+                if (tbChargeAmt1.Value.HasValue)
+                {
+                    ExLCCharge = new BEXPORT_LC_CHARGES();
+                    saveCharge(txtChargeCode1, rcbChargeCcy1, rcbChargeAcct1, tbChargeAmt1, rcbPartyCharged1, rcbAmortCharge1, rcbChargeStatus1, lblTaxCode1, lblTaxAmt1, ref ExLCCharge);
+                    dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
+                }
+                if (tbChargeAmt2.Value.HasValue)
+                {
+                    ExLCCharge = new BEXPORT_LC_CHARGES();
+                    saveCharge(txtChargeCode2, rcbChargeCcy2, rcbChargeAcct2, tbChargeAmt2, rcbPartyCharged2, rcbAmortCharge2, rcbChargeStatus2, lblTaxCode2, lblTaxAmt2, ref ExLCCharge);
+                    dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
+                }
+                if (tbChargeAmt3.Value.HasValue)
+                {
+                    ExLCCharge = new BEXPORT_LC_CHARGES();
+                    saveCharge(txtChargeCode3, rcbChargeCcy3, rcbChargeAcct3, tbChargeAmt3, rcbPartyCharged3, rcbAmortCharge3, rcbChargeStatus3, lblTaxCode3, lblTaxAmt3, ref ExLCCharge);
+                    dbEntities.BEXPORT_LC_CHARGES.Add(ExLCCharge);
+                }
+            }
+        }
+        
     }
 }
