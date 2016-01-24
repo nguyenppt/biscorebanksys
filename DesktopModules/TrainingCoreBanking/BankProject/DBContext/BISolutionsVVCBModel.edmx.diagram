@@ -4,10 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e6e2b5ef50504c8297bcf18bb902e1ad" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BCHARGECODE_BK_27082014" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="false" />
+      <Diagram DiagramId="e6e2b5ef50504c8297bcf18bb902e1ad" Name="Diagram1" ZoomLevel="54">
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BCUSTOMER_SAVINGACCT" Width="1.5" PointX="2.75" PointY="2.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_DOCUMETARYCOLLECTION_BK_27082014" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.B_AccountForBuyingTC" Width="1.5" PointX="4.75" PointY="2.75" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.B_CashWithrawalForBuyingTC" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.B_CustomerSignature" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="false" />
@@ -156,17 +154,21 @@
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BAdvisingAndNegotiationLC" Width="1.5" PointX="9.5126644771139439" PointY="11.995083441955542" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_DOCUMETARYCOLLECTIONCHARGES" Width="1.5" PointX="0.8101762313443126" PointY="24.590644281632567" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC_AMEND" Width="2" PointX="6.75" PointY="17.25" IsExpanded="false" />
-        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC_CHARGES" Width="1.875" PointX="4.875" PointY="1.75" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.B_ExchangeRates" Width="1.5" PointX="11.184779394038385" PointY="22.560166280046182" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC_DOCS_PROCESSING_CHARGES" Width="1.5" PointX="0.5" PointY="3.5" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.B_ExchangeRates_History" Width="1.5" PointX="11.53248578847036" PointY="14.719632364213295" IsExpanded="false" />
-        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.B_LOAN_TRANSACTION_HISTORY" Width="1.5" PointX="9.6836273510398474" PointY="2.5304977309566445" IsExpanded="false" />
+        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.B_LOAN_TRANSACTION_HISTORY" Width="1.5" PointX="9.625" PointY="1.75" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BLOANINTEREST_KEY_HISTORY" Width="1.5" PointX="10.018765483991599" PointY="13.724616265727494" IsExpanded="false" />
-        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC" Width="1.5" PointX="11.949075378453861" PointY="13.718217021654461" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC_DOCS_PROCESSING" Width="1.5" PointX="6.4539958585305115" PointY="15.234024367869843" IsExpanded="false" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC_DOCS_SETTLEMENT" Width="1.5" PointX="10.583011015589818" PointY="29.535644872829153" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC_DOCS_SETTLEMENT_CHARGES" Width="1.5" PointX="11.362496338487834" PointY="26.544666287742864" />
         <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_DOCUMETARYCOLLECTION" Width="1.5" PointX="0.72491215389450647" PointY="30.199713214393572" />
+        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC" Width="1.5" PointX="23.375" PointY="22.75" />
+        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BDOCUMETARYCOLLECTIONMT412" Width="1.5" PointX="3.375" PointY="24.75" />
+        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_DOCS_PROCESSING_SETTLEMENT" Width="1.5" PointX="13.375" PointY="24.75" />
+        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_DOCS_PROCESSING_SETTLEMENT_CHARGES" Width="1.5" PointX="15.375" PointY="24.75" />
+        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_DOCS_PROCESSING_SETTLEMENT_MT910" Width="1.5" PointX="5.375" PointY="24.75" />
+        <EntityTypeShape EntityType="VietVictoryCoreBankingEntity.BEXPORT_LC_CHARGES" Width="1.5" PointX="7.375" PointY="24.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
