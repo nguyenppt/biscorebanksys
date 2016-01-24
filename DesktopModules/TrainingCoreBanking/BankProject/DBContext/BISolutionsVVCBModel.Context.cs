@@ -27,10 +27,8 @@ namespace BankProject.DBContext
         {
             throw new UnintentionalCodeFirstException();
         }
-    
-        public DbSet<BCHARGECODE_BK_27082014> BCHARGECODE_BK_27082014 { get; set; }
+   
         public DbSet<BCUSTOMER_SAVINGACCT> BCUSTOMER_SAVINGACCT { get; set; }
-        public DbSet<BEXPORT_DOCUMETARYCOLLECTION_BK_27082014> BEXPORT_DOCUMETARYCOLLECTION_BK_27082014 { get; set; }
         public DbSet<B_AccountForBuyingTC> B_AccountForBuyingTC { get; set; }
         public DbSet<B_CashWithrawalForBuyingTC> B_CashWithrawalForBuyingTC { get; set; }
         public DbSet<B_CustomerSignature> B_CustomerSignature { get; set; }
@@ -179,17 +177,21 @@ namespace BankProject.DBContext
         public DbSet<BAdvisingAndNegotiationLC> BAdvisingAndNegotiationLCs { get; set; }
         public DbSet<BEXPORT_DOCUMETARYCOLLECTIONCHARGES> BEXPORT_DOCUMETARYCOLLECTIONCHARGES { get; set; }
         public DbSet<BEXPORT_LC_AMEND> BEXPORT_LC_AMEND { get; set; }
-        public DbSet<BEXPORT_LC_CHARGES> BEXPORT_LC_CHARGES { get; set; }
         public DbSet<B_ExchangeRates> B_ExchangeRates { get; set; }
         public DbSet<BEXPORT_LC_DOCS_PROCESSING_CHARGES> BEXPORT_LC_DOCS_PROCESSING_CHARGES { get; set; }
         public DbSet<B_ExchangeRates_History> B_ExchangeRates_History { get; set; }
         public DbSet<B_LOAN_TRANSACTION_HISTORY> B_LOAN_TRANSACTION_HISTORY { get; set; }
         public DbSet<BLOANINTEREST_KEY_HISTORY> BLOANINTEREST_KEY_HISTORY { get; set; }
-        public DbSet<BEXPORT_LC> BEXPORT_LC { get; set; }
         public DbSet<BEXPORT_LC_DOCS_PROCESSING> BEXPORT_LC_DOCS_PROCESSING { get; set; }
         public DbSet<BEXPORT_LC_DOCS_SETTLEMENT> BEXPORT_LC_DOCS_SETTLEMENT { get; set; }
         public DbSet<BEXPORT_LC_DOCS_SETTLEMENT_CHARGES> BEXPORT_LC_DOCS_SETTLEMENT_CHARGES { get; set; }
         public DbSet<BEXPORT_DOCUMETARYCOLLECTION> BEXPORT_DOCUMETARYCOLLECTION { get; set; }
+        public DbSet<BEXPORT_LC> BEXPORT_LC { get; set; }
+        public DbSet<BDOCUMETARYCOLLECTIONMT412> BDOCUMETARYCOLLECTIONMT412 { get; set; }
+        public DbSet<BEXPORT_DOCS_PROCESSING_SETTLEMENT> BEXPORT_DOCS_PROCESSING_SETTLEMENT { get; set; }
+        public DbSet<BEXPORT_DOCS_PROCESSING_SETTLEMENT_CHARGES> BEXPORT_DOCS_PROCESSING_SETTLEMENT_CHARGES { get; set; }
+        public DbSet<BEXPORT_DOCS_PROCESSING_SETTLEMENT_MT910> BEXPORT_DOCS_PROCESSING_SETTLEMENT_MT910 { get; set; }
+        public DbSet<BEXPORT_LC_CHARGES> BEXPORT_LC_CHARGES { get; set; }
     
         public virtual ObjectResult<string> B_BMACODE_GetNewID(string maCode, string refix, string flat)
         {
