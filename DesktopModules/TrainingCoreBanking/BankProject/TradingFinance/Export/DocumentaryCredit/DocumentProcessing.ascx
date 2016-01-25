@@ -17,8 +17,7 @@
     function RadToolBar1_OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
-            if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO")
-                radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
+            showPhieuNhap_Xuat();
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>" ||
             button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
@@ -33,6 +32,37 @@
         if (result) {
             $("#<%=btnVAT.ClientID %>").click();
         }
+    }
+    function confirmCallbackFunction_XuatNgoaiBang(result) {
+        if (result) {
+            $("#<%=btnXuatNgoaiBang.ClientID %>").click();
+        }
+        if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO")
+            radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
+    }
+
+    function confirmCallbackFunction_NhapNgoaiBang(result) {
+        if (result) {
+            $("#<%=btnNhapNgoaiBang.ClientID %>").click();
+        }
+        if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO")
+            radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
+    }
+
+    function showPhieuNhap_Xuat() {
+        if(<%= TabId %> == 239)
+        {
+            radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang, 420, 150, null, 'Download');
+        }
+        else if ($find("<%=txtNewAmount.ClientID%>").get_value() > 0 
+                && $find("<%=txtOriginalAmount.ClientID%>").get_value() > 0 
+                && $find("<%=txtNewAmount.ClientID%>").get_value() >= $find("<%=txtOriginalAmount.ClientID%>").get_value()) {
+            radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang, 420, 150, null, 'Download');
+        } else if ($find("<%=txtOriginalAmount.ClientID%>").get_value() > 0 
+                && $find("<%=txtNewAmount.ClientID%>").get_value() < $find("<%=txtOriginalAmount.ClientID%>").get_value()) {
+            radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang, 420, 150, null, 'Download');
+        }
+
     }
 </script>
 </telerik:RadCodeBlock>
@@ -1003,4 +1033,6 @@
 </telerik:RadAjaxManager>
 <div style="visibility: hidden;">
     <asp:Button ID="btnVAT" runat="server" OnClick="btnVAT_Click" />
+    <asp:Button ID="btnXuatNgoaiBang" runat="server" OnClick="btnXuatNgoaiBang_Click" />
+    <asp:Button ID="btnNhapNgoaiBang" runat="server" OnClick="btnNhapNgoaiBang_Click" />
 </div>

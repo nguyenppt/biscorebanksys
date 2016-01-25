@@ -161,7 +161,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     else
                     {
                         string[] s = ExLCDocAmend.AmendNo.Split('.');
-                        tbLCCode.Text += "." + (Convert.ToInt32(s[2]) + 1);
+                        int nextIndex;
+                        if (s.Length == 2) //in case TF number is xxx.No
+                        {
+                            nextIndex = (Convert.ToInt32(s[1]) + 1);
+                        }
+                        else //in case TF number is xx.No.No
+                        {
+                            nextIndex = (Convert.ToInt32(s[2]) + 1);
+                        }
+                        tbLCCode.Text += "." + nextIndex;
                     }
                     loadLCDoc(ExLCDoc);
                     //Cho phép amend
@@ -459,7 +468,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 }
                 else
                 {
-                    txtOriginalAmount.Value = ExLCDoc.Amount;
+                    if (ExLCDoc.Amount != 0)
+                    {
+                        txtOriginalAmount.Value = ExLCDoc.Amount;
+                    }
+                    else
+                    {
+                        string docCode = tbLCCode.Text.Trim();
+                        docCode = docCode.Split('.')[0];
+                        if (null != ExLCDoc.AmendNoOriginal)
+                        {
+                            docCode = ExLCDoc.AmendNoOriginal;
+                        }
+                        var ExLCDocOld = dbEntities.findExportLCDoc(docCode);
+
+                        txtOriginalAmount.Value = ExLCDocOld.Amount;
+                    }
                     txtOriginalTenor.Text = ExLCDoc.Tenor;
                 }
             }
@@ -526,7 +550,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 switch (ch.ChargeCode)
                 {
                     case ExportLCDocProcessing.Charges.Commission:
-                    //case ExportLCDocProcessing.Charges.Service:
+                    case ExportLCDocProcessing.Charges.Service:
                         loadCharge(ch, ref txtChargeCode1, ref rcbChargeCcy1, ref rcbChargeAcct1, ref tbChargeAmt1, ref rcbPartyCharged1, ref rcbAmortCharge1, ref rcbChargeStatus1, ref lblTaxCode1, ref lblTaxAmt1);
                         break;
                     case ExportLCDocProcessing.Charges.Courier:
@@ -578,7 +602,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         if (ExLCDoc == null)
                         {
                             ExLCDoc = new BEXPORT_LC_DOCS_PROCESSING();
-                            ExLCDoc.DocCode = docCode;
+                            ExLCDoc.DocCode = tbLCCode.Text;
                             ExLCDoc.AmendNo = docCode;
                             ExLCDoc.ActiveRecordFlag = "Yes";
                             ExLCDoc.Status = bd.TransactionStatus.UNA;
@@ -663,7 +687,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             #region Amend
             if (TabId == ExportLCDocProcessing.Actions.Amend)
             {
-                docCode = docCode.Substring(0, docCode.IndexOf(".", docCode.IndexOf(".") + 1));
+                docCode = docCode.Split('.')[0];
                 switch (commandName)
                 {
                     case bc.Commands.Commit:
@@ -675,7 +699,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             {
                                 AmendNo = tbLCCode.Text.Trim(),
                                 AmendNoOriginal = ExLCDocOld.AmendNo,
-                                DocCode = docCode,
+                                DocCode = ExLCDocOld.DocCode,
                                 ActiveRecordFlag = "Yes",
                                 AmendStatus = bd.TransactionStatus.UNA,
                                 AmendDate = DateTime.Now,
@@ -975,6 +999,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         {
             showReport("VAT");
         }
+
+        protected void btnXuatNgoaiBang_Click(object sender, EventArgs e)
+        {
+            showReport("XuatNgoaiBang");
+        }
+
+        protected void btnNhapNgoaiBang_Click(object sender, EventArgs e)
+        {
+            showReport("NhapNgoaiBang");
+        }
+
         private void showReport(string reportType)
         {
             var ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
@@ -1065,22 +1100,41 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         break;
 
                     case "XuatNgoaiBang":
-                        reportTemplate = Context.Server.MapPath(reportTemplate + "XuatNgoaiBang.doc");
-                        reportSaveName = "XuatNgoaiBang" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                    case "NhapNgoaiBang":
+
+                        reportTemplate = Context.Server.MapPath(reportTemplate +  reportType + ".doc");
+                        reportSaveName = reportType + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
 
 
                         var dataXuatNgoaiBang = new Model.Reports.PhieuXuatNgoaiBang()
-                        {                            
-                            NormalLCCode = ExLCDoc.DocCode,
+                        {
+                            DocCode = ExLCDoc.DocCode,
+                            CustomerName = BCustomer.CustomerName,
                             CurrentUserLogin = ExLCDoc.CreateBy,
                             ApplicantName = ExLCDoc.ApplicantName,
                             IdentityNo = BCustomer.IdentityNo,
                             ApplicantAddr1 = ExLCDoc.ApplicantAddr1,
                             ApplicantAddr2 = ExLCDoc.ApplicantAddr2,
                             ApplicantAddr3 = ExLCDoc.ApplicantAddr3,
-                            Amount = ExLCDoc.Amount.Value,
                             Currency = ExLCDoc.Currency
                         };
+
+                        double oldAmount = 0;
+
+                        if (null != ExLCDoc.AmendNoOriginal)
+                        {
+                            var ExLCDocOld = dbEntities.findExportLCDoc(ExLCDoc.AmendNoOriginal, true);
+                            oldAmount = ExLCDocOld.Amount.Value;
+                        }
+
+                        if(reportType.Equals("XuatNgoaiBang"))
+                        {
+                            dataXuatNgoaiBang.Amount = oldAmount - ExLCDoc.Amount.Value;
+                        }
+                        else
+                        {
+                            dataXuatNgoaiBang.Amount = ExLCDoc.Amount.Value - oldAmount;
+                        }
 
                         var lstData = new List<Model.Reports.PhieuXuatNgoaiBang>();
                         lstData.Add(dataXuatNgoaiBang);
