@@ -2242,7 +2242,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     lblChargeStatus.Text = string.Empty;
 
                     tbChargeRemarks.Text = string.Empty;
-                    tbVatNo.Text = string.Empty;
+                    tbVatNo.Text = "154";
                     lblTaxCode.Text = string.Empty;
                     //lblTaxCcy.Text = string.Empty;
                     lblTaxAmt.Text = string.Empty;
@@ -3065,19 +3065,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     case 9://VAT of "register" fucntion
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterVAT.doc");
                         saveName = "RegisterVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Register_Report(txtCode.Text, UserInfo.Username);
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Register_Report(txtCode.Text, UserInfo.Username, TabId);
                         break;
 
                     case 10://VAT of "Amend" fucntion
                         reportTemplate = Context.Server.MapPath(reportTemplate + "AmendVAT.doc");
-                        saveName = "RegisterVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report(txtCode.Text, UserInfo.Username);
+                        saveName = "AmendVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Amend_Report(txtCode.Text, UserInfo.Username, TabId);
                         break;
 
                     case 11://VAT of "Cancel" fucntion
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterVAT.doc");
-                        saveName = "RegisterVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report(txtCode.Text, UserInfo.Username);
+                        saveName = "CancelVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Cancel_Report(txtCode.Text, UserInfo.Username, TabId);
                         break;
                 }
                 if (reportData != null)

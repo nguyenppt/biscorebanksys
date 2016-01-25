@@ -515,7 +515,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //txtCode.Text = CodeId;
                 var expDocCode = CodeId.Substring(0, 14);
                 lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
-                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode);
+                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode && q.ActiveRecordFlag == "YES");
                 if (expDoc == null)
                 {
                     lblError.Text = "Document does not exists";
