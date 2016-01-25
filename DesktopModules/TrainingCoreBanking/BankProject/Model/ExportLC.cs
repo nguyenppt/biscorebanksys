@@ -117,11 +117,11 @@ namespace BankProject.Model
             if (Code.LastIndexOf(".") != i || (isAmendNo.HasValue && isAmendNo.Value))
                 return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.AmendNo.Equals(Code)).FirstOrDefault();
 
-            return BEXPORT_LC_DOCS_PROCESSING.Where(p => (p.DocCode.Equals(Code) && p.ActiveRecordFlag.Equals("Yes"))).FirstOrDefault();
+            return BEXPORT_LC_DOCS_PROCESSING.Where(p => (p.DocCode.Contains(Code) && p.ActiveRecordFlag.Equals("Yes"))).FirstOrDefault();
         }
         public BEXPORT_LC_DOCS_PROCESSING findExportLCDocLastestAmend(string DocCode)
         {
-            return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.Equals(DocCode)).OrderByDescending(p => p.AmendNo).FirstOrDefault();
+            return BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.StartsWith(DocCode)).OrderByDescending(p => p.AmendNo).FirstOrDefault();
         }
         public BEXPORT_LC_DOCS_PROCESSING findExportLCLastestDoc(string LCCode)
         {
