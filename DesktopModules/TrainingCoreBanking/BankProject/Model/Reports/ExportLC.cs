@@ -89,10 +89,12 @@ namespace BankProject.Model.Reports
         public int Year
         {
             get {
-                return (DateTime.Now).Month;
+                return (DateTime.Now).Year;
             }
         }
         public string NormalLCCode { get; set; }
+        public string DocCode { get; set; }
+        public string CustomerName { get; set; }
         public string CurrentUserLogin { get; set; }
         public string ApplicantName { get; set; }
         public string IdentityNo { get; set; }
