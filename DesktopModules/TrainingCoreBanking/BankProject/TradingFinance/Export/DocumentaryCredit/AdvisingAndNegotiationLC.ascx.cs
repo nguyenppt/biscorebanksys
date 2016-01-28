@@ -346,7 +346,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             var commandName = toolBarButton.CommandName.ToLower();
             #region Register
             if (TabId == ExportLC.Actions.Register)
-            {                
+            {
                 switch (commandName)
                 {
                     case bc.Commands.Commit:

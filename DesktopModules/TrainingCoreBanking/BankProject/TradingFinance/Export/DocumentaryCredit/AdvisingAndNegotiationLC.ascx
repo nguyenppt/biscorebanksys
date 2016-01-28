@@ -451,6 +451,15 @@
                                 InitialValue=""
                                 ErrorMessage="[Place of Expiry] is required" ForeColor="Red">
                             </asp:RequiredFieldValidator>
+                            <asp:CompareValidator 
+                                runat="server" ID="validateExpireDate" 
+                                ControlToCompare="txtDateOfIssue" 
+                                ControlToValidate="txtDateOfExpiry" 
+                                ValidationGroup="Commit"
+                                Type="Date" 
+                                Operator="GreaterThanEqual"  
+                                ErrorMessage="[Date of Expiry] should be equal or greater than [Date if issue]">
+                            </asp:CompareValidator>
                         </td>
                         <td style="width: 200px" class="MyContent">
                             <telerik:RadDatePicker ID="txtDateOfExpiry" Width="200" runat="server" />
