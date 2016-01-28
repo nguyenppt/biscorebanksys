@@ -408,7 +408,13 @@
                 </tr>
 
                 <tr>
-                    <td class="MyLable">6 New Amount<span class="Required"> (*)</span></td>
+                    <div runat="server" id="newAmountLb">
+                        <td class="MyLable">6 New Amount<span class="Required"> (*)</span></td>
+                    </div>
+                    <div runat="server" id="amountLb" visible="false">
+                        <%-- This label is shown in register page --%>
+                        <td class="MyLable">6 Amount<span class="Required"> (*)</span></td>
+                    </div>
                     <td class="MyContent">
                         <telerik:RadNumericTextBox ID="numAmount" runat="server" />
                         <asp:RequiredFieldValidator

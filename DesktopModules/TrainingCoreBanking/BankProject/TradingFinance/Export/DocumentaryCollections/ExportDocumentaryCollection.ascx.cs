@@ -196,7 +196,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         InitToolBarForRegister();
                     }
                     lblAmount_New.Visible = false;
-                  
+                    divAmount.Visible = false;
+                    newAmountLb.Visible = false;
+                    amountLb.Visible = true;
                     break;
                 case ExportDocumentaryScreenType.Amend:
                     LoadExportDocAmend();

@@ -364,6 +364,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
         
         /// <summary>
+        /// newAmountLb control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl newAmountLb;
+        
+        /// <summary>
+        /// amountLb control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl amountLb;
+        
+        /// <summary>
         /// numAmount control.
         /// </summary>
         /// <remarks>
