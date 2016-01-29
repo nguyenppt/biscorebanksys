@@ -326,6 +326,16 @@
                     </tr>
                     <tr>
                         <td class="MyLable">32B.Increase of Documentary Credit Amount</td>
+                        <td>
+                            <telerik:RadComboBox Width="195"
+                                AppendDataBoundItems="True"
+                                ID="rcbCurrency"
+                                runat="server"
+                                MarkFirstMatch="True"
+                                AutoPostBack="true"
+                                AllowCustomText="false">
+                            </telerik:RadComboBox>
+                        </td>
                         <td class="MyContent">
                             <telerik:RadNumericTextBox ID="txtIncreaseOfDocumentaryCreditAmount" Width="195" runat="server" ClientEvents-OnValueChanged="txtIncreaseOfDocumentaryCreditAmount_OnValueChanged" />
                         </td>
@@ -869,6 +879,8 @@
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="rcbChargeAcct3" />
             </UpdatedControls>
+        </telerik:AjaxSetting>
+        <telerik:AjaxSetting AjaxControlID="rcbCurrency">
         </telerik:AjaxSetting>
     </AjaxSettings>
 </telerik:RadAjaxManager>

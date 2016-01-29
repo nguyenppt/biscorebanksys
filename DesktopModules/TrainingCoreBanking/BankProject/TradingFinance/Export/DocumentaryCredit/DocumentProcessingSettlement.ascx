@@ -977,12 +977,12 @@
                         </telerik:radcombobox>
                         <asp:Label ID="lblNostroAcctName" runat="server" /></td>
                 </tr>--%>
-                <tr>
+               <%-- <tr>
                     <td class="MyLable">32A. Value Date</td>
                     <td class="MyContent">
                         <telerik:raddatepicker id="dtValueDateMt910" runat="server" />
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td class="MyLable">32A. Currency</td>
                     <td class="MyContent">

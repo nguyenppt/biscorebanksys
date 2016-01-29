@@ -288,7 +288,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 txtTransactionRefNumber.Text = mt910.TransactionReferenceNumber;
                 txtRelatedRef.Text = mt910.RelatedReference;
                 txtAccountIndentification.Text = mt910.AccountIndentification;
-                dtValueDateMt910.SelectedDate = mt910.ValueDate;
+                //dtValueDateMt910.SelectedDate = mt910.ValueDate;
                 //fixed bug 46 get value of currency from tab Main
                 comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
                 numAmountMt910.Value = (double)(mt910.Amount??0);
@@ -326,7 +326,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 mt910.TransactionReferenceNumber = txtTransactionRefNumber.Text;
                 mt910.RelatedReference = txtRelatedRef.Text;
                 mt910.AccountIndentification = txtAccountIndentification.Text;
-                mt910.ValueDate = dtValueDateMt910.SelectedDate;
+                //mt910.ValueDate = dtValueDateMt910.SelectedDate;
                 mt910.Currency = comboCurrencyMt910.SelectedValue;
                 mt910.Amount = (decimal) (numAmountMt910.Value ?? 0);
                 mt910.OrderingInstitutionName = txtOrderingInstitutionName.Text;
@@ -347,7 +347,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 mt910.TransactionReferenceNumber = txtTransactionRefNumber.Text;
                 mt910.RelatedReference = txtRelatedRef.Text;
                 mt910.AccountIndentification = txtAccountIndentification.Text;
-                mt910.ValueDate = dtValueDateMt910.SelectedDate;
+                //mt910.ValueDate = dtValueDateMt910.SelectedDate;
                 mt910.Currency = comboCurrencyMt910.SelectedValue;
                 mt910.Amount = (decimal)(numAmountMt910.Value ?? 0);
                 mt910.OrderingInstitutionName = txtOrderingInstitutionName.Text;
@@ -847,7 +847,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
             #region MT910
 
-            dtValueDateMt910.SelectedDate = DateTime.Now.Date;            
+            //dtValueDateMt910.SelectedDate = DateTime.Now.Date;            
 
             #endregion
         }

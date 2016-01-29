@@ -46,11 +46,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
             //
             var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
+            bc.Commont.initRadComboBox(ref rcbCurrency, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy1, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy2, "Code", "Code", dsCurrency);
             bc.Commont.initRadComboBox(ref rcbChargeCcy3, "Code", "Code", dsCurrency);
 
             //remove "GOLD" from list of currency
+            bc.Commont.removeCurrencyItem(rcbCurrency, "GOLD");
             bc.Commont.removeCurrencyItem(rcbChargeCcy1, "GOLD");
             bc.Commont.removeCurrencyItem(rcbChargeCcy2, "GOLD");
             bc.Commont.removeCurrencyItem(rcbChargeCcy3, "GOLD");
@@ -265,6 +267,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             ExLCAmend.IssuingBankAddr2 = txtIssuingBankAddr2.Text.Trim();
             ExLCAmend.IssuingBankAddr3 = txtIssuingBankAddr3.Text.Trim();
             //
+            ExLCAmend.Currency = rcbCurrency.SelectedValue.Trim();
             ExLCAmend.DateOfIssue = txtDateOfIssue.SelectedDate;
             ExLCAmend.DateOfAmendment = txtDateOfAmendment.SelectedDate;
             ExLCAmend.NumberOfAmendment = Convert.ToInt32(txtNumberOfAmendment.Value);
@@ -329,6 +332,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtIssuingBankAddr3.Text = ExLC.IssuingBankAddr3;
             //
             txtDateOfIssue.SelectedDate = ExLC.DateOfIssue;
+            rcbCurrency.SelectedValue = ExLC.Currency;
             //txtDateOfAmendment.SelectedDate = DateTime.Now;
             //txtNumberOfAmendment.Value = 1;
             //
@@ -382,6 +386,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             txtBeneficiaryAddr3.Text = ExLCAmend.BeneficiaryAddr3;
             //
             txtNewDateOfExpiry.SelectedDate = ExLCAmend.NewDateOfExpiry;
+            rcbCurrency.SelectedValue = ExLCAmend.Currency;
             txtIncreaseOfDocumentaryCreditAmount.Value = ExLCAmend.IncreaseOfDocumentaryCreditAmount;
             txtDecreaseOfDocumentaryCreditAmount.Value = ExLCAmend.DecreaseOfDocumentaryCreditAmount;
             txtDocumentaryCreditAmount.Value = ExLCAmend.DocumentaryCreditAmount.ToString();

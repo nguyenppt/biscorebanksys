@@ -337,6 +337,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadDatePicker txtNewDateOfExpiry;
         
         /// <summary>
+        /// rcbCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbCurrency;
+        
+        /// <summary>
         /// txtIncreaseOfDocumentaryCreditAmount control.
         /// </summary>
         /// <remarks>
