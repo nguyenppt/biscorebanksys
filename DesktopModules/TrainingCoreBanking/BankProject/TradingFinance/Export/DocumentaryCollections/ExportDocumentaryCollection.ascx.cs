@@ -384,21 +384,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void SetButtonForEnquiry()
         {
                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                if (StatusEnquiry == "UNA")
-                {
-                    RadToolBar1.FindItemByValue("btRevert").Enabled = true;
-                    
-                }
-                else if (StatusEnquiry == "REV")
+
+                if (StatusEnquiry == "REV")
                 {
                     RadToolBar1.FindItemByValue("btSave").Enabled = true;
-                    RadToolBar1.FindItemByValue("btRevert").Enabled = false;
                 }
-                else
-                {
-                    RadToolBar1.FindItemByValue("btRevert").Enabled = false;
-                }
-            
         }
         protected float ConvertStringToFloat(string num)
         {
@@ -2221,6 +2211,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                     tbChargeRemarks.Text = drow1["ChargeRemarks"].ToString();
                     tbVatNo.Text = drow1["VATNo"].ToString();
+                    
+                    //hard code VatNo as 154
+                    tbVatNo.Text = "154";
+
                     lblTaxCode.Text = drow1["TaxCode"].ToString();
                     //lblTaxCcy.Text = drow1["TaxCcy"].ToString();
                     lblTaxAmt.Text = drow1["TaxAmt"].ToString();
@@ -3052,7 +3046,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                         break;
                     case 7://VAT
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
-                        saveName = "RegisterDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        saveName = "AcceptDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username, comboCurrency.SelectedValue, TabId);
                         //reportData.Tables[0].TableName = "Table1";
                         break;
