@@ -194,13 +194,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         private bool CheckBeforeSaveOrAuthorizePayment()
         {
             var doc =
-                _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId.Substring(0, 14));
+                _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId.Substring(0, 14) && q.ActiveRecordFlag == "YES");
             if ((doc.PaymentFullFlag ?? 0) == 1)
             {
                 lblError.Text = "This document was paid full";
                 return false;
             }
-            if (numDrawingAmount.Value > doc.Amount - double.Parse(lblCreditAmount.Text)) 
+            double amount = doc.AmountNew != null ? double.Parse(doc.AmountNew.Value.ToString()) : doc.Amount.Value;
+           
+            if (numDrawingAmount.Value > amount - double.Parse(lblCreditAmount.Text)) 
             {
                 lblError.Text = "Drawing amount must be less then or equal remain amount";
                 return false;
@@ -283,6 +285,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         private void LoadMT910()
         {
             var mt910 = _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.FirstOrDefault(q => q.PaymentId == CodeId);
+            comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
             if (mt910 != null)
             {
                 txtTransactionRefNumber.Text = mt910.TransactionReferenceNumber;
@@ -290,7 +293,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 txtAccountIndentification.Text = mt910.AccountIndentification;
                 dtValueDateMt910.SelectedDate = mt910.ValueDate;
                 //fixed bug 46 get value of currency from tab Main
-                comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
                 numAmountMt910.Value = (double)(mt910.Amount??0);
                 txtOrderingInstitutionName.Text = mt910.OrderingInstitutionName;
                 txtOrderingInstitutionAddress1.Text = mt910.OrderingInstitutionAddress1;
