@@ -60,7 +60,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             switch (refId)
             {
                 case ExportLC.Actions.Amend:
-                    if (!status.IsEmpty())
+                    if (status != "")
                     {
                         enquiry = enquiry.Where(p => p.AmendStatus.Equals(status));
                     }

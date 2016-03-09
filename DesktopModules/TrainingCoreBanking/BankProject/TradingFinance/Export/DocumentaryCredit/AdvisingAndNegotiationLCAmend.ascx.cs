@@ -632,7 +632,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount2 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
-                                        if (currency.IsEmpty())
+                                        if (currency == "")
                                         {
                                             currency = ch.ChargeCcy;
                                         }
@@ -643,7 +643,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount3 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
-                                        if (currency.IsEmpty())
+                                        if (currency == "")
                                         {
                                             currency = ch.ChargeCcy;
                                         }
