@@ -538,7 +538,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             //bc.Commont.initRadComboBox(ref rcbApplicant700, "CustomerName", "CustomerID", dsc);
             bc.Commont.initRadComboBox(ref rcbAccountOfficer, "Description", "Code", bd.SQLData.B_BACCOUNTOFFICER_GetAll());
 
-            bc.Commont.initRadComboBox(ref rcbLCType, "LCTYPE", "LCTYPE", bd.DataTam.B_BLCTYPES_GetAll());
+            bc.Commont.initRadComboBox(ref rcbLCType, "LCTYPE", "LCTYPE", bd.DataTam.B_BLCTYPES_GetAll("Import"));
             bc.Commont.initRadComboBox(ref rcCommodity, "Name", "ID", bd.SQLData.B_BCOMMODITY_GetByTransactionType("OTC"));
             var dsCurrency = bd.SQLData.B_BCURRENCY_GetAll();
             bc.Commont.initRadComboBox(ref rcbChargeCcy, "Code", "Code", dsCurrency);
