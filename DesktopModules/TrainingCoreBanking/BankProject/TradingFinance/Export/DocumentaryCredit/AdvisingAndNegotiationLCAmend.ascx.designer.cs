@@ -355,6 +355,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::Telerik.Web.UI.RadNumericTextBox txtIncreaseOfDocumentaryCreditAmount;
         
         /// <summary>
+        /// decreaseCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox decreaseCurrency;
+        
+        /// <summary>
         /// txtDecreaseOfDocumentaryCreditAmount control.
         /// </summary>
         /// <remarks>
@@ -362,6 +371,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNumericTextBox txtDecreaseOfDocumentaryCreditAmount;
+        
+        /// <summary>
+        /// newCreaditAmountCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox newCreaditAmountCurrency;
         
         /// <summary>
         /// txtDocumentaryCreditAmount control.

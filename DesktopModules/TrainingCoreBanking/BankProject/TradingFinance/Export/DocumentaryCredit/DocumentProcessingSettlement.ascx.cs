@@ -13,6 +13,7 @@ using Telerik.Web.UI;
 using BankProject.DBContext;
 using bc = BankProject.Controls;
 using BankProject.DBRespository;
+using BankProject.Model;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
@@ -200,7 +201,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 lblError.Text = "This document was paid full";
                 return false;
             }
-            if (numDrawingAmount.Value > doc.Amount - double.Parse(lblCreditAmount.Text)) 
+
+            var old_doc =
+               _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode == doc.AmendNoOriginal);
+
+            double amount = doc.Amount != null ? double.Parse(doc.Amount.Value.ToString()) : old_doc.Amount.Value;
+
+            if (numDrawingAmount.Value > amount - double.Parse(lblCreditAmount.Text)) 
             {
                 lblError.Text = "Drawing amount must be less then or equal remain amount";
                 return false;
@@ -336,6 +343,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         private void LoadMT910()
         {
             var mt910 = _entities.BEXPORT_DOCS_PROCESSING_SETTLEMENT_MT910.FirstOrDefault(q => q.PaymentId == CodeId);
+            comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
             if (mt910 != null)
             {
                 txtTransactionRefNumber.Text = mt910.TransactionReferenceNumber;
@@ -343,7 +351,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 txtAccountIndentification.Text = mt910.AccountIndentification;
                 //dtValueDateMt910.SelectedDate = mt910.ValueDate;
                 //fixed bug 46 get value of currency from tab Main
-                comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
                 numAmountMt910.Value = (double)(mt910.Amount??0);
                 txtOrderingInstitutionName.Text = mt910.OrderingInstitutionName;
                 txtOrderingInstitutionAddress1.Text = mt910.OrderingInstitutionAddress1;
@@ -513,7 +520,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 //txtCode.Text = CodeId;
                 var expDocCode = CodeId.Substring(0, 14);
                 lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
-                var expDoc = _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode == expDocCode && q.ActiveRecordFlag == "YES");
+                var expDoc = _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode == expDocCode && (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                 if (expDoc == null)
                 {
                     lblError.Text = "Document does not exists";
@@ -566,7 +573,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 lblCreditAmount.Text = GetAmountCredited(CodeId).ToString("#,##0.00");
 
-                var expDoc = _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode == CodeId && q.ActiveRecordFlag == "YES");
+                var expDoc = _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode == CodeId && (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                 if (expDoc == null)
                 {
                     lblError.Text = "Document does not exists";
@@ -608,7 +615,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     txtCode.Text = CodeId;
                     var expDocCode = CodeId.Substring(0, 16);
                     lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
-                    var expDoc = _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode == expDocCode && q.ActiveRecordFlag == "YES");
+                    var expDoc = _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode == expDocCode && (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                     if (expDoc == null)
                     {
                         lblError.Text = "Document does not exists";
@@ -984,15 +991,29 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 //var drow = dsDoc.Tables[0].Rows[0];
 
                 #region Load Export Collection
-               // comboCollectionType.SelectedValue = expDoc.CollectionType;
+
+                int i = expDoc.DocCode.IndexOf(".");
+                string lblLCReferenceNo = "";
+                if (i > 0)
+                    lblLCReferenceNo = expDoc.DocCode.Substring(0, i);
+                else
+                    lblLCReferenceNo = expDoc.DocCode;
+
+                BEXPORT_LC ExLC = _entities.BEXPORT_LC.FirstOrDefault(q => q.ExportLCCode == lblLCReferenceNo);
+                if (null != ExLC)
+                {
+                    comboCollectionType.SelectedValue = ExLC.LCType;
+                    comboDrawerCusNo.SelectedValue = ExLC.BeneficiaryNo;
+                    txtDrawerCusName.Text = ExLC.BeneficiaryName;
+                    txtDrawerAddr1.Text = ExLC.BeneficiaryAddr1;
+                    txtDrawerAddr2.Text = ExLC.BeneficiaryAddr2;
+                    txtDrawerAddr3.Text = ExLC.BeneficiaryAddr3;
+//                    txtDrawerRefNo.Text = ExLC.DrawerRefNo;
+                }
+                
                 lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
 
-                //comboDrawerCusNo.SelectedValue = expDoc.DrawerCusNo;
-                //txtDrawerCusName.Text = expDoc.DrawerCusName;
-                //txtDrawerAddr1.Text = expDoc.DrawerAddr1;
-                //txtDrawerAddr2.Text = expDoc.DrawerAddr2;
-                //txtDrawerAddr3.Text = expDoc.DrawerAddr3;
-                //txtDrawerRefNo.Text = expDoc.DrawerRefNo;
+                
                 comboCollectingBankNo.SelectedValue = expDoc.IssuingBankNo;
                 txtCollectingBankName.Text = expDoc.IssuingBankName;
                 txtCollectingBankAddr1.Text = expDoc.IssuingBankAddr1;
@@ -1008,6 +1029,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 comboCreditCurrency.SelectedValue = expDoc.Currency;
                 comboCurrency.SelectedValue = expDoc.Currency;
                 loadNostroAccount();
+                LoadCreditAccount();
                 numAmount.Value = expDoc.Amount;
                 txtTenor.Text = expDoc.Tenor;
                 //numReminderDays.Text = (expDoc.ReminderDays??0).ToString();
@@ -1048,6 +1070,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 //}
                 //bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(expDoc.Currency)).ToList());//
                 //cboNostroAcct
+
+                comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
                 #endregion
             }
             else

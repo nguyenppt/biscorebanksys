@@ -330,6 +330,7 @@
                             <telerik:RadComboBox Width="195"
                                 AppendDataBoundItems="True"
                                 ID="rcbCurrency"
+                                Enabled="false"
                                 runat="server"
                                 MarkFirstMatch="True"
                                 AutoPostBack="true"
@@ -342,12 +343,34 @@
                     </tr>
                     <tr>
                         <td class="MyLable">33B.Decrease of Documentary Credit Amount</td>
+                        <td>
+                            <telerik:RadComboBox Width="195"
+                                AppendDataBoundItems="True"
+                                ID="decreaseCurrency"
+                                Enabled="false"
+                                runat="server"
+                                MarkFirstMatch="True"
+                                AutoPostBack="true"
+                                AllowCustomText="false">
+                            </telerik:RadComboBox>
+                        </td>
                         <td class="MyContent">
                             <telerik:RadNumericTextBox ID="txtDecreaseOfDocumentaryCreditAmount" Width="195" runat="server" ClientEvents-OnValueChanged="txtDecreaseOfDocumentaryCreditAmount_OnValueChanged" />
                         </td>
                     </tr>
                     <tr>
                         <td class="MyLable">34B.New Documentary Credit Amount After Amendment</td>
+                        <td>
+                            <telerik:RadComboBox Width="195"
+                                AppendDataBoundItems="True"
+                                ID="newCreaditAmountCurrency"
+                                Enabled="false"
+                                runat="server"
+                                MarkFirstMatch="True"
+                                AutoPostBack="true"
+                                AllowCustomText="false">
+                            </telerik:RadComboBox>
+                        </td>
                         <td class="MyContent">
                             <asp:HiddenField ID="txtDocumentaryCreditAmount" runat="server" Value="0" />
                             <telerik:RadNumericTextBox ID="txtNewDocumentaryCreditAmountAfterAmendment" Width="195" runat="server" ReadOnly="true" />

@@ -47,6 +47,16 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     lblLCReferenceNo.Text = tbLCCode.Text.Substring(0, i);
                 else
                     lblLCReferenceNo.Text = tbLCCode.Text;
+
+                BEXPORT_LC ExportLC = dbEntities.findExportLC(lblLCReferenceNo.Text);
+
+                if (ExportLC != null && ExportLC.CancelStatus != null)
+                {
+                    lblLCCodeMessage.Text = "This LC is canceled !";
+                    bc.Commont.SetTatusFormControls(this.Controls, false);
+                    return;
+                }
+
                 #region Amend
                 if (TabId == ExportLCDocProcessing.Actions.Amend)
                 {
@@ -236,6 +246,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 //
                 if (i < 0)//Export LC code
                 {
+
                     if (TabId == ExportLCDocProcessing.Actions.Reject || TabId == ExportLCDocProcessing.Actions.Accept)
                     {
                         lblLCCodeMessage.Text = "Invalid Code !";
@@ -1045,7 +1056,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             CustomerAddress = ExLCDoc.BeneficiaryAddr1 + " " + ExLCDoc.BeneficiaryAddr2 + " " + ExLCDoc.BeneficiaryAddr3,
                             IdentityNo = null == BCustomer ? "" : BCustomer.IdentityNo,
                             //
-                            DebitAccount = null == BCustomer ? "" : BCustomer.BankAccount,
+                            DebitAccount = null,// == BCustomer ? "" : BCustomer.BankAccount,
                             ChargeRemarks = ExLCDoc.ChargeRemarks
                         };
                         //
@@ -1053,6 +1064,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         if (ExLCDocCharges != null)
                         {
                             double TotalTaxAmount = 0, TotalChargeAmount = 0;
+                            String currency = "";
                             foreach (BEXPORT_LC_DOCS_PROCESSING_CHARGES ch in ExLCDocCharges)
                             {
                                 if (ch.ChargeAmt.HasValue && ch.ChargeAmt.Value != 0)
@@ -1060,34 +1072,49 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                     if (string.IsNullOrEmpty(dataVAT.ChargeType1))
                                     {
                                         dataVAT.ChargeType1 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
-                                        dataVAT.ChargeAmount1 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        dataVAT.ChargeAmount1 = Utils.CurrencyFormat(ch.ChargeAmt.Value, ch.ChargeCcy) + " "
+                                            + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        currency = ch.ChargeCcy;
+                                        dataVAT.DebitAccount = ch.ChargeAcc;
                                     }
                                     else if (string.IsNullOrEmpty(dataVAT.ChargeType2))
                                     {
                                         dataVAT.ChargeType2 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
-                                        dataVAT.ChargeAmount2 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        dataVAT.ChargeAmount2 = Utils.CurrencyFormat(ch.ChargeAmt.Value, ch.ChargeCcy) + " " 
+                                            + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        if (currency.IsEmpty())
+                                        {
+                                            currency = ch.ChargeCcy;
+                                        }
+                                        dataVAT.DebitAccount = ch.ChargeAcc;
                                     }
                                     else if (string.IsNullOrEmpty(dataVAT.ChargeType3))
                                     {
                                         dataVAT.ChargeType3 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
-                                        dataVAT.ChargeAmount3 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        dataVAT.ChargeAmount3 = Utils.CurrencyFormat(ch.ChargeAmt.Value, ch.ChargeCcy) + " " 
+                                            + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
+                                        if (currency.IsEmpty())
+                                        {
+                                            currency = ch.ChargeCcy;
+                                        }
+                                        dataVAT.DebitAccount = ch.ChargeAcc;
                                     }
                                 }
                             }
                             TotalChargeAmount += TotalTaxAmount;
                             if (TotalChargeAmount != 0)
                             {
-                                dataVAT.TotalChargeAmount = TotalChargeAmount + ExLCDoc.Currency;
-                                dataVAT.TotalChargeAmountWord = Utils.ReadNumber(ExLCDoc.Currency, TotalChargeAmount);
+                                dataVAT.TotalChargeAmount = TotalChargeAmount + currency;
+                                dataVAT.TotalChargeAmountWord = Utils.ReadNumber(currency, TotalChargeAmount);
                                 if (TotalTaxAmount != 0)
                                 {
-                                    dataVAT.TotalTaxAmount = TotalTaxAmount + ExLCDoc.Currency + " PL90304";
+                                    dataVAT.TotalTaxAmount = Utils.CurrencyFormat(TotalTaxAmount, currency) + " " +  currency + " PL90304";
                                     dataVAT.TotalTaxText = "VAT";
                                 }
                             }
@@ -1113,9 +1140,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             CurrentUserLogin = ExLCDoc.CreateBy,
                             ApplicantName = ExLCDoc.ApplicantName,
                             IdentityNo = BCustomer.IdentityNo,
-                            ApplicantAddr1 = ExLCDoc.ApplicantAddr1,
-                            ApplicantAddr2 = ExLCDoc.ApplicantAddr2,
-                            ApplicantAddr3 = ExLCDoc.ApplicantAddr3,
+                            ApplicantAddr1 = BCustomer.Address,
+                            ApplicantAddr2 = BCustomer.City,
+                            ApplicantAddr3 = BCustomer.Country,
                             Currency = ExLCDoc.Currency
                         };
 
@@ -1135,7 +1162,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         {
                             dataXuatNgoaiBang.Amount = ExLCDoc.Amount.Value - oldAmount;
                         }
-
+                        
                         var lstData = new List<Model.Reports.PhieuXuatNgoaiBang>();
                         lstData.Add(dataXuatNgoaiBang);
                         tbl1 = Utils.CreateDataTable<Model.Reports.PhieuXuatNgoaiBang>(lstData);
