@@ -194,7 +194,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         private bool CheckBeforeSaveOrAuthorizePayment()
         {
             var doc =
-                _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId.Substring(0, 14) && q.ActiveRecordFlag == "YES");
+                _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId.Substring(0, 14) && (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
             if ((doc.PaymentFullFlag ?? 0) == 1)
             {
                 lblError.Text = "This document was paid full";
@@ -517,7 +517,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 //txtCode.Text = CodeId;
                 var expDocCode = CodeId.Substring(0, 14);
                 lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
-                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode && q.ActiveRecordFlag == "YES");
+                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode && (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                 if (expDoc == null)
                 {
                     lblError.Text = "Document does not exists";
@@ -570,7 +570,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 lblCreditAmount.Text = GetAmountCredited(CodeId).ToString("#,##0.00");
 
-                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId & q.ActiveRecordFlag == "YES");
+                var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId & (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                 if (expDoc == null)
                 {
                     lblError.Text = "Document does not exists";
@@ -612,7 +612,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     txtCode.Text = CodeId;
                     var expDocCode = CodeId.Substring(0, 14);
                     lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
-                    var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode & q.ActiveRecordFlag == "YES");
+                    var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode & (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                     if (expDoc == null)
                     {
                         lblError.Text = "Document does not exists";
@@ -988,6 +988,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 comboCreditCurrency.SelectedValue = expDoc.Currency;
                 comboCurrency.SelectedValue = expDoc.Currency;
                 loadNostroAccount();
+                LoadCreditAccount();
                 numAmount.Value = expDoc.Amount;
                 txtTenor.Text = expDoc.Tenor;
                 numReminderDays.Text = (expDoc.ReminderDays??0).ToString();
@@ -1026,6 +1027,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 {
                     dteTracerDate.SelectedDate = expDoc.TracerDate.Value;
                 }
+
+                comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
                 //bc.Commont.initRadComboBox(ref cboNostroAcct, "Code", "AccountNo", _entities.BSWIFTCODEs.Where(q => q.Currency.Equals(expDoc.Currency)).ToList());//
                 //cboNostroAcct
                 #endregion

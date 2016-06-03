@@ -3047,7 +3047,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                     case 7://VAT
                         reportTemplate = Context.Server.MapPath(reportTemplate + "RegisterDocumentaryCollectionVAT.doc");
                         saveName = "AcceptDocumentaryCollectionVAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
-                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username, comboCurrency.SelectedValue, TabId);
+                        reportData = bd.SQLData.P_BEXPORT_DOCUMETARYCOLLECTION_VAT_Report(txtCode.Text, UserInfo.Username, rcbChargeCcy.SelectedValue, TabId);
                         //reportData.Tables[0].TableName = "Table1";
                         break;
                     case 8://COVER
