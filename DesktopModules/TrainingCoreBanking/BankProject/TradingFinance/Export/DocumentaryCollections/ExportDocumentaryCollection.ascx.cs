@@ -987,7 +987,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 if (Disable) // Authorizing
                 {
-                    if (_exportDoc["Status"].ToString() != "AUT") // Authorized
+                    if (_exportDoc["Status"].ToString() == "CAN") // Canceled
+                    {
+                        lblError.Text = "This Documentary was canceled";
+                    }
+                    else if (_exportDoc["Status"].ToString() != "AUT") // Authorized
                     {
                         lblError.Text = "This Documentary was not authorized";
                     }
@@ -1011,7 +1015,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 }
                 else // Editing
                 {
-                    if (_exportDoc["Status"].ToString() != "AUT") // Authorized
+                    if (_exportDoc["Status"].ToString() == "CAN") // Canceled
+                    {
+                        lblError.Text = "This Documentary was canceled";
+                    }
+                    else if (_exportDoc["Status"].ToString() != "AUT") // Authorized
                     {
                         lblError.Text = "This Documentary was not authorized";
                     }
