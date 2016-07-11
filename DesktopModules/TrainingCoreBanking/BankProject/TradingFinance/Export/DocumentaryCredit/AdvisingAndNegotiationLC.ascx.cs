@@ -1065,7 +1065,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                     if (string.IsNullOrEmpty(dataVAT.ChargeType1))
                                     {
                                         dataVAT.ChargeType1 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
-                                        dataVAT.ChargeAmount1 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        dataVAT.ChargeAmount1 = Utils.CurrencyFormat(ch.ChargeAmt.Value, ch.ChargeCcy) + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
                                         currency = ch.ChargeCcy;
@@ -1073,10 +1073,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                     else if (string.IsNullOrEmpty(dataVAT.ChargeType2))
                                     {
                                         dataVAT.ChargeType2 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
-                                        dataVAT.ChargeAmount2 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        dataVAT.ChargeAmount2 = Utils.CurrencyFormat(ch.ChargeAmt.Value, ch.ChargeCcy) + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
-                                        if (currency == "")
+                                        if (currency.IsEmpty())
                                         {
                                             currency = ch.ChargeCcy;
                                         }
@@ -1084,10 +1084,10 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                     else if (string.IsNullOrEmpty(dataVAT.ChargeType3))
                                     {
                                         dataVAT.ChargeType3 = dbEntities.getChargeTypeInfo(ch.ChargeCode, 1);
-                                        dataVAT.ChargeAmount3 = ch.ChargeAmt.Value + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
+                                        dataVAT.ChargeAmount3 = Utils.CurrencyFormat(ch.ChargeAmt.Value, ch.ChargeCcy) + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
-                                        if (currency == "")
+                                        if (currency.IsEmpty())
                                         {
                                             currency = ch.ChargeCcy;
                                         }
@@ -1097,11 +1097,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             TotalChargeAmount += TotalTaxAmount;
                             if (TotalChargeAmount != 0)
                             {
-                                dataVAT.TotalChargeAmount = TotalChargeAmount + currency;
+                                dataVAT.TotalChargeAmount = Utils.CurrencyFormat(TotalChargeAmount, currency) + currency;
                                 dataVAT.TotalChargeAmountWord = Utils.ReadNumber(currency, TotalChargeAmount);
                                 if (TotalTaxAmount != 0)
                                 {
-                                    dataVAT.TotalTaxAmount = TotalTaxAmount + currency + " PL90304";
+                                    dataVAT.TotalTaxAmount = Utils.CurrencyFormat(TotalTaxAmount, currency) + currency + " PL90304";
                                     dataVAT.TotalTaxText = "VAT";
                                 }
                             }

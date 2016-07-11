@@ -672,8 +672,8 @@
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
                                             <Items>
-                                                <telerik:RadComboBoxItem Value="" Text="" />
                                                 <telerik:RadComboBoxItem Value="CHARGE COLLECTED" Text="CHARGE COLLECTED" />
+                                                <telerik:RadComboBoxItem Value="" Text="" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>
@@ -774,8 +774,8 @@
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
                                             <Items>
-                                                <telerik:RadComboBoxItem Value="" Text="" />
                                                 <telerik:RadComboBoxItem Value="CHARGE COLLECTED" Text="CHARGE COLLECTED" />
+                                                <telerik:RadComboBoxItem Value="" Text="" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>
@@ -877,8 +877,8 @@
                                             <ExpandAnimation Type="None" />
                                             <CollapseAnimation Type="None" />
                                             <Items>
-                                                <telerik:RadComboBoxItem Value="" Text="" />
                                                 <telerik:RadComboBoxItem Value="CHARGE COLLECTED" Text="CHARGE COLLECTED" />
+                                                <telerik:RadComboBoxItem Value="" Text="" />
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>

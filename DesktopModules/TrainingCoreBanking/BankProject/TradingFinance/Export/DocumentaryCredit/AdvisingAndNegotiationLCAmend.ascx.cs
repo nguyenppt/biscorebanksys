@@ -66,9 +66,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             if (!string.IsNullOrEmpty(Request.QueryString["Code"]))
             {
                 tbLCCode.Text = Request.QueryString["Code"];
+                var ExLCAmend = dbEntities.findExportLCAmend(tbLCCode.Text);
+                int numberOfAmendation = 1;
                 if (tbLCCode.Text.IndexOf(".") < 0)
                 {
                     var ExLC = dbEntities.findExportLC(tbLCCode.Text);
+                    if(ExLCAmend != null)
+                    {
+                        if(ExLCAmend.AmendStatus.Equals(bd.TransactionStatus.AUT))
+                        {
+                            numberOfAmendation = (int)(ExLCAmend.NumberOfAmendment) + 1;
+                            tbLCCode.Text = tbLCCode.Text + "." + numberOfAmendation;
+                        }
+                        else
+                        {
+                            numberOfAmendation = (int)(ExLCAmend.NumberOfAmendment);
+                            tbLCCode.Text = ExLCAmend.AmendNo;
+                        }
+                    }
                     if (ExLC == null)
                     {
                         lblLCCodeMessage.Text = "Can not find this Code !";
@@ -95,13 +110,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     }
                     loadLC(ExLC);
                     tbVatNo.Text = dbEntities.getVATNo();
+                    txtNumberOfAmendment.Value = numberOfAmendation;
                     RadToolBar1.FindItemByValue("btCommit").Enabled = true;
                     RadToolBar1.FindItemByValue("btPreview").Enabled = true;
                     RadToolBar1.FindItemByValue("btSearch").Enabled = true;
                 }
                 else//Load thông tin theo amendCode
                 {
-                    var ExLCAmend = dbEntities.findExportLCAmend(tbLCCode.Text);
                     if (ExLCAmend == null)
                     {
                         lblLCCodeMessage.Text = "This Code can not found !";
@@ -340,7 +355,6 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             decreaseCurrency.SelectedValue = ExLC.Currency;
             newCreaditAmountCurrency.SelectedValue = ExLC.Currency;
             //txtDateOfAmendment.SelectedDate = DateTime.Now;
-            //txtNumberOfAmendment.Value = 1;
             //
             rcbBeneficiaryNumber.SelectedValue = ExLC.BeneficiaryNo;
             txtBeneficiaryName.Text = ExLC.BeneficiaryName;
@@ -351,7 +365,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //txtNewDateOfExpiry.SelectedDate
             //txtIncreaseOfDocumentaryCreditAmount.Value
             //txtDecreaseOfDocumentaryCreditAmount.Value
-            txtDocumentaryCreditAmount.Value = ExLC.Amount.ToString();
+            if (ExLC.Amount.ToString() != "")
+            {
+                txtDocumentaryCreditAmount.Value = ExLC.Amount.ToString();
+            }
+            else
+            {
+                txtDocumentaryCreditAmount.Value = "0";
+            }
+            txtNewDocumentaryCreditAmountAfterAmendment.Value = ExLC.Amount;
             //txtNewDocumentaryCreditAmountAfterAmendment.Text
             txtPercentCreditAmountTolerance1.Value = ExLC.PercentageCreditAmountTolerance1;
             txtPercentCreditAmountTolerance2.Value = ExLC.PercentageCreditAmountTolerance2;
@@ -383,7 +405,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             //
             txtDateOfIssue.SelectedDate = ExLCAmend.DateOfIssue;
             txtDateOfAmendment.SelectedDate = ExLCAmend.DateOfAmendment;
-            txtNumberOfAmendment.Value = ExLCAmend.NumberOfAmendment;
+            txtNumberOfAmendment.Text = ExLCAmend.NumberOfAmendment.ToString();
             //
             rcbBeneficiaryNumber.SelectedValue = ExLCAmend.BeneficiaryNo;
             txtBeneficiaryName.Text = ExLCAmend.BeneficiaryName;
@@ -641,7 +663,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount2 = Utils.CurrencyFormat(ch.ChargeAmt.Value, ch.ChargeCcy) + " " + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
-                                        if ("".Equals(currency))
+                                        if (currency.IsEmpty())
                                         {
                                             currency = ch.ChargeCcy;
                                         }
@@ -653,7 +675,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                         dataVAT.ChargeAmount3 = Utils.CurrencyFormat(ch.ChargeAmt.Value, ch.ChargeCcy) + " " + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
-                                        if ("".Equals(currency))
+                                        if (currency.IsEmpty())
                                         {
                                             currency = ch.ChargeCcy;
                                         }

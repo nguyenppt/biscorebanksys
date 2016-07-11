@@ -496,6 +496,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         txtOriginalAmount.Value = ExLCDocOld.Amount;
                     }
                     txtOriginalTenor.Text = ExLCDoc.Tenor;
+                    txtNewAmount.Value = ExLCDoc.Amount;
                 }
             }
             else
@@ -698,7 +699,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             #region Amend
             if (TabId == ExportLCDocProcessing.Actions.Amend)
             {
-                docCode = docCode.Split('.')[0];
+                docCode = docCode.Split('.')[0] + "." + docCode.Split('.')[1];
                 switch (commandName)
                 {
                     case bc.Commands.Commit:
@@ -1086,7 +1087,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                             + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
-                                        if ("".Equals(currency))
+                                        if (currency.IsEmpty())
                                         {
                                             currency = ch.ChargeCcy;
                                         }
@@ -1099,7 +1100,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                             + ch.ChargeCcy + " " + dbEntities.getChargeTypeInfo(ch.ChargeCode, 2);
                                         if (ch.TaxAmt.HasValue) TotalTaxAmount += ch.TaxAmt.Value;
                                         TotalChargeAmount += ch.ChargeAmt.Value;
-                                        if ("".Equals(currency))
+                                        if (currency.IsEmpty())
                                         {
                                             currency = ch.ChargeCcy;
                                         }
@@ -1110,7 +1111,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             TotalChargeAmount += TotalTaxAmount;
                             if (TotalChargeAmount != 0)
                             {
-                                dataVAT.TotalChargeAmount = TotalChargeAmount + currency;
+                                dataVAT.TotalChargeAmount = Utils.CurrencyFormat(TotalChargeAmount, currency) + currency;
                                 dataVAT.TotalChargeAmountWord = Utils.ReadNumber(currency, TotalChargeAmount);
                                 if (TotalTaxAmount != 0)
                                 {
