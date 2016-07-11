@@ -250,11 +250,14 @@ namespace BankProject.Helper
             {
                 strdoc = "Không";
             }
-            var strR = strdoc.Trim() + " " + donvi.Trim() + " " + strDocle.Trim();
-            if (strR.Length > 1)
+
+            if (strdoc.Trim().Length > 1)
             {
-                strR = strR.Substring(0, 1).ToUpper() + strR.Substring(1).ToLower();
+                strdoc = strdoc.Substring(0, 1).ToUpper() + strdoc.Substring(1).ToLower();
             }
+
+            var strR = strdoc.Trim() + " " + donvi.Trim() + " " + strDocle.Trim();
+            
             return strR;
         }
         public static string CurrencyFormat(object ob, string currency, string format = null)
