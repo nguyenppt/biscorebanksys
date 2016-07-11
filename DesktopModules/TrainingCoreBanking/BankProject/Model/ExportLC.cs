@@ -52,7 +52,7 @@ namespace BankProject.Model
         public BEXPORT_LC_AMEND findExportLCAmend(string Code)
         {
             Code = Code.Trim().ToUpper();
-            return BEXPORT_LC_AMEND.Where(p => p.AmendNo.Trim().Equals(Code)).FirstOrDefault();
+            return BEXPORT_LC_AMEND.Where(p => p.AmendNo.Trim().StartsWith(Code)).OrderByDescending(p => p.AmendDate).FirstOrDefault();
         }
         //
         public string getChargeTypeInfo(string ChargeType, int infoType)
