@@ -76,7 +76,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     enquiry = enquiry.Where(p => p.AmendStatus.Equals(status));
                     break;
                 default:// ExportLC.Actions.Register:
-                    if (status == "")
+                    if (status.Equals(""))
                     {
                         enquiry = enquiry.Where(p => p.Status.Equals(bd.TransactionStatus.AUT) 
                                                     || p.Status.Equals(bd.TransactionStatus.UNA) 
