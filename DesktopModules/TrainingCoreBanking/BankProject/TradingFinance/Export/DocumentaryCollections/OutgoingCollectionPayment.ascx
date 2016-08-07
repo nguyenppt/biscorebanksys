@@ -150,7 +150,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="MyLable">1.3 Drawing Amount
+                        <td class="MyLable">1.3  Receiving Amount
                         </td>
                         <td class="MyContent">
                             <telerik:radnumerictextbox id="numDrawingAmount" runat="server" value="0" />
@@ -161,7 +161,7 @@
                                 ValidationGroup="Commit"
                                 MinimumValue="0.01"
                                 MaximumValue="99999999999"
-                                ErrorMessage="Drawing Amount must be greater than 0" ForeColor="Red">
+                                ErrorMessage=" Receiving Amount must be greater than 0" ForeColor="Red">
                             </asp:RangeValidator>
                         </td>
                     </tr>
