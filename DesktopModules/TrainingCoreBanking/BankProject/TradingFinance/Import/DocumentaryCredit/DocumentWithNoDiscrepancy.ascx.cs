@@ -386,7 +386,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             break;
                         case TabDocsReject:
                         case TabDocsAccept:
-                            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, TabId, UserId, txtAcceptDate.SelectedDate, txtAcceptRemarks.Text);
+                            bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.UNA, 
+                                TabId, UserId, txtAcceptDate.SelectedDate, txtAcceptRemarks.Text);
                             Response.Redirect("Default.aspx?tabid=" + TabId);
                             break;
                     }
