@@ -115,6 +115,19 @@
                     <span style="font-weight: bold; text-transform: uppercase;">Parties</span>
                 </legend>
                 <table cellpadding="0" cellspacing="0">
+                    
+                    <tr>
+                        <td class="MyLable">Accept Date</td>
+                        <td class="MyContent">
+                            <telerik:RadDatePicker ID="txtAcceptDate" runat="server" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="MyLable">Accept Remarks</td>
+                        <td class="MyContent">
+                            <telerik:Radtextbox runat="server" ID="txtAcceptRemarks" Width="355" />
+                        </td>
+                    </tr>
                     <tr>
                         <td class="MyLable" style="width: 170px">1.LC reference no </td>
                         <td class="MyContent">

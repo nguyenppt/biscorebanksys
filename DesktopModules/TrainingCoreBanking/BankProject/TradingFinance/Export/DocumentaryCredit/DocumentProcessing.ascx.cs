@@ -304,6 +304,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             RadToolBar1.FindItemByValue("btCommit").Enabled = true;
                             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
                             RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                            txtAcceptDate.Enabled = true;
+                            txtAcceptRemarks.Enabled = true;
                             return;
                         }
                         return;
@@ -513,6 +515,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             loadLCDocsCode(ExLCDoc.DocsCode1, ExLCDoc.NoOfOriginals1, ExLCDoc.NoOfCopies1, ExLCDoc.OtherDocs1, ref rcbDocsCode1, ref txtNoOfOriginals1, ref txtNoOfCopies1);
             loadLCDocsCode(ExLCDoc.DocsCode2, ExLCDoc.NoOfOriginals2, ExLCDoc.NoOfCopies2, ExLCDoc.OtherDocs2, ref rcbDocsCode2, ref txtNoOfOriginals2, ref txtNoOfCopies2);
             loadLCDocsCode(ExLCDoc.DocsCode3, ExLCDoc.NoOfOriginals3, ExLCDoc.NoOfCopies3, ExLCDoc.OtherDocs3, ref rcbDocsCode3, ref txtNoOfOriginals3, ref txtNoOfCopies3);
+
+
+            if (null != ExLCDoc.AcceptDate)
+                txtAcceptDate.SelectedDate = Convert.ToDateTime(ExLCDoc.AcceptDate);
+            txtAcceptRemarks.Text = ExLCDoc.AcceptRemarks;
 
             txtOtherDocs1.Text = ExLCDoc.OtherDocs1;
             txtOtherDocs2.Text = ExLCDoc.OtherDocs2;
@@ -824,7 +831,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             else
                             {
                                 ExLCDoc.AcceptStatus = bd.TransactionStatus.UNA;
-                                ExLCDoc.AcceptDate = DateTime.Now;
+                                ExLCDoc.AcceptDate = txtAcceptDate.SelectedDate;
+                                ExLCDoc.AcceptRemarks = txtAcceptRemarks.Text;
                             }
                             saveLCDoc(ref ExLCDoc);
                             dbEntities.SaveChanges();
