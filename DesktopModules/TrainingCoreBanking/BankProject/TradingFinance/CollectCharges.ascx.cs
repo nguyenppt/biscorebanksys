@@ -288,9 +288,31 @@ namespace BankProject.TradingFinance
         private void calculateChargeTotalAmount()
         {
             var totalAmount = 0.0;
-            if (!string.IsNullOrEmpty(cboChargeType.SelectedValue) && txtChargeAmount.Value.HasValue) totalAmount += txtChargeAmount.Value.Value;
-            if (!string.IsNullOrEmpty(cboChargeType1.SelectedValue) && txtChargeAmount1.Value.HasValue) totalAmount += txtChargeAmount1.Value.Value;
-            if (!string.IsNullOrEmpty(cboChargeType2.SelectedValue) && txtChargeAmount2.Value.HasValue) totalAmount += txtChargeAmount2.Value.Value;
+            var freeVAT = 0.0; //used to calculate VAT that should be removeed if transaction type is "LC" and charge type is start with "ILC"
+            if (!string.IsNullOrEmpty(cboChargeType.SelectedValue) && txtChargeAmount.Value.HasValue)
+            {
+                totalAmount += txtChargeAmount.Value.Value;
+                if(cboTransactionType_ChargeCommission.SelectedValue.ToString().Equals("LC") && cboChargeType.SelectedValue.ToString().StartsWith("ILC"))
+                {
+                    freeVAT += txtChargeAmount.Value.Value * 0.1;
+                }
+            }
+            if (!string.IsNullOrEmpty(cboChargeType1.SelectedValue) && txtChargeAmount1.Value.HasValue)
+            {
+                totalAmount += txtChargeAmount1.Value.Value;
+                if (cboTransactionType_ChargeCommission.SelectedValue.ToString().Equals("LC") && cboChargeType1.SelectedValue.ToString().StartsWith("ILC"))
+                {
+                    freeVAT += txtChargeAmount1.Value.Value * 0.1;
+                }
+            }
+            if (!string.IsNullOrEmpty(cboChargeType2.SelectedValue) && txtChargeAmount2.Value.HasValue)
+            {
+                totalAmount += txtChargeAmount2.Value.Value;
+                if (cboTransactionType_ChargeCommission.SelectedValue.ToString().Equals("LC") && cboChargeType2.SelectedValue.ToString().StartsWith("ILC"))
+                {
+                    freeVAT += txtChargeAmount2.Value.Value * 0.1;
+                }
+            }
             //
             lblTotalChargeAmount.Text = "";
             if (totalAmount > 0) lblTotalChargeAmount.Text = String.Format("{0:C}", totalAmount).Replace("$", "");
@@ -301,7 +323,7 @@ namespace BankProject.TradingFinance
                 {
                     case "A":
                     case "B":
-                        lblTotalTaxAmount.Text = String.Format("{0:C}", totalAmount * 0.1).Replace("$", "");
+                        lblTotalTaxAmount.Text = String.Format("{0:C}", (totalAmount * 0.1) - freeVAT).Replace("$", "");
                         break;
                     default:
                         //txtTaxAmt.Text = String.Format("{0:C}", txtChargeAmt.Value.Value).Replace("$", "");
