@@ -491,14 +491,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             dtValueDate.SelectedDate = outColPayment.ValueDate;
             numDrawingAmount.Value = outColPayment.DrawingAmount;
             comboCountryCode.SelectedValue = outColPayment.CountryCode;
-            if (null == outColPayment.AmtCredited || outColPayment.AmtCredited == 0)
-            {
-                lblCreditAmount.Text = (numDrawingAmount.Value??0).ToString("#,##0.00");
-            }
-            else
-            {
-                lblCreditAmount.Text = (outColPayment.AmtCredited ?? 0).ToString("#,##0.00");
-            }
+            lblCreditAmount.Text = (outColPayment.AmtCredited??0).ToString("#,##0.00");
             //comboPaymentMethod.SelectedValue = outColPayment.PaymentMethod; //fixed bug 65
             comboCreditCurrency.SelectedValue = outColPayment.Currency;
             LoadCreditAccount();
