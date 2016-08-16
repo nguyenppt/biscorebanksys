@@ -571,6 +571,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             if (string.IsNullOrEmpty(txtCode.Text)) return;
 
             var dsDoc = bd.SQLData.B_BDOCUMETARYCOLLECTION_GetByDocCollectCode(txtCode.Text.Trim(), TabId);
+            var AmendNo = "";
             if (dsDoc == null || dsDoc.Tables.Count <= 0)
             {
                 lblError.Text = "Can not find this Docs !";
@@ -586,7 +587,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 RadToolBar1.FindItemByValue("btReview").Enabled = false;
 
                 var drow = dsDoc.Tables[0].Rows[0];
-
+                AmendNo = drow["AmendNo"].ToString();
                 Amount_Old = double.Parse(drow["Amount_Old"].ToString());
                 Amount = double.Parse(drow["Amount"].ToString());
                 B4_AUT_Amount = double.Parse(drow["B4_AUT_Amount"].ToString());
@@ -710,7 +711,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     {
                         if (!string.IsNullOrEmpty(drow["NewAmendNo"].ToString()))
                             txtCode.Text = drow["NewAmendNo"].ToString();
-                        else
+                        else if (!string.IsNullOrEmpty(drow["AmendNo"].ToString()))
                             txtCode.Text = drow["AmendNo"].ToString();
                     }
                 }
@@ -809,7 +810,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             #endregion
             
             #region tab Charge
-            if (dsDoc.Tables[1].Rows.Count > 0)
+            if (dsDoc.Tables[1].Rows.Count > 0 && (TabId!= 218 || AmendNo.Equals(txtCode.Text)))
             {
                 var drow1 = dsDoc.Tables[1].Rows[0];
 
@@ -928,7 +929,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             #endregion
 
             #region tab MT410
-            if (dsDoc.Tables[3].Rows.Count > 0 && isMT412Active)
+            if (dsDoc.Tables[3].Rows.Count > 0 && !isMT412Active)
             {
                 var drowMT410 = dsDoc.Tables[3].Rows[0];
 
@@ -965,6 +966,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtSenderToReceiverInfo_410_1.Text = drowMT412["SenderToReceiverInfo1"].ToString();
                 txtSenderToReceiverInfo_410_2.Text = drowMT412["SenderToReceiverInfo2"].ToString();
                 txtSenderToReceiverInfo_410_3.Text = drowMT412["SenderToReceiverInfo3"].ToString();
+
+                dteMaturityDateMT412.SelectedDate = dteMaturityDate.SelectedDate;
             }
             else
             {

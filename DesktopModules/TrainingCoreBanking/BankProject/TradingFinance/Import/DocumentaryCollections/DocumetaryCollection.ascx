@@ -300,7 +300,7 @@
         <div ID="divIncomingCollectionAcception" runat="server">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Accepted Date</td>
+                    <td class="MyLable">Maturity Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteAcceptedDate" runat="server" />
                     </td>
