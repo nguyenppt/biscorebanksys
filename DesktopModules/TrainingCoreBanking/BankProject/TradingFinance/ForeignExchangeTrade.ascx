@@ -236,7 +236,7 @@
             InitialValue="0"
             ErrorMessage="Buy Amount is required" ForeColor="Red"></asp:RequiredFieldValidator></td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtBuyAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="2" Value="0" />
+                    <telerik:RadNumericTextBox ID="txtBuyAmount" runat="server" NumberFormat-DecimalSeparator="." NumberFormat-DecimalDigits="2" Value="0" />
                 </td>
             </tr>
         </table>
@@ -273,7 +273,7 @@
             InitialValue="0"
             ErrorMessage="Sell Amount is required" ForeColor="Red"></asp:RequiredFieldValidator></td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtSellAmount" runat="server" NumberFormat-DecimalSeparator="," NumberFormat-DecimalDigits="2"
+                    <telerik:RadNumericTextBox ID="txtSellAmount" runat="server" NumberFormat-DecimalSeparator="." NumberFormat-DecimalDigits="2"
                          ClientEvents-OnValueChanged="OnAmountValueChanged" Value="0" />
                 </td>
             </tr>
