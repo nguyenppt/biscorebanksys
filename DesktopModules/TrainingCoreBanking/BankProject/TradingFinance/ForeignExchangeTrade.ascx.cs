@@ -207,6 +207,9 @@ namespace BankProject.Views.TellerApplication
                     }
                     else BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
                     break;
+                case bd.TransactionStatus.REV:
+                    //Do no things
+                    break;;
                 default:
                     RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, false);
