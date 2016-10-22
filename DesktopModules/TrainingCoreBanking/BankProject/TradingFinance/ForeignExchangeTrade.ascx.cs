@@ -130,7 +130,6 @@ namespace BankProject.Views.TellerApplication
                     Response.Redirect(EditUrl("chitiet"));
                     break;
                 case bc.Commands.Authorize:
-                case bc.Commands.Reverse:
                     int provitionTransferId = bd.SQLData.B_BFOREIGNEXCHANGE_ValidationLCNoExst_PROVISIONTRANSFER_DC(txtFTNo.Text.Trim());
 
                     if (txtFTNo.Text != "" && provitionTransferId <= 0)
@@ -144,6 +143,23 @@ namespace BankProject.Views.TellerApplication
                     BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                     BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
                     SetDefault(true);
+                    LoadToolBar(false);
+                    break;
+
+                case bc.Commands.Reverse:
+                    int provitionTransferId2 = bd.SQLData.B_BFOREIGNEXCHANGE_ValidationLCNoExst_PROVISIONTRANSFER_DC(txtFTNo.Text.Trim());
+
+                    if (txtFTNo.Text != "" && provitionTransferId2 <= 0)
+                    {
+                        ShowMsgBox("There is no Provision Transfer information. Please process function Provision Transfer");
+                        return;
+                    }
+                    // Update Status
+                    bd.SQLData.B_BFOREIGNEXCHANGE_UpdateStatus(commandName, txtId.Text.Trim(), UserId);
+
+                    //BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
+                    //SetDefault(true);
                     LoadToolBar(false);
                     break;
             }

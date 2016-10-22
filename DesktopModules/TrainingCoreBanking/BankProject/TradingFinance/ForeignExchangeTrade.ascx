@@ -282,7 +282,7 @@
             <tr>
                 <td class="MyLable">Rate</td>
                 <td class="MyContent">
-                    <telerik:RadNumericTextBox ID="txtRate" runat="server"  NumberFormat-DecimalDigits="5" ClientEvents-OnValueChanged="OnAmountValueChanged" />
+                    <telerik:RadNumericTextBox ID="txtRate" runat="server"  NumberFormat-DecimalDigits="2" ClientEvents-OnValueChanged="OnAmountValueChanged" />
                 </td>
             </tr>
         </table>
