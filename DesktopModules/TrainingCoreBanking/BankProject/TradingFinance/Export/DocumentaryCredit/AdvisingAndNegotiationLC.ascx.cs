@@ -14,7 +14,7 @@ using BankProject.Helper;
 using BankProject.Model;
 using System.Globalization;
 using System.Web.UI.WebControls;
-using System.Data.Entity.Validation;
+using System.Data.Entity.Validation; 
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {
