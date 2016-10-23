@@ -529,7 +529,7 @@
         //
         if (button.get_commandName() == '<%=BankProject.Controls.Commands.Print%>') {
             args.set_cancel(true);
-            radconfirm("Do you want to download file?", confirmCallbackFunctionVAT, 340, 150, null, 'Download');
+            radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunctionVAT, 340, 150, null, 'Download');
         }
     }
 
