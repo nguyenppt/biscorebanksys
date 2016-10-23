@@ -22,7 +22,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
             if (Request.QueryString["Codeid"] != null)
             {
-                LoadData(Request.QueryString["Codeid"]);
+                
                 if (Request.QueryString["disable"] != null)
                 {
                     hdfDisable.Value = Request.QueryString["disable"];
@@ -33,6 +33,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         RadToolBar1.FindItemByValue("btCommitData").Enabled = false;
                         RadToolBar1.FindItemByValue("btSearch").Enabled = false;
                     }
+                    LoadData(Request.QueryString["Codeid"]);
                     RadToolBar1.FindItemByValue("btPrint").Enabled = true;
                 }
             }
@@ -52,7 +53,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
             string commandName = toolBarButton.CommandName;
             if (commandName == "print" || commandName == "commit")
             {
-                if (hdfDisable.Value == "0") return;
+                //if (hdfDisable.Value == "0") return;
 
                 bd.Database.ProvisionTransfer_DC_Insert(tbDepositCode.Text,tbLCNo.Text,rcbOrderedby.SelectedValue, "", rcbDebitAccount.Text,
                     rcbDebitCurrency.SelectedValue, tbDebitAmout.Text, rdpDebitDDate.SelectedDate.ToString(), rcbCreditAccount.Text, lblCreditCurrency.Text, "",
@@ -93,10 +94,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
                 RadToolBar1.FindItemByValue("btReverse").Enabled = false;
 
-                BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
+                //BankProject.Controls.Commont.SetEmptyFormControls(this.Controls);
                 BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
-                clearComboBox();
-                FirstLoad();
+                //clearComboBox();
+                //FirstLoad();
             }
             else if (commandName == "search")
             {
@@ -247,6 +248,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     RadToolBar1.FindItemByValue("btReverse").Enabled = true;
                     RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
 
+                }
+                else if (ds.Tables[0].Rows[0]["Status"].ToString() == "REV")
+                {
+                    RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                    RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+                    BankProject.Controls.Commont.SetTatusFormControls(this.Controls, true);
                 }
             }
         }
