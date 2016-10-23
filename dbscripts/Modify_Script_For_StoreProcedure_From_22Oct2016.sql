@@ -5,6 +5,51 @@ GO
 
 /***
 ---------------------------------------------------------------------------------
+-- 23 oct 2016 : Nghia : Update for Thu Chi Ho - bullcurrency_change
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BFOREIGNEXCHANGE_GetByDebitAccount')
+BEGIN
+DROP PROCEDURE [dbo].[B_BFOREIGNEXCHANGE_GetByDebitAccount]
+END
+GO
+
+CREATE PROCEDURE [dbo].[B_BFOREIGNEXCHANGE_GetByDebitAccount]
+	@Code varchar(50),
+	@Currency varchar(10),
+	@CustomerName nvarchar(500),
+	@CallFrom varchar(50)
+AS
+BEGIN
+	if @CallFrom = 'text_chage'
+	begin
+		select id, name, currency, amount, CustomerID from dbo.BDRFROMACCOUNT
+		where Id = @Code  and Currency = @Currency
+	end
+	else if @CallFrom = 'bullcurrency_change'
+	begin
+		select * from (
+		select id, name, currency, amount, CustomerID from dbo.BDRFROMACCOUNT
+		where Name = @CustomerName and Currency = @Currency
+		union all
+		select t.thuchihoaccount as ID, cus.CustomerName as Name, t.currency, 0 as [amount], cus.CustomerID
+		from BCUSTOMERS cus 
+			inner join BINTERNALBANKACCOUNT t on 1 = 1
+		where cus.CustomerID = '1100006' and cus.CustomerName = @CustomerName and  t.Currency = @Currency
+		) a
+	end
+	else if @CallFrom = 'provision_transfers'
+	begin
+		select id, name, currency, amount, CustomerID from dbo.BDRFROMACCOUNT
+		where CustomerID = @CustomerName and Currency = @Currency
+	end
+END
+
+GO
+
+
+/***
+---------------------------------------------------------------------------------
 -- 22 oct 2016 : Nghia : In case of data is update,the status should be change to UNA
 ---------------------------------------------------------------------------------
 ***/
