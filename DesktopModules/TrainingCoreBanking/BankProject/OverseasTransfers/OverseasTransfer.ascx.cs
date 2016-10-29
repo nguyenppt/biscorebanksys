@@ -531,6 +531,11 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                     LoadCreditAccountByDebitCurrency();
                     comboCreditAccount.SelectedValue = drow["CreditAccount"].ToString();
                     lblCreditAccount.Text = comboCreditAccount.SelectedItem != null ? comboCreditAccount.SelectedItem.Attributes["Description"] : "";
+
+                    txtOtherBy2.Text = drow["OtherBy2"].ToString();
+                    txtOtherBy3.Text = drow["OtherBy3"].ToString();
+                    txtOtherBy4.Text = drow["OtherBy4"].ToString();
+                    txtOtherBy5.Text = drow["OtherBy5"].ToString();
                     
                 }
                 else

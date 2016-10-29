@@ -235,25 +235,25 @@
                     <td class="MyLable">Order customer Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtOtherBy2" runat="server" 
-                            AutoPostBack="True" OnTextChanged="txtOtherBy2_OnTextChanged" Width="355" />
+                            AutoPostBack="True"  Width="355" /> 
                     </td>
                 </tr>                
                 <tr>    
                     <td class="MyLable">Order customer Address</td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtOtherBy3" runat="server" AutoPostBack="True" OnTextChanged="txtOtherBy3_OnTextChanged" Width="355"/>
+                        <telerik:RadTextBox ID="txtOtherBy3" runat="server" AutoPostBack="True" Width="355"/>
                     </td>
                 </tr>                
                 <tr>    
                     <td class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtOtherBy4" runat="server" AutoPostBack="True" OnTextChanged="txtOtherBy4_OnTextChanged" Width="355"/>
+                        <telerik:RadTextBox ID="txtOtherBy4" runat="server" AutoPostBack="True" Width="355"/>
                     </td>
                 </tr>                
                 <tr>    
                     <td class="MyLable"></td>
                     <td class="MyContent">
-                        <telerik:RadTextBox ID="txtOtherBy5" runat="server" AutoPostBack="True" OnTextChanged="txtOtherBy5_OnTextChanged" Width="355"/>
+                        <telerik:RadTextBox ID="txtOtherBy5" runat="server" AutoPostBack="True"  Width="355"/>
                     </td>
                 </tr>
             </table>
@@ -1189,7 +1189,7 @@
             </UpdatedControls>
         </telerik:AjaxSetting>
         
-        <telerik:AjaxSetting AjaxControlID="txtOtherBy2">
+       <%-- <telerik:AjaxSetting AjaxControlID="txtOtherBy2">
             <UpdatedControls>
                  <telerik:AjaxUpdatedControl ControlID="txtOrderingCustomer1" />
                 <telerik:AjaxUpdatedControl ControlID="comboDebitAcctNo" />
@@ -1201,15 +1201,15 @@
                 <telerik:AjaxUpdatedControl ControlID="txtCommissionCurrency" />
                 <telerik:AjaxUpdatedControl ControlID="txtChargeCurrency" />
             </UpdatedControls>
-        </telerik:AjaxSetting>
+        </telerik:AjaxSetting>--%>
         
-        <telerik:AjaxSetting AjaxControlID="txtOtherBy3">
+        <%--<telerik:AjaxSetting AjaxControlID="txtOtherBy3">
             <UpdatedControls>
                  <telerik:AjaxUpdatedControl ControlID="txtOrderingCustomer2" />
             </UpdatedControls>
-        </telerik:AjaxSetting>
+        </telerik:AjaxSetting>--%>
         
-        <telerik:AjaxSetting AjaxControlID="txtOtherBy4">
+        <%--<telerik:AjaxSetting AjaxControlID="txtOtherBy4">
             <UpdatedControls>
                  <telerik:AjaxUpdatedControl ControlID="txtOrderingCustomer3" />
             </UpdatedControls>
@@ -1219,7 +1219,7 @@
             <UpdatedControls>
                  <telerik:AjaxUpdatedControl ControlID="txtOrderingCustomer4" />
             </UpdatedControls>
-        </telerik:AjaxSetting>
+        </telerik:AjaxSetting>--%>
         
         <telerik:AjaxSetting AjaxControlID="comboReceiverCorrespondent">
             <UpdatedControls>
