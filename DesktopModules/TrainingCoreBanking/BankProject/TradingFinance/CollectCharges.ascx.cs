@@ -21,6 +21,7 @@ namespace BankProject.TradingFinance
         //
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (IsPostBack) return;
             bc.Commont.initRadComboBox(ref cboAccountOfficer, "Description", "Code", bd.SQLData.B_BACCOUNTOFFICER_GetAll());
             txtCode.Text = Request.QueryString["tid"];
@@ -46,6 +47,18 @@ namespace BankProject.TradingFinance
             //
             txtCode.Text = bd.SQLData.B_BMACODE_GetNewID("CollectCharges", "FT", ".");
             txtVATNo.Text = getVATNo();
+        }
+
+        private void changeNumberFormat(string currency)
+        {
+            if ("VND".Equals(currency))
+            {
+                txtChargeAmount.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                txtChargeAmount.NumberFormat.DecimalDigits = 2;
+            }
         }
 
         private void checkButtonStatus()
@@ -92,6 +105,7 @@ namespace BankProject.TradingFinance
             txtChargeAcct.Text = cc.ChargeAcct;
             lblChargeAcctName.Text = cc.ChargeAcctName;
             lblChargeCurrency.Text = cc.ChargeCurrency;
+            changeNumberFormat(lblChargeCurrency.Text);
             cboTransactionType_ChargeCommission.SelectedValue = cc.TransactionType;
             loadChargeType();
             cboChargeType.SelectedValue = cc.ChargeType1;
@@ -116,9 +130,9 @@ namespace BankProject.TradingFinance
             txtAddRemarks_Charges2.Text = cc.AddRemarks2;
             cboAccountOfficer.SelectedValue = cc.AccountOfficer;
             if (cc.TotalChargeAmount.HasValue)
-                lblTotalChargeAmount.Text = String.Format("{0:C}", cc.TotalChargeAmount.Value).Replace("$", "");
+                lblTotalChargeAmount.Text =  formatNumber(lblChargeCurrency.Text, cc.TotalChargeAmount.Value);
             if (cc.TotalTaxAmount.HasValue)
-                lblTotalTaxAmount.Text = String.Format("{0:C}", cc.TotalTaxAmount.Value).Replace("$", "");
+                lblTotalTaxAmount.Text =  formatNumber(lblChargeCurrency.Text, cc.TotalTaxAmount.Value);
         }
 
         protected void RadToolBar1_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -223,7 +237,7 @@ namespace BankProject.TradingFinance
                     break;
             }
 
-            checkButtonStatus(); 
+            checkButtonStatus();
         }
 
         protected void btnLoadCodeInfo_Click(object sender, EventArgs e)
@@ -300,8 +314,24 @@ namespace BankProject.TradingFinance
                 {
                     lblChargeCurrency.Text = cc.Currency;
                     lblChargeAcctName.Text = cc.Name;
+                    txtChargeAmount.Text = txtChargeAmount.Text;
+                    changeNumberFormat(cc.Currency);
                 }
             }
+        }
+
+        private string formatNumber(string currency, double value)
+        {
+            string valueReturn = ""; 
+            if ("VND".Equals(currency))
+            {
+                valueReturn =  String.Format("{0:C}", ((Int32)value)).Replace("$", "").Replace(".00","");
+            }
+            else
+            {
+                valueReturn = String.Format("{0:C}", value).Replace("$", "");
+            }
+            return valueReturn;
         }
 
         private void calculateChargeTotalAmount()
@@ -334,7 +364,7 @@ namespace BankProject.TradingFinance
             }
             //
             lblTotalChargeAmount.Text = "";
-            if (totalAmount > 0) lblTotalChargeAmount.Text = String.Format("{0:C}", totalAmount).Replace("$", "");
+            if (totalAmount > 0) lblTotalChargeAmount.Text = formatNumber(lblChargeCurrency.Text, totalAmount);
             lblTotalTaxAmount.Text = "";
             if (totalAmount > 0 && !string.IsNullOrEmpty(cboChargeFor.SelectedValue))
             {
@@ -407,23 +437,23 @@ namespace BankProject.TradingFinance
                         if (!String.IsNullOrEmpty(cc2.ChargeType1) && cc2.ChargeAmount1.HasValue && cc2.ChargeAmount1 != 0)
                         {
                             VAT.ChargeType1 = getChargeTypeInfo(cc2.ChargeType1, 1);
-                            VAT.ChargeAmount1Text = cc2.ChargeAmount1.Value + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType1, 2);
+                            VAT.ChargeAmount1Text = formatNumber(VAT.ChargeCurrency,cc2.ChargeAmount1.Value) + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType1, 2);
                         }
                         if (!String.IsNullOrEmpty(cc2.ChargeType2) && cc2.ChargeAmount2.HasValue && cc2.ChargeAmount2 != 0)
                         {
                             VAT.ChargeType2 = getChargeTypeInfo(cc2.ChargeType2, 1);
-                            VAT.ChargeAmount2Text = cc2.ChargeAmount2.Value + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType2, 2);
+                            VAT.ChargeAmount2Text = formatNumber(VAT.ChargeCurrency,cc2.ChargeAmount2.Value) + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType2, 2);
                         }
                         if (!String.IsNullOrEmpty(cc2.ChargeType3) && cc2.ChargeAmount3.HasValue && cc2.ChargeAmount3 != 0)
                         {
                             VAT.ChargeType3 = getChargeTypeInfo(cc2.ChargeType3, 1);
-                            VAT.ChargeAmount3Text = cc2.ChargeAmount3.Value + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType3, 2);
+                            VAT.ChargeAmount3Text = formatNumber(VAT.ChargeCurrency,cc2.ChargeAmount3.Value) + cc2.ChargeCurrency + " " + getChargeTypeInfo(cc2.ChargeType3, 2);
                         }                        
                         //Phân loại phí phát sinh VAT hoặc phí không phát sinh VAT => Thảo sẽ gửi anh danh sách Code phí phân theo có VAT và không
                         if (VAT.TotalTaxAmount.HasValue)
                         {
                             VAT.TotalTaxText = "VAT";
-                            VAT.TotalTaxAmountText = VAT.TotalTaxAmount.Value + VAT.ChargeCurrency + " PL90304";
+                            VAT.TotalTaxAmountText = formatNumber(VAT.ChargeCurrency, VAT.TotalTaxAmount.Value) + VAT.ChargeCurrency + " PL90304";
                             if (VAT.TotalChargeAmount.HasValue) 
                                 VAT.TotalChargeAmount += VAT.TotalTaxAmount;
                             else
@@ -431,9 +461,9 @@ namespace BankProject.TradingFinance
                         }
                         if (VAT.TotalChargeAmount.HasValue)
                         {
-                            VAT.TotalChargeAmountText = VAT.TotalChargeAmount.Value + VAT.ChargeCurrency;
+                            VAT.TotalChargeAmountText =  formatNumber(VAT.ChargeCurrency,VAT.TotalChargeAmount.Value) + VAT.ChargeCurrency;
                             VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, VAT.TotalChargeAmount.Value);
-                            VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, 38.5);
+                            //VAT.TotalChargeAmountWord = Utils.ReadNumber(VAT.ChargeCurrency, 38.5);
                         }
                         var cc3 = db.BDRFROMACCOUNTs.Where(p => p.Id.Equals(cc2.ChargeAcct)).FirstOrDefault();
                         if (cc3 != null)

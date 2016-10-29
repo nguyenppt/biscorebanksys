@@ -297,6 +297,7 @@
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblTotalChargeAmount" />
                 <telerik:AjaxUpdatedControl ControlID="lblTotalTaxAmount" />
+                <telerik:AjaxUpdatedControl ControlID="txtChargeAmount" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="txtChargeAmount1">
