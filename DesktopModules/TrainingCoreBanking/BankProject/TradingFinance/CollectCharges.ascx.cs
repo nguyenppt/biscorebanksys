@@ -39,19 +39,7 @@ namespace BankProject.TradingFinance
                 divCmdChargeType1.Visible = false;
                 divCmdChargeType2.Visible = false;
                 RadToolBar1.FindItemByValue("btPrint").Enabled = true;
-                if (!string.IsNullOrEmpty(Request.QueryString["lst"]))
-                {
-                    if (cc.Status.Equals(bd.TransactionStatus.UNA))
-                    {
-                        //Duyet
-                        RadToolBar1.FindItemByValue("btCommit").Enabled = false;
-                        RadToolBar1.FindItemByValue("btPreview").Enabled = false;
-                        RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
-                        RadToolBar1.FindItemByValue("btReverse").Enabled = true;
-                        //RadToolBar1.FindItemByValue("btSearch").Enabled = false;
-                        return;
-                    }
-                }
+                checkButtonStatus();
 
                 return;
             }
@@ -59,6 +47,34 @@ namespace BankProject.TradingFinance
             txtCode.Text = bd.SQLData.B_BMACODE_GetNewID("CollectCharges", "FT", ".");
             txtVATNo.Text = getVATNo();
         }
+
+        private void checkButtonStatus()
+        {
+            if (!string.IsNullOrEmpty(Request.QueryString["lst"]))
+            {
+                B_CollectCharges cc = db.B_CollectCharges.Where(p => p.TransCode.Equals(txtCode.Text)).FirstOrDefault();
+                if (cc.Status.Equals(bd.TransactionStatus.UNA))
+                {
+                    //Duyet
+                    RadToolBar1.FindItemByValue("btCommit").Enabled = false;
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = false;
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = true;
+                    RadToolBar1.FindItemByValue("btReverse").Enabled = true;
+                    //RadToolBar1.FindItemByValue("btSearch").Enabled = false;
+                    return;
+                }
+                else if (cc.Status.Equals(bd.TransactionStatus.REV))
+                {
+                    RadToolBar1.FindItemByValue("btCommit").Enabled = true;
+                    RadToolBar1.FindItemByValue("btPreview").Enabled = true;
+                    RadToolBar1.FindItemByValue("btAuthorize").Enabled = false;
+                    RadToolBar1.FindItemByValue("btReverse").Enabled = false;
+                    bc.Commont.SetTatusFormControls(this.Controls, true);
+                }
+
+            }
+        }
+
         private string getVATNo()
         {
             DataSet ds = bd.Database.B_BMACODE_GetNewSoTT("VATNO");
@@ -202,9 +218,12 @@ namespace BankProject.TradingFinance
                     cc.DateTimeUpdate = DateTime.Now;
 
                     db.SaveChanges();
-                    Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    //Response.Redirect("Default.aspx?tabid=" + this.TabId);
+                    bc.Commont.SetTatusFormControls(this.Controls, true);
                     break;
             }
+
+            checkButtonStatus(); 
         }
 
         protected void btnLoadCodeInfo_Click(object sender, EventArgs e)
