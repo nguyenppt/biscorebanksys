@@ -322,15 +322,20 @@ namespace BankProject.TradingFinance
 
         private string formatNumber(string currency, double value)
         {
-            string valueReturn = ""; 
-            if ("VND".Equals(currency))
+
+            string valueReturn = "0";
+            try
             {
-                valueReturn =  String.Format("{0:C}", ((Int32)value)).Replace("$", "").Replace(".00","");
+                if ("VND".Equals(currency))
+                {
+                    valueReturn = String.Format("{0:C}", (Convert.ToInt32(value).ToString())).Replace("$", "").Replace(".00", "");
+                }
+                else
+                {
+                    valueReturn = String.Format("{0:C}", value).Replace("$", "");
+                }
             }
-            else
-            {
-                valueReturn = String.Format("{0:C}", value).Replace("$", "");
-            }
+            catch { }
             return valueReturn;
         }
 

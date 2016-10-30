@@ -103,6 +103,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                 lblCreditAccount.Text = item.Attributes["Description"].ToString();
                 txtCreditCurrency.Text = item.Attributes["Currency"].ToString();
                 comboCurrency.SelectedValue = txtCreditCurrency.Text;
+
+                ChangeNumberFormatControl(); 
             }
         }
 
@@ -501,6 +503,10 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                     SetDebitCurrencyName();
 
                     comboDebitCurrency.SelectedValue = drow["DebitCurrency"].ToString();
+                    txtCreditCurrency.Text = drow["CreditCurrency"].ToString();
+
+                    ChangeNumberFormatControl();
+
                     numDebitAmount.Text = drow["DebitAmount"].ToString();
 
                     if (drow["DebitDate"].ToString().IndexOf("1/1/1900") == -1)
@@ -512,7 +518,9 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                     comboTPKT.SelectedValue = drow["TPKT"].ToString();
                     lblTPKTName.Text = comboTPKT.SelectedValue;
 
-                    txtCreditCurrency.Text = drow["CreditCurrency"].ToString();
+                    
+
+
                     numTreasuryRate.Text = drow["TreasuryRate"].ToString();
 
                     numCreditAmount.Text = drow["CreditAmount"].ToString();
@@ -607,8 +615,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
                     comboCurrency.SelectedValue = drow103["Currency"].ToString();
 
-                    lblInterBankSettleAmount.Text = String.Format("{0:C}", drow103["InterBankSettleAmount"]).Replace("$", "");
-                    lblInstancedAmount.Text = String.Format("{0:C}", drow103["InstancedAmount"]).Replace("$", "");
+                    lblInterBankSettleAmount.Text = formatNumber(drow103["Currency"].ToString(), drow103["InterBankSettleAmount"]);// String.Format("{0:C}", drow103["InterBankSettleAmount"]).Replace("$", "");
+                    lblInstancedAmount.Text = formatNumber(drow103["Currency"].ToString(), drow103["InstancedAmount"]);//String.Format("{0:C}", drow103["InstancedAmount"]).Replace("$", "");
 
                     comboOrderingCustAcc.SelectedValue = drow103["OrderingCustAcc"].ToString();
                     txtOrderingInstitution.Text = drow103["OrderingInstitution"].ToString();
@@ -741,6 +749,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                         txtChargeCurrency.Text = comboChargeAcct.SelectedItem.Attributes["Currency"];
                     }
 
+                    ChangeNumberFormatControl();
+
                     comboDisplayChargesCom.SelectedValue = drowCharge["DisplayChargesCom"].ToString();
                     comboCommissionCode.SelectedValue = drowCharge["CommissionCode"].ToString();
 
@@ -764,8 +774,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
                     comboAccountOfficer.SelectedValue = drowCharge["ProfitCenteCust"].ToString();
 
-                    lblTotalChargeAmount.Text = String.Format("{0:C}", drowCharge["TotalChargeAmount"]).Replace("$", "");
-                    lblTotalTaxAmount.Text = String.Format("{0:C}", drowCharge["TotalTaxAmount"]).Replace("$", "");
+                    lblTotalChargeAmount.Text = formatNumber(drowCharge["ChargeCurrency"].ToString(), drowCharge["TotalChargeAmount"]);//String.Format("{0:C}", drowCharge["TotalChargeAmount"]).Replace("$", "");
+                    lblTotalTaxAmount.Text = formatNumber(drowCharge["ChargeCurrency"].ToString(), drowCharge["TotalTaxAmount"]);//String.Format("{0:C}", drowCharge["TotalTaxAmount"]).Replace("$", "");
                 }
                 else
                 {
@@ -1138,7 +1148,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             totalCharges = ((totalAmount) * (110)) / 100;
             if (totalCharges > 0)
             {
-                lblTotalChargeAmount.Text = String.Format("{0:C}", totalCharges).Replace("$", "");                
+                lblTotalChargeAmount.Text = formatNumber(comboChargeCurrency.SelectedValue, totalCharges);// String.Format("{0:C}", totalCharges).Replace("$", "");                
             }
 
             switch (type)
@@ -1226,11 +1236,13 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
         protected void comboCommissionCurrency_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             comboChargeCurrency.SelectedValue = comboCommissionCurrency.SelectedValue;
+            ChangeNumberFormatControl(); 
         }
 
         protected void comboChargeCurrency_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             comboCommissionCurrency.SelectedValue = comboChargeCurrency.SelectedValue;
+            ChangeNumberFormatControl();
         }
 
         protected void comboChargeAcct_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -1258,8 +1270,9 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
         protected void btnPhieuCKReport_Click(object sender, EventArgs e)
         {
+            DataSet ds = bd.SQLData.B_BOVERSEASTRANSFER_PHIEUCHUYENKHOAN(txtCode.Text, UserInfo.Username);
             bc.Reports.createFileDownload(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/OverseasTransfer/PHIEUCHUYENKHOAN.doc"),
-                bd.SQLData.B_BOVERSEASTRANSFER_PHIEUCHUYENKHOAN(txtCode.Text, UserInfo.Username), "PHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
+                ds, "PHIEUCHUYENKHOAN_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", Aspose.Words.SaveFormat.Doc, Aspose.Words.SaveType.OpenInApplication, Response);
         }
 
         protected void LoadDebitAcctNo(string customerName)
@@ -1403,6 +1416,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             // hung
 
             LoadCreditAccountByDebitCurrency();
+
+            ChangeNumberFormatControl();
         }
 
         protected void comboOrderingCustAcc_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
@@ -1410,6 +1425,64 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             DataRowView row = e.Item.DataItem as DataRowView;
             e.Item.Attributes["ACCOUNT"] = row["ACCOUNT"].ToString();
             e.Item.Attributes["Currency"] = row["Currency"].ToString();
+        }
+
+        private string formatNumber(string currency, object number)
+        {
+            string returnValue = "0";
+            try
+            {
+                if ("VND".Equals(currency))
+                {
+                    returnValue = String.Format("{0:C}",  Convert.ToInt32(number).ToString()).Replace("$", "").Replace(".00", "");
+                }
+                else
+                {
+                    returnValue = String.Format("{0:C}", number).Replace("$", "");
+                }
+            }
+            catch { }
+
+            return returnValue;
+        }
+
+        private void ChangeNumberFormatControl()
+        {
+            if ("VND".Equals(txtCreditCurrency.Text))
+            {
+                numCreditAmount.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                numCreditAmount.NumberFormat.DecimalDigits = 2;
+            }
+
+            if ("VND".Equals(txtDeitCurrency.Text))
+            {
+                numDebitAmount.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                numDebitAmount.NumberFormat.DecimalDigits = 2;
+            }
+
+            if ("VND".Equals(txtCommissionCurrency.Text) || "VND".Equals(comboCommissionCurrency.SelectedValue))
+            {
+                numCommissionAmount.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                numCommissionAmount.NumberFormat.DecimalDigits = 2;
+            }
+
+            if ("VND".Equals(txtChargeCurrency.Text) || "VND".Equals(comboChargeCurrency.SelectedValue))
+            {
+                numChargeAmount.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                numChargeAmount.NumberFormat.DecimalDigits = 2;
+            }
         }
     }
 }
