@@ -1001,6 +1001,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtSenderToReceiverInfo_410_1.Text = string.Empty;
                 txtSenderToReceiverInfo_410_2.Text = string.Empty;
                 txtSenderToReceiverInfo_410_3.Text = string.Empty;
+                if (dsDoc.Tables[3].Rows.Count > 0)//MT410
+                {
+                    var drowMT410 = dsDoc.Tables[3].Rows[0];
+                    dteMaturityDateMT412.SelectedDate = dteMaturityDate.SelectedDate;
+                    txtSendingBankTRN.Text = drowMT410["SendingBankTRN"].ToString();
+                }
+                
             }
             #endregion
         }
