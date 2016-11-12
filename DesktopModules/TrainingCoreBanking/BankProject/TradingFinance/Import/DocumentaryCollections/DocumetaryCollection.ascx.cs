@@ -317,6 +317,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         {
             lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Attributes["Description"];
             SetValueToSendingBankTRN();
+            if ("DA".Equals(comboCollectionType.SelectedItem.Attributes["Id"]))
+            {
+                if (dteMaturityDate.SelectedDate == null)
+                {
+                    dteMaturityDate.SelectedDate = DateTime.Now;
+                }
+                if (dteMaturityDateMT412.SelectedDate == null)
+                {
+                    dteMaturityDateMT412.SelectedDate = DateTime.Now;
+                }
+            }
+            else
+            {
+                dteMaturityDate.SelectedDate = null;
+                dteMaturityDateMT412.SelectedDate = null;
+            }
+
+                
         }
 
         protected void commom_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
