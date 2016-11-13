@@ -222,8 +222,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             }
             Session["DataKey"] = txtCode.Text;
 
+            comboRemittingType.Enabled = comboCollectionType.Enabled;
             // never allow to edit
-            comboRemittingType.Enabled = false;
+            //comboRemittingType.Enabled = false;
             tbVatNo.Enabled = false;
         }
 
@@ -617,6 +618,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 comboCollectionType.SelectedValue = drow["CollectionType"].ToString();
                 lblCollectionTypeName.Text = comboCollectionType.SelectedItem.Value;
 
+                comboRemittingType.SelectedValue = drow["RemittingType"].ToString();
                 txtRemittingBankNo.Text = drow["RemittingBankNo"].ToString();
                 CheckSwiftCodeExist();
 
@@ -681,6 +683,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtEdittor_InstructionToCus.Content = drow["InstructionToCus"].ToString();
 
                 txtRemarks.Text = drow["Remarks"].ToString();
+                comboRemittingType.SelectedValue = drow["RemittingType"].ToString();
 
                 // DocumentaryCollectionCancel
                 if (!string.IsNullOrEmpty(drow["CancelDate"].ToString()) && drow["CancelDate"].ToString().IndexOf("1/1/1900") == -1)
@@ -752,6 +755,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             else
             {
                 comboCollectionType.SelectedValue = string.Empty;
+                comboRemittingType.SelectedValue = "A";
                 txtRemittingBankNo.Text = string.Empty;
 
                 txtRemittingBankAddr1.Text = string.Empty;
@@ -1036,6 +1040,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
             bd.SQLData.B_BDOCUMETARYCOLLECTION_Insert(txtCode.Text.Trim()
                 , comboCollectionType.SelectedValue
+                , comboRemittingType.SelectedValue
                 , txtRemittingBankNo.Text
                 , txtRemittingBankAddr1.Text.Trim()
                 , comboRemittingBankAcct.SelectedValue

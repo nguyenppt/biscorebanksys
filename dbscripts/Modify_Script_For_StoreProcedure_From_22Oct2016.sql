@@ -5,6 +5,323 @@ GO
 
 /***
 ---------------------------------------------------------------------------------
+-- 13 Nov 2016 : Nghia : Add RemittingType to table
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BDOCUMETARYCOLLECTION_GetByDocCollectCode')
+BEGIN
+DROP PROCEDURE [dbo].[B_BDOCUMETARYCOLLECTION_GetByDocCollectCode]
+END
+GO
+CREATE PROCEDURE [dbo].[B_BDOCUMETARYCOLLECTION_GetByDocCollectCode] --'TF-14228-00612', 218
+	@DocCollectCode varchar(50),
+	@ViewType int
+AS
+BEGIN
+	-- B_BDOCUMETARYCOLLECTION_GetByDocCollectCode 'TF-14274-00181', 218
+	DECLARE @IncreaseMental float, @DocsCode VARCHAR(50), @AmendNo VARCHAR(50), @NewAmendNo VARCHAR(50)
+	SET @IncreaseMental = 0
+	IF @ViewType = 218--Amend
+	BEGIN
+		IF CHARINDEX('.', @DocCollectCode) > 0--Load detail by AmendNo
+		BEGIN
+			SET @DocsCode = SUBSTRING(@DocCollectCode, 1, CHARINDEX('.', @DocCollectCode)-1)
+			SET @AmendNo = @DocCollectCode
+			SET @NewAmendNo = ''
+		END
+		ELSE--Load Docs for amend
+		BEGIN
+			SET @DocsCode = @DocCollectCode
+			--is amending ?
+			SELECT @AmendNo = isnull(AmendNo, @DocsCode) from dbo.BDOCUMETARYCOLLECTION
+			where DocCollectCode = @DocsCode AND ISNULL(ActiveRecordFlag,'Yes') = 'Yes' AND isnull(Amend_Status,'') = 'UNA'
+			IF @AmendNo IS NULL
+			BEGIN
+				--create new AmendNo
+				SELECT @NewAmendNo = max(ISNULL(AmendNo,'')) 
+				from dbo.BDOCUMETARYCOLLECTION where DocCollectCode = @DocsCode 
+				IF @NewAmendNo = ''
+					SET @NewAmendNo = @DocsCode + '.1'
+				ELSE
+				BEGIN
+					DECLARE @i BIGINT
+					SET @i = CHARINDEX('.', @NewAmendNo)
+					SET @NewAmendNo = @DocsCode + '.' + CAST((cast(SUBSTRING(@NewAmendNo, @i + 1, LEN(@NewAmendNo) - @i) AS BIGINT) + 1) AS VARCHAR)
+				END
+				--- get lastest record
+				SELECT @AmendNo = isnull(AmendNo, @DocsCode) from dbo.BDOCUMETARYCOLLECTION
+				where DocCollectCode = @DocsCode AND ISNULL(ActiveRecordFlag,'Yes') = 'Yes'
+			END
+		END
+		---Load detail
+		--PRINT @DocsCode + '^' + @AmendNo + '^' + @NewAmendNo
+	END
+	ELSE
+	BEGIN
+		SET @DocsCode = @DocCollectCode
+		
+		set @IncreaseMental = (select max(IncreaseMental) from dbo.BINCOMINGCOLLECTIONPAYMENT 
+		where CollectionPaymentCode = @DocCollectCode)
+		
+		SELECT @AmendNo = AmendNo from dbo.BDOCUMETARYCOLLECTION
+		where DocCollectCode = @DocCollectCode AND ISNULL(ActiveRecordFlag,'Yes') = 'Yes'		
+	END
+	
+	-----------------
+	select [Id],[DocCollectCode],[CollectionType],[RemittingBankNo],[RemittingBankAddr],[RemittingBankAcct],[RemittingBankRef],[DraweeType],[DraweeCusNo],
+		[DraweeAddr1],[DraweeAddr2],[DraweeAddr3],[ReimbDraweeAcct],[DrawerType],[DrawerCusNo],[DrawerAddr],[Currency],[Amount],[DocsReceivedDate],[MaturityDate],
+		[Tenor],[Tenor_New],[Days],[TracerDate],[TracerDate_New],[ReminderDays],[Commodity],[DocsCode1],[NoOfOriginals1],[NoOfCopies1],[DocsCode2],[NoOfOriginals2],
+		[NoOfCopies2],[OtherDocs],[InstructionToCus],[Status],[CreateDate],[CreateBy],[UpdatedDate],[UpdatedBy],[AuthorizedBy],[AuthorizedDate],[DrawerAddr1],[DrawerAddr2],
+		[Remarks],[CancelDate],[ContingentExpiryDate],[DrawerCusName],[DraweeCusName],[AccountOfficer],[ExpressNo],[InvoiceNo],[CancelRemark],[RemittingBankAddr2],
+		[RemittingBankAddr3],[Cancel_Status],[CancelBy],[AcceptedDate],[AcceptRemarks],[Accept_Status],[AcceptBy],[AcceptByDate],[PaymentFullFlag],
+		case when @NewAmendNo is null then [Amend_Status] else NULL end [Amend_Status],
+		isnull(case 
+			when @ViewType = 217 then isnull(Amount,0)
+			when @ViewType = 218 then isnull(Amount,0)
+			when @ViewType = 281 then isnull(Amount,0)
+			when @ViewType = 219 then 
+				case when isnull(@IncreaseMental,0) > 0 then (Amount - @IncreaseMental) else Amount end 
+			end, 0) as B4_AUT_Amount, isnull(OldAmount,0) Amount_Old,
+		DraftNo, @NewAmendNo NewAmendNo, AmendNo, RemittingType
+	from dbo.BDOCUMETARYCOLLECTION
+	where DocCollectCode = @DocsCode AND ISNULL(AmendNo, @DocsCode) = ISNULL(@AmendNo, @DocsCode) AND ISNULL(ActiveRecordFlag,'Yes') = 'Yes'	
+	
+	-- tab Charge
+	select * from dbo.BDOCUMETARYCOLLECTIONCHARGES
+	where DocCollectCode = @DocCollectCode and [Rowchages] = '1' and ViewType = @ViewType
+	
+	select * from dbo.BDOCUMETARYCOLLECTIONCHARGES
+	where DocCollectCode = @DocCollectCode and [Rowchages] = '2' and ViewType = @ViewType
+	-- tab Charge
+	
+	-- tab MT410
+	select 'MT410' as [Identifier],* from dbo.BDOCUMETARYCOLLECTIONMT410
+	where DocCollectCode = ISNULL(@AmendNo, @DocsCode)
+
+	-- tab MT412
+	select 'MT412' as [Identifier],* from dbo.BDOCUMETARYCOLLECTIONMT412
+	where DocCollectCode = @DocsCode
+END
+GO
+
+
+/***
+---------------------------------------------------------------------------------
+-- 13 Nov 2016 : Nghia : Add RemittingType to insert script
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BDOCUMETARYCOLLECTION_Insert')
+BEGIN
+DROP PROCEDURE [dbo].[B_BDOCUMETARYCOLLECTION_Insert]
+END
+GO
+
+CREATE PROCEDURE [dbo].[B_BDOCUMETARYCOLLECTION_Insert]
+		  @DocCollectCode varchar(50),
+           @CollectionType nvarchar(250),
+		   @RemittingType varchar(50),
+           @RemittingBankNo nvarchar(250),
+           @RemittingBankAddr nvarchar(250),
+           @RemittingBankAcct nvarchar(250),
+           @RemittingBankRef nvarchar(500),
+          @DraweeCusNo nvarchar(250),
+           @DraweeAddr1 nvarchar(500),
+           @DraweeAddr2 nvarchar(500),
+          @DraweeAddr3 nvarchar(500),
+           @ReimbDraweeAcct nvarchar(250),
+           @DrawerCusNo nvarchar(250),
+           @DrawerAddr nvarchar(500),
+           @Currency nvarchar(250),
+           @Amount nvarchar(250),
+           @DocsReceivedDate nvarchar(250),
+           @MaturityDate nvarchar(250),
+           @Tenor nvarchar(250),
+           @Days nvarchar(250),
+           @TracerDate nvarchar(250),
+           @ReminderDays nvarchar(250),
+           @Commodity nvarchar(250),
+           @DocsCode1 nvarchar(250),
+           @NoOfOriginals1 nvarchar(250),
+           @NoOfCopies1 nvarchar(250),
+           @DocsCode2 nvarchar(250),
+           @NoOfOriginals2 nvarchar(250),
+           @NoOfCopies2 nvarchar(250),
+           @OtherDocs nvarchar(4000),
+           @InstructionToCus nvarchar(4000),
+           @CurrentUserId varchar(5),
+           @DrawerAddr1 nvarchar(500),
+           @DrawerAddr2 nvarchar(500),
+           @Remarks nvarchar(500),
+           @CancelDate nvarchar(250),
+           @ContingentExpiryDate nvarchar(250),           
+           @DrawerCusName nvarchar(500),
+           @DraweeCusName nvarchar(500),
+           @DraweeType varchar(50),
+           @DrawerType varchar(50),
+           @AccountOfficer NVARCHAR(250),
+           @ExpressNo NVARCHAR(500),
+           @InvoiceNo NVARCHAR(500),
+           @CancelRemark NVARCHAR(500),
+           @RemittingBankAddr2 nvarchar(500),
+           @RemittingBankAddr3 nvarchar(500),
+           @comeFromUrl varchar(50),
+           @AcceptedDate  varchar(100),
+           @AcceptRemarks  nvarchar(500),
+           @DraftNo nvarchar(500)
+AS
+BEGIN
+	IF CHARINDEX('.', @DocCollectCode) > 0---Amend
+	BEGIN
+		IF EXISTS(SELECT DocCollectCode FROM BDOCUMETARYCOLLECTION WHERE ISNULL(AmendNo,'') = @DocCollectCode)
+		BEGIN
+			update BDOCUMETARYCOLLECTION set ActiveRecordFlag = 'No' 
+			where isnull(ActiveRecordFlag,'Yes') = 'Yes' and DocCollectCode = (SELECT DocCollectCode FROM BDOCUMETARYCOLLECTION WHERE ISNULL(AmendNo,'') = @DocCollectCode)
+			---
+			UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+			SET [CollectionType] = @CollectionType,[RemittingBankNo] = @RemittingBankNo,[RemittingBankAddr] = @RemittingBankAddr,[RemittingBankAcct] = @RemittingBankAcct,
+				[RemittingBankRef] = @RemittingBankRef,[DraweeCusNo] = @DraweeCusNo,[DraweeAddr1] = @DraweeAddr1,[DraweeAddr2] = @DraweeAddr2,[DraweeAddr3] = @DraweeAddr3,
+				[ReimbDraweeAcct] = @ReimbDraweeAcct,[DrawerCusNo] = @DrawerCusNo,[DrawerAddr] = @DrawerAddr,[Currency] = @Currency,[DocsReceivedDate] = @DocsReceivedDate,
+				[MaturityDate] = @MaturityDate,[Tenor] = @Tenor,[Days] = @Days,[TracerDate] = @TracerDate,[ReminderDays] = @ReminderDays,[Commodity] = @Commodity,[DocsCode1] = @DocsCode1,
+				[NoOfOriginals1] = @NoOfOriginals1,[NoOfCopies1] = @NoOfCopies1,[DocsCode2] = @DocsCode2,[NoOfOriginals2] = @NoOfOriginals2,[NoOfCopies2] = @NoOfCopies2,[OtherDocs] = @OtherDocs,
+				[InstructionToCus] = @InstructionToCus, DrawerAddr1 = @DrawerAddr1, DrawerAddr2 = @DrawerAddr2, Remarks = @Remarks, [Amount] = @Amount,
+				ContingentExpiryDate = @ContingentExpiryDate, DrawerCusName = @DrawerCusName, DraweeCusName = @DraweeCusName, DraweeType  = @DraweeType, DrawerType = @DrawerType, 
+				AccountOfficer = @AccountOfficer, ExpressNo = @ExpressNo, InvoiceNo = @InvoiceNo, RemittingBankAddr2 = @RemittingBankAddr2, RemittingBankAddr3 = @RemittingBankAddr3, 
+				DraftNo = @DraftNo, Amend_Status = 'UNA', ActiveRecordFlag = 'Yes', RemittingType = @RemittingType
+			WHERE ISNULL(AmendNo,'') = @DocCollectCode			
+		END
+		ELSE
+		BEGIN
+			declare @DocsCode varchar(50)
+			set @DocsCode = substring(@DocCollectCode,1,CHARINDEX('.', @DocCollectCode)-1)
+			---
+			INSERT INTO [dbo].[BDOCUMETARYCOLLECTION]([DocCollectCode],[CollectionType],[RemittingBankNo],[RemittingBankAddr],[RemittingBankAcct],[RemittingBankRef],[DraweeType],
+				[DraweeCusNo],[DraweeAddr1],[DraweeAddr2],[DraweeAddr3],[ReimbDraweeAcct],[DrawerType],[DrawerCusNo],[DrawerAddr],[Currency],[Amount],[Amount_Old],[DocsReceivedDate],
+				[MaturityDate],[Tenor],[Tenor_New],[Days],[TracerDate],[TracerDate_New],[ReminderDays],[Commodity],[DocsCode1],[NoOfOriginals1],[NoOfCopies1],[DocsCode2],[NoOfOriginals2],
+				[NoOfCopies2],[OtherDocs],[InstructionToCus],[Status],[CreateDate],[CreateBy],[UpdatedDate],[UpdatedBy],[AuthorizedBy],[AuthorizedDate],[DrawerAddr1],[DrawerAddr2],[Remarks],
+				[CancelDate],[ContingentExpiryDate],[Amend_Status],[DrawerCusName],[DraweeCusName],[AccountOfficer],[ExpressNo],[InvoiceNo],[CancelRemark],[RemittingBankAddr2],[RemittingBankAddr3],
+				[Cancel_Status],[CancelBy],[AcceptedDate],[AcceptRemarks],[Accept_Status],[AcceptBy],[AcceptByDate],[PaymentFullFlag],[B4_AUT_Amount],[PaymentNo],[PaymentId],[DraftNo],[AmendNo],
+				[ActiveRecordFlag],[OldAmount],[RefAmendNo], [RemittingType])
+			SELECT DocCollectCode,@CollectionType,@RemittingBankNo,@RemittingBankAddr,@RemittingBankAcct,@RemittingBankRef,@DraweeType,@DraweeCusNo,@DraweeAddr1,@DraweeAddr2,@DraweeAddr3,
+				@ReimbDraweeAcct,@DrawerType,@DrawerCusNo,@DrawerAddr,@Currency,@Amount, Amount_Old,@DocsReceivedDate,@MaturityDate,@Tenor, Tenor_New,@Days,@TracerDate, TracerDate_New,@ReminderDays,
+				@Commodity,@DocsCode1,@NoOfOriginals1,@NoOfCopies1,@DocsCode2,@NoOfOriginals2,@NoOfCopies2,@OtherDocs,@InstructionToCus, [Status], CreateDate, CreateBy, UpdatedDate, UpdatedBy, AuthorizedBy,
+				AuthorizedDate,@DrawerAddr1,@DrawerAddr2,@Remarks, CancelDate,@ContingentExpiryDate, 'UNA',@DrawerCusName,@DraweeCusName,@AccountOfficer,@ExpressNo,@InvoiceNo, CancelRemark,@RemittingBankAddr2,
+				@RemittingBankAddr3, Cancel_Status, CancelBy, AcceptedDate, AcceptRemarks, Accept_Status, AcceptBy, AcceptByDate, PaymentFullFlag, B4_AUT_Amount, PaymentNo, PaymentId,@DraftNo,@DocCollectCode,'No',
+				Amount, AmendNo, @RemittingType
+			FROM [BDOCUMETARYCOLLECTION] WHERE DocCollectCode = @DocsCode and ISNULL(ActiveRecordFlag,'Yes') = 'Yes'
+			
+			update [BDOCUMETARYCOLLECTION] set ActiveRecordFlag = 'No' WHERE DocCollectCode = @DocsCode and ISNULL(ActiveRecordFlag,'Yes') = 'Yes'
+			
+			update [BDOCUMETARYCOLLECTION] set ActiveRecordFlag = 'Yes' where AmendNo = @DocCollectCode
+		END
+		---Must return here !!!
+		RETURN
+	END
+	---
+	IF NOT EXISTS(SELECT DocCollectCode FROM BDOCUMETARYCOLLECTION WHERE DocCollectCode = @DocCollectCode)
+	begin
+		INSERT INTO [dbo].[BDOCUMETARYCOLLECTION]([DocCollectCode],[CollectionType],[RemittingBankNo],[RemittingBankAddr],[RemittingBankAcct],
+			[RemittingBankRef],[DraweeCusNo],[DraweeAddr1],[DraweeAddr2],[DraweeAddr3],[ReimbDraweeAcct],[DrawerCusNo],[DrawerAddr],[Currency],
+			[Amount],[DocsReceivedDate],[MaturityDate],[Tenor],[Days],[TracerDate],[ReminderDays],[Commodity],[DocsCode1],[NoOfOriginals1],
+			[NoOfCopies1],[DocsCode2],[NoOfOriginals2],[NoOfCopies2],[OtherDocs],[InstructionToCus], CreateDate, CreateBy, DrawerAddr1, DrawerAddr2, 
+			Remarks, [Status], CancelDate, ContingentExpiryDate, DrawerCusName, DraweeCusName, DraweeType, DrawerType, AccountOfficer, ExpressNo, InvoiceNo, 
+			CancelRemark, RemittingBankAddr2, RemittingBankAddr3, AcceptedDate, AcceptRemarks, B4_AUT_Amount, DraftNo, RemittingType)
+		VALUES(@DocCollectCode ,@CollectionType ,@RemittingBankNo ,@RemittingBankAddr ,@RemittingBankAcct,@RemittingBankRef ,@DraweeCusNo ,@DraweeAddr1 ,
+			@DraweeAddr2 ,@DraweeAddr3 ,@ReimbDraweeAcct ,@DrawerCusNo ,@DrawerAddr ,@Currency ,@Amount ,@DocsReceivedDate,@MaturityDate ,@Tenor ,
+			@Days ,@TracerDate ,@ReminderDays ,@Commodity ,@DocsCode1 ,@NoOfOriginals1 ,@NoOfCopies1 ,@DocsCode2 ,@NoOfOriginals2 ,@NoOfCopies2 ,
+			@OtherDocs ,@InstructionToCus,getdate(),@CurrentUserId,@DrawerAddr1,@DrawerAddr2,@Remarks,'UNA',@CancelDate,@ContingentExpiryDate,@DrawerCusName,
+			@DraweeCusName,@DraweeType,@DrawerType,@AccountOfficer,@ExpressNo,@InvoiceNo,@CancelRemark,@RemittingBankAddr2,@RemittingBankAddr3,@AcceptedDate,
+			@AcceptRemarks,@Amount,@DraftNo, @RemittingType)
+		
+		RETURN
+	end
+	---Update
+	-- get old values
+	declare @Amount_old float;
+	declare @Tenor_old nvarchar(250);
+	declare @TracerDate_old date;
+	
+	select 
+		@Amount_old = isnull(Amount, 0),
+		@Tenor_old = Tenor,
+		@TracerDate_old = TracerDate
+	from BDOCUMETARYCOLLECTION
+	where DocCollectCode = @DocCollectCode
+	-- get old values
+	
+	--- update new Values
+	--if @Amount_old <> @Amount
+	--begin
+	--	UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+	--		set Amount_Old = @Amount_old
+	--	where DocCollectCode = @DocCollectCode
+	--end
+	
+	if @Tenor_old <> @Tenor
+	begin
+		UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+			set Tenor_New = @Tenor_old
+		where DocCollectCode = @DocCollectCode
+	end
+	
+	if CAST(@TracerDate_old AS DATE) <> CAST(@TracerDate AS DATE)
+	begin
+		UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+			set TracerDate_New = @TracerDate_old
+		where DocCollectCode = @DocCollectCode
+	end		
+	--- update new Values
+	
+	UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+	SET [CollectionType] = @CollectionType,[RemittingBankNo] = @RemittingBankNo,[RemittingBankAddr] = @RemittingBankAddr,[RemittingBankAcct] = @RemittingBankAcct,
+		[RemittingBankRef] = @RemittingBankRef,[DraweeCusNo] = @DraweeCusNo,[DraweeAddr1] = @DraweeAddr1,[DraweeAddr2] = @DraweeAddr2,[DraweeAddr3] = @DraweeAddr3,
+		[ReimbDraweeAcct] = @ReimbDraweeAcct,[DrawerCusNo] = @DrawerCusNo,[DrawerAddr] = @DrawerAddr,[Currency] = @Currency,[DocsReceivedDate] = @DocsReceivedDate,
+		[MaturityDate] = @MaturityDate,[Tenor] = @Tenor,[Days] = @Days,[TracerDate] = @TracerDate,[ReminderDays] = @ReminderDays,[Commodity] = @Commodity,[DocsCode1] = @DocsCode1,
+		[NoOfOriginals1] = @NoOfOriginals1,[NoOfCopies1] = @NoOfCopies1,[DocsCode2] = @DocsCode2,[NoOfOriginals2] = @NoOfOriginals2,[NoOfCopies2] = @NoOfCopies2,[OtherDocs] = @OtherDocs,
+		[InstructionToCus] = @InstructionToCus, UpdatedBy = @CurrentUserId, UpdatedDate = getdate(), DrawerAddr1 = @DrawerAddr1, DrawerAddr2 = @DrawerAddr2, Remarks = @Remarks, 
+		CancelDate = @CancelDate, ContingentExpiryDate = @ContingentExpiryDate, DrawerCusName = @DrawerCusName, DraweeCusName = @DraweeCusName, DraweeType  = @DraweeType, DrawerType = @DrawerType, 
+		AccountOfficer = @AccountOfficer, ExpressNo = @ExpressNo, InvoiceNo = @InvoiceNo, CancelRemark = @CancelRemark, RemittingBankAddr2 = @RemittingBankAddr2, RemittingBankAddr3 = @RemittingBankAddr3, 
+		AcceptedDate = @AcceptedDate, AcceptRemarks = @AcceptRemarks, DraftNo = @DraftNo, RemittingType = @RemittingType
+	WHERE [DocCollectCode] = @DocCollectCode	
+	
+	if @comeFromUrl = 'incollamendment' -- Incoming Collection Amendments
+	begin
+		UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+		SET 
+		  Amend_Status = 'UNA',
+		  B4_AUT_Amount = @Amount
+		  --Amount = 0
+		WHERE DocCollectCode = @DocCollectCode
+	end
+	else if @comeFromUrl = 'doccolcancel'
+	begin
+		UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+		SET 
+		  Cancel_Status = 'UNA'
+		  --[Amount] = @Amount
+		WHERE DocCollectCode = @DocCollectCode
+	end
+	else if @comeFromUrl = 'incollaccepted'
+	begin
+		UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+		SET 
+		  Accept_Status = 'UNA'
+		  --[Amount] = @Amount
+		WHERE DocCollectCode = @DocCollectCode
+	end
+	else -- Register Documetary Collection
+	begin
+		UPDATE [dbo].[BDOCUMETARYCOLLECTION]
+		SET 
+		  [Status] = 'UNA',
+		  [Amount] = @Amount
+		WHERE DocCollectCode = @DocCollectCode
+	end
+END
+
+GO
+
+/***
+---------------------------------------------------------------------------------
 -- 36 oct 2016 : Nghia : Correct for read number with text is wrong
 ---------------------------------------------------------------------------------
 ***/

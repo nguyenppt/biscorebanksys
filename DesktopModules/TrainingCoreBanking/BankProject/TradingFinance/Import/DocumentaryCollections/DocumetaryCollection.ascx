@@ -375,7 +375,7 @@
                 <tr>
                     <td class="MyLable">2.1 Remitting Type</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox AutoPostBack="True" OnSelectedIndexChanged="comboRemittingType_OnSelectedIndexChanged"
+                        <telerik:RadComboBox AutoPostBack="false" OnSelectedIndexChanged="comboRemittingType_OnSelectedIndexChanged"
                             ID="comboRemittingType" runat="server"
                             MarkFirstMatch="True"
                             AllowCustomText="false">

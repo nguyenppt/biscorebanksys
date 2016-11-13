@@ -565,6 +565,7 @@ namespace BankProject.DataProvider
 
         public static void B_BDOCUMETARYCOLLECTION_Insert(string DocCollectCode
                                                           , string CollectionType
+                                                          , string RemittingType
                                                           , string RemittingBankNo
                                                           , string RemittingBankAddr
                                                           , string RemittingBankAcct
@@ -607,6 +608,7 @@ namespace BankProject.DataProvider
         {
             sqldata.ndkExecuteNonQuery("B_BDOCUMETARYCOLLECTION_Insert", DocCollectCode
                                        , CollectionType
+                                       , RemittingType
                                        , RemittingBankNo
                                        , RemittingBankAddr
                                        , RemittingBankAcct
