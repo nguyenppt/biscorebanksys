@@ -610,10 +610,10 @@ BEGIN
 		select id, name, currency, amount, CustomerID from dbo.BDRFROMACCOUNT
 		where Id = @Code  and Currency = @Currency
 		union all
-		select t.thuchihoaccount as ID, cus.CustomerName as Name, t.currency, 0 as [amount], cus.CustomerID
+		select t.currency + '-' + t.Account as ID, cus.CustomerName as Name, t.currency, 0 as [amount], cus.CustomerID
 		from BCUSTOMERS cus 
 			inner join BINTERNALBANKACCOUNT t on 1 = 1
-		where cus.CustomerID = '1100006' and t.thuchihoaccount = @Code and  t.Currency = @Currency
+		where cus.CustomerID = '1100006' and t.Account = @Code and  t.Currency = @Currency
 	end
 	else if @CallFrom = 'bullcurrency_change'
 	begin
@@ -621,7 +621,7 @@ BEGIN
 		select id, name, currency, amount, CustomerID from dbo.BDRFROMACCOUNT
 		where Name = @CustomerName and Currency = @Currency
 		union all
-		select t.thuchihoaccount as ID, cus.CustomerName as Name, t.currency, 0 as [amount], cus.CustomerID
+		select t.currency + '-' + t.Account as ID, cus.CustomerName as Name, t.currency, 0 as [amount], cus.CustomerID
 		from BCUSTOMERS cus 
 			inner join BINTERNALBANKACCOUNT t on 1 = 1
 		where cus.CustomerID = '1100006' and cus.CustomerName = @CustomerName and  t.Currency = @Currency
