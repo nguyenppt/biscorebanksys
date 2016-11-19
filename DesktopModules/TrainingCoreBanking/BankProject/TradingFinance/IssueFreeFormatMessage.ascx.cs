@@ -98,7 +98,7 @@ namespace BankProject.TradingFinance
                     InitToolBar(false);
                     RadToolBar1.FindItemByValue("btSave").Enabled = true;
                     RadToolBar1.FindItemByValue("btReview").Enabled = false;
-                    SetDefaultNarrative();
+                    //SetDefaultNarrative();
                     break;
             }
         }
