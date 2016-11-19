@@ -19,7 +19,7 @@
             if (cableType !== '') {
                 if (button.get_commandName() == "print") {
                     args.set_cancel(true);
-                    radconfirm("Do you want to download file?", confirmCallbackFunction1, 340, 150, null, 'Download');
+                    radconfirm("Do you want to download MTn99?", confirmCallbackFunction1, 340, 150, null, 'Download');
                 }
             }
         }
