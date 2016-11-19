@@ -353,7 +353,8 @@ namespace BankProject.Views.TellerApplication
                 case "DP/DA":
                     txtFTNo.Enabled = true;
 
-                    SetSourceToSellCurrency(createSellCurrencySource());
+                    //SetSourceToSellCurrency(createSellCurrencySource());
+                    SetSourceToSellCurrency(bd.SQLData.B_BCURRENCY_GetAll().Tables[0]);
                     break;
             }
         }
