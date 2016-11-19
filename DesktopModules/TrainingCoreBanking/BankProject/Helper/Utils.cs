@@ -56,7 +56,7 @@ namespace BankProject.Helper
             var iNumDv = rThree.Length > 0 ? Int32.Parse(rThree.Substring(0, 1)) : 0;
             var iNumCh = rThree.Length > 1 ? Int32.Parse(rThree.Substring(1, 1)) : 0;
             var iNumTr = rThree.Length > 2 ? Int32.Parse(rThree.Substring(2, 1)) : 0;
-            const string charRead = "****mot*hai*ba**bon*nam*sau*bay*tam*chin";
+            const string charRead = "****một*hai*ba**bốn*năm*sáu*bảy*tám*chin";
 
             var rCharRead = "";
             var vdvt = "";
@@ -65,20 +65,20 @@ namespace BankProject.Helper
                 switch (idS)
                 {
                     case 1: vdvt = ""; break;
-                    case 2: vdvt = "ngan"; break;
-                    case 3: vdvt = "trieu"; break;
-                    case 4: vdvt = "ty"; break;
-                    case 5: vdvt = "ngan"; break;
-                    case 6: vdvt = "trieu"; break;
-                    case 7: vdvt = "ty"; break;
+                    case 2: vdvt = "ngàn"; break;
+                    case 3: vdvt = "triệu"; break;
+                    case 4: vdvt = "tỷ"; break;
+                    case 5: vdvt = "ngàn"; break;
+                    case 6: vdvt = "triệu"; break;
+                    case 7: vdvt = "tỷ"; break;
                 }
 
                 if (Int32.Parse(nThree) == 0)
                 {
-                    rCharRead = idS == 4 ? " ty" : "";
+                    rCharRead = idS == 4 ? " tỷ" : "";
                     return rCharRead;
                 }
-                string strTr = iNumTr == 0 ? "" : charRead.Substring(iNumTr * 4, 4).Replace("*", "") + " tram";
+                string strTr = iNumTr == 0 ? "" : charRead.Substring(iNumTr * 4, 4).Replace("*", "") + " trăm";
                 string strDv;
                 string strCh;
                 if (iNumCh == 0)
@@ -92,18 +92,18 @@ namespace BankProject.Helper
                 }
                 else
                 {
-                    strCh = iNumCh == 1 ? "muoi" : charRead.Substring(iNumCh * 4, 4).Replace("*", "") + " muoi";
+                    strCh = iNumCh == 1 ? "mươi" : charRead.Substring(iNumCh * 4, 4).Replace("*", "") + " mươi";
                     strDv = iNumDv == 0
                                 ? ""
                                 : (iNumDv == 1
-                                       ? (iNumCh == 1 ? "mot" : "mot")
-                                       : (iNumDv == 5 ? "lam" : charRead.Substring(iNumDv * 4, 4).Replace("*", "")));
+                                       ? (iNumCh == 1 ? "một" : "một")
+                                       : (iNumDv == 5 ? "lăm" : charRead.Substring(iNumDv * 4, 4).Replace("*", "")));
                 }
 
                 var vdvtr = "";
                 if (readH == 1)
                 {
-                    vdvtr = "khong tram";
+                    vdvtr = "không trăm";
                 }
                 string vdvtr1 = strTr == "" ? vdvtr : strTr;
                 rCharRead = vdvtr1.Trim() + " " + strCh.Trim() + " " + strDv.Trim() + " " + vdvt.Trim();
@@ -124,7 +124,7 @@ namespace BankProject.Helper
          */
         public static string ReadNumber(string mant, double number)
         {
-            const string charRead = "khongmot**hai**ba***bon**nam**sau**bay**tam**chin*";
+            const string charRead = "không một**hai**ba***bốn**năm**sáu**bảy**tám**chín*";
             var numberR = Math.Abs(number);
 
             string strdoc = "";
@@ -164,7 +164,7 @@ namespace BankProject.Helper
                 if (numberR <= 0)
                 {
 
-                    strdoc = "khong";
+                    strdoc = "không";
                     strDocle = "";
                 }
                 else

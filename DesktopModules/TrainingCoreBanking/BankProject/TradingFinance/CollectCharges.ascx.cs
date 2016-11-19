@@ -328,7 +328,8 @@ namespace BankProject.TradingFinance
             {
                 if ("VND".Equals(currency))
                 {
-                    valueReturn = String.Format("{0:C}", (Convert.ToInt32(value).ToString())).Replace("$", "").Replace(".00", "");
+
+                    valueReturn = String.Format("{0:C}", (Convert.ToInt32(Math.Round(value, 0, MidpointRounding.AwayFromZero)).ToString())).Replace("$", "").Replace(".00", "");
                 }
                 else
                 {
@@ -377,7 +378,7 @@ namespace BankProject.TradingFinance
                 {
                     case "A":
                     case "B":
-                        lblTotalTaxAmount.Text = String.Format("{0:C}", (totalAmount * 0.1) - freeVAT).Replace("$", "");
+                        lblTotalTaxAmount.Text = formatNumber( lblChargeCurrency.Text, (totalAmount * 0.1) - freeVAT);// String.Format("{0:C}", (totalAmount * 0.1) - freeVAT).Replace("$", "");
                         break;
                     default:
                         //txtTaxAmt.Text = String.Format("{0:C}", txtChargeAmt.Value.Value).Replace("$", "");
