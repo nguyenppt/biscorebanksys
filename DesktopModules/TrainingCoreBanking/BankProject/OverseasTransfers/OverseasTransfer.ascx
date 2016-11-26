@@ -1334,6 +1334,11 @@
                 <telerik:AjaxUpdatedControl ControlID="txtCreditCurrency" />
                 
                 <telerik:AjaxUpdatedControl ControlID="comboOrderingCustAcc" />
+
+                <telerik:AjaxUpdatedControl ControlID="comboCommissionCurrency" />
+                <telerik:AjaxUpdatedControl ControlID="comboChargeCurrency" />
+                <telerik:AjaxUpdatedControl ControlID="txtCommissionCurrency" />
+                <telerik:AjaxUpdatedControl ControlID="txtChargeCurrency" />
             </UpdatedControls>
         </telerik:AjaxSetting>
         

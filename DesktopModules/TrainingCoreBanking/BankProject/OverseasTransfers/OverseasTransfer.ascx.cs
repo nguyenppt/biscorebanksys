@@ -173,6 +173,24 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             comboChargeCurrency.SelectedValue = comboChargeAcct.SelectedItem.Attributes["Currency"];
             txtChargeCurrency.Text = comboChargeAcct.SelectedItem.Attributes["Currency"];
             txtCommissionCurrency.Text = comboChargeAcct.SelectedItem.Attributes["Currency"];
+            if ("VND".Equals(txtCommissionCurrency.Text) || "VND".Equals(comboCommissionCurrency.SelectedValue))
+            {
+                numCommissionAmount.NumberFormat.DecimalDigits = 0;
+
+            }
+            else
+            {
+                numCommissionAmount.NumberFormat.DecimalDigits = 2;
+
+            }
+            if ("VND".Equals(txtChargeCurrency.Text) || "VND".Equals(comboChargeCurrency.SelectedValue))
+            {
+                numChargeAmount.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                numChargeAmount.NumberFormat.DecimalDigits = 2;
+            }
         }
         
         protected void comboOtherBy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -1021,8 +1039,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                     //lblInterBankSettleAmount.Text = numCreditAmount.Text;
                     if (numCreditAmount.Value > 0)
                     {
-                        lblInstancedAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
-                        lblInterBankSettleAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
+                        lblInstancedAmount.Text = formatNumber(txtCreditCurrency.Text, numCreditAmount.Value);// String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
+                        lblInterBankSettleAmount.Text = formatNumber(txtCreditCurrency.Text, numCreditAmount.Value);// String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
                     }
                     
                     break;
@@ -1035,8 +1053,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                     //lblInterBankSettleAmount.Text = (numCreditAmount.Value - (numCreditAmount.Value * (PercentOverseasTransfer() / 100))).ToString();
                     if (numCreditAmount.Value > 0)
                     {
-                        lblInstancedAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");
-                        lblInterBankSettleAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
+                        lblInstancedAmount.Text = formatNumber(txtCreditCurrency.Text, numCreditAmount.Value);// String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");
+                        lblInterBankSettleAmount.Text = formatNumber(txtCreditCurrency.Text, numCreditAmount.Value);// String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");  
                     }
                     
                     break;
@@ -1129,7 +1147,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                 case "OUR":
                     if (numCreditAmount.Value > 0)
                     {
-                        lblInterBankSettleAmount.Text = String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");
+                        lblInterBankSettleAmount.Text = formatNumber(txtCreditCurrency.Text, numCreditAmount.Value);// String.Format("{0:C}", numCreditAmount.Value).Replace("$", "");
                     }
                     break;
 
@@ -1139,7 +1157,7 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
 
                     if (totalAmount > 0)
                     {
-                        lblInterBankSettleAmount.Text = String.Format("{0:C}", totalAmount).Replace("$", "");
+                        lblInterBankSettleAmount.Text = formatNumber(txtCreditCurrency.Text, totalAmount);// String.Format("{0:C}", totalAmount).Replace("$", "");
                     }
                     break;
             }
@@ -1164,8 +1182,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
                     }                    
                     break;
             }
-            
-            lblTotalTaxAmount.Text = String.Format("{0:C}", (totalAmount * 0.1)).Replace("$", "");
+
+            lblTotalTaxAmount.Text = formatNumber(comboChargeCurrency.SelectedValue, (totalAmount * 0.1));//String.Format("{0:C}", (totalAmount * 0.1)).Replace("$", "");
         }
 
         protected void comboAccountType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -1418,6 +1436,8 @@ namespace BankProject.TradingFinance.OverseasFundsTransfer
             LoadCreditAccountByDebitCurrency();
 
             ChangeNumberFormatControl();
+
+            comboChargeAcct_OnSelectedIndexChanged(null, null);
         }
 
         protected void comboOrderingCustAcc_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
