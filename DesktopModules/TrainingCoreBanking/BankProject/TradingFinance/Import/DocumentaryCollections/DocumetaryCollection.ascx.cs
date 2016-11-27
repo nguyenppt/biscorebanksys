@@ -29,6 +29,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            SetRelation_RemittingType();
             if (TabId == 281) // Incoming Collection Acception
             {
                 isMT412Active = true;
@@ -226,6 +227,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             // never allow to edit
             //comboRemittingType.Enabled = false;
             tbVatNo.Enabled = false;
+
+
         }
 
         protected void IntialEdittor(RadEditor txtEdittor)
@@ -553,6 +556,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             RadToolBar1.FindItemByValue("btSave").Enabled = true;
             RadToolBar1.FindItemByValue("btReview").Enabled = false;
             RadToolBar1.FindItemByValue("btPrint").Enabled = false;
+
+            SetRelation_RemittingType();
         }
 
         protected void btSearch_Click(object sender, EventArgs e)
@@ -999,16 +1004,23 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtGeneralMT410_2.Text = string.Empty;
                 txtSendingBankTRN.Text = string.Empty;
                 txtRelatedReference.Text = txtRemittingBankRef.Text;
-                comboCurrency_TabMT410.SelectedValue = string.Empty;
-                numAmount_TabMT410.Text = string.Empty;
+                //comboCurrency_TabMT410.SelectedValue = string.Empty;
+                //numAmount_TabMT410.Text = string.Empty;
 
                 txtSenderToReceiverInfo_410_1.Text = string.Empty;
                 txtSenderToReceiverInfo_410_2.Text = string.Empty;
                 txtSenderToReceiverInfo_410_3.Text = string.Empty;
+
+                //Begin Fix for request: BIS-IDCO-2
+                dteMaturityDateMT412.SelectedDate = dteMaturityDate.SelectedDate;
+                comboCurrency_TabMT410.SelectedValue = comboCurrency.SelectedValue;;
+                numAmount_TabMT410.Value = numAmount.Value;
+                //End Fix for request: BIS-IDCO-2
+
                 if (dsDoc.Tables[3].Rows.Count > 0)//MT410
                 {
                     var drowMT410 = dsDoc.Tables[3].Rows[0];
-                    dteMaturityDateMT412.SelectedDate = dteMaturityDate.SelectedDate;
+                    
                     txtSendingBankTRN.Text = drowMT410["SendingBankTRN"].ToString();
                 }
                 
@@ -1280,22 +1292,23 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
         protected void SetRelation_RemittingType()
         {
-            //switch (comboRemittingType.SelectedValue)
-            //{
-            //    case "A":
-            //        comboRemittingBankNo.Enabled = true;
+            switch (comboRemittingType.SelectedValue)
+            {
+                case "A":
+                    txtRemittingBankNo.Enabled = true;
             //        txtRemittingBankAddr1.Enabled = false;
             //        txtRemittingBankAddr2.Enabled = false;
             //        txtRemittingBankAddr3.Enabled = false;
-            //        break;
-            //    case "B":
-            //    case "D":
-            //        comboRemittingBankNo.Enabled = false;
+                    break;
+                case "B":
+                case "D":
+                    txtRemittingBankNo.Enabled = false;
+                    txtRemittingBankNo.Text = string.Empty;
             //        txtRemittingBankAddr1.Enabled = true;
             //        txtRemittingBankAddr2.Enabled = true;
             //        txtRemittingBankAddr3.Enabled = true;
-            //        break;
-            //}
+                    break;
+            }
         }
 
         protected void Cal_TracerDate(bool isCallFromSelected)

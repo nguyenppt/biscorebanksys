@@ -375,7 +375,7 @@
                 <tr>
                     <td class="MyLable">2.1 Remitting Type</td>
                     <td class="MyContent">
-                        <telerik:RadComboBox AutoPostBack="false" OnSelectedIndexChanged="comboRemittingType_OnSelectedIndexChanged"
+                        <telerik:RadComboBox AutoPostBack="true" OnSelectedIndexChanged="comboRemittingType_OnSelectedIndexChanged"
                             ID="comboRemittingType" runat="server"
                             MarkFirstMatch="True"
                             AllowCustomText="false">
@@ -1543,10 +1543,11 @@
 
         <telerik:AjaxSetting AjaxControlID="comboRemittingType">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="comboRemittingBankNo" />
+                <telerik:AjaxUpdatedControl ControlID="txtRemittingBankNo" />
+                <%--<telerik:AjaxUpdatedControl ControlID="comboRemittingBankNo" />
                 <telerik:AjaxUpdatedControl ControlID="txtRemittingBankAddr1" />
                 <telerik:AjaxUpdatedControl ControlID="txtRemittingBankAddr2" />
-                <telerik:AjaxUpdatedControl ControlID="txtRemittingBankAddr3" />
+                <telerik:AjaxUpdatedControl ControlID="txtRemittingBankAddr3" />--%>
             </UpdatedControls>
         </telerik:AjaxSetting>
 
