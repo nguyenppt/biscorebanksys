@@ -5,27 +5,6 @@ GO
 
 /***
 ---------------------------------------------------------------------------------
--- 13 Nov 2016 : Nghia : viet nam currency
----------------------------------------------------------------------------------
-***/
-ALTER FUNCTION [dbo].[f_CurrencyToText]
-(
-	@sNumber nvarchar(4000),
-	@ccyCode varchar(3)
-)
-RETURNS nvarchar(4000) AS
-
-BEGIN
-	DECLARE @result nvarchar(4000);
-	select @result = dbo.f_CurrencyToTextVn(@sNumber, @ccyCode);
-	--select @result = dbo.fRemoveUnicodeSign(@result);
-	
-	return @result 
-END
-
-GO
-/***
----------------------------------------------------------------------------------
 -- 13 Nov 2016 : Nghia : Add RemittingType to table
 ---------------------------------------------------------------------------------
 ***/
