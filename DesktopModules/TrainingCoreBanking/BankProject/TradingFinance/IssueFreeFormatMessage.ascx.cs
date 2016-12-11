@@ -59,6 +59,7 @@ namespace BankProject.TradingFinance
                     SetDisableByReview(true);
 
                     // Reset Data
+                    hiddenId.Value = "";
                     LoadData();
 
                     //  InitToolBar

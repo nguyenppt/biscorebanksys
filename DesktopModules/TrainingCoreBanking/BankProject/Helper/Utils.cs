@@ -56,7 +56,7 @@ namespace BankProject.Helper
             var iNumDv = rThree.Length > 0 ? Int32.Parse(rThree.Substring(0, 1)) : 0;
             var iNumCh = rThree.Length > 1 ? Int32.Parse(rThree.Substring(1, 1)) : 0;
             var iNumTr = rThree.Length > 2 ? Int32.Parse(rThree.Substring(2, 1)) : 0;
-            const string charRead = "****một*hai*ba**bốn*năm*sáu*bảy*tám*chin";
+            const string charRead = "****một*hai*ba**bốn*năm*sáu*bảy*tám*chín";
 
             var rCharRead = "";
             var vdvt = "";
@@ -87,7 +87,7 @@ namespace BankProject.Helper
                     strDv = iNumDv == 0
                                 ? ""
                                 : (nThree.Length > 1
-                                       ? "le " + charRead.Substring(iNumDv * 4, 4).Replace("*", "")
+                                       ? "lẻ " + charRead.Substring(iNumDv * 4, 4).Replace("*", "")
                                        : charRead.Substring(iNumDv * 4, 4).Replace("*", ""));
                 }
                 else

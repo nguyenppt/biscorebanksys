@@ -2,7 +2,78 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+/***
+---------------------------------------------------------------------------------
+-- 13 Dec 2016 : Nghia : Modify Update the status change to AUT
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BFREETEXTMESSAGE_Insert')
+BEGIN
+DROP PROCEDURE [dbo].[B_BFREETEXTMESSAGE_Insert]
+END
+GO
+CREATE PROCEDURE [dbo].[B_BFREETEXTMESSAGE_Insert]
+	@Id varchar(10)
+	,@WaiveCharge varchar(20)
+	,@TFNo varchar(50)
+	,@CableType varchar(20)
+	,@ReviverDesc nvarchar(500)
+	,@ReviverCode varchar(50)
+	,@RelatedReference nvarchar(500)
+	,@Narrative nvarchar(4000)
+	,@CurrentUserId INT
+AS
+BEGIN
+	IF NOT EXISTS(SELECT Id FROM dbo.[BFREETEXTMESSAGE] WHERE Id = @Id)
+	begin
+		INSERT INTO [dbo].[BFREETEXTMESSAGE]
+           ([WaiveCharge]
+           ,[TFNo]
+           ,[CableType]
+           ,[ReviverDesc]
+           ,[ReviverCode]
+           ,[RelatedReference]
+           ,[Narrative]
+           ,[Status]
+           , CreateDate
+           , CreateBy
+           )
+     VALUES
+           (
+			@WaiveCharge
+			,@TFNo
+			,@CableType 
+			,@ReviverDesc 
+			,@ReviverCode
+			,@RelatedReference
+			,@Narrative 
+			,'UNA'
+			, getdate()
+			, @CurrentUserId
+           )
+	end
+	else 
+	begin
+		UPDATE [dbo].[BFREETEXTMESSAGE]
+		   SET [WaiveCharge] = @WaiveCharge
+			  ,[TFNo] = @TFNo
+			  ,[CableType] = @CableType
+			  ,[ReviverDesc] = @ReviverDesc
+			  ,[ReviverCode] =@ReviverCode
+			  ,[RelatedReference] = @RelatedReference
+			  ,[Narrative] = @Narrative
+			  ,[Status] = 'UNA'
+			
+			  ,[UpdatedDate] = getdate()
+			  ,[UpdatedBy] = @CurrentUserId
+			 
+		 WHERE Id = @Id
+	end
+	
 
+END
+
+GO
 /***
 ---------------------------------------------------------------------------------
 -- 13 Nov 2016 : Nghia : Add RemittingType to table
