@@ -649,6 +649,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtDrawerAddr2.Text = drow["DrawerAddr2"].ToString();
 
                 comboCurrency.SelectedValue = drow["Currency"].ToString();
+                
                 //numAmount.Text = drow["Amount"].ToString();
                 numAmount.Text = drow["B4_AUT_Amount"].ToString();
                 if (drow["DocsReceivedDate"].ToString().IndexOf("1/1/1900") == -1)
@@ -850,8 +851,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     LoadChargeAcct();
                     rcbChargeAcct.SelectedValue = drow1["ChargeAcct"].ToString();
                 }
+
+                FormatCurrency();
                 tbExcheRate.Text = drow1["ExchRate"].ToString();
                 tbChargeAmt.Text = drow1["ChargeAmt"].ToString();
+                
 
                 ChargeAmount = double.Parse(drow1["ChargeAmt"].ToString());
 
@@ -908,7 +912,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                 tbChargePeriod2.Text = drow2["ChargePeriod"].ToString();
                 rcbChargeCcy2.SelectedValue = drow2["ChargeCcy"].ToString();
-
+                FormatCurrency();
                 if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
                 {
                     LoadChargeAcct2();
@@ -917,6 +921,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                 tbExcheRate2.Text = drow2["ExchRate"].ToString();
                 tbChargeAmt2.Text = drow2["ChargeAmt"].ToString();
+                FormatCurrency();
                 rcbPartyCharged2.SelectedValue = drow2["PartyCharged"].ToString();
                 lblPartyCharged2.Text = drow2["PartyCharged"].ToString();
                 rcbOmortCharges2.SelectedValue = drow2["OmortCharges"].ToString();
@@ -969,7 +974,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRelatedReference.Text = drowMT410["RelatedReference"].ToString();
                 comboCurrency_TabMT410.SelectedValue = drowMT410["Currency"].ToString();
                 numAmount_TabMT410.Text = drowMT410["Amount"].ToString();
-
+                FormatCurrency();
                 txtSenderToReceiverInfo_410_1.Text = drowMT410["SenderToReceiverInfo1"].ToString();
                 txtSenderToReceiverInfo_410_2.Text = drowMT410["SenderToReceiverInfo2"].ToString();
                 txtSenderToReceiverInfo_410_3.Text = drowMT410["SenderToReceiverInfo3"].ToString();
@@ -989,7 +994,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 txtRelatedReference.Text = drowMT412["RelatedReference"].ToString();
                 comboCurrency_TabMT410.SelectedValue = drowMT412["Currency"].ToString();
                 numAmount_TabMT410.Text = drowMT412["Amount"].ToString();
-
+                FormatCurrency(); 
                 txtSenderToReceiverInfo_410_1.Text = drowMT412["SenderToReceiverInfo1"].ToString();
                 txtSenderToReceiverInfo_410_2.Text = drowMT412["SenderToReceiverInfo2"].ToString();
                 txtSenderToReceiverInfo_410_3.Text = drowMT412["SenderToReceiverInfo3"].ToString();
@@ -1013,7 +1018,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
 
                 //Begin Fix for request: BIS-IDCO-2
                 dteMaturityDateMT412.SelectedDate = dteMaturityDate.SelectedDate;
-                comboCurrency_TabMT410.SelectedValue = comboCurrency.SelectedValue;;
+                comboCurrency_TabMT410.SelectedValue = comboCurrency.SelectedValue;
+                FormatCurrency();
                 numAmount_TabMT410.Value = numAmount.Value;
                 //End Fix for request: BIS-IDCO-2
 
@@ -1025,6 +1031,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 }
                 
             }
+            FormatCurrency(); 
             #endregion
         }
 
@@ -1201,8 +1208,29 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 sotien = double.Parse(tbChargeAmt.Value.ToString());
                 sotien = sotien*0.1;
             }
-            lblTaxAmt.Text = String.Format("{0:C}", sotien).Replace("$", "");
+            
+
+            lblTaxAmt.Text = formatNumber(rcbChargeCcy.SelectedValue, sotien); 
             lblTaxCode.Text = "81      10% VAT on Charge";
+        }
+
+        private string formatNumber(string currency, object number)
+        {
+            string returnValue = "0";
+            try
+            {
+                if ("VND".Equals(currency) || "JPY".Equals(currency))
+                {
+                    returnValue = String.Format("{0:C}", Convert.ToInt32(Math.Round(Convert.ToDecimal( number), MidpointRounding.AwayFromZero).ToString())).Replace("$", "").Replace(".00", "");
+                }
+                else
+                {
+                    returnValue = String.Format("{0:C}", number).Replace("$", "");
+                }
+            }
+            catch { }
+
+            return returnValue;
         }
 
         protected void tbChargeAmt2_TextChanged(object sender, EventArgs e)
@@ -1213,7 +1241,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 sotien = double.Parse(tbChargeAmt2.Value.ToString());
                 sotien = sotien*0.1;
             }
-            lblTaxAmt2.Text = String.Format("{0:C}", sotien).Replace("$", "");
+            lblTaxAmt2.Text = formatNumber(rcbChargeCcy2.SelectedValue, sotien);
             lblTaxCode2.Text = "81      10% VAT on Charge";
         }
 
@@ -1341,6 +1369,33 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         protected void comboCurrency_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             comboCurrency_TabMT410.SelectedValue = comboCurrency.SelectedValue;
+            FormatCurrency();
+        }
+
+        private void FormatCurrency()
+        {
+         
+            if ("VND".Equals(rcbChargeCcy.SelectedValue) || "JPY".Equals(rcbChargeCcy.SelectedValue))
+            {
+                tbChargeAmt.NumberFormat.DecimalDigits = 0;
+
+            }
+            else
+            {
+                tbChargeAmt.NumberFormat.DecimalDigits = 2;
+            }
+
+
+            if ("VND".Equals(comboCurrency.SelectedValue) || "JPY".Equals(comboCurrency.SelectedValue))
+            {
+                numAmount.NumberFormat.DecimalDigits = 0;
+                numAmount_TabMT410.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                numAmount.NumberFormat.DecimalDigits = 2;
+                numAmount_TabMT410.NumberFormat.DecimalDigits = 2;
+            }
         }
 
         protected void numAmount_OnTextChanged(object sender, EventArgs e)
@@ -1365,11 +1420,13 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         protected void rcbChargeCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadChargeAcct();
+            FormatCurrency();
         }
 
         protected void rcbChargeCcy2_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadChargeAcct2();
+            FormatCurrency();
         }
 
         protected void LoadChargeAcct()

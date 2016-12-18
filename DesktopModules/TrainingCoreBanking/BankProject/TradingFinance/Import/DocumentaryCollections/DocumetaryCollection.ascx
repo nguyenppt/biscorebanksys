@@ -1566,6 +1566,7 @@
         <telerik:AjaxSetting AjaxControlID="comboCurrency">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="comboCurrency_TabMT410" />
+                <telerik:AjaxUpdatedControl ControlID="numAmount" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
