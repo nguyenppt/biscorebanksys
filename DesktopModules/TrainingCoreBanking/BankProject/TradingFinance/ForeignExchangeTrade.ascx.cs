@@ -132,11 +132,11 @@ namespace BankProject.Views.TellerApplication
                 case bc.Commands.Authorize:
                     int provitionTransferId = bd.SQLData.B_BFOREIGNEXCHANGE_ValidationLCNoExst_PROVISIONTRANSFER_DC(txtFTNo.Text.Trim());
 
-                    if (txtFTNo.Text != "" && provitionTransferId <= 0)
-                    {
-                        ShowMsgBox("There is no Provision Transfer information. Please process function Provision Transfer");
-                        return;
-                    }
+                    //if (txtFTNo.Text != "" && provitionTransferId <= 0)
+                    //{
+                    //    ShowMsgBox("There is no Provision Transfer information. Please process function Provision Transfer");
+                    //    return;
+                    //}
                     // Update Status
                     bd.SQLData.B_BFOREIGNEXCHANGE_UpdateStatus(commandName, txtId.Text.Trim(), UserId);
 
@@ -149,11 +149,11 @@ namespace BankProject.Views.TellerApplication
                 case bc.Commands.Reverse:
                     int provitionTransferId2 = bd.SQLData.B_BFOREIGNEXCHANGE_ValidationLCNoExst_PROVISIONTRANSFER_DC(txtFTNo.Text.Trim());
 
-                    if (txtFTNo.Text != "" && provitionTransferId2 <= 0)
-                    {
-                        ShowMsgBox("There is no Provision Transfer information. Please process function Provision Transfer");
-                        return;
-                    }
+                    //if (txtFTNo.Text != "" && provitionTransferId2 <= 0)
+                    //{
+                    //    ShowMsgBox("There is no Provision Transfer information. Please process function Provision Transfer");
+                    //    return;
+                    //}
                     // Update Status
                     bd.SQLData.B_BFOREIGNEXCHANGE_UpdateStatus(commandName, txtId.Text.Trim(), UserId);
 
