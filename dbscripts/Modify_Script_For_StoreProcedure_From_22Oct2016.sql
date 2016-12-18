@@ -4,6 +4,94 @@ SET QUOTED_IDENTIFIER ON
 GO
 /***
 ---------------------------------------------------------------------------------
+-- 18 Dec 2016 : Nghia : Remove duplicate currency
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_INCOMINGCOLLECTIONPAYMENT_PHIEUCHUYENKHOAN_Report')
+BEGIN
+DROP PROCEDURE [dbo].[B_INCOMINGCOLLECTIONPAYMENT_PHIEUCHUYENKHOAN_Report]
+END
+GO
+CREATE PROCEDURE [dbo].[B_INCOMINGCOLLECTIONPAYMENT_PHIEUCHUYENKHOAN_Report]
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500)
+AS
+BEGIN
+	declare @CurrentDate varchar(15)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);
+	--declare @ChargeAmt FLOAT
+	--declare @VAT FLOAT
+	--declare @SoTienTaiKhoanCo FLOAT
+	---- get partycharge: B/AC from BINCOMINGCOLLECTIONPAYMENTCHARGES
+	--declare @PartyCharged varchar(10)
+	--set @PartyCharged = (select top 1 PartyCharged
+	--						from dbo.BINCOMINGCOLLECTIONPAYMENTCHARGES 
+	--						where CollectionPaymentCode = @Code)
+							
+	--set @ChargeAmt = isnull((select sum(ChargeAmt) 
+	--						from BINCOMINGCOLLECTIONPAYMENTCHARGES 
+	--						where CollectionPaymentCode = @Code),0)
+							
+	--set @PaymentAmount = isnull((select sum(PaymentAmount) 
+	--						from BINCOMINGCOLLECTIONPAYMENT 
+	--						where CollectionPaymentCode = @Code),0)
+							
+	--set @VAT =  isnull((@ChargeAmt * 0.1), 0)
+	
+	--1. N?u code phí là B thì m?i có VAT 
+	--va (S? ti?n phí này s? du?c TRU vào s? ti?n trong amount c?a 202 
+	--và TRU vào trong phi?u chuy?n kho?n)
+	--if @PartyCharged = 'B'
+	--begin
+	--	set @ChargeAmt = @ChargeAmt - @VAT
+	--end
+	-- 2. N?u code phí là AC thì không có VAT. 
+	--S? ti?n phí này s? du?c c?ng vào s? ti?n trong amount c?a 202 
+	--và c?ng vào trong phi?u chuy?n kho?n
+	--else if @PartyCharged = 'AC'
+	--begin
+	--	set @ChargeAmt = @ChargeAmt + @VAT
+	--end
+	declare @VATNo nvarchar(500)
+	set @VATNo = (select top 1 VATNo from 
+				dbo.BINCOMINGCOLLECTIONPAYMENTCHARGES 
+				where CollectionPaymentCode = @Code)
+	
+	----------------------------------------------------------
+	declare @Table_TempKhoanNo as table 
+	(
+		Position INT,
+		Value nvarchar(2000)
+	)
+	insert into @Table_TempKhoanNo
+	select position,value from dbo.fn_Split((select top 1 DrFromAccount from dbo.BINCOMINGCOLLECTIONPAYMENT where PaymentId = @Code), '-')
+	-------------------------------------------------------------
+	select @CurrentDate as CurrentDate
+	select
+		pay.CollectionPaymentCode,
+		@UserNameLogin as UserNameLogin,
+		@VATNo as VATNo,
+		(SELECT DATEPART(m, GETDATE())) as [Month],
+	    (SELECT DATEPART(d, GETDATE())) as [Day],
+	    (SELECT DATEPART(yy, GETDATE())) as [Year],	    
+		(select cast(Value as nvarchar) from @Table_TempKhoanNo where Position = 1) as SoTaiKhoanNo,
+		(select '' + Value from @Table_TempKhoanNo where Position = 2) as TenTaiKhoanNo,
+		CONVERT(varchar, CONVERT(money, mt202.Amount), 1) + ' ' + pay.Currency as SoTienTaiKhoanNo,
+		(select dbo.f_CurrencyToTextVn(mt202.Amount, mt202.Currency)) as SoTienTaiKhoanNoBangChu,
+		
+		(select AccountNo from dbo.BSWIFTCODE where Code =  NostroAcct) as SoTaiKhoanCo,
+		(select [Description] from dbo.BSWIFTCODE where Code =  NostroAcct) as TenTaiKhoanCo,
+		 CONVERT(varchar, CONVERT(money, (mt202.Amount)), 1) + ' ' + pay.Currency as SoTienTaiKhoanCo,
+		 (select dbo.f_CurrencyToText(mt202.Amount, mt202.Currency)) as SoTienTaiKhoanCoBangChu
+		
+	from dbo.BINCOMINGCOLLECTIONPAYMENT pay
+	inner join dbo.BINCOMINGCOLLECTIONPAYMENTMT202 mt202 on mt202.CollectionPaymentCode = pay.PaymentId
+	where pay.PaymentId = @Code
+END
+
+GO
+/***
+---------------------------------------------------------------------------------
 -- 13 Dec 2016 : Nghia : Modify Update the status change to AUT
 ---------------------------------------------------------------------------------
 ***/
