@@ -515,7 +515,7 @@
             <tr>
                 <td class="MyLable">77.B Disposal of Docs</td>
                 <td class="MyContent">
-                    <telerik:RadTextBox ID="txtDisposalOfDocs_734" runat="server" Width="355" Text="WE ARE HOLDING DOCS AS PER ARTICLE 16c(iii) B OF UCP 600" enabled="false" />
+                    <telerik:RadTextBox ID="txtDisposalOfDocs_734" runat="server" Width="355" Text="WE ARE HOLDING DOCS AS PER ARTICLE 16c(iii) B OF UCP 600"/>
                 </td>
             </tr>
         </table>

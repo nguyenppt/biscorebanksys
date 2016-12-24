@@ -151,7 +151,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         private void DisableDefaultControl()
         {
             comboDrawType.Enabled = false;
-            txtDisposalOfDocs_734.Enabled = false;
+            //txtDisposalOfDocs_734.Enabled = false;
             tbVatNo.Enabled = false;
             tbChargeCode.Enabled = false;
             tbChargeCode2.Enabled = false;
