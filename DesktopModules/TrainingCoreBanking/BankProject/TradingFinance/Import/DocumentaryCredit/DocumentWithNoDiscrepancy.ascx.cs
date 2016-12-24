@@ -21,6 +21,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         {            
             if (IsPostBack) return;
             //
+            txtDisposalOfDocs.Text = "WE ARE HOLDING DOCS AS PER ARTICLE 16C(III) B OF UCP 600"; 
             fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
             divMT734.Attributes.CssStyle.Remove("display");
             divCharge.Attributes.CssStyle.Remove("display");
