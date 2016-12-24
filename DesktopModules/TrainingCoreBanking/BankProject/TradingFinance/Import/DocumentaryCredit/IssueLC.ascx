@@ -1826,7 +1826,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 </tr>
             </table>
 
-            <table width="100%" cellpadding="0" cellspacing="0">
+            <table width="100%" cellpadding="0" cellspacing="0" style ="display:none">
                 <tr>
                     <td class="MyLable" style="width: 250px">59.1 Beneficiary Type</td>
                     <td class="MyContent">
@@ -1848,7 +1848,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">59.2 Beneficiary No.</td>
+                    <td style="width: 250px" class="MyLable">59.1 Beneficiary No.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbBeneficiaryNo740" runat="server"  />
                     </td>
@@ -1860,14 +1860,14 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
 
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td style="width: 250px" class="MyLable">59.3 Beneficiary Name</td>
+                    <td style="width: 250px" class="MyLable">59.2 Beneficiary Name</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbBeneficiaryName740" runat="server" Width="355" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td style="width: 200px" class="MyLable">59.4 Beneficiary Addr.</td>
+                    <td style="width: 200px" class="MyLable">59.3 Beneficiary Addr.</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="tbBeneficiaryAddr740_1" runat="server" Width="355" />
                     </td>
@@ -2058,7 +2058,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 </tr>
 
                 <tr>
-                    <td class="MyLable">72.1 Sender to receiver information</td>
+                    <td class="MyLable">72 Sender to receiver information</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtSenderToReceiverInformation740_1" runat="server" Width="355" />
                     </td>
