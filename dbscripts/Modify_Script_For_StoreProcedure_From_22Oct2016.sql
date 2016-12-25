@@ -2,6 +2,193 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
+/***
+---------------------------------------------------------------------------------
+-- 25 Dec 2016 : Nghia : Update status of activeFlag in case of reverce
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BIMPORT_DOCUMENTPROCESSING_Insert')
+BEGIN
+DROP PROCEDURE [dbo].[B_BIMPORT_DOCUMENTPROCESSING_Insert]
+END
+GO
+CREATE PROCEDURE [dbo].[B_BIMPORT_DOCUMENTPROCESSING_Insert]
+	@DocumentType varchar(50) 
+	,@LCCode varchar(50) 
+	,@DrawType varchar(50) 
+	,@PresentorNo varchar(50) 
+	,@PresentorName nvarchar(500) 
+	,@PresentorRefNo varchar(250) 
+	,@Currency varchar(10) 
+	,@Amount float 
+	,@BookingDate datetime 
+	,@DocsReceivedDate datetime 
+	,@DocsCode1 varchar(50) 
+	,@NoOfOriginals1 bigint 
+	,@NoOfCopies1 bigint 
+	,@DocsCode2 varchar(50) 
+	,@NoOfOriginals2 bigint 
+	,@NoOfCopies2 bigint 
+	,@DocsCode3 varchar(50) 
+	,@NoOfOriginals3 bigint 
+	,@NoOfCopies3 bigint 
+	,@OtherDocs1 nvarchar(500) 
+	,@OtherDocs2 nvarchar(500) 
+	,@OtherDocs3 nvarchar(500) 
+	,@TraceDate datetime 
+	,@DocsReceivedDate_Supplemental datetime 
+	,@PresentorRefNo_Supplemental nvarchar(500) 
+	,@Docs_Supplemental1 nvarchar(500) 
+	,@Docs_Supplemental2 nvarchar(500) 
+	,@Docs_Supplemental3 nvarchar(500) 
+	,@CurrentUserId INT
+	,@ViewType BIGINT
+	,@Discrepancies nvarchar(500) 
+	,@DisposalOfDocs nvarchar(500) 
+	,@WaiveCharges nvarchar(50) 
+	,@ChargeRemarks nvarchar(200) 
+	,@VATNo nvarchar(50) 
+	,@FullDocsAmount float
+AS
+BEGIN
+
+	declare @IncreaseMentalB4Aut FLOAT
+	declare @OrginalCode varchar(50)
+	
+	set @OrginalCode = SUBSTRING(@LCCode,0,15)
+	select @IncreaseMentalB4Aut = max(IncreaseMentalB4Aut) 
+	from dbo.BIMPORT_DOCUMENTPROCESSING 
+	where [LCCode] = @OrginalCode and isnull([Status],'') = 'AUT' and isnull(RejectStatus,'REV') = 'REV'
+		AND ISNULL(ActiveRecordFlag,'Yes') = 'Yes'
+	
+	if isnull(@IncreaseMentalB4Aut, 0) = 0
+	begin
+		set @IncreaseMentalB4Aut = 0
+	end		
+	set @IncreaseMentalB4Aut = @IncreaseMentalB4Aut + @Amount
+	--Amend ?
+	IF CHARINDEX('.', @LCCode, CHARINDEX('.', @LCCode) + 1) > 0
+	BEGIN
+		IF EXISTS(SELECT LCCode FROM dbo.BIMPORT_DOCUMENTPROCESSING WHERE AmendNo = @LCCode)
+		BEGIN
+			UPDATE [dbo].[BIMPORT_DOCUMENTPROCESSING]
+		    SET [DrawType]  = @DrawType,[PresentorNo]  = @PresentorNo,[PresentorName]  = @PresentorName
+			  ,[PresentorRefNo]  = @PresentorRefNo,[Currency]  = @Currency ,[Amount]  = @Amount ,[BookingDate]  = @BookingDate
+			  ,[DocsReceivedDate]  = @DocsReceivedDate ,[DocsCode1]  = @DocsCode1 ,[NoOfOriginals1]  = @NoOfOriginals1
+			  ,[NoOfCopies1]  = @NoOfCopies1 ,[DocsCode2]  = @DocsCode2  ,[NoOfOriginals2]  = @NoOfOriginals2 ,[NoOfCopies2]  = @NoOfCopies2
+			  ,[DocsCode3]  = @DocsCode3  ,[NoOfOriginals3]  = @NoOfOriginals3 ,[NoOfCopies3]  = @NoOfCopies3 ,[OtherDocs1]  = @OtherDocs1
+			  ,[OtherDocs2]  = @OtherDocs2 ,[OtherDocs3]  = @OtherDocs3  ,[TraceDate]  = @TraceDate  ,[DocsReceivedDate_Supplemental]  = @DocsReceivedDate_Supplemental
+			  ,[PresentorRefNo_Supplemental]  = @PresentorRefNo_Supplemental ,[Docs_Supplemental1]  = @Docs_Supplemental1
+			  ,[Docs_Supplemental2]  = @Docs_Supplemental2  ,[Docs_Supplemental3]  = @Docs_Supplemental3
+		      , AmendDate = GETDATE()    , AmendBy = @CurrentUserId , AmendStatus = 'UNA',ActiveRecordFlag = 'Yes'
+		      , IncreaseMentalB4Aut = @IncreaseMentalB4Aut, Discrepancies = @Discrepancies, DisposalOfDocs = @DisposalOfDocs
+				, WaiveCharges = @WaiveCharges, ChargeRemarks = @ChargeRemarks, VATNo = @VATNo, FullDocsAmount = @FullDocsAmount
+           WHERE AmendNo = @LCCode
+		END
+		ELSE
+		BEGIN
+			DECLARE @DocCode VARCHAR(50)
+			SET @DocCode = SUBSTRING(@LCCode, 0, CHARINDEX('.', @LCCode, CHARINDEX('.', @LCCode) + 1))
+			---
+			INSERT INTO [dbo].[BIMPORT_DOCUMENTPROCESSING]([DocumentType],[LCCode],[DrawType],[PresentorNo],[PresentorName],[PresentorRefNo]
+				,[Currency],[Amount],[BookingDate],[DocsReceivedDate],[DocsCode1],[NoOfOriginals1],[NoOfCopies1],[DocsCode2],[NoOfOriginals2]
+				,[NoOfCopies2],[DocsCode3],[NoOfOriginals3],[NoOfCopies3],[OtherDocs1],[OtherDocs2],[OtherDocs3],[TraceDate],[DocsReceivedDate_Supplemental]
+				,[PresentorRefNo_Supplemental],[Docs_Supplemental1],[Docs_Supplemental2],[Docs_Supplemental3],[PaymentNo],[PaymentId],[PaymentAmount]
+				,[IncreaseMental],[PaymentFullFlag],[IncreaseMentalB4Aut],[Status],[CreateDate],[CreateBy],[UpdatedDate],[UpdatedBy],[AuthorizedBy]
+				,[AuthorizedDate],[ViewType],[Discrepancies],[DisposalOfDocs],[RejectDrawType],[RejectStatus],[RejectBy],[RejectDate],[RejectApproveBy]
+				,[RejectApproveDate],[AmendStatus],[AmendBy],[AmendDate],[AmendApproveBy],[AmendApproveDate],[AcceptDrawType],[AcceptStatus],[AcceptBy]
+				,[AcceptDate],[AcceptApproveBy],[AcceptApproveDate],[WaiveCharges],[ChargeRemarks],[VATNo],[AcceptRemarts],[FullDocsAmount],[AmendNo]
+				,[ActiveRecordFlag], OldAmount, OldDocsReceivedDate, RefAmendNo)
+			SELECT DocumentType,LCCode,@DrawType,@PresentorNo,@PresentorName,@PresentorRefNo
+				,@Currency,@Amount,@BookingDate,@DocsReceivedDate,@DocsCode1,@NoOfOriginals1,@NoOfCopies1,@DocsCode2,@NoOfOriginals2
+				,@NoOfCopies2,@DocsCode3,@NoOfOriginals3,@NoOfCopies3,@OtherDocs1,@OtherDocs2,@OtherDocs3,@TraceDate,@DocsReceivedDate_Supplemental
+				,@PresentorRefNo_Supplemental,@Docs_Supplemental1,@Docs_Supplemental2,@Docs_Supplemental3,PaymentNo,PaymentId,@Amount
+				,0,PaymentFullFlag,@IncreaseMentalB4Aut,[Status],CreateDate,CreateBy,UpdatedDate,UpdatedBy,AuthorizedBy
+				,AuthorizedDate,@ViewType,@Discrepancies,@DisposalOfDocs,RejectDrawType,RejectStatus,RejectBy,RejectDate,RejectApproveBy
+				,RejectApproveDate, 'UNA',@CurrentUserId,GETDATE(),null,null,null AcceptDrawType,null AcceptStatus,null AcceptBy
+				,AcceptDate,AcceptApproveBy,AcceptApproveDate,WaiveCharges,ChargeRemarks,VATNo,null AcceptRemarts,FullDocsAmount,@LCCode, 'No'
+				, Amount, DocsReceivedDate,AmendNo
+			FROM [BIMPORT_DOCUMENTPROCESSING] WHERE PaymentId = @DocCode AND ISNULL(ActiveRecordFlag, 'Yes') = 'Yes' AND [Status] = 'AUT'
+			
+			IF @@ROWCOUNT > 0
+			BEGIN
+				UPDATE [BIMPORT_DOCUMENTPROCESSING] SET ActiveRecordFlag = 'No' WHERE PaymentId = @DocCode AND ISNULL(ActiveRecordFlag, 'Yes') = 'Yes' AND [Status] = 'AUT'
+				
+				UPDATE [BIMPORT_DOCUMENTPROCESSING] SET ActiveRecordFlag = 'Yes' WHERE AmendNo = @LCCode
+			END	
+		END
+		
+		RETURN
+	END
+	IF NOT EXISTS(SELECT LCCode FROM dbo.BIMPORT_DOCUMENTPROCESSING WHERE PaymentId = @LCCode)
+	begin
+		declare @MaxPaymentNo bigint
+		declare @PaymentAmount FLOAT
+		
+		set @MaxPaymentNo = (select (max(isnull(PaymentNo,0)) + 1) from dbo.BIMPORT_DOCUMENTPROCESSING where [LCCode] = @OrginalCode AND ISNULL(ActiveRecordFlag,'Yes') = 'Yes')
+		set @PaymentAmount = (select Amount from dbo.BIMPORT_NORMAILLC where NormalLCCode = @OrginalCode AND ISNULL(ActiveRecordFlag,'Yes') = 'Yes')
+		
+		if isnull(@MaxPaymentNo, 0) = 0
+		begin
+			set @MaxPaymentNo  = 1
+		end
+		
+		INSERT INTO [dbo].[BIMPORT_DOCUMENTPROCESSING]([DocumentType],[LCCode],[DrawType],[PresentorNo],[PresentorName],[PresentorRefNo],[Currency]
+           ,[Amount],[BookingDate],[DocsReceivedDate],[DocsCode1],[NoOfOriginals1],[NoOfCopies1],[DocsCode2],[NoOfOriginals2],[NoOfCopies2],[DocsCode3]
+           ,[NoOfOriginals3],[NoOfCopies3],[OtherDocs1],[OtherDocs2],[OtherDocs3],[TraceDate],[DocsReceivedDate_Supplemental],[PresentorRefNo_Supplemental]
+           ,[Docs_Supplemental1],[Docs_Supplemental2],[Docs_Supplemental3], ViewType, CreateBy, CreateDate, PaymentNo, PaymentId, PaymentAmount, IncreaseMental
+		   , IncreaseMentalB4Aut, Discrepancies, DisposalOfDocs, [Status], WaiveCharges, ChargeRemarks, VATNo, FullDocsAmount)
+		VALUES(@DocumentType,@OrginalCode,@DrawType,@PresentorNo,@PresentorName,@PresentorRefNo,@Currency,@Amount,@BookingDate,@DocsReceivedDate,@DocsCode1   
+			,@NoOfOriginals1,@NoOfCopies1,@DocsCode2,@NoOfOriginals2,@NoOfCopies2,@DocsCode3,@NoOfOriginals3,@NoOfCopies3,@OtherDocs1,@OtherDocs2,@OtherDocs3   
+			,@TraceDate,@DocsReceivedDate_Supplemental,@PresentorRefNo_Supplemental,@Docs_Supplemental1,@Docs_Supplemental2,@Docs_Supplemental3,@ViewType
+			, @CurrentUserId, getdate(), @MaxPaymentNo, @LCCode, @PaymentAmount	, 0	, @IncreaseMentalB4Aut, @Discrepancies, @DisposalOfDocs	, 'UNA'
+           , @WaiveCharges, @ChargeRemarks, @VATNo, @FullDocsAmount)
+	end
+	else
+	begin
+		UPDATE [dbo].[BIMPORT_DOCUMENTPROCESSING]
+		   SET [DrawType]  = @DrawType
+			  ,[PresentorNo]  = @PresentorNo
+			  ,[PresentorName]  = @PresentorName
+			  ,[PresentorRefNo]  = @PresentorRefNo
+			  ,[Currency]  = @Currency
+			  ,[Amount]  = @Amount
+			  ,[BookingDate]  = @BookingDate
+			  ,[DocsReceivedDate]  = @DocsReceivedDate
+			  ,[DocsCode1]  = @DocsCode1
+			  ,[NoOfOriginals1]  = @NoOfOriginals1
+			  ,[NoOfCopies1]  = @NoOfCopies1
+			  ,[DocsCode2]  = @DocsCode2
+			  ,[NoOfOriginals2]  = @NoOfOriginals2
+			  ,[NoOfCopies2]  = @NoOfCopies2
+			  ,[DocsCode3]  = @DocsCode3
+			  ,[NoOfOriginals3]  = @NoOfOriginals3
+			  ,[NoOfCopies3]  = @NoOfCopies3
+			  ,[OtherDocs1]  = @OtherDocs1
+			  ,[OtherDocs2]  = @OtherDocs2
+			  ,[OtherDocs3]  = @OtherDocs3
+			  ,[TraceDate]  = @TraceDate
+			  ,[DocsReceivedDate_Supplemental]  = @DocsReceivedDate_Supplemental
+			  ,[PresentorRefNo_Supplemental]  = @PresentorRefNo_Supplemental
+			  ,[Docs_Supplemental1]  = @Docs_Supplemental1
+			  ,[Docs_Supplemental2]  = @Docs_Supplemental2
+			  ,[Docs_Supplemental3]  = @Docs_Supplemental3
+		      , UpdatedDate = getdate()
+		      , UpdatedBy = @CurrentUserId
+		      , [Status] = 'UNA'
+		      , IncreaseMentalB4Aut = @IncreaseMentalB4Aut
+		      , Discrepancies = @Discrepancies
+			, DisposalOfDocs = @DisposalOfDocs
+			, WaiveCharges = @WaiveCharges
+           , ChargeRemarks = @ChargeRemarks
+           , VATNo = @VATNo, FullDocsAmount = @FullDocsAmount
+		      
+		 WHERE PaymentId = @LCCode AND ISNULL(ActiveRecordFlag,'Yes') = 'Yes'
+	end
+END
+GO
+
 /***
 ---------------------------------------------------------------------------------
 -- 24 Dec 2016 : Nghia : Fix VND amount value

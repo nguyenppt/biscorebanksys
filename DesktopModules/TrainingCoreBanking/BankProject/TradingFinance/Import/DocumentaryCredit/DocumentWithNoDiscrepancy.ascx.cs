@@ -97,6 +97,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                     break;
                 case TabDocsReject:
                 case TabDocsAmend:
+
                 case TabDocsAccept:
                     if (this.TabId == TabDocsReject)
                         comboDrawType.SelectedValue = "CR";
@@ -132,6 +133,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                             if (ssStatus.Equals(bd.TransactionStatus.UNA) || ssStatus.Equals(bd.TransactionStatus.REV))
                             {
                                 RadToolBar1.FindItemByValue("btCommitData").Enabled = true;
+                            }
+                            if(ssStatus.Equals(bd.TransactionStatus.REV))
+                            {
+                                bc.Commont.SetTatusFormControls(this.Controls, true);
+                                DisableDefaultControl();
                             }
                         }
                         if (this.TabId == TabDocsAccept)
@@ -401,6 +407,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
                 case bc.Commands.Reverse:
                     bd.SQLData.B_BIMPORT_DOCUMENTPROCESSING_UpdateStatus(txtCode.Text.Trim(), bd.TransactionStatus.REV, TabId, UserId);
+                    bc.Commont.SetTatusFormControls(this.Controls, true);  
                     Response.Redirect("Default.aspx?tabid=" + this.TabId + "&tid=" + txtCode.Text.Trim());
                     break;
             }
