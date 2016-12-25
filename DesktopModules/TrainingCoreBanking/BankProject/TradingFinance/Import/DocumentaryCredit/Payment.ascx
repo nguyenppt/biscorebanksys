@@ -68,7 +68,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Draw Type</td>
+                    <td class="MyLable">1 Draw Type</td>
                     <td class="MyContent">
                         <telerik:RadComboBox
                             ID="cboDrawType" 
@@ -80,11 +80,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Currency</td>
+                    <td class="MyLable">2 Currency</td>
                     <td class="MyContent"><asp:Label ID="lblCurrency" runat="server" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Drawing Amount<span class="Required"> (*)</span></td>
+                    <td class="MyLable">3 Drawing Amount<span class="Required"> (*)</span></td>
                     <td class="MyContent"><telerik:radnumerictextbox id="txtDrawingAmount" runat="server" Enabled="false" CssClass="paymentControlWidth" />
                         <asp:RequiredFieldValidator
                             runat="server" Display="None"
@@ -97,7 +97,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Value Date</td>
+                    <td class="MyLable">4 Value Date</td>
                     <td class="MyContent"><telerik:raddatepicker id="txtValueDate" runat="server" Width="180px" /></td>
                 </tr>
             </table>
@@ -108,7 +108,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Deposit Account</td>
+                    <td class="MyLable">20 Deposit Account</td>
                     <td class="MyContent">
                         <telerik:RadComboBox
                             ID="cboDepositAccount" 
@@ -118,19 +118,19 @@
                         </telerik:RadComboBox> <asp:Label ID="lblDepositAccountName" runat="server" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Exchange Rate</td>
+                    <td class="MyLable">21 Exchange Rate</td>
                     <td class="MyContent"><telerik:radnumerictextbox id="txtExchangeRate" runat="server" CssClass="paymentControlWidth" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable labelDisabled">Amt DR Fr Acct Ccy</td>
+                    <td class="MyLable labelDisabled">22 Amt DR Fr Acct Ccy</td>
                     <td class="MyContent labelDisabled"><telerik:radnumerictextbox ID="txtAmtDRFrAcctCcy" runat="server" CssClass="paymentControlWidth labelDisabled" ReadOnly="true" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable labelDisabled">Prov Amt Release</td>
+                    <td class="MyLable labelDisabled">23 Prov Amt Release</td>
                     <td class="MyContent labelDisabled"><telerik:radnumerictextbox id="txtProvAmtRelease" runat="server" CssClass="paymentControlWidth labelDisabled" ReadOnly="true" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Amt DR from Acct <span class="Required">(*)</span></td>
+                    <td class="MyLable">24 Amt DR from Acct <span class="Required">(*)</span></td>
                     <td class="MyContent">
                         <telerik:radnumerictextbox id="txtAmtDrFromAcct" runat="server" Enabled="false" CssClass="paymentControlWidth" />
                         <asp:RequiredFieldValidator
@@ -162,7 +162,7 @@
                     <td class="MyContent labelDisabled"><telerik:radnumerictextbox id="txtCoverAmount" runat="server" CssClass="paymentControlWidth labelDisabled" ReadOnly="true" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Payment Method</td>
+                    <td class="MyLable">25 Payment Method</td>
                     <td class="MyContent">
                         <telerik:radcombobox
                             id="cboPaymentMethod" runat="server" autopostback="False"
@@ -177,7 +177,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Nostro Acct</td>
+                    <td class="MyLable">26 Nostro Acct</td>
                     <td class="MyContent">
                         <telerik:radcombobox AutoPostBack="true"
                             OnItemDataBound="cboNostroAcct_ItemDataBound"
@@ -189,11 +189,11 @@
                         </telerik:radcombobox> <asp:Label ID="lblNostroAcctName" runat="server" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable labelDisabled">Amount Credited</td>
+                    <td class="MyLable labelDisabled">27 Amount Credited</td>
                     <td class="MyContent labelDisabled"><telerik:radnumerictextbox id="txtAmountCredited" runat="server" CssClass="paymentControlWidth labelDisabled" ReadOnly="true" /></td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Payment Remarks</td>
+                    <td class="MyLable">28 Payment Remarks</td>
                     <td class="MyContent"><telerik:radtextbox id="txtPaymentRemarks" runat="server" width="300" /></td>
                 </tr>
             </table>
@@ -204,7 +204,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Fully Utilised</td>
+                    <td class="MyLable">30 Fully Utilised</td>
                     <td class="MyContent"><asp:TextBox ID="txtFullyUtilised" runat="server" CssClass="paymentControlWidth"></asp:TextBox></td>
                 </tr>
             </table>
