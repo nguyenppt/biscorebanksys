@@ -269,7 +269,7 @@
         <div runat="server" id="divCancelLC">
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="MyLable">Cancel Date</td>
+                    <td class="MyLable">Cancel/Close Date</td>
                     <td class="MyContent">
                         <telerik:RadDatePicker ID="dteCancelDate" runat="server" />
                     </td>
@@ -281,7 +281,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="MyLable">Cancel Remark</td>
+                    <td class="MyLable">Cancel/Close Remark</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtCancelRemark" runat="server" Width="355" />
                     </td>
