@@ -116,7 +116,7 @@
         <table width="100%" cellpadding="0" cellspacing="0">
             <%if (TabId == TabDocsAccept){ %>
             <tr>
-                <td class="MyLable">Accept Date</td>
+                <td class="MyLable">Maturity Date</td>
                 <td class="MyContent">
                     <telerik:RadDatePicker ID="txtAcceptDate" runat="server" />
                 </td>
