@@ -34,8 +34,8 @@
             if (result) {
                 $("#<%=btnPhieuCKReport.ClientID %>").click();
             }
-
-            if (waiveCharges === 'NO') {
+            
+            if (waiveCharges === 'NO' && parseInt($("#<%=numCommissionAmount.ClientID %>").val())>0) {
                 radconfirm("Do you want to download VAT file?", confirmCallbackFunctionVAT, 340, 150, null, 'Download');
             }            
         }
