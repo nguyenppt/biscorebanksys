@@ -5,6 +5,83 @@ GO
 
 /***
 ---------------------------------------------------------------------------------
+-- 8 Jan 2017 : Nghia : Update Credit account in case of Transaction Type different than TT - Foreign Exchange
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_BFOREIGNEXCHANGE_GetByCreditAccount')
+BEGIN
+DROP PROCEDURE [dbo].[B_BFOREIGNEXCHANGE_GetByCreditAccount]
+END
+GO
+CREATE PROCEDURE [dbo].[B_BFOREIGNEXCHANGE_GetByCreditAccount]
+	@Code varchar(50),
+	@Currency varchar(10),
+	@CustomerName nvarchar(500),
+	@CallFrom varchar(50),
+	@transsactionType varchar(50)
+AS
+BEGIN
+	if @CallFrom = 'text_chage'
+	begin
+		if @transsactionType = 'TT'
+		begin
+			if NOT EXISTS (select DepositCode from dbo.BACCOUNTS where Depositcode = @Code  and Currentcy = @Currency)
+			begin
+				select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
+			end
+			else
+			begin
+				select * from dbo.BACCOUNTS
+				where Depositcode = @Code  and Currentcy = @Currency
+			end
+		end
+		else 
+		begin
+			if NOT EXISTS (select id from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency)
+			begin
+				select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
+			end
+			else
+			begin
+				select *, ID as DepositCode from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency
+			end
+		end	
+	end
+	else if @CallFrom = 'sellcurrency_change'
+	begin
+		if @transsactionType = 'TT'
+		begin
+			if NOT EXISTS (select * from dbo.BACCOUNTS where CustomerID = @Code and Currentcy = @Currency)
+			begin
+				select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
+			end 
+			else
+			begin
+				select * from dbo.BACCOUNTS
+				where CustomerID = @Code and Currentcy = @Currency
+			end
+		end 
+		else 
+		begin
+			if NOT EXISTS (select id from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency)
+			begin
+				select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
+			end
+			else
+			begin
+				select *, ID as DepositCode from dbo.BCRFROMACCOUNT
+				where CustomerID = @Code and Currency = @Currency
+			end
+		end
+		
+		
+	end	
+END
+
+GO
+
+/***
+---------------------------------------------------------------------------------
 -- 25 Dec 2016 : Nghia : Update status of activeFlag in case of reverce
 ---------------------------------------------------------------------------------
 ***/
