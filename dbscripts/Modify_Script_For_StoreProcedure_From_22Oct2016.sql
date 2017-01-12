@@ -37,13 +37,22 @@ BEGIN
 		end
 		else 
 		begin
-			if NOT EXISTS (select id from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency)
+			--if NOT EXISTS (select id from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency)
+			--begin
+			--	select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
+			--end
+			--else
+			--begin
+			--	select *, ID as DepositCode from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency
+			--end
+			if NOT EXISTS (select DepositCode from dbo.BACCOUNTS where Depositcode = @Code  and Currentcy = @Currency)
 			begin
 				select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
 			end
 			else
 			begin
-				select *, ID as DepositCode from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency
+				select * from dbo.BACCOUNTS
+				where Depositcode = @Code  and Currentcy = @Currency
 			end
 		end	
 	end
@@ -63,14 +72,23 @@ BEGIN
 		end 
 		else 
 		begin
-			if NOT EXISTS (select id from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency)
+			--if NOT EXISTS (select id from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency)
+			--begin
+			--	select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
+			--end
+			--else
+			--begin
+			--	select *, ID as DepositCode from dbo.BCRFROMACCOUNT
+			--	where CustomerID = @Code and Currency = @Currency
+			--end
+			if NOT EXISTS (select * from dbo.BACCOUNTS where CustomerID = @Code and Currentcy = @Currency)
 			begin
 				select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
-			end
+			end 
 			else
 			begin
-				select *, ID as DepositCode from dbo.BCRFROMACCOUNT
-				where CustomerID = @Code and Currency = @Currency
+				select * from dbo.BACCOUNTS
+				where CustomerID = @Code and Currentcy = @Currency
 			end
 		end
 		
