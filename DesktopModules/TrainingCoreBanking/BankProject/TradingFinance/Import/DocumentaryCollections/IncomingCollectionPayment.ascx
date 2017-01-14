@@ -1435,7 +1435,7 @@
                 </telerik:RadTab>
                 <telerik:RadTab Text="Payment Charge">
                 </telerik:RadTab>
-                <telerik:RadTab Text="Accept Charge">
+                <telerik:RadTab Text="Handling charge">
                 </telerik:RadTab>
                 <telerik:RadTab Text="Other Charge">
                 </telerik:RadTab>
