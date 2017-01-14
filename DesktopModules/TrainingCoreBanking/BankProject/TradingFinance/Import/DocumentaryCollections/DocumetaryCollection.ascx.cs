@@ -2129,5 +2129,10 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         {
             dteMaturityDate.SelectedDate = ((SelectedDateChangedEventArgs)e).NewDate;
         }
+
+        protected void dteMaturityDate_SelectedDateChanged(object sender, SelectedDateChangedEventArgs e)
+        {
+            dteMaturityDateMT412.SelectedDate = ((SelectedDateChangedEventArgs)e).NewDate;
+        }
     }
 }

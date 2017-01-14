@@ -693,7 +693,7 @@
                 <tr>
                     <td class="MyLable">8. Maturity Date</td>
                     <td class="MyContent">
-                        <telerik:RadDatePicker ID="dteMaturityDate" runat="server" />
+                        <telerik:RadDatePicker ID="dteMaturityDate" runat="server" AutoPostBack="True"  OnSelectedDateChanged="dteMaturityDate_SelectedDateChanged"/>
                     </td>
                 </tr>
 
@@ -1573,6 +1573,12 @@
         <telerik:AjaxSetting AjaxControlID="dteMaturityDateMT412">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="dteMaturityDate" />
+            </UpdatedControls>
+        </telerik:AjaxSetting>
+
+        <telerik:AjaxSetting AjaxControlID="dteMaturityDate">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="dteMaturityDateMT412" />
             </UpdatedControls>
         </telerik:AjaxSetting>
 
