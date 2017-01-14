@@ -2,6 +2,507 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+/***
+---------------------------------------------------------------------------------
+-- 14 Jan 2017 : Nghia : VAT Update
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_INCOMINGCOLLECTIONACCEPTION_VAT_REPORT')
+BEGIN
+DROP PROCEDURE [dbo].[B_INCOMINGCOLLECTIONACCEPTION_VAT_REPORT]
+END
+GO
+CREATE PROCEDURE [dbo].[B_INCOMINGCOLLECTIONACCEPTION_VAT_REPORT]
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500),
+	@ViewType int
+AS
+BEGIN
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	
+	declare @TabCus  as table
+	(
+		CustomerName nvarchar(500),
+		IdentityNo nvarchar(20),
+		[Address] nvarchar(500),
+		City nvarchar(500),
+		Country nvarchar(500)
+	)
+	insert into @TabCus
+	select CustomerName,IdentityNo, [Address],City, Country from BCUSTOMERS
+	where CustomerID = (select DraweeCusNo from BDOCUMETARYCOLLECTION where DocCollectCode = @Code and ISNULL(ActiveRecordFlag,'Yes') = 'Yes')
+	--------------------------------------------
+	declare @Table_BDOCUMETARYCOLLECTIONCHARGES as table 
+	(
+		[DocCollectCode] [nvarchar](50),
+		[ChargeAmt] [float],
+		[ChargeCcy] [nvarchar](5),
+		[Chargecode] [nvarchar](50),
+		[Rowchages] [nvarchar](3),
+		[ViewType] [int],
+		[ChargeRemarks] [nvarchar](500) ,
+		[VATNo] [nvarchar](20) ,
+		[ChargeAcct] [nvarchar](20) 
+	)
+	insert into @Table_BDOCUMETARYCOLLECTIONCHARGES
+	select
+		[DocCollectCode] ,
+		[ChargeAmt] ,
+		[ChargeCcy] ,
+		[Chargecode],
+		[Rowchages] ,
+		[ViewType]	,
+		[ChargeRemarks]	,
+		[VATNo],
+		[ChargeAcct]
+	from dbo.BDOCUMETARYCOLLECTIONCHARGES
+	where DocCollectCode = @code and [ViewType] = @ViewType
+	--------------------------------------------
+	declare @TongSoTienThanhToan float
+	set @TongSoTienThanhToan = (select  sum(ChargeAmt) from @Table_BDOCUMETARYCOLLECTIONCHARGES)
+	-------------------------------------------
+			
+	declare @VAT float
+	set @VAT = (@TongSoTienThanhToan * 0.1)
+	set @TongSoTienThanhToan = @TongSoTienThanhToan + @VAT
+	
+	declare @Cot9_1 float	
+	declare @Cot9_2 float
+	declare @Cot9_3 float
+	
+	declare @Cot9_1_ChargeCcy varchar(10)	
+	declare @Cot9_2_ChargeCcy varchar(10)	
+	declare @Cot9_3_ChargeCcy varchar(10)
+		
+	declare @Cot9_1Name nvarchar(500)	
+	declare @Cot9_2Name nvarchar(500)	
+	declare @Cot9_3Name nvarchar(500)	
+	
+	select 
+		@Cot9_1 = ChargeAmt,
+		@Cot9_1_ChargeCcy = ChargeCcy,
+		@Cot9_1Name = Chargecode
+	 from @Table_BDOCUMETARYCOLLECTIONCHARGES
+	 where Rowchages = 1
+	
+	if isnull(@Cot9_1Name, '') != ''
+	begin
+		set @Cot9_1Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_1Name)
+	end 	
+	------------
+	select 
+		@Cot9_2 = ChargeAmt,
+		@Cot9_2_ChargeCcy = ChargeCcy,
+		@Cot9_2Name = Chargecode
+	 from @Table_BDOCUMETARYCOLLECTIONCHARGES
+	 where Rowchages = 2
+	
+	if isnull(@Cot9_2Name, '') != ''
+	begin
+		set @Cot9_2Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_2Name)
+	end
+	------------
+	select 
+		@Cot9_3 = ChargeAmt,
+		@Cot9_3_ChargeCcy = ChargeCcy,
+		@Cot9_3Name = Chargecode
+	 from @Table_BDOCUMETARYCOLLECTIONCHARGES
+	 where Rowchages = 3	 
+	
+	if isnull(@Cot9_3Name, '') != ''
+	begin
+		set @Cot9_3Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_3Name)
+	end
+			 
+	--------------------------------------------
+	select @CurrentDate as CurrentDate
+	select
+		doc.DocCollectCode,
+		(select top 1 VATNo from @Table_BDOCUMETARYCOLLECTIONCHARGES) as VATNo,
+		(select top 1 ChargeAcct from @Table_BDOCUMETARYCOLLECTIONCHARGES) as  ChargeAcct,
+		@UserNameLogin as UserNameLogin,
+		(select top 1 ChargeRemarks from @Table_BDOCUMETARYCOLLECTIONCHARGES) as ChargeRemarks,
+		doc.DraweeCusName as CustomerName,
+		doc.DraweeAddr1 + ', ' +doc.DraweeAddr2 + ', ' + doc.DraweeAddr3 as CustomerAddress,
+		(select IdentityNo from @TabCus) as IdentityNo,		
+		doc.DraweeCusNo as CustomerID,		
+		case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 
+		 then CONVERT(varchar, CEILING(@VAT)) + ' ' + @Cot9_1_ChargeCcy + ' PL90304'
+		 else CONVERT(varchar, CONVERT(money, @VAT), 1) + ' ' + @Cot9_1_ChargeCcy + ' PL90304' end as VAT,
+		--(select dbo.fuDocSoThanhChu(@TongSoTienThanhToan)) + ' ' + (select Vietnamese from dbo.BCURRENCY where Code = @Cot9_1_ChargeCcy) as SoTienBangChu,
+		case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 
+			then (select dbo.f_CurrencyToText(CONVERT(INT, CEILING(@TongSoTienThanhToan)), @Cot9_1_ChargeCcy))
+			else (select dbo.f_CurrencyToText(cast(@TongSoTienThanhToan as decimal(18,2)), @Cot9_1_ChargeCcy)) end as SoTienBangChu,
+		
+		case when isnull(@Cot9_1, 0) > 0 
+			then (case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND'
+					then CONVERT(varchar, CEILING(@Cot9_1)) + ' ' + @Cot9_1_ChargeCcy + ' PL737869'
+					else CONVERT(varchar, CONVERT(money, @Cot9_1), 1) + ' ' + @Cot9_1_ChargeCcy + ' PL737869' end			
+				) 
+			else '' end as Cot9_1,
+
+		case when isnull(@Cot9_2, 0) > 0 
+			then (case when @Cot9_2_ChargeCcy = 'JPY' OR @Cot9_2_ChargeCcy = 'VND'
+					then CONVERT(varchar, CEILING(@Cot9_2)) + ' ' + @Cot9_2_ChargeCcy + ' PL837870' 
+					else CONVERT(varchar, CONVERT(money, @Cot9_2), 1) + ' ' + @Cot9_2_ChargeCcy + ' PL837870' end
+				)
+			else '' end as Cot9_2,
+
+		case when isnull(@Cot9_3, 0) > 0 
+			then (case when @Cot9_3_ChargeCcy = 'JPY' OR @Cot9_3_ChargeCcy = 'VND'
+					then CONVERT(varchar, CEILING(@Cot9_3)) + ' ' + @Cot9_3_ChargeCcy + 'P L837124' 
+					else CONVERT(varchar, CONVERT(money, @Cot9_3), 1) + ' ' + @Cot9_3_ChargeCcy + 'P L837124' end 
+				)
+			else '' end as Cot9_3,
+		
+		case when isnull(@Cot9_1, 0) > 0 then @Cot9_1Name else '' end as Cot9_1Name,
+		case when isnull(@Cot9_2, 0) > 0 then @Cot9_2Name else '' end as Cot9_2Name,
+		case when isnull(@Cot9_3, 0) > 0 then @Cot9_3Name else '' end as Cot9_3Name,
+		
+		case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND'
+			then CONVERT(varchar, CEILING( @TongSoTienThanhToan)) + ' ' + @Cot9_1_ChargeCcy 
+			else CONVERT(varchar, CONVERT(money, @TongSoTienThanhToan), 1) + ' ' + @Cot9_1_ChargeCcy  end as TongSoTienThanhToan
+		
+	from dbo.BDOCUMETARYCOLLECTION doc
+	where doc.DocCollectCode = @Code and ISNULL(doc.ActiveRecordFlag,'Yes') = 'Yes'
+END
+
+GO
+/***
+---------------------------------------------------------------------------------
+-- 14 Jan 2017 : Nghia : VAT Update
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_DOCUMENTARYCOLLECTIONCANCEL_VAT_REPORT')
+BEGIN
+DROP PROCEDURE [dbo].[B_DOCUMENTARYCOLLECTIONCANCEL_VAT_REPORT]
+END
+GO
+CREATE PROCEDURE [dbo].[B_DOCUMENTARYCOLLECTIONCANCEL_VAT_REPORT]
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500),
+	@ViewType int
+AS
+BEGIN
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	
+	declare @TabCus  as table
+	(
+		CustomerName nvarchar(500),
+		IdentityNo nvarchar(20),
+		[Address] nvarchar(500),
+		City nvarchar(500),
+		Country nvarchar(500)
+	)
+	insert into @TabCus
+	select CustomerName,IdentityNo, [Address],City, Country from BCUSTOMERS
+	where CustomerID = (select DraweeCusNo from BDOCUMETARYCOLLECTION where DocCollectCode = @Code)
+	--------------------------------------------
+	declare @TongSoTienThanhToan float
+	set @TongSoTienThanhToan = (select  sum(ChargeAmt)
+		from dbo.BDOCUMETARYCOLLECTIONCHARGES 
+		where DocCollectCode = @code and [ViewType] = @ViewType)
+	
+			
+	declare @VAT float
+	set @VAT = (@TongSoTienThanhToan * 0.1)
+	set @TongSoTienThanhToan = @TongSoTienThanhToan + @VAT
+	
+	-----------------------------------------------------------------------
+	declare @Table_CHARGE as table 
+	(
+		DocCollectCode [nvarchar](50),
+		[ChargeAmt] [float],
+		[ChargeCcy] [nvarchar](5),
+		[Chargecode] [nvarchar](50),
+		[Rowchages] [nvarchar](3),
+		[ViewType] [int],
+		[ChargeRemarks] [nvarchar](500) ,
+		[VATNo] [nvarchar](20) ,
+		[ChargeAcct] [nvarchar](20) 
+	)
+	insert into @Table_CHARGE
+	select
+		DocCollectCode ,
+		[ChargeAmt] ,
+		[ChargeCcy] ,
+		[Chargecode],
+		[Rowchages] ,
+		[ViewType]	,
+		[ChargeRemarks]	,
+		[VATNo],
+		[ChargeAcct]
+	from dbo.BDOCUMETARYCOLLECTIONCHARGES
+	where DocCollectCode = @code and [ViewType] = @ViewType
+	------------------------------------------------------
+	
+	declare @Cot9_1 float	
+	declare @Cot9_2 float
+	declare @Cot9_3 float
+	
+	declare @Cot9_1_ChargeCcy varchar(10)	
+	declare @Cot9_2_ChargeCcy varchar(10)	
+	declare @Cot9_3_ChargeCcy varchar(10)
+		
+	declare @Cot9_1Name nvarchar(500)	
+	declare @Cot9_2Name nvarchar(500)	
+	declare @Cot9_3Name nvarchar(500)	
+	
+	select 
+		@Cot9_1 = ChargeAmt,
+		@Cot9_1_ChargeCcy = ChargeCcy,
+		@Cot9_1Name = Chargecode
+	 from @Table_CHARGE
+	 where Rowchages = 1
+	
+	if isnull(@Cot9_1Name, '') != ''
+	begin
+		set @Cot9_1Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_1Name)
+	end 	
+	------------
+	select 
+		@Cot9_2 = ChargeAmt,
+		@Cot9_2_ChargeCcy = ChargeCcy,
+		@Cot9_2Name = Chargecode
+	 from @Table_CHARGE
+	 where Rowchages = 2
+	
+	if isnull(@Cot9_2Name, '') != ''
+	begin
+		set @Cot9_2Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_2Name)
+	end
+	------------
+	select 
+		@Cot9_3 = ChargeAmt,
+		@Cot9_3_ChargeCcy = ChargeCcy,
+		@Cot9_3Name = Chargecode
+	 from @Table_CHARGE
+	 where Rowchages = 3	 
+	
+	if isnull(@Cot9_3Name, '') != ''
+	begin
+		set @Cot9_3Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_3Name)
+	end  
+	--------------------------------------------
+	select @CurrentDate as CurrentDate
+	select
+		doc.DocCollectCode,
+		(select top 1 VATNo from @Table_CHARGE) as VATNo,
+		(select top 1 ChargeAcct from @Table_CHARGE) as  ChargeAcct,
+		(select top 1 ChargeRemarks from @Table_CHARGE) as ChargeRemarks,
+		@UserNameLogin as UserNameLogin,
+		doc.DraweeCusName as CustomerName,
+		doc.DraweeAddr1 + ', ' +doc.DraweeAddr2 + ', ' + doc.DraweeAddr3 as CustomerAddress,
+		(select IdentityNo from @TabCus) as IdentityNo,		
+		doc.DraweeCusNo as CustomerID,				
+		--(select dbo.fuDocSoThanhChu(@TongSoTienThanhToan)) + ' ' + (select Vietnamese from dbo.BCURRENCY where Code = @Cot9_1_ChargeCcy) as SoTienBangChu,
+		case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 
+			then (select dbo.f_CurrencyToText(CONVERT(INT, CEILING(@TongSoTienThanhToan)), @Cot9_1_ChargeCcy))
+			else (select dbo.f_CurrencyToText(cast(@TongSoTienThanhToan as decimal(18,2)), @Cot9_1_ChargeCcy)) end as SoTienBangChu,
+		case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 
+			then CONVERT(varchar, CEILING(@TongSoTienThanhToan)) + ' ' + @Cot9_1_ChargeCcy
+			else CONVERT(varchar, CONVERT(money, cast(@TongSoTienThanhToan as decimal(18,2))), 1) + ' ' + @Cot9_1_ChargeCcy end as TongSoTienThanhToan,
+		
+		case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 
+			then CONVERT(varchar, CEILING(@VAT)) + ' ' + @Cot9_1_ChargeCcy + ' PL90304'
+			else CONVERT(varchar, CONVERT(money, cast(@VAT as decimal(18,2))), 1) + ' ' + @Cot9_1_ChargeCcy + ' PL90304' end as VAT,	
+		
+		case when isnull(@Cot9_1, 0) > 0 
+			then (case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 
+					then CONVERT(varchar, CEILING( @Cot9_1)) + ' ' + @Cot9_1_ChargeCcy + ' PL737869'
+					else CONVERT(varchar, CONVERT(money, @Cot9_1), 1) + ' ' + @Cot9_1_ChargeCcy + ' PL737869' end				 
+				)
+			else '' end as Cot9_1,
+
+		case when isnull(@Cot9_2, 0) > 0 
+			then (
+				case when @Cot9_2_ChargeCcy = 'JPY' OR @Cot9_2_ChargeCcy = 'VND' 
+					then CONVERT(varchar, CEILING(@Cot9_2)) + ' ' + @Cot9_2_ChargeCcy + ' PL837870' 
+					else CONVERT(varchar, CONVERT(money, @Cot9_2), 1) + ' ' + @Cot9_2_ChargeCcy + ' PL837870' end
+				)
+			else '' end as Cot9_2,
+
+		case when isnull(@Cot9_3, 0) > 0 
+			then ( case when @Cot9_3_ChargeCcy = 'JPY' OR @Cot9_3_ChargeCcy = 'VND'
+						then CONVERT(varchar, CEILING(@Cot9_3)) + ' ' + @Cot9_3_ChargeCcy + ' PL837304' 
+						else CONVERT(varchar, CONVERT(money, @Cot9_3), 1) + ' ' + @Cot9_3_ChargeCcy + ' PL837304'  end				
+				)
+			else '' end as Cot9_3,
+		
+		case when isnull(@Cot9_1, 0) > 0 then @Cot9_1Name else '' end as Cot9_1Name,
+		case when isnull(@Cot9_2, 0) > 0 then @Cot9_2Name else '' end as Cot9_2Name,
+		case when isnull(@Cot9_3, 0) > 0 then @Cot9_3Name else '' end as Cot9_3Name			
+		
+	from dbo.BDOCUMETARYCOLLECTION doc
+	where doc.DocCollectCode = @Code
+END
+
+GO
+/***
+---------------------------------------------------------------------------------
+-- 14 Jan 2017 : Nghia : VAT Update
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_INCOMINGCOLLECTIONAMENDMENT_VAT_Report')
+BEGIN
+DROP PROCEDURE [dbo].[B_INCOMINGCOLLECTIONAMENDMENT_VAT_Report]
+END
+GO
+CREATE PROCEDURE [dbo].[B_INCOMINGCOLLECTIONAMENDMENT_VAT_Report]
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500),
+	@ViewType int
+AS
+BEGIN
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	
+	declare @TabCus  as table
+	(
+		CustomerName nvarchar(500),
+		IdentityNo nvarchar(20),
+		[Address] nvarchar(500),
+		City nvarchar(500),
+		Country nvarchar(500)
+	)
+	insert into @TabCus
+	select CustomerName,IdentityNo, [Address],City, Country from BCUSTOMERS
+	where CustomerID = (select DraweeCusNo from BDOCUMETARYCOLLECTION where AmendNo = @Code)
+	--------------------------------------------
+	declare @Table_BDOCUMETARYCOLLECTIONCHARGES as table 
+	(
+		[DocCollectCode] [nvarchar](50),
+		[ChargeAmt] [float],
+		[ChargeCcy] [nvarchar](5),
+		[Chargecode] [nvarchar](50),
+		[Rowchages] [nvarchar](3),
+		[ViewType] [int],
+		[ChargeRemarks] [nvarchar](500) ,
+		[VATNo] [nvarchar](20) ,
+		[ChargeAcct] [nvarchar](20) 
+	)
+	insert into @Table_BDOCUMETARYCOLLECTIONCHARGES
+	select
+		[DocCollectCode] ,
+		[ChargeAmt] ,
+		[ChargeCcy] ,
+		[Chargecode],
+		[Rowchages] ,
+		[ViewType]	,
+		[ChargeRemarks]	,
+		[VATNo],
+		[ChargeAcct]
+	from dbo.BDOCUMETARYCOLLECTIONCHARGES
+	where DocCollectCode = @code and [ViewType] = @ViewType
+	----------------------------------------------
+	declare @TongSoTienThanhToan float
+	set @TongSoTienThanhToan = (select  sum(ChargeAmt) from @Table_BDOCUMETARYCOLLECTIONCHARGES)
+	
+			
+	declare @VAT float
+	set @VAT = (@TongSoTienThanhToan * 0.1)
+	set @TongSoTienThanhToan = @TongSoTienThanhToan + @VAT
+	
+	declare @Cot9_1 float	
+	declare @Cot9_2 float
+	--declare @Cot9_3 float
+	
+	declare @Cot9_1_ChargeCcy varchar(10)	
+	declare @Cot9_2_ChargeCcy varchar(10)	
+	--declare @Cot9_3_ChargeCcy varchar(10)
+		
+	declare @Cot9_1Name nvarchar(500)	
+	declare @Cot9_2Name nvarchar(500)	
+	--declare @Cot9_3Name nvarchar(500)	
+	
+	select 
+		@Cot9_1 = ChargeAmt,
+		@Cot9_1_ChargeCcy = ChargeCcy,
+		@Cot9_1Name = Chargecode
+	 from @Table_BDOCUMETARYCOLLECTIONCHARGES
+	 where Rowchages = 1
+	
+	if isnull(@Cot9_1Name, '') != ''
+	begin
+		set @Cot9_1Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_1Name)
+	end 	
+	------------
+	select 
+		@Cot9_2 = ChargeAmt,
+		@Cot9_2_ChargeCcy = ChargeCcy,
+		@Cot9_2Name = Chargecode
+	 from @Table_BDOCUMETARYCOLLECTIONCHARGES
+	 where Rowchages = 2
+	
+	if isnull(@Cot9_2Name, '') != ''
+	begin
+		set @Cot9_2Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_2Name)
+	end
+	------------
+	--select 
+	--	@Cot9_3 = ChargeAmt,
+	--	@Cot9_3_ChargeCcy = ChargeCcy,
+	--	@Cot9_3Name = Chargecode
+	-- from @Table_BDOCUMETARYCOLLECTIONCHARGES
+	-- where Rowchages = 3	 
+	
+	--if isnull(@Cot9_3Name, '') != ''
+	--begin
+	--	set @Cot9_3Name = (select Name_VN from dbo.BCHARGECODE where Code = @Cot9_3Name)
+	--end 
+	
+	--------------------------------------------
+	select @CurrentDate as CurrentDate
+	select
+		doc.DocCollectCode,
+		(select top 1 VATNo from @Table_BDOCUMETARYCOLLECTIONCHARGES) as VATNo,
+		(select top 1 ChargeAcct from @Table_BDOCUMETARYCOLLECTIONCHARGES) as  ChargeAcct,
+		@UserNameLogin as UserNameLogin,
+		(select top 1 ChargeRemarks from @Table_BDOCUMETARYCOLLECTIONCHARGES) as ChargeRemarks,
+		doc.DraweeCusName as CustomerName,
+		doc.DraweeAddr1 + ', ' +doc.DraweeAddr2 + ', ' + doc.DraweeAddr3 as CustomerAddress,
+		(select IdentityNo from @TabCus) as IdentityNo,		
+		doc.DraweeCusNo as CustomerID,	
+		case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 	
+		 then CONVERT(varchar, CEILING(@VAT)) + ' ' + @Cot9_1_ChargeCcy + ' PL837553'
+		 else CONVERT(varchar, CONVERT(money, @VAT), 1) + ' ' + @Cot9_1_ChargeCcy + ' PL837553' end as VAT,		
+		--(select dbo.fuDocSoThanhChu(@TongSoTienThanhToan)) + ' ' + (select Vietnamese from dbo.BCURRENCY where Code = @Cot9_1_ChargeCcy) as SoTienBangChu,
+		
+		case when isnull(@Cot9_1, 0) > 0 
+		then (
+				case when  @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND'
+					then CONVERT(varchar, CEILING(@Cot9_1)) + ' ' + @Cot9_1_ChargeCcy + ' PL737869' 
+					else CONVERT(varchar, CONVERT(money, @Cot9_1), 1) + ' ' + @Cot9_1_ChargeCcy + ' PL737869' end 
+			)
+		else '' end as Cot9_1,
+
+		case when isnull(@Cot9_2, 0) > 0 
+		then ( Case when  @Cot9_2_ChargeCcy = 'JPY' OR @Cot9_2_ChargeCcy = 'VND' 	
+			     then CONVERT(varchar, CEILING(@Cot9_2)) + ' ' + @Cot9_2_ChargeCcy + ' PL837870'
+				 else CONVERT(varchar, CONVERT(money, @Cot9_2), 1) + ' ' + @Cot9_2_ChargeCcy + ' PL837870' end 
+			 )
+		else '' end as Cot9_2,
+		--case when isnull(@Cot9_3, 0) > 0 then CONVERT(varchar, CONVERT(money, @Cot9_3), 1) + ' ' + @Cot9_3_ChargeCcy + 'P L837124' else '' end as Cot9_3,
+		
+		case when isnull(@Cot9_1, 0) > 0 then @Cot9_1Name else '' end as Cot9_1Name,
+		case when isnull(@Cot9_2, 0) > 0 then @Cot9_2Name else '' end as Cot9_2Name,
+		--case when isnull(@Cot9_3, 0) > 0 then @Cot9_3Name else '' end as Cot9_3Name,
+		Case when  @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 	
+		then CONVERT(varchar, CEILING(@TongSoTienThanhToan)) + ' ' + @Cot9_1_ChargeCcy 
+		else CONVERT(varchar, CONVERT(money, @TongSoTienThanhToan), 1) + ' ' + @Cot9_1_ChargeCcy  end as TongSoTienThanhToan,
+		 
+		case when @Cot9_1_ChargeCcy = 'JPY' OR @Cot9_1_ChargeCcy = 'VND' 
+			then (select dbo.f_CurrencyToText(CONVERT(INT, CEILING(@TongSoTienThanhToan)), @Cot9_1_ChargeCcy))
+			else (select dbo.f_CurrencyToText(cast(@TongSoTienThanhToan as decimal(18,2)), @Cot9_1_ChargeCcy)) end as SoTienBangChu
+		
+	from dbo.BDOCUMETARYCOLLECTION doc
+	--inner join dbo.BDOCUMETARYCOLLECTIONCHARGES cha on cha.DocCollectCode = doc.DocCollectCode
+	where doc.AmendNo = @Code --and cha.Rowchages = 1 and cha.ViewType = @ViewType
+END
+GO
+
 
 /***
 ---------------------------------------------------------------------------------
