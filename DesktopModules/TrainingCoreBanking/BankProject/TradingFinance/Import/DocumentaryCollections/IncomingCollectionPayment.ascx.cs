@@ -2253,9 +2253,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             txtDetailOfCharges1.Enabled = flag;
             txtDetailOfCharges2.Enabled = flag;
             txtDetailOfCharges3.Enabled = flag;
-            txtSenderToReceiverInformation1_400_1.Enabled = flag;
-            txtSenderToReceiverInformation1_400_2.Enabled = flag;
-            txtSenderToReceiverInformation1_400_3.Enabled = flag;
+            //txtSenderToReceiverInformation1_400_1.Enabled = flag;
+            //txtSenderToReceiverInformation1_400_2.Enabled = flag;
+            //txtSenderToReceiverInformation1_400_3.Enabled = flag;
         }
 
         protected void comboSenderCorrespondentType_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
