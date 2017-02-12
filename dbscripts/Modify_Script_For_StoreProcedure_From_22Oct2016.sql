@@ -546,14 +546,14 @@ BEGIN
 			--begin
 			--	select *, ID as DepositCode from dbo.BCRFROMACCOUNT where id = @Code  and Currency = @Currency
 			--end
-			if NOT EXISTS (select DepositCode from dbo.BACCOUNTS where Depositcode = @Code  and Currentcy = @Currency)
+			if NOT EXISTS (select id from dbo.BDRFROMACCOUNT where id = @Code  and Currency = @Currency)
 			begin
 				select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
 			end
 			else
 			begin
-				select * from dbo.BACCOUNTS
-				where Depositcode = @Code  and Currentcy = @Currency
+				select *,ID as DepositCode from dbo.BDRFROMACCOUNT
+				where id = @Code  and Currency = @Currency
 			end
 		end	
 	end
@@ -582,14 +582,14 @@ BEGIN
 			--	select *, ID as DepositCode from dbo.BCRFROMACCOUNT
 			--	where CustomerID = @Code and Currency = @Currency
 			--end
-			if NOT EXISTS (select * from dbo.BACCOUNTS where CustomerID = @Code and Currentcy = @Currency)
+			if NOT EXISTS (select * from dbo.BDRFROMACCOUNT where CustomerID = @Code and Currency = @Currency)
 			begin
 				select *,  Account as DepositCode from dbo.BINTERNALBANKACCOUNT where Currency = @Currency
 			end 
 			else
 			begin
-				select * from dbo.BACCOUNTS
-				where CustomerID = @Code and Currentcy = @Currency
+				select *, ID as DepositCode from dbo.BDRFROMACCOUNT
+				where CustomerID = @Code and Currency = @Currency
 			end
 		end
 		
