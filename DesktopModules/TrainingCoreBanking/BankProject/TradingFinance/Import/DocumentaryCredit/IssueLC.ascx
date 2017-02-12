@@ -2058,7 +2058,7 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 </tr>
 
                 <tr>
-                    <td class="MyLable">72 Sender to receiver information</td>
+                    <td class="MyLable">72. Sender to receiver information</td>
                     <td class="MyContent">
                         <telerik:RadTextBox ID="txtSenderToReceiverInformation740_1" runat="server" Width="355" />
                     </td>
