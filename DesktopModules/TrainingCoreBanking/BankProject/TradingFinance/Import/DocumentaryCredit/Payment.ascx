@@ -198,7 +198,7 @@
                 </tr>
             </table>
         </fieldset>
-        <fieldset>
+        <fieldset style="display:none">
             <legend>
                 <span style="font-weight: bold; text-transform: uppercase;">Utilisation Details</span>
             </legend>
