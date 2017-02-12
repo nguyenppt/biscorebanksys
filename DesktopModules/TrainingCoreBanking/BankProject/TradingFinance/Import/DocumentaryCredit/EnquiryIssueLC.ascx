@@ -56,7 +56,7 @@
         <MasterTableView DataKeyNames="Id">
             <Columns>
                 <telerik:GridBoundColumn HeaderText="LC Code" DataField="NormalLCCode"  />
-                <telerik:GridBoundColumn HeaderText="Collection Type" DataField="LCType" />
+                <telerik:GridBoundColumn HeaderText="LC Type" DataField="LCType" />
                 <telerik:GridBoundColumn HeaderText="CCY" DataField="Currency" >
                     <ItemStyle Width="100" />
                 </telerik:GridBoundColumn>
