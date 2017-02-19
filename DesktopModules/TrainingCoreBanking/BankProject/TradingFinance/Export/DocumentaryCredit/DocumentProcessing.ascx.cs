@@ -1129,10 +1129,19 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             }
                         }
                         //
-                        var lstData2 = new List<Model.Reports.VAT>();
-                        lstData2.Add(dataVAT);
-                        tbl1 = Utils.CreateDataTable<Model.Reports.VAT>(lstData2);
-                        reportData.Tables.Add(tbl1);
+                        if (!String.IsNullOrEmpty(dataVAT.TotalChargeAmount))
+                        {
+                            var lstData2 = new List<Model.Reports.VAT>();
+                            lstData2.Add(dataVAT);
+                            tbl1 = Utils.CreateDataTable<Model.Reports.VAT>(lstData2);
+                            reportData.Tables.Add(tbl1);
+                        }
+                        else
+                        {
+                            string radalertscript =
+                   "<script language='javascript'>function f(){radalert('There is no required VAT!', 420, 150, 'Warning'); Sys.Application.remove_load(f);}; Sys.Application.add_load(f);</script>";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "radalert", radalertscript);
+                        }
                         break;
 
                     case "XuatNgoaiBang":
@@ -1178,7 +1187,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         reportData.Tables.Add(tbl1);
                         break;
                 }
-                if (reportData != null)
+                if (reportData != null && reportData.Tables.Count > 0)
                 {
                     try
                     {
