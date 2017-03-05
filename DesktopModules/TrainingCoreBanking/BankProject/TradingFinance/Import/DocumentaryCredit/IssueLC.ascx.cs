@@ -14,6 +14,8 @@ using System.Globalization;
 using System.Text;
 using BankProject.Controls;
 using Aspose.Words;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace BankProject.TradingFinance.Import.DocumentaryCredit
 {
@@ -1810,59 +1812,59 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 if (dsDoc.Tables[1].Rows.Count > 0)
                 {
                     var drow = dsDoc.Tables[1].Rows[0];
-                    ReceivingBank_700 = drow["ReceivingBank"].ToString();
+                    ReceivingBank_700 = StripHTML(drow["ReceivingBank"].ToString());
 
-                    txtRevivingBank700.Text = drow["ReceivingBank"].ToString();
-                    tbBaquenceOfTotal.Text = drow["SequenceOfTotal"].ToString();
-                    comboFormOfDocumentaryCredit.SelectedValue = drow["FormDocumentaryCredit"].ToString();
-                    lblDocumentaryCreditNumber.Text = drow["DocumentaryCreditNumber"].ToString();
-                    txtPlaceOfExpiry700.Text = drow["PlaceOfExpiry"].ToString();
-                    comboAvailableRule.SelectedValue = drow["ApplicationRule"].ToString();
+                    txtRevivingBank700.Text = StripHTML(drow["ReceivingBank"].ToString());
+                    tbBaquenceOfTotal.Text = StripHTML(drow["SequenceOfTotal"].ToString());
+                    comboFormOfDocumentaryCredit.SelectedValue = StripHTML(drow["FormDocumentaryCredit"].ToString());
+                    lblDocumentaryCreditNumber.Text = StripHTML(drow["DocumentaryCreditNumber"].ToString());
+                    txtPlaceOfExpiry700.Text = StripHTML(drow["PlaceOfExpiry"].ToString());
+                    comboAvailableRule.SelectedValue = StripHTML(drow["ApplicationRule"].ToString());
 
-                    rcbApplicantBankType700.SelectedValue = drow["ApplicantType"].ToString();
-                    tbApplicantNo700.Text = drow["ApplicantNo"].ToString();
-                    tbApplicantName700.Text = drow["ApplicantName"].ToString();
-                    tbApplicantAddr700_1.Text = drow["ApplicantAddr1"].ToString();
-                    tbApplicantAddr700_2.Text = drow["ApplicantAddr2"].ToString();
-                    tbApplicantAddr700_3.Text = drow["ApplicantAddr3"].ToString();
+                    rcbApplicantBankType700.SelectedValue = StripHTML(drow["ApplicantType"].ToString());
+                    tbApplicantNo700.Text = StripHTML(drow["ApplicantNo"].ToString());
+                    tbApplicantName700.Text = StripHTML(drow["ApplicantName"].ToString());
+                    tbApplicantAddr700_1.Text = StripHTML(drow["ApplicantAddr1"].ToString());
+                    tbApplicantAddr700_2.Text = StripHTML(drow["ApplicantAddr2"].ToString());
+                    tbApplicantAddr700_3.Text = StripHTML(drow["ApplicantAddr3"].ToString());
 
-                    comboBeneficiaryType700.SelectedValue = drow["BeneficiaryType"].ToString();
-                    txtBeneficiaryNo700.Text = drow["BeneficiaryNo"].ToString();
-                    txtBeneficiaryName700.Text = drow["BeneficiaryName"].ToString();
-                    txtBeneficiaryAddr700_1.Text = drow["BeneficiaryAddr1"].ToString();
-                    txtBeneficiaryAddr700_2.Text = drow["BeneficiaryAddr2"].ToString();
-                    txtBeneficiaryAddr700_3.Text = drow["BeneficiaryAddr3"].ToString();
+                    comboBeneficiaryType700.SelectedValue = StripHTML(drow["BeneficiaryType"].ToString());
+                    txtBeneficiaryNo700.Text = StripHTML(drow["BeneficiaryNo"].ToString());
+                    txtBeneficiaryName700.Text = StripHTML(drow["BeneficiaryName"].ToString());
+                    txtBeneficiaryAddr700_1.Text = StripHTML(drow["BeneficiaryAddr1"].ToString());
+                    txtBeneficiaryAddr700_2.Text = StripHTML(drow["BeneficiaryAddr2"].ToString());
+                    txtBeneficiaryAddr700_3.Text = StripHTML(drow["BeneficiaryAddr3"].ToString());
 
-                    comboCurrency700.SelectedValue = drow["Currency"].ToString();
+                    comboCurrency700.SelectedValue = StripHTML(drow["Currency"].ToString());
                     numAmount700.Value = (double?)drow["Amount"];
                     numPercentCreditAmount1.Value = (double?)drow["PercentageCredit"];
                     numPercentCreditAmount2.Value = (double?)drow["AmountTolerance"];
-                    comboMaximumCreditAmount700.SelectedValue = drow["MaximumCreditAmount"].ToString();
+                    comboMaximumCreditAmount700.SelectedValue = StripHTML(drow["MaximumCreditAmount"].ToString());
 
-                    rcbAvailableWithType.SelectedValue = drow["AvailableWithType"].ToString();
-                    txtAvailableWithNo.Text = drow["AvailableWithNo"].ToString();
-                    tbAvailableWithName.Text = drow["AvailableWithName"].ToString();
-                    tbAvailableWithAddr1.Text = drow["AvailableWithAddr1"].ToString();
-                    tbAvailableWithAddr2.Text = drow["AvailableWithAddr2"].ToString();
-                    tbAvailableWithAddr3.Text = drow["AvailableWithAddr3"].ToString();
+                    rcbAvailableWithType.SelectedValue = StripHTML(drow["AvailableWithType"].ToString());
+                    txtAvailableWithNo.Text = StripHTML(drow["AvailableWithNo"].ToString());
+                    tbAvailableWithName.Text = StripHTML(drow["AvailableWithName"].ToString());
+                    tbAvailableWithAddr1.Text = StripHTML(drow["AvailableWithAddr1"].ToString());
+                    tbAvailableWithAddr2.Text = StripHTML(drow["AvailableWithAddr2"].ToString());
+                    tbAvailableWithAddr3.Text = StripHTML(drow["AvailableWithAddr3"].ToString());
 
-                    comboAvailableWithBy.SelectedValue = drow["Available_By"].ToString();
+                    comboAvailableWithBy.SelectedValue = StripHTML(drow["Available_By"].ToString());
 
-                    rcbPatialShipment.SelectedValue = drow["PatialShipment"].ToString();
-                    rcbTranshipment.SelectedValue = drow["Transhipment"].ToString();
-                    tbPlaceoftakingincharge.Text = drow["PlaceOfTakingInCharge"].ToString();
-                    tbPortofloading.Text = drow["PortOfLoading"].ToString();
-                    tbPortofDischarge.Text = drow["PortOfDischarge"].ToString();
-                    tbPlaceoffinalindistination.Text = drow["PlaceOfFinalInDistination"].ToString();
+                    rcbPatialShipment.SelectedValue = StripHTML(drow["PatialShipment"].ToString());
+                    rcbTranshipment.SelectedValue = StripHTML(drow["Transhipment"].ToString());
+                    tbPlaceoftakingincharge.Text = StripHTML(drow["PlaceOfTakingInCharge"].ToString());
+                    tbPortofloading.Text = StripHTML(drow["PortOfLoading"].ToString());
+                    tbPortofDischarge.Text = StripHTML(drow["PortOfDischarge"].ToString());
+                    tbPlaceoffinalindistination.Text = StripHTML(drow["PlaceOfFinalInDistination"].ToString());
 
-                    txtEdittor_DescrpofGoods.Content = drow["DescrpGoodsBervices"].ToString();
-                    txtEdittor_OrderDocs700.Content = drow["DocsRequired"].ToString();
-                    txtEdittor_AdditionalConditions700.Content = drow["AdditionalConditions"].ToString();
-                    txtEdittor_Charges700.Content = drow["Charges"].ToString();
-                    txtEdittor_PeriodforPresentation700.Content = drow["PeriodForPresentation"].ToString();
-                    rcbConfimationInstructions.SelectedValue = drow["ConfimationInstructions"].ToString();
-                    txtEdittor_NegotgBank700.Content = drow["InstrToPaygAccptgNegotgBank"].ToString();
-                    txtEdittor_SendertoReceiverInfomation700.Content = drow["SenderReceiverInfomation"].ToString();
+                    txtEdittor_DescrpofGoods.Content = StripHTML(drow["DescrpGoodsBervices"].ToString());
+                    txtEdittor_OrderDocs700.Content = StripHTML(drow["DocsRequired"].ToString());
+                    txtEdittor_AdditionalConditions700.Content = StripHTML(drow["AdditionalConditions"].ToString());
+                    txtEdittor_Charges700.Content = StripHTML(drow["Charges"].ToString());
+                    txtEdittor_PeriodforPresentation700.Content = StripHTML(drow["PeriodForPresentation"].ToString());
+                    rcbConfimationInstructions.SelectedValue = StripHTML(drow["ConfimationInstructions"].ToString());
+                    txtEdittor_NegotgBank700.Content = StripHTML(drow["InstrToPaygAccptgNegotgBank"].ToString());
+                    txtEdittor_SendertoReceiverInfomation700.Content = StripHTML(drow["SenderReceiverInfomation"].ToString());
 
                     if (!string.IsNullOrEmpty(drow["LatesDateOfShipment"].ToString()) && drow["LatesDateOfShipment"].ToString().IndexOf("1/1/1900") == -1)
                     {
@@ -1877,48 +1879,48 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                         dteDateOfIssue.SelectedDate = DateTime.Parse(drow["DateOfIssue"].ToString());
                     }
 
-                    comboAdviseThroughBankType700.SelectedValue = drow["AdviseThroughBankType"].ToString();
-                    txtAdviseThroughBankNo700.Text = drow["AdviseThroughBankNo"].ToString();
-                    txtAdviseThroughBankName700.Text = drow["AdviseThroughBankName"].ToString();
-                    txtAdviseThroughBankAddr700_1.Text = drow["AdviseThroughBankAddr1"].ToString();
-                    txtAdviseThroughBankAddr700_2.Text = drow["AdviseThroughBankAddr2"].ToString();
-                    txtAdviseThroughBankAddr700_3.Text = drow["AdviseThroughBankAddr3"].ToString();
+                    comboAdviseThroughBankType700.SelectedValue = StripHTML(drow["AdviseThroughBankType"].ToString());
+                    txtAdviseThroughBankNo700.Text = StripHTML(drow["AdviseThroughBankNo"].ToString());
+                    txtAdviseThroughBankName700.Text = StripHTML(drow["AdviseThroughBankName"].ToString());
+                    txtAdviseThroughBankAddr700_1.Text = StripHTML(drow["AdviseThroughBankAddr1"].ToString());
+                    txtAdviseThroughBankAddr700_2.Text = StripHTML(drow["AdviseThroughBankAddr2"].ToString());
+                    txtAdviseThroughBankAddr700_3.Text = StripHTML(drow["AdviseThroughBankAddr3"].ToString());
 
-                    comboReimbBankType700.SelectedValue = drow["ReimbBankType"].ToString();
-                    txtReimbBankNo700.Text = drow["ReimbBankNo"].ToString();
-                    tbReimbBankName700.Text = drow["ReimbBankName"].ToString();
-                    tbReimbBankAddr700_1.Text = drow["ReimbBankAddr1"].ToString();
-                    tbReimbBankAddr700_2.Text = drow["ReimbBankAddr2"].ToString();
-                    tbReimbBankAddr700_3.Text = drow["ReimbBankAddr3"].ToString();
+                    comboReimbBankType700.SelectedValue = StripHTML(drow["ReimbBankType"].ToString());
+                    txtReimbBankNo700.Text = StripHTML(drow["ReimbBankNo"].ToString());
+                    tbReimbBankName700.Text = StripHTML(drow["ReimbBankName"].ToString());
+                    tbReimbBankAddr700_1.Text = StripHTML(drow["ReimbBankAddr1"].ToString());
+                    tbReimbBankAddr700_2.Text = StripHTML(drow["ReimbBankAddr2"].ToString());
+                    tbReimbBankAddr700_3.Text = StripHTML(drow["ReimbBankAddr3"].ToString());
 
-                    txtAdditionalAmountsCovered700_1.Text = drow["AdditionalAmountsCovered1"].ToString();
-                    txtAdditionalAmountsCovered700_2.Text = drow["AdditionalAmountsCovered2"].ToString();
-                    txtDraftsAt700_1.Text = drow["DraftsAt1"].ToString();
-                    txtDraftsAt700_2.Text = drow["DraftsAt2"].ToString();
+                    txtAdditionalAmountsCovered700_1.Text = StripHTML(drow["AdditionalAmountsCovered1"].ToString());
+                    txtAdditionalAmountsCovered700_2.Text = StripHTML(drow["AdditionalAmountsCovered2"].ToString());
+                    txtDraftsAt700_1.Text = StripHTML(drow["DraftsAt1"].ToString());
+                    txtDraftsAt700_2.Text = StripHTML(drow["DraftsAt2"].ToString());
 
-                    txtMixedPaymentDetails700_1.Text = drow["MixedPaymentDetails1"].ToString();
-                    txtMixedPaymentDetails700_2.Text = drow["MixedPaymentDetails2"].ToString();
-                    txtMixedPaymentDetails700_3.Text = drow["MixedPaymentDetails3"].ToString();
-                    txtMixedPaymentDetails700_4.Text = drow["MixedPaymentDetails4"].ToString();
+                    txtMixedPaymentDetails700_1.Text = StripHTML(drow["MixedPaymentDetails1"].ToString());
+                    txtMixedPaymentDetails700_2.Text = StripHTML(drow["MixedPaymentDetails2"].ToString());
+                    txtMixedPaymentDetails700_3.Text = StripHTML(drow["MixedPaymentDetails3"].ToString());
+                    txtMixedPaymentDetails700_4.Text = StripHTML(drow["MixedPaymentDetails4"].ToString());
 
-                    txtDeferredPaymentDetails700_1.Text = drow["DeferredPaymentDetails1"].ToString();
-                    txtDeferredPaymentDetails700_2.Text = drow["DeferredPaymentDetails2"].ToString();
-                    txtDeferredPaymentDetails700_3.Text = drow["DeferredPaymentDetails3"].ToString();
-                    txtDeferredPaymentDetails700_4.Text = drow["DeferredPaymentDetails4"].ToString();
+                    txtDeferredPaymentDetails700_1.Text = StripHTML(drow["DeferredPaymentDetails1"].ToString());
+                    txtDeferredPaymentDetails700_2.Text = StripHTML(drow["DeferredPaymentDetails2"].ToString());
+                    txtDeferredPaymentDetails700_3.Text = StripHTML(drow["DeferredPaymentDetails3"].ToString());
+                    txtDeferredPaymentDetails700_4.Text = StripHTML(drow["DeferredPaymentDetails4"].ToString());
 
-                    txtShipmentPeriod700_1.Text = drow["ShipmentPeriod1"].ToString();
-                    txtShipmentPeriod700_2.Text = drow["ShipmentPeriod2"].ToString();
-                    txtShipmentPeriod700_3.Text = drow["ShipmentPeriod3"].ToString();
-                    txtShipmentPeriod700_4.Text = drow["ShipmentPeriod4"].ToString();
-                    txtShipmentPeriod700_5.Text = drow["ShipmentPeriod3"].ToString();
-                    txtShipmentPeriod700_6.Text = drow["ShipmentPeriod4"].ToString();
+                    txtShipmentPeriod700_1.Text = StripHTML(drow["ShipmentPeriod1"].ToString());
+                    txtShipmentPeriod700_2.Text = StripHTML(drow["ShipmentPeriod2"].ToString());
+                    txtShipmentPeriod700_3.Text = StripHTML(drow["ShipmentPeriod3"].ToString());
+                    txtShipmentPeriod700_4.Text = StripHTML(drow["ShipmentPeriod4"].ToString());
+                    txtShipmentPeriod700_5.Text = StripHTML(drow["ShipmentPeriod3"].ToString());
+                    txtShipmentPeriod700_6.Text = StripHTML(drow["ShipmentPeriod4"].ToString());
 
-                    comboDraweeCusType.SelectedValue = drow["DraweeType"].ToString();
-                    txtDraweeCusNo700.Text = drow["DraweeNo"].ToString();
-                    txtDraweeCusName.Text = drow["DraweeName"].ToString();
-                    txtDraweeAddr1.Text = drow["DraweeAddr1"].ToString();
-                    txtDraweeAddr2.Text = drow["DraweeAddr2"].ToString();
-                    txtDraweeAddr3.Text = drow["DraweeAddr3"].ToString();
+                    comboDraweeCusType.SelectedValue = StripHTML(drow["DraweeType"].ToString());
+                    txtDraweeCusNo700.Text = StripHTML(drow["DraweeNo"].ToString());
+                    txtDraweeCusName.Text = StripHTML(drow["DraweeName"].ToString());
+                    txtDraweeAddr1.Text = StripHTML(drow["DraweeAddr1"].ToString());
+                    txtDraweeAddr2.Text = StripHTML(drow["DraweeAddr2"].ToString());
+                    txtDraweeAddr3.Text = StripHTML(drow["DraweeAddr3"].ToString());
                 }
                 else
                 {
@@ -2739,6 +2741,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         #region Module Report
         private void showDocuments(string templateFilePath, DataSet dsSource, string saveAsFileName, SaveFormat formatFile = SaveFormat.Pdf)
         {
+            if (dsSource == null || dsSource.Tables.Count == 0)
+                return;
             Aspose.Words.License license = new Aspose.Words.License();
             license.SetLicense("Aspose.Words.lic");
             //Open the template document
@@ -2781,8 +2785,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         }
         protected void btnAmentLCReport_VAT_Click(object sender, EventArgs e)
         {
+            DataSet ds = bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId); 
             showDocuments(Context.Server.MapPath("~/DesktopModules/TrainingCoreBanking/BankProject/Report/Template/NormalLC/AmendLC_VAT.doc"),
-                    bd.SQLData.B_BIMPORT_NORMAILLC_AMEND_VAT_REPORT(txtCode.Text, UserInfo.Username, TabId), "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
+                    ds, "AmendLC_VAT_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc", SaveFormat.Doc);
         }
         protected void btnAmentLCReport_MT707_Click(object sender, EventArgs e)
         {
@@ -3110,6 +3115,11 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void txtReimbBankNo_747_OnTextChanged(object sender, EventArgs e)
         {
             bc.Commont.loadBankSwiftCodeInfo(txtReimbBankNo_747.Text, ref lblReimbBankNo_747, ref txtReimbBankName_747, ref txtReimbBankAddr_747_1, ref txtReimbBankAddr_747_2, ref txtReimbBankAddr_747_3);
+        }
+
+        public string StripHTML(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
         }
     }
 }
