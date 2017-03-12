@@ -150,8 +150,8 @@ namespace BankProject.Views.TellerApplication
                 tbNote.Text = ds.Tables[0].Rows[0]["Note"].ToString();
                 rcbFandA.SelectedValue = ds.Tables[0].Rows[0]["Mode"].ToString();
                 tbMaxTotal.Text = ds.Tables[0].Rows[0]["MaxTotal"].ToString();
-                tbMaxSecured.Text = ds.Tables[0].Rows[0]["MaxUnSecured"].ToString();
-                tbMaxUnsecured.Text = ds.Tables[0].Rows[0]["MaxSecured"].ToString();
+                tbMaxSecured.Text = ds.Tables[0].Rows[0]["MaxSecured"].ToString();
+                tbMaxUnsecured.Text = ds.Tables[0].Rows[0]["MaxUnSecured"].ToString();
             }
         }
         protected void Load_SubLimit_DataToReview(string SubLimitID)
