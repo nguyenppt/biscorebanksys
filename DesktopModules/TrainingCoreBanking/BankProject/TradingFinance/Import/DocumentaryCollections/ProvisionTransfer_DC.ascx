@@ -22,10 +22,10 @@
         var hdfCheckCreditAcc = $find('<%= hdfCheckCreditAcc.ClientID %>');
         var rcbCreditAccount = $find('<%= rcbCreditAccount.ClientID %>');
 
-        if (rcbCreditAccount.get_value() != hdfCheckCreditAcc.get_value()) {
-            radconfirm("Credit Account is not existed. Please check again!!!", confirmCallbackFunction1);
-            return false;
-        }
+        //if (rcbCreditAccount.get_value() != hdfCheckCreditAcc.get_value()) {
+        //    radconfirm("Credit Account is not existed. Please check again!!!", confirmCallbackFunction1);
+        //    return false;
+        //}
         return true;
     }
 
