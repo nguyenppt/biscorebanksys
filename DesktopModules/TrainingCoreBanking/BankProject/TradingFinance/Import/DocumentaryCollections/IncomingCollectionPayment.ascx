@@ -54,7 +54,12 @@
             if (result) {
                 $("#<%=btnPhieuCK.ClientID %>").click();
             }
-            if ($find("<%=comboWaiveCharges.ClientID%>").get_selectedItem().get_value() == "NO") {
+            if ($find("<%=comboWaiveCharges.ClientID%>").get_selectedItem().get_value() == "NO"
+                 && (parseInt($("#<%=tbChargeAmt.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt2.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt3.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt4.ClientID %>").val()) > 0))
+            {
                 radconfirm("Do you want to download HOA DON VAT file?", confirmCallbackFunction_VATB, 365, 150, null, 'Download');
             }
             else {
