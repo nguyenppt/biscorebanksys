@@ -26,7 +26,11 @@
             //args.set_cancel(false);
             if(<%=TabId%> == 237)
             {
-                radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
+                if((parseInt($("#<%=tbChargeAmt1.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt2.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt3.ClientID %>").val()) > 0)){
+                    radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
+                }
             }
             else
             {
