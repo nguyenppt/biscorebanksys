@@ -37,7 +37,10 @@
         if (result) {
             $("#<%=btnXuatNgoaiBang.ClientID %>").click();
         }
-        if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO")
+        if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO"
+             && (parseInt($("#<%=tbChargeAmt1.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt2.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt3.ClientID %>").val()) > 0))
             radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
     }
 
@@ -45,7 +48,10 @@
         if (result) {
             $("#<%=btnNhapNgoaiBang.ClientID %>").click();
         }
-        if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO")
+        if ($find("<%=rcbWaiveCharges.ClientID%>").get_value() == "NO"
+             && (parseInt($("#<%=tbChargeAmt1.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt2.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt3.ClientID %>").val()) > 0))
             radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
     }
 
