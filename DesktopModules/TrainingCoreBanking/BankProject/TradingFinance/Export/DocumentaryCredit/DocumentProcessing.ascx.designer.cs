@@ -76,6 +76,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         protected global::System.Web.UI.WebControls.Label lblLCCodeMessage;
         
         /// <summary>
+        /// txtAcceptDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtAcceptDate;
+        
+        /// <summary>
+        /// txtAcceptRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtAcceptRemarks;
+        
+        /// <summary>
         /// lblLCReferenceNo control.
         /// </summary>
         /// <remarks>
@@ -1100,24 +1118,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnVAT;
-
-
+        
         /// <summary>
-        /// txtAcceptDate control.
+        /// btnXuatNgoaiBang control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker txtAcceptDate;
-
+        protected global::System.Web.UI.WebControls.Button btnXuatNgoaiBang;
+        
         /// <summary>
-        /// txtAcceptRemarks control.
+        /// btnNhapNgoaiBang control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtAcceptRemarks;
+        protected global::System.Web.UI.WebControls.Button btnNhapNgoaiBang;
     }
 }
