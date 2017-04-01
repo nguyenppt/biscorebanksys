@@ -4,6 +4,45 @@ SET QUOTED_IDENTIFIER ON
 GO
 /***
 ---------------------------------------------------------------------------------
+-- 1 Apr 2017 : Nghia : Fix loi Credit account ph?i hi?n th? tài kho?n ký qu? ngo?i t? tuong ?ng v?i don v? ti?n t? c?a TF nh? thu dã kh?i t?o
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'PROVISIONTRANSFER_DC_GetByLCNo')
+BEGIN
+DROP PROCEDURE [dbo].[PROVISIONTRANSFER_DC_GetByLCNo]
+END
+GO
+CREATE PROCEDURE [dbo].[PROVISIONTRANSFER_DC_GetByLCNo]
+	@NormalLCCode nvarchar(50),
+	@Type nvarchar(50)
+AS
+BEGIN
+	select ProvisionNo, Un.[NormalLCCode], Un.[ApplicantID], Un.[ApplicantName],Un.Currency, Un.Amount
+			,acc.[CustomerID], acc.[Currentcy] ,acc.[AccountName],acc.[DepositCode],isnull(dc.CreditAmount, 0) as CreditAmount
+	from
+	(
+		SELECT [NormalLCCode] ,[ApplicantID] ,[ApplicantName], Currency ,Amount
+		FROM [dbo].BIMPORT_NORMAILLC
+		WHERE [NormalLCCode] <> '' 
+		and [NormalLCCode] = @NormalLCCode 
+		and @Type ='LC' --fix hard code la LC
+
+		union all
+
+		SELECT [DocCollectCode], [DraweeCusNo], [DraweeCusName], [Currency], isnull([Amount_Old], [Amount]) 
+		FROM [dbo].[BDOCUMETARYCOLLECTION]
+		WHERE [DocCollectCode] <> '' 
+		and [DocCollectCode] = @NormalLCCode 
+		and @Type ='DOC'--fix hard code la DOC
+	) Un 
+	left join BACCOUNTS acc on Un.[ApplicantID] = acc.CustomerID and Un.Currency = acc.Currentcy
+	left join PROVISIONTRANSFER_DC dc on Un.NormalLCCode = dc.LCNo
+		
+END
+
+GO
+/***
+---------------------------------------------------------------------------------
 -- 19 Mar 2017 : Nghia : Fix loi show data ko dung trong truong hop cancel
 ---------------------------------------------------------------------------------
 ***/

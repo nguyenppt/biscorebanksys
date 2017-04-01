@@ -182,7 +182,7 @@
                        <telerik:RadComboBox width="160"
                             ID="rcbDebitCurrency" Runat="server" AutoPostBack="true"
                             MarkFirstMatch="True"
-                            AllowCustomText="false" >
+                            AllowCustomText="false" OnSelectedIndexChanged="rcbDebitCurrency_SelectedIndexChanged" >
                             <Items>
                                 <telerik:RadComboBoxItem Value="" Text="" />
                                 <telerik:RadComboBoxItem Value="USD" Text="USD" />
@@ -373,9 +373,9 @@
 
 <%--<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="AjaxLoadingPanel1">
     <AjaxSettings>
-        <telerik:AjaxSetting AjaxControlID="rcbDebitAccount">
+        <telerik:AjaxSetting AjaxControlID="rcbDebitCurrency">
             <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="lblDebitAccountName" />
+                <telerik:AjaxUpdatedControl ControlID="tbDebitAmout" />
             </UpdatedControls>
         </telerik:AjaxSetting>
     </AjaxSettings>

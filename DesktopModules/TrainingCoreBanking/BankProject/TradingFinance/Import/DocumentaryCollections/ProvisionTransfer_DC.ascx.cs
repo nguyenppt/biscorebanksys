@@ -194,6 +194,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 }
 
                 rcbDebitCurrency.SelectedValue = ds.Tables[0].Rows[0]["Currency"].ToString();
+                updateAmountDisplay(tbDebitAmout, rcbDebitCurrency.SelectedValue);
 
                 if(ds.Tables[0].Rows[0]["ProvisionNo"] != null
                    && ds.Tables[0].Rows[0]["ProvisionNo"].ToString() != ""  
@@ -203,6 +204,9 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 }
 
                 lblCreditCurrency.Text = rcbDebitCurrency.SelectedValue;
+                updateAmountDisplay(tbCreditAmount, rcbDebitCurrency.SelectedValue);
+                updateAmountDisplay(txtAmountDebited, rcbDebitCurrency.SelectedValue);
+                updateAmountDisplay(txtAmountCredited, rcbDebitCurrency.SelectedValue);
                 //Không cần load lên nữa cho tự nhập
                 txtAmountCredited.Value = (double?)ds.Tables[0].Rows[0]["CreditAmount"];
                 txtAmountDebited.Value = (double?)ds.Tables[0].Rows[0]["CreditAmount"];
@@ -230,12 +234,16 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
                 rcbDebitCurrency.SelectedValue = ds.Tables[0].Rows[0]["DebitCurrency"].ToString();
                 SetDebitAcc();
 
+                updateAmountDisplay(tbDebitAmout, rcbDebitCurrency.SelectedValue);
+                updateAmountDisplay(txtAmountDebited, rcbDebitCurrency.SelectedValue);
                 tbDebitAmout.Text = ds.Tables[0].Rows[0]["DebitAmout"].ToString();
                 txtAmountDebited.Text = ((decimal)ds.Tables[0].Rows[0]["CreditAmount"] + (decimal)ds.Tables[0].Rows[0]["DebitAmout"]).ToString();
                 rdpDebitDDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["DebitDate"].ToString());
                 //rcbCreditAccount.SelectedValue = ds.Tables[0].Rows[0]["CreditAccount"].ToString();
                 lblCreditCurrency.Text = ds.Tables[0].Rows[0]["CreditCurrency"].ToString();
                 //tbTreasuryRate.Text = ds.Tables[0].Rows[0]["TreasuryRate"].ToString();
+                updateAmountDisplay(txtAmountCredited, lblCreditCurrency.Text.Trim());
+                updateAmountDisplay(tbCreditAmount, lblCreditCurrency.Text.Trim());
                 tbCreditAmount.Text = ds.Tables[0].Rows[0]["DebitAmout"].ToString();
                 txtAmountCredited.Text = ((decimal)ds.Tables[0].Rows[0]["CreditAmount"] + (decimal)ds.Tables[0].Rows[0]["DebitAmout"]).ToString();
                 rdpCreditDate.SelectedDate = DateTime.Parse(ds.Tables[0].Rows[0]["CreditDate"].ToString());
@@ -317,6 +325,24 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
         protected void rcbDebitAccount_OnTextChanged(object sender, EventArgs e)
         {
             SetDebitAcc();
+        }
+
+        private void updateAmountDisplay(RadNumericTextBox amountTB, string currency)
+        {
+            if ("VND".Equals(currency) || "JPY".Equals(currency))
+            {
+                amountTB.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                amountTB.NumberFormat.DecimalDigits = 2;
+            }
+            
+        }
+
+        protected void rcbDebitCurrency_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            updateAmountDisplay(tbDebitAmout, rcbDebitCurrency.SelectedValue); 
         }
     }
 }
