@@ -191,20 +191,22 @@ namespace BankProject.TradingFinance.Import.DocumentaryCredit
 
         protected void txtBeneficiaryNo700_OnTextChanged(object sender, EventArgs e)
         {
-            lblBeneficiaryNo700Error.Text = "";
-            txtBeneficiaryName700.Text = "";
-            if (!string.IsNullOrEmpty(txtBeneficiaryNo700.Text.Trim()))
-            {
-                var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtBeneficiaryNo700.Text.Trim());
-                if (dtBSWIFTCODE.Rows.Count > 0)
-                {
-                    txtBeneficiaryName700.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
-                }
-                else
-                {
-                    lblBeneficiaryNo700Error.Text = "No found swiftcode";
-                }
-            }
+
+            //if (!string.IsNullOrEmpty(txtBeneficiaryNo700.Text.Trim()))
+            //{
+            //    lblBeneficiaryNo700Error.Text = "";
+            //    txtBeneficiaryName700.Text = "";
+
+            //    var dtBSWIFTCODE = bd.SQLData.B_BBANKSWIFTCODE_GetByCode(txtBeneficiaryNo700.Text.Trim());
+            //    if (dtBSWIFTCODE.Rows.Count > 0)
+            //    {
+            //        txtBeneficiaryName700.Text = dtBSWIFTCODE.Rows[0]["BankName"].ToString();
+            //    }
+            //    else
+            //    {
+            //        lblBeneficiaryNo700Error.Text = "No found swiftcode";
+            //    }
+            //}
         }
 
         protected void tbReimbBankName_tbReimbBankName(object sender, EventArgs e)

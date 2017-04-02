@@ -4229,7 +4229,14 @@ ToolsFile="DesktopModules/TrainingCoreBanking/BankProject/TradingFinance/BasicTo
                 <telerik:AjaxUpdatedControl ControlID="txtAdviseThroughBankAddr700_3" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-
+        
+        <telerik:AjaxSetting AjaxControlID="txtBeneficiaryNo700">
+            <UpdatedControls>
+                <telerik:AjaxUpdatedControl ControlID="txtBeneficiaryName700" />
+                <telerik:AjaxUpdatedControl ControlID="lblBeneficiaryNo700Error" />
+                
+            </UpdatedControls>
+        </telerik:AjaxSetting>
         <telerik:AjaxSetting AjaxControlID="txtReimbBankNo_747">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="lblReimbBankNo_747" />
