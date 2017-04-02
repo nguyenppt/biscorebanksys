@@ -286,6 +286,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         {
             var mt910 = _entities.BOUTGOINGCOLLECTIONPAYMENTMT910.FirstOrDefault(q => q.PaymentId == CodeId);
             comboCurrencyMt910.SelectedValue = comboCreditCurrency.SelectedValue;
+            formatCurrency(numAmountMt910, comboCurrencyMt910.SelectedValue);
+
             if (mt910 != null)
             {
                 txtTransactionRefNumber.Text = mt910.TransactionReferenceNumber;
@@ -487,20 +489,23 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 comboDrawType.SelectedValue = "MA";
             }
             //comboDrawType.SelectedValue = outColPayment.DrawType;
+            comboCreditCurrency.SelectedValue = outColPayment.Currency;
+            formatCurrency(numDrawingAmount, comboCreditCurrency.SelectedValue);
             lblDrawType.Text = comboDrawType.SelectedItem.Attributes["Description"];
             dtValueDate.SelectedDate = outColPayment.ValueDate;
             numDrawingAmount.Value = outColPayment.DrawingAmount;
             comboCountryCode.SelectedValue = outColPayment.CountryCode;
             if (null == outColPayment.AmtCredited || outColPayment.AmtCredited == 0)
             {
-                lblCreditAmount.Text = (numDrawingAmount.Value??0).ToString("#,##0.00");
+                lblCreditAmount.Text = formatCurrency(numDrawingAmount.Value, comboCreditCurrency.SelectedValue); //(numDrawingAmount.Value ?? 0).ToString("#,##0.00");
+                
             }
             else
             {
-                lblCreditAmount.Text = (outColPayment.AmtCredited ?? 0).ToString("#,##0.00");
+                lblCreditAmount.Text = formatCurrency(outColPayment.AmtCredited, comboCreditCurrency.SelectedValue); //(outColPayment.AmtCredited ?? 0).ToString("#,##0.00");
             }
             //comboPaymentMethod.SelectedValue = outColPayment.PaymentMethod; //fixed bug 65
-            comboCreditCurrency.SelectedValue = outColPayment.Currency;
+            //comboCreditCurrency.SelectedValue = outColPayment.Currency;
             LoadCreditAccount();
             comboCreditAcct.SelectedValue = outColPayment.CreditAccount;
             loadNostroAccount();
@@ -523,7 +528,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 //txtCode.Text = CodeId;
                 var expDocCode = CodeId.Substring(0, 14);
-                lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
+                lblCreditAmount.Text = formatCurrency(GetAmountCredited(expDocCode), comboCreditCurrency.SelectedValue);
                 var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode && (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                 if (expDoc == null)
                 {
@@ -575,7 +580,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             lblCreditAmount.Text = GetAmountCredited(CodeId).ToString("");
             if (CodeId.Length == 14)
             {
-                lblCreditAmount.Text = GetAmountCredited(CodeId).ToString("#,##0.00");
+                lblCreditAmount.Text = formatCurrency(GetAmountCredited(CodeId), comboCreditCurrency.SelectedValue); 
 
                 var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == CodeId & (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                 if (expDoc == null)
@@ -618,7 +623,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 {
                     txtCode.Text = CodeId;
                     var expDocCode = CodeId.Substring(0, 14);
-                    lblCreditAmount.Text = GetAmountCredited(expDocCode).ToString("#,##0.00");
+                    lblCreditAmount.Text = formatCurrency(GetAmountCredited(expDocCode), comboCreditCurrency.SelectedValue); //GetAmountCredited(expDocCode).ToString("#,##0.00");
                     var expDoc = _entities.BEXPORT_DOCUMETARYCOLLECTION.FirstOrDefault(q => q.DocCollectCode == expDocCode & (q.ActiveRecordFlag == "YES" || q.ActiveRecordFlag == null));
                     if (expDoc == null)
                     {
@@ -684,6 +689,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
 
                 //tbChargePeriod.Text = drow1["ChargePeriod"].ToString();
                 rcbChargeCcy.SelectedValue = charge.ChargeCcy;
+                formatCurrency(tbChargeAmt, rcbChargeCcy.SelectedValue);
+
                 if (!string.IsNullOrEmpty(rcbChargeCcy.SelectedValue))
                 {
                     LoadChargeAcct();
@@ -742,6 +749,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeAcct2.SelectedValue = charge.ChargeAcct;
 
                 rcbChargeCcy2.SelectedValue = charge.ChargeCcy;
+                formatCurrency(tbChargeAmt2, rcbChargeCcy2.SelectedValue);
                 if (!string.IsNullOrEmpty(rcbChargeCcy2.SelectedValue))
                 {
                     LoadChargeAcct2();
@@ -786,6 +794,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeAcct3.SelectedValue = charge.ChargeAcct;
 
                 rcbChargeCcy3.SelectedValue = charge.ChargeCcy;
+                formatCurrency(tbChargeAmt3, rcbChargeCcy3.SelectedValue);
                 if (!string.IsNullOrEmpty(rcbChargeCcy3.SelectedValue))
                 {
                     LoadChargeAcct3();
@@ -830,6 +839,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeAcct4.SelectedValue = charge.ChargeAcct;
 
                 rcbChargeCcy4.SelectedValue = charge.ChargeCcy;
+                formatCurrency(tbChargeAmt4, rcbChargeCcy4.SelectedValue);
                 if (!string.IsNullOrEmpty(rcbChargeCcy4.SelectedValue))
                 {
                     LoadChargeAcct4();
@@ -996,6 +1006,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 comboCurrency.SelectedValue = expDoc.Currency;
                 loadNostroAccount();
                 LoadCreditAccount();
+                formatCurrency(numAmount, comboCurrency.SelectedValue);
                 numAmount.Value = expDoc.Amount;
                 txtTenor.Text = expDoc.Tenor;
                 numReminderDays.Text = (expDoc.ReminderDays??0).ToString();
@@ -1457,6 +1468,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             LoadCreditAccount();
             loadNostroAccount();
             comboCurrencyMt910.SelectedValue = e.Value; //fixed bug 86
+            formatCurrency(numDrawingAmount, e.Value);
+            formatCurrency(numAmountMt910, e.Value);
+
         }
 
         protected void comboWaiveCharges_OnSelectedIndexChanged(object sender,
@@ -1533,21 +1547,29 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void rcbChargeCcy_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadChargeAcct();
+            formatCurrency(tbChargeAmt, rcbChargeCcy.SelectedValue);
+            CalcTax();
         }
 
         protected void rcbChargeCcy2_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadChargeAcct2();
+            formatCurrency(tbChargeAmt2, rcbChargeCcy2.SelectedValue);
+            CalcTax2();
         }
 
         protected void rcbChargeCcy3_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadChargeAcct3();
+            formatCurrency(tbChargeAmt3, rcbChargeCcy3.SelectedValue);
+            CalcTax3();
         }
 
         protected void rcbChargeCcy4_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             LoadChargeAcct4();
+            formatCurrency(tbChargeAmt4, rcbChargeCcy4.SelectedValue);
+            CalcTax4();
         }
 
         protected void rcbChargeCcy5_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -1676,7 +1698,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 sotien = double.Parse(tbChargeAmt.Value.ToString());
                 sotien = sotien * 0.1;
-                lblTaxAmt.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxAmt.Text = formatCurrency2(sotien, rcbChargeCcy.SelectedValue);
                 lblTaxCode.Text = "81      10% VAT on Charge";
             }
             else
@@ -1693,7 +1715,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 sotien = double.Parse(tbChargeAmt2.Value.ToString());
                 sotien = sotien * 0.1;
-                lblTaxAmt2.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxAmt2.Text = formatCurrency2(sotien, rcbChargeCcy2.SelectedValue); 
                 lblTaxCode2.Text = "81      10% VAT on Charge";
             }
             else
@@ -1711,7 +1733,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 sotien = Double.Parse(tbChargeAmt3.Value.ToString());
                 sotien = sotien * 0.1;
-                lblTaxAmt3.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxAmt3.Text = formatCurrency2(sotien, rcbChargeCcy3.SelectedValue);
                 lblTaxCode3.Text = "81      10% VAT on Charge";
             }
             else
@@ -1728,7 +1750,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             {
                 sotien = Double.Parse(tbChargeAmt4.Value.ToString());
                 sotien = sotien * 0.1;
-                lblTaxAmt4.Text = String.Format("{0:C}", sotien).Replace("$", "");
+                lblTaxAmt4.Text = formatCurrency2(sotien, rcbChargeCcy4.SelectedValue);
                 lblTaxCode4.Text = "81      10% VAT on Charge";
             }
             else
@@ -1950,6 +1972,47 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
         protected void comboCountryCode_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             //lblCountryCodeName.Text = comboCountryCode.SelectedValue;
+        }
+
+        protected void numDrawingAmount_TextChanged(object sender, EventArgs e)
+        {
+            lblCreditAmount.Text = formatCurrency(numDrawingAmount.Value, comboCreditCurrency.SelectedValue);//(numDrawingAmount.Value ?? 0).ToString("#,##0.00");
+        }
+
+        private string formatCurrency(double? value, string currency)
+        {
+            if ("VND".Equals(currency) || "JPY".Equals(currency))
+            {
+                return (numDrawingAmount.Value ?? 0).ToString("#,##0");
+            }
+            else
+            {
+                return (numDrawingAmount.Value ?? 0).ToString("#,##0.00");
+            }
+        }
+
+        private string formatCurrency2(double value, string currency)
+        {
+            if ("VND".Equals(currency) || "JPY".Equals(currency))
+            {
+                return String.Format("{0:C}", Math.Round(value, MidpointRounding.ToEven)).Replace("$", "").Replace(".00","") ;
+            }
+            else
+            {
+                return String.Format("{0:C}", value).Replace("$", "");
+            }
+        }
+
+        private void formatCurrency(RadNumericTextBox tb, string currency)
+        {
+            if ("VND".Equals(currency) || "JPY".Equals(currency))
+            {
+                tb.NumberFormat.DecimalDigits = 0;
+            }
+            else
+            {
+                tb.NumberFormat.DecimalDigits = 2;
+            }
         }
     }
 }
