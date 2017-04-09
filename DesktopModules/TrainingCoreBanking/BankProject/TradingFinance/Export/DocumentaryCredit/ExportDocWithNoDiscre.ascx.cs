@@ -2,6 +2,7 @@
 using System.Data;
 using System.Web.UI;
 using DotNetNuke.Common;
+using DotNetNuke.Common.Utilities;
 using Telerik.Web.UI;
 using BankProject.DBContext;
 using bd = BankProject.DataProvider;
@@ -30,7 +31,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-            var TabId = this.TabId;
+            var TabIdLocal = this.TabId;
             //fieldsetDiscrepancies.Visible = (this.TabId == TabDocsWithDiscrepancies);
             InitDataSource();
             if (string.IsNullOrEmpty(Request.QueryString["tid"])) 
@@ -38,7 +39,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             
                 var tid = Request.QueryString["tid"].ToString();
                 var dsDetail = dbEntities.BEXPORT_DOCUMENTPROCESSINGs.Where(dr => dr.PaymentId == tid).FirstOrDefault();
-                if (TabId == TabDocsAmend)
+                if (TabIdLocal == TabDocsAmend)
                 {
                     var findTypeAmend = tid.Split('.');
                     if (findTypeAmend != null && findTypeAmend.Length > 0)

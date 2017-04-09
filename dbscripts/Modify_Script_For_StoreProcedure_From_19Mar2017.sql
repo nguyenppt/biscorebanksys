@@ -4,6 +4,38 @@ SET QUOTED_IDENTIFIER ON
 GO
 /***
 ---------------------------------------------------------------------------------
+-- 9 Apr 2017 : Nghia : FT ph?i hi?n dúng format và dúng ngày giao d?ch
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'ProvisionTransfer_GetNewID')
+BEGIN
+DROP PROCEDURE [dbo].[ProvisionTransfer_GetNewID]
+END
+GO
+CREATE Procedure [dbo].[ProvisionTransfer_GetNewID] 
+
+as
+DECLARE @MAXValue VARCHAR(10),@NEWValue VARCHAR(10),@NEW_ID VARCHAR(10);
+SELECT @MAXValue=(select SoTT from BMACODE where MaCode='ISSURLC' )
+update BMACODE set SoTT = SoTT + 1 where MaCode = 'ISSURLC'
+SET @NEWValue= REPLACE(@MaxValue,'03.','')+1
+SET @NEW_ID = ''+
+    CASE
+       WHEN LEN(@NEWValue)<5
+          THEN REPLICATE('0',5-LEN(@newValue))
+          ELSE ''
+       END +
+       @NEWValue
+DECLARE @NumberOfDay int
+SET @NumberOfDay = DATEDIFF(Day,CONVERT(datetime,'1/1/' + convert(nvarchar,YEAR(getdate()),103)),getdate()) + 1;
+DECLARE @NumberOfDayStr nvarchar(3)
+SET @NumberOfDayStr = replicate('0', 3 - len(@NumberOfDay)) + cast (@NumberOfDay as varchar)
+
+select 'FT-'+CONVERT(nvarchar,right(YEAR(getdate()),2))+@NumberOfDayStr +'-' + @NEW_ID as Code
+
+GO
+/***
+---------------------------------------------------------------------------------
 -- 2 Apr 2017 : Nghia : Update currency display data
 ---------------------------------------------------------------------------------
 ***/

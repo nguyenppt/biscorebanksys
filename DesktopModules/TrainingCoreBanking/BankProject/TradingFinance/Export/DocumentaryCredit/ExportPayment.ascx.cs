@@ -2,6 +2,7 @@
 using System.Data;
 using System.Web.UI;
 using DotNetNuke.Common;
+using DotNetNuke.Common.Utilities;
 using Telerik.Web.UI;
 using BankProject.DBContext;
 using bd = BankProject.DataProvider;

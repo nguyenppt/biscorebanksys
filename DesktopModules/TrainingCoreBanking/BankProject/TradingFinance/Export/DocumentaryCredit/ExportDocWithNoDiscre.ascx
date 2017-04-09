@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ExportDocWithNoDiscre.ascx.cs" Inherits="BankProject.TradingFinance.Export.DocumentaryCredit.ExportDocWithNoDiscre" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"></telerik:RadWindowManager>
+<telerik:RadWindowManager ID="RadWindowManager1" runat="server" EnableShadow="true"/>
 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="Commit" />
 <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
     <script type="text/javascript">
