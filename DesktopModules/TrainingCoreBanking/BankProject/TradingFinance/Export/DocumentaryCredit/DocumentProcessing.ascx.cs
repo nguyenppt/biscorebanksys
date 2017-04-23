@@ -1147,7 +1147,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     case "XuatNgoaiBang":
                     case "NhapNgoaiBang":
 
-                        reportTemplate = Context.Server.MapPath(reportTemplate +  reportType + ".doc");
+                        if (TabId == ExportLCDocProcessing.Actions.Amend)
+                        {
+                            reportTemplate = Context.Server.MapPath(reportTemplate + reportType + "Amend" + ".doc");
+                        }
+                        else
+                        {
+                            reportTemplate = Context.Server.MapPath(reportTemplate + reportType + ".doc");
+                        }
+                        
                         reportSaveName = reportType + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
 
 
