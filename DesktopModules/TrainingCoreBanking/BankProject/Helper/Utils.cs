@@ -96,7 +96,7 @@ namespace BankProject.Helper
                     strDv = iNumDv == 0
                                 ? ""
                                 : (iNumDv == 1
-                                       ? (iNumCh == 1 ? "một" : "một")
+                                       ? (iNumCh == 1 ? "mốt" : "mốt")
                                        : (iNumDv == 5 ? "lăm" : charRead.Substring(iNumDv * 4, 4).Replace("*", "")));
                 }
 
