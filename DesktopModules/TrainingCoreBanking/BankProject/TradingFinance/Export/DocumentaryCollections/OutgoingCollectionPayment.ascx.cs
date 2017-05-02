@@ -720,7 +720,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeCcy.SelectedValue = string.Empty;
                 //tbExcheRate.Text = string.Empty;
                 tbChargeAmt.Text = string.Empty;
-                rcbPartyCharged.SelectedValue = "A";
+                rcbPartyCharged.SelectedValue = "B";
                 
                 //lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
                 rcbOmortCharge.SelectedValue = string.Empty;
@@ -771,7 +771,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeAcct2.SelectedValue = string.Empty;
                 rcbChargeCcy2.SelectedValue = string.Empty;
                 tbChargeAmt2.Text = string.Empty;
-                rcbPartyCharged2.SelectedValue = "A";
+                rcbPartyCharged2.SelectedValue = "B";
                 //lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
                 rcbChargeStatus2.SelectedValue = string.Empty;
                 lblChargeStatus2.Text = string.Empty;
@@ -816,7 +816,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeAcct3.SelectedValue = string.Empty;
                 rcbChargeCcy3.SelectedValue = string.Empty;
                 tbChargeAmt3.Text = string.Empty;
-                rcbPartyCharged3.SelectedValue = "A";
+                rcbPartyCharged3.SelectedValue = "B";
                 //lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
                 rcbChargeStatus3.SelectedValue = string.Empty;
                 //lblChargeStatus3.Text = string.Empty;
@@ -861,7 +861,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 rcbChargeAcct4.SelectedValue = string.Empty;
                 rcbChargeCcy4.SelectedValue = string.Empty;
                 tbChargeAmt4.Text = string.Empty;
-                rcbPartyCharged4.SelectedValue = "A";
+                rcbPartyCharged4.SelectedValue = "B";
                 //lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
                 rcbChargeStatus4.SelectedValue = string.Empty;
                 //lblChargeStatus4.Text = string.Empty;
@@ -1110,7 +1110,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged.DataTextField = "Id";
             rcbPartyCharged.DataSource = dtSource;
             rcbPartyCharged.DataBind();
-            rcbPartyCharged.SelectedValue = "A";
+            rcbPartyCharged.SelectedValue = "B";
             //lblPartyCharged.Text = rcbPartyCharged.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged2.Items.Clear();
@@ -1118,7 +1118,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged2.DataTextField = "Id";
             rcbPartyCharged2.DataSource = dtSource;
             rcbPartyCharged2.DataBind();
-            rcbPartyCharged2.SelectedValue = "A";
+            rcbPartyCharged2.SelectedValue = "B";
             //lblPartyCharged2.Text = rcbPartyCharged2.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged3.Items.Clear();
@@ -1126,7 +1126,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged3.DataTextField = "Id";
             rcbPartyCharged3.DataSource = dtSource;
             rcbPartyCharged3.DataBind();
-            rcbPartyCharged3.SelectedValue = "A";
+            rcbPartyCharged3.SelectedValue = "B";
             //lblPartyCharged3.Text = rcbPartyCharged3.SelectedItem.Attributes["Description"];
 
             rcbPartyCharged4.Items.Clear();
@@ -1134,7 +1134,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             rcbPartyCharged4.DataTextField = "Id";
             rcbPartyCharged4.DataSource = dtSource;
             rcbPartyCharged4.DataBind();
-            rcbPartyCharged4.SelectedValue = "A";
+            rcbPartyCharged4.SelectedValue = "B";
             //lblPartyCharged4.Text = rcbPartyCharged4.SelectedItem.Attributes["Description"];
 
             //comment code to fix bug 47 start
