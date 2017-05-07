@@ -292,7 +292,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 loadLCDoc(ExLCDoc);
                 if (TabId == ExportLCDocProcessing.Actions.Accept || TabId == ExportLCDocProcessing.Actions.Reject)
                 {
-                    bc.Commont.SetTatusFormControls(this.Controls, false);
+                   
                     if (!string.IsNullOrEmpty(ExLCDoc.ActiveRecordFlag) && !ExLCDoc.ActiveRecordFlag.Equals("Yes"))
                     if (!ExLCDoc.Status.Equals(bd.TransactionStatus.AUT))
                         return;
@@ -300,6 +300,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     {
                         if (string.IsNullOrEmpty(ExLCDoc.AcceptStatus) || !ExLCDoc.AcceptStatus.Equals(bd.TransactionStatus.AUT))
                         {
+                            bc.Commont.SetTatusFormControls(this.Controls, false);
                             //Cho phép accept
                             RadToolBar1.FindItemByValue("btCommit").Enabled = true;
                             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
@@ -312,13 +313,20 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     }
                     if (TabId == ExportLCDocProcessing.Actions.Reject)
                     {
+
+                        
                         if (string.IsNullOrEmpty(ExLCDoc.RejectStatus) || !ExLCDoc.RejectStatus.Equals(bd.TransactionStatus.AUT))
                         {
                             //Cho phép reject
                             RadToolBar1.FindItemByValue("btCommit").Enabled = true;
                             RadToolBar1.FindItemByValue("btPreview").Enabled = true;
                             RadToolBar1.FindItemByValue("btSearch").Enabled = true;
+                            bc.Commont.SetTatusFormControls(this.Controls, true);
                             return;
+                        }
+                        else
+                        {
+                            bc.Commont.SetTatusFormControls(this.Controls, false);
                         }
                         return;
                     }
@@ -435,6 +443,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             }
             if (TabId == ExportLCDocProcessing.Actions.Reject)
             {
+                loadCharges(); 
             }
             txtBeneficiaryNumber.Text = ExLCDoc.BeneficiaryNo;
             txtBeneficiaryName.Text = ExLCDoc.BeneficiaryName;
@@ -838,6 +847,34 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             dbEntities.SaveChanges();
                         }                        
                         //
+                        if (TabId == ExportLCDocProcessing.Actions.Reject)
+                        {
+                            if (ExLCDoc.WaiveCharges.Equals(bd.YesNo.NO))
+                            {
+                                //dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES = new System.Data.Entity.DbSet<BEXPORT_LC_DOCS_PROCESSING_CHARGES>();
+                                BEXPORT_LC_DOCS_PROCESSING_CHARGES ExLCCharge;
+                                if (tbChargeAmt1.Value.HasValue)
+                                {
+                                    ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                    saveCharge(txtChargeCode1, rcbChargeCcy1, rcbChargeAcct1, tbChargeAmt1, rcbPartyCharged1, rcbAmortCharge1, rcbChargeStatus1, lblTaxCode1, lblTaxAmt1, ref ExLCCharge);
+                                    dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                }
+                                if (tbChargeAmt2.Value.HasValue)
+                                {
+                                    ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                    saveCharge(txtChargeCode2, rcbChargeCcy2, rcbChargeAcct2, tbChargeAmt2, rcbPartyCharged2, rcbAmortCharge2, rcbChargeStatus2, lblTaxCode2, lblTaxAmt2, ref ExLCCharge);
+                                    dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                }
+                                if (tbChargeAmt3.Value.HasValue)
+                                {
+                                    ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                    saveCharge(txtChargeCode3, rcbChargeCcy3, rcbChargeAcct3, tbChargeAmt3, rcbPartyCharged3, rcbAmortCharge3, rcbChargeStatus3, lblTaxCode3, lblTaxAmt3, ref ExLCCharge);
+                                    dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                }
+
+                                dbEntities.SaveChanges();
+                            }
+                        }
                         Response.Redirect("Default.aspx?tabid=" + this.TabId);
                         break;
                     case bc.Commands.Authorize:

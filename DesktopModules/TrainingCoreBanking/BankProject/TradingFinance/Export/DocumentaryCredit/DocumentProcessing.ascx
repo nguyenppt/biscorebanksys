@@ -59,6 +59,8 @@
         if(<%= TabId %> == 239)
         {
             radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang, 420, 150, null, 'Download');
+        }else if (<%= TabId %> == 241){
+            radconfirm("Do you want to download PHIEU XUAT NGOAI BANG file?", confirmCallbackFunction_XuatNgoaiBang, 420, 150, null, 'Download');
         }
         else if ($find("<%=txtNewAmount.ClientID%>").get_value() > 0 
                 && $find("<%=txtOriginalAmount.ClientID%>").get_value() > 0 
