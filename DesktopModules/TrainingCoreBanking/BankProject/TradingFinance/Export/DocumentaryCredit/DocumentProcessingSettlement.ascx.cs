@@ -225,7 +225,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
          */
         private void SavePayment()
         {
-
+            char[] dot = new char[] { '.' };
             var outCoPayment =
                        _entities.BEXPORT_DOCS_PROCESSING_SETTLEMENT.FirstOrDefault(q => q.PaymentId == txtCode.Text);
             if (outCoPayment == null) // insert
@@ -252,12 +252,13 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
                 outCoPayment.CountryCode = comboCountryCode.SelectedValue;
                 outCoPayment.LCType = comboCollectionType.SelectedValue;
+                outCoPayment.NostroAccount = cbNostroAccount.SelectedValue;
                 _entities.BEXPORT_DOCS_PROCESSING_SETTLEMENT.Add(outCoPayment);
             }
             else
             {
                 outCoPayment.PaymentId = txtCode.Text;
-                outCoPayment.PaymentNo = long.Parse(txtCode.Text.Substring(15));
+                //outCoPayment.PaymentNo = long.Parse(txtCode.Text.Substring(txtCode.Text.LastIndexOfAny(dot, 1)));
                 outCoPayment.ValueDate = dtValueDate.SelectedDate;
                 outCoPayment.AmtCredited = double.Parse(lblCreditAmount.Text);
                 outCoPayment.UpdatedBy = UserId.ToString();
@@ -274,6 +275,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                 outCoPayment.IncreaseMental = 0;
                 outCoPayment.CreditAccount = comboCreditAcct.SelectedValue;
                 outCoPayment.LCType = comboCollectionType.SelectedValue;
+                outCoPayment.NostroAccount = cbNostroAccount.SelectedValue;
+                
             }
             _entities.SaveChanges();
             SaveCharges();
@@ -496,6 +499,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             numDrawingAmount.Value = outColPayment.DrawingAmount;
             comboCountryCode.SelectedValue = outColPayment.CountryCode;
             lblCreditAmount.Text = (outColPayment.AmtCredited??0).ToString("#,##0.00");
+            cbNostroAccount.SelectedValue = outColPayment.NostroAccount;
+            lblNostro.Text = cbNostroAccount.SelectedItem.Attributes["Code"] + " - " + cbNostroAccount.SelectedItem.Attributes["Description"];
             //comboPaymentMethod.SelectedValue = outColPayment.PaymentMethod; //fixed bug 65
             comboCreditCurrency.SelectedValue = outColPayment.Currency;
             LoadCreditAccount();
@@ -1915,11 +1920,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             try
             {
                 reportData = bd.IssueLC.ExportLCSettlementReport(reportType, txtCode.Text, this.UserInfo.Username);
+                
                 switch (reportType)
                 {
                     case 1://PhieuChuyenKhoan
                         reportTemplate = Context.Server.MapPath(reportTemplate + "SettlementPhieuChuyenKhoan.doc");
                         reportSaveName = "PhieuChuyenKhoan" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        if(reportData != null){
+                            reportData.Tables[0].Rows[0]["TenTaiKhoanNo"]= txtCollectingBankName.Text;
+                        }
                         break;
                     case 2://VAT B
                         reportTemplate = Context.Server.MapPath(reportTemplate + "SettlementVAT.doc");

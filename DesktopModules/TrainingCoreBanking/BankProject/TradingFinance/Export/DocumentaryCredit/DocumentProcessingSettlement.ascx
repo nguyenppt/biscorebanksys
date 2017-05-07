@@ -36,7 +36,7 @@
             if (result) {
                 $("#<%=btnReportPhieuChuyenKhoan.ClientID %>").click();
             }
-            radconfirm("Do you want to download PHIEU VAT ?", confirmCallbackFunction_PhieuVAT, 365, 150, null, 'Download');
+            radconfirm("Do you want to download PHIEU XUAT NGOAI BANG ?", confirmCallbackFunction_PhieuXuatNgoaiBang, 420, 150, null, 'Download');
         }
 
         function confirmCallbackFunction_PhieuVAT(result) {
@@ -44,13 +44,21 @@
             if (result) {
                 $("#<%=btnReportVATb.ClientID %>").click();
             }
-            radconfirm("Do you want to download PHIEU XUAT NGOAI BANG ?", confirmCallbackFunction_PhieuXuatNgoaiBang, 420, 150, null, 'Download');
+            
         }
         
         function confirmCallbackFunction_PhieuXuatNgoaiBang(result) {
             clickCalledAfterRadconfirm = false;
             if(result) {
                 $("#<%=btnReportPhieuXuatNgoaiBang.ClientID %>").click();
+            }
+
+            if (parseInt($("#<%=tbChargeAmt.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt2.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt3.ClientID %>").val()) > 0
+                || parseInt($("#<%=tbChargeAmt4.ClientID %>").val()) > 0)
+            {
+                radconfirm("Do you want to download PHIEU VAT ?", confirmCallbackFunction_PhieuVAT, 365, 150, null, 'Download');
             }
         }
     </script>
