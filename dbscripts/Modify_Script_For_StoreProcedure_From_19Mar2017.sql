@@ -607,6 +607,10 @@ BEGIN
 	    @CurrentDate as CurrentDate,	    
 	    --case when isnull(@IncreaseMental,0) > 0 then CONVERT(varchar, CONVERT(money, (Amount - @IncreaseMental)), 1) else CONVERT(varchar, CONVERT(money, Amount), 1) end as Amount,			
 	    cast(@totalAmt as decimal(18,2)) as Amount,
+		--cast(@totalAmt as decimal(18,2)) as Amount,
+		case when Currency = 'JPY' OR Currency = 'VND' 
+				then REPLACE(CONVERT(varchar, CONVERT(money, cast((@totalAmt) as decimal(18,2))), 1),'.00','')
+				else (CONVERT(varchar, CONVERT(money, cast((@totalAmt) as decimal(18,2))), 1)) end as Amount,
 	    (select Vietnamese from dbo.BCURRENCY where Code = Currency) as Vietnamese,
 	    (SELECT DATEPART(m, GETDATE())) as [Month],
 	    (SELECT DATEPART(d, GETDATE())) as [Day],
