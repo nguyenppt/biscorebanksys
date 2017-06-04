@@ -1,10 +1,12 @@
-﻿using System;
+﻿using BankProject.DBRespository;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Xml.Serialization;
 
@@ -114,7 +116,15 @@ namespace BankProject.Helper
             return rCharRead.Trim();
 
         }
-        
+
+        public static string ReadNumber(string currency, double number)
+        {
+            StoreProRepository storeFacase = new StoreProRepository();
+            var outp = storeFacase.StoreProcessor().P_ReadNumber((decimal?)number, currency).FirstOrDefault();
+
+            return outp;
+        }
+
         /*
          * Method Revision History:
          * Version        Date            Author            Comment
@@ -122,7 +132,7 @@ namespace BankProject.Helper
          * 0.1            NA
          * 0.2            Sep 12, 2015    Hien Nguyen       Fix bug convert sai so le cua USD
          */
-        public static string ReadNumber(string mant, double number)
+        private static string ReadNumber1(string mant, double number)
         {
             const string charRead = "không một**hai**ba***bốn**năm**sáu**bảy**tám**chín*";
             var numberR = Math.Abs(number);

@@ -2,6 +2,26 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+/***
+---------------------------------------------------------------------------------
+-- 2 May 2017 : Nghia : Add Nostro account in report
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'P_ReadNumber')
+BEGIN
+DROP PROCEDURE [dbo].[P_ReadNumber]
+END
+GO
+
+CREATE PROCEDURE [dbo].[P_ReadNumber](
+	@money decimal(18,2),
+	@Currency VARCHAR(50))
+as
+Begin
+	Select dbo.f_CurrencyToTextVn((@money), @Currency) SoTienBangChu
+End
+Go
+
 
 /***
 ---------------------------------------------------------------------------------
