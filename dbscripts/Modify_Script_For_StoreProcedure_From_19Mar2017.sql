@@ -2,6 +2,198 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
+/***
+---------------------------------------------------------------------------------
+-- 2 May 2017 : Nghia : Add Nostro account in report
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'B_INCOMINGCOLLECTIONPAYMENT_VAT_B_Report')
+BEGIN
+DROP PROCEDURE [dbo].[B_INCOMINGCOLLECTIONPAYMENT_VAT_B_Report]
+END
+GO
+CREATE PROCEDURE [dbo].[B_INCOMINGCOLLECTIONPAYMENT_VAT_B_Report]
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500)
+AS
+BEGIN-- B_INCOMINGCOLLECTIONPAYMENT_VAT_B_Report 'TF-14235-00016.1', 'a'
+	declare @CurrentDate varchar(12)
+	set @CurrentDate = CONVERT(VARCHAR(10),GETDATE(),101);	
+	declare @DepositCode_BACCOUNTS nvarchar(50)
+	
+	declare @Tab_temp as table 
+	(
+		id int,
+		part nvarchar(4000)
+	)
+	insert into @Tab_temp
+	select id,part from [dbo].SplitString ((select DrFromAccount from dbo.BINCOMINGCOLLECTIONPAYMENT where PaymentId = @Code), '-')
+	set @DepositCode_BACCOUNTS = (select LTRIM(RTRIM(part)) from @Tab_temp where id = 1)	
+	
+	declare @TabCus  as table
+	(
+		CustomerName nvarchar(500),
+		IdentityNo nvarchar(20),
+		[Address] nvarchar(500),
+		City nvarchar(500),
+		Country nvarchar(500),
+		BankAccount nvarchar(50),
+		CustomerID nvarchar(50)
+	)
+	insert into @TabCus
+	select 
+		top 1 CustomerName,
+		IdentityNo, 
+		[Address],
+		City, 
+		Country, 
+		BankAccount,
+		CustomerID
+	from BCUSTOMERS
+	where CustomerID = (select CustomerID from dbo.BACCOUNTS where DepositCode = @DepositCode_BACCOUNTS)	
+	--------------------------------------------	
+	declare @Table_ChargeCode as table 
+	(
+		Code varchar(20),
+		Name_VN nvarchar(100),
+		PaymentIC varchar(1)
+	)
+	insert into @Table_ChargeCode
+	select Code,Name_VN,PaymentIC from  dbo.BCHARGECODE
+	where isnull(PaymentIC, '') != ''
+	
+	-------------------------------------------
+	declare @OrginalCode varchar(50)
+	set @OrginalCode = SUBSTRING(@Code,0,15)
+	
+	declare @Table_PaymentCharge as table 
+	(
+		CollectionPaymentCode varchar(50),
+		ChargeAmt float,
+		Chargecode nvarchar(50),
+		ChargeCcy varchar(5),
+		Rowchages int,
+		PartyCharged varchar(5)
+	)
+	insert into @Table_PaymentCharge
+	select 
+		CollectionPaymentCode,
+		ChargeAmt,
+		Chargecode,
+		ChargeCcy,
+		Rowchages,
+		PartyCharged
+	from dbo.BINCOMINGCOLLECTIONPAYMENTCHARGES
+	where SUBSTRING(CollectionPaymentCode,0,15) = @OrginalCode
+	and PartyCharged = 'B'
+	--------------------------------------------
+	declare @TongSoTienThanhToan float
+	set @TongSoTienThanhToan = (select sum(ChargeAmt)
+		from dbo.BINCOMINGCOLLECTIONPAYMENTCHARGES 
+		where SUBSTRING(CollectionPaymentCode,0,15) = @OrginalCode
+			  and PartyCharged = 'B')
+			
+	declare @VAT float
+	set @VAT = (@TongSoTienThanhToan * 0.1)
+	set @TongSoTienThanhToan = @TongSoTienThanhToan + @VAT
+	
+	declare @Cot9_1 FLOAT
+	declare @Cot9_2 FLOAT
+	declare @Cot9_3 FLOAT	
+	declare @Cot9_4 FLOAT
+	declare @Cot9_1_Currency nvarchar(500)	
+	declare @Cot9_2_Currency nvarchar(500)	
+	declare @Cot9_3_Currency nvarchar(500)	
+	declare @Cot9_4_Currency nvarchar(500)	
+	
+	declare @Cot9_1Name nvarchar(500)	
+	declare @Cot9_2Name nvarchar(500)
+	declare @Cot9_3Name nvarchar(500)	
+	declare @Cot9_4Name nvarchar(500)	
+	
+	set @Cot9_1Name = (select Chargecode from @Table_PaymentCharge
+		 where CollectionPaymentCode = @Code and Rowchages = 1)
+	select @Cot9_1 = isnull(ChargeAmt, 0), @Cot9_1_Currency = ChargeCcy
+		 from @Table_PaymentCharge
+		 where CollectionPaymentCode = @Code and Rowchages = 1
+		 
+	set @Cot9_2Name = (select Chargecode from @Table_PaymentCharge
+		 where CollectionPaymentCode = @Code and Rowchages = 2)
+	select @Cot9_2 = isnull(ChargeAmt, 0), @Cot9_2_Currency = ChargeCcy
+		 from @Table_PaymentCharge
+		 where CollectionPaymentCode = @Code and Rowchages = 2
+		 
+	set @Cot9_3Name = (select Chargecode from @Table_PaymentCharge
+		 where CollectionPaymentCode = @Code and Rowchages = 3)
+	select @Cot9_3 = isnull(ChargeAmt, 0), @Cot9_3_Currency = ChargeCcy
+		 from @Table_PaymentCharge
+		 where CollectionPaymentCode = @Code and Rowchages = 3	
+	
+	set @Cot9_4Name = (select Chargecode from @Table_PaymentCharge
+		 where CollectionPaymentCode = @Code and Rowchages = 4)
+	select @Cot9_4 = isnull(ChargeAmt, 0), @Cot9_4_Currency = ChargeCcy
+		 from @Table_PaymentCharge
+		 where CollectionPaymentCode = @Code and Rowchages = 4		 
+	
+	set @Cot9_1Name = (select Name_VN from @Table_ChargeCode where Code = @Cot9_1Name)
+	set @Cot9_2Name = (select Name_VN from @Table_ChargeCode where Code = @Cot9_2Name)
+	set @Cot9_3Name = (select Name_VN from @Table_ChargeCode where Code = @Cot9_3Name)
+	set @Cot9_4Name = (select Name_VN from @Table_ChargeCode where Code = @Cot9_4Name)
+	--------------------------------------------
+	declare @Tab_Charge as table
+	(
+		VATNo nvarchar(500),
+		ChargeAcct nvarchar(500),
+		ChargeRemarks nvarchar(500),
+		ChargeCcy nvarchar(500)
+	)
+	insert into @Tab_Charge
+	select VATNo,ChargeAcct,ChargeRemarks,ChargeCcy 
+		from dbo.BINCOMINGCOLLECTIONPAYMENTCHARGES 
+		 where CollectionPaymentCode = @Code and Rowchages = 1 
+	
+	select @CurrentDate as CurrentDate
+	select
+		doc.CollectionPaymentCode,
+		@UserNameLogin as UserNameLogin,
+		
+		(select VATNo from @Tab_Charge) as VATNo,
+		(select ChargeAcct from @Tab_Charge) as ChargeAcct,		
+		(select ChargeRemarks from @Tab_Charge) as ChargeRemarks,
+		
+		(select CustomerName from @TabCus) as CustomerName,
+		(select [Address] from @TabCus) as [Address],
+		(select IdentityNo from @TabCus) as IdentityNo,		
+		(select City from @TabCus) as City,		
+		(select Country from @TabCus) as Country,		
+		(select BankAccount from @TabCus) as BankAccount,
+		(select CustomerID from @TabCus) as CustomerID,	
+		(select top 1 DepositCode from BACCOUNTS where CustomerId = (select CustomerID from @TabCus) and currentcy = (select ChargeCcy from @Tab_Charge)) as DepositCode,
+		CONVERT(varchar, CONVERT(money, @VAT), 1) + ' ' + (select ChargeCcy from @Tab_Charge) + ' PL52768' as VAT,
+		--(select dbo.fuDocSoThanhChu(@TongSoTienThanhToan)) + ' ' + isnull((select Vietnamese from dbo.BCURRENCY where Code = (select ChargeCcy from @Tab_Charge)),'') as SoTienBangChu,
+		(select dbo.f_CurrencyToText(cast(@TongSoTienThanhToan as decimal(18,2)), (select ChargeCcy from @Tab_Charge))) as SoTienBangChu,
+		
+		case when @Cot9_1 != 0 then CONVERT(varchar, CONVERT(money, @Cot9_1), 1) + ' ' + @Cot9_1_Currency + ' PL52324' else '' end as Cot9_1,
+		case when @Cot9_2 != 0 then CONVERT(varchar, CONVERT(money, @Cot9_2), 1) + ' ' + @Cot9_2_Currency + ' PL52356' else '' end as Cot9_2,
+		case when @Cot9_3 != 0 then CONVERT(varchar, CONVERT(money, @Cot9_3), 1) + ' ' + @Cot9_3_Currency + ' PL52477' else '' end as Cot9_3,
+		case when @Cot9_4 != 0 then CONVERT(varchar, CONVERT(money, @Cot9_4), 1) + ' ' + @Cot9_4_Currency + ' PL52566' else '' end as Cot9_4,
+		
+		case when @Cot9_1 != 0 then @Cot9_1Name else '' end as Cot9_1Name,
+		case when @Cot9_2 != 0 then @Cot9_2Name else '' end as Cot9_2Name,
+		case when @Cot9_3 != 0 then @Cot9_3Name else '' end as Cot9_3Name,
+		case when @Cot9_4 != 0 then @Cot9_4Name else '' end as Cot9_4Name,
+		
+		CONVERT(varchar, CONVERT(money, @TongSoTienThanhToan), 1) + ' ' + (select ChargeCcy from @Tab_Charge) as TongSoTienThanhToan,
+		(SELECT DATEPART(m, GETDATE())) as [Month],
+	    (SELECT DATEPART(d, GETDATE())) as [Day],
+	    (SELECT DATEPART(yy, GETDATE())) as [Year]
+		
+	from dbo.BINCOMINGCOLLECTIONPAYMENT doc
+	where doc.PaymentId = @Code
+END
+GO
+
 /***
 ---------------------------------------------------------------------------------
 -- 2 May 2017 : Nghia : Add Nostro account in report
