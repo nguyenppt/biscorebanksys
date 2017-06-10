@@ -26,6 +26,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         public double ChargeAmount = 0;
         public string CreateMT410 = string.Empty;
         public bool isMT412Active = false;
+        private string PARTY_CHANGE = "Beneficiary";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -46,6 +47,8 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             lblError.Text = "";
             lblTaxAmt.Text = "0";
             lblTaxAmt2.Text = "0";
+            rcbPartyCharged.SelectedValue = PARTY_CHANGE;
+            rcbPartyCharged2.SelectedValue = PARTY_CHANGE;
 
            
             // default no use
@@ -883,7 +886,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 tbExcheRate.Text = string.Empty;
                 tbChargeAmt.Text = string.Empty;
 
-                rcbPartyCharged.SelectedValue = string.Empty;
+                rcbPartyCharged.SelectedValue = PARTY_CHANGE;
                 lblPartyCharged.Text = string.Empty;
 
                 rcbOmortCharge.SelectedValue = string.Empty;
@@ -941,7 +944,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 rcbChargeCcy2.SelectedValue = string.Empty;
                 tbExcheRate2.Text = string.Empty;
                 tbChargeAmt2.Text = string.Empty;
-                rcbPartyCharged2.SelectedValue = string.Empty;
+                rcbPartyCharged2.SelectedValue = PARTY_CHANGE;
                 lblPartyCharged2.Text = string.Empty;
                 rcbOmortCharges2.SelectedValue = string.Empty;
 
@@ -1590,7 +1593,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 rcbOmortCharge.SelectedValue = string.Empty;
 
                 rcbPartyCharged.Visible = false;
-                rcbPartyCharged.SelectedValue = string.Empty;
+                rcbPartyCharged.SelectedValue = PARTY_CHANGE;
 
                 rcbChargeCcy.Visible = false;
                 rcbChargeCcy.SelectedValue = string.Empty;
@@ -1612,7 +1615,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                 rcbChargeCcy2.SelectedValue = string.Empty;
                 tbExcheRate2.Text = string.Empty;
                 tbChargeAmt2.Text = string.Empty;
-                rcbPartyCharged2.SelectedValue = string.Empty;
+                rcbPartyCharged2.SelectedValue = PARTY_CHANGE;
                 lblPartyCharged2.Text = string.Empty;
                 rcbOmortCharges2.SelectedValue = string.Empty;
                 rcbChargeStatus2.SelectedValue = string.Empty;
@@ -1815,7 +1818,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             tbChargeAmt.Text = string.Empty;
             tbChargeAmt.Enabled = true;
 
-            rcbPartyCharged.SelectedValue = string.Empty;
+            rcbPartyCharged.SelectedValue = PARTY_CHANGE;
             rcbPartyCharged.Enabled = true;
 
             lblPartyCharged.Text = string.Empty;
@@ -1861,7 +1864,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             tbChargeAmt2.Text = string.Empty;
             tbChargeAmt2.Enabled = true;
 
-            rcbPartyCharged2.SelectedValue = string.Empty;
+            rcbPartyCharged2.SelectedValue = PARTY_CHANGE;
             rcbPartyCharged2.Enabled = true;
 
             lblPartyCharged2.Text = string.Empty;
@@ -2079,7 +2082,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
             rcbChargeCcy2.SelectedValue = string.Empty;
             rcbChargeAcct2.SelectedValue = string.Empty;
             tbChargeAmt2.Value = 0;
-            rcbPartyCharged2.SelectedValue = string.Empty;
+            rcbPartyCharged2.SelectedValue = PARTY_CHANGE;
             rcbOmortCharges2.SelectedValue = string.Empty;
             rcbChargeStatus2.SelectedValue = string.Empty;
 
