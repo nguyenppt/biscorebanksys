@@ -2,7 +2,62 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+ALTER FUNCTION [dbo].[f_CurrencyToTextVn]
+(
+	@sNumber nvarchar(4000),
+	@ccyCode varchar(3)
+)
+RETURNS nvarchar(4000) AS
 
+BEGIN
+	DECLARE @ccyName nvarchar(50);
+	DECLARE @ccyPence nvarchar(250);
+	DECLARE @integerNum nvarchar(4000);
+	DECLARE @penceNum nvarchar(4000);
+	DECLARE @result nvarchar(4000);
+
+	select @ccyName = Vietnamese, @ccyPence = Pence from dbo.bcurrency where code = @ccyCode;
+	if CHARINDEX ('.',@sNumber) > 0 
+	begin
+		select @integerNum = SUBSTRING(@sNumber,0,CHARINDEX ('.',@sNumber));
+		select @penceNum=substring(@sNumber,CHARINDEX ('.',@sNumber) + 1,len(@sNumber)-len(@integerNum));
+		if (len(@penceNum) < 2)
+			set @penceNum = @penceNum + '0';
+		select @result = REPLACE(lower(dbo.fuDocSoThanhChu(@penceNum)), '  ', ' ');
+		IF @ccyCode = 'VND'
+		BEGIN
+			IF ISNULL(@result,'') != ''
+				select @result = (REPLACE(lower(dbo.fuDocSoThanhChu(@integerNum)), '  ', ' ') + N' l? ' + @result + @ccyName);
+			else
+				select @result = (REPLACE(lower(dbo.fuDocSoThanhChu(@integerNum)), '  ', ' ') + @ccyName);
+		END
+		else
+		BEGIN
+			IF ISNULL(@result,'') != ''
+				select @result = (REPLACE(lower(dbo.fuDocSoThanhChu(@integerNum)), '  ', ' ') + ' ' + @ccyName + N' và ' + @result + ' ' + isnull(@ccyPence,''));
+			else
+				select @result = (REPLACE(lower(dbo.fuDocSoThanhChu(@integerNum)), '  ', ' ') + ' ' + @ccyName);
+		end
+	end
+	else
+	begin
+		select @result = lower(dbo.fuDocSoThanhChu(@sNumber)) + ' ' + @ccyName;
+	end
+	---Loai bo khoang trang thua
+	while len(@result) > 0
+	begin
+		if charindex('  ', @result) > 0
+			set @result = replace(@result, '  ', ' ')
+		else
+			break
+	end
+	set @result = ltrim(rtrim(@result))
+	
+	return UPPER(Left(@result, 1)) + SUBSTRING(@result,2, 4000);
+END
+
+
+GO
 /***
 ---------------------------------------------------------------------------------
 -- 2 May 2017 : Nghia : Add Nostro account in report
