@@ -1054,7 +1054,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             ChargeRemarks = ExLC.ChargeRemarks
                         };
                         //
-                        var ExLCCharges = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Equals(tbLCCode.Text));
+                        var ExLCCharges = dbEntities.BEXPORT_LC_CHARGES.Where(p => p.ExportLCCode.Equals(tbLCCode.Text) && p.TabId ==TabId);
                         if (ExLCCharges != null)
                         {
                             double TotalTaxAmount = 0, TotalChargeAmount = 0;
