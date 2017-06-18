@@ -179,7 +179,7 @@
                         <td>
                             <asp:Label ID="lblCountryCodeName" runat="server" />
                     </tr>
-                    <tr>
+                    <tr style="display:none">
                         <td class="MyLable">1.5 Amount Credited
                         </td>
                         <td class="MyContent">
