@@ -288,6 +288,7 @@ begin
 	if @ReportType = 2
 	begin
 		Declare @collType nvarchar(10);
+		Declare @chargeRemark nvarchar(225);
 		set @TaiKhoanCo = (select  top 1  CreditAccount from BEXPORT_DOCS_PROCESSING_SETTLEMENT where PaymentId = @PaymentId) 
 		set @TaiKhoanNo = (select  top 1  NostroAccount from BEXPORT_DOCS_PROCESSING_SETTLEMENT_MT910 where PaymentId = @PaymentId)
 		set @TenTaiKhoanNo = (select  top 1  [Description] from BSWIFTCODE where AccountNo = @TaiKhoanNo)
@@ -298,7 +299,7 @@ begin
 		
 		---
 		select @CustomerID = BeneficiaryNo, @CustomerName = BeneficiaryName
-		from BEXPORT_LC_DOCS_PROCESSING where [AmendNo] = @PaymentId
+		from BEXPORT_LC_DOCS_PROCESSING where [AmendNo] like SUBSTRING(@PaymentId,0,14) + '%'
 		---
 		select @CustomerIDNo = IdentityNo, @CustomerBankAcc = BankAccount, @Address1 = [Address], @Address2 = [City], @Address3 = [Country]
 		from dbo.BCUSTOMERS where CustomerID = @CustomerID
@@ -312,6 +313,11 @@ begin
 		from BEXPORT_DOCS_PROCESSING_SETTLEMENT_CHARGES a
 			inner join BCHARGECODE b on a.ChargeCode = b.Code
 		where CollectionPaymentCode = @PaymentId and ChargeAmt is not null
+
+		Set @chargeRemark = (select top 1 a.ChargeRemarks
+		from BEXPORT_DOCS_PROCESSING_SETTLEMENT_CHARGES a
+			inner join BCHARGECODE b on a.ChargeCode = b.Code
+		where CollectionPaymentCode = @PaymentId and ChargeAmt is not null)
 		---
 		select PaymentId Id, (SELECT DATEPART(d, GETDATE())) as [Day], (SELECT DATEPART(m, GETDATE())) as [Month], (SELECT DATEPART(yy, GETDATE())) as [Year],
 			[PaymentId] LCCode, @UserId CurrentUserLogin, @CustomerName CustomerName, @CustomerID CustomerID, @CustomerIDNo IdentityNo, 
@@ -323,7 +329,7 @@ begin
 		into #tblPayment
 		from BEXPORT_DOCS_PROCESSING_SETTLEMENT a where PaymentId = @PaymentId
 		---
-		select a.*, 
+		select a.*, @chargeRemark ChargeRemarks,
 			  b1.ChargeName ChargeName_1, b1.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b1.ChargeAmt )) + CONVERT(money,  ISNULL(b1.TaxAmt,0)), 1) + ' ' + b1.PLAccount ChargeInfo_1
 			, b2.ChargeName ChargeName_2, b2.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b2.ChargeAmt )) + CONVERT(money,  ISNULL(b2.TaxAmt,0)), 1) + ' ' + b2.PLAccount ChargeInfo_2
 			, b3.ChargeName ChargeName_3, b3.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b3.ChargeAmt )) + CONVERT(money,  ISNULL(b3.TaxAmt,0)), 1) + ' ' + b3.PLAccount ChargeInfo_3
