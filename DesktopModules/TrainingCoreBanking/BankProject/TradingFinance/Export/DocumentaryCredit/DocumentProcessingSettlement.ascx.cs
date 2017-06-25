@@ -164,7 +164,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             
             if (payment != null)
             {
-                var doc = _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode == payment.CollectionPaymentCode);
+                var doc = _entities.BEXPORT_LC_DOCS_PROCESSING.FirstOrDefault(q => q.DocCode.Contains(payment.CollectionPaymentCode));
                 var drFromAccount = _entities.BDRFROMACCOUNTs.FirstOrDefault(q => q.Id == comboCreditAcct.SelectedValue);
                 if (drFromAccount != null)
                 {
