@@ -2,6 +2,27 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+/***
+---------------------------------------------------------------------------------
+-- 25 June 2017 : Nghia : 
+---------------------------------------------------------------------------------
+***/
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'BEXPORT_LC_DOCS_PROCESSING_Report_Cover')
+BEGIN
+DROP PROCEDURE [dbo].[BEXPORT_LC_DOCS_PROCESSING_Report_Cover]
+END
+GO
+CREATE PROCEDURE [dbo].[BEXPORT_LC_DOCS_PROCESSING_Report_Cover]
+	@Code varchar(50),
+	@UserNameLogin  nvarchar(500)
+AS
+BEGIN
+	Select * from BEXPORT_LC_DOCS_PROCESSING Where DocCode = @Code;
+
+END
+
+
+GO
 ALTER FUNCTION [dbo].[f_CurrencyToTextVn]
 (
 	@sNumber nvarchar(4000),

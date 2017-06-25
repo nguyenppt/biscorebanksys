@@ -15,6 +15,7 @@ using BankProject.Model;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using System.Data.Entity.Validation;
+using BankProject.DBRespository;
 
 namespace BankProject.TradingFinance.Export.DocumentaryCredit
 {//B_ExportDocCreditProcessing
@@ -841,7 +842,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             {
                                 ExLCDoc.AcceptStatus = bd.TransactionStatus.UNA;
                                 ExLCDoc.AcceptDate = txtAcceptDate.SelectedDate;
-                                ExLCDoc.AcceptRemarks = txtAcceptRemarks.Text;
+                                ExLCDoc.AcceptRemarks = txtAcceptRemarks.Text.Trim();
                             }
                             saveLCDoc(ref ExLCDoc);
                             dbEntities.SaveChanges();
@@ -1067,6 +1068,12 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             showReport("NhapNgoaiBang");
         }
 
+
+        protected void btnCover_Click(object sender, EventArgs e)
+        {
+            showReport("COVER");
+        }
+
         private void showReport(string reportType)
         {
             var ExLCDoc = dbEntities.findExportLCDoc(tbLCCode.Text);
@@ -1087,6 +1094,17 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
             {
                 switch (reportType)
                 {
+                    case "COVER":
+                        reportTemplate = Context.Server.MapPath(reportTemplate + "CoverLetter_Docs_Processing.doc");
+                        reportSaveName = "COVER" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
+                        //var ExLCDocR = dbEntities.BEXPORT_LC_DOCS_PROCESSING.Where(p => p.DocCode.Equals(tbLCCode.Text)).ToList();
+                        StoreProRepository storePro = new StoreProRepository();
+                        var tbl12 = (storePro.StoreProcessor().BEXPORT_LC_DOCS_PROCESSING_Report_Cover(tbLCCode.Text, "").ToList());
+                        tbl1 = Utils.CreateDataTable<DBContext.BEXPORT_LC_DOCS_PROCESSING_Report_Cover_Result>(tbl12);
+                        
+                       // tbl1 = Utils.CreateDataTable<Model.Reports.CoverProcessing>(ExLCDocR.ToList());
+                       reportData.Tables.Add(tbl1);
+                        break;
                     case "VAT":
                         reportTemplate = Context.Server.MapPath(reportTemplate + "VAT.doc");
                         reportSaveName = "VAT" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";

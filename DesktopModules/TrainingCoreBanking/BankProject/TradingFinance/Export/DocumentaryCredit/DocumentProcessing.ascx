@@ -56,6 +56,8 @@
     }
 
     function showPhieuNhap_Xuat() {
+        $("#<%=btnCover.ClientID %>").click();
+
         if(<%= TabId %> == 239)
         {
             radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang, 420, 150, null, 'Download');
@@ -1056,4 +1058,5 @@
     <asp:Button ID="btnVAT" runat="server" OnClick="btnVAT_Click" />
     <asp:Button ID="btnXuatNgoaiBang" runat="server" OnClick="btnXuatNgoaiBang_Click" />
     <asp:Button ID="btnNhapNgoaiBang" runat="server" OnClick="btnNhapNgoaiBang_Click" />
+    <asp:Button ID="btnCover" runat="server" OnClick="btnCover_Click" />
 </div>
