@@ -425,8 +425,11 @@ begin
 		select @LCCode =  CollectionPaymentCode from BEXPORT_DOCS_PROCESSING_SETTLEMENT where PaymentId = @PaymentId
 
 		---
-		select @CustomerID = BeneficiaryNo, @CustomerName = BeneficiaryName, @currency = Currency, @Amount = Amount
-		from BEXPORT_LC_DOCS_PROCESSING where [AmendNo] = @PaymentId
+		select @CustomerID = BeneficiaryNo, 
+		@CustomerName = BeneficiaryName, 
+		@currency = Currency, 
+		@Amount = Amount
+		from BEXPORT_LC_DOCS_PROCESSING where [AmendNo] like @LCCode + '%'
 		---
 		select @CustomerIDNo = IdentityNo, @CustomerBankAcc = BankAccount, @Address1 = [Address], @Address2 = [City], @Address3 = [Country]
 		from dbo.BCUSTOMERS where CustomerID = @CustomerID
