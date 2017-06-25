@@ -17,7 +17,7 @@
     function RadToolBar1_OnClientButtonClicking(sender, args) {
         var button = args.get_item();
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Print%>") {
-            showPhieuNhap_Xuat();
+            showCoverLeter();
         }
         if (button.get_commandName() == "<%=BankProject.Controls.Commands.Search%>" ||
             button.get_commandName() == "<%=BankProject.Controls.Commands.Preview%>") {
@@ -55,9 +55,21 @@
             radconfirm("Do you want to download 'VAT' file ?", confirmCallbackFunction_VAT, 420, 150, null, 'Download');
     }
 
-    function showPhieuNhap_Xuat() {
-        $("#<%=btnCover.ClientID %>").click();
+    function showCoverLeter(){
+        radconfirm("Do you want to download Cover letter?", confirmCallbackFunction_Cover, 420, 150, null, 'Download');
+    }
+    function confirmCallbackFunction_Cover(result) {
+        if (result) {
+            $("#<%=btnCover.ClientID %>").click();
+            showPhieuNhap_Xuat();
+        }else
+        {
+            showPhieuNhap_Xuat();;
+        }
+    }
 
+    function showPhieuNhap_Xuat() {
+       
         if(<%= TabId %> == 239)
         {
             radconfirm("Do you want to download PHIEU NHAP NGOAI BANG file?", confirmCallbackFunction_NhapNgoaiBang, 420, 150, null, 'Download');
