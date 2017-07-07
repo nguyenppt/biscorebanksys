@@ -262,4 +262,86 @@ namespace BankProject.Model.Reports
             }
         }
     }
+
+    public class CoverProcessing
+    {
+        public string DocCode { get; set; }
+        public string BeneficiaryName { get; set; }
+        public string BeneficiaryAddr1 { get; set; }
+        public string BeneficiaryAddr2 { get; set; }
+        public string BeneficiaryAddr3 { get; set; }
+        public string ApplicantName { get; set; }
+        public string ApplicantAddr1 { get; set; }
+        public string ApplicantAddr2 { get; set; }
+        public string ApplicantAddr3 { get; set; }
+        public string IssuingBankNo { get; set; }
+        public string IssuingBankName { get; set; }
+        public string IssuingBankAddr1 { get; set; }
+        public string IssuingBankAddr2 { get; set; }
+        public string IssuingBankAddr3 { get; set; }
+        public string NostroAgentBankNo { get; set; }
+        public string NostroAgentBankName { get; set; }
+        public string NostroAgentBankAddr1 { get; set; }
+        public string NostroAgentBankAddr2 { get; set; }
+        public string NostroAgentBankAddr3 { get; set; }
+        public string ReceivingBankName { get; set; }
+        public string ReceivingBankAddr1 { get; set; }
+        public string ReceivingBankAddr2 { get; set; }
+        public string ReceivingBankAddr3 { get; set; }
+        public string DocumentaryCreditNo { get; set; }
+        public string Commodity { get; set; }
+        public string Currency { get; set; }
+        public string Amount { get; set; }
+        public string DocumentReceivedDate { get; set; }
+        public string ProccessingDate { get; set; }
+        public string Tenor { get; set; }
+        public string InvoiceNo { get; set; }
+        public string DocsCode1 { get; set; }
+        public string NoOfOriginals1 { get; set; }
+        public string NoOfCopies1 { get; set; }
+        public string DocsCode2 { get; set; }
+        public string NoOfOriginals2 { get; set; }
+        public string NoOfCopies2 { get; set; }
+        public string DocsCode3 { get; set; }
+        public string NoOfOriginals3 { get; set; }
+        public string NoOfCopies3 { get; set; }
+        public string Remark { get; set; }
+        public string SettlementInstruction { get; set; }
+        public string WaiveCharges { get; set; }
+        public string ChargeRemarks { get; set; }
+        public string VATNo { get; set; }
+        public string PaymentFull { get; set; }
+        public string Status { get; set; }
+        public string CreateBy { get; set; }
+        public string CreateDate { get; set; }
+        public string UpdatedBy { get; set; }
+        public string UpdateDate { get; set; }
+        public string AuthorizedBy { get; set; }
+        public string AuthorizedDate { get; set; }
+        public string AmendStatus { get; set; }
+        public string AmendBy { get; set; }
+        public string AmendDate { get; set; }
+        public string AmendNo { get; set; }
+        public string AmendNoOriginal { get; set; }
+        public string ActiveRecordFlag { get; set; }
+        public string RejectStatus { get; set; }
+        public string RejectDate { get; set; }
+        public string AcceptStatus { get; set; }
+        public string AcceptDate { get; set; }
+        public string PaymentAmount { get; set; }
+        public string OtherDocs1 { get; set; }
+        public string OtherDocs2 { get; set; }
+        public string OtherDocs3 { get; set; }
+        public string BeneficiaryNo { get; set; }
+        public string OtherDocs4 { get; set; }
+        public string OtherDocs5 { get; set; }
+        public string OtherDocs6 { get; set; }
+        public string OtherDocs7 { get; set; }
+        public string OtherDocs8 { get; set; }
+        public string OtherDocs9 { get; set; }
+        public string OtherDocs10 { get; set; }
+        public string AcceptanceDate { get; set; }
+        public string MaturityDate { get; set; }
+        public string AcceptRemarks { get; set; }
+    }
 }

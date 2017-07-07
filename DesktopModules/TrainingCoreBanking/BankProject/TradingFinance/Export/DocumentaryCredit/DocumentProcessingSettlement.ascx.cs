@@ -1928,6 +1928,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         reportSaveName = "PhieuChuyenKhoan" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         if(reportData != null){
                             reportData.Tables[0].Rows[0]["TenTaiKhoanNo"]= txtCollectingBankName.Text;
+                            reportData.Tables[0].Rows[0]["LCCode"] = reportData.Tables[0].Rows[0]["LCCode"].ToString().Substring(0, 16);
                         }
                         break;
                     case 2://VAT B

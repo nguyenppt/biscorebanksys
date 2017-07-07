@@ -44,6 +44,10 @@ namespace BankProject.Model
             Code = Code.Trim().ToUpper();
             return BEXPORT_LC.Where(p => p.ExportLCCode.Equals(Code)).FirstOrDefault();
         }
+        public BEXPORT_LC_DOCS_PROCESSING_CHARGES findExportLCCharges(string docCode, string chargeCode)
+        {
+            return BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Equals(docCode) && p.ChargeCode.Equals(chargeCode)).FirstOrDefault();
+        }
         public BIMPORT_NORMAILLC findImportLC(string Code)
         {
             Code = Code.Trim().ToUpper();

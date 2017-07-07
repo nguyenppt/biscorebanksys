@@ -856,24 +856,46 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 BEXPORT_LC_DOCS_PROCESSING_CHARGES ExLCCharge;
                                 if (tbChargeAmt1.Value.HasValue)
                                 {
-                                    ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                    
+                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode1.Text.Trim());
+                                    if (ExLCCharge == null)
+                                    {
+                                        ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                        dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                    }
+
                                     saveCharge(txtChargeCode1, rcbChargeCcy1, rcbChargeAcct1, tbChargeAmt1, rcbPartyCharged1, rcbAmortCharge1, rcbChargeStatus1, lblTaxCode1, lblTaxAmt1, ref ExLCCharge);
-                                    dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                    
                                 }
                                 if (tbChargeAmt2.Value.HasValue)
                                 {
-                                    ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode2.Text.Trim());
+                                    if (ExLCCharge == null)
+                                    {
+                                        ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                        dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                    }
+                                    //ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
                                     saveCharge(txtChargeCode2, rcbChargeCcy2, rcbChargeAcct2, tbChargeAmt2, rcbPartyCharged2, rcbAmortCharge2, rcbChargeStatus2, lblTaxCode2, lblTaxAmt2, ref ExLCCharge);
-                                    dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                    
                                 }
                                 if (tbChargeAmt3.Value.HasValue)
                                 {
-                                    ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode3.Text.Trim());
+                                    if (ExLCCharge == null)
+                                    {
+                                        ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
+                                        dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                    }
+                                    //ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
                                     saveCharge(txtChargeCode3, rcbChargeCcy3, rcbChargeAcct3, tbChargeAmt3, rcbPartyCharged3, rcbAmortCharge3, rcbChargeStatus3, lblTaxCode3, lblTaxAmt3, ref ExLCCharge);
-                                    dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
+                                    
                                 }
-
-                                dbEntities.SaveChanges();
+                                //try
+                                //{
+                                    dbEntities.SaveChanges();
+                                //}catch(Exception ex){
+                                //}; 
                             }
                         }
                         Response.Redirect("Default.aspx?tabid=" + this.TabId);
@@ -1102,6 +1124,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         var tbl12 = (storePro.StoreProcessor().BEXPORT_LC_DOCS_PROCESSING_Report_Cover(tbLCCode.Text, "").ToList());
                         tbl1 = Utils.CreateDataTable<DBContext.BEXPORT_LC_DOCS_PROCESSING_Report_Cover_Result>(tbl12);
                         
+                        
                        // tbl1 = Utils.CreateDataTable<Model.Reports.CoverProcessing>(ExLCDocR.ToList());
                        reportData.Tables.Add(tbl1);
                         break;
@@ -1216,7 +1239,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
                         var dataXuatNgoaiBang = new Model.Reports.PhieuXuatNgoaiBang()
                         {
-                            DocCode = ExLCDoc.DocCode,
+                            DocCode = ExLCDoc.DocCode.Substring(0,16),
                             CustomerName = BCustomer.CustomerName,
                             CurrentUserLogin = ExLCDoc.CreateBy,
                             ApplicantName = ExLCDoc.ApplicantName,

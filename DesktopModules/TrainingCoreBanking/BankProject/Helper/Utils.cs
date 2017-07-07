@@ -119,6 +119,8 @@ namespace BankProject.Helper
 
         public static string ReadNumber(string currency, double number)
         {
+            if (number < 0)
+                number = number * (-1); 
             StoreProRepository storeFacase = new StoreProRepository();
             var outp = storeFacase.StoreProcessor().P_ReadNumber((decimal?)number, currency).FirstOrDefault();
 
