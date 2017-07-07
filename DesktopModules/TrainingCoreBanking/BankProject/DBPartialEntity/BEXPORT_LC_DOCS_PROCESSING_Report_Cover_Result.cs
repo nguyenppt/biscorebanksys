@@ -19,5 +19,19 @@ namespace BankProject.DBContext
             }
 
         }
+        public string MaturityDateString
+        {
+            get
+            {
+                if (MaturityDate != null)
+                {
+                    return ((DateTime)MaturityDate).ToString("MM/dd/yyyy");
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
     }
 }
