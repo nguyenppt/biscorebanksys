@@ -50,7 +50,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
 
         protected void radGridReview_OnNeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr")) 
+            //if (!string.IsNullOrEmpty(lstType) && lstType.ToLower().Equals("4appr")) 
                 loadData();
         }
 
@@ -110,18 +110,21 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         .OrderByDescending(p => p.ConfirmDate)
                         .Select(q => new { Code = q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.ConfirmStatus })
                         .ToList();
+                    //radGridReview.DataBind();
                     return;
                 case ExportLC.Actions.Cancel:
                     radGridReview.DataSource = enquiry
                         .OrderByDescending(p => p.CancelDate)
                         .Select(q => new { Code = q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.CancelStatus })
                         .ToList();
+                    //radGridReview.DataBind();
                     return;
                 case ExportLC.Actions.Close:
                     radGridReview.DataSource = enquiry
                         .OrderByDescending(p => p.ClosedDate)
                         .Select(q => new { Code = q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.ClosedStatus })
                         .ToList();
+                    //radGridReview.DataBind();
                     return;
                 default:// ExportLC.Actions.Register:
                     var data = enquiry
@@ -129,8 +132,11 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         .Select(q => new { Code = q.ExportLCCode, q.ImportLCCode, q.ApplicantName, q.Amount, q.Currency, q.BeneficiaryNo, q.BeneficiaryName, q.DateOfIssue, q.IssuingBankNo, Status = q.Status })
                         .ToList();
                     radGridReview.DataSource = data;
+                    //radGridReview.DataBind();
                     return;
             }
         }
+    
+    
     }
 }
