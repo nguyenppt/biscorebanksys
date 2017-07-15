@@ -22,6 +22,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
     public partial class DocumentProcessing : DotNetNuke.Entities.Modules.PortalModuleBase
     {
         private ExportLCDocProcessing dbEntities = new ExportLCDocProcessing();
+        private int REJECT_PAGE = 241;
         protected void Page_Load(object sender, EventArgs e)
         {
             txtChargeCode1.Text = (TabId == ExportLCDocProcessing.Actions.Amend ? ExportLCDocProcessing.Charges.Service : ExportLCDocProcessing.Charges.Commission);
@@ -571,7 +572,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
         }
         private void loadCharges()
         {
-            var lstCharges = dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Equals(tbLCCode.Text));
+            var lstCharges = dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Equals(tbLCCode.Text) && p.TabId == REJECT_PAGE);
             if (lstCharges == null || lstCharges.Count() <= 0) return;
             //
             foreach (BEXPORT_LC_DOCS_PROCESSING_CHARGES ch in lstCharges)
@@ -856,37 +857,39 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                                 BEXPORT_LC_DOCS_PROCESSING_CHARGES ExLCCharge;
                                 if (tbChargeAmt1.Value.HasValue)
                                 {
-                                    
-                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode1.Text.Trim());
+
+                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode1.Text.Trim(), TabId);
                                     if (ExLCCharge == null)
                                     {
                                         ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
                                         dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
                                     }
-
+                                    ExLCCharge.TabId = TabId;
                                     saveCharge(txtChargeCode1, rcbChargeCcy1, rcbChargeAcct1, tbChargeAmt1, rcbPartyCharged1, rcbAmortCharge1, rcbChargeStatus1, lblTaxCode1, lblTaxAmt1, ref ExLCCharge);
                                     
                                 }
                                 if (tbChargeAmt2.Value.HasValue)
                                 {
-                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode2.Text.Trim());
+                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode2.Text.Trim(), TabId);
                                     if (ExLCCharge == null)
                                     {
                                         ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
                                         dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
                                     }
+                                    ExLCCharge.TabId = TabId;
                                     //ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
                                     saveCharge(txtChargeCode2, rcbChargeCcy2, rcbChargeAcct2, tbChargeAmt2, rcbPartyCharged2, rcbAmortCharge2, rcbChargeStatus2, lblTaxCode2, lblTaxAmt2, ref ExLCCharge);
                                     
                                 }
                                 if (tbChargeAmt3.Value.HasValue)
                                 {
-                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode3.Text.Trim());
+                                    ExLCCharge = dbEntities.findExportLCCharges(tbLCCode.Text.Trim(), txtChargeCode3.Text.Trim(), TabId);
                                     if (ExLCCharge == null)
                                     {
                                         ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
                                         dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Add(ExLCCharge);
                                     }
+                                    ExLCCharge.TabId = TabId;
                                     //ExLCCharge = new BEXPORT_LC_DOCS_PROCESSING_CHARGES();
                                     saveCharge(txtChargeCode3, rcbChargeCcy3, rcbChargeAcct3, tbChargeAmt3, rcbPartyCharged3, rcbAmortCharge3, rcbChargeStatus3, lblTaxCode3, lblTaxAmt3, ref ExLCCharge);
                                     
@@ -1147,7 +1150,14 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             ChargeRemarks = ExLCDoc.ChargeRemarks
                         };
                         //
+                      
                         var ExLCDocCharges = dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Equals(tbLCCode.Text));
+
+                        if (TabId == REJECT_PAGE)
+                        {
+                            ExLCDocCharges = dbEntities.BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Equals(tbLCCode.Text) && p.TabId == TabId);
+                        }
+              
                         if (ExLCDocCharges != null)
                         {
                             double TotalTaxAmount = 0, TotalChargeAmount = 0;
@@ -1266,6 +1276,9 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         {
                             dataXuatNgoaiBang.Amount = ExLCDoc.Amount.Value - oldAmount;
                         }
+
+                        if (dataXuatNgoaiBang.Amount < 0)
+                            dataXuatNgoaiBang.Amount = dataXuatNgoaiBang.Amount * (-1);
                         
                         var lstData = new List<Model.Reports.PhieuXuatNgoaiBang>();
                         lstData.Add(dataXuatNgoaiBang);

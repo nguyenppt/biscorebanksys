@@ -1945,6 +1945,7 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                     try
                     {
                         reportData.Tables[0].TableName = "Table1";
+                        reportData.Tables[0].Rows[0]["DocCollectCode"] = reportData.Tables[0].Rows[0]["DocCollectCode"].ToString().Substring(0, 16);
                         bc.Reports.createFileDownload(reportTemplate, reportData, reportSaveName, saveFormat, saveType, Response);
                     }
                     catch (Exception err)

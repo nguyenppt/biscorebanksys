@@ -26,7 +26,17 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
         public double ChargeAmount = 0;
         public string CreateMT410 = string.Empty;
         public bool isMT412Active = false;
-        private string PARTY_CHANGE = "Beneficiary";
+        //private string PARTY_CHANGE = "Beneficiary";
+        private string PARTY_CHANGE
+        {
+            get
+            {
+                if (TabId == 217)
+                    return "Openner";
+                else
+                    return "Beneficiary";
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
