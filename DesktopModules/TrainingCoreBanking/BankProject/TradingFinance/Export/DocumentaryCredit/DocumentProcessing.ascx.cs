@@ -1268,15 +1268,18 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             oldAmount = ExLCDocOld.Amount.Value;
                         }
 
-                        if(reportType.Equals("XuatNgoaiBang"))
-                        {
-                            dataXuatNgoaiBang.Amount = oldAmount - ExLCDoc.Amount.Value;
-                        }
-                        else
-                        {
-                            dataXuatNgoaiBang.Amount = ExLCDoc.Amount.Value - oldAmount;
-                        }
+                        //if(reportType.Equals("XuatNgoaiBang"))
+                        //{
+                        //    dataXuatNgoaiBang.Amount = oldAmount - ExLCDoc.Amount.Value;
+                        //}
+                        //else
+                        //{
+                        //    dataXuatNgoaiBang.Amount = ExLCDoc.Amount.Value - oldAmount;
+                        //}
 
+                        //Customer request the value base on latest amount.
+
+                        dataXuatNgoaiBang.Amount = ExLCDoc.Amount.Value;
                         if (dataXuatNgoaiBang.Amount < 0)
                             dataXuatNgoaiBang.Amount = dataXuatNgoaiBang.Amount * (-1);
                         

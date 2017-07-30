@@ -17,7 +17,8 @@ CREATE PROCEDURE [dbo].[BEXPORT_LC_DOCS_PROCESSING_Report_Cover]
 	@UserNameLogin  nvarchar(500)
 AS
 BEGIN
-	Select * from BEXPORT_LC_DOCS_PROCESSING Where DocCode = @Code;
+	Select top 1 * from BEXPORT_LC_DOCS_PROCESSING Where DocCode = @Code
+	 and ActiveRecordFlag = 'Yes';
 
 END
 

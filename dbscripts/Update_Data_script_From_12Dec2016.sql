@@ -1,6 +1,8 @@
 ﻿
 Update BBANKSWIFTCODE set BankName = 'STANDARD CHARTERED BANK' where SwiftCode = 'SCBLSGSG'
 
+Update BCHARGECODE set Name_VN = N'Phí xử lý BCT LC xuất' where Code = 'ELC.HANDLE'
+
 /***
 ---------------------------------------------------------------------------------
 -- 11 Dec 2016 : Nghia : viet nam currency
