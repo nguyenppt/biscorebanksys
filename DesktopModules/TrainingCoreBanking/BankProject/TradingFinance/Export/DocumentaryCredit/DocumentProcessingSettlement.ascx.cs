@@ -1927,7 +1927,15 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                         reportTemplate = Context.Server.MapPath(reportTemplate + "SettlementPhieuChuyenKhoan.doc");
                         reportSaveName = "PhieuChuyenKhoan" + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".doc";
                         if(reportData != null){
-                            reportData.Tables[0].Rows[0]["TenTaiKhoanNo"]= txtCollectingBankName.Text;
+                            if (reportData.Tables[0].Rows[0]["NostroAccount"] != null && !string.IsNullOrEmpty(reportData.Tables[0].Rows[0]["NostroAccount"].ToString()))
+                            {
+                                reportData.Tables[0].Rows[0]["TenTaiKhoanNo"] = reportData.Tables[0].Rows[0]["NostroAccountName"];
+                            }
+                            else
+                            {
+                                 reportData.Tables[0].Rows[0]["TenTaiKhoanNo"]= txtCollectingBankName.Text;
+                            }
+                           
                             reportData.Tables[0].Rows[0]["LCCode"] = reportData.Tables[0].Rows[0]["LCCode"].ToString().Substring(0, 16);
                         }
                         break;

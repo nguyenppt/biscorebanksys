@@ -46,7 +46,12 @@ namespace BankProject.Model
         }
         public BEXPORT_LC_DOCS_PROCESSING_CHARGES findExportLCCharges(string docCode, string chargeCode)
         {
-            return BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Equals(docCode) && p.ChargeCode.Equals(chargeCode)).FirstOrDefault();
+            return findExportLCCharges(docCode, chargeCode, null);
+        }
+
+        public BEXPORT_LC_DOCS_PROCESSING_CHARGES findExportLCCharges(string docCode, string chargeCode, int? tabId)
+        {
+            return BEXPORT_LC_DOCS_PROCESSING_CHARGES.Where(p => p.DocsCode.Equals(docCode) && p.ChargeCode.Equals(chargeCode) && p.TabId == tabId).FirstOrDefault();
         }
         public BIMPORT_NORMAILLC findImportLC(string Code)
         {

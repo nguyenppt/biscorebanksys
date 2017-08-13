@@ -17,6 +17,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
     {
         public string PartyCharged = string.Empty;
         public string CreateMT400 = string.Empty;
+        private string PAYMENT_DEFAULT_PARTICHARGE = "B";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -362,7 +363,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     rcbChargeCcy.SelectedValue = string.Empty;
                     tbExcheRate.Value = 0;
                     tbChargeAmt.Value = 0;
-                    rcbPartyCharged.SelectedValue = string.Empty;
+                    rcbPartyCharged.SelectedValue = PAYMENT_DEFAULT_PARTICHARGE;
                     lblPartyCharged.Text = string.Empty;
                     rcbOmortCharge.SelectedValue = string.Empty;
                     rcbChargeStatus.SelectedValue = string.Empty;
@@ -418,7 +419,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     rcbChargeCcy2.SelectedValue = string.Empty;
                     tbExcheRate2.Value = 0;
                     tbChargeAmt2.Value = 0;
-                    rcbPartyCharged2.SelectedValue = string.Empty;
+                    rcbPartyCharged2.SelectedValue = PAYMENT_DEFAULT_PARTICHARGE;
                     rcbOmortCharges2.SelectedValue = string.Empty;
                     rcbChargeStatus2.SelectedValue = string.Empty;
                     lblChargeStatus2.Text = string.Empty;
@@ -466,7 +467,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     rcbChargeCcy3.SelectedValue = string.Empty;
                     tbExcheRate3.Value = 0;
                     tbChargeAmt3.Value = 0;
-                    rcbPartyCharged3.SelectedValue = string.Empty;
+                    rcbPartyCharged3.SelectedValue = PAYMENT_DEFAULT_PARTICHARGE;
                     rcbOmortCharges3.SelectedValue = string.Empty;
                     rcbChargeStatus3.SelectedValue = string.Empty;
                     lblChargeStatus3.Text = string.Empty;
@@ -512,7 +513,7 @@ namespace BankProject.TradingFinance.Import.DocumentaryCollections
                     rcbChargeCcy4.SelectedValue = string.Empty;
                     tbExcheRate4.Value = 0;
                     tbChargeAmt4.Value = 0;
-                    rcbPartyCharged4.SelectedValue = string.Empty;
+                    rcbPartyCharged4.SelectedValue = PAYMENT_DEFAULT_PARTICHARGE;
                     rcbOmortCharges4.SelectedValue = string.Empty;
                     rcbChargeStatus4.SelectedValue = string.Empty;
                     lblChargeStatus4.Text = string.Empty;

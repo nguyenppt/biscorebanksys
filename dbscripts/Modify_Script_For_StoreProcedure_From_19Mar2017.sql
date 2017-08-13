@@ -341,23 +341,26 @@ begin
 			[PaymentId] LCCode, @VATNo VATNo, @UserId CurrentUserLogin, 
 			@CustomerBankAcc SoTaiKhoanNo, @CustomerName TenTaiKhoanNo,
 			--Currency + cast(DrawingAmount AS VARCHAR) SoTienTaiKhoanNo, 
-			case when Currency = 'JPY' OR Currency = 'VND' 
-				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
-				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanNo,
+			case when se.Currency = 'JPY' OR se.Currency = 'VND' 
+				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + se.Currency)
+				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,2))), 1) + ' ' + se.Currency) end as SoTienTaiKhoanNo,
 
 			--REPLACE(CONVERT(varchar, CONVERT(money, cast(isnull(DrawingAmount,0) as decimal(18,2))), 1) , '.00', '')+ ' ' + Currency AS SoTienTaiKhoanNo,
-			dbo.f_CurrencyToTextVn((DrawingAmount), Currency) SoTienTaiKhoanNoBangChu,
+			dbo.f_CurrencyToTextVn((DrawingAmount), se.Currency) SoTienTaiKhoanNoBangChu,
 			--Currency + cast(DrawingAmount AS VARCHAR) SoTienTaiKhoanCo, 
 			
-			case when Currency = 'JPY' OR Currency = 'VND' 
-				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + Currency)
-				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,2))), 1) + ' ' + Currency) end as SoTienTaiKhoanCo,
+			case when se.Currency = 'JPY' OR se.Currency = 'VND' 
+				then (REPLACE(CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,0))), 1),'.00','') + ' ' + se.Currency)
+				else (CONVERT(varchar, CONVERT(money, cast((DrawingAmount) as decimal(18,2))), 1) + ' ' + se.Currency) end as SoTienTaiKhoanCo,
 			
 			--REPLACE(CONVERT(varchar, CONVERT(money, cast(isnull(DrawingAmount,0) as decimal(18,2))), 1), '.00', '') + ' ' + Currency AS SoTienTaiKhoanCo,
 
-			dbo.f_CurrencyToTextVn((DrawingAmount), Currency) SoTienTaiKhoanCoBangChu,
-			CreditAccount SoTaiKhoanCo, @TenTaiKhoanCo TenTaiKhoanCo, LCType CollectionType, NostroAccount
-		from BEXPORT_DOCS_PROCESSING_SETTLEMENT where PaymentId = @PaymentId
+			dbo.f_CurrencyToTextVn((DrawingAmount), se.Currency) SoTienTaiKhoanCoBangChu,
+			CreditAccount SoTaiKhoanCo, @TenTaiKhoanCo TenTaiKhoanCo, LCType CollectionType, NostroAccount, sw.Description NostroAccountName
+		from BEXPORT_DOCS_PROCESSING_SETTLEMENT se 
+			left join BSWIFTCODE sw on sw.AccountNo = NostroAccount and sw.Currency = se.Currency
+		
+		where PaymentId = @PaymentId
 		
 		return
 	end
