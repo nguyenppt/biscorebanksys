@@ -409,11 +409,19 @@ begin
 		into #tblPayment
 		from BEXPORT_DOCS_PROCESSING_SETTLEMENT a where PaymentId = @PaymentId
 		---
-		select a.*, @chargeRemark ChargeRemarks,
-			  b1.ChargeName ChargeName_1, b1.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b1.ChargeAmt )) + CONVERT(money,  ISNULL(b1.TaxAmt,0)), 1) + ' ' + b1.PLAccount ChargeInfo_1
-			, b2.ChargeName ChargeName_2, b2.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b2.ChargeAmt )) + CONVERT(money,  ISNULL(b2.TaxAmt,0)), 1) + ' ' + b2.PLAccount ChargeInfo_2
-			, b3.ChargeName ChargeName_3, b3.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b3.ChargeAmt )) + CONVERT(money,  ISNULL(b3.TaxAmt,0)), 1) + ' ' + b3.PLAccount ChargeInfo_3
-			, b4.ChargeName ChargeName_4, b4.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b4.ChargeAmt )) + CONVERT(money,  ISNULL(b4.TaxAmt,0)), 1) + ' ' + b4.PLAccount ChargeInfo_4
+		select a.*, @chargeRemark ChargeRemarks
+			, b1.ChargeName ChargeName_1
+			--, b1.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b1.ChargeAmt )) + CONVERT(money,  ISNULL(b1.TaxAmt,0)), 1) + ' ' + b1.PLAccount ChargeInfo_1
+			, b1.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b1.ChargeAmt )), 1) + ' ' + b1.PLAccount ChargeInfo_1
+			, b2.ChargeName ChargeName_2
+			--, b2.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b2.ChargeAmt )) + CONVERT(money,  ISNULL(b2.TaxAmt,0)), 1) + ' ' + b2.PLAccount ChargeInfo_2
+			, b2.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b2.ChargeAmt )), 1) + ' ' + b2.PLAccount ChargeInfo_2
+			, b3.ChargeName ChargeName_3
+			--, b3.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b3.ChargeAmt )) + CONVERT(money,  ISNULL(b3.TaxAmt,0)), 1) + ' ' + b3.PLAccount ChargeInfo_3
+			, b3.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b3.ChargeAmt )) , 1) + ' ' + b3.PLAccount ChargeInfo_3
+			, b4.ChargeName ChargeName_4
+			---, b4.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b4.ChargeAmt )) + CONVERT(money,  ISNULL(b4.TaxAmt,0)), 1) + ' ' + b4.PLAccount ChargeInfo_4
+			, b4.ChargeCcy + ' ' + CONVERT(varchar, CONVERT(money, (b4.ChargeAmt )), 1) + ' ' + b4.PLAccount ChargeInfo_4
 		from #tblPayment a
 			left join #tblCharge b1 on a.Id = b1.PaymentId and b1.ChargeTab = 'ELC.RECEIVE' and b1.rowchages = 1--'ELC.RECEIVE'
 			left join #tblCharge b2 on a.Id = b2.PaymentId and b2.ChargeTab = 'ELC.COURIER' and b2.rowchages = 2--'ELC.COURIER'
