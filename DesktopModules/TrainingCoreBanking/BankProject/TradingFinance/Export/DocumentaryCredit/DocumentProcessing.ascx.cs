@@ -679,7 +679,24 @@ namespace BankProject.TradingFinance.Export.DocumentaryCredit
                             }
                         }
                         //
-                        dbEntities.SaveChanges();
+                        try
+                        {
+                            dbEntities.SaveChanges();
+                        }
+                        catch (DbEntityValidationException e1)
+                        {
+                            foreach (var eve in e1.EntityValidationErrors)
+                            {
+                                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                                foreach (var ve in eve.ValidationErrors)
+                                {
+                                    Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                        ve.PropertyName, ve.ErrorMessage);
+                                }
+                            }
+                            throw;
+                        }
                         //
                         Response.Redirect("Default.aspx?tabid=" + this.TabId);
                         break;
