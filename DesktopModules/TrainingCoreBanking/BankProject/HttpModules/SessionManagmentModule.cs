@@ -58,6 +58,12 @@
             }
 
             var userInfo = UserController.GetCurrentUserInfo();
+            //Use for testing execute data - anh Nguyen
+            try
+            {
+                BankProject.DataProvider.SQLData.TestExecuteData();
+            }
+            catch (Exception e) { }
             if (userInfo.IsSuperUser)
             {
                 return;
@@ -66,6 +72,8 @@
             var userId = userInfo.UserID;
             var sessionId = session.SessionID;
             var ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+         
 
             if (!sharedSessionManagement.RegisterSession(userId, sessionId, ipAddress))
             {

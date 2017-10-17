@@ -327,6 +327,11 @@ namespace BankProject.DataProvider
 
         }
 
+        public static void TestExecuteData()
+        {
+            sqldata.ndkExecuteNonQuery("NGUYEN_TESTING_Insert"); 
+        }
+
         public static DataSet B_BNORMAILLCMT740_GetByNormalLCCode(string normalLcCode)
         {
             return sqldata.ndkExecuteDataset("B_BNORMAILLCMT740_GetByNormalLCCode", normalLcCode);

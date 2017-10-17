@@ -4,6 +4,30 @@ SET QUOTED_IDENTIFIER ON
 GO
 /***
 ---------------------------------------------------------------------------------
+-- Add Testing Procedue
+---------------------------------------------------------------------------------
+***/
+CREATE TABLE [dbo].[TestTable](
+	[TestData] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+
+IF EXISTS(SELECT * FROM sys.procedures WHERE NAME = 'NGUYEN_TESTING_Insert')
+BEGIN
+DROP PROCEDURE [dbo].[NGUYEN_TESTING_Insert]
+END
+GO
+CREATE PROCEDURE [dbo].[NGUYEN_TESTING_Insert]
+AS
+BEGIN
+	Insert into [TestTable] values ('NghiaTest')
+END
+
+
+
+/***
+---------------------------------------------------------------------------------
 -- 25 June 2017 : Nghia : 
 ---------------------------------------------------------------------------------
 ***/
