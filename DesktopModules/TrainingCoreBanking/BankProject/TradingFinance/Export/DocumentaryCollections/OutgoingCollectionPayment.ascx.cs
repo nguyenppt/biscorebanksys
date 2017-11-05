@@ -150,6 +150,22 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
             return 0;
         }
 
+        private double GetAmountCredited2(string docCode)
+        {
+            if (_entities.BOUTGOINGCOLLECTIONPAYMENTs.Any(q => q.CollectionPaymentCode == docCode && q.Status == "AUT"))
+            {
+                var closestPayment =
+                    _entities.BOUTGOINGCOLLECTIONPAYMENTs.Where(q => q.CollectionPaymentCode == docCode && q.Status == "AUT")
+                        .OrderByDescending(q => q.PaymentNo)
+                        .FirstOrDefault();
+                if (closestPayment != null)
+                {
+                    return closestPayment.AmtCredited??0.0;
+                }
+            }
+            return 0;
+        }
+
         /*
          * Method Revision History:
          * Version        Date            Author            Comment
@@ -202,8 +218,8 @@ namespace BankProject.TradingFinance.Export.DocumentaryCollections
                 return false;
             }
             double amount = doc.AmountNew != null ? double.Parse(doc.AmountNew.Value.ToString()) : doc.Amount.Value;
-           
-            if (numDrawingAmount.Value > amount - double.Parse(lblCreditAmount.Text)) 
+            double creditedAmount = GetAmountCredited2(CodeId.Substring(0, 14));
+            if (numDrawingAmount.Value > amount - creditedAmount) //double.Parse(lblCreditAmount.Text)) 
             {
                 lblError.Text = "Drawing amount must be less then or equal remain amount";
                 return false;
